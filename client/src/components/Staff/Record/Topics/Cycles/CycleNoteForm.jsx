@@ -1,0 +1,59 @@
+
+import {
+    dateISOToTimestampTZ,
+    timestampToDateISOTZ,
+} from "../../../../../utils/dates/formatDates";
+
+const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
+  const handleRemove = () => {
+    setErrMsg("");
+    setFormDatas({
+      ...formDatas,
+      notes: formDatas.notes.filter((note) => note.temp_id !== item.temp_id),
+    });
+  };
+  const handleChange = (e) => {
+    setErrMsg("");
+    const name = e.target.name;
+    let value = e.target.value;
+    if (name === "date")
+      value = value === "" ? null : dateISOToTimestampTZ(value);
+    setFormDatas({
+      ...formDatas,
+      notes: formDatas.notes.map((note) => {
+        return note.temp_id === item.temp_id
+          ? { ...note, [name]: value }
+          : note;
+      }),
+    });
+  };
+  return (
+    <tr className="cycles-form__events-item">
+      <td style={{ width: "10%" }}>
+        <button onClick={handleRemove}>Remove</button>
+      </td>
+      <td style={{ width: "10%" }}>
+        <input
+          name="date"
+          type="date"
+          value={timestampToDateISOTZ(item.date)}
+          onChange={handleChange}
+          autoComplete="off"
+          style={{ width: "110px" }}
+        />
+      </td>
+      <td style={{ width: "80%" }}>
+        <textarea
+          name="text"
+          value={item.text}
+          onChange={handleChange}
+          autoComplete="off"
+          style={{ width: "100%", whiteSpace: "pre-wrap" }}
+          rows={2}
+        />
+      </td>
+    </tr>
+  );
+};
+
+export default CycleNoteForm;

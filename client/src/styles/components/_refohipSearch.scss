@@ -1,0 +1,54 @@
+.refohip {
+  &__err {
+    padding : 10px 20px;
+    font-size: 0.9rem;
+    width : 100%;
+    margin:10px auto;
+    color : red;
+    background-color:rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__container {
+    margin-top: 40px;
+  }
+}
+.refohip-search {
+  padding: 10px 20px 20px;
+  background: $white;
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+}
+.refohip-results {
+  height:50px;
+  border:solid 0.5px $grey;
+  border-radius: 6px;
+  overflow-y: scroll;
+  height:210px;
+  position: relative;
+  &__item {
+    cursor:pointer;
+    display: flex;
+    justify-content: flex-start;
+    &:hover {
+      text-decoration: underline;
+    }
+    padding:0 20px;
+    &--headers {
+      position:sticky;
+      top:0;
+      background-color: $white;
+      padding: 5px 20px;
+    }
+  }   
+  &__code {
+    font-weight: bold;
+    display: inline-block;
+    width:10%;
+  }
+  &__name {
+    width:80%;
+  }
+}

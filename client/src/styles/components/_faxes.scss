@@ -1,0 +1,899 @@
+.fax-container {
+  height: 100%;
+  border-radius: 6px;
+  width: 98%;
+  margin: 0 auto;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  &--patient {
+    height: 100%;
+  }
+}
+.fax-toolbar {
+  margin: 0 auto;
+  height: 7%;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $blue;
+  border-radius: 6px 4px 0 0;
+  &__title {
+    width: 13%;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  &__filter {
+    width: 62%;
+    display: flex;
+    align-items: center;
+    &-search {
+      width: 200px;
+      margin-right: 50px;
+    }
+    &-date {
+      display: flex;
+      align-items: center;
+      &-item {
+        display: flex;
+        align-items: center;
+        label {
+          font-weight: bold;
+          font-size: 0.85rem;
+          margin-right: 10px;
+        }
+        input {
+          margin-right: 10px;
+          &:disabled {
+            visibility: hidden;
+          }
+        }
+        input[type="checkbox"] {
+          margin-left: 10px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  &__btns {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    button {
+      margin-right: 5px;
+    }
+  }
+}
+.fax-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 auto;
+  height: 93%;
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__leftbar {
+    width: 10%;
+    height: 100%;
+    background: rgb(238, 238, 238);
+    overflow: scroll;
+    border-radius: 0 0 0 6px;
+    ul {
+      font-size: 0.9rem;
+    }
+  }
+  &__category {
+    padding: 4px 10px;
+    width: 100%;
+    cursor: pointer;
+    &:hover {
+      background: $green;
+    }
+    &--active {
+      font-weight: bold;
+      background: $green;
+    }
+  }
+  &__box {
+    background-color: $white;
+    width: 90%;
+    height: 100%;
+    overflow: scroll;
+    position: relative;
+    border-radius: 0 0 6px 0;
+    // p {
+    //   margin-top: 20px;
+    //   font-size: 0.9rem;
+    //   text-align: center;
+    // }
+  }
+}
+.fax-overview {
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 0.5px $grey;
+    font-size: 0.85rem;
+    padding: 5px;
+    font-weight: bold;
+  }
+  &__from {
+    text-align: center;
+    width: 50%;
+  }
+  &__date {
+    text-align: center;
+    width: 25%;
+  }
+  &__pages {
+    text-align: center;
+    width: 23%;
+  }
+  &__fake-div {
+    width: 2%;
+  }
+}
+.fax-thumbnail {
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 35px;
+  border-bottom: solid 0.5px $grey;
+  padding: 0 5px;
+  &--unread {
+    font-weight: bold;
+  }
+  &__checkbox {
+    width: 2%;
+  }
+  &__link {
+    width: 48%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__author {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+  }
+  &__date {
+    width: 25%;
+    text-align: center;
+  }
+  &__logos {
+    cursor: pointer;
+    text-align: center;
+    width: 2%;
+    &--todo {
+      width: 4%;
+    }
+  }
+  &__pages {
+    width: 23%;
+    text-align: center;
+  }
+}
+.fax-detail {
+  &__content {
+    margin-top: 0;
+  }
+  &__content-err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 0 auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+    margin: 0 auto 20px;
+  }
+  &__toolbar {
+    padding: 5px;
+    background: $white;
+    border-bottom: solid 0.5px $grey;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: auto;
+    &-btns {
+      width: 90%;
+      button {
+        margin-right: 5px;
+      }
+    }
+    &-logos {
+      cursor: pointer;
+      width: 2%;
+      text-align: end;
+    }
+  }
+  &__arrow {
+    width: 5%;
+  }
+  &__subject {
+    font-size: 0.9rem;
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    &--todo {
+      width: 69%;
+    }
+  }
+  &__patient {
+    width: 40%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 0.8rem;
+    button {
+      margin-left: 10px;
+    }
+  }
+  &__patient-link {
+    text-decoration: underline;
+  }
+  &__trash {
+    width: 5%;
+    cursor: pointer;
+    text-align: end;
+    font-size: 0.8rem;
+  }
+  &__btns {
+    padding: 20px;
+    button {
+      margin-left: 5px;
+    }
+  }
+}
+.fax-print {
+  &__container {
+    padding: 40px;
+  }
+  &__section {
+    print-color-adjust: exact;
+    border-radius: 6px;
+    border: solid 0.3px $grey;
+    overflow: hidden;
+  }
+  &__subject,
+  &__patient {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    font-size: 0.9rem;
+    background-color: $blue;
+  }
+  &__btn {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+}
+.fax {
+  padding: 20px;
+  border-bottom: solid 0.5px rgb(204, 204, 204);
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+  }
+  &__author {
+    font-weight: bold;
+  }
+  &__date {
+    width: 28%;
+    text-align: right;
+  }
+  &__subject {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 92%;
+    }
+  }
+  &__subtitle {
+    font-size: 0.6rem;
+  }
+  &__body {
+    padding: 20px 20px 0;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+  }
+}
+.fax-attachments {
+  display: flex;
+  padding: 15px;
+  flex-wrap: wrap;
+}
+.fax-attachment {
+  &__card {
+    border: solid 0.5px $grey;
+    width: 30%;
+    margin: 10px 5px 0;
+  }
+  &__thumbnail {
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    iframe {
+      border: none;
+      cursor: pointer;
+    }
+  }
+  &__footer {
+    background: rgb(154, 154, 154);
+    padding: 5px;
+    font-size: 0.7rem;
+    display: flex;
+    flex-direction: column;
+  }
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      margin-top: 0;
+      font-size: 0.7rem;
+    }
+  }
+  &__btn {
+    button {
+      font-size: 0.65rem;
+    }
+  }
+}
+.new-fax {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin-top: 30px;
+  &--template {
+    margin-top: 0;
+  }
+  &__template-name {
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    input {
+      width: 500px;
+    }
+    margin-left: 10px;
+    margin-top: 50px;
+  }
+  &__contacts {
+    width: 25%;
+    border: solid 0.3px $grey;
+    border-radius: 6px;
+    margin: 20px auto;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    height: 600px;
+    overflow-y: scroll;
+    &--template {
+      width: 25%;
+    }
+  }
+  &__form {
+    min-height: 250px;
+    border: solid 0.3px $grey;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 20px auto;
+    width: 70%;
+    font-size: 0.8rem;
+    &--template {
+      width: 90%;
+    }
+  }
+  &__recipients {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 90%;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+    }
+  }
+  &__subject {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 92%;
+      font-size: 0.8rem;
+    }
+  }
+  &__patient {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 80%;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+    }
+  }
+  &__attach {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    i {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+  }
+  &__importance {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    label {
+      font-weight: bold;
+    }
+    &-check {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__duedate {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+  &__templates {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &__body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    textarea {
+      border: none;
+      outline: none;
+      padding: 10px 0;
+      width: 100%;
+      min-height: 300px;
+    }
+  }
+  &__btns {
+    border-top: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    button {
+      margin-right: 5px;
+    }
+  }
+  &__patients {
+    width: 19%;
+    border: solid 0.3px $grey;
+    height: 500px;
+    border-radius: 6px;
+    margin: 20px auto;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    &--todo {
+      width: 30%;
+    }
+    &--template-external {
+      width: 25%;
+    }
+  }
+}
+.reply-fax {
+  &__form {
+    min-height: 250px;
+    border: solid 0.3px $grey;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 20px auto;
+    width: 90%;
+    font-size: 0.8rem;
+  }
+  &__title {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    p {
+      margin: 0;
+      padding: 0;
+      font-size: 0.8rem;
+    }
+  }
+  &__subject {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 92%;
+      font-size: 0.8rem;
+    }
+  }
+  &__patient {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 92%;
+      font-size: 0.8rem;
+    }
+  }
+  &__body {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    textarea {
+      border: none;
+      outline: none;
+      padding: 10px 0;
+      width: 100%;
+      min-height: 200px;
+    }
+  }
+  &__history {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btns {
+    border-top: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    button {
+      margin-left: 5px;
+    }
+  }
+  &__attach {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.8rem;
+    i {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+  }
+  &__importance {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    label {
+      font-weight: bold;
+    }
+    &-check {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.forward-fax {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin-top: 30px;
+  &__contacts {
+    width: 20%;
+    border: solid 0.3px $grey;
+    border-radius: 6px;
+    margin: 20px auto;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  &__form {
+    min-height: 250px;
+    border: solid 0.3px $grey;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 20px auto;
+    width: 75%;
+    font-size: 0.8rem;
+  }
+  &__recipients {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      outline: none;
+      width: 90%;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+    }
+  }
+  &__subject {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      font-size: 0.8rem;
+    }
+  }
+  &__patient {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    input {
+      font-size: 0.8rem;
+    }
+  }
+  &__body {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    textarea {
+      border: none;
+      outline: none;
+      padding: 10px 0;
+      width: 100%;
+      min-height: 300px;
+    }
+  }
+  &__history {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btns {
+    border-top: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    button {
+      margin-left: 5px;
+    }
+  }
+  &__attach {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    i {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    font-size: 0.8rem;
+  }
+  &__importance {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 0.8rem;
+    label {
+      font-weight: bold;
+    }
+    &-check {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.contacts {
+  &__title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  &__category-overview {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    i {
+      margin-right: 5px;
+    }
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+  }
+}
+.contacts-list {
+  padding: 5px 0 0 30px;
+  &__item {
+    display: flex;
+    align-items: center;
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+  }
+}
+.patients {
+  &__title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  &__search-input {
+    margin-bottom: 20px;
+    input {
+      width: 100%;
+    }
+  }
+  &__list-item {
+    display: flex;
+    align-items: center;
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 5px;
+    }
+  }
+  &__list-err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+}
+
+@media print {
+  .fax-print__btn {
+    display: none !important;
+  }
+}
+
+.fax__templates {
+  margin-top: 40px;
+  padding: 0 20px;
+  height: 93%;
+  &-err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &-btn-container {
+    text-align: center;
+    margin-bottom: 20px;
+    button {
+      margin-left: 5px;
+    }
+  }
+  &-list {
+    height: 85%;
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    overflow-y: scroll;
+    padding: 10px;
+    &-item {
+      margin-bottom: 5px;
+      span {
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  &-search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    input {
+      width: 200px;
+    }
+  }
+}
+.fax-numbers {
+  margin-bottom: 20px;
+  &__list {
+    height: 200px;
+    overflow-y: scroll;
+    border: solid 0.2px $grey;
+    border-radius: 6px;
+    padding: 5px 10px;
+    margin-top: 5px;
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 0.85rem;
+  }
+  &__item {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

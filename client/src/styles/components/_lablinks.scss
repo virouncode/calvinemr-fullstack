@@ -1,0 +1,150 @@
+.lablinks {
+  width: 95%;
+  margin: 40px auto 0;
+  &__btn {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  &__list {
+    padding: 10px;
+    height: 230px;
+    overflow-y: scroll;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  }
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    padding: 10px;
+    &-inputs {
+      width: 75%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    &-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    &-err {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      width: 100%;
+      margin: 10px auto;
+      color: red;
+      background-color: rgba(255, 0, 0, 0.403);
+      border-radius: 6px;
+      text-align: center;
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      label {
+        font-weight: bold;
+        margin-right: 10px;
+        width: 70px;
+        margin-right: 10px;
+      }
+      input {
+        width: 200px;
+      }
+    }
+    &-btns {
+      width: 15%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      button {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.lablink {
+  &__item {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    &-link {
+      text-decoration: underline;
+      width: 55%;
+      font-weight: bold;
+      i {
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+    &-login {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-weight: bold;
+        i {
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+      width: 20%;
+    }
+    &-pwd {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-weight: bold;
+        i {
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+      width: 20%;
+    }
+  }
+}
+
+.lablinks__personal {
+  &-err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &-title {
+    margin: 10px 0;
+    h3 {
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    display: flex;
+    align-items: center;
+  }
+  &-list {
+    padding: 10px;
+    height: 230px;
+    overflow-y: scroll;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  }
+  &-search {
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 0.85rem;
+    }
+    input {
+      width: 350px;
+    }
+    margin-bottom: 10px;
+  }
+}

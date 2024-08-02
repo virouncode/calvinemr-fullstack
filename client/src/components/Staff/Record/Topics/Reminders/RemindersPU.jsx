@@ -1,0 +1,148 @@
+import { useRef, useState } from "react";
+import useIntersection from "../../../../../hooks/useIntersection";
+import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
+import EmptyRow from "../../../../UI/Tables/EmptyRow";
+import LoadingRow from "../../../../UI/Tables/LoadingRow";
+import ReminderForm from "./ReminderForm";
+import ReminderItem from "./ReminderItem";
+
+const RemindersPU = ({
+  topicDatas,
+  topicPost,
+  topicPut,
+  topicDelete,
+  isPending,
+  error,
+  patientId,
+  setPopUpVisible,
+  isFetchingNextPage,
+  fetchNextPage,
+  isFetching,
+}) => {
+  //HOOKS
+  const editCounter = useRef(0);
+  const [addVisible, setAddVisible] = useState(false);
+  const [errMsgPost, setErrMsgPost] = useState(false);
+
+  //INTERSECTION OBSERVER
+  const { rootRef, lastItemRef } = useIntersection(
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching
+  );
+
+  //HANDLERS
+  const handleClose = async (e) => {
+    if (
+      editCounter.current === 0 ||
+      (editCounter.current > 0 &&
+        (await confirmAlert({
+          content:
+            "Do you really want to close the window ? Your changes will be lost",
+        })))
+    ) {
+      setPopUpVisible(false);
+    }
+  };
+  const handleAdd = (e) => {
+    setErrMsgPost("");
+    editCounter.current += 1;
+    setAddVisible((v) => !v);
+  };
+
+  if (isPending) {
+    return (
+      <>
+        <h1 className="reminders__title">
+          Reminders <i className="fa-solid fa-bell"></i>
+        </h1>
+        <LoadingParagraph />
+      </>
+    );
+  }
+  if (error) {
+    return (
+      <>
+        <h1 className="reminders__title">
+          Reminders <i className="fa-solid fa-bell"></i>
+        </h1>
+        <ErrorParagraph errorMsg={error.message} />
+      </>
+    );
+  }
+
+  const datas = topicDatas.pages.flatMap((page) => page.items);
+
+  return (
+    <>
+      <h1 className="reminders__title">
+        Reminders <i className="fa-solid fa-bell"></i>
+      </h1>
+      {errMsgPost && <div className="reminders__err">{errMsgPost}</div>}
+      <>
+        <div className="reminders__table-container" ref={rootRef}>
+          <table className="reminders__table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Reminder</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+              </tr>
+            </thead>
+            <tbody>
+              {addVisible && (
+                <ReminderForm
+                  editCounter={editCounter}
+                  setAddVisible={setAddVisible}
+                  patientId={patientId}
+                  setErrMsgPost={setErrMsgPost}
+                  errMsgPost={errMsgPost}
+                  topicPost={topicPost}
+                />
+              )}
+              {datas && datas.length > 0
+                ? datas.map((item, index) =>
+                    index === datas.length - 1 ? (
+                      <ReminderItem
+                        item={item}
+                        key={item.id}
+                        editCounter={editCounter}
+                        setErrMsgPost={setErrMsgPost}
+                        errMsgPost={errMsgPost}
+                        lastItemRef={lastItemRef}
+                        topicPut={topicPut}
+                        topicDelete={topicDelete}
+                      />
+                    ) : (
+                      <ReminderItem
+                        item={item}
+                        key={item.id}
+                        editCounter={editCounter}
+                        setErrMsgPost={setErrMsgPost}
+                        errMsgPost={errMsgPost}
+                        topicPut={topicPut}
+                        topicDelete={topicDelete}
+                      />
+                    )
+                  )
+                : !isFetchingNextPage &&
+                  !addVisible && <EmptyRow colSpan="4" text="No reminders" />}
+              {isFetchingNextPage && <LoadingRow colSpan="4" />}
+            </tbody>
+          </table>
+        </div>
+        <div className="reminders__btn-container">
+          <button onClick={handleAdd} disabled={addVisible}>
+            Add
+          </button>
+          <button onClick={handleClose}>Close</button>
+        </div>
+      </>
+    </>
+  );
+};
+
+export default RemindersPU;

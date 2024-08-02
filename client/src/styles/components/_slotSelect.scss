@@ -1,0 +1,14 @@
+.calendar {
+    &__slot-select {
+        padding : 5px;
+        margin-right: 32px;
+        label {
+            font-size : 0.8rem;
+            font-weight: bold;
+            margin-right : 8px;
+        }
+        select {
+            font-size : 0.7rem;
+        }
+    }
+}

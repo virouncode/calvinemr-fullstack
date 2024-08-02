@@ -1,0 +1,30 @@
+.staff-search {
+  font-size: 0.8rem;
+  &__title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 auto 20px;
+    width: 80px;
+  }
+  &__form {
+    width: 80%;
+    margin: 0 auto 40px;
+  }
+  &__row {
+    display: flex;
+  }
+  &__item {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin-bottom: 10px;
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input,
+    select {
+      width: 150px;
+    }
+  }
+}

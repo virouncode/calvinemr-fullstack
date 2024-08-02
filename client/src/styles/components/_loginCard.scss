@@ -1,0 +1,146 @@
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: $font1;
+  backdrop-filter: blur(3px);
+}
+.login-logo {
+  display: flex;
+  align-items: center;
+  width: 450px;
+  margin: 0 auto 10px;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 3rem;
+  &__title {
+    width: 100%;
+    @media screen and (max-width: 1200px) {
+      font-size: 2.5rem;
+    }
+    @media screen and (max-width: 970px) {
+      font-size: 2.3rem;
+    }
+    @media screen and (max-width: 800px) {
+      font-size: 2rem;
+    }
+  }
+  // &__image {
+  //   cursor: pointer;
+  //   width: 45%;
+  //   display: flex;
+  //   align-items: center;
+  //   img {
+  //     width: 100%;
+  //     object-fit: cover;
+  //   }
+  // }
+  @media screen and (max-width: 1200px) {
+    width: 400px;
+  }
+  @media screen and (max-width: 970px) {
+    width: 380px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 350px;
+  }
+}
+.login-newcard {
+  padding: 15px 30px;
+  width: 30%;
+  @media screen and (max-width: 1500px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 970px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 800px) {
+    width: 70%;
+  }
+}
+.login-form {
+  width: 70%;
+  //   margin-left: auto;
+  margin: 0 auto;
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto 8px;
+    label {
+      font-weight: bold;
+      font-size: 0.95rem;
+      @media screen and (max-width: 970px) {
+        font-size: 0.85rem;
+      }
+    }
+    input {
+      outline-color: $blue2;
+      background-color: #fefefe;
+      width: 180px;
+    }
+  }
+  &__row-radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // width : 70%;
+    margin: 0 auto 5px;
+    &-item {
+      display: flex;
+      align-items: center;
+      input[type="radio"] {
+        margin-right: 8px;
+        opacity: none;
+      }
+      label {
+        font-weight: bold;
+        @media screen and (max-width: 970px) {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+  &__btn-label {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 32px;
+    font-size: 0.85rem;
+  }
+  &__btn-container {
+    margin-top: 16px;
+    text-align: center;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: 32%;
+    }
+  }
+}
+.login__err {
+  font-size: 0.8rem;
+  color: red;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 0;
+}
+.login-forgot {
+  font-size: 0.7rem;
+  text-align: end;
+  padding: 0;
+  text-align: end;
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

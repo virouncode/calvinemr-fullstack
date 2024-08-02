@@ -1,0 +1,162 @@
+.care-elements {
+  &__title {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  &__btn-container {
+    button {
+      margin-left: 5px;
+    }
+  }
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 80%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__card {
+    width: 95%;
+    border-radius: 6px;
+    margin: 0 auto;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  }
+  &__card-title {
+    border-radius: 6px 6px 0 0;
+    padding: 10px 20px;
+    background-color: $blue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+  &__card-content {
+    padding: 20px;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    margin: 5px auto;
+    font-size: 0.8rem;
+    justify-content: space-between;
+    p {
+      padding: 0;
+    }
+    &-label {
+      font-weight: bold;
+      width: 60%;
+    }
+    &-value {
+      width: 20%;
+      text-align: end;
+      &--add {
+        width: 40%;
+        text-align: left;
+      }
+    }
+    input,
+    select {
+      width: 100%;
+    }
+    &-btns {
+      width: 20%;
+      text-align: end;
+      i {
+        cursor: pointer;
+      }
+    }
+    &--title {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      button {
+        margin-left: 5px;
+      }
+    }
+  }
+  &__date {
+    display: inline-block;
+  }
+  &__history {
+    i {
+      cursor: pointer;
+    }
+    &-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      border: solid 1px $grey;
+      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      border-radius: 6px;
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+  &__value {
+    width: 80px;
+    display: inline-block;
+  }
+  &__sign {
+    font-size: 0.6rem;
+    text-align: end;
+    margin-top: 20px;
+  }
+  &__edit {
+    margin-top: 40px;
+    &-list {
+      padding: 20px;
+      height: 400px;
+      border: solid 1px $grey;
+      border-radius: 6px;
+      overflow-y: scroll;
+    }
+    &-item {
+      margin: 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      label {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      input,
+      select {
+        width: 50px;
+      }
+      input[type="date"] {
+        width: 120px;
+      }
+    }
+    &-block {
+      width: 30%;
+      display: flex;
+      align-items: center;
+      &--double {
+        width: 45%;
+      }
+    }
+    &-btns {
+      text-align: center;
+      margin-top: 20px;
+      button {
+        margin-right: 5px;
+      }
+    }
+  }
+}

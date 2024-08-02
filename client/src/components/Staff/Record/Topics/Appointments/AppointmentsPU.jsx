@@ -1,0 +1,170 @@
+import { useRef, useState } from "react";
+
+import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
+import useIntersection from "../../../../../hooks/useIntersection";
+import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
+import EmptyRow from "../../../../UI/Tables/EmptyRow";
+import LoadingRow from "../../../../UI/Tables/LoadingRow";
+import AppointmentForm from "./AppointmentForm";
+import AppointmentItem from "./AppointmentItem";
+
+const AppointmentsPU = ({
+  topicDatas,
+  topicPost,
+  topicPut,
+  topicDelete,
+  isPending,
+  error,
+  patientId,
+  setPopUpVisible,
+  demographicsInfos,
+  isFetchingNextPage,
+  fetchNextPage,
+  isFetching,
+}) => {
+  //HOOKS
+  const editCounter = useRef(0);
+  const [addVisible, setAddVisible] = useState(false);
+  const [errMsgPost, setErrMsgPost] = useState("");
+  const {
+    data: sites,
+    isPending: isPendingSites,
+    error: errorSites,
+  } = useSites();
+
+  //INTERSECTION OBSERVER
+  const { rootRef, lastItemRef } = useIntersection(
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching
+  );
+
+  //HANDLERS
+  const handleClose = async (e) => {
+    if (
+      editCounter.current === 0 ||
+      (editCounter.current > 0 &&
+        (await confirmAlert({
+          content:
+            "Do you really want to close the window ? Your changes will be lost",
+        })))
+    ) {
+      setPopUpVisible(false);
+    }
+  };
+
+  const handleAdd = async (e) => {
+    setErrMsgPost("");
+    editCounter.current += 1;
+    setAddVisible((v) => !v);
+  };
+
+  if (isPending || isPendingSites) {
+    return (
+      <>
+        <h1 className="appointments__title">
+          Patient appointments <i className="fa-regular fa-calendar-check"></i>
+        </h1>
+        <LoadingParagraph />
+      </>
+    );
+  }
+  if (error || errorSites) {
+    return (
+      <>
+        <h1 className="appointments__title">
+          Patient appointments <i className="fa-regular fa-calendar-check"></i>
+        </h1>
+        <ErrorParagraph errorMsg={error?.message || errorSites?.message} />
+      </>
+    );
+  }
+
+  const datas = topicDatas.pages.flatMap((page) => page.items);
+
+  return (
+    <>
+      <h1 className="appointments__title">
+        Patient appointments <i className="fa-regular fa-calendar-check"></i>
+      </h1>
+      {errMsgPost && <div className="appointments__err">{errMsgPost}</div>}
+
+      <div className="appointments__table-container" ref={rootRef}>
+        <table className="appointments__table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Host</th>
+              <th>Reason</th>
+              <th>Recurrence</th>
+              <th>Until</th>
+              <th>From</th>
+              <th>To</th>
+              <th>All Day</th>
+              <th>Site</th>
+              <th>Room</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {addVisible && (
+              <AppointmentForm
+                patientId={patientId}
+                editCounter={editCounter}
+                demographicsInfos={demographicsInfos}
+                setAddVisible={setAddVisible}
+                errMsgPost={errMsgPost}
+                setErrMsgPost={setErrMsgPost}
+                sites={sites}
+                topicPost={topicPost}
+              />
+            )}
+            {datas && datas.length > 0
+              ? datas.map((item, index) =>
+                  index === datas.length - 1 ? (
+                    <AppointmentItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      errMsgPost={errMsgPost}
+                      setErrMsgPost={setErrMsgPost}
+                      sites={sites}
+                      lastItemRef={lastItemRef}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
+                  ) : (
+                    <AppointmentItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      errMsgPost={errMsgPost}
+                      setErrMsgPost={setErrMsgPost}
+                      sites={sites}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
+                  )
+                )
+              : !isFetchingNextPage &&
+                !addVisible && <EmptyRow colSpan="12" text="No appointments" />}
+            {isFetchingNextPage && <LoadingRow colSpan="12" />}
+          </tbody>
+        </table>
+      </div>
+      <div className="appointments__btn-container">
+        <button onClick={handleAdd} disabled={addVisible}>
+          Add
+        </button>
+        <button onClick={handleClose}>Close</button>
+      </div>
+    </>
+  );
+};
+
+export default AppointmentsPU;

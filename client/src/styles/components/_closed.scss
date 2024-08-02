@@ -1,0 +1,17 @@
+.closed-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: $white;
+  padding: 20px;
+  border-radius: 6px;
+  &-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  &-link {
+    text-decoration: underline;
+  }
+}

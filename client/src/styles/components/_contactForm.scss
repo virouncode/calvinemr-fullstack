@@ -1,0 +1,25 @@
+.contact-form {
+  margin-top: 40px;
+  padding: 0 20px;
+  &-radios {
+    display: flex;
+    align-items: center;
+  }
+  &-radios__list {
+    display: flex;
+    align-items: center;
+  }
+  &-radios__item {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  }
+  &-radios__label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-right: 40px;
+  }
+}

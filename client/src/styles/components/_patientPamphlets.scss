@@ -1,0 +1,55 @@
+.patient-pamphlets {
+  width: 97%;
+  margin: 0 auto;
+  &__search {
+    margin: 20px 0 10px;
+    label {
+      font-size: 0.85rem;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+  }
+  &__content {
+    width: 49%;
+  }
+  &__table-container {
+    height: 650px;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    position: relative;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
+    }
+    th {
+      min-width: 120px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+  &__item {
+    border-bottom: solid 1px $grey;
+    td {
+      text-align: center;
+      padding: 10px;
+      word-break: break-word;
+      input {
+        width: 100%;
+      }
+    }
+  }
+  &__item-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

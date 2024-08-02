@@ -1,0 +1,34 @@
+.new-fax {
+  margin-top: 40px;
+  &__title {
+    font-weight: bold;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    label {
+      margin-bottom: 5px;
+    }
+  }
+  &__btn-container {
+    text-align: center;
+    margin-top: 10px;
+    button {
+      margin-right: 5px;
+    }
+  }
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+}

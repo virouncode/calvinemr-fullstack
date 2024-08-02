@@ -1,0 +1,13 @@
+.closed-practician {
+  padding: 20px;
+  font-size: 0.9rem;
+  &__message {
+    margin-bottom: 10px;
+  }
+  label {
+    margin-right: 20px;
+  }
+  button {
+    margin-left: 20px;
+  }
+}

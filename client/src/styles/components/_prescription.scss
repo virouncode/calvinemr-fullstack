@@ -1,0 +1,161 @@
+.prescription {
+  &__actions {
+    width: 90%;
+    margin: 40px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    button {
+      margin-right: 10px;
+    }
+  }
+  &__container {
+    height: 680px;
+    overflow-y: scroll;
+    border-bottom: solid 1px $grey;
+    border-top: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  }
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    &--preview {
+      margin-top: 40px;
+    }
+  }
+  &__item {
+    padding: 10px 0;
+    &-textarea {
+      width: 100%;
+      height: auto;
+      white-space: pre-wrap;
+    }
+  }
+  &__page {
+    border: solid 1px $grey;
+    border-radius: 6px;
+    // width: 21cm;
+    // height: 29.7cm;
+    width: 22cm;
+    height: 28cm;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    &--preview {
+      margin-bottom: 20px;
+    }
+  }
+  &__medications {
+    width: 38%;
+  }
+  &__header {
+    display: flex;
+    height: 20%;
+    justify-content: space-between;
+  }
+  &__logo {
+    width: 20%;
+    padding: 5px 10px;
+    img {
+      width: 100%;
+    }
+  }
+  &__doctor-infos {
+    font-size: 0.85rem;
+    width: 50%;
+    padding: 5px 10px;
+    p {
+      padding: 0;
+    }
+  }
+  &__subheader {
+    display: flex;
+    flex-direction: column;
+    height: 10%;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  &__date {
+    font-size: 0.85rem;
+    margin-left: auto;
+    text-align: end;
+  }
+  &__patient-infos {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    p {
+      padding: 0;
+    }
+  }
+  &__body {
+    height: 63%;
+    &-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-align: center;
+      margin: 20px 0;
+    }
+    &-content {
+      overflow-y: scroll;
+      margin-top: 40px;
+      padding: 0 20px;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      height: 500px;
+      border: solid 1px $grey;
+      border-radius: 6px;
+      &-textarea {
+        width: 100%;
+        min-height: 200px;
+        margin-top: 10px;
+        border: solid 1px $grey;
+        border-radius: 6px;
+        outline: none;
+        font-size: 0.85rem;
+        &:focus {
+          outline: none;
+        }
+      }
+      &--preview {
+        border: none;
+      }
+    }
+  }
+  &__footer {
+    height: 2%;
+  }
+  &__id {
+    font-size: 0.7em;
+    font-style: italic;
+    text-align: end;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  &__sign {
+    height: 5%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.8rem;
+    &-image {
+      img {
+        height: 100%;
+      }
+    }
+  }
+  &__preview {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-pages {
+      height: 680px;
+      overflow-y: scroll;
+    }
+    &-options {
+      margin-bottom: 10px;
+    }
+  }
+}

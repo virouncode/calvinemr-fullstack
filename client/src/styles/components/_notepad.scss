@@ -1,0 +1,19 @@
+.notepad {
+  margin-top: 40px;
+  height: 92%;
+  width: 100%;
+  padding: 10px;
+  &__notes {
+    height: 95%;
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+  }
+  &__btns {
+    text-align: center;
+    button {
+      margin-right: 5px;
+    }
+  }
+}

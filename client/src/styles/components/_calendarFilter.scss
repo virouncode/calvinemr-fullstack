@@ -1,0 +1,23 @@
+.calendar {
+    &__filter{
+        margin-top : 5px;
+        box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+        width:100%;
+        border-radius:6px;
+        font-weight: bold;
+        overflow-y: scroll;
+        height:44.7vh;
+        border:solid 1px $grey;
+    }
+    &__filter-title {
+        @include childCenter;
+        position: sticky;
+        top:0;
+        border-radius: 4px 4px 0 0;
+        font-size : 0.85rem;
+        height: 50px;
+        color : $black;
+        background : $blue;
+        width:100%;
+    }
+}

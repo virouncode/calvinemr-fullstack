@@ -1,0 +1,59 @@
+.export-chart {
+  margin-top: 40px;
+  &__title {
+    font-weight: bold;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+  &__records {
+    margin-top: 10px;
+    margin-left: 20px;
+    &-item {
+      display: flex;
+      align-items: center;
+      input[type="checkbox"] {
+        margin-right: 5px;
+      }
+    }
+  }
+  &__btn-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    button {
+      margin-right: 5px;
+    }
+  }
+}
+.export-chart__preview {
+  margin: 100px auto 10px;
+  // width:21cm;
+  width: 22cm;
+  &-options {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: $white;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+    button {
+      margin-right: 5px;
+    }
+  }
+}
+.export__card {
+  width: 95%;
+  margin: 20px auto;
+  border: solid 1px $grey;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.export__title {
+  font-weight: bold;
+  padding: 10px;
+  color: $white;
+}
+.export__content {
+  padding: 10px;
+}

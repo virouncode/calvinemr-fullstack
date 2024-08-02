@@ -1,0 +1,13 @@
+.labels-content {
+
+  &__item {
+    text-decoration: underline;
+    cursor:pointer;
+  }
+}
+
+@media print {
+  .labels-content__print-btn, .labels-content__select {
+      display: none !important;
+  }
+}

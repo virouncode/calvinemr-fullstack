@@ -1,0 +1,46 @@
+import { useState } from "react";
+
+import { useLinkDelete } from "../../../hooks/reactquery/mutations/linksMutations";
+import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import LinkEdit from "./LinkEdit";
+
+const MyLinkItem = ({ link, setAddVisible, lastItemRef = null }) => {
+  const [editVisible, setEditVisible] = useState(false);
+  const linkDelete = useLinkDelete(link.staff_id);
+
+  const handleEdit = () => {
+    setEditVisible((v) => !v);
+  };
+  const handleRemoveLink = async (e, linkName) => {
+    if (
+      await confirmAlert({ content: "Do you reall want to remove this link ?" })
+    ) {
+      linkDelete.mutate(link.id, {
+        onSuccess: () => {
+          setAddVisible(false);
+        },
+      });
+    }
+  };
+
+  return (
+    <li key={link.name} ref={lastItemRef}>
+      <a href={link.url} target="_blank" rel="noreferrer">
+        {link.name}
+      </a>
+      <i
+        className="fa-regular fa-pen-to-square"
+        style={{ cursor: "pointer", marginLeft: "5px" }}
+        onClick={handleEdit}
+      ></i>
+      <i
+        className="fa-solid fa-trash"
+        style={{ cursor: "pointer", marginLeft: "5px" }}
+        onClick={(e) => handleRemoveLink(e, link.name)}
+      ></i>
+      {editVisible && <LinkEdit link={link} setEditVisible={setEditVisible} />}
+    </li>
+  );
+};
+
+export default MyLinkItem;
