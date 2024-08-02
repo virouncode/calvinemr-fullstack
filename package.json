@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"pnpm --prefix server dev\" \"pnpm --prefix client dev\"",
-    "heroku-postbuild": "cd client && pnpm install && pnpm build"
+    "heroku-postbuild": "cd client && pnpm install --production=false && pnpm run build"
   },
   "keywords": [],
   "author": "",
