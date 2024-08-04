@@ -10,7 +10,11 @@ import { staffSchema } from "../../../validation/signup/staffValidation";
 import SiteSelect from "../../Staff/EventForm/SiteSelect";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
-import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
+import Input from "../../UI/Inputs/Input";
+import InputImgFile from "../../UI/Inputs/InputImgFile";
+import InputTel from "../../UI/Inputs/InputTel";
+import GenderSelect from "../../UI/Lists/GenderSelect";
+import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
 
 const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
   //HOOKS
@@ -145,86 +149,57 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
               <p>{formDatas.email}</p>
             </div>
             <div className="staff-account__row">
-              <label htmlFor="first-name">First Name*: </label>
-              <input
-                type="text"
-                required
+              <Input
                 value={formDatas.first_name}
                 onChange={handleChange}
                 name="first_name"
-                autoComplete="off"
-                id="first-name"
+                id="first_name"
+                label="First Name*: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="middle-name">Middle Name: </label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.middle_name}
                 onChange={handleChange}
                 name="middle_name"
-                autoComplete="off"
-                id="middle-name"
+                id="middle_name"
+                label="Midle Name*: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="last-name">Last Name*: </label>
-              <input
-                type="text"
-                required
+              <Input
                 value={formDatas.last_name}
                 onChange={handleChange}
                 name="last_name"
-                autoComplete="off"
-                id="last-name"
+                id="last_name"
+                label="Last Name*: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="">Site*: </label>
               <SiteSelect
                 handleSiteChange={handleSiteChange}
                 sites={sites}
                 value={formDatas.site_id}
-                label={false}
+                label="Site*: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="gender">Gender*: </label>
-              <select
-                required
+              <GenderSelect
+                id="gender"
+                name="gender"
                 value={formDatas.gender}
                 onChange={handleChange}
-                name="gender"
-                id="gender"
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
+                label="Gender*: "
+              />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="occupation">Occupation*: </label>
-              <select
-                required
+              <OccupationsSelect
+                id="occupation"
+                name="title"
                 value={formDatas.title}
                 onChange={handleChange}
-                name="title"
-                id="occupation"
-              >
-                <option value="Doctor">Doctor</option>
-                <option value="Medical Student">Medical Student</option>
-                <option value="Nurse">Nurse</option>
-                <option value="Nursing Student">Nursing Student</option>
-                <option value="Secretary">Secretary</option>
-                <option value="Lab Technician">Lab Technician</option>
-                <option value="Ultra Sound Technician">
-                  Ultra Sound Technician
-                </option>
-                <option value="Nutritionist">Nutritionist</option>
-                <option value="Physiotherapist">Physiotherapist</option>
-                <option value="Psychologist">Psychologist</option>
-                <option value="Other">Other</option>
-              </select>
+                label="Occupation*: "
+              />
             </div>
             <div className="staff-account__row">
               <label htmlFor="status">Account status*: </label>
@@ -243,124 +218,82 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
           </div>
           <div className="staff-account__column">
             <div className="staff-account__row">
-              <label htmlFor="speciality">Speciality: </label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.speciality}
                 onChange={handleChange}
                 name="speciality"
-                autoComplete="off"
                 id="speciality"
+                label="Speciality: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="subspeciality">Subspeciality: </label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.subspeciality}
                 onChange={handleChange}
                 name="subspeciality"
-                autoComplete="off"
                 id="subspeciality"
+                label="Sub speciality: "
               />
             </div>
             <div className="staff-account__row">
               <label htmlFor="licence">Licence#: </label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.licence_nbr}
                 onChange={handleChange}
                 name="licence_nbr"
-                autoComplete="off"
-                required={formDatas.title === "Doctor"}
-                id="licence"
+                id="licence_nbr"
+                label="Licence#: "
               />
             </div>
             <div className="staff-account__row">
               <label htmlFor="ohip">OHIP#: </label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.ohip_billing_nbr}
                 onChange={handleChange}
                 name="ohip_billing_nbr"
-                autoComplete="off"
-                required={formDatas.title === "Doctor"}
-                id="ohip"
+                id="ohip_billing_nbr"
+                label="OHIP#: "
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="cellphone">Cell phone*: </label>
-              <input
-                type="text"
+              <InputTel
                 value={formDatas.cell_phone}
                 onChange={handleChange}
                 name="cell_phone"
-                autoComplete="off"
-                required
-                id="cellphone"
+                id="cell_phone"
+                label="Cell phone*: "
                 placeholder="xxx-xxx-xxxx"
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="backupphone">Backup phone: </label>
-              <input
-                type="text"
+              <InputTel
                 value={formDatas.backup_phone}
                 onChange={handleChange}
                 name="backup_phone"
-                autoComplete="off"
-                id="backupphone"
+                id="backup_phone"
+                label="Backup phone: "
                 placeholder="xxx-xxx-xxxx"
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="video_link">Link for video calls: </label>
-              <input
-                name="video_link"
-                type="text"
-                autoComplete="off"
+              <Input
                 value={formDatas.video_link}
                 onChange={handleChange}
+                name="video_link"
                 id="video_link"
+                label="Link for video calls: "
+                placeholder="https://my-video-link.com"
               />
             </div>
-            {/* <div className="myaccount-section__row">
-              <label htmlFor="ai_consent">AI consent: </label>
-              <select
-                value={formDatas.ai_consent}
-                onChange={handleChange}
-                name="ai_consent"
-                id="ai_consent"
-              >
-                <option value={true}>Yes</option>
-                <option value={false}>No</option>
-              </select>
-            </div> */}
             <div className="staff-account__row">
               <label>E-sign: </label>
               <div className="staff-account__image">
-                {isLoadingFile ? (
-                  <CircularProgressMedium />
-                ) : formDatas.sign ? (
-                  <img
-                    src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                      formDatas.sign?.path
-                    }`}
-                    alt="e-sign"
-                    width="150px"
-                  />
-                ) : (
-                  <img
-                    src="https://placehold.co/200x100/png?font=roboto&text=Sign"
-                    alt="user-avatar-placeholder"
-                  />
-                )}
-
-                <input
-                  name="sign"
-                  type="file"
-                  accept=".jpeg, .jpg, .png, .tif, .pdf, .svg"
+                <InputImgFile
+                  isLoadingFile={isLoadingFile}
                   onChange={handleSignChange}
+                  img={formDatas.sign}
+                  alt="staff-sign"
+                  width={150}
                 />
               </div>
             </div>

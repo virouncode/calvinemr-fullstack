@@ -1,3 +1,6 @@
+import TrashButton from "../../UI/Buttons/TrashButton";
+import Input from "../../UI/Inputs/Input";
+
 const RoomItem = ({ room, handleDeleteRoom, handleChangeRoomTitle }) => {
   return (
     <li className="site-form__room-item">
@@ -5,16 +8,14 @@ const RoomItem = ({ room, handleDeleteRoom, handleChangeRoomTitle }) => {
         <label>ID*:</label>
         {room.id}
       </div>
-      <label htmlFor="room-name">Name*:</label>
-      <input
+      <Input
         value={room.title}
         onChange={(e) => handleChangeRoomTitle(e, room.id)}
+        name="room-name"
         id="room-name"
+        label="Name*:"
       />
-      <i
-        className="fa-solid fa-trash  message-detail__trash"
-        onClick={(e) => handleDeleteRoom(e, room.id)}
-      ></i>
+      <TrashButton onClick={(e) => handleDeleteRoom(e, room.id)} ml={10} />
     </li>
   );
 };

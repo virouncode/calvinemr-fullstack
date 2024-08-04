@@ -4,6 +4,7 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { personalHistorySchema } from "../../../../../validation/record/personalHistoryValidation";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 
 const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
   const { user } = useUserContext();
@@ -199,9 +200,7 @@ const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
         />
       </p>
       <p className="personalhistory-form__btns">
-        <button onClick={handleSubmit} disabled={progress} className="save-btn">
-          Save
-        </button>
+        <SaveButton onClick={handleSubmit} disabled={progress} />
         <CloseButton onClick={handleClose} disabled={progress} />
       </p>
     </form>

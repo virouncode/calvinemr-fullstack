@@ -1,5 +1,6 @@
-
 import { toast } from "react-toastify";
+import Button from "../../../../../UI/Buttons/Button";
+import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SiteSelect from "../../../../EventForm/SiteSelect";
 import LetterAddAttachments from "./LetterAddAttachments";
 import LetterAddPatientRecords from "./LetterAddPatientRecords";
@@ -123,12 +124,12 @@ const LetterOptions = ({
         Use template
       </div>
       <div className="letter__options-actions">
-        <button onClick={handlePreview} disabled={isLoadingFile}>
-          Preview
-        </button>
-        <button onClick={handleCancel} disabled={isLoadingFile}>
-          Cancel
-        </button>
+        <Button
+          onClick={handlePreview}
+          disabled={isLoadingFile}
+          label="Preview"
+        />
+        <CancelButton onClick={handleCancel} disabled={isLoadingFile} />
       </div>
     </div>
   );

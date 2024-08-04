@@ -1,66 +1,57 @@
+import Input from "../../UI/Inputs/Input";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputTel from "../../UI/Inputs/InputTel";
+
 const MigrationPatientSearchForm = ({ search, handleSearch }) => {
   return (
     <div className="migration-export__patient-search">
       <form className="migration-export__patient-search__form">
         <div className="migration-export__patient-search__item">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
+          <Input
             value={search.name}
             onChange={handleSearch}
-            autoComplete="off"
+            name="name"
             id="name"
-            autoFocus
+            label="Name"
+            autoFocus={true}
           />
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
+          <InputEmail
             value={search.email}
             onChange={handleSearch}
-            autoComplete="off"
+            name="email"
             id="email"
+            label="Email"
           />
-          <label htmlFor="phone">Phone</label>
-          <input
-            type="text"
-            name="phone"
+          <InputTel
             value={search.phone}
             onChange={handleSearch}
-            autoComplete="off"
+            name="phone"
             id="phone"
+            label="Phone"
             placeholder="xxx-xxx-xxxx"
           />
         </div>
         <div className="migration-export__patient-search__item">
-          <label htmlFor="birth">Date Of Birth</label>
-          <input
-            type="text"
-            name="birth"
+          <Input
             value={search.birth}
             onChange={handleSearch}
-            autoComplete="off"
+            name="birth"
             id="birth"
-            placeholder="yyyy-mm-dd"
+            label="Date Of Birth"
           />
-          <label htmlFor="chart">Chart#</label>
-          <input
-            type="text"
-            name="chart"
+          <Input
             value={search.chart}
             onChange={handleSearch}
-            autoComplete="off"
+            name="chart"
             id="chart"
+            label="Chart#"
           />
-          <label htmlFor="health">Health Card#</label>
-          <input
-            type="text"
-            name="health"
+          <Input
             value={search.health}
             onChange={handleSearch}
-            autoComplete="off"
+            name="health"
             id="health"
+            label="Health Card#"
           />
         </div>
       </form>

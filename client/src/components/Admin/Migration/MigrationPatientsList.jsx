@@ -2,6 +2,7 @@ import { usePatients } from "../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import PatientsListItem from "../../Staff/Messaging/PatientsListItem";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -36,15 +37,14 @@ const MigrationPatientsList = ({
   return (
     <ul className="migration-export__patients-list" ref={rootRef}>
       <li className="patients__list-item">
-        <input
-          type="checkbox"
+        <Checkbox
+          id="all-patients"
+          name="all-patients"
           onChange={handleCheckAllPatients}
           checked={isAllPatientsChecked()}
           disabled={progress}
-          style={{ marginRight: "5px" }}
-          id="all-patients"
+          label="All"
         />
-        <label htmlFor="all-patients">All</label>
       </li>
       {patientsDemographics && patientsDemographics.length > 0
         ? patientsDemographics.map((item, index) =>

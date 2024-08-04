@@ -6,6 +6,7 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { showDocument } from "../../../../../utils/files/showDocument";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import Button from "../../../../UI/Buttons/Button";
 
 const PrescriptionItem = ({
   item,
@@ -37,9 +38,8 @@ const PrescriptionItem = ({
   return (
     <tr className="prescriptions__item" ref={lastItemRef}>
       <td className="prescriptions__item-btn-container">
-        <button onClick={handleSend}>Send</button>
-        <button onClick={handleFax}>Fax</button>
-        {/* <button onClick={handleDelete}>Delete</button> */}
+        <Button onClick={handleSend} label="Send" />
+        <Button onClick={handleFax} label="Fax" />
       </td>
       <td
         className="prescriptions__link"

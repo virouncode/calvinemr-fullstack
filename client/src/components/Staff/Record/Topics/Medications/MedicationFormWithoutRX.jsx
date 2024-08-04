@@ -21,6 +21,9 @@ import {
 import { toDurationText } from "../../../../../utils/dates/toDurationText";
 import { toPrescriptionInstructions } from "../../../../../utils/medications/toPrescriptionInstructions";
 import { medicationSchema } from "../../../../../validation/record/medicationValidation";
+import Button from "../../../../UI/Buttons/Button";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
+import SubmitButton from "../../../../UI/Buttons/SubmitButton";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
 import DurationPickerLong from "../../../../UI/Pickers/DurationPickerLong";
@@ -583,17 +586,17 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
       style={{ marginTop: "40px", height: "730px" }}
     >
       <div className="medications-form__btn-container">
-        <input type="submit" value="Save" disabled={progressTemplates} />
-        <button
+        <SubmitButton label="Save" disabled={progressTemplates} />
+        <SaveButton
           onClick={handleSubmitAndSaveTemplate}
           disabled={progressTemplates}
-          className="save-btn"
-        >
-          Save & Add to templates
-        </button>
-        <button onClick={handleUseTemplate} disabled={progressTemplates}>
-          Use template
-        </button>
+          label="Save & Add to templates"
+        />
+        <Button
+          onClick={handleUseTemplate}
+          disabled={progressTemplates}
+          label="Use template"
+        />
       </div>
       {errMsg && <p className="medications-form__err">{errMsg}</p>}
       <div className="medications-form__allergies">

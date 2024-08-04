@@ -16,6 +16,8 @@ import {
 import { getExtension } from "../../../../../utils/files/getExtension";
 import { patientIdToAssignedStaffTitleAndName } from "../../../../../utils/names/patientIdToName";
 import { reportSchema } from "../../../../../validation/record/reportValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SubmitButton from "../../../../UI/Buttons/SubmitButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 
@@ -222,18 +224,14 @@ const ReportForm = ({
       <form className="reports__content" onSubmit={handleSubmit}>
         {errMsgPost && <div className="reports__err">{errMsgPost}</div>}
         <div className="reports__form-btn-container">
-          <input
-            type="submit"
-            value={isLoadingFile ? "Loading" : "Save"}
+          <SubmitButton
+            label={isLoadingFile ? "Loading" : "Save"}
             disabled={isLoadingFile || progress}
           />
-          <button
-            type="button"
+          <CancelButton
             onClick={handleCancel}
             disabled={progress || isLoadingFile}
-          >
-            Cancel
-          </button>
+          />
         </div>
         <div className="reports__row">
           <label htmlFor="report-sent-received">Sent or Received*</label>

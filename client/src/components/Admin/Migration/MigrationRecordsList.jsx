@@ -1,4 +1,5 @@
 import { recordCategories } from "../../../utils/migration/exports/recordCategories";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import MigrationRecordItem from "./MigrationRecordItem";
 
 const MigrationRecordsList = ({
@@ -11,14 +12,14 @@ const MigrationRecordsList = ({
   return (
     <ul className="migration-export__records-list">
       <li className="migration-export__records-list-item">
-        <input
-          type="checkbox"
+        <Checkbox
+          id="all-records"
+          name="all-records"
           onChange={handleCheckAllRecordsIds}
           checked={isAllRecordsIdsChecked()}
           disabled={isLoading}
-          id="all-records"
+          label="All"
         />
-        <label htmlFor="all-records">All</label>
       </li>
       {recordCategories.map((record) => (
         <MigrationRecordItem

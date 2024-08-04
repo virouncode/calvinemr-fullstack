@@ -17,6 +17,11 @@ import {
 import { showReportTextContent } from "../../../../../utils/reports/showReportTextContent";
 import { reportSchema } from "../../../../../validation/record/reportValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
 
@@ -214,39 +219,25 @@ const ReportItemReceived = ({
         <div className="reports__item-btn-container">
           {editVisible ? (
             <>
-              <button
-                onClick={handleSave}
-                disabled={progress}
-                className="save-btn"
-              >
-                Save
-              </button>
-              <button onClick={handleCancel} disabled={progress}>
-                Cancel
-              </button>
+              <SaveButton onClick={handleSave} disabled={progress} />
+              <CancelButton onClick={handleCancel} disabled={progress} />
             </>
           ) : (
             <>
               {!item.acknowledged && item.assigned_staff_id === user.id && (
-                <button onClick={handleAcknowledge} disabled={progress}>
-                  Acknowledge
-                </button>
+                <Button
+                  onClick={handleAcknowledge}
+                  disabled={progress}
+                  label="Acknowledge"
+                />
               )}
-              <button onClick={handleEdit} disabled={progress}>
-                Edit
-              </button>
-              <button onClick={handleSend} disabled={progress}>
-                Send
-              </button>
-              <button onClick={handleFax} disabled={progress}>
-                Fax
-              </button>
-              <button
+              <EditButton onClick={handleEdit} disabled={progress} />
+              <Button onClick={handleSend} disabled={progress} label="Send" />
+              <Button onClick={handleFax} disabled={progress} label="Fax" />
+              <DeleteButton
                 onClick={handleDeleteClick}
                 disabled={user.id !== item.assigned_staff_id || progress}
-              >
-                Delete
-              </button>
+              />
             </>
           )}
         </div>

@@ -11,6 +11,10 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { personalHistorySchema } from "../../../../../validation/record/personalHistoryValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PersonalHistoryForm from "./PersonalHistoryForm";
@@ -328,33 +332,16 @@ const PersonalHistoryPU = ({
               <div className="personalhistory-card__btns">
                 {!editVisible ? (
                   <>
-                    <button
+                    <EditButton
                       onClick={() => setEditVisible((v) => !v)}
                       disabled={progress}
-                    >
-                      Edit
-                    </button>
-                    <button onClick={handleClose} disabled={progress}>
-                      Close
-                    </button>
+                    />
+                    <CloseButton onClick={handleClose} disabled={progress} />
                   </>
                 ) : (
                   <>
-                    <button
-                      type="button"
-                      onClick={handleSubmit}
-                      disabled={progress}
-                      className="save-btn"
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      disabled={progress}
-                    >
-                      Cancel
-                    </button>
+                    <SaveButton onClick={handleSubmit} disabled={progress} />
+                    <CancelButton onClick={handleCancel} disabled={progress} />
                   </>
                 )}
               </div>

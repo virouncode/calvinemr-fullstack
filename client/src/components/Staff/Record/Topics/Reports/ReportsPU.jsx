@@ -7,6 +7,7 @@ import {
 import useIntersection from "../../../../../hooks/useIntersection";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -249,9 +250,7 @@ const ReportsPU = ({
         </table>
       </div>
       <div className="reports__btn-container">
-        <button disabled={addVisible} onClick={handleAdd}>
-          Add
-        </button>
+        <Button onClick={handleAdd} label="Add" disabled={addVisible} />
         <CloseButton onClick={handleClose} />
       </div>
       {addVisible && (

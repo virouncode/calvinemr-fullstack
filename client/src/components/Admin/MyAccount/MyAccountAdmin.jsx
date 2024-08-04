@@ -12,6 +12,7 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 
 const MyAccountAdmin = () => {
   //HOOKS
@@ -116,34 +117,24 @@ const MyAccountAdmin = () => {
               <p>{tempFormDatas.email}</p>
             </div>
             <div className="myaccount-section__row">
-              <label htmlFor="first-name">First Name*: </label>
-              {editVisible ? (
-                <input
-                  type="text"
-                  value={tempFormDatas.first_name}
-                  onChange={handleChange}
-                  name="first_name"
-                  autoComplete="off"
-                  id="first-name"
-                />
-              ) : (
-                <p>{tempFormDatas.first_name}</p>
-              )}
+              <InputTextToggle
+                value={tempFormDatas.first_name}
+                onChange={handleChange}
+                name="first_name"
+                id="first_name"
+                editVisible={editVisible}
+                label="First Name*: "
+              />
             </div>
             <div className="myaccount-section__row">
-              <label htmlFor="last-name">Last Name*: </label>
-              {editVisible ? (
-                <input
-                  type="text"
-                  value={tempFormDatas.last_name}
-                  onChange={handleChange}
-                  name="last_name"
-                  autoComplete="off"
-                  id="last-name"
-                />
-              ) : (
-                <p>{tempFormDatas.last_name}</p>
-              )}
+              <InputTextToggle
+                value={tempFormDatas.last_name}
+                onChange={handleChange}
+                name="last_name"
+                id="last_name"
+                editVisible={editVisible}
+                label="Last Name*: "
+              />
             </div>
           </div>
         </div>

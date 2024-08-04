@@ -1,4 +1,5 @@
-
+import Button from "../../../../../../UI/Buttons/Button";
+import SaveButton from "../../../../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../../../../UI/Progress/CircularProgressMedium";
 
 const PrescriptionOptionsPreview = ({
@@ -16,37 +17,26 @@ const PrescriptionOptionsPreview = ({
   };
   return (
     <div className="letter__options-actions">
-      <button
-        className="save-btn"
-        onClick={handleSave}
-        disabled={progress || prescription}
-      >
-        Save
-      </button>
-      <button
+      <SaveButton onClick={handleSave} disabled={progress || prescription} />
+      <Button
         onClick={handlePrint}
         disabled={progress}
+        label={prescription ? "Print" : "Save & Print"}
         className={prescription ? "" : "save-btn"}
-      >
-        {prescription ? "Print" : "Save & Print"}
-      </button>
-      <button
+      />
+      <Button
         onClick={handleSend}
         disabled={progress}
+        label={prescription ? "Send (External)" : "Save & Send (External)"}
         className={prescription ? "" : "save-btn"}
-      >
-        {prescription ? "Send (External)" : "Save & Send (External)"}
-      </button>
-      <button
+      />
+      <Button
         onClick={handleFax}
         disabled={progress}
+        label={prescription ? "Fax" : "Save & Fax"}
         className={prescription ? "" : "save-btn"}
-      >
-        {prescription ? "Fax" : "Save & Fax"}
-      </button>
-      <button onClick={handleBack} disabled={progress}>
-        Back
-      </button>
+      />
+      <Button onClick={handleBack} disabled={progress} label="Back" />
       {progress && <CircularProgressMedium />}
     </div>
   );

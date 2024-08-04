@@ -5,6 +5,7 @@ import useIntersection from "../../../../../hooks/useIntersection";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -166,9 +167,9 @@ const MedicationsPU = ({
           </table>
         </div>
         <div className="medications__btn-container">
-          <button onClick={handleNewMed}>Add Med without RX</button>
+          <Button onClick={handleNewMed} label="Add Med without RX" />
           {user.title === "Doctor" && (
-            <button onClick={handleNewRX}>New RX</button>
+            <Button onClick={handleNewRX} label="New RX" />
           )}
           <CloseButton onClick={handleClose} />
         </div>

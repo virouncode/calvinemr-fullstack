@@ -191,7 +191,7 @@ const CalvinAIMedsChat = ({ initialMessage }) => {
             onClick={() => abortController.current.abort()}
             label="Stop generating"
           />
-          <button onClick={handleNew}>New conversation</button>
+          <Button onClick={handleNew} label="New conversation" />
         </div>
         <CalvinAIInput
           handleChangeInput={handleChangeInput}

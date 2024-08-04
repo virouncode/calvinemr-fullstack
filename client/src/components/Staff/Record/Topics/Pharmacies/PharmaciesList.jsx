@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
+import Button from "../../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -66,9 +67,10 @@ const PharmaciesList = ({
     <>
       <div className="pharmacies-list__title">
         Pharmacies directory
-        <button onClick={handleAddNewClick}>
-          Add a new Pharmacy to directory
-        </button>
+        <Button
+          onClick={handleAddNewClick}
+          label="Add a new Pharmacy to directory"
+        />
       </div>
       {errMsgPost && <div className="pharmacies-list__err">{errMsgPost}</div>}
       <div className="pharmacies-list__table-container" ref={rootRef}>

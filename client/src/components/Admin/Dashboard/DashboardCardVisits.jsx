@@ -5,11 +5,12 @@ import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { getVisitsPerAge } from "../../../utils/dashboard/getVisitsPerAge";
 import { getVisitsPerGender } from "../../../utils/dashboard/getVisitsPerGender";
 import {
-    dateISOToTimestampTZ,
-    getEndOfTheMonthTZ,
-    getStartOfTheMonthTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  getEndOfTheMonthTZ,
+  getStartOfTheMonthTZ,
+  timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
+import InputDate from "../../UI/Inputs/InputDate";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
@@ -98,19 +99,19 @@ const DashboardCardVisits = () => {
       <div className="dashboard-card__title">Visits</div>
       <div className="dashboard-card__filter">
         <div>
-          <label htmlFor="from">From</label>
-          <input
-            type="date"
+          <InputDate
+            value={timestampToDateISOTZ(rangeStartVisits)}
             onChange={handleChangeStart}
-            value={timestampToDateISOTZ(rangeStartVisits, "America/Toronto")}
+            name="from"
             id="from"
+            label="From"
           />
-          <label htmlFor="to">To</label>
-          <input
-            type="date"
+          <InputDate
+            value={timestampToDateISOTZ(rangeEndVisits)}
             onChange={handleChangeEnd}
-            value={timestampToDateISOTZ(rangeEndVisits, "America/Toronto")}
+            name="to"
             id="to"
+            label="To"
           />
         </div>
         {visitsPerGender.length > 0 ? (

@@ -11,6 +11,9 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import InputEmailToggle from "../../UI/Inputs/InputEmailToggle";
+import InputTextToggle from "../../UI/Inputs/InputTextToggle";
+import InputTextToggleLink from "../../UI/Inputs/InputTextToggleLink";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -106,46 +109,30 @@ const ClinicInfos = () => {
     <>
       <div className="clinic__global-infos">
         <span className="clinic__global-infos-title">Global clinic infos</span>
-        <label htmlFor="name">Name: </label>
-        {editClinicVisible ? (
-          <input
-            type="text"
-            value={formDatas.name}
-            onChange={handleChange}
-            name="name"
-            id="name"
-          />
-        ) : (
-          <p>{clinic.name}</p>
-        )}
-        <label htmlFor="email">Email: </label>
-        {editClinicVisible ? (
-          <input
-            type="email"
-            value={formDatas.email}
-            onChange={handleChange}
-            name="email"
-            id="email"
-          />
-        ) : (
-          <p>{clinic.email}</p>
-        )}
-        <label htmlFor="website">Website: </label>
-        {editClinicVisible ? (
-          <input
-            type="text"
-            value={formDatas.website}
-            onChange={handleChange}
-            name="website"
-            id="website"
-          />
-        ) : (
-          <p className="clinic__global-infos-link">
-            <a href={clinic.website} target="_blank" rel="noreferrer">
-              {clinic.website}
-            </a>
-          </p>
-        )}
+        <InputTextToggle
+          value={formDatas.name}
+          onChange={handleChange}
+          name="name"
+          id="name"
+          editVisible={editClinicVisible}
+          label="Name: "
+        />
+        <InputEmailToggle
+          value={formDatas.email}
+          onChange={handleChange}
+          name="email"
+          id="email"
+          editVisible={editClinicVisible}
+          label="Email: "
+        />
+        <InputTextToggleLink
+          value={formDatas.website}
+          onChange={handleChange}
+          name="website"
+          id="website"
+          editVisible={editClinicVisible}
+          label="Website: "
+        />
         <div className="clinic__global-infos-btn-container">
           {editClinicVisible ? (
             <>

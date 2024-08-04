@@ -8,6 +8,9 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputPassword from "../../UI/Inputs/InputPassword";
+import PasswordValidator from "../../UI/Inputs/PasswordValidator";
 
 const CredentialsFormAdmin = () => {
   const navigate = useNavigate();
@@ -73,6 +76,14 @@ const CredentialsFormAdmin = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!credentials.email) {
+      setErrMsg("Email is required");
+      return;
+    }
+    if (!credentials.password) {
+      setErrMsg("Password is required");
+      return;
+    }
     if (credentials.confirmPassword !== credentials.password) {
       setErrMsg("Passwords do not match");
       return;
@@ -137,156 +148,42 @@ const CredentialsFormAdmin = () => {
       >
         {errMsg && <div className="credentials-err">{errMsg}</div>}
         <div className="credentials-form-row">
-          <label htmlFor="email">New email</label>
-          <input
-            id="email"
-            type="email"
+          <InputEmail
+            value={credentials.email}
             onChange={handleChange}
             name="email"
-            value={credentials.email}
-            autoComplete="off"
-            required
+            id="email"
+            label="New email"
           />
         </div>
         <div className="credentials-form-row">
-          <label htmlFor="password">New password</label>
-          <input
-            id="password"
-            type="password"
+          <InputPassword
+            value={credentials.password}
             onChange={handlePasswordChange}
             name="password"
-            value={credentials.password}
-            autoFocus
-            autoComplete="off"
-            required
+            id="password"
+            label="New password"
           />
         </div>
         <div className="credentials-form-row">
-          <ul>
-            <li>
-              {passwordValidity.size ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.size ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                8-20 characters
-              </span>
-            </li>
-            <li>
-              {passwordValidity.uppercase ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.uppercase ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 uppercase letter
-              </span>
-            </li>
-            <li>
-              {passwordValidity.lowercase ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.lowercase ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 lowercase letter
-              </span>
-            </li>
-            <li>
-              {passwordValidity.number ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.number ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 number
-              </span>
-            </li>
-            <li>
-              {passwordValidity.special ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.special ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 special character
-              </span>
-            </li>
-          </ul>
+          <PasswordValidator passwordValidity={passwordValidity} />
         </div>
         <div className="credentials-form-row">
-          <label htmlFor="confirm-password">Confirm new password</label>
-          <input
-            id="confirm-password"
-            type="password"
+          <InputPassword
+            value={credentials.confirmPassword}
             onChange={handleChange}
             name="confirmPassword"
-            value={credentials.confirmPassword}
-            autoComplete="off"
-            required
+            id="confirmPassword"
+            label="Confirm password"
           />
         </div>
         <div className="credentials-form-row">
-          <label htmlFor="pin">New PIN</label>
-          <input
-            id="pin"
-            type="password"
+          <InputPassword
+            value={credentials.pin}
             onChange={handleChange}
             name="pin"
-            value={credentials.pin}
-            autoComplete="off"
-            required
+            id="pin"
+            label="New PIN"
           />
         </div>
         <div className="credentials-form-row-submit">

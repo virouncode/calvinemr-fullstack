@@ -1,5 +1,3 @@
-
-
 const GenericList = ({
   list,
   value,
@@ -8,19 +6,23 @@ const GenericList = ({
   placeHolder,
   noneOption = true,
   id = null,
+  label,
 }) => {
   return (
-    <select value={value} name={name} onChange={handleChange} id={id}>
-      <option value="" disabled>
-        {placeHolder}
-      </option>
-      {noneOption && <option value="">(None)</option>}
-      {list.map((item) => (
-        <option value={item.code} key={item.code}>
-          {item.name}
+    <>
+      {label && <label htmlFor={id}>{label}</label>}
+      <select value={value} name={name} onChange={handleChange} id={id}>
+        <option value="" disabled>
+          {placeHolder}
         </option>
-      ))}
-    </select>
+        {noneOption && <option value="">(None)</option>}
+        {list.map((item) => (
+          <option value={item.code} key={item.code}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+    </>
   );
 };
 

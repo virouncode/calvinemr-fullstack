@@ -26,6 +26,7 @@ import {
 import { createChartNbr } from "../../../utils/numbers/createChartNbr";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { patientSchema } from "../../../validation/signup/patientValidation";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import GenericList from "../../UI/Lists/GenericList";
 import StaffList from "../../UI/Lists/StaffList";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
@@ -696,13 +697,11 @@ const SignupPatientForm = () => {
         </div>
       </form>
       <div className="signup-patient__submit">
-        <button
+        <SaveButton
           disabled={isLoadingFile || progress}
           onClick={handleSubmit}
-          className="save-btn"
-        >
-          Sign up
-        </button>
+          label="Sign up"
+        />
       </div>
       {webcamVisible && (
         <FakeWindow

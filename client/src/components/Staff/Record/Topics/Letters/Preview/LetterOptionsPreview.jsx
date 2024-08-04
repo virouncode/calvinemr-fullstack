@@ -1,4 +1,4 @@
-
+import Button from "../../../../../UI/Buttons/Button";
 import CircularProgressMedium from "../../../../../UI/Progress/CircularProgressMedium";
 
 const LetterOptionsPreview = ({
@@ -18,46 +18,43 @@ const LetterOptionsPreview = ({
   return (
     <div className="letter__options">
       <div className="letter__options-actions">
-        <button
+        <Button
           onClick={handleSave}
           disabled={progress || isLoadingFile || letter}
           className={letter ? "" : "save-btn"}
-        >
-          Save
-        </button>
-        <button
+          label="Save"
+        />
+        <Button
           onClick={handlePrint}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
-        >
-          {letter ? "Print" : "Save & Print"}
-        </button>
-        <button
+          label={letter ? "Print" : "Save & Print"}
+        />
+        <Button
           onClick={handleFax}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
-        >
-          {letter ? "Fax" : "Save & Fax"}
-        </button>
-        <button onClick={handleCancel} disabled={progress || isLoadingFile}>
-          Back
-        </button>
+          label={letter ? "Fax" : "Save & Fax"}
+        />
+        <Button
+          onClick={handleCancel}
+          disabled={progress || isLoadingFile}
+          label="Back"
+        />
       </div>
       <div className="letter__options-actions">
-        <button
+        <Button
           onClick={(e) => handleSend(e, "Internal")}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
-        >
-          {letter ? "Send (Internal)" : "Save & Send (Internal)"}
-        </button>
-        <button
+          label={letter ? "Send (Internal)" : "Save & Send (Internal)"}
+        />
+        <Button
           onClick={(e) => handleSend(e, "External")}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
-        >
-          {letter ? "Send (External)" : "Save & Send (External)"}
-        </button>
+          label={letter ? "Send (External)" : "Save & Send (External)"}
+        />
         {progress && <CircularProgressMedium />}
       </div>
       <div className="letter__options-disclaimer">

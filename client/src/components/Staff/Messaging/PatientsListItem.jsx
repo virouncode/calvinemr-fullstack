@@ -1,3 +1,5 @@
+import Checkbox from "../../UI/Checkbox/Checkbox";
+
 const PatientsListItem = ({
   info,
   handleCheckPatient,
@@ -9,15 +11,14 @@ const PatientsListItem = ({
 }) => {
   return (
     <li className="patients__list-item" ref={lastItemRef}>
-      <input
+      <Checkbox
         id={info.patient_id}
-        type="checkbox"
+        name={info.patient_id}
         onChange={(e) => handleCheckPatient(e, info)}
         checked={isPatientChecked(info.patient_id) || allPatientsChecked}
-        name={patientName}
         disabled={progress}
+        label={patientName}
       />
-      <label htmlFor={info.patient_id}>{patientName}</label>
     </li>
   );
 };

@@ -10,6 +10,10 @@ import { showDocument } from "../../../utils/files/showDocument";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { edocSchema } from "../../../validation/reference/edocValidation";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import DeleteButton from "../../UI/Buttons/DeleteButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const ReferenceEdocItem = ({
   item,
@@ -98,34 +102,25 @@ const ReferenceEdocItem = ({
           <div className="reference-edocs__item-btn-container">
             {editVisible ? (
               <>
-                <button
+                <SaveButton
                   onClick={handleSaveClick}
                   disabled={progress || item.created_by_id !== user.id}
-                  className="save-btn"
-                >
-                  Save
-                </button>
-                <button
+                />
+                <CancelButton
                   onClick={handleCancelClick}
                   disabled={progress || item.created_by_id !== user.id}
-                >
-                  Cancel
-                </button>
+                />
               </>
             ) : (
               <>
-                <button
+                <EditButton
                   onClick={handleEditClick}
                   disabled={progress || item.created_by_id !== user.id}
-                >
-                  Edit
-                </button>
-                <button
+                />
+                <DeleteButton
                   onClick={handleDeleteClick}
                   disabled={progress || item.created_by_id !== user.id}
-                >
-                  Delete
-                </button>
+                />
               </>
             )}
           </div>

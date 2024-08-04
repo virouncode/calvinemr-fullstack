@@ -7,6 +7,7 @@ import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQuerie
 import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -191,9 +192,7 @@ const LetterTemplateEdit = ({ setEditTemplateVisible, template }) => {
         />
       </div>
       <div className="letters__template-form-btns">
-        <button onClick={handleSave} disabled={progress} className="save-btn">
-          Save
-        </button>
+        <SaveButton onClick={handleSave} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
       {refOHIPSearchVisible && (

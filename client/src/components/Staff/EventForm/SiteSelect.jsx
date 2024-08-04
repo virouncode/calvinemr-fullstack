@@ -1,25 +1,13 @@
-const SiteSelect = ({
-  handleSiteChange,
-  sites,
-  value,
-  label = true,
-  all = false,
-}) => {
+const SiteSelect = ({ handleSiteChange, sites, value, label, all = false }) => {
   return (
     <>
       {label && (
-        <label
-          htmlFor="site-select"
-          style={{ fontWeight: "bold", marginRight: "10px" }}
-        >
-          Site{" "}
+        <label htmlFor="site-select" style={{ fontWeight: "bold" }}>
+          {label}
         </label>
       )}
       <select value={value} onChange={handleSiteChange} id="site-select">
         {all && <option value="-1">All</option>}
-        {/* <option value="0" disabled>
-          Choose a site...
-        </option> */}
         {sites &&
           sites.map((site) => (
             <option

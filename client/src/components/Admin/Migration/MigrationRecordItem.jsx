@@ -1,3 +1,5 @@
+import Checkbox from "../../UI/Checkbox/Checkbox";
+
 const MigrationRecordItem = ({
   label,
   handleCheckRecord,
@@ -7,14 +9,14 @@ const MigrationRecordItem = ({
 }) => {
   return (
     <li className="migration-export__records-list-item">
-      <input
-        type="checkbox"
-        onChange={(e) => handleCheckRecord(e, recordId)}
+      <Checkbox
         id={label}
+        name={label}
+        onChange={(e) => handleCheckRecord(e, recordId)}
         checked={isRecordChecked(recordId)}
         disabled={recordId === 1 || isLoading}
+        label={label}
       />
-      <label htmlFor={label}>{label}</label>
     </li>
   );
 };

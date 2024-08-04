@@ -3,9 +3,11 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { showDocument } from "../../../../../utils/files/showDocument";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const LetterItem = ({
@@ -139,25 +141,22 @@ const LetterItem = ({
             {!editVisible ? (
               <>
                 <EditButton onClick={handleEditClick} disabled={progress} />
-                <button onClick={handleSendInternal} disabled={progress}>
-                  Send (Internal)
-                </button>
-                <button onClick={handleSendExternal} disabled={progress}>
-                  Send (External)
-                </button>
-                <button onClick={handleFax} disabled={progress}>
-                  Fax
-                </button>
+                <Button
+                  onClick={handleSendInternal}
+                  disabled={progress}
+                  label="Send (Internal)"
+                />
+                <Button
+                  onClick={handleSendExternal}
+                  disabled={progress}
+                  label="Send (External)"
+                />
+                <Button onClick={handleFax} disabled={progress} label="Fax" />
                 <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
-                <input
-                  type="submit"
-                  value="Save"
-                  onClick={handleSubmit}
-                  disabled={progress}
-                />
+                <SaveButton onClick={handleSubmit} disabled={progress} />
                 <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}

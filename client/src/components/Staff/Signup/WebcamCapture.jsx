@@ -1,7 +1,9 @@
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const WebcamCapture = ({ setFormDatas, setWebcamVisible }) => {
   const [imgSrc, setImageSrc] = useState(null);
@@ -53,17 +55,11 @@ const WebcamCapture = ({ setFormDatas, setWebcamVisible }) => {
       </div>
       <div className="webcam__btn-container">
         {imgSrc ? (
-          <button onClick={handleRetake}>Retake photo</button>
+          <Button onClick={handleRetake} label="Retake photo" />
         ) : (
-          <button onClick={handleTake} className="save-btn">
-            Capture photo
-          </button>
+          <Button onClick={handleTake} label="Capture photo" />
         )}
-        {imgSrc && (
-          <button onClick={handleConfirm} className="save-btn">
-            OK
-          </button>
-        )}
+        {imgSrc && <SaveButton onClick={handleConfirm} label="OK" />}
         <CancelButton onClick={handleCancel} />
       </div>
     </div>

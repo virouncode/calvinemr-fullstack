@@ -22,6 +22,7 @@ import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MedsTemplatesList from "./Templates/MedsTemplatesList";
 
 import _ from "lodash";
+import Button from "../../../../UI/Buttons/Button";
 const MedicationForm = ({
   addedMeds,
   setAddedMeds,
@@ -613,18 +614,16 @@ const MedicationForm = ({
           value="Add to RX"
           disabled={progress || progressTemplates}
         />
-        <button
+        <Button
           onClick={handleSubmitAndSaveTemplate}
           disabled={progress || progressTemplates}
-        >
-          Add to RX & templates
-        </button>
-        <button
+          label="Add to RX & templates"
+        />
+        <Button
           onClick={handleUseTemplate}
           disabled={progress || progressTemplates}
-        >
-          Use template
-        </button>
+          label="Use template"
+        />
       </div>
       {errMsg && <p className="medications-form__err">{errMsg}</p>}
       <div className="medications-form__allergies">

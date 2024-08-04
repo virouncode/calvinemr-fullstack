@@ -5,6 +5,7 @@ import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputPassword from "../../UI/Inputs/InputPassword";
 
 const VerifyPasswordAdmin = ({ setVerified }) => {
   const LOGIN_URL = "/auth/login";
@@ -48,22 +49,21 @@ const VerifyPasswordAdmin = ({ setVerified }) => {
       <form className="verify-pwd-form" onSubmit={handleSubmit}>
         {errMsg && <div className="verify-pwd-err">{errMsg}</div>}
         <div className="verify-pwd-form-row">
-          <label htmlFor="pwd">Password</label>
-          <input
-            type="password"
+          <InputPassword
             value={password}
-            id="pwd"
             onChange={handlePwdChange}
-            autoFocus
+            name="password"
+            id="password"
+            label="Password"
           />
         </div>
         <div className="verify-pwd-form-row">
-          <label htmlFor="pin">PIN</label>
-          <input
-            type="password"
+          <InputPassword
             value={pin}
-            id="pin"
             onChange={handlePinChange}
+            name="pin"
+            id="pin"
+            label="PIN"
           />
         </div>
         <div className="verify-pwd-form-row verify-pwd-form-row--submit">

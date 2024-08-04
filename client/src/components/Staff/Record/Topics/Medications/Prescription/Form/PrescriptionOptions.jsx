@@ -1,3 +1,5 @@
+import Button from "../../../../../../UI/Buttons/Button";
+import CancelButton from "../../../../../../UI/Buttons/CancelButton";
 import CircularProgressMedium from "../../../../../../UI/Progress/CircularProgressMedium";
 import SiteSelect from "../../../../../EventForm/SiteSelect";
 
@@ -12,15 +14,13 @@ const PrescriptionOptions = ({
 }) => {
   return (
     <div className="prescription__actions">
-      <button onClick={handlePreview} disabled={progress}>
-        Preview
-      </button>
-      <button onClick={handleAsk} disabled={progress}>
-        Check interactions
-      </button>
-      <button onClick={handleCancel} disabled={progress}>
-        Cancel
-      </button>
+      <Button onClick={handlePreview} disabled={progress} label="Preview" />
+      <Button
+        onClick={handleAsk}
+        disabled={progress}
+        label="Check interactions"
+      />
+      <CancelButton onClick={handleCancel} disabled={progress} />
       <SiteSelect
         handleSiteChange={handleSiteChange}
         value={siteSelectedId}

@@ -2,6 +2,8 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useReportInboxPut } from "../../../hooks/reactquery/mutations/reportsMutations";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
 import ReportsInboxPracticianCategoryForward from "./ReportsInboxPracticianCategoryForward";
 
 const ReportsInboxAssignedPracticianForward = ({
@@ -107,15 +109,12 @@ const ReportsInboxAssignedPracticianForward = ({
       <div className="practicians-forward__title">
         <label>Forward document to practitioner</label>
         <div className="practicians-forward__btn">
-          <button
+          <Button
             onClick={handleForwardDocument}
             disabled={!assignedId || progress}
-          >
-            Forward
-          </button>
-          <button onClick={handleCancelForward} disabled={progress}>
-            Cancel
-          </button>
+            label="Forward"
+          />
+          <CancelButton onClick={handleCancelForward} disabled={progress} />
         </div>
       </div>
       <div className="practicians-forward__list">

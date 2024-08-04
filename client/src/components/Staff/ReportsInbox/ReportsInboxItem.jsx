@@ -21,6 +21,10 @@ import {
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { showReportTextContent } from "../../../utils/reports/showReportTextContent";
 import { reportSchema } from "../../../validation/record/reportValidation";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import GenericList from "../../UI/Lists/GenericList";
 import ErrorRow from "../../UI/Tables/ErrorRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
@@ -199,46 +203,35 @@ const ReportsInboxItem = ({
           <div className="reports__item-btn-container">
             {editVisible ? (
               <>
-                <button
-                  onClick={handleSave}
-                  disabled={progress}
-                  className="save-btn"
-                >
-                  Save
-                </button>
-                <button onClick={handleCancel} disabled={progress}>
-                  Cancel
-                </button>
+                <SaveButton onClick={handleSave} disabled={progress} />
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             ) : (
               <>
-                <button onClick={handleAcknowledge} disabled={progress}>
-                  Acknowledge
-                </button>
-                <button
+                <Button
+                  onClick={handleAcknowledge}
+                  disabled={progress}
+                  label="Acknowledge"
+                />
+                <Button
                   onClick={(e) => handleForward(e, item.id)}
                   disabled={forwardVisible || progress}
-                >
-                  Forward
-                </button>
-                <button
+                  label="Forward"
+                />
+                <Button
                   onClick={(e) => handleSend(e, item)}
                   disabled={messageVisible || progress}
-                >
-                  Message
-                </button>
-                <button
+                  label="Message"
+                />
+                <Button
                   onClick={(e) => handleTodo(e, item)}
                   disabled={todoVisible || progress}
-                >
-                  To-do
-                </button>
-                <button
+                  label="To-do"
+                />
+                <EditButton
                   onClick={handleEdit}
                   disabled={forwardVisible || progress}
-                >
-                  Edit
-                </button>
+                />
               </>
             )}
           </div>

@@ -1,11 +1,8 @@
-import { CSVLink } from "react-csv";
-import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import useUserContext from "../../../hooks/context/useUserContext";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
-import { toExportCSVName } from "../../../utils/files/toExportCSVName";
+import ExportCSVButton from "../../UI/Buttons/ExportCSVButton";
 
 const BillingFilter = ({
   billings,
@@ -18,8 +15,6 @@ const BillingFilter = ({
   initialRangeStart,
   initialRangeEnd,
 }) => {
-  const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const headers = [
     {
       label: "ProviderNumber",
@@ -153,65 +148,13 @@ const BillingFilter = ({
           <a href="https://cab.md/Signin.aspx" target="_blank">
             Cab MD
           </a>
-          <button>
-            <CSVLink
-              data={billings.map((billing) => {
-                return {
-                  ...billing,
-                  date: [
-                    timestampToDateISOTZ(billing.date).split("-")[1],
-                    timestampToDateISOTZ(billing.date).split("-")[2],
-                    timestampToDateISOTZ(billing.date).split("-")[0],
-                  ].join("-"),
-                  site_infos: {
-                    ...billing.site_infos,
-                    province_state:
-                      billing.site_infos.province_state.split("-")[1],
-                  },
-                  patient_infos: {
-                    ...billing.patient_infos,
-                    DateOfBirth: [
-                      timestampToDateISOTZ(
-                        billing.patient_infos.DateOfBirth
-                      ).split("-")[1],
-                      timestampToDateISOTZ(
-                        billing.patient_infos.DateOfBirth
-                      ).split("-")[2],
-                      timestampToDateISOTZ(
-                        billing.patient_infos.DateOfBirth
-                      ).split("-")[0],
-                    ].join("-"),
-                    Gender:
-                      billing.patient_infos.Gender === "M" ? "Male" : "Female",
-                  },
-                  referrer_ohip_billing_nbr:
-                    billing.referrer_ohip_billing_nbr || "",
-                  service_quantity: 1,
-                  billing_infos: {
-                    ...billing.billing_infos,
-                    billing_code:
-                      billing.billing_infos.billing_code.length === 4
-                        ? `${billing.billing_infos.billing_code}A`
-                        : billing.billing_infos.billing_code,
-                  },
-                };
-              })}
-              filename={toExportCSVName(
-                user.access_level,
-                user.title || "",
-                rangeStart,
-                rangeEnd,
-                all,
-                staffInfos,
-                user.id
-              )}
-              // target="_blank"
-              headers={headers}
-              style={{ color: "#3D375A" }}
-            >
-              Export to CSV
-            </CSVLink>
-          </button>
+          <ExportCSVButton
+            billings={billings}
+            rangeStart={rangeStart}
+            rangeEnd={rangeEnd}
+            all={all}
+            headers={headers}
+          />
         </div>
       </div>
     </div>

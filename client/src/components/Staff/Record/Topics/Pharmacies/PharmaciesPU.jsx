@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { isObjectEmpty } from "../../../../../utils/js/isObjectEmpty";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import PharmaciesList from "./PharmaciesList";
 import PharmacyCard from "./PharmacyCard";
@@ -62,13 +63,13 @@ const PharmaciesPU = ({
       )}
       <div className="pharmacies__btn-container">
         {isObjectEmpty(preferredPharmacy) ? (
-          <button onClick={handleAdd} disabled={addVisible}>
-            Add a preferred pharmacy
-          </button>
+          <Button
+            onClick={handleAdd}
+            disabled={addVisible}
+            label="Add a preferred pharmacy"
+          />
         ) : (
-          <button onClick={handleAdd} disabled={addVisible}>
-            Change
-          </button>
+          <Button onClick={handleAdd} disabled={addVisible} label="Change" />
         )}
         <CloseButton onClick={handleClose} />
       </div>

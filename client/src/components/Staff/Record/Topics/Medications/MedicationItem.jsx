@@ -8,6 +8,8 @@ import {
 } from "../../../../../omdDatas/codesTables";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MedicationDetails from "./MedicationDetails";
@@ -46,9 +48,9 @@ const MedicationItem = ({ item, lastItemRef = null, topicDelete }) => {
         >
           <td>
             <div className="medications__item-btn-container">
-              <button onClick={handleDetailClick}>See details</button>
+              <Button onClick={handleDetailClick} label="See details" />
               {user.title === "Doctor" && (
-                <button onClick={handleDeleteClick}>Delete</button>
+                <DeleteButton onClick={handleDeleteClick} />
               )}
             </div>
           </td>
