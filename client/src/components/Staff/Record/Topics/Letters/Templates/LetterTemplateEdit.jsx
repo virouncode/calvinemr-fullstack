@@ -193,9 +193,7 @@ const LetterTemplateEdit = ({ setEditTemplateVisible, template }) => {
         <button onClick={handleSave} disabled={progress} className="save-btn">
           Save
         </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
       {refOHIPSearchVisible && (
         <FakeWindow

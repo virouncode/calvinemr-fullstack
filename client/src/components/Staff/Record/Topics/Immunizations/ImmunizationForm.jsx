@@ -2,15 +2,15 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    immunizationTypeCT,
-    routeCT,
-    siteCT,
-    ynIndicatorsimpleCT,
+  immunizationTypeCT,
+  routeCT,
+  siteCT,
+  ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
@@ -121,9 +121,7 @@ const ImmunizationForm = ({
             onClick={handleSubmit}
             disabled={progress}
           />
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>
       <td className="immunizations__form-type-list">

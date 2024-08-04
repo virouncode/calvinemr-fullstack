@@ -4,6 +4,7 @@ import useClinicContext from "../../../../../hooks/context/useClinicContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import { copyToClipboard } from "../../../../../utils/js/copyToClipboard";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
 import EmptyParagraph from "../../../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -25,7 +26,7 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
   const labelRef = useRef(null);
 
   useEffect(() => {
-    if (sites.length === 0) return;
+    if (!sites || sites?.length === 0) return;
     setSite(sites.find(({ id }) => id === assignedMd.site_id));
   }, [assignedMd.site_id, sites]);
 
@@ -126,16 +127,15 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
         <EmptyParagraph text="The clinic has no sites" />
       )}
       <div>
-        <button
-          style={BTN_STYLE}
+        <PrintButton
           onClick={handlePrint}
           className="labels-content__print-btn"
-        >
-          Print
-        </button>
-        <button onClick={handleCopy} className="labels-content__print-btn">
-          Copy to clipboard
-        </button>
+        />
+        <PrintButton
+          onClick={handleCopy}
+          className="labels-content__print-btn"
+          label="Copy to clipboard"
+        />
       </div>
     </div>
   );

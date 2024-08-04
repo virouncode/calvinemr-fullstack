@@ -1,18 +1,15 @@
-
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const CycleItem = ({
   item,
-  editCounter,
-  setErrMsgPost,
   errMsgPost,
   lastItemRef,
-  topicPut,
   setCycleToShow,
   setShow,
 }) => {
-  const handleClickShow = (e) => {
+  const handleClickShow = () => {
     setCycleToShow(item);
     setShow(true);
   };
@@ -27,7 +24,7 @@ const CycleItem = ({
     >
       <td>
         <div className="cycles-item__btn-container">
-          <button onClick={handleClickShow}>Show</button>
+          <Button onClick={handleClickShow} label="Show" />
         </div>
       </td>
       <td>{item.status}</td>

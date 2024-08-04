@@ -1,9 +1,9 @@
 import { useState } from "react";
+import Button from "../../../../UI/Buttons/Button";
 import ImmunizationForm from "./ImmunizationForm";
 import ImmunizationItem from "./ImmunizationItem";
 
 const ImmunizationsTable = ({
-  demographicsInfos,
   datas,
   errMsgPost,
   setErrMsgPost,
@@ -68,9 +68,7 @@ const ImmunizationsTable = ({
         </table>
       </div>
       <div className="immunizations__btn-container">
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
     </>
   );

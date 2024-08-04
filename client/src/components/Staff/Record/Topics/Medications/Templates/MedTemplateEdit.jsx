@@ -3,12 +3,12 @@ import { useState } from "react";
 
 import { useMedsTemplatePut } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import {
-    dosageUnitCT,
-    formCT,
-    frequencyCT,
-    routeCT,
-    strengthUnitCT,
-    ynIndicatorsimpleCT,
+  dosageUnitCT,
+  formCT,
+  frequencyCT,
+  routeCT,
+  strengthUnitCT,
+  ynIndicatorsimpleCT,
 } from "../../../../../../omdDatas/codesTables";
 import { toDurationText } from "../../../../../../utils/dates/toDurationText";
 import { toPrescriptionInstructions } from "../../../../../../utils/medications/toPrescriptionInstructions";
@@ -568,9 +568,7 @@ const MedTemplateEdit = ({ setEditVisible, med }) => {
         <button onClick={handleSubmit} disabled={progress} className="save-btn">
           Save
         </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>
   );

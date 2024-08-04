@@ -2,13 +2,14 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { alertSchema } from "../../../../../validation/record/alertValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 
 const AlertForm = ({
   editCounter,
@@ -91,9 +92,7 @@ const AlertForm = ({
             onClick={handleSubmit}
             disabled={progress}
           />
-          <button type="button" onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>
       <td>

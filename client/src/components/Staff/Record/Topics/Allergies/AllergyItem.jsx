@@ -15,6 +15,9 @@ import {
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { allergySchema } from "../../../../../validation/record/allergyValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
 
@@ -92,13 +95,13 @@ const AllergyItem = ({
     setEditVisible(false);
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({
@@ -128,12 +131,8 @@ const AllergyItem = ({
           <div className="allergies__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -143,13 +142,7 @@ const AllergyItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

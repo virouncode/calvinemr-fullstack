@@ -34,6 +34,10 @@ import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { demographicsSchema } from "../../../../../validation/record/demographicsValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import StaffList from "../../../../UI/Lists/StaffList";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -417,33 +421,22 @@ const DemographicsPU = ({
           <div className="demographics-card__btns">
             {!editVisible ? (
               <>
-                <button
+                <EditButton
                   onClick={() => setEditVisible((v) => !v)}
                   disabled={progress}
-                >
-                  Edit
-                </button>
-                <button onClick={handleClose} disabled={progress}>
-                  Close
-                </button>
+                />
+                <CloseButton onClick={handleClose} disabled={progress} />
               </>
             ) : (
               <>
-                <button
-                  type="button"
-                  disabled={loadingFile || progress}
+                <SaveButton
                   onClick={handleSubmit}
-                  className="save-btn"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
                   disabled={loadingFile || progress}
+                />
+                <CancelButton
                   onClick={handleCancel}
-                >
-                  Cancel
-                </button>
+                  disabled={loadingFile || progress}
+                />
               </>
             )}
           </div>

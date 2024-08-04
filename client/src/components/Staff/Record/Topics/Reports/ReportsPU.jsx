@@ -251,7 +251,7 @@ const ReportsPU = ({
         <button disabled={addVisible} onClick={handleAdd}>
           Add
         </button>
-        <button onClick={handleClose}>Close</button>
+        <CloseButton onClick={handleClose} />
       </div>
       {addVisible && (
         <FakeWindow

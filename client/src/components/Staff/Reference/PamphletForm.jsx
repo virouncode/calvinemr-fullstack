@@ -104,7 +104,7 @@ const PamphletForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
             value={isLoadingFile ? "Loading" : "Save"}
             disabled={isLoadingFile || progress}
           />
-          <button onClick={handleCancel}>Cancel</button>
+          <CancelButton onClick={handleCancel} />
         </div>
         <div className="reference-edocs__row">
           <label htmlFor="name">Name</label>

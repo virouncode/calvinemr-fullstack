@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
 
 const MessageDetailToolbar = ({
   message,
@@ -50,9 +51,11 @@ const MessageDetailToolbar = ({
             </div>
             {section !== "To-dos" && section !== "Deleted messages" && (
               <div className="message-detail__toolbar-patient-btn">
-                <button onClick={handleAddToClinicalNotes} disabled={posting}>
-                  Add to patient clinical notes
-                </button>
+                <Button
+                  onClick={handleAddToClinicalNotes}
+                  disabled={posting}
+                  label="Add to patient clinical notes"
+                />
               </div>
             )}
           </>

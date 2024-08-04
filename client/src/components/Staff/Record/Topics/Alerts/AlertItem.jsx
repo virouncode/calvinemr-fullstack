@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { alertSchema } from "../../../../../validation/record/alertValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const AlertItem = ({
@@ -82,13 +85,13 @@ const AlertItem = ({
     setEditVisible(false);
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({
@@ -118,24 +121,17 @@ const AlertItem = ({
           <div className="alerts__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick}>Edit</button>
-                <button onClick={handleDeleteClick}>Delete</button>
+                <Button onClick={handleEditClick} />
+                <Button onClick={handleDeleteClick} />
               </>
             ) : (
               <>
-                <input
-                  type="submit"
-                  value="Save"
+                <SaveButton
                   onClick={handleSubmit}
                   disabled={progress}
+                  label="Save"
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

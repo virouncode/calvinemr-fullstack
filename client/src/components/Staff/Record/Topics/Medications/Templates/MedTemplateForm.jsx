@@ -4,12 +4,12 @@ import { useState } from "react";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useMedsTemplatePost } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import {
-    dosageUnitCT,
-    formCT,
-    frequencyCT,
-    routeCT,
-    strengthUnitCT,
-    ynIndicatorsimpleCT,
+  dosageUnitCT,
+  formCT,
+  frequencyCT,
+  routeCT,
+  strengthUnitCT,
+  ynIndicatorsimpleCT,
 } from "../../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toDurationText } from "../../../../../../utils/dates/toDurationText";
@@ -656,9 +656,7 @@ const MedTemplateForm = ({ setNewVisible }) => {
           onClick={handleSubmit}
           className="save-btn"
         />
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>
   );

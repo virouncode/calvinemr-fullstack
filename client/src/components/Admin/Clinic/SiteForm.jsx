@@ -7,6 +7,8 @@ import { provinceStateTerritoryCT } from "../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import GenericList from "../../UI/Lists/GenericList";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import RoomsForm from "./RoomsForm";
@@ -316,16 +318,14 @@ const SiteForm = ({ setAddVisible }) => {
         </div>
       </form>
       <div className="site-form__btn-container">
-        <button
+        <SaveButton
           onClick={handleSubmit}
           disabled={isLoadingFile || progress}
-          className="save-btn"
-        >
-          Save
-        </button>
-        <button type="button" onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        />
+        <CancelButton
+          onClick={handleCancel}
+          disabled={isLoadingFile || progress}
+        />
       </div>
     </div>
   );

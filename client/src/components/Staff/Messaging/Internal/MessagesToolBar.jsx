@@ -7,6 +7,7 @@ import {
   useTodoDelete,
 } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../UI/Buttons/Button";
 
 const MessagesToolBar = ({
   search,
@@ -32,7 +33,7 @@ const MessagesToolBar = ({
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
-  const handleClickNew = (e) => {
+  const handleClickNew = () => {
     if (section === "To-dos") {
       setNewTodoVisible(true);
     } else {
@@ -150,7 +151,7 @@ const MessagesToolBar = ({
     }
   };
 
-  const handleClickUndelete = async (e) => {
+  const handleClickUndelete = async () => {
     const msgsSelected = await xanoGet("/messages_selected", "staff", {
       messages_ids: msgsSelectedIds,
     });
@@ -207,33 +208,34 @@ const MessagesToolBar = ({
         id="search"
       />
       <div className="messages-toolbar__btns">
-        <button
+        <Button
           onClick={handleClickNew}
           disabled={
             (section === "To-dos" && newTodoVisible) ||
             (section !== "To-dos" && newVisible)
           }
-        >
-          New
-        </button>
+          label="New"
+        />
         {section === "Deleted messages" && msgsSelectedIds.length !== 0 && (
-          <button onClick={handleClickUndelete}>Undelete</button>
+          <Button onClick={handleClickUndelete} label="Undelete" />
         )}
         {currentMsgId !== 0 && (
-          <button onClick={handleClickPrint}>Print</button>
+          <Button onClick={handleClickPrint} label="Print" />
         )}
         {section !== "Deleted messages" &&
           currentMsgId === 0 &&
           msgsSelectedIds.length !== 0 && (
-            <button onClick={handleDeleteSelected}>Delete Selected</button>
+            <Button onClick={handleDeleteSelected} label="Delete Selected" />
           )}
         {currentMsgId === 0 &&
           (selectAllVisible ? (
-            <button onClick={handleSelectAll} disabled={!messages}>
-              Select All
-            </button>
+            <Button
+              onClick={handleSelectAll}
+              disabled={!messages}
+              label="Select All"
+            />
           ) : (
-            <button onClick={handleUnselectAll}>Unselect All</button>
+            <Button onClick={handleUnselectAll} label="Unselect All" />
           ))}
       </div>
     </div>

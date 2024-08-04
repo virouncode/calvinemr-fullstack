@@ -7,6 +7,7 @@ import {
   getEndOfTheMonthTZ,
   getStartOfTheMonthTZ,
 } from "../../../utils/dates/formatDates";
+import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import BillingFilter from "./BillingFilter";
@@ -61,9 +62,11 @@ const Billing = () => {
     <div className="billing">
       <div className="billing__btn-container">
         {user.title !== "Secretary" && (
-          <button onClick={handleAdd} disabled={addVisible}>
-            Add Billing
-          </button>
+          <Button
+            onClick={handleAdd}
+            disabled={addVisible}
+            label="Add Billing"
+          />
         )}
       </div>
       {errMsgPost && <p className="billing__err">{errMsgPost}</p>}

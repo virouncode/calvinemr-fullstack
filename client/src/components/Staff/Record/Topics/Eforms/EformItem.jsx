@@ -2,6 +2,10 @@ import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const EformItem = ({
@@ -55,7 +59,7 @@ const EformItem = ({
     setRenameVisible(true);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to delete this item ?",
@@ -101,31 +105,19 @@ const EformItem = ({
         <div className="eforms__item-btn-container">
           {renameVisible ? (
             <>
-              <button
-                onClick={handleSave}
-                disabled={progress}
-                className="save-btn"
-              >
-                Save
-              </button>
-              <button onClick={handleCancel} disabled={progress}>
-                Cancel
-              </button>
+              <SaveButton onClick={handleSave} disabled={progress} />
+              <CancelButton onClick={handleCancel} disabled={progress} />
             </>
           ) : (
             <>
-              <button onClick={handleSend} disabled={progress}>
-                Send
-              </button>
-              <button onClick={handleFax} disabled={progress}>
-                Fax
-              </button>
-              <button onClick={handleRenameClick} disabled={progress}>
-                Rename
-              </button>
-              <button onClick={handleDeleteClick} disabled={progress}>
-                Delete
-              </button>
+              <Button onClick={handleSend} disabled={progress} label="Send" />
+              <Button onClick={handleFax} disabled={progress} label="Fax" />
+              <Button
+                onClick={handleRenameClick}
+                disabled={progress}
+                label="Rename"
+              />
+              <DeleteButton onClick={handleDeleteClick} disabled={progress} />
             </>
           )}
         </div>

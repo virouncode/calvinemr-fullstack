@@ -6,6 +6,8 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 
 const CredentialsForm = () => {
   const navigate = useNavigate();
@@ -288,12 +290,8 @@ const CredentialsForm = () => {
           />
         </div>
         <div className="credentials-form-row-submit">
-          <button type="submit" className="save-btn">
-            Submit
-          </button>
-          <button onClick={handleCancel} style={{ marginLeft: "5px" }}>
-            Cancel
-          </button>
+          <SubmitButton />
+          <CancelButton onClick={handleCancel} />
         </div>
       </form>
     </>

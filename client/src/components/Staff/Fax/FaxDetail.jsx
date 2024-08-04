@@ -1,12 +1,12 @@
 import uniqueId from "lodash/uniqueId";
 import { useState } from "react";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
-import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useFax } from "../../../hooks/reactquery/queries/faxQueries";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
@@ -22,7 +22,6 @@ const FaxDetail = ({
   section,
 }) => {
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [forwardVisible, setForwardVisible] = useState(false);
   const [addToReportsVisible, setAddToReportsVisible] = useState(false);
   const [replyVisible, setReplyVisible] = useState(false);
@@ -39,11 +38,11 @@ const FaxDetail = ({
 
   const faxDelete = useFaxDelete();
 
-  const handleClickBack = (e) => {
+  const handleClickBack = () => {
     setCurrentFaxId(0);
   };
 
-  const handleDeleteFax = async (e) => {
+  const handleDeleteFax = async () => {
     if (
       await confirmAlert({
         content: `Do you really want to delete this fax ? (this action is irreversible)`,
@@ -61,7 +60,7 @@ const FaxDetail = ({
     }
   };
 
-  const handleClickReply = async (e) => {
+  const handleClickReply = async () => {
     setProgress(true);
     const response = await xanoPost("/upload/attachment", "staff", {
       content: "data:application/pdf;base64," + fax,
@@ -78,7 +77,7 @@ const FaxDetail = ({
     setReplyVisible(true);
   };
 
-  const handleClickForward = async (e) => {
+  const handleClickForward = async () => {
     setProgress(true);
     const response = await xanoPost("/upload/attachment", "staff", {
       content: "data:application/pdf;base64," + fax,
@@ -95,7 +94,7 @@ const FaxDetail = ({
     setProgress(false);
   };
 
-  const handleAddToReports = async (e) => {
+  const handleAddToReports = async () => {
     setProgress(true);
     const response = await xanoPost("/upload/attachment", "staff", {
       content: "data:application/pdf;base64," + fax,
@@ -125,16 +124,22 @@ const FaxDetail = ({
             onClick={handleClickBack}
           />
           <div className="fax-detail__toolbar-btns">
-            <button disabled={progress} onClick={handleAddToReports}>
-              Add to patient reports
-            </button>
-            <button disabled={progress} onClick={handleClickForward}>
-              Forward
-            </button>
+            <Button
+              disabled={progress}
+              onClick={handleAddToReports}
+              label="Add to patient reports"
+            />
+            <Button
+              disabled={progress}
+              onClick={handleClickForward}
+              label="Forward"
+            />
             {section === "Received faxes" && (
-              <button disabled={progress} onClick={handleClickReply}>
-                Reply
-              </button>
+              <Button
+                disabled={progress}
+                onClick={handleClickReply}
+                label="Reply"
+              />
             )}
             {progress && <CircularProgressSmall />}
           </div>

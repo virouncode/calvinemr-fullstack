@@ -1,12 +1,14 @@
 import { useState } from "react";
 import {
-    dateISOToTimestampTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import {
-    bodyMassIndex,
-    bodySurfaceArea,
+  bodyMassIndex,
+  bodySurfaceArea,
 } from "../../../../../utils/measurements/measurements";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 
 const CareElementsHeightEdit = ({
   heightDatas,
@@ -100,8 +102,7 @@ const CareElementsHeightEdit = ({
         ))}
       </ul>
       <div className="care-elements__edit-btns">
-        <button
-          className="save-btn"
+        <SaveButton
           onClick={(e) =>
             handleSaveEditHeight(
               e,
@@ -111,10 +112,8 @@ const CareElementsHeightEdit = ({
               bsaFormDatas
             )
           }
-        >
-          Save
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

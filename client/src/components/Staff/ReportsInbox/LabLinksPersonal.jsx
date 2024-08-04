@@ -49,9 +49,7 @@ const LabLinksPersonal = () => {
     <div className="lablinks__personal">
       <div className="lablinks__personal-title">
         <h3>Personal Links</h3>
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
       <div className="lablinks__personal-search">
         <label htmlFor="search">Search</label>

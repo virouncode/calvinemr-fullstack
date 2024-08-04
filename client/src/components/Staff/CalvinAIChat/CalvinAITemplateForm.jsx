@@ -3,6 +3,8 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useCalvinAITemplatePost } from "../../../hooks/reactquery/mutations/calvinaiTemplatesMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const CalvinAITemplateForm = ({ setNewTemplateVisible }) => {
   const { user } = useUserContext();
@@ -60,10 +62,8 @@ const CalvinAITemplateForm = ({ setNewTemplateVisible }) => {
         />
       </div>
       <div className="new-template-btns">
-        <button onClick={handleSave} className="save-btn">
-          Save
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

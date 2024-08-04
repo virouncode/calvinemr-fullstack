@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
 
 const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }) => {
@@ -80,7 +81,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }) => {
   return (
     <div className="site-form__rooms">
       <label>Rooms*:</label>
-      <button onClick={handleAddRoom}>Add a new room</button>
+      <Button onClick={handleAddRoom} label="Add a new room" />
       <ul>
         {formDatas.rooms
           .filter(({ id }) => id !== "z")

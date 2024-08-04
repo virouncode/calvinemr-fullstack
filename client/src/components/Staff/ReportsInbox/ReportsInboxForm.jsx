@@ -120,7 +120,7 @@ const ReportsInboxForm = ({
       <form className="reportsinbox__form-content" onSubmit={handleSubmit}>
         <div className="reportsinbox__form-row reportsinbox__form-row--btns">
           <input type="submit" value="Save" disabled={progress} />
-          <button onClick={handleCancel}>Cancel</button>
+          <CancelButton onClick={handleCancel} />
         </div>
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
         <div className="reportsinbox__form-row">

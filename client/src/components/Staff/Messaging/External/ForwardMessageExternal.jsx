@@ -9,6 +9,8 @@ import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesM
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
@@ -347,16 +349,12 @@ const ForwardMessageExternal = ({
           />
         </div>
         <div className="forward-message__btns">
-          <button
+          <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}
-            className="save-btn"
-          >
-            Send
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+            label="Send"
+          />
+          <CancelButton onClick={handleCancel} disabled={progress} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>

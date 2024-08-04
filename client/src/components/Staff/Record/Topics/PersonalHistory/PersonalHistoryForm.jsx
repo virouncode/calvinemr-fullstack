@@ -201,9 +201,7 @@ const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
         <button onClick={handleSubmit} disabled={progress} className="save-btn">
           Save
         </button>
-        <button onClick={handleClose} disabled={progress}>
-          Close
-        </button>
+        <CloseButton onClick={handleClose} disabled={progress} />
       </p>
     </form>
   );

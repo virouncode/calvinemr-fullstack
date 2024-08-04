@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { problemListSchema } from "../../../../../validation/record/problemListValidation";
@@ -125,12 +125,8 @@ const ProblemListItem = ({
           <div className="problemlist__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -140,13 +136,7 @@ const ProblemListItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

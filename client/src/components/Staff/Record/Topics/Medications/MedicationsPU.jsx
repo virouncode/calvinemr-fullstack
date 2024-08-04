@@ -169,7 +169,7 @@ const MedicationsPU = ({
           {user.title === "Doctor" && (
             <button onClick={handleNewRX}>New RX</button>
           )}
-          <button onClick={handleClose}>Close</button>
+          <CloseButton onClick={handleClose} />
         </div>
       </>
       {presVisible && (

@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -133,10 +135,8 @@ const CyclesPU = ({
         </table>
       </div>
       <div className="cycles__btn-container">
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
-        <button onClick={handleClose}>Close</button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
       </div>
       {addVisible && (
         <FakeWindow

@@ -3,6 +3,8 @@ import { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroupPut } from "../../../hooks/reactquery/mutations/patientsGroupsMutations";
 import { groupSchema } from "../../../validation/groups/groupValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import PatientChartHealthSearch from "../Billing/PatientChartHealthSearch";
@@ -141,12 +143,8 @@ const PatientsGroupEdit = ({ group, setEditVisible }) => {
         </Reorder.Group>
       </div>
       <div className="patients-groups__edit-btns">
-        <button onClick={handleSave} disabled={progress} className="save-btn">
-          Save
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SaveButton onClick={handleSave} disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
       {addPatientsVisible && (
         <FakeWindow

@@ -108,12 +108,8 @@ const ReminderItem = ({
           <div className="reminders__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -123,13 +119,7 @@ const ReminderItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

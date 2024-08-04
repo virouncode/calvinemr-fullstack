@@ -5,6 +5,8 @@ import { provinceStateTerritoryCT } from "../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { doctorSchema } from "../../../validation/record/doctorValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import GenericList from "../../UI/Lists/GenericList";
 
 const DoctorFaxForm = ({
@@ -113,7 +115,7 @@ const DoctorFaxForm = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setAddFaxNumberVisible(false);
   };
 
@@ -267,12 +269,8 @@ const DoctorFaxForm = ({
         />
       </div>
       <div className="doctor-fax__form-btns">
-        <button onClick={handleSubmit} className="save-btn" disabled={progress}>
-          Save
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SaveButton onClick={handleSubmit} disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>
   );

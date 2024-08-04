@@ -3,14 +3,16 @@ import xanoGet from "../../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
-    useBillingCodeTemplateDelete,
-    useBillingCodeTemplatePost,
-    useBillingCodeTemplatePut,
+  useBillingCodeTemplateDelete,
+  useBillingCodeTemplatePost,
+  useBillingCodeTemplatePut,
 } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { removeLastLetter } from "../../../../utils/strings/removeLastLetter";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 
 const BillingCodesTemplateItem = ({
   template,
@@ -125,10 +127,8 @@ const BillingCodesTemplateItem = ({
         autoComplete="off"
         id="template-billing-code"
       />
-      <button onClick={handleSave} className="save-btn">
-        Save
-      </button>
-      <button onClick={handleCancel}>Cancel</button>
+      <SaveButton onClick={handleSave} />
+      <CancelButton onClick={handleCancel} />
     </li>
   ) : (
     <li className="billing-codes__templates-list-item" ref={lastItemRef}>

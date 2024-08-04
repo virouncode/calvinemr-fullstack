@@ -1,20 +1,20 @@
-
 import { useNavigate } from "react-router-dom";
 import avatarLogo from "../../../assets/img/avatar.png";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
-    officialLanguageCT,
-    personStatusCT,
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  officialLanguageCT,
+  personStatusCT,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../omdDatas/codesTables";
 import {
-    getAgeTZ,
-    timestampToDateISOTZ,
+  getAgeTZ,
+  timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
 import { emergencyContactCaption } from "../../../utils/names/emergencyContactCaption";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import Button from "../../UI/Buttons/Button";
 
 const MyAccountPatient = () => {
   //HOOKS
@@ -270,9 +270,10 @@ const MyAccountPatient = () => {
         </form>
       )}
       <div className="patient-account__btns">
-        <button onClick={handleChangeCredentials}>
-          Change login credentials
-        </button>
+        <Button
+          onClick={handleChangeCredentials}
+          label="Change login credentials"
+        />
       </div>
     </div>
   );

@@ -16,6 +16,8 @@ import { toPatientName } from "../../../utils/names/toPatientName";
 import { getLastLetter } from "../../../utils/strings/getLastLetter";
 import { removeLastLetter } from "../../../utils/strings/removeLastLetter";
 import { billingFormSchema } from "../../../validation/billing/billingValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
 import DiagnosisSearch from "./DiagnosisSearch";
@@ -355,10 +357,8 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
         </div>
       </div>
       <div className="billing-form__btns">
-        <input type="submit" disabled={progress} value="Save" />
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SubmitButton disabled={progress} label="Save" />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
       {diagnosisSearchVisible && (
         <FakeWindow

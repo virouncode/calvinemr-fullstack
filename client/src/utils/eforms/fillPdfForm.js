@@ -157,30 +157,30 @@ export const fillPdfForm = async (
     { fieldName: "patient_sin", value: demographicsInfos.SIN },
     {
       fieldName: "patient_height_cm",
-      value: demographicsInfos.patient_care_elements.Height.sort(
+      value: demographicsInfos.patient_care_elements?.Height?.sort(
         (a, b) => b.Date - a.Date
-      )[0].Height,
+      )?.[0]?.Height,
     },
     {
       fieldName: "patient_height_feet",
       value: cmToFeet(
-        demographicsInfos.patient_care_elements.Height.sort(
+        demographicsInfos.patient_care_elements?.Height?.sort(
           (a, b) => b.Date - a.Date
-        )[0].Height
+        )?.[0]?.Height
       ),
     },
     {
       fieldName: "patient_weight_kg",
-      value: demographicsInfos.patient_care_elements.Weight.sort(
+      value: demographicsInfos.patient_care_elements?.Weight?.sort(
         (a, b) => b.Date - a.Date
-      )[0].Weight,
+      )?.[0]?.Weight,
     },
     {
       fieldName: "patient_weight_lbs",
       value: kgToLbs(
-        demographicsInfos.patient_care_elements.Weight.sort(
+        demographicsInfos.patient_care_elements?.Weight?.sort(
           (a, b) => b.Date - a.Date
-        )[0].Weight
+        )?.[0]?.Weight
       ),
     },
   ];

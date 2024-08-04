@@ -13,6 +13,8 @@ import {
 import { titleToCategory } from "../../../../utils/messages/titleToCategory";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
@@ -362,16 +364,11 @@ const NewTodo = ({
           />
         </div>
         <div className="new-message__btns">
-          <button
+          <SaveButton
             onClick={handleSave}
             disabled={isLoadingFile || progress}
-            className="save-btn"
-          >
-            Save
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          />
+          <CancelButton onClick={handleCancel} disabled={progress} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>

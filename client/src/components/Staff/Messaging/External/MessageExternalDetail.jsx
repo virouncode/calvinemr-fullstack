@@ -21,6 +21,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../UI/Buttons/Button";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewTodo from "../Internal/NewTodo";
 import ForwardMessageExternal from "./ForwardMessageExternal";
@@ -65,18 +66,18 @@ const MessageExternalDetail = ({
   const messagePut = useMessageExternalPut();
   const clinicalNotePost = useClinicalNotePost();
 
-  const handleClickBack = (e) => {
+  const handleClickBack = () => {
     setCurrentMsgId(0);
   };
 
-  const handleClickForward = (e) => {
+  const handleClickForward = () => {
     setForwardVisible(true);
   };
-  const handleClickTodo = (e) => {
+  const handleClickTodo = () => {
     setNewTodoVisible(true);
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to delete this message ?",
@@ -113,7 +114,7 @@ const MessageExternalDetail = ({
     }
   };
 
-  const handleClickReply = (e) => {
+  const handleClickReply = () => {
     setReplyVisible(true);
     setAllPersons(false);
   };
@@ -324,10 +325,10 @@ const MessageExternalDetail = ({
         {section !== "Deleted messages" && !replyVisible && (
           <div className="message-detail__btns">
             {section !== "Sent messages" && (
-              <button onClick={handleClickReply}>Reply</button>
+              <Button onClick={handleClickReply} label="Reply" />
             )}
-            <button onClick={handleClickForward}>Forward</button>
-            <button onClick={handleClickTodo}>Todo</button>
+            <Button onClick={handleClickForward} label="Forward" />
+            <Button onClick={handleClickTodo} label="Todo" />
           </div>
         )}
         {forwardVisible && (

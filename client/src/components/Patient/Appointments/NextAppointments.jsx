@@ -9,6 +9,7 @@ import {
 } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import NextAppointmentItem from "./NextAppointmentItem";
 
@@ -117,13 +118,11 @@ Cellphone: ${
       )}
       {!requestSent && (
         <div className="appointments-patient__btn">
-          <button
+          <SaveButton
+            label="Cancel Appointment"
             onClick={handleDeleteAppointment}
             disabled={!appointmentSelectedId}
-            className="save-btn"
-          >
-            Cancel Appointment
-          </button>
+          />
         </div>
       )}
     </div>

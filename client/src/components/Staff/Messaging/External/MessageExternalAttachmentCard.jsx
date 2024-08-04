@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NewWindow from "react-new-window";
 import { useReportPost } from "../../../../hooks/reactquery/mutations/reportsMutations";
+import Button from "../../../UI/Buttons/Button";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ReportForm from "../../Record/Topics/Reports/ReportForm";
 import ReportFormMultiplePatients from "../../Record/Topics/Reports/ReportFormMultiplePatients";
@@ -11,7 +12,6 @@ const MessageExternalAttachmentCard = ({
   cardWidth,
   addable,
   patientsNames,
-  patientsIds,
   message,
   handleRemoveAttachment = null,
 }) => {
@@ -115,9 +115,10 @@ const MessageExternalAttachmentCard = ({
           </div>
           {addable && (
             <div className="message-attachment__btn">
-              <button onClick={handleAddToReports}>
-                Add to patient(s) report
-              </button>
+              <Button
+                onClick={handleAddToReports}
+                label="Add to patient(s) report"
+              />
             </div>
           )}
         </div>

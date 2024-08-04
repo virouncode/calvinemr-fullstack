@@ -211,7 +211,7 @@ const EnrolmentEdit = ({
         </div>
         <div className="new-enrolment__btn-container">
           <input type="submit" value="Save" />
-          <button onClick={handleCancel}>Cancel</button>
+          <CancelButton onClick={handleCancel} />
         </div>
       </form>
     </div>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Button from "../../../UI/Buttons/Button";
+import CancelButton from "../../../UI/Buttons/CancelButton";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ExportRecordItem from "../Sections/ExportRecordItem";
 import ExportChartPreview from "./ExportChartPreview";
@@ -108,10 +110,12 @@ const ExportChart = ({ setExportVisible, patientId, demographicsInfos }) => {
         ))}
       </ul>
       <div className="export-chart__btn-container">
-        <button disabled={!recordsSelected.length} onClick={handlePreview}>
-          Preview
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <Button
+          onClick={handlePreview}
+          label="Preview"
+          disabled={!recordsSelected.length}
+        />
+        <CancelButton onClick={handleCancel} />
       </div>
       {previewVisible && (
         <FakeWindow

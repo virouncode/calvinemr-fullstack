@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    immunizationTypeCT,
-    routeCT,
-    siteCT,
-    toCodeTableName,
-    ynIndicatorsimpleCT,
+  immunizationTypeCT,
+  routeCT,
+  siteCT,
+  toCodeTableName,
+  ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
@@ -131,12 +131,8 @@ const ImmunizationItem = ({
           <div className="immunizations__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -146,13 +142,7 @@ const ImmunizationItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

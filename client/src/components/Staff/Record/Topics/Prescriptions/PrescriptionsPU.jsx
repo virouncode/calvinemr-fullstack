@@ -115,7 +115,7 @@ const PrescriptionsPU = ({
           </table>
         </div>
         <div className="prescriptions__btn-container">
-          <button onClick={handleClose}>Close</button>
+          <CloseButton onClick={handleClose} />
         </div>
         {faxVisible && (
           <FakeWindow

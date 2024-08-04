@@ -9,7 +9,7 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { loginSchema } from "../../../validation/login/loginValidation";
-import CircularProgressSmallBlack from "../../UI/Progress/CircularProgressSmallBlack";
+import LoginButton from "../../UI/Buttons/LoginButton";
 import LoginInputs from "./LoginInputs";
 import LoginLogo from "./LoginLogo";
 
@@ -407,30 +407,24 @@ const LoginForm = ({ setCreditsVisible }) => {
         />
         <div className="login-form__btn-label">Sign In as</div>
         <div className="login-form__btn-container">
-          <button
-            type="button"
-            className="save-btn-login"
+          <LoginButton
             onClick={handleSubmitStaff}
             disabled={loadingStaff || loadingPatient || loadingAdmin}
-          >
-            {loadingStaff ? <CircularProgressSmallBlack /> : "Staff"}
-          </button>
-          <button
-            type="button"
-            className="save-btn-login"
+            label="Staff"
+            loading={loadingStaff}
+          />
+          <LoginButton
             onClick={handleSubmitPatient}
             disabled={loadingStaff || loadingPatient || loadingAdmin}
-          >
-            {loadingPatient ? <CircularProgressSmallBlack /> : "Patient"}
-          </button>
-          <button
-            type="button"
-            className="save-btn-login"
+            label="Patient"
+            loading={loadingPatient}
+          />
+          <LoginButton
             onClick={handleSubmitAdmin}
             disabled={loadingStaff || loadingPatient || loadingAdmin}
-          >
-            {loadingAdmin ? <CircularProgressSmallBlack /> : "Admin"}
-          </button>
+            label="Admin"
+            loading={loadingAdmin}
+          />
         </div>
         <p className="login-forgot">
           <span onClick={handleClickForgot}>I forgot my password/pin</span>

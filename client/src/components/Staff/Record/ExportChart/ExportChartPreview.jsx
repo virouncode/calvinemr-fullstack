@@ -7,6 +7,9 @@ import xanoPost from "../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
+import CloseButton from "../../../UI/Buttons/CloseButton";
+import PrintButton from "../../../UI/Buttons/PrintButton";
 import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewFax from "../../Fax/NewFax";
@@ -38,20 +41,6 @@ const ExportChartPreview = ({
     useState(false);
   const [attachmentsToSend, setAttachmentsToSend] = useState([]);
 
-  const CHART_PREVIEW_STYLE = {
-    margin: "100px auto 10px",
-    width: "22cm",
-    fontFamily: "Lato, Arial,sans-serif",
-  };
-  const OPTIONS_STYLE = {
-    position: "absolute",
-    top: "40px",
-    left: "0",
-    backgroundColor: "#FEFEFE",
-    textAlign: "center",
-    width: "100%",
-    padding: "20px 0",
-  };
   const handleGeneratePDF = async () => {
     try {
       setProgress(true);
@@ -519,32 +508,16 @@ const ExportChartPreview = ({
   };
 
   return (
-    <div style={CHART_PREVIEW_STYLE}>
-      <div style={OPTIONS_STYLE}>
-        <button
-          onClick={handlePrint}
-          style={{ marginRight: "5px" }}
-          disabled={progress}
-        >
-          Print
-        </button>
-        <button
+    <div className="export-chart__preview">
+      <div className="export-chart__preview-options">
+        <PrintButton onClick={handlePrint} disabled={progress} />
+        <Button
           onClick={handleSend}
-          style={{ marginRight: "5px" }}
           disabled={progress}
-        >
-          Send (External)
-        </button>
-        <button
-          onClick={handleFax}
-          style={{ marginRight: "5px" }}
-          disabled={progress}
-        >
-          Fax
-        </button>
-        <button onClick={handleClose} disabled={progress}>
-          Close
-        </button>
+          label="Send (External)"
+        />
+        <Button onClick={handleFax} disabled={progress} label="Fax" />
+        <CloseButton onClick={handleClose} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
       <div>

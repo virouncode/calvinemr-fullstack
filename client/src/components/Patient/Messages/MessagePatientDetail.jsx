@@ -7,6 +7,7 @@ import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesExternalPrintPU from "../../Staff/Messaging/External/MessagesExternalPrintPU";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import Button from "../../UI/Buttons/Button";
 import MessagePatientDetailToolbar from "./MessagePatientDetailToolbar";
 import ReplyMessagePatient from "./ReplyMessagePatient";
 
@@ -28,11 +29,11 @@ const MessagePatientDetail = ({
   );
   const messagePut = useMessageExternalPut();
 
-  const handleClickBack = (e) => {
+  const handleClickBack = () => {
     setCurrentMsgId(0);
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to delete this message ?",
@@ -69,7 +70,7 @@ const MessagePatientDetail = ({
     }
   };
 
-  const handleClickReply = (e) => {
+  const handleClickReply = () => {
     setReplyVisible(true);
   };
 
@@ -135,7 +136,7 @@ const MessagePatientDetail = ({
         {section !== "Deleted messages" && !replyVisible && (
           <div className="message-detail__btns">
             {section !== "Sent messages" && (
-              <button onClick={handleClickReply}>Reply</button>
+              <Button onClick={handleClickReply} label="Reply" />
             )}
           </div>
         )}

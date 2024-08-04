@@ -37,6 +37,7 @@ import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndNam
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { toRoomTitle } from "../../../utils/names/toRoomTitle";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import EventForm from "../EventForm/EventForm";
@@ -1625,13 +1626,12 @@ const Calendar = () => {
             timelineVisible={timelineVisible}
           />
           {(currentView === "timeGrid" || timelineVisible) && (
-            <button
-              className="calendar__print-day"
+            <Button
               onClick={handlePrintDay}
               disabled={events?.length === 0}
-            >
-              Print day sheet
-            </button>
+              className="calendar__print-day"
+              label={"Print day sheet"}
+            />
           )}
           {printDayVisible && (
             <NewWindow

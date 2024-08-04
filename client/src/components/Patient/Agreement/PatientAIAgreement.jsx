@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
   const { user } = useUserContext();
@@ -209,13 +210,13 @@ const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
               value={!agreed}
               onChange={handleChange}
             />
-            <label htmlFor="disagreement">
+            <label htmlFor="no">
               I don't agree to the terms and conditions outlined in this consent
               form.
             </label>
           </div>
         </div>
-        <button onClick={handleConfirm}>Confirm</button>
+        <SaveButton label="Confirm" onClick={handleConfirm} />
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useNotepadPut } from "../../../hooks/reactquery/mutations/notepadMutations";
 import { useNotepad } from "../../../hooks/reactquery/queries/notepadQueries";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../UI/Buttons/CloseButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
@@ -22,7 +24,7 @@ const Notepad = ({ setNotepadVisible }) => {
   const handleChange = (e) => {
     setNotes(e.target.value);
   };
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       data.notes === notes ||
       (data.notes !== notes &&
@@ -73,12 +75,8 @@ const Notepad = ({ setNotepadVisible }) => {
         autoComplete="off"
       />
       <div className="notepad__btns">
-        <button className="save-btn" onClick={handleSave} disabled={progress}>
-          Save
-        </button>
-        <button onClick={handleClose} disabled={progress}>
-          Close
-        </button>
+        <SaveButton onClick={handleSave} disabled={progress} />
+        <CloseButton onClick={handleClose} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
     </div>

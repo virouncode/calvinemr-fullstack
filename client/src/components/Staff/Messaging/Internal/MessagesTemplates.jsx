@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMessagesTemplates } from "../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useIntersection from "../../../../hooks/useIntersection";
+import Button from "../../../UI/Buttons/Button";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -48,9 +49,11 @@ const MessagesTemplates = ({ handleSelectTemplate }) => {
   return (
     <div className="messages__templates">
       <div className="messages__templates-btn-container">
-        <button onClick={handleAddNew} disabled={newTemplateVisible}>
-          Add a new template
-        </button>
+        <Button
+          onClick={handleAddNew}
+          disabled={newTemplateVisible}
+          label="Add a new template"
+        />
       </div>
       <div className="messages__templates-search">
         <label htmlFor="template-search">Search</label>

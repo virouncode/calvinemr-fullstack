@@ -4,17 +4,18 @@ import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 
 const PatientClinicDoctorItem = ({ item, patientId, site }) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();
   const [progress, setProgress] = useState(false);
 
-  const handleRemoveFromPatient = async (e) => {
+  const handleRemoveFromPatient = async () => {
     try {
       setProgress(true);
       const staffToPut = {
@@ -60,9 +61,11 @@ const PatientClinicDoctorItem = ({ item, patientId, site }) => {
     site && (
       <tr className="doctors__item">
         <td>
-          <button onClick={handleRemoveFromPatient} disabled={progress}>
-            Remove from patient
-          </button>
+          <Button
+            onClick={handleRemoveFromPatient}
+            disabled={progress}
+            label="Remove from patient"
+          />
         </td>
         <td>{item.last_name}</td>
         <td>{item.first_name}</td>

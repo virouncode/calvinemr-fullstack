@@ -18,6 +18,8 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNoteValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import ClinicalNotesTemplates from "../Templates/ClinicalNotesTemplates";
@@ -287,11 +289,7 @@ const ClinicalNoteForm = ({
 
   return (
     <>
-      <form
-        className="clinical-notes__form"
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <form className="clinical-notes__form" ref={formRef}>
         <div className="clinical-notes__form-header">
           <div className="clinical-notes__form-row">
             <p>
@@ -387,18 +385,17 @@ const ClinicalNoteForm = ({
           />
         </div>
         <div className="clinical-notes__form-btns">
-          <button
-            type="button"
+          <SaveButton
             disabled={isLoadingFile}
             onClick={handleSaveSignBillClick}
-            className="save-btn"
-          >
-            Save & Sign & Bill
-          </button>
-          <input type="submit" value="Save & Sign" disabled={isLoadingFile} />
-          <button type="button" onClick={handleCancelClick}>
-            Cancel
-          </button>
+            label="Save & Sign & Bill"
+          />
+          <SaveButton
+            disabled={isLoadingFile}
+            onClick={handleSubmit}
+            label="Save & Sign"
+          />
+          <CancelButton onClick={handleCancelClick} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </form>

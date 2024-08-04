@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useCalvinAITemplatePut } from "../../../hooks/reactquery/mutations/calvinaiTemplatesMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const CalvinAITemplateEdit = ({ setEditTemplateVisible, templateToEdit }) => {
   const [editedTemplate, setEditedTemplate] = useState(templateToEdit);
@@ -56,10 +58,8 @@ const CalvinAITemplateEdit = ({ setEditTemplateVisible, templateToEdit }) => {
         />
       </div>
       <div className="edit-template-btns">
-        <button onClick={handleSave} className="save-btn">
-          Save
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

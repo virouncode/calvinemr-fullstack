@@ -88,16 +88,8 @@ const TodoTemplateEdit = ({ template, setEditTemplateVisible }) => {
             <textarea value={body} onChange={handleChange} autoFocus></textarea>
           </div>
           <div className="new-message__btns">
-            <button
-              onClick={handleSave}
-              disabled={progress}
-              className="save-btn"
-            >
-              Save
-            </button>
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>

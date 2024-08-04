@@ -4,6 +4,8 @@ import { useFaxDirectoryPost } from "../../../hooks/reactquery/mutations/faxDire
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { otherSchema } from "../../../validation/others/otherValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 const OtherFaxForm = ({
@@ -58,7 +60,7 @@ const OtherFaxForm = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setAddFaxNumberVisible(false);
   };
 
@@ -96,12 +98,8 @@ const OtherFaxForm = ({
         />
       </div>
       <div className="other-fax__form-btns">
-        <button onClick={handleSubmit} className="save-btn" disabled={progress}>
-          Save
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SaveButton onClick={handleSubmit} disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
     </div>

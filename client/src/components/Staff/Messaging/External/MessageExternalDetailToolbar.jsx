@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
 
 const MessageExternalDetailToolbar = ({
   message,
@@ -46,6 +47,7 @@ const MessageExternalDetailToolbar = ({
                     `/staff/patient-record/${to_patient_infos.patient_id}`
                   )
                 }
+                key={to_patient_infos.patient_id}
               >
                 {toPatientName(to_patient_infos)}
                 {index !== message.to_patients_ids.length - 1 && " /"}
@@ -55,9 +57,11 @@ const MessageExternalDetailToolbar = ({
         </div>
         {section !== "Deleted messages" && (
           <div className="message-detail__toolbar-patient-btn">
-            <button onClick={handleAddToClinicalNotes} disabled={posting}>
-              Add to patient(s) clinical notes
-            </button>
+            <Button
+              onClick={handleAddToClinicalNotes}
+              disabled={posting}
+              label="Add to patient(s) clinical notes"
+            />
           </div>
         )}
       </div>

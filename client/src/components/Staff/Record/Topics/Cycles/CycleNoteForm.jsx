@@ -1,8 +1,8 @@
-
 import {
-    dateISOToTimestampTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 
 const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
   const handleRemove = () => {
@@ -30,7 +30,7 @@ const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
   return (
     <tr className="cycles-form__events-item">
       <td style={{ width: "10%" }}>
-        <button onClick={handleRemove}>Remove</button>
+        <Button onClick={handleRemove} label="Remove" />
       </td>
       <td style={{ width: "10%" }}>
         <input

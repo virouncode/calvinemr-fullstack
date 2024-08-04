@@ -9,6 +9,8 @@ import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/mess
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import ContactsForPatient from "./ContactsForPatient";
 
@@ -197,16 +199,12 @@ const NewMessagePatient = ({ setNewVisible }) => {
           />
         </div>
         <div className="new-message__btns new-message__btns--patient">
-          <button
+          <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}
-            className="save-btn"
-          >
-            Send
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+            label="Send"
+          />
+          <CancelButton onClick={handleCancel} disabled={progress} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>

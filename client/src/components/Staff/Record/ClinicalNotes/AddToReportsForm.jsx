@@ -8,6 +8,8 @@ import {
   timestampToDateISOTZ,
 } from "../../../../utils/dates/formatDates";
 import { getExtension } from "../../../../utils/files/getExtension";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SubmitButton from "../../../UI/Buttons/SubmitButton";
 import GenericList from "../../../UI/Lists/GenericList";
 
 const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
@@ -110,12 +112,17 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
     });
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setAddToReports(false);
+  };
+
   return (
     <div className="reports__form">
       <form className="reports__content" onSubmit={handleSubmit}>
         <div className="reports__row reports__row--btns">
-          <input type="submit" value="Save" />
-          <button>Cancel</button>
+          <SubmitButton label="Save" />
+          <CancelButton onClick={handleCancel} />
         </div>
         {errMsgPost && <p className="reports__err">{errMsgPost}</p>}
         <div className="reports__row">

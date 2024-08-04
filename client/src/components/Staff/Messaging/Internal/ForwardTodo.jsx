@@ -16,6 +16,8 @@ import {
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
@@ -129,7 +131,7 @@ const ForwardTodo = ({
     setDueDate(value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setForwardTodoVisible(false);
   };
 
@@ -138,7 +140,7 @@ const ForwardTodo = ({
     setImportant(value);
   };
 
-  const handleSend = async (e) => {
+  const handleSend = async () => {
     if (!recipientsIds.length) {
       toast.error("Please choose at least one recipient", { containerId: "A" });
       return;
@@ -280,12 +282,8 @@ const ForwardTodo = ({
           />
         </div>
         <div className="forward-message__btns">
-          <button onClick={handleSend} disabled={progress} className="save-btn">
-            Send
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          <SaveButton onClick={handleSend} disabled={progress} label="Send" />
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </div>
       {templatesVisible && (

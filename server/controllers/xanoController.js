@@ -354,7 +354,7 @@ Powered by Calvin EMR`,
 
 const tempPassword = async (req, res) => {
   try {
-    const { email, userType, clinicName } = req.query;
+    const { email, userType } = req.query;
     let headers = {
       "Content-Type": "application/json",
     };
@@ -368,13 +368,13 @@ const tempPassword = async (req, res) => {
     const response = await axiosXanoInstance(config);
     const emailToPost = {
       to: response.data.email, //to be changed to user.email
-      subject: `${clinicName}: Temporary Password - DO NOT REPLY`,
+      subject: `${process.env.CLINIC_NAME}: Temporary Password - DO NOT REPLY`,
       text: `
 Hello ${response.data.full_name || toPatientName(response.data.patient_infos)}
 
 Please find your temporary password for your account: ${
         response.data.temp_login.temp_password
-      }.
+      }
 
 This password will be active for 15 minutes, after this time, please make a new request.
 

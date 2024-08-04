@@ -351,9 +351,7 @@ const ReferenceLinks = () => {
       <div className="reference-links__column">
         <div className="reference-links__personal-title">
           <h3>Personal Links</h3>
-          <button onClick={handleAdd} disabled={addVisible}>
-            Add
-          </button>
+          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         </div>
         <div className="reference-links__personal-search">
           <label htmlFor="search">Search</label>

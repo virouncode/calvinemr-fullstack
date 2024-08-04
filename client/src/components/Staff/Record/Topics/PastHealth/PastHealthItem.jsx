@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    lifeStageCT,
-    toCodeTableName,
+  lifeStageCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pastHealthSchema } from "../../../../../validation/record/pastHealthValidation";
@@ -130,12 +130,8 @@ const PastHealthItem = ({
           <div className="pasthealth__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -145,13 +141,7 @@ const PastHealthItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

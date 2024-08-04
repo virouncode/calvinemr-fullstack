@@ -8,6 +8,8 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
 import SiteSelect from "../../Staff/EventForm/SiteSelect";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 
 const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
@@ -366,16 +368,8 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
         </div>
       )}
       <div className="staff-account__btns">
-        <button
-          onClick={handleSave}
-          disabled={isLoadingFile || progress}
-          className="save-btn"
-        >
-          Save
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SaveButton onClick={handleSave} disabled={isLoadingFile || progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>
   );

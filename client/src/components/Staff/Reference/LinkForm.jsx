@@ -89,9 +89,7 @@ const LinkForm = ({ links, setAddVisible }) => {
       </div>
       <div className="reference-links__form-btns">
         <input type="submit" value="Save" disabled={progress} />
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </form>
   );

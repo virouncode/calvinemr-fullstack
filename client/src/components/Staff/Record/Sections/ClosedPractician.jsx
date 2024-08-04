@@ -6,6 +6,7 @@ import { usePatientPut } from "../../../../hooks/reactquery/mutations/patientsMu
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import StaffList from "../../../UI/Lists/StaffList";
 
 const ClosedPractician = ({ demographicsInfos }) => {
@@ -18,7 +19,7 @@ const ClosedPractician = ({ demographicsInfos }) => {
   const handleChange = (e) => {
     setAssignedStaffId(e.target.value);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const patientToPut = {
       ...demographicsInfos,
       assigned_staff_id: parseInt(assignedStaffId),
@@ -50,9 +51,7 @@ const ClosedPractician = ({ demographicsInfos }) => {
           record:`}
         </label>
         <StaffList value={assignedStaffId} handleChange={handleChange} />
-        <button className="save-btn" onClick={handleSubmit}>
-          Save
-        </button>
+        <SaveButton onClick={handleSubmit} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import Button from "../../../../UI/Buttons/Button";
 import AddAIAttachments from "./AddAIAttachments";
 import AddAIReports from "./AddAIReports";
 
@@ -154,12 +155,11 @@ const CalvinAIClinicalPrompt = ({
             setMsgText={setMsgText}
           />
         </div>
-        <button
+        <Button
           onClick={handleSubmit}
           disabled={isLoadingAttachmentText || isLoadingReportText}
-        >
-          Submit to CalvinAI
-        </button>
+          label="Submit to CalvinAI"
+        />
       </div>
     </div>
   );

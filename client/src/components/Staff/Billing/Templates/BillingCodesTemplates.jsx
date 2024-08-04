@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useBillingCodesTemplates } from "../../../../hooks/reactquery/queries/billingCodesTemplatesQueries";
 import useIntersection from "../../../../hooks/useIntersection";
+import Button from "../../../UI/Buttons/Button";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -51,9 +52,11 @@ const BillingCodesTemplates = ({ handleSelectTemplate }) => {
   return (
     <div className="billing-codes__templates">
       <div className="billing-codes__templates-btn-container">
-        <button onClick={handleAddNew} disabled={newTemplateVisible}>
-          Add a new template
-        </button>
+        <Button
+          onClick={handleAddNew}
+          disabled={newTemplateVisible}
+          label="Add a new template"
+        />
         {isFetching && <CircularProgressSmall />}
       </div>
       <div className="billing-codes__templates-search">

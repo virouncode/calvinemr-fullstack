@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import ImmunizationsCaption from "./ImmunizationsCaption";
@@ -25,7 +26,7 @@ const ImmunizationsPU = ({
 
   //HANDLERS
 
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -59,7 +60,7 @@ const ImmunizationsPU = ({
             className="fa-solid fa-syringe"
             style={{ marginRight: "10px" }}
           ></i>
-          <button onClick={handleClose}>Close</button>
+          <CloseButton onClick={handleClose} />
         </h1>
         <LoadingParagraph />
       </>
@@ -74,7 +75,7 @@ const ImmunizationsPU = ({
             className="fa-solid fa-syringe"
             style={{ marginRight: "10px" }}
           ></i>
-          <button onClick={handleClose}>Close</button>
+          <CloseButton onClick={handleClose} />
         </h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
@@ -88,7 +89,7 @@ const ImmunizationsPU = ({
       <h1 className="immunizations__title">
         Patient immunizations{" "}
         <i className="fa-solid fa-syringe" style={{ marginRight: "10px" }}></i>
-        <button onClick={handleClose}>Close</button>
+        <CloseButton onClick={handleClose} />
       </h1>
       <h2 className="immunizations__subtitle">
         Recommended{" "}

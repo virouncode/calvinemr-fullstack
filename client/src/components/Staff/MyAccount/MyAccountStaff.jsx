@@ -8,6 +8,10 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { myAccountStaffSchema } from "../../../validation/accounts/myAccountStaffValidation";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import SiteSelect from "../EventForm/SiteSelect";
 
 const MyAccountStaff = () => {
@@ -243,25 +247,17 @@ const MyAccountStaff = () => {
       <div className="myaccount-section__btns">
         {editVisible ? (
           <>
-            <button
-              onClick={handleSave}
-              disabled={progress}
-              className="save-btn"
-            >
-              Save
-            </button>
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </>
         ) : (
           <>
-            <button onClick={handleEdit} disabled={progress}>
-              Edit
-            </button>
-            <button onClick={handleChangeCredentials} disabled={progress}>
-              Change login credentials
-            </button>
+            <EditButton onClick={handleEdit} disabled={progress} />
+            <Button
+              onClick={handleChangeCredentials}
+              disabled={progress}
+              label="Change login credentials"
+            />
           </>
         )}
       </div>

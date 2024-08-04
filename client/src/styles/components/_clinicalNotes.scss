@@ -155,6 +155,7 @@
     border-radius: 6px;
     overflow: hidden;
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    print-color-adjust: exact;
     &--print {
       font-size: 0.8rem;
     }

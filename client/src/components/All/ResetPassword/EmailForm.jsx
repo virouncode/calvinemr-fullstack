@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import useClinicContext from "../../../hooks/context/useClinicContext";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 axios.defaults.withCredentials = true;
@@ -16,7 +17,6 @@ const EmailForm = ({
   setEmailInput,
   emailInput,
 }) => {
-  const { clinic } = useClinicContext();
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 
@@ -47,7 +47,6 @@ const EmailForm = ({
         params: {
           userType: type,
           email: emailInput.toLowerCase(),
-          clinicName: clinic.name,
         },
       });
       setRequestSent(true);
@@ -109,12 +108,9 @@ const EmailForm = ({
           autoFocus
         />
         <div>
-          <input type="submit" value="Submit" disabled={progress} />
-          <button onClick={handleCancel} style={{ marginLeft: "5px" }}>
-            Cancel
-          </button>
+          <SubmitButton disabled={progress} />
+          <CancelButton onClick={handleCancel} />
         </div>
-
         {progress && <CircularProgressSmall />}
       </div>
     </form>

@@ -10,6 +10,8 @@ import {
   nowTZTimestamp,
 } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
@@ -283,16 +285,11 @@ const EditTodo = ({ setEditTodoVisible, todo }) => {
           />
         </div>
         <div className="new-message__btns">
-          <button
+          <SaveButton
             onClick={handleSave}
             disabled={isLoadingFile || progress}
-            className="save-btn"
-          >
-            Save
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          />
+          <CancelButton onClick={handleCancel} disabled={progress} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>

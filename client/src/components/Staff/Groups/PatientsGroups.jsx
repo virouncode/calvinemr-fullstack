@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroups } from "../../../hooks/reactquery/queries/patientsGroupsQueries";
+import Button from "../../UI/Buttons/Button";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
@@ -27,14 +28,12 @@ const PatientsGroups = () => {
   return (
     <div className="patients-groups">
       <div className="patients-groups__title">
-        My groups{" "}
-        <button
-          style={{ marginLeft: "10px" }}
-          disabled={addGroupVisible}
+        <span style={{ marginRight: "10px" }}>My groups</span>
+        <Button
           onClick={handleAdd}
-        >
-          Add new group
-        </button>
+          label="Add new group"
+          disabled={addGroupVisible}
+        />
       </div>
       <div className="patients-groups__content">
         {groups && groups.length > 0 ? (

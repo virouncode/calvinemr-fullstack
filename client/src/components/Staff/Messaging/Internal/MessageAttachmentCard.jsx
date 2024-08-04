@@ -4,6 +4,7 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ReportForm from "../../Record/Topics/Reports/ReportForm";
 
 import { useReportPost } from "../../../../hooks/reactquery/mutations/reportsMutations";
+import Button from "../../../UI/Buttons/Button";
 import ReportsInboxForm from "../../ReportsInbox/ReportsInboxForm";
 
 const MessageAttachmentCard = ({
@@ -117,9 +118,10 @@ const MessageAttachmentCard = ({
           </div>
           {addable && (
             <div className="message-attachment__btn">
-              <button onClick={handleAddToReports}>
-                Add to patient reports
-              </button>
+              <Button
+                onClick={handleAddToReports}
+                label="Add to patient reports"
+              />
             </div>
           )}
         </div>

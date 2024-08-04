@@ -9,6 +9,8 @@ import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import Button from "../../UI/Buttons/Button";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 axios.defaults.withCredentials = true;
 
@@ -174,14 +176,8 @@ const UnlockForm = ({
           value={pin}
           onChange={handleChange}
         />
-        <button
-          className="save-btn"
-          onClick={handleSubmit}
-          style={{ marginRight: "5px" }}
-        >
-          Unlock
-        </button>
-        <button onClick={handleLogout}>Logout</button>
+        <SaveButton label="Unlock" onClick={handleSubmit} />
+        <Button label="Logout" onClick={handleLogout} />
       </div>
       <div className="unlock-form__message" style={{ marginTop: "20px" }}>
         <label style={{ marginRight: "10px" }}>Change auto lock time:</label>

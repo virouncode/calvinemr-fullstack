@@ -1,18 +1,21 @@
 import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    routeCT,
-    siteCT,
-    ynIndicatorsimpleCT,
+  routeCT,
+  siteCT,
+  ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import SubmitButton from "../../../../UI/Buttons/SubmitButton";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
 
@@ -34,7 +37,7 @@ const RecImmunizationEdit = ({
   const handleCancel = () => {
     setEditVisible(false);
   };
-  const handleDelete = async (e) => {
+  const handleDelete = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to remove this immunization ?",
@@ -226,13 +229,9 @@ const RecImmunizationEdit = ({
         />
       </div>
       <div className="recimmunizations-form__btns">
-        <input type="submit" value="Save" disabled={progress} />
-        <button type="button" onClick={handleDelete} disabled={progress}>
-          Delete
-        </button>
-        <button type="button" onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SubmitButton label="Save" disabled={progress} />
+        <DeleteButton onClick={handleDelete} disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </form>
   );

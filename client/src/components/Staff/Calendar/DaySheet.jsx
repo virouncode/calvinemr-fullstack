@@ -1,6 +1,6 @@
-
 import { getTodaysEvents } from "../../../utils/appointments/occurences";
 import { timestampToHumanDateYearTZ } from "../../../utils/dates/formatDates";
+import Button from "../../UI/Buttons/Button";
 import DaySheetEventCard from "./DaySheetEventCard";
 
 const DaySheet = ({ events, rangeStart, rangeEnd }) => {
@@ -13,7 +13,7 @@ const DaySheet = ({ events, rangeStart, rangeEnd }) => {
         {timestampToHumanDateYearTZ(rangeStart)}
       </div>
       <div className="daysheet__btn-container">
-        <button onClick={handlePrint}>Print</button>
+        <Button onClick={handlePrint} label="Print" />
       </div>
       {getTodaysEvents(events, rangeStart, rangeEnd)
         .sort((a, b) => a.start - b.start)

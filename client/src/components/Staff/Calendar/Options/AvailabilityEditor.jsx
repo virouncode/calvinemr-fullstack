@@ -6,6 +6,8 @@ import { useUserSchedulePut } from "../../../../hooks/reactquery/mutations/userS
 import { useUserSchedule } from "../../../../hooks/reactquery/queries/userScheduleQueries";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { availabilitySchema } from "../../../../validation/calendar/availabilityValidation";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SubmitButton from "../../../UI/Buttons/SubmitButton";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import DurationPicker from "../../../UI/Pickers/DurationPicker";
@@ -160,10 +162,8 @@ const AvailabilityEditor = ({ setEditAvailabilityVisible }) => {
             />
           </div>
           <div className="availability__btns">
-            <input type="submit" value="Save" disabled={progress} />
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SubmitButton label="Save" disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </form>
       </div>

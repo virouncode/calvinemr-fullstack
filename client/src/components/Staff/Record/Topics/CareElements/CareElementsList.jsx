@@ -2,10 +2,14 @@ import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import {
-    bodyMassIndex,
-    bodySurfaceArea,
+  bodyMassIndex,
+  bodySurfaceArea,
 } from "../../../../../utils/measurements/measurements";
 import { careElementsSchema } from "../../../../../validation/record/careElementsValidation";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CareElementHistory from "./CareElementHistory";
 import CareElementsListAdd from "./CareElementsListAdd";
@@ -345,29 +349,13 @@ const CareElementsList = ({
           <div className="care-elements__btn-container">
             {!addVisible ? (
               <>
-                <button onClick={handleAdd} disabled={progress}>
-                  Add
-                </button>
-                <button onClick={handleClose} disabled={progress}>
-                  Close
-                </button>
+                <Button onClick={handleAdd} disabled={progress} label="Add" />
+                <CloseButton onClick={handleClose} disabled={progress} />
               </>
             ) : (
               <>
-                <button
-                  onClick={handleSubmit}
-                  disabled={progress}
-                  className="save-btn"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <SaveButton onClick={handleSubmit} disabled={progress} />
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

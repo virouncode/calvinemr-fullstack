@@ -31,6 +31,10 @@ import { toRoomTitle } from "../../../utils/names/toRoomTitle";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../validation/record/appointmentValidation";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import CloseButton from "../../UI/Buttons/CloseButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DateTimePicker from "../../UI/Pickers/DateTimePicker";
 import DurationPicker from "../../UI/Pickers/DurationPicker";
@@ -1066,11 +1070,9 @@ const EventForm = ({
             {user.title === "Secretary" ||
             currentEvent.current.extendedProps.host === user.id ? (
               <>
-                <input type="submit" value="Save" />
-                <button onClick={handleCancel} disabled={progress}>
-                  Cancel
-                </button>
-                <button
+                <SubmitButton label="Save" />
+                <CancelButton onClick={handleCancel} disabled={progress} />
+                <Button
                   onClick={handleInvitation}
                   disabled={
                     (!formDatas.staff_guests_ids.length &&
@@ -1078,14 +1080,11 @@ const EventForm = ({
                     !formDatas.host_id ||
                     progress
                   }
-                >
-                  Send invitation
-                </button>
+                  label="Send Invitation"
+                />
               </>
             ) : (
-              <button onClick={handleCancel} disabled={progress}>
-                Close
-              </button>
+              <CloseButton onClick={handleCancel} disabled={progress} />
             )}
           </div>
         </form>

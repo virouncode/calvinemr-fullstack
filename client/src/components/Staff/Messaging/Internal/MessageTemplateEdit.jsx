@@ -7,6 +7,8 @@ import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import StaffContacts from "../StaffContacts";
 
 const MessageTemplateEdit = ({ template, setEditTemplateVisible }) => {
@@ -100,11 +102,11 @@ const MessageTemplateEdit = ({ template, setEditTemplateVisible }) => {
     }
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setEditTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });
@@ -185,12 +187,8 @@ const MessageTemplateEdit = ({ template, setEditTemplateVisible }) => {
             <textarea value={body} onChange={handleChange}></textarea>
           </div>
           <div className="new-message__btns">
-            <button onClick={handleSave} disabled={progress}>
-              Save
-            </button>
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>

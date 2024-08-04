@@ -5,6 +5,7 @@ import {
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import ClinicalNoteCardPrint from "./ClinicalNoteCardPrint";
@@ -46,16 +47,11 @@ const ClinicalNotesPrint = ({
   return (
     <div className="clinical-notes__print-page">
       <p style={{ textAlign: "center" }}>
-        <button
-          type="button"
+        <PrintButton
           onClick={handlePrint}
-          style={{ width: "100px" }}
           className="clinical-notes__print-page-btn"
-        >
-          Print
-        </button>
+        />
       </p>
-
       <p
         style={{
           fontSize: "0.85rem",

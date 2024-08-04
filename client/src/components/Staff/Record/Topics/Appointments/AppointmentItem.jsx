@@ -8,27 +8,31 @@ import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/avail
 import { getAvailableRooms } from "../../../../../utils/appointments/getAvailableRooms";
 import { statuses } from "../../../../../utils/appointments/statuses";
 import {
-    nowTZTimestamp,
-    timestampToDateISOTZ,
-    timestampToDateTimeSecondsISOTZ,
-    timestampToDateTimeStrTZ,
-    timestampToTimeISOTZ,
-    tzComponentsToTimestamp,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
+  timestampToDateTimeSecondsISOTZ,
+  timestampToDateTimeStrTZ,
+  timestampToTimeISOTZ,
+  tzComponentsToTimestamp,
 } from "../../../../../utils/dates/formatDates";
 import {
-    staffIdToFirstName,
-    staffIdToLastName,
-    staffIdToOHIP,
+  staffIdToFirstName,
+  staffIdToLastName,
+  staffIdToOHIP,
 } from "../../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toRoomTitle } from "../../../../../utils/names/toRoomTitle";
 import { toSiteName } from "../../../../../utils/names/toSiteName";
 import {
-    firstLetterOfFirstWordUpper,
-    firstLetterUpper,
+  firstLetterOfFirstWordUpper,
+  firstLetterUpper,
 } from "../../../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import DateTimePicker from "../../../../UI/Pickers/DateTimePicker";
 import SignCell from "../../../../UI/Tables/SignCell";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
@@ -543,13 +547,13 @@ const AppointmentItem = ({
     }
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     //if many patients_guests_ids or staff_guests_ids, ask if remove for everyone or only the patient
     if (
@@ -604,35 +608,23 @@ const AppointmentItem = ({
             <div className="appointments__item-btn-container">
               {!editVisible ? (
                 <>
-                  <button
+                  <EditButton
                     onClick={handleEditClick}
                     disabled={
                       (item.recurrence === "Once" &&
                         item.end < nowTZTimestamp()) ||
                       progress
                     }
-                  >
-                    Edit
-                  </button>
-                  <button onClick={handleDeleteClick} disabled={progress}>
-                    Delete
-                  </button>
+                  />
+                  <DeleteButton
+                    onClick={handleDeleteClick}
+                    disabled={progress}
+                  />
                 </>
               ) : (
                 <>
-                  <input
-                    type="submit"
-                    value="Save"
-                    onClick={handleSubmit}
-                    disabled={progress}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleCancel}
-                    disabled={progress}
-                  >
-                    Cancel
-                  </button>
+                  <SaveButton onClick={handleSubmit} disabled={progress} />
+                  <CancelButton onClick={handleCancel} disabled={progress} />
                 </>
               )}
             </div>

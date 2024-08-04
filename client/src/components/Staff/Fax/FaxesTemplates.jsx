@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useFaxesTemplates } from "../../../hooks/reactquery/queries/faxesTemplatesQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Button from "../../UI/Buttons/Button";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -48,9 +49,11 @@ const FaxesTemplates = ({ handleSelectTemplate }) => {
   return (
     <div className="fax__templates">
       <div className="fax__templates-btn-container">
-        <button onClick={handleAddNew} disabled={newTemplateVisible}>
-          Add a new template
-        </button>
+        <Button
+          onClick={handleAddNew}
+          label="Add a new template"
+          disabled={newTemplateVisible}
+        />
       </div>
       <div className="fax__templates-search">
         <label htmlFor="template-search">Search</label>

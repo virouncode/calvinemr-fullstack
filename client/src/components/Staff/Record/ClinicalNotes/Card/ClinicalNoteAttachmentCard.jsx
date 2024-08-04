@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NewWindow from "react-new-window";
+import Button from "../../../../UI/Buttons/Button";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import AddToReportsForm from "../AddToReportsForm";
 
@@ -109,9 +110,10 @@ const ClinicalNoteAttachmentCard = ({
             </div>
             {addable && (
               <div className="clinical-notes-attachment__footer-btn">
-                <button onClick={handleAddToReports}>
-                  Add to patient reports
-                </button>
+                <Button
+                  onClick={handleAddToReports}
+                  label="Add to patient reports"
+                />
               </div>
             )}
           </div>

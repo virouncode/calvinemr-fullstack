@@ -3,6 +3,7 @@ import {
   toCodeTableName,
 } from "../../../omdDatas/codesTables";
 import { showDocument } from "../../../utils/files/showDocument";
+import EditButton from "../../UI/Buttons/EditButton";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 
 const SiteItem = ({ site, handleEditClick }) => {
@@ -15,7 +16,7 @@ const SiteItem = ({ site, handleEditClick }) => {
       <tr style={{ color: site.site_status === "Closed" && "red" }}>
         <td>
           <div className="site-item__btn-container">
-            <button onClick={(e) => handleEditClick(e, site.id)}>Edit</button>
+            <EditButton onClick={(e) => handleEditClick(e, site.id)} />
           </div>
         </td>
         <td>{site.name || ""}</td>

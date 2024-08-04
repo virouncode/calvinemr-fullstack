@@ -1,5 +1,6 @@
-
 import logo from "../../../assets/img/logoRectTest.png";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const ConfirmDialogRecurringChange = ({
   handleChangeThisEvent,
@@ -42,22 +43,16 @@ const ConfirmDialogRecurringChange = ({
             </span>
           </p>
           <p className="confirm-dialog-btn-container confirm-dialog-btn-container--recurring">
-            <button type="button" onClick={handleChangeThisEvent}>
-              Only this event
-            </button>
-            <button
-              type="button"
+            <Button onClick={handleChangeThisEvent} label="Only this event" />
+            <Button
               onClick={
                 isFirstEvent
                   ? handleChangeAllEvents
                   : handleChangeAllFutureEvents
               }
-            >
-              {isFirstEvent ? "All events" : "All future events"}
-            </button>
-            <button type="button" onClick={handleCancel}>
-              Cancel
-            </button>
+              label={isFirstEvent ? "All events" : "All future events"}
+            />
+            <CancelButton onClick={handleCancel} />
           </p>
         </div>
       </div>

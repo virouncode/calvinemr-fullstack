@@ -8,6 +8,10 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { myAccountAdminSchema } from "../../../validation/accounts/myAccountAdminValidation";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const MyAccountAdmin = () => {
   //HOOKS
@@ -33,15 +37,15 @@ const MyAccountAdmin = () => {
     setTempFormDatas({ ...tempFormDatas, [name]: value });
   };
 
-  const handleChangeCredentials = (e) => {
+  const handleChangeCredentials = () => {
     navigate("/admin/credentials");
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = () => {
     setEditVisible(true);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     try {
       await myAccountAdminSchema.validate(tempFormDatas);
@@ -94,7 +98,7 @@ const MyAccountAdmin = () => {
     }
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setErrMsg("");
     setTempFormDatas(initialDatas);
     setEditVisible(false);
@@ -127,7 +131,7 @@ const MyAccountAdmin = () => {
               )}
             </div>
             <div className="myaccount-section__row">
-              <label html="last-name">Last Name*: </label>
+              <label htmlFor="last-name">Last Name*: </label>
               {editVisible ? (
                 <input
                   type="text"
@@ -147,25 +151,17 @@ const MyAccountAdmin = () => {
       <div className="myaccount-section__btns">
         {editVisible ? (
           <>
-            <button
-              onClick={handleSave}
-              disabled={progress}
-              className="save-btn"
-            >
-              Save
-            </button>
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </>
         ) : (
           <>
-            <button onClick={handleEdit} disabled={progress}>
-              Edit
-            </button>
-            <button onClick={handleChangeCredentials} disabled={progress}>
-              Change login credentials
-            </button>
+            <EditButton onClick={handleEdit} disabled={progress} />
+            <Button
+              onClick={handleChangeCredentials}
+              disabled={progress}
+              label="Change login credentials"
+            />
           </>
         )}
       </div>

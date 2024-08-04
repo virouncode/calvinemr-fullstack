@@ -1,6 +1,7 @@
 import { useFaxesDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { dateStringToISO } from "../../../utils/dates/formatDates";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
 
 const FaxToolBar = ({
   newVisible,
@@ -142,22 +143,19 @@ const FaxToolBar = ({
       </div>
 
       <div className="fax-toolbar__btns">
-        <button onClick={handleClickNew} disabled={newVisible}>
-          New
-        </button>
+        <Button onClick={handleClickNew} label="New" disabled={newVisible} />
         {currentFaxId === 0 && faxesSelectedIds.length !== 0 && (
-          <button onClick={handleDeleteSelected}>Delete Selected</button>
+          <Button onClick={handleDeleteSelected} label="Delete Selected" />
         )}
         {currentFaxId === 0 &&
           (selectAllVisible ? (
-            <button
+            <Button
               onClick={handleSelectAll}
+              label="Select All"
               disabled={!faxesInbox && !faxesOutbox}
-            >
-              Select All
-            </button>
+            />
           ) : (
-            <button onClick={handleUnselectAll}>Unselect All</button>
+            <Button onClick={handleUnselectAll} label="Unselect All" />
           ))}
       </div>
     </div>

@@ -41,9 +41,7 @@ const ReferenceEdocs = () => {
     <div className="reference-edocs">
       <div className="reference-edocs__title">
         <h3>E-docs</h3>
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
       <div className="reference-edocs__search">
         <label htmlFor="search-edocs">Search</label>

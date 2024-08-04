@@ -1,18 +1,20 @@
 import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    routeCT,
-    siteCT,
-    ynIndicatorsimpleCT,
+  routeCT,
+  siteCT,
+  ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampMonthsLaterTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampMonthsLaterTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SubmitButton from "../../../../UI/Buttons/SubmitButton";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
 
@@ -22,8 +24,6 @@ const RecImmunizationFormSecondDose = ({
   age,
   errMsgPost,
   setErrMsgPost,
-  rangeStart,
-  rangeEnd,
   route,
   patientId,
   immunizationInfos,
@@ -231,10 +231,8 @@ const RecImmunizationFormSecondDose = ({
         />
       </div>
       <div className="recimmunizations-form__btns">
-        <input type="submit" value="Save" disabled={progress} />
-        <button type="button" onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SubmitButton label="Save" disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </form>
   );

@@ -3,8 +3,8 @@ import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosCont
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { provinceStateTerritoryCT } from "../../../../../omdDatas/codesTables";
 import {
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
@@ -134,9 +134,7 @@ const PharmacyFaxForm = ({
             onClick={handleSubmit}
             disabled={progress}
           />
-          <button type="button" onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>
       <td>

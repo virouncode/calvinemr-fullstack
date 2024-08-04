@@ -3,6 +3,9 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { cycleSchema } from "../../../../../validation/cycles/cycleValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 import CycleCycleInfos from "./CycleCycleInfos";
@@ -108,15 +111,9 @@ const CycleDetails = ({
           setErrMsg={setErrMsg}
         />
         <div className="cycles-form__btn-container">
-          <button className="save-btn" onClick={handleSave} disabled={progress}>
-            Save
-          </button>
-          <button onClick={handlePrint} disabled={progress}>
-            Print
-          </button>
-          <button onClick={handleClose} disabled={progress}>
-            Close
-          </button>
+          <SaveButton onClick={handleSave} disabled={progress} />
+          <PrintButton onClick={handlePrint} disabled={progress} />
+          <CloseButton onClick={handleClose} disabled={progress} />
           {progress && <CircularProgressSmall />}
         </div>
       </form>

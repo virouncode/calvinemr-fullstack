@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { doctorSchema } from "../../../../../validation/record/doctorValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellMultipleTypes from "../../../../UI/Tables/SignCellMultipleTypes";
 
@@ -19,7 +22,6 @@ const FamilyDoctorListItem = ({
   errMsgPost,
   lastItemRef = null,
   doctorPut,
-  doctorDelete,
 }) => {
   //HOOKS
   const { user } = useUserContext();
@@ -139,20 +141,20 @@ const FamilyDoctorListItem = ({
           setEditVisible(false);
           setProgress(false);
         },
-        onError: (error) => {
+        onError: () => {
           setProgress(false);
         },
       });
     }
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
 
-  const handleAddToPatient = async (e) => {
+  const handleAddToPatient = async () => {
     const doctorToPut = {
       ...item,
       patients: [...item.patients, patientId],
@@ -202,15 +204,12 @@ const FamilyDoctorListItem = ({
           <div className="doctors__item-btn-container">
             {!editVisible ? (
               <>
-                <button
+                <Button
                   onClick={handleAddToPatient}
                   disabled={item.patients.includes(patientId) || progress}
-                >
-                  Add to patient
-                </button>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
+                  label="Add to patient"
+                />
+                <EditButton onClick={handleEditClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -220,13 +219,7 @@ const FamilyDoctorListItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

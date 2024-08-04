@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import userLogo from "../../../../../assets/img/doctorLogo.png";
 import botLogo from "../../../../../assets/img/logoCarreTest.png";
 import { copyClinicalNoteToClipboard } from "../../../../../utils/js/copyToClipboard";
+import Button from "../../../../UI/Buttons/Button";
 
 const CalvinAIClinicalMessage = ({
   role,
@@ -49,16 +50,16 @@ const CalvinAIClinicalMessage = ({
       </div>
       {role !== "user" && (
         <div className="calvinai-discussion__card-btns">
-          <button
+          <Button
             onClick={handleCopyToClipboard}
             disabled={isLoading}
-            style={{ marginRight: "5px" }}
-          >
-            Copy to clipboard
-          </button>
-          <button onClick={handleCopyToClinicalNote} disabled={isLoading}>
-            Copy to new clinical note version
-          </button>
+            label="Copy to clipboard"
+          />
+          <Button
+            onClick={handleCopyToClinicalNote}
+            disabled={isLoading}
+            label="Copy to new clinical note version"
+          />
         </div>
       )}
     </div>

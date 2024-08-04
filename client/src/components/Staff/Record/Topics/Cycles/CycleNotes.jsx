@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleNoteForm from "./CycleNoteForm";
 const CycleNotes = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
@@ -24,9 +25,9 @@ const CycleNotes = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
       style={{ border: errMsg && "solid 1px red" }}
     >
       <legend>EVENTS NOTES</legend>
-      <button style={{ marginBottom: "10px" }} onClick={handleAdd}>
-        Add
-      </button>
+      <div style={{ marginBottom: "10px" }}>
+        <Button onClick={handleAdd} label="Add" />
+      </div>
       <div className="cycles-form__events-table-container">
         <table className="cycles-form__events-table">
           <thead>

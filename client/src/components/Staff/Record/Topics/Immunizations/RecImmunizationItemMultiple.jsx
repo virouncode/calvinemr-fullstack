@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
+import DotsButton from "../../../../UI/Buttons/DotsButton";
+import PlusButton from "../../../../UI/Buttons/PlusButton";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import RecImmunizationFormMultiple from "./RecImmunizationFormMultiple";
 import RecImmunizationHistory from "./RecImmunizationHistory";
@@ -18,7 +20,7 @@ const RecImmunizationItemMultiple = ({
   const [historyVisible, setHistoryVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
 
-  const handleAddClick = (e) => {
+  const handleAddClick = () => {
     setErrMsgPost("");
     setFormVisible((v) => !v);
   };
@@ -61,20 +63,14 @@ const RecImmunizationItemMultiple = ({
             : ""}{" "}
         </label>
       )}
-      <button
-        type="button"
+      <PlusButton
         onClick={handleAddClick}
         className="recimmunizations-item__cell-multiple-btn"
-      >
-        {"+"}
-      </button>
-      <button
-        type="button"
+      />
+      <DotsButton
         onClick={handleHistoryClick}
         className="recimmunizations-item__cell-multiple-btn"
-      >
-        {"..."}
-      </button>
+      />
       {formVisible && (
         <FakeWindow
           title={`NEW IMMUNIZATION (${type})`}

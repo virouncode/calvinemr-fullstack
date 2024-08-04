@@ -69,7 +69,7 @@ const PharmaciesPU = ({
             Change
           </button>
         )}
-        <button onClick={handleClose}>Close</button>
+        <CloseButton onClick={handleClose} />
       </div>
       {addVisible && (
         <PharmaciesList

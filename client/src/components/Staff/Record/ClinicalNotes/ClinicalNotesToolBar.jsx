@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import xanoPut from "../../../../api/xanoCRUD/xanoPut";
 import useUserContext from "../../../../hooks/context/useUserContext";
+import Button from "../../../UI/Buttons/Button";
 
 const ClinicalNotesToolBar = ({
   contentsVisible,
@@ -15,7 +16,6 @@ const ClinicalNotesToolBar = ({
   setCheckedNotes,
   checkAllNotes,
   setPrintVisible,
-  selectAllDisabled,
   selectAll,
   setSelectAll,
   order,
@@ -38,7 +38,7 @@ const ClinicalNotesToolBar = ({
   const handleClickOverview = () => {
     setOverviewVisible(true);
   };
-  const handleClickSelectAll = async (e) => {
+  const handleClickSelectAll = async () => {
     if (selectAll) {
       setSelectAll(false);
       setCheckedNotes([]);
@@ -64,7 +64,7 @@ const ClinicalNotesToolBar = ({
     }
     setAddVisible(true);
   };
-  const handleClickFold = (e) => {
+  const handleClickFold = () => {
     if (!contentsVisible) {
       triangleRef.current.classList.add("triangle--active");
       contentRef.current.classList.add("clinical-notes__content--active");
@@ -90,7 +90,7 @@ const ClinicalNotesToolBar = ({
     }
   };
 
-  const handleChangeOrder = async (e) => {
+  const handleChangeOrder = async () => {
     if (addVisible) return;
     let newOrder;
     if (order === "asc") {
@@ -197,33 +197,30 @@ const ClinicalNotesToolBar = ({
         />
       </div>
       <div className="clinical-notes__toolbar-btn-container">
-        <button onClick={handleClickFold}>
-          {contentsVisible ? "Fold" : "Unfold"}
-        </button>
-        <button
+        <Button
+          onClick={handleClickFold}
+          label={contentsVisible ? "Fold" : "Unfold"}
+        />
+        <Button
           onClick={handleClickOverview}
           disabled={overviewVisible || isPending}
-        >
-          Overview
-        </button>
-        <button
+          label="Overview"
+        />
+        <Button
           onClick={handleClickNew}
           disabled={addVisible || newButtonDisabled || isPending}
-        >
-          New
-        </button>
-        <button
+          label="New"
+        />
+        <Button
           onClick={handleClickPrint}
           disabled={checkedNotes.length === 0 || isPending}
-        >
-          Print Selection
-        </button>
-        <button
+          label="Print Selection"
+        />
+        <Button
           onClick={handleClickSelectAll}
           disabled={isPending || !clinicalNotes.length}
-        >
-          {selectAll ? "Unselect All" : "Select All"}
-        </button>
+          label={selectAll ? "Unselect All" : "Select All"}
+        />
       </div>
     </div>
   );

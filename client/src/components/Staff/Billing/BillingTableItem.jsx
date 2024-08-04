@@ -23,6 +23,11 @@ import { getLastLetter } from "../../../utils/strings/getLastLetter";
 import { removeLastLetter } from "../../../utils/strings/removeLastLetter";
 import { billingItemSchema } from "../../../validation/billing/billingValidation";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import DeleteButton from "../../UI/Buttons/DeleteButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
@@ -259,28 +264,25 @@ const BillingTableItem = ({
               <div className="billing-table__item-btn-container">
                 {!editVisible ? (
                   <>
-                    <button onClick={handleEditClick} disabled={progress}>
-                      Edit
-                    </button>
-                    <button onClick={handleDeleteClick} disabled={progress}>
-                      Delete
-                    </button>
-                    <button onClick={handleDuplicateClick} disabled={progress}>
-                      Duplicate
-                    </button>
+                    <EditButton onClick={handleEditClick} progress={progress} />
+                    <DeleteButton
+                      onClick={handleDeleteClick}
+                      progress={progress}
+                    />
+                    <Button
+                      onClick={handleDuplicateClick}
+                      disabled={progress}
+                      label="Duplicate"
+                    />
                   </>
                 ) : (
                   <>
-                    <input
-                      type="submit"
-                      value="Save"
+                    <SubmitButton
                       onClick={handleSubmit}
                       disabled={progress}
+                      label="Save"
                     />
-
-                    <button onClick={handleCancel} disabled={progress}>
-                      Cancel
-                    </button>
+                    <CancelButton onClick={handleCancel} disabled={progress} />
                   </>
                 )}
               </div>

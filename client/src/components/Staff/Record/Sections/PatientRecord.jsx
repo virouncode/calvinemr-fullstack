@@ -6,6 +6,7 @@ import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ClinicalNotes from "../ClinicalNotes/ClinicalNotes";
 import ExportChart from "../ExportChart/ExportChart";
@@ -105,31 +106,22 @@ const PatientRecord = ({
     <>
       <div className="patient-record__actions">
         <div className="patient-record__btn-container">
-          <button
-            type="button"
-            className="patient-record__fold"
+          <Button
             onClick={handleClickLeftFold}
-          >
-            {leftContentsVisible ? "Fold" : "Unfold"}
-          </button>
+            label={leftContentsVisible ? "Fold" : "Unfold"}
+          />
         </div>
         <div className="patient-record__btn-container patient-record__btn-container--center">
           <div style={{ textAlign: "end" }}>
-            <button
-              type="button"
-              className="patient-record__fold"
+            <Button
               onClick={handleClickAllFold}
-            >
-              {allContentsVisible ? "Fold All" : "Unfold All"}
-            </button>
-            <button
-              type="button"
-              className="patient-record__fold"
+              label={allContentsVisible ? "Fold All" : "Unfold All"}
+            />
+            <Button
               onClick={handleClickExport}
               disabled={exportVisible}
-            >
-              Export chart
-            </button>
+              label="Export chart"
+            />
           </div>
           <div style={{ textAlign: "end", marginRight: "10px" }}>
             <FormControlLabel
@@ -146,13 +138,10 @@ const PatientRecord = ({
           </div>
         </div>
         <div className="patient-record__btn-container">
-          <button
-            type="button"
-            className="patient-record__fold"
+          <Button
             onClick={handleClickRightFold}
-          >
-            {rightContentsVisible ? "Fold" : "Unfold"}
-          </button>
+            label={rightContentsVisible ? "Fold" : "Unfold"}
+          />
         </div>
       </div>
       <div className="patient-record__content">

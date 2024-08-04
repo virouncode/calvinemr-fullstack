@@ -42,9 +42,11 @@ const LettersTemplates = ({ handleSelectTemplate }) => {
   return (
     <div className="letters__templates">
       <div className="letters__templates-btn-container">
-        <button onClick={handleAddNew} disabled={newTemplateVisible}>
-          Add a new template
-        </button>
+        <Button
+          onClick={handleAddNew}
+          disabled={newTemplateVisible}
+          label="Add a new template"
+        />
       </div>
       <div className="letters__templates-search">
         <label htmlFor="template-search">Search</label>

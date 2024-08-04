@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useSpeechRecognition } from "../../../../../hooks/useSpeechRecognition";
+import Button from "../../../../UI/Buttons/Button";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CalvinAIInput from "../../../CalvinAIChat/CalvinAIInput";
 import CalvinAITemplates from "../../../CalvinAIChat/CalvinAITemplates";
@@ -156,13 +157,11 @@ const CalvinAIClinicalDiscussion = ({
           >
             Use template
           </span>
-          <button
+          <Button
             onClick={() => abortController.current.abort()}
-            style={{ marginRight: "5px" }}
-          >
-            Stop generating
-          </button>
-          <button onClick={handleNew}>New conversation</button>
+            label="Stop generating"
+          />
+          <Button onClick={handleNew} label="New conversation" />
         </div>
         <CalvinAIInput
           handleChangeInput={handleChangeInput}

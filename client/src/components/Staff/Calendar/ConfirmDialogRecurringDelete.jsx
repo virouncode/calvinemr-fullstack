@@ -1,5 +1,6 @@
-
 import logo from "../../../assets/img/logoRectTest.png";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const ConfirmDialogRecurringDelete = ({
   handleDeleteThisEvent,
@@ -37,22 +38,18 @@ const ConfirmDialogRecurringDelete = ({
             </span>
           </p>
           <p className="confirm-dialog-btn-container confirm-dialog-btn-container--recurring">
-            <button type="button" onClick={handleDeleteThisEvent}>
-              Delete only this event
-            </button>
-            <button
-              type="button"
+            <Button onClick={handleDeleteThisEvent} label="Only this event" />
+            <Button
               onClick={
                 isFirstEvent
                   ? handleDeleteAllEvents
                   : handleDeleteAllFutureEvents
               }
-            >
-              {isFirstEvent ? "Delete all events" : "Delete all future events"}
-            </button>
-            <button type="button" onClick={handleCancel}>
-              Cancel
-            </button>
+              label={
+                isFirstEvent ? "Delete all events" : "Delete all future events"
+              }
+            />
+            <CancelButton onClick={handleCancel} />
           </p>
         </div>
       </div>

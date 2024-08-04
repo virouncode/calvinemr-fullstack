@@ -10,6 +10,8 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
 import SiteSelect from "../../Staff/EventForm/SiteSelect";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 
 axios.defaults.withCredentials = true;
@@ -513,18 +515,12 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
         </div>
       </form>
       <div className="signup-staff__submit">
-        <button
-          type="button"
+        <SaveButton
           onClick={handleSubmit}
-          value="Sign Up"
-          disabled={isLoadingFile || progress}
-          className="save-btn"
-        >
-          Sign Up
-        </button>
-        <button type="button" onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+          disabled={progress}
+          label="Sign Up"
+        />
+        <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>
   );

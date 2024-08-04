@@ -144,10 +144,8 @@ const ProblemListPU = ({
         </table>
       </div>
       <div className="problemlist__btn-container">
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
-        <button onClick={handleClose}>Close</button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
       </div>
     </>
   );

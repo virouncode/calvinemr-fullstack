@@ -1,9 +1,9 @@
-
 import {
-    dateISOToTimestampTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
 import IvfMedsList from "../../../../UI/Lists/IvfMedsList";
 
 const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
@@ -70,7 +70,7 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
   return (
     <tr className="cycles-form__events-item">
       <td>
-        <button onClick={handleRemove}>Remove</button>
+        <Button onClick={handleRemove} label="Remove" />
       </td>
       <td>
         <input

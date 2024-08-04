@@ -24,6 +24,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -80,11 +81,11 @@ const MessageDetail = ({
     setEditTodoVisible(true);
   };
 
-  const handleClickBack = (e) => {
+  const handleClickBack = () => {
     setCurrentMsgId(0);
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: `Do you really want to delete this ${
@@ -124,23 +125,23 @@ const MessageDetail = ({
     }
   };
 
-  const handleClickReply = (e) => {
+  const handleClickReply = () => {
     setReplyVisible(true);
     setAllPersons(false);
   };
-  const handleClickReplyAll = (e) => {
+  const handleClickReplyAll = () => {
     setReplyVisible(true);
     setAllPersons(true);
   };
 
-  const handleClickForward = (e) => {
+  const handleClickForward = () => {
     setForwardVisible(true);
   };
-  const handleClickTodo = (e) => {
+  const handleClickTodo = () => {
     setNewTodoVisible(true);
   };
 
-  const handleClickForwardTodo = (e) => {
+  const handleClickForwardTodo = () => {
     setForwardTodoVisible(true);
   };
 
@@ -313,19 +314,19 @@ const MessageDetail = ({
           !newTodoVisible && (
             <div className="message-detail__btns">
               {section !== "Sent messages" && (
-                <button onClick={handleClickReply}>Reply</button>
+                <Button onClick={handleClickReply} label="Reply" />
               )}
               {message.to_staff_ids.length >= 2 &&
                 section !== "Sent messages" && (
-                  <button onClick={handleClickReplyAll}>Reply all</button>
+                  <Button onClick={handleClickReplyAll} label="Reply all" />
                 )}
-              <button onClick={handleClickForward}>Forward</button>
-              <button onClick={handleClickTodo}>Todo</button>
+              <Button onClick={handleClickForward} label="Forward" />
+              <Button onClick={handleClickTodo} label="Todo" />
             </div>
           )}
         {section === "To-dos" && (
           <div className="message-detail__btns">
-            <button onClick={handleClickForwardTodo}>Forward To-do</button>
+            <Button onClick={handleClickForwardTodo} label="Forward To-do" />
           </div>
         )}
         {forwardVisible && (

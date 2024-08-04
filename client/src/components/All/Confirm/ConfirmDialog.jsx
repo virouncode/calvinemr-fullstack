@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import logo from "../../../assets/img/logoRectTest.png";
+import Button from "../../UI/Buttons/Button";
 
 const ConfirmDialog = ({ onConfirm, onCancel, isPopUp, props }) => {
   const positionY = isPopUp
@@ -36,12 +37,8 @@ const ConfirmDialog = ({ onConfirm, onCancel, isPopUp, props }) => {
             {props.content ?? "Do you really want to do this action ?"}
           </p>
           <p className="confirm-dialog-btn-container">
-            <button type="button" onClick={onConfirm}>
-              {props.yes}
-            </button>
-            <button type="button" onClick={onCancel}>
-              {props.no}
-            </button>
+            <Button onClick={onConfirm} label={props.yes} />
+            <Button onClick={onCancel} label={props.no} />
           </p>
         </div>
       </div>

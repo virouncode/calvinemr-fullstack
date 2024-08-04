@@ -18,6 +18,8 @@ import { staffIdListToTitleAndName } from "../../../../utils/names/staffIdListTo
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import DoneButton from "../../../UI/Buttons/DoneButton";
+import UndoneButton from "../../../UI/Buttons/UndoneButton";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import EditTodo from "./EditTodo";
 
@@ -37,7 +39,7 @@ const MessageThumbnail = ({
   const todoDelete = useTodoDelete(user.id, section);
   const navigate = useNavigate();
 
-  const handleMsgClick = async (e) => {
+  const handleMsgClick = async () => {
     if (section !== "To-dos" && !message.read_by_staff_ids?.includes(user.id)) {
       //create and replace message with read by user id
       const messageToPut = {
@@ -124,7 +126,7 @@ const MessageThumbnail = ({
     return msgsSelectedIds.includes(parseInt(id));
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: `Do you really want to delete this ${
@@ -302,27 +304,9 @@ const MessageThumbnail = ({
         {section === "To-dos" && (
           <div className="message-thumbnail__subject-btn">
             {message.done ? (
-              <button
-                style={{
-                  marginLeft: "5px",
-                  fontSize: "0.7rem",
-                  boxShadow: "none",
-                }}
-                onClick={handleUndone}
-              >
-                Undone
-              </button>
+              <UndoneButton onClick={handleUndone} />
             ) : (
-              <button
-                style={{
-                  marginLeft: "5px",
-                  fontSize: "0.7rem",
-                  boxShadow: "none",
-                }}
-                onClick={handleDone}
-              >
-                Done
-              </button>
+              <DoneButton onClick={handleDone} />
             )}
           </div>
         )}

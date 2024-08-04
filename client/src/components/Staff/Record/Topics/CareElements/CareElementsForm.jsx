@@ -2,18 +2,20 @@ import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { ynIndicatorsimpleCT } from "../../../../../omdDatas/codesTables";
 import {
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import {
-    bodyMassIndex,
-    bodySurfaceArea,
-    cmToFeet,
-    feetToCm,
-    kgToLbs,
-    lbsToKg,
+  bodyMassIndex,
+  bodySurfaceArea,
+  cmToFeet,
+  feetToCm,
+  kgToLbs,
+  lbsToKg,
 } from "../../../../../utils/measurements/measurements";
 import { careElementsSchema } from "../../../../../validation/record/careElementsValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
@@ -298,16 +300,8 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
         <div className="care-elements__card-title">
           <span>Add new care elements</span>
           <div className="care-elements__btn-container">
-            <button
-              onClick={handleSubmit}
-              disabled={progress}
-              className="save-btn"
-            >
-              Save
-            </button>
-            <button type="button" onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSubmit} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
         <div className="care-elements__card-content">

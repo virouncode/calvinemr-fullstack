@@ -1,10 +1,11 @@
 import { useState } from "react";
 import {
-    useDoctorDelete,
-    useDoctorPost,
-    useDoctorPut,
+  useDoctorDelete,
+  useDoctorPost,
+  useDoctorPut,
 } from "../../../../../hooks/reactquery/mutations/doctorsMutations";
 import useIntersection from "../../../../../hooks/useIntersection";
+import Button from "../../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -64,7 +65,7 @@ const FamilyDoctorsList = ({
     <>
       <div className="doctors-list__title">
         External Doctors directory (as of [date])
-        <button onClick={handleAdd}>Add</button>
+        <Button onClick={handleAdd} label="Add" />
       </div>
       {errMsgPost && <div className="doctors-list__err">{errMsgPost}</div>}
 

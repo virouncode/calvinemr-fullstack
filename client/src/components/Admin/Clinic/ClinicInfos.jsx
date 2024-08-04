@@ -7,6 +7,10 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { clinicSchema } from "../../../validation/clinic/clinicValidation";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import EditButton from "../../UI/Buttons/EditButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -145,22 +149,18 @@ const ClinicInfos = () => {
         <div className="clinic__global-infos-btn-container">
           {editClinicVisible ? (
             <>
-              <button onClick={handleSaveClinic} className="save-btn">
-                Save
-              </button>
-              <button onClick={handleCancelClinic}>Cancel</button>
+              <SaveButton onClick={handleSaveClinic} />
+              <CancelButton onClick={handleCancelClinic} />
             </>
           ) : (
-            <>
-              <button onClick={handleEditClinic}>Edit</button>
-            </>
+            <EditButton onClick={handleEditClinic} />
           )}
         </div>
       </div>
       {errMsgPost && <p className="clinic__global-infos-err">{errMsgPost}</p>}
       <div className="clinic__subtitle">
         <span>Sites</span>
-        <button onClick={handleAddNew}>New site</button>
+        <Button label="New site" onClick={handleAddNew} />
       </div>
       <SitesTable sites={sites} handleEditClick={handleEditClick} />
       {addVisible && (

@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 
 const TempPwdForm = ({
   emailInput,
@@ -49,10 +51,8 @@ const TempPwdForm = ({
           autoFocus
         />
         <div className="temp-password-form-row-btns">
-          <input type="submit" value="Submit" />
-          <button onClick={handleCancel} style={{ marginLeft: "5px" }}>
-            Cancel
-          </button>
+          <SubmitButton />
+          <CancelButton onClick={handleCancel} />
         </div>
       </div>
     </form>

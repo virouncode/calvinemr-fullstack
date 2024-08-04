@@ -1,3 +1,4 @@
+import EditButton from "../../UI/Buttons/EditButton";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 
 const StaffAccountItem = ({
@@ -22,7 +23,7 @@ const StaffAccountItem = ({
     >
       <td>
         <div className="staff-result__item-btn-container">
-          <button onClick={handleEdit}>Edit</button>
+          <EditButton onClick={handleEdit} />
         </div>
       </td>
       <td>{staff.last_name}</td>

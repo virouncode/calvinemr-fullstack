@@ -1,13 +1,13 @@
-
 import { toast } from "react-toastify";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 import SignCellMultipleTypes from "../../../../UI/Tables/SignCellMultipleTypes";
 
 const ClinicDoctorItem = ({ item, patientId, site }) => {
@@ -64,12 +64,11 @@ const ClinicDoctorItem = ({ item, patientId, site }) => {
       <tr className="doctors__item">
         <td>
           <div className="doctors__item-btn-container">
-            <button
+            <Button
               onClick={handleAddToPatient}
               disabled={item.patients.includes(patientId)}
-            >
-              Add to patient
-            </button>
+              label="Add to patient"
+            />
           </div>
         </td>
         <td>{item.last_name}</td>

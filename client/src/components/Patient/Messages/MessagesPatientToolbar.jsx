@@ -4,6 +4,7 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPut } from "../../../hooks/reactquery/mutations/messagesMutations";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Button from "../../UI/Buttons/Button";
 
 const MessagesPatientToolBar = ({
   search,
@@ -25,7 +26,7 @@ const MessagesPatientToolBar = ({
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
-  const handleClickNew = (e) => {
+  const handleClickNew = () => {
     setNewVisible(true);
   };
 
@@ -106,7 +107,7 @@ const MessagesPatientToolBar = ({
     }
   };
 
-  const handleClickUndelete = async (e) => {
+  const handleClickUndelete = async () => {
     const msgsSelected = await xanoGet(
       "/messages_external_selected",
       "patient",
@@ -171,23 +172,23 @@ const MessagesPatientToolBar = ({
         onChange={handleChange}
       />
       <div className="messages-toolbar__btns">
-        <button onClick={handleClickNew}>New</button>
+        <Button onClick={handleClickNew} label="New" />
         {section === "Deleted messages" && msgsSelectedIds.length !== 0 && (
-          <button onClick={handleClickUndelete}>Undelete</button>
+          <Button onClick={handleClickUndelete} label="Undelete" />
         )}
         {currentMsgId !== 0 && (
-          <button onClick={handleClickPrint}>Print</button>
+          <Button onClick={handleClickPrint} label="Print" />
         )}
         {section !== "Deleted messages" &&
           currentMsgId === 0 &&
           msgsSelectedIds.length !== 0 && (
-            <button onClick={handleDeleteSelected}>Delete Selected</button>
+            <Button onClick={handleDeleteSelected} label="Delete Selected" />
           )}
         {currentMsgId === 0 &&
           (selectAllVisible ? (
-            <button onClick={handleSelectAll}>Select All</button>
+            <Button onClick={handleSelectAll} label="Select All" />
           ) : (
-            <button onClick={handleUnselectAll}>Unselect All</button>
+            <Button onClick={handleUnselectAll} label="Unselect All" />
           ))}
       </div>
     </div>

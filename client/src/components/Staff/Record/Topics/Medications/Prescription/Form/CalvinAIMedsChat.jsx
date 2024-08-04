@@ -186,12 +186,10 @@ const CalvinAIMedsChat = ({ initialMessage }) => {
           >
             Use template
           </span>
-          <button
+          <Button
             onClick={() => abortController.current.abort()}
-            style={{ marginRight: "5px" }}
-          >
-            Stop generating
-          </button>
+            label="Stop generating"
+          />
           <button onClick={handleNew}>New conversation</button>
         </div>
         <CalvinAIInput

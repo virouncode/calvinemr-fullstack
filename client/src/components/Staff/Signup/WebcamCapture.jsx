@@ -63,7 +63,7 @@ const WebcamCapture = ({ setFormDatas, setWebcamVisible }) => {
             OK
           </button>
         )}
-        <button onClick={handleCancel}>Cancel</button>
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

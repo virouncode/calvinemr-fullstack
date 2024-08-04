@@ -7,17 +7,17 @@ import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/avail
 import { getAvailableRooms } from "../../../../../utils/appointments/getAvailableRooms";
 import { statuses } from "../../../../../utils/appointments/statuses";
 import {
-    nowTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
-    timestampToDateTimeSecondsISOTZ,
-    timestampToTimeISOTZ,
-    tzComponentsToTimestamp,
+  nowTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
+  timestampToDateTimeSecondsISOTZ,
+  timestampToTimeISOTZ,
+  tzComponentsToTimestamp,
 } from "../../../../../utils/dates/formatDates";
 import {
-    staffIdToFirstName,
-    staffIdToLastName,
-    staffIdToOHIP,
+  staffIdToFirstName,
+  staffIdToLastName,
+  staffIdToOHIP,
 } from "../../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toRoomTitle } from "../../../../../utils/names/toRoomTitle";
@@ -529,9 +529,7 @@ const AppointmentForm = ({
             onClick={handleSubmit}
             disabled={progress}
           />
-          <button type="button" onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>
       <td style={{ minWidth: "170px" }}>

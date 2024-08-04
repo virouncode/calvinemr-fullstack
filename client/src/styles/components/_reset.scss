@@ -61,6 +61,9 @@
     input[type="email"] {
       width: 200px;
     }
+    button {
+      margin-left: 5px;
+    }
   }
   .temp-password-form {
     p {
@@ -78,9 +81,8 @@
       input[type="password"] {
         width: 250px;
       }
-      &-btns {
-        display: flex;
-        justify-content: flex-start;
+      button {
+        margin-left: 5px;
       }
     }
   }

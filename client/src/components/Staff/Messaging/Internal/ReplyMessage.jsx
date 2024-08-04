@@ -8,6 +8,8 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Message from "./Message";
@@ -46,10 +48,10 @@ const ReplyMessage = ({
     );
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setReplyVisible(false);
   };
-  const handleSend = async (e) => {
+  const handleSend = async () => {
     setProgress(true);
     let attach_ids;
     if (attachments.length > 0) {
@@ -268,16 +270,12 @@ const ReplyMessage = ({
         />
       </div>
       <div className="reply-message__btns">
-        <button
+        <SaveButton
           onClick={handleSend}
           disabled={isLoadingFile || progress}
-          className="save-btn"
-        >
-          Send
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+          label="Send"
+        />
+        <CancelButton onClick={handleCancel} disabled={progress} />
         {isLoadingFile && <CircularProgressMedium />}
       </div>
       {templatesVisible && (

@@ -5,7 +5,10 @@ import { provinceStateTerritoryCT } from "../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../validation/record/pharmacyValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import GenericList from "../../UI/Lists/GenericList";
+import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 const PharmacyFaxForm = ({
   initialFaxNumber,
@@ -106,7 +109,7 @@ const PharmacyFaxForm = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setAddFaxNumberVisible(false);
   };
 
@@ -210,12 +213,9 @@ const PharmacyFaxForm = ({
         />
       </div>
       <div className="pharmacy-fax__form-btns">
-        <button onClick={handleSubmit} className="save-btn" disabled={progress}>
-          Save
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <SaveButton onClick={handleSubmit} disabled={progress} />
+        <CancelButton onClick={handleCancel} disabled={progress} />
+        {progress && <CircularProgressSmall />}
       </div>
     </div>
   );

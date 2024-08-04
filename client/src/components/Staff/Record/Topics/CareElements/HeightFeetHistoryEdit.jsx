@@ -1,15 +1,17 @@
 import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    dateISOToTimestampTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import {
-    bodyMassIndex,
-    cmToFeet,
-    feetToCm,
+  bodyMassIndex,
+  cmToFeet,
+  feetToCm,
 } from "../../../../../utils/measurements/measurements";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const HeightFeetHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
@@ -186,10 +188,8 @@ const HeightFeetHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         ))}
       </ul>
       <div className="care-elements__edit-btns">
-        <button className="save-btn" onClick={handleSubmit}>
-          Save
-        </button>
-        <button onClick={handleClose}>Close</button>
+        <SaveButton onClick={handleSubmit} />
+        <CloseButton onClick={handleClose} />
       </div>
     </div>
   );

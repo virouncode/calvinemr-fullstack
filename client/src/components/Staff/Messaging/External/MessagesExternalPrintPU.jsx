@@ -1,3 +1,4 @@
+import Button from "../../../UI/Buttons/Button";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
 
@@ -32,7 +33,7 @@ const MessagesExternalPrintPU = ({ message, previousMsgs, attachments }) => {
           />
         </div>
         <div className="messages-print__btn">
-          <button onClick={handleClickPrint}>Print</button>
+          <Button onClick={handleClickPrint} label="Print" />
         </div>
       </div>
     </div>

@@ -6,6 +6,11 @@ import { timestampToDateTimeStrTZ } from "../../../../../utils/dates/formatDates
 import { copyClinicalNoteToClipboard } from "../../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import Button from "../../../../UI/Buttons/Button";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import LinkButton from "../../../../UI/Buttons/LinkButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import TriangleClinicalButton from "../../../../UI/Buttons/TriangleClinicalButton";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 
@@ -102,71 +107,57 @@ const ClinicalNoteCardHeader = ({
           {!editVisible ? (
             <>
               {isRewriting && <CircularProgressSmall />}
-              <button
+              <EditButton
                 onClick={handleEditClick}
                 disabled={
                   user.id !== clinicalNote.created_by_id ||
                   addVisible ||
                   isRewriting
                 }
-              >
-                Edit
-              </button>
-              <button
+              />
+              <LinkButton
                 onClick={(e) => e.stopPropagation()}
                 disabled={
                   user.id !== clinicalNote.created_by_id ||
                   addVisible ||
                   isRewriting
                 }
-              >
-                <a
-                  href={`/staff/billing/${
-                    demographicsInfos.patient_id
-                  }/${toPatientName(demographicsInfos)}/${
-                    demographicsInfos.HealthCard?.Number
-                  }/${clinicalNote.date_created}`}
-                  rel="noreferrer"
-                >
-                  Bill
-                </a>
-              </button>
+                label="Bill"
+                url={`/staff/billing/${
+                  demographicsInfos.patient_id
+                }/${toPatientName(demographicsInfos)}/${
+                  demographicsInfos.HealthCard?.Number
+                }/${clinicalNote.date_created}`}
+              />
               {user.title !== "Secretary" && user.title !== "Nurse" && (
-                <button
+                <Button
                   onClick={handleCalvinAIClick}
                   disabled={
                     user.id !== clinicalNote.created_by_id ||
                     addVisible ||
                     isRewriting
                   }
-                >
-                  CalvinAI
-                </button>
+                  label="CalvinAI"
+                />
               )}
-              <button
+              <Button
                 onClick={handleRewrite}
                 disabled={
                   user.id !== clinicalNote.created_by_id ||
                   addVisible ||
                   isRewriting
                 }
-              >
-                Rewrite
-              </button>
-              <button onClick={handleCopyToClipboard}>Copy to clipboard</button>
+                label="Rewrite"
+              />
+              <Button
+                onClick={handleCopyToClipboard}
+                label="Copy to clipboard"
+              />
             </>
           ) : (
             <>
-              <button
-                style={{ margin: "0 2px" }}
-                onClick={handleSaveClick}
-                className="save-btn"
-              >
-                Save
-              </button>
-              <button style={{ margin: "0 2px" }} onClick={handleCancelClick}>
-                Cancel
-              </button>
+              <SaveButton onClick={handleSaveClick} />
+              <CancelButton onClick={handleCancelClick} />
             </>
           )}
         </div>

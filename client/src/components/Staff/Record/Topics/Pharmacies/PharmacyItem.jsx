@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { usePatientPut } from "../../../../../hooks/reactquery/mutations/patientsMutations";
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
@@ -197,9 +197,7 @@ const PharmacyItem = ({
                 >
                   Prefer
                 </button>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -209,13 +207,7 @@ const PharmacyItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

@@ -1,6 +1,8 @@
+import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -33,7 +35,7 @@ const AlertsPU = ({
   );
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -46,7 +48,7 @@ const AlertsPU = ({
     }
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setErrMsgPost("");
     editCounter.current += 1;
     setAddVisible((v) => !v);
@@ -141,10 +143,8 @@ const AlertsPU = ({
           </table>
         </div>
         <div className="alerts__btn-container">
-          <button onClick={handleAdd} disabled={addVisible}>
-            Add
-          </button>
-          <button onClick={handleClose}>Close</button>
+          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+          <CloseButton onClick={handleClose} />
         </div>
       </>
     </>

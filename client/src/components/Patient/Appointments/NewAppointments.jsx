@@ -17,6 +17,7 @@ import {
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import AppointmentsSlots from "./AppointmentsSlots";
@@ -233,13 +234,11 @@ Cellphone: ${
           rangeEnd={rangeEnd}
         />
         <div className="new-appointments__submit">
-          <button
+          <SaveButton
             onClick={handleSubmit}
             disabled={_.isEmpty(appointmentSelected)}
-            className="save-btn"
-          >
-            Submit
-          </button>
+            label="Submit"
+          />
         </div>
       </>
       {requestSent && (

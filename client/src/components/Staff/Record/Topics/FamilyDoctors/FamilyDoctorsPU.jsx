@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PatientClinicDoctorsList from "./PatientClinicDoctorsList";
@@ -18,7 +19,6 @@ const FamilyDoctorsPU = ({
   errorDoctors,
   isFetchingNextPageDoctors,
   fetchNextPageDoctors,
-  isFetchingDoctors,
   patientId,
   setPopUpVisible,
   demographicsInfos,
@@ -37,7 +37,7 @@ const FamilyDoctorsPU = ({
   );
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -97,7 +97,7 @@ const FamilyDoctorsPU = ({
         fetchNextPageDoctors={fetchNextPageDoctors}
       />
       <div className="doctors__btn-container">
-        <button onClick={handleClose}>Close</button>
+        <CloseButton onClick={handleClose} />
       </div>
     </>
   );

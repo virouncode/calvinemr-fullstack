@@ -1,4 +1,5 @@
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
 import MessageExternal from "../External/MessageExternal";
 import Message from "./Message";
 import MessagesAttachments from "./MessagesAttachments";
@@ -53,7 +54,7 @@ const MessagesPrintPU = ({ message, previousMsgs, attachments, section }) => {
           />
         </div>
         <div className="messages-print__btn">
-          <button onClick={handleClickPrint}>Print</button>
+          <Button onClick={handleClickPrint} label="Print" />
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useClinicalNotesTemplatesPut } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 
 const ClinicalNotesTemplateEdit = ({
   setEditTemplateVisible,
@@ -59,10 +61,8 @@ const ClinicalNotesTemplateEdit = ({
         />
       </div>
       <div className="edit-template-btns">
-        <button onClick={handleSave} className="save-btn">
-          Save
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

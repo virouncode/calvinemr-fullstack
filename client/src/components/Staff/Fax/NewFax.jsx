@@ -9,6 +9,8 @@ import { useFaxPost } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
@@ -249,17 +251,12 @@ const NewFax = ({
           )}
         </div>
         <div className="new-fax__btns">
-          <button
+          <SaveButton
             onClick={handleSend}
-            disabled={isLoadingFile || progress}
-            className="save-btn"
-          >
-            Send
-          </button>
-          <button onClick={handleCancel} disabled={progress}>
-            Cancel
-          </button>
-
+            disabled={progress || isLoadingFile}
+            label="Send"
+          />
+          <CancelButton onClick={handleCancel} disabled={progress} />
           {(isLoadingFile || progress) && <CircularProgressMedium />}
         </div>
       </div>

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import userLogo from "../../../assets/img/doctorLogo.png";
 import botLogo from "../../../assets/img/logoCarreTest.png";
 import { copyClinicalNoteToClipboard } from "../../../utils/js/copyToClipboard";
+import Button from "../../UI/Buttons/Button";
 
 const CalvinAIChatMessage = ({ role, message, isLoading }) => {
   const handleCopyToClipboard = async (e) => {
@@ -39,9 +40,11 @@ const CalvinAIChatMessage = ({ role, message, isLoading }) => {
       </div>
       {role !== "user" && (
         <div className="calvinai-chat__card-btns">
-          <button onClick={handleCopyToClipboard} disabled={isLoading}>
-            Copy to clipboard
-          </button>
+          <Button
+            onClick={handleCopyToClipboard}
+            disabled={isLoading}
+            label="Copy to clipboard"
+          />
         </div>
       )}
     </div>

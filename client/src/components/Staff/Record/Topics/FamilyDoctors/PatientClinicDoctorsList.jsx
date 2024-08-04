@@ -3,6 +3,7 @@ import useClinicContext from "../../../../../hooks/context/useClinicContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import { toPatientLastName } from "../../../../../utils/names/toPatientName";
+import Button from "../../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -33,16 +34,11 @@ const PatientClinicDoctorsList = ({ patientId, demographicsInfos }) => {
   return (
     <>
       <div className="doctors__table-title">
-        {`${toPatientLastName(demographicsInfos, true)}'s doctors at ${
-          clinic.name
-        }`}
-        <button
-          style={{ marginLeft: "5px" }}
-          onClick={handleAdd}
-          disabled={addVisible}
-        >
-          Add
-        </button>
+        <span style={{ marginRight: "10px" }}>{`${toPatientLastName(
+          demographicsInfos,
+          true
+        )}'s doctors at ${clinic.name}`}</span>
+        <Button onClick={handleAdd} label="Add" disabled={addVisible} />
       </div>
       <div className="doctors__table-container">
         <table className="doctors__table">

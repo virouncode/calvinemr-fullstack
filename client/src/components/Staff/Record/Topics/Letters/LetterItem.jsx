@@ -135,9 +135,7 @@ const LetterItem = ({
           <div className="letters__item-btn-container">
             {!editVisible ? (
               <>
-                <button onClick={handleEditClick} disabled={progress}>
-                  Edit
-                </button>
+                <EditButton onClick={handleEditClick} disabled={progress} />
                 <button onClick={handleSendInternal} disabled={progress}>
                   Send (Internal)
                 </button>
@@ -147,9 +145,7 @@ const LetterItem = ({
                 <button onClick={handleFax} disabled={progress}>
                   Fax
                 </button>
-                <button onClick={handleDeleteClick} disabled={progress}>
-                  Delete
-                </button>
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
               </>
             ) : (
               <>
@@ -159,13 +155,7 @@ const LetterItem = ({
                   onClick={handleSubmit}
                   disabled={progress}
                 />
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  disabled={progress}
-                >
-                  Cancel
-                </button>
+                <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>

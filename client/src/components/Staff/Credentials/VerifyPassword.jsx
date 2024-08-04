@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
 
 const VerifyPassword = ({ setVerified }) => {
   const LOGIN_URL = "/auth/login";
@@ -64,10 +66,8 @@ const VerifyPassword = ({ setVerified }) => {
           />
         </div>
         <div className="verify-pwd-form-row verify-pwd-form-row--submit">
-          <input type="submit" value="Ok" />
-          <button onClick={handleCancel} style={{ marginLeft: "5px" }}>
-            Cancel
-          </button>
+          <SubmitButton />
+          <CancelButton onClick={handleCancel} />
         </div>
       </form>
     </div>

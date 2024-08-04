@@ -2,17 +2,18 @@ import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useDoctorPut } from "../../../../../hooks/reactquery/mutations/doctorsMutations";
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import Button from "../../../../UI/Buttons/Button";
 
 const PatientFamilyDoctorItem = ({ item, patientId, lastItemRef = null }) => {
   const { user } = useUserContext();
   const [progress, setProgress] = useState(false);
   const doctorPut = useDoctorPut();
 
-  const handleRemoveFromPatient = async (e) => {
+  const handleRemoveFromPatient = async () => {
     setProgress(true);
     const doctorToPut = {
       ...item,
@@ -35,9 +36,11 @@ const PatientFamilyDoctorItem = ({ item, patientId, lastItemRef = null }) => {
   return (
     <tr className="doctors__item" ref={lastItemRef}>
       <td>
-        <button onClick={handleRemoveFromPatient} disabled={progress}>
-          Remove from patient
-        </button>
+        <Button
+          onClick={handleRemoveFromPatient}
+          disabled={progress}
+          label="Remove from patient"
+        />
       </td>
       <td>{item.LastName}</td>
       <td>{item.FirstName}</td>

@@ -5,6 +5,8 @@ import { useBillingCodeTemplatePost } from "../../../../hooks/reactquery/mutatio
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
 import { removeLastLetter } from "../../../../utils/strings/removeLastLetter";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 
 const BillingCodesTemplateForm = ({
   errMsgPost,
@@ -94,10 +96,8 @@ const BillingCodesTemplateForm = ({
         autoComplete="off"
         id="template-billing-code"
       />
-      <button onClick={handleSave} className="save-btn">
-        Save
-      </button>
-      <button onClick={handleCancel}>Cancel</button>
+      <SaveButton onClick={handleSave} />
+      <CancelButton onClick={handleCancel} />
     </li>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -49,9 +50,7 @@ const StaffAccounts = () => {
           sites={sites}
         />
         <div className="staff-result__btn-container">
-          <button onClick={handleAddNew} style={{ marginBottom: "20px" }}>
-            New staff account
-          </button>
+          <Button onClick={handleAddNew} label="New staff account" />
         </div>
         <StaffAccountsTable
           search={search}

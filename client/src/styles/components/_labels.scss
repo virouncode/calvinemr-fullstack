@@ -1,13 +1,16 @@
 .labels-content {
-
   &__item {
     text-decoration: underline;
-    cursor:pointer;
+    cursor: pointer;
   }
+}
+.labels-content__print-btn {
+  margin-right: 5px;
 }
 
 @media print {
-  .labels-content__print-btn, .labels-content__select {
-      display: none !important;
+  .labels-content__print-btn,
+  .labels-content__select {
+    display: none !important;
   }
 }

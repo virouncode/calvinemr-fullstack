@@ -17,6 +17,7 @@ import {
   toPatientFirstName,
   toPatientLastName,
 } from "../../../utils/names/toPatientName";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import MigrationPatientSearchForm from "./MigrationPatientSearchForm";
 import MigrationPatientsList from "./MigrationPatientsList";
@@ -192,9 +193,7 @@ const MigrationExport = () => {
         </div>
       </div>
       <div className="migration-export__btn">
-        <button onClick={handleExport} disabled={progress} className="save-btn">
-          Export
-        </button>
+        <SaveButton onClick={handleExport} disabled={progress} label="Export" />
         {progress && <CircularProgressMedium />}
       </div>
     </div>

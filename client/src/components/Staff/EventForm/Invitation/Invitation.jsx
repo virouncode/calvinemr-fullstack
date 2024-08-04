@@ -13,6 +13,8 @@ import {
 } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
+import CancelButton from "../../../UI/Buttons/CancelButton";
 import SiteSelect from "../SiteSelect";
 import TemplatesRadio from "../Templates/TemplatesRadio";
 
@@ -316,16 +318,14 @@ const Invitation = ({
       </div>
       <div className="invitation__btns">
         {user.id === hostId && (
-          <button onClick={handleSendAndSave} disabled={progress}>
-            Send & Save as template
-          </button>
+          <Button
+            onClick={handleSendAndSave}
+            label="Send & Save as template"
+            disabled={progress}
+          />
         )}
-        <button onClick={handleSend} disabled={progress}>
-          Send
-        </button>
-        <button onClick={handleCancel} disabled={progress}>
-          Cancel
-        </button>
+        <Button onClick={handleSend} label="Send" disabled={progress} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </form>
   );

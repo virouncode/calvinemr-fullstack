@@ -26,10 +26,10 @@
       }
       display: grid;
       grid-template-columns: 60.5% 39.5%;
+      button {
+        margin-right: 5px;
+      }
     }
-  }
-  &__fold {
-    margin-right: 5px;
   }
   &__menu {
     display: flex;

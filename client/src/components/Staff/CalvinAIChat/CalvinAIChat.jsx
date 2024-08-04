@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useSpeechRecognition } from "../../../hooks/useSpeechRecognition";
+import Button from "../../UI/Buttons/Button";
 import CalvinAIChatContent from "./CalvinAIChatContent";
 import CalvinAIInput from "./CalvinAIInput";
 import CalvinAIChatTemplates from "./ClavinAIChatTemplates";
@@ -133,13 +134,11 @@ const CalvinAIChat = () => {
           isLoading={isLoading}
         />
         <div className="calvinai-chat__stop-btn">
-          <button
+          <Button
             onClick={() => abortController.current.abort()}
-            style={{ marginRight: "5px" }}
-          >
-            Stop generating
-          </button>
-          <button onClick={handleNew}>New conversation</button>
+            label="Stop generating"
+          />
+          <Button onClick={handleNew} label="New conversation" />
         </div>
         <CalvinAIInput
           handleChangeInput={handleChangeInput}

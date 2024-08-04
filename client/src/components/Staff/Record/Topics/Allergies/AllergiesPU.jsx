@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -34,7 +36,7 @@ const AllergiesPU = ({
   );
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -47,7 +49,7 @@ const AllergiesPU = ({
     }
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setErrMsgPost("");
     editCounter.current += 1;
     setAddVisible((v) => !v);
@@ -147,10 +149,8 @@ const AllergiesPU = ({
         </table>
       </div>
       <div className="allergies__btn-container">
-        <button onClick={handleAdd} disabled={addVisible}>
-          Add
-        </button>
-        <button onClick={handleClose}>Close</button>
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
       </div>
     </>
   );

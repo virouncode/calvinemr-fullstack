@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxTemplatePut } from "../../../hooks/reactquery/mutations/faxesTemplatesMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const FaxTemplateEdit = ({ setEditTemplateVisible, template }) => {
   const { user } = useUserContext();
@@ -88,16 +90,8 @@ const FaxTemplateEdit = ({ setEditTemplateVisible, template }) => {
             <textarea value={body} onChange={handleChange} />
           </div>
           <div className="new-fax__btns">
-            <button
-              onClick={handleSave}
-              disabled={progress}
-              className="save-btn"
-            >
-              Save
-            </button>
-            <button onClick={handleCancel} disabled={progress}>
-              Cancel
-            </button>
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>

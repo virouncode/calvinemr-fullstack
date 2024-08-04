@@ -7,6 +7,8 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import Button from "../../../../UI/Buttons/Button";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -210,12 +212,8 @@ const EformsPU = ({
           </table>
         </div>
         <div className="eforms__btn-container">
-          <button onClick={handleAdd} disabled={addVisible}>
-            Add
-          </button>
-          <button onClick={handleClose} disabled={isLoadingFile}>
-            Close
-          </button>
+          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+          <CloseButton onClick={handleClose} disabled={isLoadingFile} />
         </div>
       </>
       {addVisible && (

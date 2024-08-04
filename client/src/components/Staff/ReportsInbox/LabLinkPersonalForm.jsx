@@ -110,10 +110,8 @@ const LabLinkPersonalForm = ({ setAddVisible, errMsgPost, setErrMsgPost }) => {
         </div>
       </div>
       <div className="lablinks__form-btns">
-        <button onClick={handleSave} className="save-btn">
-          Save
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );

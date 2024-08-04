@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toPatientLastName } from "../../../../../utils/names/toPatientName";
+import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -33,14 +34,11 @@ const PatientFamilyDoctorsList = ({
   return (
     <>
       <div className="doctors__table-title">
-        {`${toPatientLastName(demographicsInfos, true)}'s other doctors`}
-        <button
-          style={{ marginLeft: "5px" }}
-          onClick={handleAdd}
-          disabled={addVisible}
-        >
-          Add
-        </button>
+        <span style={{ marginRight: "10px" }}>{`${toPatientLastName(
+          demographicsInfos,
+          true
+        )}'s other doctors`}</span>
+        <Button onClick={handleAdd} label="Add" disabled={addVisible} />
       </div>
       <div className="doctors__table-container" ref={rootRefPatientDoctors}>
         <table className="doctors__table">

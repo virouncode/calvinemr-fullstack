@@ -3,6 +3,8 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import Button from "../../UI/Buttons/Button";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const StaffAIAgreement = ({ setStart, setChatVisible }) => {
   const { user } = useUserContext();
@@ -179,10 +181,8 @@ const StaffAIAgreement = ({ setStart, setChatVisible }) => {
         <label htmlFor="agreement">
           I agree to the terms and conditions outlined in this disclaimer.
         </label>
-        <button onClick={handleStart} disabled={!agreed}>
-          Start
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <Button onClick={handleStart} label="Start" disabled={!agreed} />
+        <CancelButton onClick={handleCancel} />
       </div>
     </div>
   );
