@@ -1,28 +1,16 @@
 export const copyToClipboard = async (newWindow, element) => {
   newWindow.window.focus();
-  try {
-    newWindow.window.navigator.clipboard.write([
-      new ClipboardItem({
-        "text/html": new Blob([element.outerHTML], { type: "text/html" }),
-      }),
-    ]);
-  } catch (err) {
-    throw err;
-  }
+  await newWindow.window.navigator.clipboard.write([
+    new ClipboardItem({
+      "text/html": new Blob([element.outerHTML], { type: "text/html" }),
+    }),
+  ]);
 };
 
 export const copyClinicalNoteToClipboard = async (bodyRef) => {
-  try {
-    navigator.clipboard.writeText(bodyRef.current.innerText);
-  } catch (err) {
-    throw err;
-  }
+  await navigator.clipboard.writeText(bodyRef.current.innerText);
 };
 
 export const copyCredentialToClipboard = async (str) => {
-  try {
-    navigator.clipboard.writeText(str);
-  } catch (err) {
-    throw err;
-  }
+  await navigator.clipboard.writeText(str);
 };

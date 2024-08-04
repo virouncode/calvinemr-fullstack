@@ -38,7 +38,7 @@ export const useMessagePost = (staffId, section) => {
       }
       toast.success("Message post succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to post message: ${error.message}`, {
         containerId: "A",
       });
@@ -78,7 +78,7 @@ export const useTodoDelete = (staffId) => {
   return useMutation({
     mutationFn: (todoToDeleteId) =>
       xanoDelete(`/todos/${todoToDeleteId}`, "staff"),
-    onSuccess: (data) => {
+    onSuccess: () => {
       socket.emit("message", { key: ["messages", staffId] });
       socket.emit("message", {
         key: ["TODOS ABOUT PATIENT"],

@@ -8,7 +8,7 @@ import useClinicContext from "./context/useClinicContext";
 import useStaffInfosContext from "./context/useStaffInfosContext";
 import useUserContext from "./context/useUserContext";
 
-const useLogoutForAll = (toastExpiredID, tokenLimitVerifierID) => {
+const useLogoutForAll = () => {
   const { setUser } = useUserContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAuth } = useAuthContext();

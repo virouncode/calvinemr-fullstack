@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { usePamphlets } from "../../../hooks/reactquery/queries/pamphletsQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Button from "../../UI/Buttons/Button";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import FakeWindow from "../../UI/Windows/FakeWindow";

@@ -11,7 +11,7 @@ export const useNotepadPut = (staffId) => {
     onSuccess: () => {
       socket.emit("message", { key: ["notepads", staffId] });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to update notepad: ${error.message}`, {
         containerId: "A",
       });

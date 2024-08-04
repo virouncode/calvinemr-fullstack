@@ -17,8 +17,7 @@ const useCalendarShortcuts = (
   setCalendarSelectable,
   editAvailabilityVisible,
   setIsFirstEvent,
-  setConfirmDlgRecDeleteVisible,
-  currentInfo
+  setConfirmDlgRecDeleteVisible
 ) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();

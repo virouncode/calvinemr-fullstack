@@ -295,7 +295,7 @@ export const useAppointmentPost = () => {
         containerId: "A",
       });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to save appointment: ${error.message}`, {
         containerId: "A",
       });
@@ -336,7 +336,7 @@ export const useAppointmentPut = (appointmentId) => {
       );
       return { previousAppointment };
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       socket.emit("message", { key: ["appointments"] });
       socket.emit("message", { key: ["appointment"] });
       socket.emit("message", { key: ["APPOINTMENTS"] });

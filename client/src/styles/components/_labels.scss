@@ -1,7 +1,26 @@
+.labels-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
 .labels-content {
   &__item {
     text-decoration: underline;
     cursor: pointer;
+  }
+  &__select {
+    font-size: 0.8rem;
+  }
+  &__label {
+    width: 11.86cm;
+    height: 3.71cm;
+    border: solid 1px $black;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 .labels-content__print-btn {

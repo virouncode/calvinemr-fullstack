@@ -14,7 +14,7 @@ export const useCalvinAITemplatePost = () => {
       socket.emit("message", { key: ["calvinaiTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to post template: ${error.message}`, {
         containerId: "A",
       });
@@ -36,7 +36,7 @@ export const useCalvinAITemplatePut = () => {
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to update template: ${error.message}`, {
         containerId: "A",
       });
@@ -53,7 +53,7 @@ export const useCalvinAITemplateDelete = () => {
       socket.emit("message", { key: ["calvinaiTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to delete template: ${error.message}`, {
         containerId: "A",
       });

@@ -4,9 +4,7 @@ const useIntersection = (
   isFetchingNextPage,
   fetchNextPage,
   isFetching,
-  addVisible = null,
-  order = null,
-  goToEnd = null
+  addVisible = null
 ) => {
   const rootRef = useRef(null);
   const observer = useRef(null);

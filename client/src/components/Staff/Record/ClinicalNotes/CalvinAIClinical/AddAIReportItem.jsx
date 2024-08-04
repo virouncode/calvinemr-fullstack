@@ -1,4 +1,3 @@
-
 import { toast } from "react-toastify";
 import { extractToText } from "../../../../../utils/extractText/extractToText";
 import { toAnonymousText } from "../../../../../utils/extractText/toAnonymousText";
@@ -33,11 +32,13 @@ const AddAIReportItem = ({
             report.File?.mime
           );
           textToAdd = response.join("");
+          setIsLoadingReportText(false);
         } catch (err) {
           toast.error(
             `Error while extracting text from the document:${err.message}`,
             { containerId: "A" }
           );
+          setIsLoadingReportText(false);
           return;
         }
       } else {
@@ -49,7 +50,6 @@ const AddAIReportItem = ({
         { id, content: textToAdd, date_created: report.date_created },
       ];
       setReportsTextsToAdd(reportsTextsToAddUpdated);
-      setIsLoadingReportText(false);
     } else {
       let updatedIds = [...reportsAddedIds];
       updatedIds = updatedIds.filter((documentId) => documentId !== id);

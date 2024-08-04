@@ -14,7 +14,7 @@ export const useLettersTemplatePost = () => {
       socket.emit("message", { key: ["lettersTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to post template: ${error.message}`, {
         containerId: "A",
       });
@@ -48,7 +48,7 @@ export const useLettersTemplateDelete = () => {
       socket.emit("message", { key: ["lettersTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to delete template: ${error.message}`, {
         containerId: "A",
       });

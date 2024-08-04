@@ -8,6 +8,7 @@ import { copyToClipboard } from "../../../../../utils/js/copyToClipboard";
 import { isObjectEmpty } from "../../../../../utils/js/isObjectEmpty";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 
@@ -25,21 +26,6 @@ const PatientLabel = ({ demographicsInfos, windowRef }) => {
 
   const labelRef = useRef(null);
 
-  const LABEL_CONTAINER = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    flexDirection: "column",
-  };
-  const LABEL_STYLE = {
-    fontFamily: "Arial, sans-serif",
-    width: "11.86cm",
-    height: "3.71cm",
-    border: "solid 1px black",
-    padding: "10px",
-    marginBottom: "20px",
-  };
   const TITLE_STYLE = {
     fontSize: "1.1rem",
     fontWeight: "bold",
@@ -56,9 +42,6 @@ const PatientLabel = ({ demographicsInfos, windowRef }) => {
   const SMALL_LINE_STYLE = {
     fontSize: "0.5rem",
     padding: "0px 10px",
-  };
-  const BTN_STYLE = {
-    marginRight: "5px",
   };
 
   const handlePrint = (e) => {
@@ -79,8 +62,8 @@ const PatientLabel = ({ demographicsInfos, windowRef }) => {
   const patientSite = sites.find(({ id }) => id === assignedMd.site_id);
 
   return (
-    <div style={LABEL_CONTAINER}>
-      <div style={LABEL_STYLE} ref={labelRef}>
+    <div className="labels-container">
+      <div className="labels-content__label" ref={labelRef}>
         <p style={TITLE_STYLE}>
           {toPatientName(demographicsInfos).toUpperCase()}
         </p>
@@ -175,16 +158,15 @@ const PatientLabel = ({ demographicsInfos, windowRef }) => {
         </p>
       </div>
       <div>
-        <button
-          style={BTN_STYLE}
+        <PrintButton
           onClick={handlePrint}
           className="labels-content__print-btn"
-        >
-          Print
-        </button>
-        <button onClick={handleCopy} className="labels-content__print-btn">
-          Copy to clipboard
-        </button>
+        />
+        <PrintButton
+          onClick={handleCopy}
+          className="labels-content__print-btn"
+          label="Copy to clipboard"
+        />
       </div>
     </div>
   );

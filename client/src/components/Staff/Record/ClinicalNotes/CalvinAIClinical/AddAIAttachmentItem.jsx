@@ -1,4 +1,4 @@
-
+import { toast } from "react-toastify";
 import { extractToText } from "../../../../../utils/extractText/extractToText";
 import { toAnonymousText } from "../../../../../utils/extractText/toAnonymousText";
 
@@ -24,18 +24,27 @@ const AddAIAttachmentItem = ({
     if (checked) {
       setAttachmentsAddedIds([...attachmentsAddedIds, id]);
       setIsLoadingAttachmentText(true);
-      let textToAdd = (
-        await extractToText(attachment.file.url, attachment.file.mime)
-      ).join("");
+      try {
+        let textToAdd = (
+          await extractToText(attachment.file.url, attachment.file.mime)
+        ).join("");
 
-      textToAdd = toAnonymousText(textToAdd, demographicsInfos);
+        textToAdd = toAnonymousText(textToAdd, demographicsInfos);
 
-      attachmentsTextsToAddUpdated = [
-        ...attachmentsTextsToAdd,
-        { id, content: textToAdd, date_created: attachment.date_created },
-      ];
-      setAttachmentsTextsToAdd(attachmentsTextsToAddUpdated);
-      setIsLoadingAttachmentText(false);
+        attachmentsTextsToAddUpdated = [
+          ...attachmentsTextsToAdd,
+          { id, content: textToAdd, date_created: attachment.date_created },
+        ];
+        setAttachmentsTextsToAdd(attachmentsTextsToAddUpdated);
+        setIsLoadingAttachmentText(false);
+      } catch (err) {
+        toast.error(
+          `Error while extracting text from the document:${err.message}`,
+          { containerId: "A" }
+        );
+        setIsLoadingAttachmentText(false);
+        return;
+      }
     } else {
       let updatedIds = [...attachmentsAddedIds];
       updatedIds = updatedIds.filter((attachmentId) => attachmentId !== id);

@@ -57,7 +57,7 @@ export const usePatientsGroupPut = (staffId) => {
   });
 };
 
-export const usePatientsGroupDelete = (staffId, patientsIds) => {
+export const usePatientsGroupDelete = (staffId) => {
   const queryClient = useQueryClient();
   const { socket } = useSocketContext();
   return useMutation({

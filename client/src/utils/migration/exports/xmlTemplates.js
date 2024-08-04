@@ -452,7 +452,7 @@ export const toXmlDemographics = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlPersonalHistory = (jsObj, patientInfos = null) => {
+export const toXmlPersonalHistory = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -477,7 +477,7 @@ export const toXmlPersonalHistory = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlFamHistory = (jsObj, patientInfos = null) => {
+export const toXmlFamHistory = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -548,7 +548,7 @@ export const toXmlFamHistory = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlPastHealth = (jsObj, patientInfos = null) => {
+export const toXmlPastHealth = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -621,7 +621,7 @@ export const toXmlPastHealth = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlProblemList = (jsObj, patientInfos = null) => {
+export const toXmlProblemList = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -694,7 +694,7 @@ export const toXmlProblemList = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlRiskFactors = (jsObj, patientInfos = null) => {
+export const toXmlRiskFactors = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -754,7 +754,7 @@ export const toXmlRiskFactors = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlAllergies = (jsObj, patientInfos = null) => {
+export const toXmlAllergies = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -826,7 +826,7 @@ export const toXmlAllergies = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlMedications = (jsObj, patientInfos = null) => {
+export const toXmlMedications = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -984,7 +984,7 @@ export const toXmlMedications = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlImmunizations = (jsObj, patientInfos = null) => {
+export const toXmlImmunizations = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -1059,11 +1059,11 @@ export const toXmlImmunizations = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlLabResults = (jsObj, patientInfos = null) => {
+export const toXmlLabResults = () => {
   return "";
 };
 
-export const toXmlAppointments = (jsObj, patientInfos = null) => {
+export const toXmlAppointments = (jsObj) => {
   const xmlTime = `<AppointmentTime>${escapeXml(
     jsObj.AppointmentTime ?? ""
   )}</AppointmentTime>`;
@@ -1111,7 +1111,7 @@ export const toXmlAppointments = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlClinicalNotes = (jsObj, patientInfos = null) => {
+export const toXmlClinicalNotes = (jsObj) => {
   const xmlNoteType = `<NoteType>${escapeXml(jsObj.NoteType ?? "")}</NoteType>`;
   const xmlContent = `<MyClinicalNotesContent>${escapeXml(
     jsObj.MyClinicalNotesContent ?? ""
@@ -1191,7 +1191,7 @@ export const toXmlClinicalNotes = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlReports = (jsObj, patientInfos = null) => {
+export const toXmlReports = (jsObj) => {
   const xmlMedia = `<Media>${escapeXml(jsObj.Media ?? "")}</Media>`;
   const xmlForm = `<Format>${escapeXml(jsObj.Format ?? "")}</Format>`;
   const xmlFileExtAndVer = `<FileExtensionAndVersion>${escapeXml(
@@ -1360,7 +1360,7 @@ export const toXmlReports = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlCareElements = (jsObj, patientInfos = null) => {
+export const toXmlCareElements = (jsObj) => {
   const xmlSmokingStatus =
     jsObj.SmokingStatus?.length > 0
       ? jsObj.SmokingStatus.map(
@@ -1552,7 +1552,7 @@ export const toXmlCareElements = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlAlerts = (jsObj, patientInfos = null) => {
+export const toXmlAlerts = (jsObj) => {
   const xmlResidual = `<ResidualInfo>
   ${
     jsObj.ResidualInfo?.DataElement?.length > 0
@@ -1597,7 +1597,7 @@ export const toXmlAlerts = (jsObj, patientInfos = null) => {
   });
 };
 
-export const toXmlPregnancies = (jsObj, patientInfos = null) => {
+export const toXmlPregnancies = (jsObj) => {
   const xmlPregnancies = `<NewCategory>
 <CategoryName>Pregnancies</CategoryName>
 <CategoryDescription>Encompasses data collected from the patient's pregnancy events</CategoryDescription>

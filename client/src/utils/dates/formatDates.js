@@ -305,31 +305,31 @@ export const tzComponentsToTimestamp = (
   ).toMillis();
 };
 
-export const getStartOfTheMonthTZ = (timezone = "America/Toronto") => {
+export const getStartOfTheMonthTZ = () => {
   const now = nowTZ();
   const startOfMonth = now.startOf("month");
   const startOfMonthMidnight = startOfMonth.startOf("day");
   return startOfMonthMidnight.toMillis();
 };
 
-export const getEndOfTheMonthTZ = (timezone = "America/Toronto") => {
+export const getEndOfTheMonthTZ = () => {
   const now = nowTZ();
   const endOfMonth = now.endOf("month");
   return endOfMonth.toMillis();
 };
 
-export const getTodayStartTZ = (timezone = "America/Toronto") => {
+export const getTodayStartTZ = () => {
   return nowTZ().startOf("day").toMillis();
 };
-export const getTomorrowStartTZ = (timezone = "America/Toronto") => {
+export const getTomorrowStartTZ = () => {
   return nowTZ().plus({ days: 1 }).startOf("day").toMillis();
 };
-export const getTodayEndTZ = (timezone = "America/Toronto") => {
+export const getTodayEndTZ = () => {
   return nowTZ().endOf("day").toMillis();
 };
 
 //OTHER FUNCTIONS
-export const getAgeTZ = (dateOfBirthMs, timezone = "America/Toronto") => {
+export const getAgeTZ = (dateOfBirthMs) => {
   if (!dateOfBirthMs) return "";
   const dateOfBirth = DateTime.fromMillis(dateOfBirthMs, {
     zone: "America/Toronto",

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEdocs } from "../../../hooks/reactquery/queries/edocsQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Button from "../../UI/Buttons/Button";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import FakeWindow from "../../UI/Windows/FakeWindow";

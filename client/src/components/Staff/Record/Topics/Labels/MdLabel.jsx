@@ -6,12 +6,13 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import { copyToClipboard } from "../../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
 import EmptyParagraph from "../../../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import SiteSelect from "../../../EventForm/SiteSelect";
 
-const MdLabel = ({ demographicsInfos, windowRef }) => {
+const MdLabel = ({ windowRef }) => {
   const { user } = useUserContext();
   const { staffInfos } = useStaffInfosContext();
   const { clinic } = useClinicContext();
@@ -34,22 +35,6 @@ const MdLabel = ({ demographicsInfos, windowRef }) => {
     setSite(sites.find(({ id }) => id === user.site_id));
   }, [sites, user.site_id]);
 
-  const LABEL_CONTAINER = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    flexDirection: "column",
-  };
-  const LABEL_STYLE = {
-    fontFamily: "Arial, sans-serif",
-    width: "11.86cm",
-    height: "3.71cm",
-    border: "solid 1px black",
-    padding: "10px",
-    marginTop: "20px",
-    marginBottom: "20px",
-  };
   const TITLE_STYLE = {
     fontSize: "1rem",
     fontWeight: "bold",
@@ -66,9 +51,6 @@ const MdLabel = ({ demographicsInfos, windowRef }) => {
   const SELECT_STYLE = {
     fontFamily: "Arial, sans-serif",
     fontSize: "0.8rem",
-  };
-  const BTN_STYLE = {
-    marginRight: "5px",
   };
 
   const handleSiteChange = (e) => {
@@ -93,7 +75,7 @@ const MdLabel = ({ demographicsInfos, windowRef }) => {
   if (errorSites) return <ErrorParagraph errorMsg={errorSites.message} />;
 
   return (
-    <div style={LABEL_CONTAINER}>
+    <div className="labels-container">
       {sites && sites.length > 0 && site ? (
         <>
           <div className="labels-content__select" style={SELECT_STYLE}>
@@ -129,7 +111,7 @@ const MdLabel = ({ demographicsInfos, windowRef }) => {
               value={site.id}
             />
           </div>
-          <div style={LABEL_STYLE} ref={labelRef}>
+          <div className="labels-content__label" ref={labelRef}>
             <p style={TITLE_STYLE}>
               {staffIdToTitleAndName(staffInfos, md.id, false).toUpperCase()}
             </p>
@@ -165,20 +147,15 @@ const MdLabel = ({ demographicsInfos, windowRef }) => {
         <EmptyParagraph text="The clinic has no sites" />
       )}
       <div>
-        <button
-          style={BTN_STYLE}
+        <PrintButton
           onClick={handlePrint}
           className="labels-content__print-btn"
-        >
-          Print
-        </button>
-        <button
-          style={BTN_STYLE}
+        />
+        <PrintButton
           onClick={handleCopy}
           className="labels-content__print-btn"
-        >
-          Copy to clipboard
-        </button>
+          label="Copy to clipboard"
+        />
       </div>
     </div>
   );

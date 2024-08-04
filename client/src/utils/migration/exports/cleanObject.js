@@ -2,7 +2,7 @@ import { timestampToDateISOTZ } from "./formatDates";
 
 export const cleanObject = (objet) => {
   for (const cle in objet) {
-    if (objet.hasOwnProperty(cle)) {
+    if (Object.prototype.hasOwnProperty.call(objet, cle)) {
       if (!objet[cle]) {
         delete objet[cle];
       } else if (cle.includes("Date") || cle.includes("date")) {

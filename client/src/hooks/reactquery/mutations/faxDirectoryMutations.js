@@ -13,7 +13,7 @@ export const useFaxDirectoryPost = () => {
       socket.emit("message", { key: ["fax directory"] });
       toast.success("Contact saved succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to save contact: ${error.message}`, {
         containerId: "A",
       });

@@ -30,22 +30,6 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
     setSite(sites.find(({ id }) => id === assignedMd.site_id));
   }, [assignedMd.site_id, sites]);
 
-  const LABEL_CONTAINER = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    flexDirection: "column",
-  };
-  const LABEL_STYLE = {
-    fontFamily: "Arial, sans-serif",
-    width: "11.86cm",
-    height: "3.71cm",
-    border: "solid 1px black",
-    padding: "10px",
-    marginTop: "20px",
-    marginBottom: "20px",
-  };
   const TITLE_STYLE = {
     fontSize: "1.1rem",
     fontWeight: "bold",
@@ -55,16 +39,6 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
   const LINE_STYLE = {
     fontSize: "0.8rem",
     padding: "0px 10px",
-  };
-  const SPAN_STYLE = {
-    // marginRight: "20px",
-  };
-  const SELECT_STYLE = {
-    fontFamily: "Arial, sans-serif",
-    fontSize: "0.8rem",
-  };
-  const BTN_STYLE = {
-    marginRight: "5px",
   };
 
   const handlePrint = (e) => {
@@ -89,17 +63,17 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
   if (errorSites) return <ErrorParagraph errorMsg={errorSites.message} />;
 
   return (
-    <div style={LABEL_CONTAINER}>
+    <div className="labels-container">
       {sites && sites.length > 0 && site ? (
         <>
-          <div className="labels-content__select" style={SELECT_STYLE}>
+          <div className="labels-content__select">
             <SiteSelect
               handleSiteChange={handleSiteChange}
               sites={sites}
               value={site?.id}
             />
           </div>
-          <div style={LABEL_STYLE} ref={labelRef}>
+          <div className="labels-content__label" ref={labelRef}>
             <p style={TITLE_STYLE}>{clinic.name.toUpperCase()}</p>
             <p style={LINE_STYLE}>
               <span>SITE: {site.name}</span>
@@ -111,9 +85,9 @@ const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
               </span>
             </p>
             <p style={LINE_STYLE}>
-              <span style={SPAN_STYLE}>PHONE: {site.phone}</span>
-              <span style={SPAN_STYLE}> / </span>
-              <span style={SPAN_STYLE}>FAX: {site.fax}</span>
+              <span>PHONE: {site.phone}</span>
+              <span> / </span>
+              <span>FAX: {site.fax}</span>
             </p>
             <p style={LINE_STYLE}>
               <span>EMAIL: {site.email || clinic.email}</span>

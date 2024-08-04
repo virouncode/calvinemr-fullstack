@@ -14,7 +14,7 @@ export const useClinicalNotesTemplatesPost = () => {
       socket.emit("message", { key: ["clinicalNotesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to post template: ${error.message}`, {
         containerId: "A",
       });
@@ -36,7 +36,7 @@ export const useClinicalNotesTemplatesPut = () => {
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to update template: ${error.message}`, {
         containerId: "A",
       });
@@ -53,7 +53,7 @@ export const useClinicalNotesTemplatesDelete = () => {
       socket.emit("message", { key: ["clinicalNotesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to delete template: ${error.message}`, {
         containerId: "A",
       });

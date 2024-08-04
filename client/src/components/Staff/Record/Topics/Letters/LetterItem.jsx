@@ -99,13 +99,13 @@ const LetterItem = ({
     setEditVisible(false);
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible(true);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({
