@@ -3,7 +3,6 @@ import { isObjectEmpty } from "../../../../../utils/js/isObjectEmpty";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 const PharmaciesContent = ({
-  patientId,
   demographicsInfos,
   loadingPatient,
   errPatient,

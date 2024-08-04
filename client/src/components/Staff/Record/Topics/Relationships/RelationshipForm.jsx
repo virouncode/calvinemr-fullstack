@@ -11,6 +11,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { toInverseRelation } from "../../../../../utils/relationships/toInverseRelation";
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import RelationshipList from "./RelationshipList";
 
 const RelationshipForm = ({
@@ -33,7 +34,7 @@ const RelationshipForm = ({
 
   const [progress, setProgress] = useState(false);
 
-  const handleRelationshipChange = (value, itemId) => {
+  const handleRelationshipChange = (value) => {
     setErrMsgPost("");
     setFormDatas({ ...formDatas, relationship: value });
   };

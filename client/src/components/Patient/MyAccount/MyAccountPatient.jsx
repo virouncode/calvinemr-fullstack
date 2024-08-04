@@ -28,7 +28,7 @@ const MyAccountPatient = () => {
       ) || {}
     : {};
 
-  const handleChangeCredentials = (e) => {
+  const handleChangeCredentials = () => {
     navigate("/patient/credentials");
   };
 

@@ -1,10 +1,8 @@
-
-
 const ToggleView = ({ timelineVisible, setTimelineVisible }) => {
-  const handleClickCalendar = (e) => {
+  const handleClickCalendar = () => {
     setTimelineVisible(false);
   };
-  const handleClickRooms = (e) => {
+  const handleClickRooms = () => {
     setTimelineVisible(true);
   };
   return (

@@ -1,5 +1,3 @@
-
-
 const CountriesList = ({ handleChange, value, name }) => {
   return (
     <select

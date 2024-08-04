@@ -1,4 +1,3 @@
-
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import AvailabilityEditor from "./AvailabilityEditor";
 
@@ -6,7 +5,7 @@ const Availability = ({
   editAvailabilityVisible,
   setEditAvailabilityVisible,
 }) => {
-  const handleEdit = (e) => {
+  const handleEdit = () => {
     setEditAvailabilityVisible((v) => !v);
   };
   return (

@@ -153,7 +153,7 @@ const NewTodo = ({
     setImportant(value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setNewTodoVisible(false);
   };
 
@@ -165,7 +165,7 @@ const NewTodo = ({
     setAttachments(updatedAttachments);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     try {
       setProgress(true);
       let attach_ids = [];

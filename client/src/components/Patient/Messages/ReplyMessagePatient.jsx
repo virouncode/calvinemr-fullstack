@@ -29,10 +29,10 @@ const ReplyMessagePatient = ({
   const [progress, setProgress] = useState(false);
   const messagePost = useMessageExternalPost();
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setReplyVisible(false);
   };
-  const handleSend = async (e) => {
+  const handleSend = async () => {
     setProgress(true);
     let attach_ids;
     if (attachments.length > 0) {

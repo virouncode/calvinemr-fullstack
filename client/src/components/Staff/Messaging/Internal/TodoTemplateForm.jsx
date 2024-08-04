@@ -4,6 +4,8 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useTodosTemplatePost } from "../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 
 const TodoTemplateForm = ({ setNewTemplateVisible }) => {
   const { user } = useUserContext();
@@ -25,11 +27,11 @@ const TodoTemplateForm = ({ setNewTemplateVisible }) => {
     setName(e.target.value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setNewTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });

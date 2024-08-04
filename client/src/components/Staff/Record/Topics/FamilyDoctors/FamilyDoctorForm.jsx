@@ -9,6 +9,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { doctorSchema } from "../../../../../validation/record/doctorValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const FamilyDoctorForm = ({

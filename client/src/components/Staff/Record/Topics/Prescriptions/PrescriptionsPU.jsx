@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CloseButton } from "react-toastify";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -33,7 +34,7 @@ const PrescriptionsPU = ({
     useState(false);
   const [attachmentsToSend, setAttachmentsToSend] = useState(null);
 
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     setPopUpVisible(false);
   };
 

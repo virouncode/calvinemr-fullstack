@@ -10,6 +10,7 @@ import {
 } from "../../../utils/dates/formatDates";
 import { getExtension } from "../../../utils/files/getExtension";
 import { reportSchema } from "../../../validation/record/reportValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
 import GenericList from "../../UI/Lists/GenericList";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import ReportsInboxPatients from "./ReportsInboxPatients";
@@ -64,10 +65,6 @@ const ReportsInboxForm = ({
       patient_id: patient.patient_id,
       assigned_staff_id: patient.assigned_staff_id,
     });
-  };
-
-  const handleContentChange = (e) => {
-    setFormDatas({ ...formDatas, Content: { TextContent: e.target.value } });
   };
 
   const handleSubmit = async (e) => {

@@ -6,6 +6,7 @@ import { useLettersTemplatePost } from "../../../../../../hooks/reactquery/mutat
 import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQueries";
 import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
+import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";

@@ -1,12 +1,10 @@
-
-import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
-    genderCT,
-    toCodeTableName,
+  genderCT,
+  toCodeTableName,
 } from "../../../../../../omdDatas/codesTables";
 import {
-    getAgeTZ,
-    timestampToDateISOTZ,
+  getAgeTZ,
+  timestampToDateISOTZ,
 } from "../../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import LetterSign from "../Form/LetterSign";
@@ -18,7 +16,6 @@ const LetterAdditionalPagePreview = ({
   page,
   numberOfPages,
 }) => {
-  const { user } = useUserContext();
   return (
     <div
       className="letter__page"

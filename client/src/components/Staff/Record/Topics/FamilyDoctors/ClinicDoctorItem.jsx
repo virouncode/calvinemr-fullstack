@@ -15,7 +15,7 @@ const ClinicDoctorItem = ({ item, patientId, site }) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();
 
-  const handleAddToPatient = async (e) => {
+  const handleAddToPatient = async () => {
     try {
       //Add patient to clinic doctor
       const datasToPut = {

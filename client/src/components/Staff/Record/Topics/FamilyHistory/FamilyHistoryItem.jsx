@@ -12,6 +12,9 @@ import {
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { famHistorySchema } from "../../../../../validation/record/famHistoryValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelativesList from "./RelativesList";
@@ -94,13 +97,13 @@ const FamilyHistoryItem = ({
     setItemInfos({ ...itemInfos, Relationship: value });
   };
 
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({

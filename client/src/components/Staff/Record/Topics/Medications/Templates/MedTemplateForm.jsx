@@ -15,6 +15,7 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toDurationText } from "../../../../../../utils/dates/toDurationText";
 import { toPrescriptionInstructions } from "../../../../../../utils/medications/toPrescriptionInstructions";
 import { medTemplateSchema } from "../../../../../../validation/record/medTemplateValidation";
+import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import GenericCombo from "../../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../../UI/Lists/GenericList";
 import DurationPickerLong from "../../../../../UI/Pickers/DurationPickerLong";

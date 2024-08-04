@@ -4,6 +4,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useLinkPut } from "../../../hooks/reactquery/mutations/linksMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { linkSchema } from "../../../validation/reference/linkValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const LinkEdit = ({ link, setEditVisible }) => {
   const { user } = useUserContext();

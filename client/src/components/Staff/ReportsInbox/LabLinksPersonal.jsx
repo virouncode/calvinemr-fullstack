@@ -2,6 +2,7 @@ import { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useLabLinksPersonal } from "../../../hooks/reactquery/queries/labLinksQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Button from "../../UI/Buttons/Button";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";

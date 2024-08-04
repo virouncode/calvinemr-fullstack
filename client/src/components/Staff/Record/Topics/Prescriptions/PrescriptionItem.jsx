@@ -1,17 +1,14 @@
-
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { showDocument } from "../../../../../utils/files/showDocument";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 
 const PrescriptionItem = ({
   item,
-  topicDelete,
   setFileToFax,
   setAttachmentsToSend,
   setNewMessageExternalVisible,
@@ -21,15 +18,6 @@ const PrescriptionItem = ({
   const { user } = useUserContext();
   const { staffInfos } = useStaffInfosContext();
 
-  const handleDelete = async () => {
-    if (
-      await confirmAlert({
-        content: "Do you really want to delete this item ?",
-      })
-    ) {
-      topicDelete.mutate(item.id);
-    }
-  };
   const handleFax = () => {
     setFileToFax({ alias: item.attachment.alias, file: item.attachment.file });
     setFaxVisible(true);

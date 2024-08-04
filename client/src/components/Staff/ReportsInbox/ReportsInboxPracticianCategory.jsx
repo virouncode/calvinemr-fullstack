@@ -8,7 +8,7 @@ const ReportsInboxPracticianCategory = ({
   handleCheckPractician,
 }) => {
   const [listVisible, setListVisible] = useState(false);
-  const handleClick = (e) => {
+  const handleClick = () => {
     setListVisible((v) => !v);
   };
 

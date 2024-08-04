@@ -71,7 +71,7 @@ const CareElementsHeightEdit = ({
       })
     );
   };
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setEditVisible(false);
   };
 

@@ -1,4 +1,3 @@
-
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
 
 const ExportProblemlist = ({ topicDatas }) => {
@@ -41,7 +40,7 @@ const ExportProblemlist = ({ topicDatas }) => {
 
 export default ExportProblemlist;
 
-export const toProblemListCaption = (item) => {
+const toProblemListCaption = (item) => {
   const diagnosis = item.ProblemDiagnosisDescription
     ? `Diagnosis: ${item.ProblemDiagnosisDescription}`
     : "";

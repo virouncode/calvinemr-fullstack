@@ -13,6 +13,7 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { enrolmentSchema } from "../../../../../validation/record/enrolmentValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const EnrolmentEdit = ({

@@ -9,6 +9,8 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
 
@@ -126,7 +128,7 @@ const PharmacyItem = ({
           setEditVisible(false);
           setProgress(false);
         },
-        onError: (error) => {
+        onError: () => {
           setProgress(false);
         },
       });
@@ -139,7 +141,7 @@ const PharmacyItem = ({
     }
   };
 
-  const handlePrefer = async (e) => {
+  const handlePrefer = async () => {
     if (
       await confirmAlert({
         content:
@@ -154,7 +156,7 @@ const PharmacyItem = ({
       patientPut.mutate(newPatientDemographics);
     }
   };
-  const handleEditClick = (e) => {
+  const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible((v) => !v);

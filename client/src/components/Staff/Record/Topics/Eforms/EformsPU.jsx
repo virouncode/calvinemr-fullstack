@@ -55,11 +55,11 @@ const EformsPU = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState(null);
 
   //HANDLERS
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setAddVisible((v) => !v);
   };
 
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     setPopUpVisible(false);
   };
 

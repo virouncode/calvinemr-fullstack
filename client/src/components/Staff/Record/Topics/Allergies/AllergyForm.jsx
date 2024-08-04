@@ -15,6 +15,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { allergySchema } from "../../../../../validation/record/allergyValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const AllergyForm = ({

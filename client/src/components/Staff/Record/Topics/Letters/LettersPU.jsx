@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import Button from "../../../../UI/Buttons/Button";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -48,7 +50,7 @@ const LettersPU = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState(null);
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -60,7 +62,7 @@ const LettersPU = ({
       setPopUpVisible(false);
     }
   };
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setErrMsgPost("");
     editCounter.current += 1;
     setAddVisible((v) => !v);

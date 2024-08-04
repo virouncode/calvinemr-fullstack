@@ -5,6 +5,8 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useTodosTemplatePut } from "../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../UI/Buttons/SaveButton";
 
 const TodoTemplateEdit = ({ template, setEditTemplateVisible }) => {
   const { user } = useUserContext();
@@ -26,11 +28,11 @@ const TodoTemplateEdit = ({ template, setEditTemplateVisible }) => {
     setName(e.target.value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setEditTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });

@@ -10,6 +10,9 @@ import { relations } from "../../../../../utils/relationships/relations";
 import { toInverseRelation } from "../../../../../utils/relationships/toInverseRelation";
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelationshipList from "./RelationshipList";
 
@@ -18,7 +21,6 @@ const RelationshipItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  patientId,
   lastItemRef = null,
   topicPost,
   topicPut,
@@ -38,7 +40,7 @@ const RelationshipItem = ({
   }, [item, setPatientSelected]);
 
   //HANDLERS
-  const handleRelationshipChange = (value, itemId) => {
+  const handleRelationshipChange = (value) => {
     setErrMsgPost("");
     setItemInfos({ ...itemInfos, relationship: value });
   };
@@ -113,7 +115,7 @@ const RelationshipItem = ({
     setEditVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({

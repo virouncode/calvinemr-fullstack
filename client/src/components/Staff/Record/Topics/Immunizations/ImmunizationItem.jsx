@@ -15,6 +15,9 @@ import {
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
@@ -22,7 +25,6 @@ import ImmunizationCombo from "./ImmunizationCombo";
 
 const ImmunizationItem = ({
   item,
-  errMsgPost,
   setErrMsgPost,
   editCounter,
   topicPut,
@@ -72,7 +74,7 @@ const ImmunizationItem = ({
     setErrMsgPost("");
     setEditVisible((v) => !v);
   };
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to remove this immunization ?",

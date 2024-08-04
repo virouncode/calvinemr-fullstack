@@ -4,6 +4,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useLinkPost } from "../../../hooks/reactquery/mutations/linksMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { linkSchema } from "../../../validation/reference/linkValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const LinkForm = ({ links, setAddVisible }) => {
   const { user } = useUserContext();
@@ -56,7 +57,7 @@ const LinkForm = ({ links, setAddVisible }) => {
       },
     });
   };
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setAddVisible(false);
   };
   return (

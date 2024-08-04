@@ -5,6 +5,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useEdocPost } from "../../../hooks/reactquery/mutations/edocsMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { edocSchema } from "../../../validation/reference/edocValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
@@ -110,7 +111,7 @@ const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
           <label htmlFor="name">Name</label>
           <input
             type="text"
-            vlaue={formDatas.name}
+            value={formDatas.name}
             onChange={handleChange}
             name="name"
             autoComplete="off"

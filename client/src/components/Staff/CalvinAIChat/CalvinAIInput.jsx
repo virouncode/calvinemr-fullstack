@@ -43,7 +43,6 @@ const CalvinAIInput = ({
         placeholder="Type a message..."
         onChange={handleChangeInput}
         value={value}
-        multiline="true"
         rows={10}
         ref={inputTextRef}
       />

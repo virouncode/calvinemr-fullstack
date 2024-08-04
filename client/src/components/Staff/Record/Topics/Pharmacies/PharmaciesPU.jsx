@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { isObjectEmpty } from "../../../../../utils/js/isObjectEmpty";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import PharmaciesList from "./PharmaciesList";
 import PharmacyCard from "./PharmacyCard";
 
@@ -29,7 +30,7 @@ const PharmaciesPU = ({
   }, [demographicsInfos.preferred_pharmacy]);
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -41,7 +42,7 @@ const PharmaciesPU = ({
     }
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setAddVisible((v) => !v);
   };
 

@@ -11,7 +11,7 @@ const EnrolmentItem = ({
 }) => {
   const [editVisible, setEditVisible] = useState(false);
 
-  const handleEdit = (e) => {
+  const handleEdit = () => {
     setEditVisible(true);
   };
   return (

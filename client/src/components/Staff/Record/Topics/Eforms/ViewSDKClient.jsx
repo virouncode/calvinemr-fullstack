@@ -134,7 +134,7 @@ class ViewSDKClient {
     };
     this.adobeDCView.registerCallback(
       window.AdobeDC.View.Enum.CallbackType.SAVE_API,
-      async (metaData, content, options) => {
+      async (metaData, content) => {
         const dataURL = arrayBufferToDataURL(content, "application/pdf");
         const attachmentFile = await xanoPost("/upload/attachment", "staff", {
           content: dataURL,
@@ -169,7 +169,7 @@ class ViewSDKClient {
             },
           });
         }
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           resolve({
             code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
           });

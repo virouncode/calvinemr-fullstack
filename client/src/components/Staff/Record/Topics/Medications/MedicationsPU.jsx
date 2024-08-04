@@ -5,6 +5,7 @@ import useIntersection from "../../../../../hooks/useIntersection";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -59,7 +60,7 @@ const MedicationsPU = ({
   }, [fetchNextPageAllergies]);
 
   //HANDLERS
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (
       editCounter.current === 0 ||
       (editCounter.current > 0 &&
@@ -71,11 +72,11 @@ const MedicationsPU = ({
       setPopUpVisible(false);
     }
   };
-  const handleNewRX = (e) => {
+  const handleNewRX = () => {
     setErrMsgPost("");
     setPresVisible((v) => !v);
   };
-  const handleNewMed = (e) => {
+  const handleNewMed = () => {
     setMedFormVisible(true);
   };
 

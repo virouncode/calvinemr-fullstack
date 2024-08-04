@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-
-import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagesExternalTemplatePut } from "../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
@@ -10,7 +8,6 @@ import SaveButton from "../../../UI/Buttons/SaveButton";
 
 const MessageExternalTemplateEdit = ({ setEditTemplateVisible, template }) => {
   const { user } = useUserContext();
-  const { socket } = useSocketContext();
   const [name, setName] = useState(template.name);
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
@@ -29,11 +26,11 @@ const MessageExternalTemplateEdit = ({ setEditTemplateVisible, template }) => {
     setName(e.target.value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setEditTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });

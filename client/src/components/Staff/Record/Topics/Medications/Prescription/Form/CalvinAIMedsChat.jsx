@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useSpeechRecognition } from "../../../../../../../hooks/useSpeechRecognition";
+import Button from "../../../../../../UI/Buttons/Button";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import CalvinAIChatContent from "../../../../../CalvinAIChat/CalvinAIChatContent";
 import CalvinAIInput from "../../../../../CalvinAIChat/CalvinAIInput";
@@ -55,8 +56,8 @@ const CalvinAIMedsChat = ({ initialMessage }) => {
         const reader = response.body
           ?.pipeThrough(new TextDecoderStream())
           .getReader();
-
-        while (true) {
+        const test = true;
+        while (test) {
           const { done, value } = await reader.read();
           if (done) break;
           updatedMessages[updatedMessages.length - 1].content += value;
@@ -118,8 +119,8 @@ const CalvinAIMedsChat = ({ initialMessage }) => {
       const reader = response.body
         ?.pipeThrough(new TextDecoderStream())
         .getReader();
-
-      while (true) {
+      const test = true;
+      while (test) {
         const { done, value } = await reader.read();
         if (done) break;
         updatedMessages[updatedMessages.length - 1].content += value;

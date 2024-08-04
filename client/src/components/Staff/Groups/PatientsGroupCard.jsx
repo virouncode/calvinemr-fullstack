@@ -38,7 +38,7 @@ const PatientsGroupCard = ({
       groupDelete.mutate(group.id);
     }
   };
-  const handleDuplicate = async (e) => {
+  const handleDuplicate = async () => {
     const datasToPost = {
       ...group,
       date_created: nowTZTimestamp(),

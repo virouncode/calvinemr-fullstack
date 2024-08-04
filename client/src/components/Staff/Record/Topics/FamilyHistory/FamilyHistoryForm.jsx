@@ -10,6 +10,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { famHistorySchema } from "../../../../../validation/record/famHistoryValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import RelativesList from "./RelativesList";
 

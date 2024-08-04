@@ -9,6 +9,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const PharmacyFaxForm = ({

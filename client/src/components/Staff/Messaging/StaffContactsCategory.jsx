@@ -11,7 +11,7 @@ const StaffContactsCategory = ({
   initiallyVisible,
 }) => {
   const [listVisible, setListVisible] = useState(initiallyVisible);
-  const handleClick = (e) => {
+  const handleClick = () => {
     setListVisible((v) => !v);
   };
   return (

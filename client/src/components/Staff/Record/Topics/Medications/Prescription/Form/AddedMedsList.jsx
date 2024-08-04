@@ -1,7 +1,6 @@
-
 import AddedMedItem from "./AddedMedItem";
 
-const AddedMedsList = ({ addedMeds, setAddedMeds, body }) => {
+const AddedMedsList = ({ addedMeds, setAddedMeds }) => {
   return (
     <ul className="prescription__list">
       {addedMeds.map((med) => (

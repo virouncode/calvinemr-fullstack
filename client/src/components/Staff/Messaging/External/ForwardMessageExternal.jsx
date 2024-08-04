@@ -124,11 +124,11 @@ const ForwardMessageExternal = ({
     }
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setForwardVisible(false);
   };
 
-  const handleSend = async (e) => {
+  const handleSend = async () => {
     if (!recipientsIds.length) {
       toast.error("Please choose at least one recipient", { containerId: "A" });
       return;

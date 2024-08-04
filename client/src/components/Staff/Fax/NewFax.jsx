@@ -68,7 +68,7 @@ const NewFax = ({
     );
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setNewVisible(false);
   };
 
@@ -76,7 +76,7 @@ const NewFax = ({
     setAttachment(null);
   };
 
-  const handleSend = async (e) => {
+  const handleSend = async () => {
     const regex = /^\d{10}$/;
     if (!regex.test(toFaxNumber)) {
       toast.error("Please enter a valid 10-digit fax number", {

@@ -44,7 +44,7 @@ const FaxThumbnail = ({
     contactWithFaxNumber();
   }, [fax.CallerID, fax.ToFaxNumber, section]);
 
-  const handleFaxClick = async (e) => {
+  const handleFaxClick = async () => {
     if (section === "Received faxes") {
       setCurrentCallerId(fax.CallerID);
     }
@@ -71,7 +71,7 @@ const FaxThumbnail = ({
     return faxesSelectedIds.includes(id);
   };
 
-  const handleDeleteFax = async (e) => {
+  const handleDeleteFax = async () => {
     if (
       await confirmAlert({
         content:

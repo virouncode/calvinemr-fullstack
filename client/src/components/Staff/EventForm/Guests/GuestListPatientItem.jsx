@@ -1,12 +1,7 @@
-
 import { NavLink } from "react-router-dom";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 
-const GuestListPatientItem = ({
-  patient,
-  handleRemoveGuest,
-  handleRemovePatientGuest,
-}) => {
+const GuestListPatientItem = ({ patient, handleRemovePatientGuest }) => {
   return (
     <>
       <NavLink

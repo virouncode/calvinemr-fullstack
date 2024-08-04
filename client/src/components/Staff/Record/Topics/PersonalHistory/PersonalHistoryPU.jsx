@@ -59,7 +59,7 @@ const PersonalHistoryPU = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleClose = async (e) => {
+  const handleClose = async () => {
     if (!editVisible) {
       setPopUpVisible(false);
     } else if (
@@ -329,7 +329,7 @@ const PersonalHistoryPU = ({
                 {!editVisible ? (
                   <>
                     <button
-                      onClick={(e) => setEditVisible((v) => !v)}
+                      onClick={() => setEditVisible((v) => !v)}
                       disabled={progress}
                     >
                       Edit

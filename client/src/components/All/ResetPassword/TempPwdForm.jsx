@@ -33,7 +33,9 @@ const TempPwdForm = ({
       });
       setTempToken(response.tempToken);
       setValidTempPwd(true);
-    } catch (err) {}
+    } catch (err) {
+      setErrMsg(err.message);
+    }
   };
 
   return (

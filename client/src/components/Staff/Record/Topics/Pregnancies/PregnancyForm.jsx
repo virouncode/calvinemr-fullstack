@@ -9,6 +9,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pregnancySchema } from "../../../../../validation/record/pregnancyValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import PregnanciesList from "./PregnanciesList";
 
 const PregnancyForm = ({

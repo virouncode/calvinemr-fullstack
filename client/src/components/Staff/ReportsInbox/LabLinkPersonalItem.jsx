@@ -10,7 +10,7 @@ import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 
-const LabLinkPersonalItem = ({ link, errMsgPost, setErrMsgPost }) => {
+const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
   const { user } = useUserContext();
   const [editVisible, setEditVisible] = useState(false);
   const loginRef = useRef(null);
@@ -140,18 +140,21 @@ const LabLinkPersonalItem = ({ link, errMsgPost, setErrMsgPost }) => {
 
         {!editVisible && (
           <>
-            <i class="fa-solid fa-pen-to-square" onClick={handleClickEdit} />
-            <i class="fa-solid fa-trash" onClick={handleDelete} />
+            <i
+              className="fa-solid fa-pen-to-square"
+              onClick={handleClickEdit}
+            />
+            <i className="fa-solid fa-trash" onClick={handleDelete} />
           </>
         )}
         {editVisible && (
           <>
             <i
-              class="fa-solid fa-floppy-disk"
+              className="fa-solid fa-floppy-disk"
               onClick={handleClickSave}
               style={{ color: "#f53f77" }}
             />
-            <i class="fa-solid fa-xmark" onClick={handleCancel} />
+            <i className="fa-solid fa-xmark" onClick={handleCancel} />
           </>
         )}
       </div>

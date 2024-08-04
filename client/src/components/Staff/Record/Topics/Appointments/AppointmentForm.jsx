@@ -24,6 +24,7 @@ import { toRoomTitle } from "../../../../../utils/names/toRoomTitle";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import { DateTimePicker } from "../../../../UI/Pickers/DateTimePicker";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
 import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";

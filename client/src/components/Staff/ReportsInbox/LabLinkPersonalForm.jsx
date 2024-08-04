@@ -3,6 +3,8 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useLabLinksPersonalPost } from "../../../hooks/reactquery/mutations/labLinksMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 
 const LabLinkPersonalForm = ({ setAddVisible, errMsgPost, setErrMsgPost }) => {
   const { user } = useUserContext();

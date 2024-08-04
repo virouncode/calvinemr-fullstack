@@ -155,14 +155,22 @@ const PrescriptionPreview = ({
             PrescriptionIdentifier: uniqueId,
             site_id: siteSelectedId,
           };
-          if (medToPost.hasOwnProperty("id")) delete medToPost.id;
-          if (medToPost.hasOwnProperty("temp_id")) delete medToPost.temp_id;
-          if (medToPost.hasOwnProperty("staff_id")) delete medToPost.staff_id;
-          if (medToPost.hasOwnProperty("date_created"))
-            delete medToPost.date_created;
-          if (medToPost.hasOwnProperty("created_by_id"))
-            delete medToPost.created_by_id;
-          if (medToPost.hasOwnProperty("updates")) delete medToPost.updates;
+
+          const propertiesToDelete = [
+            "id",
+            "temp_id",
+            "staff_id",
+            "date_created",
+            "created_by_id",
+            "updates",
+          ];
+
+          for (const prop of propertiesToDelete) {
+            if (Object.prototype.hasOwnProperty.call(medToPost, prop)) {
+              delete medToPost[prop];
+            }
+          }
+
           medToPost.date_created = nowTZTimestamp();
           medToPost.created_by_id = user.id;
           topicPost.mutate(medToPost);

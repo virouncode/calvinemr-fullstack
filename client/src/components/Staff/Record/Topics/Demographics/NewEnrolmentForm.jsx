@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { usePatientPut } from "../../../../../hooks/reactquery/mutations/patientsMutations";
 import {
@@ -14,11 +13,11 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { enrolmentSchema } from "../../../../../validation/record/enrolmentValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const NewEnrolmentForm = ({ setNewEnrolmentVisible, demographicsInfos }) => {
   const { user } = useUserContext();
-  const { socket } = useSocketContext();
   const [newEnrolment, setNewEnrolment] = useState({
     EnrollmentStatus: "",
     EnrollmentDate: null,

@@ -1,10 +1,9 @@
-
 import {
-    provinceStateTerritoryCT,
-    toCodeTableName,
+  provinceStateTerritoryCT,
+  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 
-const PharmacyCard = ({ pharmacy, demographicsInfos }) => {
+const PharmacyCard = ({ pharmacy }) => {
   return (
     <div className="pharmacies__card">
       <div className="pharmacies__card-row">

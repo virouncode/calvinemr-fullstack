@@ -21,7 +21,7 @@ const MessagePatientThumbnail = ({
   const { socket } = useSocketContext();
   const messagePut = useMessageExternalPut();
 
-  const handleMsgClick = async (e) => {
+  const handleMsgClick = async () => {
     if (!message.read_by_patients_ids.includes(user.id)) {
       //create and replace message with read by user id
       const messageToPut = {
@@ -78,7 +78,7 @@ const MessagePatientThumbnail = ({
     return msgsSelectedIds.includes(parseInt(id));
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to remove this message ?",

@@ -90,8 +90,8 @@ const CalvinAIChat = () => {
       const reader = response.body
         ?.pipeThrough(new TextDecoderStream())
         .getReader();
-
-      while (true) {
+      const test = true;
+      while (test) {
         const { done, value } = await reader.read();
         if (done) break;
         updatedMessages[updatedMessages.length - 1].content += value;

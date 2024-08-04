@@ -18,11 +18,11 @@ const MedicationItem = ({ item, lastItemRef = null, topicDelete }) => {
   const [detailVisible, setDetailVisible] = useState(false);
 
   //HANDLERS
-  const handleDetailClick = (e) => {
+  const handleDetailClick = () => {
     setDetailVisible((v) => !v);
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to delete this item ?",

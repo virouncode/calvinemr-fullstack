@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const WebcamCapture = ({ setFormDatas, setWebcamVisible }) => {
   const [imgSrc, setImageSrc] = useState(null);

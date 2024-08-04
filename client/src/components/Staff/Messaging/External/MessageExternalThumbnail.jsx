@@ -22,7 +22,7 @@ const MessageExternalThumbnail = ({
   const { staffInfos } = useStaffInfosContext();
   const messagePut = useMessageExternalPut();
 
-  const handleMsgClick = async (e) => {
+  const handleMsgClick = async () => {
     if (!message.read_by_staff_id) {
       //create and replace message with read by user id
       const messageToPut = {
@@ -77,7 +77,7 @@ const MessageExternalThumbnail = ({
     return msgsSelectedIds.includes(parseInt(id));
   };
 
-  const handleDeleteMsg = async (e) => {
+  const handleDeleteMsg = async () => {
     if (
       await confirmAlert({
         content: "Do you really want to remove this message ?",

@@ -45,7 +45,7 @@ const ReportItemReceived = ({
     setItemInfos({ ...itemInfos, [name]: value });
   };
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = async () => {
     setErrMsgPost("");
     if (
       await confirmAlert({

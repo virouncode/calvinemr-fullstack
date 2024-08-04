@@ -26,11 +26,11 @@ const FaxTemplateForm = ({ setNewTemplateVisible }) => {
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setNewTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });
       return;

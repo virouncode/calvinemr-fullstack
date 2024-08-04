@@ -26,11 +26,11 @@ const FaxTemplateEdit = ({ setEditTemplateVisible, template }) => {
     setName(e.target.value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setEditTemplateVisible(false);
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     //Validation
     if (!name) {
       toast.error("Template name field is required", { containerId: "A" });

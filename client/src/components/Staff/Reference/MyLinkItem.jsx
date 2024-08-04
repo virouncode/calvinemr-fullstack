@@ -11,7 +11,7 @@ const MyLinkItem = ({ link, setAddVisible, lastItemRef = null }) => {
   const handleEdit = () => {
     setEditVisible((v) => !v);
   };
-  const handleRemoveLink = async (e, linkName) => {
+  const handleRemoveLink = async () => {
     if (
       await confirmAlert({ content: "Do you reall want to remove this link ?" })
     ) {
@@ -36,7 +36,7 @@ const MyLinkItem = ({ link, setAddVisible, lastItemRef = null }) => {
       <i
         className="fa-solid fa-trash"
         style={{ cursor: "pointer", marginLeft: "5px" }}
-        onClick={(e) => handleRemoveLink(e, link.name)}
+        onClick={handleRemoveLink}
       ></i>
       {editVisible && <LinkEdit link={link} setEditVisible={setEditVisible} />}
     </li>

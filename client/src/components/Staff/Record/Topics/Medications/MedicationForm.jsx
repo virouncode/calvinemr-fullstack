@@ -23,7 +23,6 @@ import MedsTemplatesList from "./Templates/MedsTemplatesList";
 
 import _ from "lodash";
 const MedicationForm = ({
-  patientId,
   addedMeds,
   setAddedMeds,
   progress,
@@ -602,8 +601,6 @@ const MedicationForm = ({
     e.preventDefault();
     setTemplatesVisible((v) => !v);
   };
-
-  const allergiesDatas = allergies?.pages?.flatMap((page) => page.items);
 
   return (
     <form className="medications-form" onSubmit={handleSubmit}>

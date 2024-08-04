@@ -3,6 +3,7 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { personalHistorySchema } from "../../../../../validation/record/personalHistoryValidation";
+import CloseButton from "../../../../UI/Buttons/CloseButton";
 
 const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
   const { user } = useUserContext();

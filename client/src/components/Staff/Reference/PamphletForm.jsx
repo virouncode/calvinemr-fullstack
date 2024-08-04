@@ -7,6 +7,7 @@ import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 import { usePamphletPost } from "../../../hooks/reactquery/mutations/pamphletsMutations";
 import { pamphletSchema } from "../../../validation/reference/pamphletValidation";
+import CancelButton from "../../UI/Buttons/CancelButton";
 
 const PamphletForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
   const { user } = useUserContext();
@@ -110,7 +111,7 @@ const PamphletForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
           <label htmlFor="name">Name</label>
           <input
             type="text"
-            vlaue={formDatas.name}
+            value={formDatas.name}
             onChange={handleChange}
             name="name"
             autoComplete="off"

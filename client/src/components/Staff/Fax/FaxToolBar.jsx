@@ -26,7 +26,7 @@ const FaxToolBar = ({
   setAll,
 }) => {
   const faxesDelete = useFaxesDelete();
-  const handleClickNew = (e) => {
+  const handleClickNew = () => {
     setNewVisible(true);
   };
 
