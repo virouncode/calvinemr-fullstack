@@ -11,6 +11,9 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import Button from "../../UI/Buttons/Button";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import InputPassword from "../../UI/Inputs/InputPassword";
+import AutoLockTimeSelect from "../../UI/Lists/AutoLockTimeSelect";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 axios.defaults.withCredentials = true;
 
@@ -166,29 +169,25 @@ const UnlockForm = ({
         <br />
         Please enter PIN to unlock:
       </div>
-      {errMsg && <div className="unlock-form__err">{errMsg}</div>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="unlock-form__input">
-        <input
-          type="password"
-          placeholder="PIN 4-digits"
-          autoFocus
-          autoComplete="off"
+        <InputPassword
           value={pin}
           onChange={handleChange}
+          name="password"
+          id="password"
+          placeholder="PIN 4-digits"
+          autoFocus={true}
         />
         <SaveButton label="Unlock" onClick={handleSubmit} />
         <Button label="Logout" onClick={handleLogout} />
       </div>
       <div className="unlock-form__message" style={{ marginTop: "20px" }}>
-        <label style={{ marginRight: "10px" }}>Change auto lock time:</label>
-        <select value={autolockTime} onChange={handleAutoLockChange}>
-          <option value="1">1 min</option>
-          <option value="5">5 min</option>
-          <option value="10">10 min</option>
-          <option value="15">15 min</option>
-          <option value="30">30 min</option>
-          <option value="60">1 hour</option>
-        </select>
+        <AutoLockTimeSelect
+          autolockTime={autolockTime}
+          onChange={handleAutoLockChange}
+          label="Change auto lock time:"
+        />
       </div>
     </div>
   );

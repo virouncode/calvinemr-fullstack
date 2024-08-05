@@ -7,6 +7,7 @@ import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 
 const MessagePatientThumbnail = ({
   message,
@@ -145,12 +146,10 @@ const MessagePatientThumbnail = ({
     >
       {/*========== FROM =============*/}
       <div className="message-thumbnail__from">
-        <input
-          className="message-thumbnail__from-checkbox"
-          type="checkbox"
+        <Checkbox
           id={message.id}
-          checked={isMsgSelected(message.id)}
           onChange={handleCheckMsg}
+          checked={isMsgSelected(message.id)}
         />
         <div
           onClick={handleMsgClick}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDiagnosis } from "../../../hooks/reactquery/queries/diagnosisQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 
@@ -30,15 +31,12 @@ const DiagnosisSearch = ({ handleClickDiagnosis }) => {
   return (
     <div className="diagnosis__container" ref={rootRef}>
       <div className="diagnosis-search">
-        <label htmlFor="diagnosis-search">Search</label>
-        <input
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          placeholder="Name, Category..."
           id="diagnosis-search"
-          autoComplete="off"
-          autoFocus
+          label="Search"
+          autoFocus={true}
         />
       </div>
       {error && <p className="diagnosis__err">{error.message}</p>}

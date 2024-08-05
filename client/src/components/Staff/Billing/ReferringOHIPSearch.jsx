@@ -2,6 +2,7 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { useDoctorsSearch } from "../../../hooks/reactquery/queries/doctorsQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -47,15 +48,13 @@ const ReferringOHIPSearch = ({
   return (
     <div className="refohip__container">
       <div className="refohip-search">
-        <label htmlFor="refohip-search">Search</label>
-        <input
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          placeholder="OHIP#, Name"
           id="refohip-search"
-          autoComplete="off"
-          autoFocus
+          label="Search"
+          autoFocus={true}
+          placeholder="OHIP#, Name"
         />
       </div>
       <p

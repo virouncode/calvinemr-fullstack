@@ -1,6 +1,6 @@
 import CircularProgressSmallBlack from "../Progress/CircularProgressSmallBlack";
 
-const LoginButton = ({ label, onClick, disabled, loading }) => {
+const LoginButton = ({ label, onClick, disabled = false, loading }) => {
   return (
     <button
       type="button"

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputPassword from "../../UI/Inputs/InputPassword";
 
 const TempPwdForm = ({
   emailInput,
@@ -45,12 +46,12 @@ const TempPwdForm = ({
         {emailInput.toLowerCase()}):
       </p>
       <div className="temp-password-form-row">
-        <input
-          type="password"
-          name="tempPwd"
+        <InputPassword
+          value={tempPwd}
           onChange={handleChange}
-          autoComplete="off"
-          autoFocus
+          name="tempPwd"
+          id="tempPwd"
+          autoFocus={true}
         />
         <div className="temp-password-form-row-btns">
           <SubmitButton />

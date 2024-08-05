@@ -1,4 +1,13 @@
-const Checkbox = ({ id, name, onChange, checked, disabled, label }) => {
+const Checkbox = ({
+  id,
+  name,
+  onChange,
+  checked,
+  disabled,
+  label,
+  mr = 5,
+  className = "",
+}) => {
   return (
     <>
       <input
@@ -6,9 +15,10 @@ const Checkbox = ({ id, name, onChange, checked, disabled, label }) => {
         onChange={onChange}
         checked={checked}
         disabled={disabled}
-        style={{ marginRight: "5px" }}
+        style={{ marginRight: `${mr}px` }}
         id={id}
         name={name}
+        className={className}
       />
       {label && <label htmlFor={id}>{label}</label>}
     </>

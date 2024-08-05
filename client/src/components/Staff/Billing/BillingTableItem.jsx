@@ -28,6 +28,9 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import DeleteButton from "../../UI/Buttons/DeleteButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import Input from "../../UI/Inputs/Input";
+import InputDate from "../../UI/Inputs/InputDate";
+import InputWithLogoInTable from "../../UI/Inputs/InputWithLogoInTable";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
@@ -292,11 +295,10 @@ const BillingTableItem = ({
           )}
           <td>
             {editVisible ? (
-              <input
-                type="date"
+              <InputDate
                 value={timestampToDateISOTZ(itemInfos.date)}
-                name="date"
                 onChange={handleChange}
+                name="date"
               />
             ) : (
               timestampToDateISOTZ(itemInfos.date)
@@ -326,22 +328,12 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <input
-                  type="text"
+                <InputWithLogoInTable
+                  name="referrer_ohip_billing_nbr"
                   value={itemInfos.referrer_ohip_billing_nbr}
-                  name="referrer_ohip_nbr"
                   onChange={handleChange}
-                />
-                <i
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    right: "12px",
-                    top: "19px",
-                  }}
-                  className="fa-solid fa-magnifying-glass"
                   onClick={() => setRefOHIPSearchVisible(true)}
-                ></i>
+                />
               </>
             ) : (
               itemInfos.referrer_ohip_billing_nbr
@@ -350,22 +342,12 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <input
-                  type="text"
+                <InputWithLogoInTable
+                  name="patient_hcn"
                   value={itemInfos.patient_hcn}
-                  name="patient_health_card_nbr"
-                  readOnly
-                />
-                <i
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    right: "12px",
-                    top: "19px",
-                  }}
-                  className="fa-solid fa-magnifying-glass"
+                  readOnly={true}
                   onClick={() => setPatientSearchVisible(true)}
-                ></i>
+                />
               </>
             ) : (
               itemInfos.patient_hcn
@@ -374,22 +356,12 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <input
-                  type="text"
-                  value={itemInfos.patient_name}
+                <InputWithLogoInTable
                   name="patient_id"
-                  readOnly
-                />
-                <i
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    right: "12px",
-                    top: "19px",
-                  }}
-                  className="fa-solid fa-magnifying-glass"
+                  value={itemInfos.patient_name}
+                  readOnly={true}
                   onClick={() => setPatientSearchVisible(true)}
-                ></i>
+                />
               </>
             ) : (
               itemInfos.patient_name
@@ -398,22 +370,12 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <input
-                  type="text"
-                  value={itemInfos.diagnosis_code}
+                <InputWithLogoInTable
                   name="diagnosis_code"
+                  value={itemInfos.diagnosis_code}
                   onChange={handleChange}
-                />
-                <i
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    right: "12px",
-                    top: "19px",
-                  }}
-                  className="fa-solid fa-magnifying-glass"
                   onClick={() => setDiagnosisSearchVisible(true)}
-                ></i>
+                />
               </>
             ) : (
               itemInfos.diagnosis_code
@@ -421,11 +383,10 @@ const BillingTableItem = ({
           </td>
           <td>
             {editVisible ? (
-              <input
-                type="text"
+              <Input
                 value={itemInfos.billing_code}
-                name="billing_code"
                 onChange={handleChange}
+                name="billing_code"
               />
             ) : (
               itemInfos.billing_code

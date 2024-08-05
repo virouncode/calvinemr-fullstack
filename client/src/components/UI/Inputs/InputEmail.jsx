@@ -6,6 +6,7 @@ const InputEmail = ({
   label,
   width,
   placeholder,
+  autoFocus = false,
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ const InputEmail = ({
         autoComplete="off"
         style={{ width: width ? `${width}px` : "" }}
         placeholder={placeholder}
+        autoFocus={autoFocus}
       />
     </>
   );

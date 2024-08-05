@@ -1,4 +1,4 @@
-const UndoneButton = ({ onClick, disabled }) => {
+const UndoneButton = ({ onClick, disabled = false }) => {
   return (
     <button
       type="button"

@@ -6,8 +6,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import CancelButton from "../../UI/Buttons/CancelButton";
-import SubmitButton from "../../UI/Buttons/SubmitButton";
+import FormCredentials from "../../UI/Forms/FormCredentials";
 
 const CredentialsForm = () => {
   const navigate = useNavigate();
@@ -73,6 +72,14 @@ const CredentialsForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!credentials.email) {
+      setErrMsg("Email is required");
+      return;
+    }
+    if (!credentials.password) {
+      setErrMsg("Password is required");
+      return;
+    }
     if (credentials.confirmPassword !== credentials.password) {
       setErrMsg("Passwords do not match");
       return;
@@ -136,163 +143,13 @@ const CredentialsForm = () => {
         style={{ border: errMsg && "solid 1px red" }}
       >
         {errMsg && <div className="credentials-err">{errMsg}</div>}
-        <div className="credentials-form-row">
-          <label htmlFor="email">New email</label>
-          <input
-            id="email"
-            type="email"
-            onChange={handleChange}
-            name="email"
-            value={credentials.email}
-            autoComplete="off"
-            required
-          />
-        </div>
-        <div className="credentials-form-row">
-          <label htmlFor="password">New password</label>
-          <input
-            id="password"
-            type="password"
-            onChange={handlePasswordChange}
-            name="password"
-            value={credentials.password}
-            autoFocus
-            autoComplete="off"
-            required
-          />
-        </div>
-        <div className="credentials-form-row">
-          <ul>
-            <li>
-              {passwordValidity.size ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.size ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                8-20 characters
-              </span>
-            </li>
-            <li>
-              {passwordValidity.uppercase ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.uppercase ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 uppercase letter
-              </span>
-            </li>
-            <li>
-              {passwordValidity.lowercase ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.lowercase ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 lowercase letter
-              </span>
-            </li>
-            <li>
-              {passwordValidity.number ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.number ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 number
-              </span>
-            </li>
-            <li>
-              {passwordValidity.special ? (
-                <i
-                  className="fa-solid fa-check"
-                  style={{ color: "#0dbc01" }}
-                ></i>
-              ) : (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ color: "#ff4d4d" }}
-                ></i>
-              )}{" "}
-              <span
-                style={{
-                  color: passwordValidity.special ? "#0dbc01" : "#ff4d4d",
-                }}
-              >
-                At least 1 special character
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="credentials-form-row">
-          <label htmlFor="confirm-password">Confirm new password</label>
-          <input
-            id="confirm-password"
-            type="password"
-            onChange={handleChange}
-            name="confirmPassword"
-            value={credentials.confirmPassword}
-            autoComplete="off"
-            required
-          />
-        </div>
-        <div className="credentials-form-row">
-          <label htmlFor="pin">New PIN</label>
-          <input
-            id="pin"
-            type="password"
-            onChange={handleChange}
-            name="pin"
-            value={credentials.pin}
-            autoComplete="off"
-            required
-          />
-        </div>
-        <div className="credentials-form-row-submit">
-          <SubmitButton />
-          <CancelButton onClick={handleCancel} />
-        </div>
+        <FormCredentials
+          credentials={credentials}
+          passwordValidity={passwordValidity}
+          handleChangeChange={handleChange}
+          onPasswordChange={handlePasswordChange}
+          handleCancel={handleCancel}
+        />
       </form>
     </>
   );

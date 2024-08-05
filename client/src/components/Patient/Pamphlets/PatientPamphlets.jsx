@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { usePamphlets } from "../../../hooks/reactquery/queries/pamphletsQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import PatientPamphletItem from "./PatientPamhpletItem";
@@ -33,16 +35,15 @@ const PatientPamphlets = () => {
   return (
     <div className="patient-pamphlets">
       <div className="patient-pamphlets__search">
-        <label htmlFor="search-pamphlets">Search</label>
-        <input
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
           id="search-pamphlets"
+          label="Search"
         />
       </div>
       <div className="patient-pamphlets__results">
-        {error && <div className="patient-pamphlets__err">{error.message}</div>}
+        {error && <ErrorParagraph errorMsg={error.message} />}
         <>
           <div className="patient-pamphlets__table-container" ref={rootRef}>
             <table className="patient-pamphlets__table">

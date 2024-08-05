@@ -1,4 +1,4 @@
-const LinkButton = ({ label, onClick, disabled, url }) => {
+const LinkButton = ({ label, onClick, disabled = false, url }) => {
   return (
     <button type="button" onClick={onClick} disabled={disabled}>
       <a href={url} rel="noreferrer">

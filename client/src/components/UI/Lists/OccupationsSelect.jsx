@@ -1,8 +1,16 @@
-const OccupationsSelect = ({ id, name, value, onChange, label }) => {
+const OccupationsSelect = ({
+  id,
+  name,
+  value,
+  onChange,
+  label,
+  all = false,
+}) => {
   return (
     <>
-      {label && <label htmlFor="occupation">{label}</label>}
+      {label && <label htmlFor={id}>{label}</label>}
       <select value={value} onChange={onChange} name={name} id={id}>
+        {all && <option value="All">All</option>}
         <option value="Doctor">Doctor</option>
         <option value="Medical Student">Medical Student</option>
         <option value="Nurse">Nurse</option>

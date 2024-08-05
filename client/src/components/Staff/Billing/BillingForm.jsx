@@ -18,8 +18,11 @@ import { removeLastLetter } from "../../../utils/strings/removeLastLetter";
 import { billingFormSchema } from "../../../validation/billing/billingValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputDate from "../../UI/Inputs/InputDate";
+import InputWithLogo from "../../UI/Inputs/InputWithLogo";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
+import BillingCodesTextarea from "./BillingCodesTextarea";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
@@ -201,151 +204,77 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
     >
       <div className="billing-form__row">
         <div className="billing-form__item">
-          <label htmlFor="date">Date*</label>
-          <input
-            type="date"
+          <InputDate
             value={formDatas.date}
+            onChange={handleChange}
             name="date"
-            onChange={handleChange}
             id="date"
+            label="Date*"
+            width={150}
           />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="provider_ohip_billing_nbr">Provider OHIP#*</label>
-          <input
-            type="text"
-            value={formDatas.provider_ohip_billing_nbr.toString()}
-            name="provider_ohip_billing_nbr"
-            onChange={handleChange}
-            readOnly={user.access_level !== "admin"}
+          <InputWithLogo
             id="provider_ohip_billing_nbr"
+            name="provider_ohip_billing_nbr"
+            value={formDatas.provider_ohip_billing_nbr.toString()}
+            onChange={handleChange}
+            onClick={() => setProviderOHIPSearchVisible(true)}
+            label="Provider OHIP#*"
+            readOnly={user.access_level !== "admin"}
+            logo={userType === "admin"}
           />
-          {userType === "admin" && (
-            <i
-              style={{
-                cursor: "pointer",
-                position: "absolute",
-                right: "5px",
-                top: "5px",
-              }}
-              className="fa-solid fa-magnifying-glass"
-              onClick={() => setProviderOHIPSearchVisible(true)}
-            ></i>
-          )}
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="referrer_ohip_billing_nbr">Referring MD OHIP#</label>
-          <input
-            type="text"
-            value={formDatas.referrer_ohip_billing_nbr.toString()}
-            name="referrer_ohip_billing_nbr"
-            onChange={handleChange}
-            autoComplete="off"
-            autoFocus
+          <InputWithLogo
             id="referrer_ohip_billing_nbr"
-          />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-              top: "5px",
-            }}
-            className="fa-solid fa-magnifying-glass"
+            name="referrer_ohip_billing_nbr"
+            value={formDatas.referrer_ohip_billing_nbr.toString()}
+            onChange={handleChange}
             onClick={() => setRefOHIPSearchVisible(true)}
-          ></i>
+            label="Referring MD OHIP#"
+          />
         </div>
       </div>
       <div className="billing-form__row">
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="patient_hcn">Patient Health Card#</label>
-          <input
-            type="text"
-            value={formDatas.patient_hcn}
-            name="patient_hcn"
-            onChange={handleChange}
-            autoComplete="off"
-            readOnly
+          <InputWithLogo
             id="patient_hcn"
-          />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-              top: "5px",
-            }}
-            className="fa-solid fa-magnifying-glass"
+            name="patient_hcn"
+            value={formDatas.patient_hcn}
+            onChange={handleChange}
             onClick={() => setPatientSearchVisible(true)}
-          ></i>
+            readOnly={true}
+            label="Patient Health Card#"
+          />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="diagnosis_code">Diagnosis code*</label>
-          <input
-            type="text"
-            value={formDatas.diagnosis_code}
-            name="diagnosis_code"
-            onChange={handleChange}
-            autoComplete="off"
+          <InputWithLogo
             id="diagnosis_code"
-          />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-              top: "5px",
-            }}
-            className="fa-solid fa-magnifying-glass"
+            name="diagnosis_code"
+            value={formDatas.diagnosis_code}
+            onChange={handleChange}
             onClick={() => setDiagnosisSearchVisible(true)}
-          ></i>
+            label="Diagnosis code*"
+          />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="billing_codes">Billing code(s)*</label>
-          <textarea
-            placeholder="A001,B423,F404,..."
+          <BillingCodesTextarea
             value={formDatas.billing_codes}
-            name="billing_codes"
             onChange={handleChange}
-            autoComplete="off"
-            rows={2}
-            style={{
-              padding: "5px 20px 5px 5px",
-              whiteSpace: "pre-wrap",
-              width: "170px",
-            }}
-            id="billing_codes"
-          />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-            }}
-            className="fa-solid fa-magnifying-glass"
             onClick={() => setBillingCodesTemplatesVisible(true)}
-          ></i>
+          />
         </div>
       </div>
       <div className="billing-form__row">
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <label htmlFor="patient_id">Patient Name*</label>
-          <input
-            type="text"
-            value={formDatas.patient_name}
-            name="patient_id"
-            readOnly
+          <InputWithLogo
             id="patient_id"
-          />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-              top: "5px",
-            }}
-            className="fa-solid fa-magnifying-glass"
+            name="patient_id"
+            value={formDatas.patient_name}
             onClick={() => setPatientSearchVisible(true)}
+            readOnly={true}
+            label="Patient Name*"
           />
         </div>
         <div className="billing-form__item">
@@ -353,6 +282,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
             handleSiteChange={handleSiteChange}
             sites={sites}
             value={formDatas.site_id}
+            label="Site"
           />
         </div>
       </div>

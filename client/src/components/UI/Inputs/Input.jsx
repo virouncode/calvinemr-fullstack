@@ -6,7 +6,8 @@ const Input = ({
   label,
   width,
   placeholder,
-  autoFocus,
+  autoFocus = false,
+  readOnly = false,
 }) => {
   return (
     <>
@@ -21,6 +22,7 @@ const Input = ({
         style={{ width: width ? `${width}px` : "" }}
         placeholder={placeholder}
         autoFocus={autoFocus}
+        readOnly={readOnly}
       />
     </>
   );

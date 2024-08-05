@@ -6,11 +6,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import CancelButton from "../../UI/Buttons/CancelButton";
-import SubmitButton from "../../UI/Buttons/SubmitButton";
-import InputEmail from "../../UI/Inputs/InputEmail";
-import InputPassword from "../../UI/Inputs/InputPassword";
-import PasswordValidator from "../../UI/Inputs/PasswordValidator";
+import FormCredentials from "../../UI/Forms/FormCredentials";
 
 const CredentialsFormAdmin = () => {
   const navigate = useNavigate();
@@ -147,49 +143,13 @@ const CredentialsFormAdmin = () => {
         style={{ border: errMsg && "solid 1px red" }}
       >
         {errMsg && <div className="credentials-err">{errMsg}</div>}
-        <div className="credentials-form-row">
-          <InputEmail
-            value={credentials.email}
-            onChange={handleChange}
-            name="email"
-            id="email"
-            label="New email"
-          />
-        </div>
-        <div className="credentials-form-row">
-          <InputPassword
-            value={credentials.password}
-            onChange={handlePasswordChange}
-            name="password"
-            id="password"
-            label="New password"
-          />
-        </div>
-        <div className="credentials-form-row">
-          <PasswordValidator passwordValidity={passwordValidity} />
-        </div>
-        <div className="credentials-form-row">
-          <InputPassword
-            value={credentials.confirmPassword}
-            onChange={handleChange}
-            name="confirmPassword"
-            id="confirmPassword"
-            label="Confirm password"
-          />
-        </div>
-        <div className="credentials-form-row">
-          <InputPassword
-            value={credentials.pin}
-            onChange={handleChange}
-            name="pin"
-            id="pin"
-            label="New PIN"
-          />
-        </div>
-        <div className="credentials-form-row-submit">
-          <SubmitButton />
-          <CancelButton onClick={handleCancel} />
-        </div>
+        <FormCredentials
+          credentials={credentials}
+          passwordValidity={passwordValidity}
+          handleChangeChange={handleChange}
+          onPasswordChange={handlePasswordChange}
+          handleCancel={handleCancel}
+        />
       </form>
     </>
   );

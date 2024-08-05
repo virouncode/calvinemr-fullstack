@@ -6,6 +6,7 @@ const InputPassword = ({
   label,
   width,
   placeholder,
+  autoFocus = false,
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ const InputPassword = ({
         autoComplete="off"
         style={{ width: width ? `${width}px` : "" }}
         placeholder={placeholder}
+        autoFocus={autoFocus}
       />
     </>
   );

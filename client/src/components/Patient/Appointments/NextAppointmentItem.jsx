@@ -1,11 +1,7 @@
-
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import { toNextOccurence } from "../../../utils/appointments/occurences";
-import {
-    timestampToHumanDateTZ,
-    timestampToHumanDateTimeTZ,
-} from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import Checkbox from "../../UI/Checkbox/Checkbox";
+import NextAppointmentDate from "./NextAppointmentDate";
 
 const NextAppointmentItem = ({
   appointment,
@@ -16,46 +12,12 @@ const NextAppointmentItem = ({
   return (
     <li key={appointment.id} className="appointments-patient__item">
       <div className="appointments-patient__date" style={{ width: "50%" }}>
-        <input
-          type="checkbox"
-          checked={isAppointmentSelected(appointment.id)}
-          onChange={handleCheck}
+        <Checkbox
           id={appointment.id}
-          style={{ textAlign: "center", margin: "4px" }}
+          onChange={handleCheck}
+          checked={isAppointmentSelected(appointment.id)}
         />
-        {!appointment.all_day ? (
-          <>
-            <div style={{ width: "45%", textAlign: "center" }}>
-              {timestampToHumanDateTimeTZ(
-                appointment.recurrence === "Once"
-                  ? appointment.start
-                  : toNextOccurence(
-                      appointment.start,
-                      appointment.end,
-                      appointment.rrule,
-                      appointment.exrule
-                    )[0]
-              )}
-            </div>
-            <div style={{ width: "5%", textAlign: "center" }}>-</div>
-            <div style={{ width: "45%", textAlign: "center" }}>
-              {timestampToHumanDateTimeTZ(
-                appointment.recurrence === "Once"
-                  ? appointment.end
-                  : toNextOccurence(
-                      appointment.start,
-                      appointment.end,
-                      appointment.rrule,
-                      appointment.exrule
-                    )[1]
-              )}
-            </div>
-          </>
-        ) : (
-          <div style={{ width: "100%", textAlign: "center" }}>
-            {timestampToHumanDateTZ(appointment.start)} {`All Day`}
-          </div>
-        )}
+        <NextAppointmentDate appointment={appointment} />
       </div>
       <div style={{ width: "25%", textAlign: "center" }}>
         Reason : {appointment.AppointmentPurpose}

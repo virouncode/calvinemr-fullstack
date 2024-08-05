@@ -1,4 +1,4 @@
-const DoneButton = ({ onClick, disabled }) => {
+const DoneButton = ({ onClick, disabled = false }) => {
   return (
     <button
       type="button"

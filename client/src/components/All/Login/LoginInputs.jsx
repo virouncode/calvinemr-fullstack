@@ -1,3 +1,8 @@
+import EyeButton from "../../UI/Buttons/EyeButton";
+import Input from "../../UI/Inputs/Input";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputPassword from "../../UI/Inputs/InputPassword";
+
 const LoginInputs = ({
   formDatas,
   handleChange,
@@ -9,106 +14,62 @@ const LoginInputs = ({
   return (
     <>
       <div className="login-form__row">
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          name="email"
+        <InputEmail
           id="email"
-          autoComplete="off"
+          name="email"
           onChange={handleChange}
           value={formDatas.email}
-          autoFocus
+          autoFocus={true}
+          label="Email"
         />
       </div>
       <div className="login-form__row" style={{ position: "relative" }}>
-        <label htmlFor="password">Password</label>
         {passwordVisible ? (
           <>
-            <input
-              type="text"
+            <Input
               id="password"
               name="password"
               onChange={handleChange}
               value={formDatas.password}
-              autoComplete="off"
+              label="Password"
             />
-            <i
-              className="fa-regular fa-eye"
-              style={{
-                position: "absolute",
-                right: "5px",
-                fontSize: "0.7rem",
-                cursor: "pointer",
-              }}
-              onClick={handleTogglePwd}
-            />
+            <EyeButton onClick={handleTogglePwd} />
           </>
         ) : (
           <>
-            <input
-              type="password"
+            <InputPassword
               id="password"
               name="password"
               onChange={handleChange}
               value={formDatas.password}
-              autoComplete="off"
+              label="Password"
             />
-            <i
-              className="fa-regular fa-eye-slash"
-              style={{
-                position: "absolute",
-                right: "5px",
-                fontSize: "0.7rem",
-                cursor: "pointer",
-              }}
-              onClick={handleTogglePwd}
-            />
+            <EyeButton onClick={handleTogglePwd} slash={true} />
           </>
         )}
       </div>
       <div className="login-form__row" style={{ position: "relative" }}>
-        <label htmlFor="pin">PIN</label>
         {pinVisible ? (
           <>
-            <input
-              type="text"
+            <Input
               id="pin"
               name="pin"
               onChange={handleChange}
               value={formDatas.pin}
-              autoComplete="off"
+              label="PIN"
             />
-            <i
-              className="fa-regular fa-eye"
-              style={{
-                position: "absolute",
-                right: "5px",
-                fontSize: "0.7rem",
-                cursor: "pointer",
-              }}
-              onClick={handleTogglePin}
-            />
+            <EyeButton onClick={handleTogglePin} />
           </>
         ) : (
           <>
-            <input
-              type="password"
+            <InputPassword
               id="pin"
               name="pin"
               onChange={handleChange}
               value={formDatas.pin}
-              autoComplete="off"
+              label="PIN"
             />
-            <i
-              className="fa-regular fa-eye-slash"
-              style={{
-                position: "absolute",
-                right: "5px",
-                fontSize: "0.7rem",
-                cursor: "pointer",
-              }}
-              onClick={handleTogglePin}
-            />
+            <EyeButton onClick={handleTogglePin} slash={true} />
           </>
         )}
       </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePatientsSimpleSearch } from "../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import { toPatientName } from "../../../utils/names/toPatientName";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -45,16 +46,13 @@ const PatientChartHealthSearch = ({
   return (
     <div className="hcn__container">
       <div className="hcn-search">
-        <label htmlFor="hcn-search">Search</label>
-        <input
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
+          id="search"
+          label="Search"
+          autoFocus={true}
           placeholder="Chart#, Health Card#, Name..."
-          style={{ width: "300px" }}
-          id="hcn-search"
-          autoComplete="off"
-          autoFocus
         />
       </div>
       <ul className="hcn-results" ref={rootRef}>

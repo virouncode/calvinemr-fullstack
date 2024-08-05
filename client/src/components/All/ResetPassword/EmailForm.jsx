@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputEmail from "../../UI/Inputs/InputEmail";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
+import UserTypeRadioGroup from "../../UI/Radio/UserTypeRadioGroup";
 
 axios.defaults.withCredentials = true;
 
@@ -61,51 +63,18 @@ const EmailForm = ({
   return (
     <form onSubmit={handleSubmitEmail}>
       <div className="email-form-row-radio">
-        <div className="email-form-row-radio-item">
-          <input
-            type="radio"
-            id="staff"
-            name="type"
-            value="staff"
-            checked={type === "staff"}
-            onChange={handleTypeChange}
-          />
-          <label htmlFor="staff">Staff</label>
-        </div>
-        <div className="email-form-row-radio-item">
-          <input
-            type="radio"
-            id="patient"
-            name="type"
-            value="patient"
-            checked={type === "patient"}
-            onChange={handleTypeChange}
-          />
-          <label htmlFor="patient">Patient</label>
-        </div>
-        <div className="email-form-row-radio-item">
-          <input
-            type="radio"
-            id="admin"
-            name="type"
-            value="admin"
-            checked={type === "admin"}
-            onChange={handleTypeChange}
-          />
-          <label htmlFor="admin">Admin</label>
-        </div>
+        <UserTypeRadioGroup type={type} handleTypeChange={handleTypeChange} />
       </div>
       <div className="email-form-row">
-        <label htmlFor="email">Enter your email: </label>
-        <input
-          type="email"
+        <InputEmail
+          value={emailInput}
           onChange={(e) => {
             setEmailInput(e.target.value);
             setErrMsg("");
           }}
-          required
-          value={emailInput}
-          autoFocus
+          name="email"
+          id="email"
+          label="Enter your email: "
         />
         <div>
           <SubmitButton disabled={progress} />

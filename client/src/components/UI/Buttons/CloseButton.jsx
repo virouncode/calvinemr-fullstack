@@ -1,4 +1,4 @@
-const CloseButton = ({ label = "Close", onClick, disabled }) => {
+const CloseButton = ({ label = "Close", onClick, disabled = false }) => {
   return (
     <button type="button" onClick={onClick} disabled={disabled}>
       {label}

@@ -1,4 +1,8 @@
 import SiteSelect from "../../Staff/EventForm/SiteSelect";
+import Input from "../../UI/Inputs/Input";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputTel from "../../UI/Inputs/InputTel";
+import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
 
 const StaffAccountSearch = ({ search, setSearch, sites }) => {
   const handleChange = (e) => {
@@ -15,15 +19,13 @@ const StaffAccountSearch = ({ search, setSearch, sites }) => {
       <form className="staff-search__form">
         <div className="staff-search__row">
           <div className="staff-search__item">
-            <label htmlFor="name-search">Name</label>
-            <input
-              type="text"
-              name="name"
+            <Input
               value={search.name}
               onChange={handleChange}
-              autoComplete="off"
-              id="name-search"
-              autoFocus
+              name="name"
+              id="name"
+              label="Name"
+              autoFocus={true}
             />
           </div>
           <div className="staff-search__item">
@@ -31,88 +33,75 @@ const StaffAccountSearch = ({ search, setSearch, sites }) => {
               handleSiteChange={handleSiteChange}
               sites={sites}
               value={search.site_id}
-              label={true}
+              label="Site"
               all={true}
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="email-search">Email</label>
-            <input
-              type="text"
-              name="email"
+            <InputEmail
               value={search.email}
               onChange={handleChange}
-              autoComplete="off"
-              id="email-search"
+              name="email"
+              id="email"
+              label="Email"
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="phone-search">Phone</label>
-            <input
-              type="text"
-              name="phone"
+            <InputTel
               value={search.phone}
               onChange={handleChange}
-              autoComplete="off"
-              id="phone-search"
+              name="phone"
+              id="phone"
+              label="Phone"
               placeholder="xxx-xxx-xxxx"
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="title-search">Occupation</label>
-            <input
-              type="text"
+            <OccupationsSelect
+              id="title"
               name="title"
               value={search.title}
               onChange={handleChange}
-              autoComplete="off"
-              id="title-search"
+              label="Occupation"
+              all={true}
             />
           </div>
         </div>
         <div className="staff-search__row">
           <div className="staff-search__item">
-            <label htmlFor="licence_nbr-search">Licence#</label>
-            <input
-              type="text"
-              name="licence_nbr"
+            <Input
               value={search.licence_nbr}
               onChange={handleChange}
-              autoComplete="off"
-              id="licence_nbr-search"
+              name="licence_nbr"
+              id="licence_nbr"
+              label="Licence#"
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="ohip_billing_nbr-search">OHIP#</label>
-            <input
-              type="text"
-              name="ohip_billing_nbr"
+            <Input
               value={search.ohip_billing_nbr}
               onChange={handleChange}
-              autoComplete="off"
-              id="ohip_billing_nbr-search"
+              name="ohip_billing_nbr"
+              id="ohip_billing_nbr"
+              label="OHIP#"
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="speciality-search">Speciality</label>
-            <input
-              type="text"
-              name="speciality"
+            <Input
               value={search.speciality}
               onChange={handleChange}
-              autoComplete="off"
-              id="speciality-search"
+              name="speciality"
+              id="speciality"
+              label="Speciality"
             />
           </div>
           <div className="staff-search__item">
-            <label htmlFor="subspeciality-search">Subspeciality</label>
-            <input
-              type="text"
-              name="subspeciality"
+            <Input
               value={search.subspeciality}
               onChange={handleChange}
-              autoComplete="off"
-              id="subspeciality-search"
+              name="subspeciality"
+              id="subspeciality"
+              label="Sub Speciality"
             />
           </div>
         </div>

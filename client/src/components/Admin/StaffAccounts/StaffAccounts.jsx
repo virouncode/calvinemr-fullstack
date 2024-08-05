@@ -19,14 +19,13 @@ const StaffAccounts = () => {
   const [search, setSearch] = useState({
     email: "",
     name: "",
-    title: "",
+    title: "All",
     speciality: "",
     subspeciality: "",
     phone: "",
     licence_nbr: "",
     ohip_billing_nbr: "",
     site_id: -1,
-    occupation: "",
   });
   const {
     data: sites,

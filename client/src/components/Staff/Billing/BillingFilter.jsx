@@ -3,6 +3,8 @@ import {
   timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
 import ExportCSVButton from "../../UI/Buttons/ExportCSVButton";
+import Checkbox from "../../UI/Checkbox/Checkbox";
+import InputDate from "../../UI/Inputs/InputDate";
 
 const BillingFilter = ({
   billings,
@@ -113,36 +115,33 @@ const BillingFilter = ({
       <div className="billing-filter__row">
         <div className="billing-filter__title">Filter</div>
         <div className="billing-filter__item">
-          <label htmlFor="from">From</label>
-          <input
-            type="date"
-            value={timestampToDateISOTZ(rangeStart, "America/Toronto")}
+          <InputDate
+            value={timestampToDateISOTZ(rangeStart)}
+            onChange={handleDateChange}
             name="date_start"
-            onChange={handleDateChange}
-            disabled={all}
             id="from"
-          />
-        </div>
-        <div className="billing-filter__item">
-          <label htmlFor="to">To</label>
-          <input
-            type="date"
-            value={timestampToDateISOTZ(rangeEnd, "America/Toronto")}
-            name="date_end"
-            onChange={handleDateChange}
+            label="From"
             disabled={all}
-            id="to"
           />
         </div>
         <div className="billing-filter__item">
-          <input
-            type="checkbox"
-            checked={all}
+          <InputDate
+            value={timestampToDateISOTZ(rangeEnd)}
+            onChange={handleDateChange}
+            name="date_end"
+            id="to"
+            label="To"
+            disabled={all}
+          />
+        </div>
+        <div className="billing-filter__item">
+          <Checkbox
+            id="all"
             name="all"
             onChange={handleCheckAll}
-            id="all"
+            checked={all}
+            label="All"
           />
-          <label htmlFor="all">All</label>
         </div>
         <div className="billing-filter__btn-container">
           <a href="https://cab.md/Signin.aspx" target="_blank">

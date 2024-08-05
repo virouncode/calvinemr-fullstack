@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import xanoPostReset from "../../../api/xanoCRUD/xanoPostReset";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
+import InputPassword from "../../UI/Inputs/InputPassword";
+import PasswordValidator from "../../UI/Inputs/PasswordValidator";
 
 const ResetPasswordForm = ({
   setErrMsg,
@@ -49,7 +52,6 @@ const ResetPasswordForm = ({
     } else {
       newValidity.size = false;
     }
-
     setPasswordValidity(newValidity);
     setPwd(value);
   };
@@ -91,120 +93,44 @@ const ResetPasswordForm = ({
   return (
     <form onSubmit={handleSubmitPwd} className="reset-password-form">
       <div className="reset-password-form-row">
-        <label htmlFor="new-password">Enter a new password:</label>
-        <input
-          type="password"
-          id="new-password"
+        <InputPassword
           value={pwd}
           onChange={handlePasswordChange}
-          required
-          autoComplete="off"
+          name="new-password"
+          id="new-password"
+          label="Enter a new password:"
+          autoFocus={true}
         />
       </div>
       <div className="reset-password-form-row">
-        <ul>
-          <li>
-            {passwordValidity.size ? (
-              <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
-            ) : (
-              <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
-            )}{" "}
-            <span
-              style={{
-                color: passwordValidity.size ? "#0dbc01" : "#ff4d4d",
-              }}
-            >
-              8-20 characters
-            </span>
-          </li>
-          <li>
-            {passwordValidity.uppercase ? (
-              <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
-            ) : (
-              <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
-            )}{" "}
-            <span
-              style={{
-                color: passwordValidity.uppercase ? "#0dbc01" : "#ff4d4d",
-              }}
-            >
-              At least 1 uppercase letter
-            </span>
-          </li>
-          <li>
-            {passwordValidity.lowercase ? (
-              <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
-            ) : (
-              <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
-            )}{" "}
-            <span
-              style={{
-                color: passwordValidity.lowercase ? "#0dbc01" : "#ff4d4d",
-              }}
-            >
-              At least 1 lowercase letter
-            </span>
-          </li>
-          <li>
-            {passwordValidity.number ? (
-              <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
-            ) : (
-              <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
-            )}{" "}
-            <span
-              style={{
-                color: passwordValidity.number ? "#0dbc01" : "#ff4d4d",
-              }}
-            >
-              At least 1 number
-            </span>
-          </li>
-          <li>
-            {passwordValidity.special ? (
-              <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
-            ) : (
-              <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
-            )}{" "}
-            <span
-              style={{
-                color: passwordValidity.special ? "#0dbc01" : "#ff4d4d",
-              }}
-            >
-              At least 1 special character
-            </span>
-          </li>
-        </ul>
+        <PasswordValidator passwordValidity={passwordValidity} />
       </div>
       <div className="reset-password-form-row">
-        <label htmlFor="confirm-password">Confirm new password:</label>
-        <input
-          type="password"
-          id="confirm-password"
+        <InputPassword
           value={confirmPwd}
           onChange={(e) => {
             setConfirmPwd(e.target.value);
             setErrMsg("");
           }}
-          required
-          autoComplete="off"
+          name="confirm-password"
+          id="confirm-password"
+          label="Confirm new password:"
         />
       </div>
       <div className="reset-password-form-row">
-        <label htmlFor="pin">New PIN:</label>
-        <input
-          type="password"
-          id="pin"
+        <InputPassword
           value={pin}
           onChange={(e) => {
             setPin(e.target.value);
             setErrMsg("");
           }}
-          required
-          autoComplete="off"
+          name="pin"
+          id="pin"
+          label="Enter a new PIN:"
         />
       </div>
       <div className="reset-password-form-row-btn">
-        <input type="submit" value="Submit" />
+        <SubmitButton />
       </div>
     </form>
   );

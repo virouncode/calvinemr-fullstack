@@ -4,6 +4,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Radio from "../../UI/Radio/Radio";
 
 const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
   const { user } = useUserContext();
@@ -191,29 +192,24 @@ const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
       <div className="patient-ai-agreement-footer">
         <div className="patient-ai-agreement-radio">
           <div className="patient-ai-agreement-radio-item">
-            <input
-              type="radio"
-              name="agreement"
+            <Radio
               id="yes"
-              value={agreed}
+              name="agreement"
+              value={true}
+              checked={agreed}
               onChange={handleChange}
+              label="I agree to the terms and conditions outlined in this consent form."
             />
-            <label htmlFor="yes">
-              I agree to the terms and conditions outlined in this consent form.
-            </label>
           </div>
           <div className="patient-ai-agreement-radio-item">
-            <input
-              type="radio"
-              name="agreement"
+            <Radio
               id="no"
-              value={!agreed}
+              name="agreement"
+              value={false}
+              checked={!agreed}
               onChange={handleChange}
+              label="I don't agree to the terms and conditions outlined in this consent form."
             />
-            <label htmlFor="no">
-              I don't agree to the terms and conditions outlined in this consent
-              form.
-            </label>
           </div>
         </div>
         <SaveButton label="Confirm" onClick={handleConfirm} />

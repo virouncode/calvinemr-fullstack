@@ -1,4 +1,4 @@
-const CancelButton = ({ label = "Cancel", onClick, disabled }) => {
+const CancelButton = ({ label = "Cancel", onClick, disabled = false }) => {
   return (
     <button type="button" onClick={onClick} disabled={disabled}>
       {label}

@@ -1,4 +1,12 @@
-const InputDate = ({ value, onChange, name, id, label, width }) => {
+const InputDate = ({
+  value,
+  onChange,
+  name,
+  id,
+  label,
+  width,
+  disabled = false,
+}) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
@@ -9,6 +17,7 @@ const InputDate = ({ value, onChange, name, id, label, width }) => {
         name={name}
         id={id}
         style={{ width: width ? `${width}px` : "" }}
+        disabled={disabled}
       />
     </>
   );

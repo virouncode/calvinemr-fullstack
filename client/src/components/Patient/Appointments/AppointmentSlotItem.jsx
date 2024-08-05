@@ -1,13 +1,6 @@
-import { DateTime } from "luxon";
-
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
-
-const optionsDate = {
-  weekday: "short",
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-};
+import Checkbox from "../../UI/Checkbox/Checkbox";
+import NewAppointmentDate from "./NewAppointmentDate";
 
 const AppointmentSlotItem = ({
   appointment,
@@ -23,29 +16,13 @@ const AppointmentSlotItem = ({
   const isAppointmentSelected = (id) => appointmentSelected.id === id;
   return (
     <div key={appointment.id} className="new-appointments__content-item">
-      <input
-        type="checkbox"
+      <Checkbox
         checked={isAppointmentSelected(appointment.id)}
         onChange={handleCheck}
+        mr={10}
       />
       <div className="new-appointments__content-item-date">
-        <p>
-          {DateTime.fromMillis(appointment.start, {
-            zone: "America/Toronto",
-            locale: "en-CA",
-          }).toLocaleString(optionsDate)}
-        </p>
-        <p>
-          {DateTime.fromMillis(appointment.start, {
-            zone: "America/Toronto",
-            locale: "en-CA",
-          }).toLocaleString(DateTime.TIME_SIMPLE)}{" "}
-          -{" "}
-          {DateTime.fromMillis(appointment.end, {
-            zone: "America/Toronto",
-            locale: "en-CA",
-          }).toLocaleString(DateTime.TIME_SIMPLE)}
-        </p>
+        <NewAppointmentDate appointment={appointment} />
       </div>
       <p>Reason : {appointment.reason}</p>
       <p>{staffIdToTitleAndName(staffInfos, appointment.host_id)}</p>

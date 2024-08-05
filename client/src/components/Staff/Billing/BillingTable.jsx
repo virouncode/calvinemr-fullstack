@@ -1,4 +1,3 @@
-
 import useIntersection from "../../../hooks/useIntersection";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";

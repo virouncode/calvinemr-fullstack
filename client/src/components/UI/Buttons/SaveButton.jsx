@@ -1,4 +1,4 @@
-const SaveButton = ({ label = "Save", onClick, disabled }) => {
+const SaveButton = ({ label = "Save", onClick, disabled = false }) => {
   return (
     <button
       type="button"

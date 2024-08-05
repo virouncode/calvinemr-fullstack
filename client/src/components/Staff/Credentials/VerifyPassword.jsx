@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
-import CancelButton from "../../UI/Buttons/CancelButton";
-import SubmitButton from "../../UI/Buttons/SubmitButton";
+import FormVerifyPassword from "../../UI/Forms/FormVerifyPassword";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const VerifyPassword = ({ setVerified }) => {
   const LOGIN_URL = "/auth/login";
@@ -45,30 +45,14 @@ const VerifyPassword = ({ setVerified }) => {
     <div className="verify-pwd" style={{ border: errMsg && "solid 1px red" }}>
       <div className="verify-pwd-title">Please enter your password and PIN</div>
       <form className="verify-pwd-form" onSubmit={handleSubmit}>
-        {errMsg && <div className="verify-pwd-err">{errMsg}</div>}
-        <div className="verify-pwd-form-row">
-          <label htmlFor="pwd">Password</label>
-          <input
-            type="password"
-            value={password}
-            id="pwd"
-            onChange={handlePwdChange}
-            autoFocus
-          />
-        </div>
-        <div className="verify-pwd-form-row">
-          <label htmlFor="pin">PIN</label>
-          <input
-            type="password"
-            value={pin}
-            id="pin"
-            onChange={handlePinChange}
-          />
-        </div>
-        <div className="verify-pwd-form-row verify-pwd-form-row--submit">
-          <SubmitButton />
-          <CancelButton onClick={handleCancel} />
-        </div>
+        {errMsg && <ErrorParagraph errorMsg={errMsg} />}
+        <FormVerifyPassword
+          password={password}
+          pin={pin}
+          handlePwdChange={handlePwdChange}
+          handlePinChange={handlePinChange}
+          handleCancel={handleCancel}
+        />
       </form>
     </div>
   );

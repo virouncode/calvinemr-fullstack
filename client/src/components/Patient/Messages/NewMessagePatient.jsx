@@ -9,8 +9,10 @@ import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/mess
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import ContactsForPatient from "./ContactsForPatient";
 
@@ -161,36 +163,30 @@ const NewMessagePatient = ({ setNewVisible }) => {
       </div>
       <div className="new-message__form new-message__form--patient">
         <div className="new-message__recipients new-message__recipients--patient">
-          <strong>To: </strong>
-          <input
-            type="text"
-            placeholder="Staff member"
+          <Input
             value={
               recipientId ? staffIdToTitleAndName(staffInfos, recipientId) : ""
             }
-            readOnly
+            id="to"
+            label="To:"
+            readOnly={true}
+            placeholder="Recipient"
           />
         </div>
         <div className="new-message__subject new-message__subject--patient">
-          <strong>Subject: </strong>
-          <input
-            type="text"
-            placeholder="Subject"
-            onChange={handleChangeSubject}
+          <Input
             value={subject}
+            id="subject"
+            onChange={handleChangeSubject}
+            label="Subject:"
+            placeholder="Subject"
           />
         </div>
         <div className="new-message__attach new-message__attach--patient">
-          <strong>Attach files</strong>
-          <i className="fa-solid fa-paperclip" onClick={handleAttach}></i>
-          {attachments.map((attachment) => (
-            <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
-              {attachment.alias},
-            </span>
-          ))}
+          <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
         <div className="new-message__body new-message__body--patient">
-          <textarea value={body} onChange={handleChange}></textarea>
+          <textarea value={body} onChange={handleChange} />
           <MessagesAttachments
             attachments={attachments}
             handleRemoveAttachment={handleRemoveAttachment}

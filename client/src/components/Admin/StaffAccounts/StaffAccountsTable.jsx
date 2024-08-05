@@ -8,6 +8,33 @@ const StaffAccountsTable = ({
   setEditVisible,
   setSelectedStaffId,
 }) => {
+  const filteredStaffInfos =
+    staffInfos.length > 0
+      ? staffInfos.filter(
+          (staff) =>
+            staff.full_name
+              ?.toLowerCase()
+              .includes(search.name.toLowerCase()) &&
+            staff.email?.toLowerCase().includes(search.email.toLowerCase()) &&
+            (staff.cell_phone
+              ?.toLowerCase()
+              .includes(search.phone.toLowerCase()) ||
+              staff.backup_phone
+                ?.toLowerCase()
+                .includes(search.phone.toLowerCase())) &&
+            staff.speciality
+              ?.toLowerCase()
+              .includes(search.speciality.toLowerCase()) &&
+            staff.subspeciality
+              ?.toLowerCase()
+              .includes(search.subspeciality.toLowerCase()) &&
+            staff.licence_nbr?.includes(search.licence_nbr) &&
+            staff.ohip_billing_nbr.includes(search.ohip_billing_nbr) &&
+            (search.site_id === -1 || staff.site_id === search.site_id) &&
+            (search.title === "All" || staff.title === search.title)
+        )
+      : [];
+  console.log("filteredInfos", filteredStaffInfos);
   return staffInfos ? (
     <div className="staff-result">
       <table>
@@ -33,49 +60,18 @@ const StaffAccountsTable = ({
           </tr>
         </thead>
         <tbody>
-          {staffInfos.length > 0 ? (
-            staffInfos
-              .filter(
-                (staff) =>
-                  staff.full_name
-                    ?.toLowerCase()
-                    .includes(search.name.toLowerCase()) &&
-                  staff.email
-                    ?.toLowerCase()
-                    .includes(search.email.toLowerCase()) &&
-                  (staff.cell_phone
-                    ?.toLowerCase()
-                    .includes(search.phone.toLowerCase()) ||
-                    staff.backup_phone
-                      ?.toLowerCase()
-                      .includes(search.phone.toLowerCase())) &&
-                  staff.title
-                    ?.toLowerCase()
-                    .includes(search.title.toLowerCase()) &&
-                  staff.speciality
-                    ?.toLowerCase()
-                    .includes(search.speciality.toLowerCase()) &&
-                  staff.subspeciality
-                    ?.toLowerCase()
-                    .includes(search.subspeciality.toLowerCase()) &&
-                  staff.licence_nbr?.includes(search.licence_nbr) &&
-                  staff.ohip_billing_nbr.includes(search.ohip_billing_nbr) &&
-                  (staff.site_id === search.site_id || search.site_id === -1) &&
-                  staff.title
-                    ?.toLowerCase()
-                    .includes(search.title.toLowerCase())
-              )
-              .map((staff) => (
-                <StaffAccountItem
-                  staff={staff}
-                  key={staff.id}
-                  setEditVisible={setEditVisible}
-                  setSelectedStaffId={setSelectedStaffId}
-                  id={staff.id}
-                />
-              ))
+          {filteredStaffInfos.length > 0 ? (
+            filteredStaffInfos.map((staff) => (
+              <StaffAccountItem
+                staff={staff}
+                key={staff.id}
+                setEditVisible={setEditVisible}
+                setSelectedStaffId={setSelectedStaffId}
+                id={staff.id}
+              />
+            ))
           ) : (
-            <EmptyRow colSpan={17} text={"No staff members"} />
+            <EmptyRow colSpan={17} text={"No results"} />
           )}
         </tbody>
       </table>

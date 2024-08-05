@@ -10,6 +10,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { loginSchema } from "../../../validation/login/loginValidation";
 import LoginButton from "../../UI/Buttons/LoginButton";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoginInputs from "./LoginInputs";
 import LoginLogo from "./LoginLogo";
 
@@ -389,11 +390,10 @@ const LoginForm = ({ setCreditsVisible }) => {
     <div className="login-newcard">
       <LoginLogo setCreditsVisible={setCreditsVisible} />
       <form className="login-form">
-        {/* <LoginRadio formDatas={formDatas} handleChangeType={handleChangeType} /> */}
         {err ? (
-          <p className={"login__err"}>{err}</p>
+          <ErrorParagraph errorMsg={err} />
         ) : (
-          <p className={"login__err"} style={{ visibility: "hidden" }}>
+          <p className="login__err" style={{ visibility: "hidden" }}>
             Placeholder
           </p>
         )}
