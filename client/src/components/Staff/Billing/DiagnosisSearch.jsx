@@ -37,6 +37,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }) => {
           id="diagnosis-search"
           label="Search"
           autoFocus={true}
+          width={300}
         />
       </div>
       {error && <p className="diagnosis__err">{error.message}</p>}

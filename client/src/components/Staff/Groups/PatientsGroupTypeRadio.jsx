@@ -1,29 +1,27 @@
-
+import Radio from "../../UI/Radio/Radio";
 
 const PatientsGroupTypeRadio = ({ groupInfos, handleChangeType }) => {
   return (
     <div className="patients-groups__edit-row-radio">
       <div className="patients-groups__edit-row-radio-item">
-        <input
-          type="radio"
+        <Radio
           id="personal"
-          name="global"
+          name="personal"
           value={false}
           checked={!groupInfos.global}
           onChange={handleChangeType}
+          label="Personal Group"
         />
-        <label htmlFor="personal">Personal Group</label>
       </div>
       <div className="patients-groups__edit-row-radio-item">
-        <input
-          type="radio"
+        <Radio
           id="global"
           name="global"
           value={true}
           checked={groupInfos.global}
           onChange={handleChangeType}
+          label="Clinic Group"
         />
-        <label htmlFor="global">Clinic Group</label>
       </div>
     </div>
   );

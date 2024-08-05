@@ -6,6 +6,7 @@ const InputDate = ({
   label,
   width,
   disabled = false,
+  min = "1800-01-01",
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const InputDate = ({
         id={id}
         style={{ width: width ? `${width}px` : "" }}
         disabled={disabled}
+        min={min}
       />
     </>
   );

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useFaxesTemplates } from "../../../hooks/reactquery/queries/faxesTemplatesQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -56,15 +57,14 @@ const FaxesTemplates = ({ handleSelectTemplate }) => {
         />
       </div>
       <div className="fax__templates-search">
-        <label htmlFor="template-search">Search</label>
-        <input
-          style={{ width: "300px" }}
-          id="template-search"
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
+          id="template-search"
+          label="Search"
+          width={300}
           placeholder="Template name, author name,..."
+          autoFocus={true}
         />
       </div>
       <div className="fax__templates-list" ref={rootRef}>

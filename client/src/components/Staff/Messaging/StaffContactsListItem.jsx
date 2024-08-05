@@ -1,5 +1,6 @@
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 
 const StaffContactsListItem = ({
   info,
@@ -10,16 +11,13 @@ const StaffContactsListItem = ({
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="contacts-list__item">
-      <input
+      <Checkbox
         id={info.id}
-        type="checkbox"
+        name={categoryName}
         onChange={handleCheckContact}
         checked={isContactChecked(info.id)}
-        name={categoryName}
+        label={staffIdToTitleAndName(staffInfos, info.id)}
       />
-      <label htmlFor={info.id}>
-        {staffIdToTitleAndName(staffInfos, info.id)}
-      </label>
     </li>
   );
 };

@@ -7,6 +7,7 @@ import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLett
 import { removeLastLetter } from "../../../../utils/strings/removeLastLetter";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Input from "../../../UI/Inputs/Input";
 
 const BillingCodesTemplateForm = ({
   errMsgPost,
@@ -72,19 +73,15 @@ const BillingCodesTemplateForm = ({
       className="billing-codes__templates-list-item billing-codes__templates-list-item--edit"
       style={{ border: errMsgPost && "solid 1px red" }}
     >
-      <label htmlFor="template-billing-name">Name</label>
-      <input
-        type="text"
+      <Input
         value={formDatas.name}
         onChange={handleChange}
         name="name"
-        autoComplete="off"
-        autoFocus
         id="template-billing-name"
+        label="Name"
+        autoFocus={true}
       />
-      <label htmlFor="template-billing-code">Billing code(s)</label>
-      <input
-        type="text"
+      <Input
         placeholder="A001,B423,F404,..."
         value={
           formDatas.billing_codes.length > 0
@@ -93,8 +90,8 @@ const BillingCodesTemplateForm = ({
         }
         onChange={handleChange}
         name="billing_codes"
-        autoComplete="off"
         id="template-billing-code"
+        label="Billing code(s)"
       />
       <SaveButton onClick={handleSave} />
       <CancelButton onClick={handleCancel} />

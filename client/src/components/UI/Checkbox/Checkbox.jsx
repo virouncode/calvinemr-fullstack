@@ -7,6 +7,7 @@ const Checkbox = ({
   label,
   mr = 5,
   className = "",
+  accentColor = "",
 }) => {
   return (
     <>
@@ -15,7 +16,7 @@ const Checkbox = ({
         onChange={onChange}
         checked={checked}
         disabled={disabled}
-        style={{ marginRight: `${mr}px` }}
+        style={{ marginRight: `${mr}px`, accentColor: accentColor }}
         id={id}
         name={name}
         className={className}

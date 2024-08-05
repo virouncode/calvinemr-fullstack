@@ -1,6 +1,7 @@
 import { usePatientsSimpleSearch } from "../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import { toPatientName } from "../../../utils/names/toPatientName";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import PatientsListItem from "./PatientsListItem";
@@ -40,13 +41,12 @@ const PatientsList = ({
         <>
           {allAvailable && (
             <li className="patients__list-item">
-              <input
-                id="all"
-                type="checkbox"
-                checked={allPatientsChecked}
+              <Checkbox
+                id="all-patients"
                 onChange={handleCheckAllPatients}
+                checked={allPatientsChecked}
+                label="All"
               />
-              <label htmlFor="all">All</label>
             </li>
           )}
           {patientsDemographics.map((info, index) =>

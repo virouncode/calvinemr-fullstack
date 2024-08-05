@@ -5,6 +5,7 @@ import { useFaxTemplatePut } from "../../../hooks/reactquery/mutations/faxesTemp
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
 
 const FaxTemplateEdit = ({ setEditTemplateVisible, template }) => {
   const { user } = useUserContext();
@@ -65,25 +66,22 @@ const FaxTemplateEdit = ({ setEditTemplateVisible, template }) => {
   return (
     <>
       <div className="new-fax__template-name">
-        <label htmlFor="template-name">Template Name*</label>
-        <input
-          type="text"
+        <Input
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          autoFocus
-          autoComplete="off"
+          label="Template Name*"
+          autoFocus={true}
         />
       </div>
       <div className="new-fax">
         <div className="new-fax__form new-fax__form--template">
           <div className="fax__subject">
-            <strong>Subject: </strong>
-            <input
-              type="text"
-              placeholder="Subject"
-              onChange={handleChangeSubject}
+            <Input
               value={subject}
+              onChange={handleChangeSubject}
+              id="subject"
+              label="Subject:"
             />
           </div>
           <div className="new-fax__body">

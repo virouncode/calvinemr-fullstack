@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "../../UI/Inputs/Input";
 import PatientsList from "./PatientsList";
 
 const Patients = ({
@@ -24,11 +25,11 @@ const Patients = ({
         </div>
       )}
       <div className="patients__search-input">
-        <input
-          type="text"
+        <Input
           value={search}
-          placeholder="Name, Email, Chart#, Health Card#,..."
           onChange={handleChange}
+          id="patient-search"
+          placeholder="Name, Email, Chart#, Health Card#,..."
         />
       </div>
       <PatientsList

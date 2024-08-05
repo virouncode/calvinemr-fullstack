@@ -153,7 +153,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
 
   //======================== EVENT HANDLERS ===================//
 
-  const handleCheck = async (e) => {
+  const handleCheck = async (e, staffId) => {
     let newHostsIds = [...hostsIds];
     let newHostsDoctorsIds = [...hostsDoctorsIds];
     let newHostsNursesIds = [...hostsNursesIds];
@@ -168,7 +168,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
     let newHostsOthersIds = [...hostsOthersIds];
     let newHostsCategories = [...hostsCategories];
 
-    const id = parseInt(e.target.id);
+    const id = parseInt(staffId);
     const name = e.target.name;
 
     if (e.target.checked) {

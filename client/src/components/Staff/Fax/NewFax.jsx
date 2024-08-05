@@ -9,8 +9,10 @@ import { useFaxPost } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
@@ -190,35 +192,28 @@ const NewFax = ({
       </div>
       <div className="new-fax__form">
         <div className="new-fax__recipients">
-          <strong>To: </strong>
-          <input
-            type="text"
-            placeholder="Please enter a 10-digit fax number or select a contact..."
+          <Input
             value={toFaxNumber}
             onChange={handleChangeToFaxNumber}
+            id="to"
+            label="To:"
+            placeholder="Please enter a 10-digit fax number or select a contact..."
           />
         </div>
         <div className="new-fax__subject">
-          <strong>Subject: </strong>
-          <input
-            type="text"
-            placeholder="Subject"
-            onChange={handleChangeSubject}
+          <Input
             value={subject}
+            onChange={handleChangeSubject}
+            id="subject"
+            label="Subject:"
+            placeholder="Subject"
           />
         </div>
         <div className="new-fax__attach">
-          <strong>Attach file</strong>
-          <i
-            className="fa-solid fa-paperclip"
+          <AttachFilesButton
             onClick={handleAttach}
-            disabled={progress || isLoadingFile}
-          ></i>
-          {attachment && (
-            <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
-              {attachment.alias},
-            </span>
-          )}
+            attachments={attachment ? [attachment] : []}
+          />
         </div>
         <div className="new-fax__importance">
           <div>

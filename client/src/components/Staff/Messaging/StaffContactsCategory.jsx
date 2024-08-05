@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import StaffContactsList from "./StaffContactsList";
 
 const StaffContactsCategory = ({
@@ -21,20 +22,19 @@ const StaffContactsCategory = ({
           <i
             onClick={handleClick}
             className="fa-regular fa-square-plus fa-lg"
-          ></i>
+          />
         ) : (
           <i
             onClick={handleClick}
             className="fa-regular fa-square-minus fa-lg"
-          ></i>
+          />
         )}
-        <input
-          type="checkbox"
+        <Checkbox
           id={categoryName}
-          checked={isCategoryChecked(categoryName)}
           onChange={handleCheckCategory}
+          checked={isCategoryChecked(categoryName)}
+          label={categoryName}
         />
-        <label htmlFor={categoryName}>{categoryName}</label>
       </div>
       {listVisible && (
         <StaffContactsList

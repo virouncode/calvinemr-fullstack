@@ -1,3 +1,5 @@
+import Checkbox from "../../../UI/Checkbox/Checkbox";
+
 const SitesCheckboxes = ({ sites, sitesIds, setSitesIds }) => {
   const handleCheckAllSitesIds = (e) => {
     const checked = e.target.checked;
@@ -10,7 +12,12 @@ const SitesCheckboxes = ({ sites, sitesIds, setSitesIds }) => {
   const handleCheckSiteId = (e, siteId) => {
     const checked = e.target.checked;
     if (checked) {
-      setSitesIds([...sitesIds, siteId]);
+      if (
+        [...sitesIds, siteId].length ===
+        sites.filter(({ site_status }) => site_status !== "Closed").length
+      )
+        setSitesIds(sites.map(({ id }) => id));
+      else setSitesIds([...sitesIds, siteId]);
     } else {
       setSitesIds(sitesIds.filter((id) => id !== siteId));
     }
@@ -26,25 +33,23 @@ const SitesCheckboxes = ({ sites, sitesIds, setSitesIds }) => {
     sites && (
       <ul className="site-checkboxes">
         <li className="site-checkboxes__title">
-          <input
-            type="checkbox"
+          <Checkbox
             id="sites"
             onChange={handleCheckAllSitesIds}
             checked={isAllSitesIdsChecked()}
+            label="Sites"
           />
-          <label htmlFor="sites">Sites</label>
         </li>
         {sites
           .filter(({ site_status }) => site_status !== "Closed")
           .map((site) => (
             <li key={site.id} className="site-checkboxes__item">
-              <input
-                type="checkbox"
-                id={site.id}
+              <Checkbox
+                id={`site-${site.id}`}
                 onChange={(e) => handleCheckSiteId(e, site.id)}
                 checked={isSiteIdChecked(site.id)}
+                label={site.name}
               />
-              <label htmlFor={site.id}>{site.name}</label>
             </li>
           ))}
       </ul>

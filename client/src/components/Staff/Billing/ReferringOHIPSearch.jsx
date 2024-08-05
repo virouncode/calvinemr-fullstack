@@ -55,6 +55,7 @@ const ReferringOHIPSearch = ({
           label="Search"
           autoFocus={true}
           placeholder="OHIP#, Name"
+          width={300}
         />
       </div>
       <p

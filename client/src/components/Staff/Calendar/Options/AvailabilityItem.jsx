@@ -1,5 +1,5 @@
-
 import { firstLetterUpper } from "../../../../utils/strings/firstLetterUpper";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import TimePickerAvailability from "../../../UI/Pickers/TimePickerAvailability";
 
 const AvailabilityItem = ({
@@ -55,13 +55,12 @@ const AvailabilityItem = ({
         />
       </div>
       <div className="availability__column--checkbox">
-        <input
-          type="checkbox"
-          id="notavailable"
+        <Checkbox
+          id={`notavailable-${day}`}
           onChange={(e) => handleCheck(e, day)}
           checked={unavailable}
+          label="Not available"
         />
-        <label htmlFor="notavailable">Not available</label>
       </div>
     </div>
   );

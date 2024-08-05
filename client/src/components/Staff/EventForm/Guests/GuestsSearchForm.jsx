@@ -1,4 +1,6 @@
-
+import Input from "../../../UI/Inputs/Input";
+import InputEmail from "../../../UI/Inputs/InputEmail";
+import InputTel from "../../../UI/Inputs/InputTel";
 
 const GuestsSearchForm = ({ search, handleSearch }) => {
   return (
@@ -6,73 +8,63 @@ const GuestsSearchForm = ({ search, handleSearch }) => {
       <p className="search-bar-title">Search by</p>
       <div className="search-bar-row">
         <div className="search-bar-item">
-          <label htmlFor="name-search">Name</label>
-          <input
-            type="text"
-            name="name"
+          <Input
             value={search.name}
             onChange={handleSearch}
-            autoComplete="off"
+            name="name"
             id="name-search"
+            label="Name"
           />
         </div>
         <div className="search-bar-item">
-          <label htmlFor="email-search">Email</label>
-          <input
-            type="text"
-            name="email"
+          <InputEmail
             value={search.email}
             onChange={handleSearch}
-            autoComplete="off"
+            name="email"
             id="email-search"
+            label="Email"
           />
         </div>
       </div>
       <div className="search-bar-row">
         <div className="search-bar-item">
-          <label htmlFor="phone-search">Phone</label>
-          <input
-            type="text"
-            name="phone"
+          <InputTel
             value={search.phone}
             onChange={handleSearch}
-            autoComplete="off"
+            name="phone"
             id="phone-search"
+            label="Phone"
+            placeholder="xxx-xxx-xxxx"
           />
         </div>
         <div className="search-bar-item">
-          <label htmlFor="dob-search">Date of birth</label>
-          <input
-            type="text"
-            name="birth"
+          <Input
             value={search.birth}
             onChange={handleSearch}
-            autoComplete="off"
+            name="birth"
             id="dob-search"
+            label="Date of birth"
+            placeholder="yyyy-mm-dd"
           />
         </div>
       </div>
       <div className="search-bar-row">
         <div className="search-bar-item">
-          <label htmlFor="chart-search">Chart#</label>
-          <input
-            type="text"
-            name="chart"
+          <Input
             value={search.chart}
             onChange={handleSearch}
-            autoComplete="off"
+            name="chart"
             id="chart-search"
+            label="Chart#"
           />
         </div>
         <div className="search-bar-item">
-          <label htmlFor="health-search">Health Card#</label>
-          <input
-            type="text"
-            name="health"
+          <Input
             value={search.health}
             onChange={handleSearch}
-            autoComplete="off"
+            name="health"
             id="health-search"
+            label="Health Card#"
           />
         </div>
       </div>

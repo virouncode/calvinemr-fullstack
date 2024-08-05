@@ -35,6 +35,10 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import CloseButton from "../../UI/Buttons/CloseButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import Checkbox from "../../UI/Checkbox/Checkbox";
+import Input from "../../UI/Inputs/Input";
+import InputDate from "../../UI/Inputs/InputDate";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DateTimePicker from "../../UI/Pickers/DateTimePicker";
 import DurationPicker from "../../UI/Pickers/DurationPicker";
@@ -905,7 +909,7 @@ const EventForm = ({
         >
           {errMsgPost && (
             <div className="event-form__row">
-              <p className="event-form__err">{errMsgPost}</p>
+              <ErrorParagraph errorMsg={errMsgPost} />
             </div>
           )}
           <div className="event-form__row">
@@ -921,14 +925,12 @@ const EventForm = ({
               )}
             </div>
             <div className="event-form__item">
-              <label htmlFor="purpose">Purpose</label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.AppointmentPurpose}
                 onChange={handlePurposeChange}
                 name="AppointmentPurpose"
                 id="purpose"
-                autoComplete="off"
+                label="Purpose"
               />
             </div>
             <div className="event-form__item">
@@ -938,18 +940,16 @@ const EventForm = ({
               />
             </div>
             <div className="event-form__item">
-              <label htmlFor="until">Until</label>
-              <input
-                type="date"
+              <InputDate
                 value={
                   formDatas.rrule?.until
                     ? formDatas.rrule?.until.slice(0, 10)
                     : ""
                 }
-                id="until"
                 onChange={handleUntilChange}
-                disabled={formDatas.recurrence === "Once"}
+                id="until"
                 min={timestampToDateISOTZ(formDatas.start)}
+                label="Until"
               />
             </div>
           </div>
@@ -965,8 +965,6 @@ const EventForm = ({
                 locale="en-CA"
                 handleChange={handleStartChange}
                 label="Start"
-                // readOnlyTime,
-                // readOnlyDate
               />
             </div>
             <div className="event-form__item">
@@ -980,8 +978,6 @@ const EventForm = ({
                 locale="en-CA"
                 handleChange={handleEndChange}
                 label="End"
-                // readOnlyTime,
-                // readOnlyDate
               />
             </div>
             <div className="event-form__item">
@@ -1006,13 +1002,11 @@ const EventForm = ({
               />
             </div>
             <div className="event-form__item">
-              <label htmlFor="all-day">All Day</label>
-              <input
-                type="checkbox"
-                className="all-day-checkbox"
-                checked={formDatas.all_day}
-                onChange={handleCheckAllDay}
+              <Checkbox
                 id="all-day"
+                onChange={handleCheckAllDay}
+                checked={formDatas.all_day}
+                label="All Day"
               />
             </div>
           </div>

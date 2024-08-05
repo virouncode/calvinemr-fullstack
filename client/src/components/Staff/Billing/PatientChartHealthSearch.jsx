@@ -53,6 +53,7 @@ const PatientChartHealthSearch = ({
           label="Search"
           autoFocus={true}
           placeholder="Chart#, Health Card#, Name..."
+          width={300}
         />
       </div>
       <ul className="hcn-results" ref={rootRef}>

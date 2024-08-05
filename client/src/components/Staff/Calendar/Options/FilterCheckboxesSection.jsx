@@ -1,7 +1,7 @@
-
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import FilterStaffItem from "./FilterStaffItem";
 
 const FilterCheckboxesSection = ({
@@ -19,19 +19,14 @@ const FilterCheckboxesSection = ({
   );
   return (
     <ul>
-      <li>
-        <input
-          type="checkbox"
-          className="filter-checkbox-category"
-          name={category}
+      <li className="filter-checkbox-category">
+        <Checkbox
           id={category}
-          checked={isCategoryChecked(category)}
+          name={category}
           onChange={(e) => handleCheckCategory(category, e)}
-          autoComplete="off"
+          checked={isCategoryChecked(category)}
+          label={category}
         />
-        <label htmlFor={category} className="filter-category-label">
-          {category}
-        </label>
       </li>
       {activeStaff
         .filter(({ title }) => title === categoryToTitle(category))

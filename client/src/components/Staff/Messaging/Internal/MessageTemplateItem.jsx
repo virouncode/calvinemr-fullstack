@@ -61,7 +61,7 @@ const MessageTemplateItem = ({
           {template.name}{" "}
           {template.author_id
             ? `(
-          ${staffIdToTitleAndName(staffInfos, template.author_id)}})`
+          ${staffIdToTitleAndName(staffInfos, template.author_id)})`
             : ""}
         </span>
         <>

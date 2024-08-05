@@ -7,7 +7,11 @@ import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { doctorSchema } from "../../../validation/record/doctorValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputTel from "../../UI/Inputs/InputTel";
 import GenericList from "../../UI/Lists/GenericList";
+import PostalZipSelect from "../../UI/Lists/PostalZipSelect";
 
 const DoctorFaxForm = ({
   initialFaxNumber,
@@ -122,150 +126,124 @@ const DoctorFaxForm = ({
   return (
     <div className="doctor-fax__form">
       <div className="doctor-fax__form-row">
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          id="lastName"
-          name="lastName"
-          type="text"
+        <Input
           value={formDatas.lastName}
           onChange={handleChange}
-          autoComplete="off"
+          name="lastName"
+          id="lastName"
+          label="Last Name"
+          autoFocus={true}
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          id="firstName"
-          name="firstName"
-          type="text"
+        <Input
           value={formDatas.firstName}
           onChange={handleChange}
-          autoComplete="off"
+          name="firstName"
+          id="firstName"
+          label="First Name"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="speciality">Speciality:</label>
-        <input
-          id="speciality"
-          name="speciality"
-          type="text"
+        <Input
           value={formDatas.speciality}
           onChange={handleChange}
-          autoComplete="off"
+          name="speciality"
+          id="speciality"
+          label="Speciality"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="licence_nbr">CPSO#:</label>
-        <input
-          id="licence_nbr"
-          name="licence_nbr"
-          type="text"
+        <Input
           value={formDatas.licence_nbr}
           onChange={handleChange}
-          autoComplete="off"
+          name="licence_nbr"
+          id="licence_nbr"
+          label="CPSO#"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="ohip_billing_nbr">OHIP#:</label>
-        <input
-          id="ohip_billing_nbr"
-          name="ohip_billing_nbr"
-          type="text"
+        <Input
           value={formDatas.ohip_billing_nbr}
           onChange={handleChange}
-          autoComplete="off"
+          name="ohip_billing_nbr"
+          id="ohip_billing_nbr"
+          label="OHIP#"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="line1">Address:</label>
-        <input
-          id="line1"
-          name="line1"
-          type="text"
+        <Input
           value={formDatas.line1}
           onChange={handleChange}
-          autoComplete="off"
+          name="line1"
+          id="line1"
+          label="Address"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="city">City:</label>
-        <input
-          id="city"
-          name="city"
-          type="text"
+        <Input
           value={formDatas.city}
           onChange={handleChange}
-          autoComplete="off"
+          name="city"
+          id="city"
+          label="City"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="province">Province/State:</label>
         <GenericList
           list={provinceStateTerritoryCT}
           value={formDatas.province}
           name="province"
           handleChange={handleChange}
           noneOption={false}
+          label="Province/State"
         />
       </div>
       <div className="doctor-fax__form-row doctor-fax__form-row--postal">
-        <label htmlFor="postalOrZip">Postal/Zip code:</label>
-        <select
-          style={{ width: "60px", marginRight: "10px" }}
-          name="postalOrZip"
-          id="postalOrZip"
-          value={postalOrZip}
+        <PostalZipSelect
           onChange={handleChangePostalOrZip}
-        >
-          <option value="postal">Postal</option>
-          <option value="zip">Zip</option>
-        </select>
-        <input
-          name="postalZipCode"
-          type="text"
+          postalOrZip={postalOrZip}
+        />
+        <Input
           value={
             postalOrZip === "postal" ? formDatas.postalCode : formDatas.zipCode
           }
           onChange={handleChange}
-          autoComplete="off"
+          name="postalZipCode"
+          id="postalZipCode"
+          width={57}
           placeholder={
             postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
           }
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="phone">Phone:</label>
-        <input
-          id="phone"
-          name="phone"
-          type="text"
+        <InputTel
           value={formDatas.phone}
           onChange={handleChange}
-          autoComplete="off"
+          name="phone"
+          id="phone"
+          label="Phone"
           placeholder="xxx-xxx-xxxx"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="fax">Fax:</label>
-        <input
-          id="fax"
-          name="fax"
-          type="text"
+        <InputTel
           value={formDatas.fax}
           onChange={handleChange}
-          autoComplete="off"
+          name="fax"
+          id="fax"
+          label="Fax"
           placeholder="xxx-xxx-xxxx"
         />
       </div>
       <div className="doctor-fax__form-row">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          name="email"
-          type="text"
+        <InputEmail
           value={formDatas.email}
           onChange={handleChange}
-          autoComplete="off"
+          name="email"
+          id="email"
+          label="Email"
         />
       </div>
       <div className="doctor-fax__form-btns">

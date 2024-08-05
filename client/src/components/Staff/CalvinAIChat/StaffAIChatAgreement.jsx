@@ -6,6 +6,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import Button from "../../UI/Buttons/Button";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 
 const StaffAIChatAgreement = ({ setStart }) => {
   const { user } = useUserContext();
@@ -177,15 +178,12 @@ const StaffAIChatAgreement = ({ setStart }) => {
         </li>
       </ol>
       <div className="staff-ai-agreement-check staff-ai-agreement-check--chat">
-        <input
-          type="checkbox"
+        <Checkbox
           id="agreement"
-          checked={agreed}
           onChange={handleCheck}
+          checked={agreed}
+          label="I agree to the terms and conditions outlined in this disclaimer."
         />
-        <label htmlFor="agreement">
-          I agree to the terms and conditions outlined in this disclaimer.
-        </label>
         <Button disabled={!agreed} onClick={handleStart} />
       </div>
     </div>

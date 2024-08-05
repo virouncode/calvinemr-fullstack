@@ -1,4 +1,4 @@
-
+import Radio from "../../../UI/Radio/Radio";
 
 const RoomRadioItem = ({
   roomId,
@@ -9,17 +9,14 @@ const RoomRadioItem = ({
 }) => {
   return (
     <div className="event-form__item event-form__item--radio">
-      <input
-        type="radio"
-        name="room_id"
+      <Radio
         id={roomId}
+        name="room_id"
         value={roomId}
-        onChange={handleRoomChange}
         checked={isRoomSelected(roomId)}
+        onChange={handleRoomChange}
+        label={`${roomName}` + `${isRoomOccupied(roomId) ? " (Occupied)" : ""}`}
       />
-      <label htmlFor={roomId}>
-        {roomName} {isRoomOccupied(roomId) ? "(Occupied)" : ""}
-      </label>
     </div>
   );
 };

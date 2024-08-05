@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import Radio from "../../UI/Radio/Radio";
 import DoctorFaxForm from "./DoctorFaxForm";
 import OtherFaxForm from "./OtherFaxForm";
 import PharmacyFaxForm from "./PharmacyFaxForm";
@@ -18,34 +19,31 @@ const ContactFaxForm = ({ initialFaxNumber, setAddFaxNumberVisible }) => {
         <label className="contact-form-radios__label">Add contact to:</label>
         <div className="contact-form-radios__list">
           <div className="contact-form-radios__item">
-            <input
-              type="radio"
+            <Radio
+              id="doctors"
               value="doctors"
               checked={contactType === "doctors"}
-              id="doctors"
               onChange={handleChange}
+              label="Doctors directory"
             />
-            <label htmlFor="doctors">Doctors directory</label>
           </div>
           <div className="contact-form-radios__item">
-            <input
-              type="radio"
+            <Radio
+              id="pharmacies"
               value="pharmacies"
               checked={contactType === "pharmacies"}
-              id="pharmacies"
               onChange={handleChange}
+              label="Pharmacies directory"
             />
-            <label htmlFor="pharmacies">Pharmacies directory</label>
           </div>
           <div className="contact-form-radios__item">
-            <input
-              type="radio"
+            <Radio
+              id="others"
               value="others"
               checked={contactType === "others"}
-              id="others"
               onChange={handleChange}
+              label="Others directory"
             />
-            <label htmlFor="others">Others directory</label>
           </div>
         </div>
       </div>

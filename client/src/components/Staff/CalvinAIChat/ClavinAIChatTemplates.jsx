@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCalvinAITemplates } from "../../../hooks/reactquery/queries/calvinaiTemplatesQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -59,14 +60,13 @@ const CalvinAIChatTemplates = ({ handleSelectTemplate }) => {
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
       <div className="calvinai-chat__templates-search">
-        <label htmlFor="template-search">Search</label>
-        <input
-          id="template-search"
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
+          id="template-search"
+          label="Search"
           placeholder="Template name, author name"
+          autoFocus={true}
         />
       </div>
       <div className="calvinai-chat__templates-list" ref={rootRef}>

@@ -4,6 +4,7 @@ import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./ContactFaxForm";
 
@@ -120,12 +121,11 @@ const FaxThumbnail = ({
           : "fax-thumbnail"
       }
     >
-      <input
-        className="fax-thumbnail__checkbox"
-        type="checkbox"
+      <Checkbox
         id={fax.FileName}
-        checked={isFaxSelected(fax.FileName)}
         onChange={handleCheckFax}
+        checked={isFaxSelected(fax.FileName)}
+        className="fax-thumbnail__checkbox"
       />
       <div onClick={handleFaxClick} className="fax-thumbnail__link">
         <div className="fax-thumbnail__author">

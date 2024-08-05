@@ -1,4 +1,4 @@
-
+import Radio from "../../../UI/Radio/Radio";
 
 const TemplateRadioItem = ({
   templateName,
@@ -7,15 +7,14 @@ const TemplateRadioItem = ({
 }) => {
   return (
     <div className="invitation__radio-item">
-      <input
-        type="radio"
-        name={templateName}
+      <Radio
         id={templateName}
+        name={templateName}
         value={templateName}
-        onChange={handleTemplateChange}
         checked={isTemplateSelected(templateName)}
+        onChange={handleTemplateChange}
+        label={templateName}
       />
-      <label htmlFor={templateName}>{templateName}</label>
     </div>
   );
 };

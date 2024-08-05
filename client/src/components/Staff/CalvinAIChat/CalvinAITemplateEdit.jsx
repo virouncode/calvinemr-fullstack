@@ -4,6 +4,8 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../utils/strings/firstLetterUpper";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const CalvinAITemplateEdit = ({ setEditTemplateVisible, templateToEdit }) => {
   const [editedTemplate, setEditedTemplate] = useState(templateToEdit);
@@ -37,17 +39,15 @@ const CalvinAITemplateEdit = ({ setEditTemplateVisible, templateToEdit }) => {
   };
   return (
     <div className="edit-template">
-      {errMsg && <p className="edit-template-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="edit-template-name">
-        <label htmlFor="template-ai-name">Template name: </label>
-        <input
-          type="text"
-          name="name"
+        <Input
           value={editedTemplate.name}
           onChange={handleChange}
-          autoComplete="off"
-          autoFocus
+          name="name"
           id="template-ai-name"
+          label="Template name:"
+          autoFocus={true}
         />
       </div>
       <div className="edit-template-body">

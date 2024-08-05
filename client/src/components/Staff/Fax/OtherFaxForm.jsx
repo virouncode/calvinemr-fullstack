@@ -6,6 +6,8 @@ import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { otherSchema } from "../../../validation/others/otherValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import InputTel from "../../UI/Inputs/InputTel";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 const OtherFaxForm = ({
@@ -67,33 +69,28 @@ const OtherFaxForm = ({
   return (
     <div className="other-fax__form">
       <div className="other-fax__form-row">
-        <label htmlFor="name">Name:</label>
-        <input
-          name="name"
-          type="text"
+        <Input
           value={formDatas.name}
           onChange={handleChange}
-          autoComplete="off"
+          name="name"
+          label="Name:"
+          autoFocus={true}
         />
       </div>
       <div className="other-fax__form-row">
-        <label htmlFor="category">Category:</label>
-        <input
-          name="category"
-          type="text"
+        <Input
           value={formDatas.category}
           onChange={handleChange}
-          autoComplete="off"
+          name="category"
+          label="Category:"
         />
       </div>
       <div className="other-fax__form-row">
-        <label htmlFor="fax">Fax:</label>
-        <input
-          name="fax"
-          type="text"
+        <InputTel
           value={formDatas.fax}
           onChange={handleChange}
-          autoComplete="off"
+          name="fax"
+          label="Fax:"
           placeholder="xxx-xxx-xxxx"
         />
       </div>

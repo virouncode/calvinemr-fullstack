@@ -1,40 +1,39 @@
 import useUserContext from "../../../hooks/context/useUserContext";
+import Radio from "../../UI/Radio/Radio";
 
 const MessagingToggle = ({ isTypeChecked, handleMsgsTypeChanged }) => {
   const { user } = useUserContext();
   return (
     <div className="messages-toggle">
       <div className="messages-toggle__radio">
-        <input
-          type="radio"
-          value="Internal"
+        <Radio
+          id="internal"
           name="Internal"
+          value="Internal"
           checked={isTypeChecked("Internal")}
           onChange={handleMsgsTypeChanged}
-          id="internal"
+          label={
+            "Internal" +
+            (user.unreadMessagesNbr || user.unreadTodosNbr
+              ? ` (${user.unreadMessagesNbr + user.unreadTodosNbr})`
+              : "")
+          }
         />
-        <label htmlFor="internal">
-          Internal{" "}
-          {user.unreadMessagesNbr || user.unreadTodosNbr
-            ? `(${user.unreadMessagesNbr + user.unreadTodosNbr})`
-            : ""}
-        </label>
       </div>
       <div className="messages-toggle__radio">
-        <input
-          type="radio"
-          value="External"
+        <Radio
+          id="external"
           name="External"
+          value="External"
           checked={isTypeChecked("External")}
           onChange={handleMsgsTypeChanged}
-          id="external"
+          label={
+            "External" +
+            (user.unreadMessagesExternalNbr
+              ? ` (${user.unreadMessagesExternalNbr})`
+              : "")
+          }
         />
-        <label htmlFor="external">
-          External{" "}
-          {user.unreadMessagesExternalNbr
-            ? `(${user.unreadMessagesExternalNbr})`
-            : ""}
-        </label>
       </div>
     </div>
   );

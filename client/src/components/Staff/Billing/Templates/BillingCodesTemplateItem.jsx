@@ -1,6 +1,5 @@
 import { useState } from "react";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
-import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
   useBillingCodeTemplateDelete,
@@ -8,11 +7,10 @@ import {
   useBillingCodeTemplatePut,
 } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { removeLastLetter } from "../../../../utils/strings/removeLastLetter";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
-import CancelButton from "../../../UI/Buttons/CancelButton";
-import SaveButton from "../../../UI/Buttons/SaveButton";
+import BillingCodesTemplateDisplay from "./BillingCodesTemplateDisplay";
+import BillingCodesTemplateEdit from "./BillingCodesTemplateEdit";
 
 const BillingCodesTemplateItem = ({
   template,
@@ -23,7 +21,6 @@ const BillingCodesTemplateItem = ({
 }) => {
   const { user } = useUserContext();
   const userType = user.access_level;
-  const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
   const [formDatas, setFormDatas] = useState(template);
   const billingCodeTemplatePost = useBillingCodeTemplatePost();
@@ -98,67 +95,23 @@ const BillingCodesTemplateItem = ({
     }
   };
   return editVisible ? (
-    <li
-      className="billing-codes__templates-list-item billing-codes__templates-list-item--edit"
-      style={{ border: errMsgPost && "solid 1px red" }}
-      ref={lastItemRef}
-    >
-      <label htmlFor="template-billing-name">Name</label>
-      <input
-        type="text"
-        value={formDatas.name}
-        onChange={handleChange}
-        name="name"
-        autoComplete="off"
-        autoFocus
-        id="template-billing-name"
-      />
-      <label htmlFor="template-billing-code">Billing code(s)</label>
-      <input
-        type="text"
-        placeholder="A001,B423,F404,..."
-        value={
-          formDatas.billing_codes.length > 0
-            ? formDatas.billing_codes.join(",")
-            : ""
-        }
-        onChange={handleChange}
-        name="billing_codes"
-        autoComplete="off"
-        id="template-billing-code"
-      />
-      <SaveButton onClick={handleSave} />
-      <CancelButton onClick={handleCancel} />
-    </li>
+    <BillingCodesTemplateEdit
+      formDatas={formDatas}
+      handleChange={handleChange}
+      lastItemRef={lastItemRef}
+      handleSave={handleSave}
+      handleCancel={handleCancel}
+      errMsgPost={errMsgPost}
+    />
   ) : (
-    <li className="billing-codes__templates-list-item" ref={lastItemRef}>
-      <span onClick={(e) => handleSelectTemplate(e, template.billing_codes)}>
-        {template.name} : {template.billing_codes.join(", ")}{" "}
-        {template.author_id
-          ? `(
-          ${staffIdToTitleAndName(staffInfos, template.author_id)})`
-          : ""}
-      </span>
-      {user.id === template.author_id && (
-        <>
-          <i
-            className="fa-solid fa-pen-to-square"
-            style={{ marginLeft: "5px" }}
-            onClick={handleEditClick}
-          ></i>
-          <i
-            className="fa-solid fa-trash"
-            onClick={handleDelete}
-            style={{ cursor: "pointer", marginLeft: "5px" }}
-          ></i>
-        </>
-      )}
-      <i
-        className="fa-solid fa-clone"
-        onClick={(e) => handleDuplicate(e, template)}
-        style={{ cursor: "pointer", marginLeft: "5px" }}
-      />
-    </li>
+    <BillingCodesTemplateDisplay
+      lastItemRef={lastItemRef}
+      handleSelectTemplate={handleSelectTemplate}
+      template={template}
+      handleEditClick={handleEditClick}
+      handleDelete={handleDelete}
+      handleDuplicate={handleDuplicate}
+    />
   );
 };
 

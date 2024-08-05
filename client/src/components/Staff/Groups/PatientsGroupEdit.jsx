@@ -5,6 +5,7 @@ import { usePatientsGroupPut } from "../../../hooks/reactquery/mutations/patient
 import { groupSchema } from "../../../validation/groups/groupValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import PatientChartHealthSearch from "../Billing/PatientChartHealthSearch";
@@ -89,14 +90,13 @@ const PatientsGroupEdit = ({ group, setEditVisible }) => {
         />
       </div>
       <div className="patients-groups__edit-name">
-        <label htmlFor="name">Name</label>
-        <input
-          name="name"
-          type="text"
+        <Input
           value={groupInfos.name}
           onChange={handleChange}
-          autoComplete="off"
+          name="name"
           id="name"
+          label="Name"
+          autoFocus={true}
         />
       </div>
       <div className="patients-groups__edit-description">

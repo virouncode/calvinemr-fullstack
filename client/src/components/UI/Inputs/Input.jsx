@@ -8,6 +8,7 @@ const Input = ({
   placeholder,
   autoFocus = false,
   readOnly = false,
+  className = "",
 }) => {
   return (
     <>
@@ -23,6 +24,7 @@ const Input = ({
         placeholder={placeholder}
         autoFocus={autoFocus}
         readOnly={readOnly}
+        className={className}
       />
     </>
   );

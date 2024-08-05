@@ -2,6 +2,9 @@ import { useFaxesDelete } from "../../../hooks/reactquery/mutations/faxMutations
 import { dateStringToISO } from "../../../utils/dates/formatDates";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Button from "../../UI/Buttons/Button";
+import Checkbox from "../../UI/Checkbox/Checkbox";
+import Input from "../../UI/Inputs/Input";
+import InputDate from "../../UI/Inputs/InputDate";
 
 const FaxToolBar = ({
   newVisible,
@@ -97,47 +100,42 @@ const FaxToolBar = ({
     <div className="fax-toolbar">
       <p className="fax-toolbar__title">Faxing</p>
       <div className="fax-toolbar__filter">
-        <input
-          type="text"
-          placeholder="Search by fax number..."
+        <Input
           value={search}
           onChange={handleChange}
           id="search"
-          autoComplete="off"
+          placeholder="Search by fax number..."
           className="fax-toolbar__filter-search"
         />
         <div className="fax-toolbar__filter-date">
           <div className="fax-toolbar__filter-date-item">
-            <label htmlFor="from">From</label>
-            <input
-              type="date"
+            <InputDate
               value={dateStringToISO(rangeStart)}
-              name="date_start"
               onChange={handleDateChange}
-              disabled={all}
               id="from"
-            />
-          </div>
-          <div className="fax-toolbar__filter-date-item">
-            <label htmlFor="to">To</label>
-            <input
-              type="date"
-              value={dateStringToISO(rangeEnd)}
-              name="date_end"
-              onChange={handleDateChange}
+              label="From"
               disabled={all}
-              id="to"
+              name="date_start"
             />
           </div>
           <div className="fax-toolbar__filter-date-item">
-            <input
-              type="checkbox"
-              checked={all}
+            <InputDate
+              value={dateStringToISO(rangeEnd)}
+              onChange={handleDateChange}
+              id="to"
+              label="To"
+              disabled={all}
+              name="date_end"
+            />
+          </div>
+          <div className="fax-toolbar__filter-date-item">
+            <Checkbox
+              id="all"
               name="all"
               onChange={handleCheckAll}
-              id="all"
+              checked={all}
+              label="All"
             />
-            <label htmlFor="all">All</label>
           </div>
         </div>
       </div>

@@ -15,20 +15,20 @@
       font-weight: normal;
       margin-bottom: 2px;
       display: flex;
-      .filter-checkbox {
-        width: auto;
-        margin-right: 5px;
-        margin-left: 10px;
-      }
-      .filter-checkbox-category {
-        width: auto;
-        margin-right: 5px;
-        margin-bottom: 5px;
-      }
-      .filter-category-label {
-        font-weight: bold;
+    }
+    .filter-checkbox-category {
+      width: auto;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      label {
         font-size: 0.8rem;
+        font-weight: bold;
       }
+    }
+    .filter-checkbox {
+      width: auto;
+      margin-right: 5px;
+      margin-left: 10px;
     }
   }
 }

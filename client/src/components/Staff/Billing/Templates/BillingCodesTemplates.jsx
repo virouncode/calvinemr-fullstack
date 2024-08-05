@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useBillingCodesTemplates } from "../../../../hooks/reactquery/queries/billingCodesTemplatesQueries";
 import useIntersection from "../../../../hooks/useIntersection";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -60,16 +61,14 @@ const BillingCodesTemplates = ({ handleSelectTemplate }) => {
         {isFetching && <CircularProgressSmall />}
       </div>
       <div className="billing-codes__templates-search">
-        <label htmlFor="template-search">Search</label>
-        <input
-          style={{ width: "300px" }}
-          id="template-search"
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
+          id="template-search"
+          label="Search"
+          width={300}
           placeholder="Template name, author name..."
-          autoFocus
+          autoFocus={true}
         />
       </div>
       {errMsgPost && (

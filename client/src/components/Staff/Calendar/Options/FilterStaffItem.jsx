@@ -1,7 +1,7 @@
-
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 
 const FilterStaffItem = ({
   staff,
@@ -12,19 +12,15 @@ const FilterStaffItem = ({
 }) => {
   const { staffInfos } = useStaffInfosContext();
   return (
-    <li>
-      <input
-        type="checkbox"
-        className="filter-checkbox"
+    <li className="filter-checkbox">
+      <Checkbox
+        id={`staff-${staff.id}`}
         name={categoryToTitle(category).toLowerCase()}
-        id={staff.id}
+        onChange={(e) => handleCheck(e, staff.id)}
         checked={isChecked(staff.id)}
-        onChange={handleCheck}
-        style={{ accentColor: color }}
+        label={staffIdToTitleAndName(staffInfos, staff.id)}
+        accentColor={color}
       />
-      <label htmlFor={staff.id}>
-        {staffIdToTitleAndName(staffInfos, staff.id)}
-      </label>
     </li>
   );
 };

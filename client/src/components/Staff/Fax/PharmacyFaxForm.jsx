@@ -7,7 +7,11 @@ import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../validation/record/pharmacyValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputTel from "../../UI/Inputs/InputTel";
 import GenericList from "../../UI/Lists/GenericList";
+import PostalZipSelect from "../../UI/Lists/PostalZipSelect";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 const PharmacyFaxForm = ({
@@ -116,100 +120,85 @@ const PharmacyFaxForm = ({
   return (
     <div className="pharmacy-fax__form">
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="name">Name:</label>
-        <input
-          name="name"
-          type="text"
+        <Input
           value={formDatas.name}
           onChange={handleChange}
-          autoComplete="off"
+          name="name"
+          label="Name:"
+          autoFocus={true}
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="line1">Address:</label>
-        <input
-          name="line1"
-          type="text"
+        <Input
           value={formDatas.line1}
           onChange={handleChange}
-          autoComplete="off"
+          name="line1"
+          label="Address:"
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="city">City:</label>
-        <input
-          name="city"
-          type="text"
+        <Input
           value={formDatas.city}
           onChange={handleChange}
-          autoComplete="off"
+          name="city"
+          label="City:"
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="province">Province/State:</label>
         <GenericList
           list={provinceStateTerritoryCT}
           value={formDatas.province}
           name="province"
           handleChange={handleChange}
           noneOption={false}
+          label="Province/State:"
         />
       </div>
       <div className="pharmacy-fax__form-row pharmacy-fax__form-row--postal">
-        <label htmlFor="postalOrZp">Postal/Zip code:</label>
-        <select
-          style={{ width: "60px", marginRight: "10px" }}
-          name="postalOrZip"
-          id="postalOrZip"
-          value={postalOrZip}
+        <PostalZipSelect
           onChange={handleChangePostalOrZip}
-        >
-          <option value="postal">Postal</option>
-          <option value="zip">Zip</option>
-        </select>
-        <input
-          name="postalZipCode"
-          type="text"
+          postalOrZip={postalOrZip}
+        />
+        <Input
           value={
             postalOrZip === "postal" ? formDatas.postalCode : formDatas.zipCode
           }
           onChange={handleChange}
-          autoComplete="off"
+          name="postalZipCode"
+          id="postalZipCode"
+          width={57}
           placeholder={
             postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
           }
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="phone">Phone:</label>
-        <input
-          name="phone"
-          type="text"
+        <InputTel
           value={formDatas.phone}
           onChange={handleChange}
-          autoComplete="off"
+          name="phone"
+          id="phone"
+          label="Phone"
           placeholder="xxx-xxx-xxxx"
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="fax">Fax:</label>
-        <input
-          name="fax"
-          type="text"
+        <InputTel
           value={formDatas.fax}
           onChange={handleChange}
-          autoComplete="off"
+          name="fax"
+          id="fax"
+          label="Fax"
           placeholder="xxx-xxx-xxxx"
         />
       </div>
       <div className="pharmacy-fax__form-row">
-        <label htmlFor="fax">Email:</label>
-        <input
-          name="email"
-          type="text"
+        <InputEmail
           value={formDatas.email}
           onChange={handleChange}
-          autoComplete="off"
+          name="email"
+          id="email"
+          label="Email"
         />
       </div>
       <div className="pharmacy-fax__form-btns">

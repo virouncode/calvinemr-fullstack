@@ -306,6 +306,10 @@
     height: 30px;
     display: flex;
     align-items: center;
+    label {
+      font-weight: bold;
+      margin: 0;
+    }
     input {
       outline: none;
       width: 92%;
@@ -413,6 +417,10 @@
     height: 30px;
     display: flex;
     align-items: center;
+    label {
+      font-weight: bold;
+      margin: 0;
+    }
     input {
       outline: none;
       width: 90%;
@@ -428,6 +436,10 @@
     height: 30px;
     display: flex;
     align-items: center;
+    label {
+      font-weight: bold;
+      margin: 0;
+    }
     input {
       outline: none;
       width: 92%;
@@ -458,6 +470,10 @@
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 0.8rem;
+    label {
+      font-weight: bold;
+      margin: 0;
+    }
     i {
       cursor: pointer;
       margin-left: 5px;
