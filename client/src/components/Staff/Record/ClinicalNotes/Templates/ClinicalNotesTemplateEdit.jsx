@@ -4,6 +4,7 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
 
 const ClinicalNotesTemplateEdit = ({
   setEditTemplateVisible,
@@ -42,15 +43,13 @@ const ClinicalNotesTemplateEdit = ({
     <div className="edit-template">
       {errMsg && <p className="edit-template-err">{errMsg}</p>}
       <div className="edit-template-name">
-        <label htmlFor="clinical-template-name">Template name: </label>
-        <input
-          type="text"
-          name="name"
+        <Input
           value={editedTemplate.name}
           onChange={handleChange}
-          autoComplete="off"
-          autoFocus
+          name="name"
           id="clinical-template-name"
+          label="Template name:"
+          autoFocus={true}
         />
       </div>
       <div className="edit-template-body">

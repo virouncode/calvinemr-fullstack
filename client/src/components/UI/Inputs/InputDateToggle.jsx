@@ -1,26 +1,27 @@
-const InputTextToggle = ({
+const InputDateToggle = ({
   value,
   onChange,
-  onClick,
   name,
   id,
-  editVisible,
   label,
-  placeholder,
+  width,
+  disabled = false,
+  editVisible,
+  min = "1800-01-01",
 }) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
       {editVisible ? (
         <input
-          type="text"
+          type="date"
           value={value}
           onChange={onChange}
-          onClick={onClick}
           name={name}
           id={id}
-          autoComplete="off"
-          placeholder={placeholder}
+          style={{ width: width ? `${width}px` : "" }}
+          disabled={disabled}
+          min={min}
         />
       ) : (
         <p>{value}</p>
@@ -29,4 +30,4 @@ const InputTextToggle = ({
   );
 };
 
-export default InputTextToggle;
+export default InputDateToggle;

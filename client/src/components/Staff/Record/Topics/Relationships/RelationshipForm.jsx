@@ -12,6 +12,7 @@ import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { toInverseRelation } from "../../../../../utils/relationships/toInverseRelation";
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import RelationshipList from "./RelationshipList";
 
 const RelationshipForm = ({
@@ -99,12 +100,7 @@ const RelationshipForm = ({
     >
       <td>
         <div className="relationships-form__btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

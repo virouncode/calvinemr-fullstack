@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../../UI/Buttons/Button";
 import CancelButton from "../../../UI/Buttons/CancelButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ExportRecordItem from "../Sections/ExportRecordItem";
 import ExportChartPreview from "./ExportChartPreview";
@@ -92,13 +93,13 @@ const ExportChart = ({ setExportVisible, patientId, demographicsInfos }) => {
       <p className="export-chart__title">Records to export</p>
       <ul className="export-chart__records">
         <li className="export-chart__records-item">
-          <input
-            type="checkbox"
-            checked={allRecordsSelected}
-            onChange={handleCheckAll}
+          <Checkbox
             id="all"
+            onChange={handleCheckAll}
+            checked={allRecordsSelected}
+            label="All"
+            mr={10}
           />
-          <label htmlFor="all">All</label>
         </li>
         {recordsNames.map((recordName) => (
           <ExportRecordItem

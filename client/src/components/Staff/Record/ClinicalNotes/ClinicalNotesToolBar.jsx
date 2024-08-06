@@ -2,6 +2,9 @@ import { toast } from "react-toastify";
 import xanoPut from "../../../../api/xanoCRUD/xanoPut";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
+import ClinicalNotesNavigation from "./ClinicalNotesNavigation";
+import OrderPicker from "./OrderPicker";
 
 const ClinicalNotesToolBar = ({
   contentsVisible,
@@ -138,62 +141,25 @@ const ClinicalNotesToolBar = ({
   return (
     <div className="clinical-notes__toolbar">
       <div className="clinical-notes__toolbar-search">
-        <label htmlFor="search">
-          <strong>Search</strong>
-        </label>
-        <input
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
           id="search"
           placeholder="By content, author..."
+          label="Search"
         />
       </div>
       <div className="clinical-notes__toolbar-order">
-        Most recent on:
-        <span
-          onClick={handleChangeOrder}
-          style={{ opacity: addVisible && "0.3" }}
-        >
-          {order === "asc" ? (
-            <i
-              className="fa-solid fa-arrow-down"
-              style={{
-                marginLeft: "5px",
-                marginRight: "2px",
-                cursor: "pointer",
-              }}
-            ></i>
-          ) : (
-            <i
-              className="fa-solid fa-arrow-up"
-              style={{
-                marginLeft: "5px",
-                marginRight: "2px",
-                cursor: "pointer",
-              }}
-            ></i>
-          )}
-          {order === "asc" ? "Bottom" : "Top"}
-        </span>
+        <OrderPicker
+          handleChangeOrder={handleChangeOrder}
+          addVisible={addVisible}
+          order={order}
+        />
       </div>
       <div className="clinical-notes__toolbar-goto">
-        <i
-          className="fa-solid fa-angles-up"
-          style={{
-            marginLeft: "5px",
-            marginRight: "2px",
-            cursor: "pointer",
-          }}
-          onClick={handleGoToTop}
-        />
-        <i
-          className="fa-solid fa-angles-down"
-          style={{
-            marginRight: "2px",
-            cursor: "pointer",
-          }}
-          onClick={handleGoToEnd}
+        <ClinicalNotesNavigation
+          handleGoToTop={handleGoToTop}
+          handleGoToEnd={handleGoToEnd}
         />
       </div>
       <div className="clinical-notes__toolbar-btn-container">

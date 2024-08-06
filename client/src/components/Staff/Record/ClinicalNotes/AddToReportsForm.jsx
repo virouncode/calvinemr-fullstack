@@ -10,7 +10,11 @@ import {
 import { getExtension } from "../../../../utils/files/getExtension";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SubmitButton from "../../../UI/Buttons/SubmitButton";
+import ReportViewer from "../../../UI/Documents/ReportViewer";
+import Input from "../../../UI/Inputs/Input";
+import InputDate from "../../../UI/Inputs/InputDate";
 import GenericList from "../../../UI/Lists/GenericList";
+import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 
 const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
   const { user } = useUserContext();
@@ -99,11 +103,6 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
       datasToPost.ReportReviewed = [datasToPost.ReportReviewed];
       datasToPost.acknowledged = true;
     }
-
-    // if (datasToPost.Format === "Binary" && !datasToPost.File.type) {
-    //   datasToPost.File.type = "document";
-    // }
-
     //Submissions
     reportPost.mutate(datasToPost, {
       onSuccess: () => {
@@ -124,12 +123,10 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
           <SubmitButton label="Save" />
           <CancelButton onClick={handleCancel} />
         </div>
-        {errMsgPost && <p className="reports__err">{errMsgPost}</p>}
+        {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
         <div className="reports__row">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            autoComplete="off"
+          <Input
+            label="Name"
             name="name"
             value={formDatas.name || ""}
             onChange={handleChange}
@@ -145,55 +142,48 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
           {formDatas.FileExtensionAndVersion}
         </div>
         <div className="reports__row">
-          <label>Class</label>
           <GenericList
             name="Class"
             value={formDatas.Class || ""}
             handleChange={handleChange}
             list={reportClassCT}
+            label="Class"
+            noneOption={false}
           />
         </div>
         <div className="reports__row">
-          <label htmlFor="subclass">Sub class</label>
-          <input
-            type="text"
+          <Input
             name="SubClass"
             value={formDatas.SubClass || ""}
             onChange={handleChange}
-            autoComplete="off"
+            label="Sub class"
             id="subclass"
           />
         </div>
         <div className="reports__row">
-          <label htmlFor="date-of-doc">Date of document</label>
-          <input
-            type="date"
+          <InputDate
+            label="Date of document"
             name="EventDateTime"
             value={timestampToDateISOTZ(formDatas.EventDateTime)}
             onChange={handleChange}
-            autoComplete="off"
             id="date-of-doc"
           />
         </div>
         <div className="reports__row">
-          <label htmlFor="date-received">Date received</label>
-          <input
-            type="date"
+          <InputDate
+            label="Date received"
             name="ReceivedDateTime"
             value={timestampToDateISOTZ(formDatas.ReceivedDateTime)}
             onChange={handleChange}
-            autoComplete="off"
             id="date-received"
           />
         </div>
         <div className="reports__row">
-          <label htmlFor="author">Author</label>
-          <input
-            type="text"
+          <Input
             name="AuthorFreeText"
             value={formDatas.AuthorFreeText || ""}
             onChange={handleChange}
-            autoComplete="off"
+            label="Author"
             id="author"
           />
         </div>
@@ -201,42 +191,35 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
           <label>Reviewed by</label>
           <div>
             <div className="reports__subrow">
-              <label htmlFor="reviewed-first-name">First name</label>
-              <input
-                type="text"
+              <Input
                 name="FirstName"
                 value={formDatas.ReportReviewed?.Name?.FirstName || ""}
                 onChange={handleReviewedName}
-                autoComplete="off"
+                label="First name"
                 id="reviewed-first-name"
               />
             </div>
             <div className="reports__subrow">
-              <label htmlFor="reviewed-last-name">Last name</label>
-              <input
-                type="text"
+              <Input
                 name="LastName"
                 value={formDatas.ReportReviewed?.Name?.LastName || ""}
                 onChange={handleReviewedName}
-                autoComplete="off"
+                label="Last name"
                 id="reviewed-last-name"
               />
             </div>
             <div className="reports__subrow">
-              <label htmlFor="ohip">OHIP#</label>
-              <input
-                type="text"
+              <Input
                 name="ReviewingOHIPPhysicianId"
                 value={formDatas.ReportReviewed?.ReviewingOHIPPhysicianId || ""}
                 onChange={handleReviewedOHIP}
-                autoComplete="off"
+                label="OHIP#"
                 id="ohip"
               />
             </div>
             <div className="reports__subrow">
-              <label htmlFor="date-reviewed">Date reviewed</label>
-              <input
-                type="date"
+              <InputDate
+                label="Date reviewed"
                 name="DateTimeReportReviewed"
                 value={timestampToDateISOTZ(
                   formDatas.ReportReviewed?.DateTimeReportReviewed
@@ -259,48 +242,7 @@ const AddToReportsForm = ({ attachment, patientId, date, setAddToReports }) => {
         </div>
       </form>
       <div className="reports__preview">
-        {formDatas.File && formDatas.File.mime?.includes("image") ? (
-          <img
-            src={`${import.meta.env.VITE_XANO_BASE_URL}${formDatas.File.path}`}
-            alt=""
-            width="100%"
-          />
-        ) : formDatas.File && formDatas.File.mime?.includes("video") ? (
-          <video controls>
-            <source
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.File.path
-              }`}
-              type={formDatas.File.mime}
-            />
-          </video>
-        ) : formDatas.File &&
-          formDatas.File.mime?.includes("officedocument") ? (
-          <div>
-            <iframe
-              title="office document"
-              src={`https://docs.google.com/gview?url=${
-                import.meta.env.VITE_XANO_BASE_URL
-              }${formDatas.File.path}&embedded=true&widget=false`}
-              width="100%"
-              height="700px"
-              frameBorder="0"
-            />
-          </div>
-        ) : (
-          formDatas.File && (
-            <iframe
-              title={formDatas.alias}
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.File.path
-              }`}
-              type={formDatas.File.type}
-              width="100%"
-              style={{ border: "none" }}
-              height="700px"
-            />
-          )
-        )}
+        <ReportViewer file={formDatas.File} />
       </div>
     </div>
   );

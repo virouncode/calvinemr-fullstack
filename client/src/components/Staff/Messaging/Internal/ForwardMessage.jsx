@@ -9,8 +9,11 @@ import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesM
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
+import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternal from "../External/MessageExternal";
@@ -266,15 +269,15 @@ const ForwardMessage = ({
       </div>
       <div className="forward-message__form">
         <div className="forward-message__recipients">
-          <strong>To: </strong>
-          <input
-            type="text"
+          <Input
+            id="to"
+            label="To:"
             placeholder="Recipients"
             value={staffInfos
               .filter(({ id }) => recipientsIds.includes(id))
               .map((staff) => staffIdToTitleAndName(staffInfos, staff.id))
               .join(" / ")}
-            readOnly
+            readOnly={true}
           />
         </div>
         <div className="forward-message__subject">
@@ -291,25 +294,17 @@ const ForwardMessage = ({
           </div>
         )}
         <div className="forward-message__attach">
-          <strong>Attach files</strong>
-          <i className="fa-solid fa-paperclip" onClick={handleAttach}></i>
-          {attachments.map((attachment) => (
-            <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
-              {attachment.alias},
-            </span>
-          ))}
+          <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
         <div className="forward-message__importance">
           <div className="forward-message__importance-check">
-            <input
-              type="checkbox"
+            <Checkbox
               name="high_importance"
               id="importance"
-              style={{ marginRight: "5px" }}
               onChange={handleImportanceChange}
               checked={important}
+              label="High importance"
             />
-            <label htmlFor="importance">High importance</label>
           </div>
           <div>
             <strong

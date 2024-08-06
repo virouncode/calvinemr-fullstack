@@ -1,3 +1,5 @@
+import Checkbox from "../../../UI/Checkbox/Checkbox";
+
 const ExportRecordItem = ({
   recordName,
   isRecordSelected,
@@ -5,14 +7,14 @@ const ExportRecordItem = ({
 }) => {
   return (
     <li className="export-chart__records-item">
-      <input
-        type="checkbox"
+      <Checkbox
+        id={recordName}
         checked={isRecordSelected(recordName)}
         onChange={(e) => handleCheckRecord(e, recordName)}
-        id={recordName}
         disabled={recordName === "DEMOGRAPHICS"}
+        label={recordName}
+        mr={10}
       />
-      <label htmlFor={recordName}>{recordName}</label>
     </li>
   );
 };

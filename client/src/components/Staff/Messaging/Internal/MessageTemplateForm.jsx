@@ -9,6 +9,7 @@ import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAnd
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Input from "../../../UI/Inputs/Input";
 import StaffContacts from "../StaffContacts";
 
 const MessageTemplateForm = ({ setNewTemplateVisible }) => {
@@ -139,14 +140,12 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
   return (
     <>
       <div className="new-message__template-name">
-        <label htmlFor="template-name">Template Name*</label>
-        <input
-          type="text"
+        <Input
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          autoFocus
-          autoComplete="off"
+          label="Template Name*"
+          autoFocus={true}
         />
       </div>
       <div className="new-message new-message--template">
@@ -161,9 +160,9 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
         </div>
         <div className="new-message__form new-message__form--template">
           <div className="new-message__recipients">
-            <strong>To: </strong>
-            <input
-              type="text"
+            <Input
+              label="To:"
+              id="to"
               placeholder="Recipients"
               value={staffInfos
                 .filter(({ id }) => recipientsIds.includes(id))
@@ -173,12 +172,12 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
             />
           </div>
           <div className="new-message__subject">
-            <strong>Subject: </strong>
-            <input
-              type="text"
-              placeholder="Subject"
-              onChange={handleChangeSubject}
+            <Input
               value={subject}
+              onChange={handleChangeSubject}
+              id="subject"
+              label="Subject:"
+              placeholder="Subject"
             />
           </div>
           <div className="new-message__body">

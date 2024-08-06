@@ -10,6 +10,9 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { alertSchema } from "../../../../../validation/record/alertValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 
 const AlertForm = ({
   editCounter,
@@ -86,50 +89,33 @@ const AlertForm = ({
     >
       <td>
         <div className="alerts__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>
       <td>
-        <input
-          name="AlertDescription"
-          onChange={handleChange}
-          type="text"
+        <Input
           value={formDatas.AlertDescription}
-          autoComplete="off"
+          onChange={handleChange}
+          name="AlertDescription"
         />
       </td>
       <td>
-        <input
+        <InputDate
+          value={timestampToDateISOTZ(formDatas.DateActive)}
+          onChange={handleChange}
           name="DateActive"
-          onChange={handleChange}
-          type="date"
-          value={timestampToDateISOTZ(formDatas.DateActive, "America/Toronto")}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <InputDate
+          value={timestampToDateISOTZ(formDatas.EndDate)}
+          onChange={handleChange}
           name="EndDate"
-          onChange={handleChange}
-          type="date"
-          value={timestampToDateISOTZ(formDatas.EndDate, "America/Toronto")}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
-          name="Notes"
-          onChange={handleChange}
-          type="text"
-          value={formDatas.Notes}
-          autoComplete="off"
-        />
+        <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
       <td>
         <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>

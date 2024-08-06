@@ -20,6 +20,7 @@ import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNot
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import ClinicalNotesTemplates from "../Templates/ClinicalNotesTemplates";
@@ -321,16 +322,13 @@ const ClinicalNoteForm = ({
           </div>
           <div className="clinical-notes__form-row">
             <div className="clinical-notes__form-subject">
-              <label htmlFor="clinical-form-subject">
-                <strong>Subject: </strong>
-              </label>
-              <input
-                type="text"
-                name="subject"
-                onChange={handleChange}
+              <Input
                 value={formDatas.subject}
-                autoComplete="off"
+                onChange={handleChange}
+                name="subject"
                 id="clinical-form-subject"
+                label="Subject:"
+                autoFocus={true}
               />
             </div>
             <div>

@@ -11,6 +11,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { riskSchema } from "../../../../../validation/record/riskValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const RiskForm = ({
@@ -92,12 +93,7 @@ const RiskForm = ({
     >
       <td>
         <div className="risk__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

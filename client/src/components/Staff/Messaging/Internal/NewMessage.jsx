@@ -9,8 +9,11 @@ import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesM
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
+import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
@@ -266,59 +269,47 @@ const NewMessage = ({
       </div>
       <div className="new-message__form">
         <div className="new-message__recipients">
-          <strong>To: </strong>
-          <input
-            type="text"
+          <Input
+            label="To:"
+            id="to"
             placeholder="Recipient(s)"
             value={staffInfos
               .filter(({ id }) => recipientsIds.includes(id))
               .map((staff) => staffIdToTitleAndName(staffInfos, staff.id))
               .join(" / ")}
-            readOnly
+            readOnly={true}
           />
         </div>
         <div className="new-message__subject">
-          <strong>Subject: </strong>
-          <input
-            type="text"
-            placeholder="Subject"
-            onChange={handleChangeSubject}
+          <Input
             value={subject}
+            onChange={handleChangeSubject}
+            id="subject"
+            label="Subject:"
+            placeholder="Subject"
           />
         </div>
         <div className="new-message__patient">
-          <strong>About patient: </strong>
-          <input
-            type="text"
+          <Input
+            id="patient"
+            label="About patient:"
             placeholder="Patient"
             value={patient.name}
             readOnly
           />
         </div>
         <div className="new-message__attach">
-          <strong>Attach files</strong>
-          <i
-            className="fa-solid fa-paperclip"
-            onClick={handleAttach}
-            disabled={progress || isLoadingFile}
-          ></i>
-          {attachments.map((attachment) => (
-            <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
-              {attachment.alias},
-            </span>
-          ))}
+          <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
         <div className="new-message__importance">
           <div className="new-message__importance-check">
-            <input
-              type="checkbox"
+            <Checkbox
               name="high_importance"
               id="importance"
-              style={{ marginRight: "5px" }}
               onChange={handleImportanceChange}
               checked={important}
+              label="High importance"
             />
-            <label htmlFor="importance">High importance</label>
           </div>
           <div>
             <strong

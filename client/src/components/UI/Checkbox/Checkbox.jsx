@@ -2,6 +2,7 @@ const Checkbox = ({
   id,
   name,
   onChange,
+  onClick,
   checked,
   disabled,
   label,
@@ -14,6 +15,7 @@ const Checkbox = ({
       <input
         type="checkbox"
         onChange={onChange}
+        onClick={onClick}
         checked={checked}
         disabled={disabled}
         style={{ marginRight: `${mr}px`, accentColor: accentColor }}

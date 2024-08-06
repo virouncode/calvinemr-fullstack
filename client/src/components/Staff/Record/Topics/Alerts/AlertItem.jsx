@@ -8,9 +8,12 @@ import {
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { alertSchema } from "../../../../../validation/record/alertValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
-import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const AlertItem = ({
@@ -121,8 +124,8 @@ const AlertItem = ({
           <div className="alerts__item-btn-container">
             {!editVisible ? (
               <>
-                <Button onClick={handleEditClick} />
-                <Button onClick={handleDeleteClick} />
+                <EditButton onClick={handleEditClick} />
+                <DeleteButton onClick={handleDeleteClick} />
               </>
             ) : (
               <>
@@ -137,60 +140,36 @@ const AlertItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="AlertDescription"
-              onChange={handleChange}
-              type="text"
-              value={itemInfos.AlertDescription}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.AlertDescription
-          )}
-        </td>
-
-        <td>
-          {editVisible ? (
-            <input
-              name="DateActive"
-              onChange={handleChange}
-              type="date"
-              value={timestampToDateISOTZ(
-                itemInfos.DateActive,
-                "America/Toronto"
-              )}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.DateActive, "America/Toronto")
-          )}
+          <InputTextToggle
+            value={itemInfos.AlertDescription}
+            onChange={handleChange}
+            name="AlertDescription"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="EndDate"
-              onChange={handleChange}
-              type="date"
-              value={timestampToDateISOTZ(itemInfos.EndDate, "America/Toronto")}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.EndDate, "America/Toronto")
-          )}
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.DateActive)}
+            onChange={handleChange}
+            name="DateActive"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Notes"
-              onChange={handleChange}
-              type="text"
-              value={itemInfos.Notes}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.Notes
-          )}
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.EndDate)}
+            onChange={handleChange}
+            name="EndDate"
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          <InputTextToggle
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            name="Notes"
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

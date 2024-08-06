@@ -186,7 +186,7 @@ const NewMessagePatient = ({ setNewVisible }) => {
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
         <div className="new-message__body new-message__body--patient">
-          <textarea value={body} onChange={handleChange} />
+          <textarea value={body} onChange={handleChange} autoFocus />
           <MessagesAttachments
             attachments={attachments}
             handleRemoveAttachment={handleRemoveAttachment}

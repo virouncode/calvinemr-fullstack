@@ -8,6 +8,7 @@ import {
 } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
 
 const MessagesToolBar = ({
   search,
@@ -200,8 +201,7 @@ const MessagesToolBar = ({
   return (
     <div className="messages-toolbar">
       <p className="messages-toolbar__title">Messaging</p>
-      <input
-        type="text"
+      <Input
         placeholder="Search in messages"
         value={search}
         onChange={handleChange}

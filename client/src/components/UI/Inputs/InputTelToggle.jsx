@@ -1,25 +1,25 @@
-const InputTextToggle = ({
+const InputTelToggle = ({
   value,
   onChange,
-  onClick,
   name,
   id,
-  editVisible,
   label,
+  width,
   placeholder,
+  editVisible,
 }) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
       {editVisible ? (
         <input
-          type="text"
+          type="tel"
           value={value}
           onChange={onChange}
-          onClick={onClick}
           name={name}
           id={id}
           autoComplete="off"
+          style={{ width: width ? `${width}px` : "" }}
           placeholder={placeholder}
         />
       ) : (
@@ -29,4 +29,4 @@ const InputTextToggle = ({
   );
 };
 
-export default InputTextToggle;
+export default InputTelToggle;

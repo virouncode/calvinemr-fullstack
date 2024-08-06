@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMessagesExternalTemplates } from "../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useIntersection from "../../../../hooks/useIntersection";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -55,15 +56,14 @@ const MessagesExternalTemplates = ({ handleSelectTemplate }) => {
         />
       </div>
       <div className="messages__templates-search">
-        <label htmlFor="template-search">Search</label>
-        <input
-          style={{ width: "300px" }}
-          id="template-search"
-          type="text"
+        <Input
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
+          id="template-search"
+          label="Search"
           placeholder="Template name, author name,..."
+          autoFocus={true}
+          width={300}
         />
       </div>
       <div className="messages__templates-list" ref={rootRef}>

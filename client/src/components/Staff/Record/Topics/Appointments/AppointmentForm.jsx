@@ -25,6 +25,7 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { DateTimePicker } from "../../../../UI/Pickers/DateTimePicker";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
 import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
@@ -524,12 +525,7 @@ const AppointmentForm = ({
     >
       <td>
         <div className="appointments__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

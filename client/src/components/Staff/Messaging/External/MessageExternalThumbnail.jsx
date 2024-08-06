@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -8,6 +7,7 @@ import { timestampToDateTimeStrTZ } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 
 const MessageExternalThumbnail = ({
   message,
@@ -143,12 +143,10 @@ const MessageExternalThumbnail = ({
     >
       {/*========== FROM =============*/}
       <div className="message-thumbnail__from">
-        <input
-          className="message-thumbnail__from-checkbox"
-          type="checkbox"
+        <Checkbox
           id={message.id}
-          checked={isMsgSelected(message.id)}
           onChange={handleCheckMsg}
+          checked={isMsgSelected(message.id)}
         />
         <div
           onClick={handleMsgClick}

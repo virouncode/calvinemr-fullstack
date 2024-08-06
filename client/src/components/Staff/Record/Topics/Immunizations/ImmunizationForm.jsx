@@ -16,6 +16,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
 import GenericComboImmunization from "./ImmunizationCombo";
@@ -116,12 +117,7 @@ const ImmunizationForm = ({
         style={{ textAlign: "center", border: errMsgPost && "solid 1.5px red" }}
       >
         <div className="immunizations__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

@@ -18,6 +18,9 @@ import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAnd
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
+import Input from "../../../UI/Inputs/Input";
+import InputDate from "../../../UI/Inputs/InputDate";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
@@ -215,15 +218,15 @@ const ForwardTodo = ({
       </div>
       <div className="forward-message__form">
         <div className="forward-message__recipients">
-          <strong>To: </strong>
-          <input
-            type="text"
+          <Input
+            label="To:"
+            id="to"
             placeholder="Recipients"
             value={staffInfos
               .filter(({ id }) => recipientsIds.includes(id))
               .map((staff) => staffIdToTitleAndName(staffInfos, staff.id))
               .join(" / ")}
-            readOnly
+            readOnly={true}
           />
         </div>
         <div className="forward-message__subject">
@@ -232,30 +235,30 @@ const ForwardTodo = ({
         </div>
         {patientName && (
           <div className="forward-message__patient">
-            <strong>About patient: {"\u00A0"}</strong> {patientName}
+            <strong>About patient:{"\u00A0"}</strong>
+            {patientName}
           </div>
         )}
         <div className="new-message__duedate">
-          <label htmlFor="due-date">Due date</label>
-          <input
-            type="date"
+          <InputDate
             value={dueDate}
             onChange={handleChangeDueDate}
             id="due-date"
+            label="Due date"
           />
         </div>
         <div className="new-message__importance">
           <div className="new-message__importance-check">
-            <input
-              type="checkbox"
+            <Checkbox
               name="high_importance"
               id="importance"
-              style={{ marginRight: "5px" }}
               onChange={handleImportanceChange}
               checked={important}
+              label="High importance"
             />
             <label htmlFor="importance">High importance</label>
           </div>
+
           <div>
             <strong
               onClick={() => setTemplatesVisible((v) => !v)}

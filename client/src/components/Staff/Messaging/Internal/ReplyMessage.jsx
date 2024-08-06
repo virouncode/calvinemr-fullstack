@@ -10,6 +10,7 @@ import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Message from "./Message";
@@ -224,15 +225,13 @@ const ReplyMessage = ({
       </div>
       <div className="reply-message__importance">
         <div className="reply-message__importance-check">
-          <input
-            type="checkbox"
+          <Checkbox
             name="high_importance"
             id="importance"
-            style={{ marginRight: "5px" }}
             onChange={handleImportanceChange}
             checked={important}
+            label="High importance"
           />
-          <label htmlFor="importance">High importance</label>
         </div>
         <div>
           <strong

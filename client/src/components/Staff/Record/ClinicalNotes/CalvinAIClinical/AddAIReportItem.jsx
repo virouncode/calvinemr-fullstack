@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { extractToText } from "../../../../../utils/extractText/extractToText";
 import { toAnonymousText } from "../../../../../utils/extractText/toAnonymousText";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 
 const AddAIReportItem = ({
   report,
@@ -69,14 +70,13 @@ const AddAIReportItem = ({
 
   return (
     <li className="calvinai-prompt__report-item" ref={lastItemRef}>
-      <input
-        type="checkbox"
+      <Checkbox
         id={report.id}
-        checked={isChecked(report.id)}
         onChange={handleChange}
+        checked={isChecked(report.id)}
         disabled={isLoadingReportText || isLoadingAttachmentText}
+        label={report.name}
       />
-      <label htmlFor={`calvinai-report${report.id}`}>{report.name}</label>
     </li>
   );
 };

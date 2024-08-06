@@ -12,6 +12,8 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import InputTelToggle from "../../UI/Inputs/InputTelToggle";
+import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 import SiteSelect from "../EventForm/SiteSelect";
 
 const MyAccountStaff = () => {
@@ -171,57 +173,38 @@ const MyAccountStaff = () => {
               <p>{tempFormDatas.licence_nbr}</p>
             </div>
             <div className="myaccount-section__row">
-              <label htmlFor="cellphone">Cell phone*: </label>
-              {editVisible ? (
-                <input
-                  type="text"
-                  value={tempFormDatas.cell_phone}
-                  onChange={handleChange}
-                  name="cell_phone"
-                  autoComplete="off"
-                  required
-                  id="cellphone"
-                  placeholder="xxx-xxx-xxxx"
-                />
-              ) : (
-                <p>{tempFormDatas.cell_phone}</p>
-              )}
+              <InputTelToggle
+                value={tempFormDatas.cell_phone}
+                onChange={handleChange}
+                name="cell_phone"
+                id="cellphone"
+                label="Cell phone*:"
+                placeholder="xxx-xxx-xxxx"
+                editVisible={editVisible}
+              />
             </div>
             <div className="myaccount-section__row">
-              <label htmlFor="backupphone">Backup phone: </label>
-              {editVisible ? (
-                <input
-                  type="text"
-                  value={tempFormDatas.backup_phone}
-                  onChange={handleChange}
-                  name="backup_phone"
-                  autoComplete="off"
-                  id="backupphone"
-                  placeholder="xxx-xxx-xxxx"
-                />
-              ) : (
-                <p>{tempFormDatas.backup_phone}</p>
-              )}
+              <InputTelToggle
+                value={tempFormDatas.backup_phone}
+                onChange={handleChange}
+                name="backup_phone"
+                id="backupphone"
+                label="Backup phone*:"
+                placeholder="xxx-xxx-xxxx"
+                editVisible={editVisible}
+              />
             </div>
             <div className="myaccount-section__row">
-              <label htmlFor="video_link">Link for video calls: </label>
-              {editVisible ? (
-                <input
-                  name="video_link"
-                  type="text"
-                  autoComplete="off"
-                  value={tempFormDatas.video_link}
-                  onChange={handleChange}
-                  id="video_link"
-                />
-              ) : (
-                <p>{tempFormDatas.video_link}</p>
-              )}
+              <InputTextToggle
+                value={tempFormDatas.video_link}
+                onChange={handleChange}
+                name="video_link"
+                id="video_link"
+                editVisible={editVisible}
+                label="Link for video calls:"
+                placeholder="https://mylink.com"
+              />
             </div>
-            {/* <div className="myaccount-section__row">
-              <label>AI consent: </label>
-              <p>{tempFormDatas.ai_consent ? "Yes" : "No"}</p>
-            </div> */}
             <div className="myaccount-section__row">
               <label>E-sign: </label>
               <div className="myaccount-section__image">

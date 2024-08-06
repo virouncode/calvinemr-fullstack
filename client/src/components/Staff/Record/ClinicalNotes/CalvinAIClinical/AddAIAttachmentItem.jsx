@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { extractToText } from "../../../../../utils/extractText/extractToText";
 import { toAnonymousText } from "../../../../../utils/extractText/toAnonymousText";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 
 const AddAIAttachmentItem = ({
   attachment,
@@ -65,16 +66,13 @@ const AddAIAttachmentItem = ({
 
   return (
     <div className="calvinai-prompt__attachment-item">
-      <input
-        type="checkbox"
-        id={attachment.id}
-        checked={isChecked(attachment.id)}
+      <Checkbox
+        id={`calvinai-attachment${attachment.id}`}
         onChange={handleChange}
+        checked={isChecked(attachment.id)}
         disabled={isLoadingAttachmentText || isLoadingReportText}
+        label={attachment.alias}
       />
-      <label htmlFor={`calvinai-attachment${attachment.id}`}>
-        {attachment.alias}
-      </label>
     </div>
   );
 };

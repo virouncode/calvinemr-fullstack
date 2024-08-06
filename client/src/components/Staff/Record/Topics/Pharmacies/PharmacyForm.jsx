@@ -10,6 +10,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const PharmacyFaxForm = ({
@@ -129,12 +130,7 @@ const PharmacyFaxForm = ({
     >
       <td>
         <div className="pharmacies__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

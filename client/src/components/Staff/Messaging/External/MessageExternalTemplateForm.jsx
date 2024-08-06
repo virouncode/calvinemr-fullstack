@@ -6,6 +6,7 @@ import { useMessagesExternalTemplatePost } from "../../../../hooks/reactquery/mu
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Input from "../../../UI/Inputs/Input";
 
 const MessageExternalTemplateForm = ({ setNewTemplateVisible }) => {
   const { user } = useUserContext();
@@ -62,25 +63,23 @@ const MessageExternalTemplateForm = ({ setNewTemplateVisible }) => {
   return (
     <>
       <div className="new-message__template-name">
-        <label htmlFor="template-name">Template Name*</label>
-        <input
-          type="text"
+        <Input
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          autoFocus
-          autoComplete="off"
+          label="Template Name*"
+          autoFocus={true}
         />
       </div>
       <div className="new-message new-message--template">
         <div className="new-message__form new-message__form--template-external">
           <div className="new-message__subject">
-            <strong>Subject: </strong>
-            <input
-              type="text"
-              placeholder="Subject"
-              onChange={handleChangeSubject}
+            <Input
               value={subject}
+              onChange={handleChangeSubject}
+              id="subject"
+              placeholder="Subject"
+              label="Subject:"
             />
           </div>
           <div className="new-message__body">

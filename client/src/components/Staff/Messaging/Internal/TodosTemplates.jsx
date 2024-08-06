@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTodosTemplates } from "../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useIntersection from "../../../../hooks/useIntersection";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -57,14 +58,13 @@ const TodosTemplates = ({ handleSelectTemplate }) => {
       </div>
       <div className="messages__templates-search">
         <label htmlFor="template-search">Search</label>
-        <input
-          style={{ width: "300px" }}
+        <Input
           id="template-search"
-          type="text"
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
           placeholder="Template name, author name,..."
+          width={300}
+          autoFocus={true}
         />
       </div>
       <div className="messages__templates-list" ref={rootRef}>

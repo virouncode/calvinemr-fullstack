@@ -20,6 +20,7 @@ import { toPatientName } from "../../../../utils/names/toPatientName";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import DoneButton from "../../../UI/Buttons/DoneButton";
 import UndoneButton from "../../../UI/Buttons/UndoneButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import EditTodo from "./EditTodo";
 
@@ -251,12 +252,10 @@ const MessageThumbnail = ({
       {/*========== FROM =============*/}
 
       <div className="message-thumbnail__from">
-        <input
-          className="message-thumbnail__from-checkbox"
-          type="checkbox"
+        <Checkbox
           id={message.id}
-          checked={isMsgSelected(message.id)}
           onChange={handleCheckMsg}
+          checked={isMsgSelected(message.id)}
         />
         <div
           onClick={handleMsgClick}

@@ -9,8 +9,10 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
@@ -247,25 +249,17 @@ Powered by Calvin EMR`,
           : `\u00A0Re: ${message.subject}`}
       </div>
       <div className="reply-message__attach">
-        <strong>Attach files</strong>
-        <i className="fa-solid fa-paperclip" onClick={handleAttach}></i>
-        {attachments.map((attachment) => (
-          <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
-            {attachment.alias},
-          </span>
-        ))}
+        <AttachFilesButton onClick={handleAttach} attachments={attachments} />
       </div>
       <div className="reply-message__importance">
         <div className="reply-message__importance-check">
-          <input
-            type="checkbox"
+          <Checkbox
             name="high_importance"
             id="importance"
-            style={{ marginRight: "5px" }}
             onChange={handleImportanceChange}
             checked={important}
+            label="High importance"
           />
-          <label htmlFor="importance">High importance</label>
         </div>
         <div>
           <strong

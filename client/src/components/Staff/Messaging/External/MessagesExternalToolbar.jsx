@@ -6,6 +6,7 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessageExternalPut } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../UI/Buttons/Button";
+import Input from "../../../UI/Inputs/Input";
 
 const MessagesExternalToolBar = ({
   search,
@@ -156,11 +157,10 @@ const MessagesExternalToolBar = ({
   return (
     <div className="messages-toolbar">
       <p className="messages-toolbar__title">Messaging</p>
-      <input
-        type="text"
-        placeholder="Search in messages"
+      <Input
         value={search}
         onChange={handleChange}
+        placeholder="Search in messages"
       />
       <div className="messages-toolbar__btns">
         <Button onClick={handleClickNew} label={"New"} />

@@ -1,11 +1,13 @@
 import { DateTime } from "luxon";
 import { useState } from "react";
 import {
-    dateISOToTimestampTZ,
-    getAgeTZ,
-    nowTZTimestamp,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  getAgeTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
+import InputDate from "../../../../UI/Inputs/InputDate";
+import InputNumber from "../../../../UI/Inputs/InputNumber";
 
 const AgeCalculatorPU = ({ patientDob }) => {
   const [age, setAge] = useState(getAgeTZ(patientDob));
@@ -47,24 +49,22 @@ const AgeCalculatorPU = ({ patientDob }) => {
     <div className="age-calculator">
       <form className="age-calculator__form">
         <div className="age-calculator__form-row">
-          <label htmlFor="age">Age</label>
-          <input
-            type="number"
-            id="age"
+          <InputNumber
             value={age}
             onChange={handleAgeChange}
-            autoComplete="off"
+            id="age"
+            label="Age"
+            autoFocus={true}
             step="1"
             min="0"
           />
         </div>
         <div className="age-calculator__form-row">
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            id="date"
+          <InputDate
             value={date}
             onChange={handleDateChange}
+            id="date"
+            label="Date"
           />
         </div>
       </form>

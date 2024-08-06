@@ -5,6 +5,7 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
 
 const ClinicalNotesTemplateForm = ({ setNewTemplateVisible }) => {
   const { user } = useUserContext();
@@ -44,15 +45,13 @@ const ClinicalNotesTemplateForm = ({ setNewTemplateVisible }) => {
     <div className="new-template">
       {errMsg && <p className="new-template-err">{errMsg}</p>}
       <div className="new-template-name">
-        <label htmlFor="clinical-template-name">Template name: </label>
-        <input
-          type="text"
-          name="name"
+        <Input
           value={newTemplate.name}
           onChange={handleChange}
-          placeholder="New template name"
-          autoComplete="off"
+          name="name"
           id="clinical-template-name"
+          label="Template name:"
+          autoFocus={true}
         />
       </div>
       <div className="new-template-body">

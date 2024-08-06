@@ -12,6 +12,8 @@ import EditButton from "../../../../UI/Buttons/EditButton";
 import LinkButton from "../../../../UI/Buttons/LinkButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import TriangleClinicalButton from "../../../../UI/Buttons/TriangleClinicalButton";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 
 axios.defaults.withCredentials = true;
@@ -90,11 +92,9 @@ const ClinicalNoteCardHeader = ({
     >
       <div className="clinical-notes__card-header-row">
         <div className="clinical-notes__card-author">
-          <input
-            className="clinical-notes__card-check"
-            type="checkbox"
-            checked={isChecked(clinicalNote.id) || selectAll}
+          <Checkbox
             onChange={handleCheck}
+            checked={isChecked(clinicalNote.id) || selectAll}
             onClick={(event) => event.stopPropagation()}
           />
           <p>
@@ -173,22 +173,15 @@ const ClinicalNoteCardHeader = ({
       </div>
       <div className="clinical-notes__card-header-row">
         <div className="clinical-notes__card-subject">
-          <label htmlFor="clinical-subject">
-            <strong>Subject: </strong>
-          </label>
-          {!editVisible ? (
-            clinicalNote.subject
-          ) : (
-            <input
-              type="text"
-              value={tempFormDatas.subject}
-              onChange={handleChange}
-              name="subject"
-              autoComplete="off"
-              onClick={(e) => e.stopPropagation()}
-              id="clinical-subject"
-            />
-          )}
+          <InputTextToggle
+            value={tempFormDatas.subject}
+            onChange={handleChange}
+            onClick={(e) => e.stopPropagation()}
+            name="subject"
+            id="clinical-subject"
+            editVisible={editVisible}
+            label="Subject:"
+          />
         </div>
         {!editVisible && versions && (
           <div className="clinical-notes__card-version">

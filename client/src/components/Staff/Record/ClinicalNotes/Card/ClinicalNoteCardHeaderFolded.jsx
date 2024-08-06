@@ -1,8 +1,8 @@
-
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { timestampToDateTimeStrTZ } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import TriangleClinicalButton from "../../../../UI/Buttons/TriangleClinicalButton";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 
 const ClinicalNoteCardHeaderFolded = ({
   tempFormDatas,
@@ -19,11 +19,9 @@ const ClinicalNoteCardHeaderFolded = ({
       onClick={handleTriangleClinicalClick}
     >
       <div className="clinical-notes__card-header--folded-title">
-        <input
-          className="clinical-notes__card-check"
-          type="checkbox"
-          checked={isChecked(clinicalNote.id) || selectAll}
+        <Checkbox
           onChange={handleCheck}
+          checked={isChecked(clinicalNote.id) || selectAll}
           onClick={(event) => event.stopPropagation()}
         />
         <p>

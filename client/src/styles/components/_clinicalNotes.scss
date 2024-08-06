@@ -44,6 +44,7 @@
         width: 160px;
       }
       label {
+        font-weight: bold;
         padding: 0 5px;
       }
     }
@@ -119,6 +120,7 @@
     align-items: center;
     label {
       margin-right: 5px;
+      font-weight: bold;
     }
   }
   &__form-body {
@@ -212,6 +214,15 @@
     text-align: end;
   }
   &__card-subject {
+    display: flex;
+    align-items: center;
+    p {
+      padding: 0;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
     input {
       min-width: 500px;
     }
@@ -225,9 +236,7 @@
     width: 48%;
     text-align: end;
   }
-  &__card-check {
-    margin-right: 5px;
-  }
+
   &__card-body {
     padding: 20px;
     text-align: justify;
@@ -366,9 +375,6 @@
       label {
         font-weight: bold;
         margin-right: 10px;
-      }
-      input {
-        width: 200px;
       }
     }
   }
