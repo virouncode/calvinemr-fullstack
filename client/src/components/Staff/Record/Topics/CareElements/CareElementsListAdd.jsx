@@ -1,17 +1,18 @@
-
 import { ynIndicatorsimpleCT } from "../../../../../omdDatas/codesTables";
 import {
-    dateISOToTimestampTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import {
-    bodyMassIndex,
-    bodySurfaceArea,
-    cmToFeet,
-    feetToCm,
-    kgToLbs,
-    lbsToKg,
+  bodyMassIndex,
+  bodySurfaceArea,
+  cmToFeet,
+  feetToCm,
+  kgToLbs,
+  lbsToKg,
 } from "../../../../../utils/measurements/measurements";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const CareElementsListAdd = ({
@@ -199,8 +200,7 @@ const CareElementsListAdd = ({
       <div className="care-elements__row">
         <label className="care-elements__row-label">Date:</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="date"
+          <InputDate
             onChange={handleDateChange}
             value={timestampToDateISOTZ(addDate)}
           />
@@ -223,60 +223,50 @@ const CareElementsListAdd = ({
           Smoking Packs (per day):
         </label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="SmokingPacks"
             onChange={handleChange}
             value={addFormDatas.SmokingPacks?.PerDay}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Weight (kg):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="Weight"
             onChange={handleChange}
             value={addFormDatas.Weight?.Weight}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Weight (lbs):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="WeightLbs"
             onChange={handleChange}
             value={addFormDatas.WeightLbs?.Weight}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Height (cm):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="Height"
             onChange={handleChange}
             value={addFormDatas.Height?.Height}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Height (feet):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="HeightFeet"
             onChange={handleChange}
             value={addFormDatas.HeightFeet?.Height}
-            autoComplete="off"
           />
         </div>
       </div>
@@ -285,13 +275,7 @@ const CareElementsListAdd = ({
           Body mass index (kg/m2):
         </label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
-            name="BMI"
-            value={addFormDatas.bodyMassIndex?.BMI}
-            autoComplete="off"
-            readOnly
-          />
+          <Input name="BMI" value={addFormDatas.bodyMassIndex?.BMI} readOnly />
         </div>
       </div>
       <div className="care-elements__row">
@@ -299,11 +283,9 @@ const CareElementsListAdd = ({
           Body surface area (m2):
         </label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="BSA"
             value={addFormDatas.bodySurfaceArea?.BSA}
-            autoComplete="off"
             readOnly
           />
         </div>
@@ -313,36 +295,30 @@ const CareElementsListAdd = ({
           Waist circumference (cm):
         </label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="Waist"
             onChange={handleChange}
             value={addFormDatas.WaistCircumference?.WaistCircumference}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Systolic (mmHg):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="SystolicBP"
             onChange={handleChange}
             value={addFormDatas.BloodPressure?.SystolicBP}
-            autoComplete="off"
           />
         </div>
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Diastolic (mmHg):</label>
         <div className="care-elements__row-value care-elements__row-value--add">
-          <input
-            type="text"
+          <Input
             name="DiastolicBP"
             onChange={handleChange}
             value={addFormDatas.BloodPressure?.DiastolicBP}
-            autoComplete="off"
           />
         </div>
       </div>

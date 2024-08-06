@@ -8,6 +8,8 @@ import {
 import { bodyMassIndex } from "../../../../../utils/measurements/measurements";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const HeightHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
@@ -153,9 +155,8 @@ const HeightHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         {formDatasHeight.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Date: </label>
-              <input
-                type="date"
+              <InputDate
+                label="Date:"
                 value={timestampToDateISOTZ(
                   formDatasHeight.find(({ id }) => id === item.id).Date
                 )}
@@ -165,9 +166,8 @@ const HeightHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
               />
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Height (cm): </label>
-              <input
-                type="text"
+              <Input
+                label="Height (cm):"
                 value={formDatasHeight.find(({ id }) => id === item.id).Height}
                 onChange={handleChange}
                 id={item.id}

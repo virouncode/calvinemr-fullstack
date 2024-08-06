@@ -11,6 +11,7 @@ import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellMultipleTypes from "../../../../UI/Tables/SignCellMultipleTypes";
 
@@ -213,12 +214,7 @@ const FamilyDoctorListItem = ({
               </>
             ) : (
               <>
-                <input
-                  type="submit"
-                  value="Save"
-                  onClick={handleSubmit}
-                  disabled={progress}
-                />
+                <SaveButton onClick={handleSubmit} disabled={progress} />
                 <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}

@@ -26,12 +26,16 @@ import { appointmentSchema } from "../../../../../validation/record/appointmentV
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import { DateTimePicker } from "../../../../UI/Pickers/DateTimePicker";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
 import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
 import RoomsSelect from "../../../EventForm/Rooms/RoomsSelect";
 import SiteSelect from "../../../EventForm/SiteSelect";
-import StatusSelect from "../../../EventForm/Status/StatusSelect";
+import AllDaySelect from "./AllDaySelect";
+import AppointmentStatusSelect from "./AppointmentStatusSelect";
 
 const AppointmentForm = ({
   patientId,
@@ -541,12 +545,10 @@ const AppointmentForm = ({
         )}
       </td>
       <td>
-        <input
-          type="text"
+        <Input
           name="AppointmentPurpose"
           value={formDatas.AppointmentPurpose}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
@@ -558,12 +560,10 @@ const AppointmentForm = ({
       </td>
       <td>
         {formDatas.recurrence !== "Once" && (
-          <input
-            type="date"
+          <InputDate
             value={
               formDatas.rrule?.until ? formDatas.rrule?.until.slice(0, 10) : ""
             }
-            id="until"
             onChange={handleUntilChange}
           />
         )}
@@ -597,15 +597,11 @@ const AppointmentForm = ({
         />
       </td>
       <td>
-        <select
+        <AllDaySelect
           name="all_day"
           value={formDatas.all_day.toString()}
           onChange={handleAllDayChange}
-          style={{ width: "50px" }}
-        >
-          <option value="true">Yes</option>
-          <option value="false">No</option>
-        </select>
+        />
       </td>
       <td>
         <SiteSelect
@@ -627,7 +623,7 @@ const AppointmentForm = ({
         />
       </td>
       <td>
-        <StatusSelect
+        <AppointmentStatusSelect
           handleChange={handleChange}
           statuses={statuses}
           selectedStatus={formDatas.AppointmentStatus}
@@ -635,20 +631,13 @@ const AppointmentForm = ({
         />
       </td>
       <td>
-        <input
-          type="text"
+        <Input
           name="AppointmentNotes"
           value={formDatas.AppointmentNotes}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto")}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

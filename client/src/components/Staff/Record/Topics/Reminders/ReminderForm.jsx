@@ -1,15 +1,11 @@
 import { useState } from "react";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import {
-  nowTZTimestamp,
-  timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { reminderSchema } from "../../../../../validation/record/reminderValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
 const ReminderForm = ({
   editCounter,
@@ -21,7 +17,6 @@ const ReminderForm = ({
 }) => {
   //HOOKS
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState({
     patient_id: patientId,
     reminder: "",
@@ -96,12 +91,7 @@ const ReminderForm = ({
           autoComplete="off"
         />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp())}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

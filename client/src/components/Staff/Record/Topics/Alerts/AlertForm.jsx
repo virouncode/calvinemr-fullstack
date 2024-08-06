@@ -1,18 +1,17 @@
 import { useState } from "react";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { alertSchema } from "../../../../../validation/record/alertValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
 const AlertForm = ({
   editCounter,
@@ -24,7 +23,6 @@ const AlertForm = ({
 }) => {
   //HOOKS
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState({
     patient_id: patientId,
     AlertDescription: "",
@@ -117,12 +115,7 @@ const AlertForm = ({
       <td>
         <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp())}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

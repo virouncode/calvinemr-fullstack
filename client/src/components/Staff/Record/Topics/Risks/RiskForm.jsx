@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
 import {
@@ -7,12 +6,12 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { riskSchema } from "../../../../../validation/record/riskValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
 const RiskForm = ({
   editCounter,
@@ -24,7 +23,6 @@ const RiskForm = ({
 }) => {
   //HOOKS
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState({
     patient_id: patientId,
     RiskFactor: "",
@@ -162,12 +160,7 @@ const RiskForm = ({
           autoComplete="off"
         />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp())}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

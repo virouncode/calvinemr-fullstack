@@ -1,4 +1,3 @@
-
 import { Combobox } from "react-widgets";
 
 const etiology = [

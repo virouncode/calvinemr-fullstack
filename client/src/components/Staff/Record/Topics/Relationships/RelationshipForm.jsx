@@ -1,18 +1,14 @@
 import { useState } from "react";
 import "react-widgets/scss/styles.scss";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { genderCT, toCodeTableName } from "../../../../../omdDatas/codesTables";
-import {
-  nowTZTimestamp,
-  timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { toInverseRelation } from "../../../../../utils/relationships/toInverseRelation";
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import RelationshipList from "./RelationshipList";
 
 const RelationshipForm = ({
@@ -26,7 +22,6 @@ const RelationshipForm = ({
   setPatientSearchVisible,
 }) => {
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState({
     patient_id: patientId,
     relationship: "",
@@ -132,12 +127,7 @@ const RelationshipForm = ({
           onClick={() => setPatientSearchVisible(true)}
         />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp())}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

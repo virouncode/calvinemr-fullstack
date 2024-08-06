@@ -1,4 +1,3 @@
-
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import { getLastUpdate, isUpdated } from "../../../utils/dates/updates";

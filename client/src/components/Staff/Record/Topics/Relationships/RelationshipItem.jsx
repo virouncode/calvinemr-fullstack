@@ -13,6 +13,7 @@ import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelationshipList from "./RelationshipList";
 
@@ -159,12 +160,7 @@ const RelationshipItem = ({
               </>
             ) : (
               <>
-                <input
-                  type="submit"
-                  value="Save"
-                  onClick={handleSubmit}
-                  disabled={progress}
-                />
+                <SaveButton onClick={handleSubmit} disabled={progress} />
                 <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}

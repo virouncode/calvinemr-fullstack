@@ -7,6 +7,8 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const BPHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
@@ -102,35 +104,32 @@ const BPHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         {formDatasBP.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block">
-              <label>Date: </label>
-              <input
-                type="date"
+              <InputDate
                 value={timestampToDateISOTZ(
                   formDatasBP.find(({ id }) => id === item.id).Date
                 )}
                 onChange={handleChange}
-                id={item.id}
                 name="Date"
+                id={item.id}
+                label="Date"
               />
             </span>
             <span className="care-elements__edit-block">
-              <label>Systolic (mmHg): </label>
-              <input
-                type="text"
+              <Input
                 value={formDatasBP.find(({ id }) => id === item.id).SystolicBP}
                 onChange={handleChange}
                 id={item.id}
                 name="Systolic"
+                label="Systolic (mmHg):"
               />
             </span>
             <span className="care-elements__edit-block">
-              <label>Diastolic (mmHg): </label>
-              <input
-                type="text"
+              <Input
                 value={formDatasBP.find(({ id }) => id === item.id).DiastolicBP}
                 onChange={handleChange}
                 id={item.id}
                 name="Diastolic"
+                label="Diastolic (mmHg):"
               />
             </span>
           </li>

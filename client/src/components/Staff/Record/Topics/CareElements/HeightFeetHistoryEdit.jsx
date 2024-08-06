@@ -12,6 +12,8 @@ import {
 } from "../../../../../utils/measurements/measurements";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const HeightFeetHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
@@ -163,25 +165,23 @@ const HeightFeetHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         {formDatasHeight.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Date: </label>
-              <input
-                type="date"
+              <InputDate
                 value={timestampToDateISOTZ(
                   formDatasHeight.find(({ id }) => id === item.id).Date
                 )}
                 onChange={handleChange}
                 id={item.id}
                 name="Date"
+                label="Date:"
               />
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Height (feet): </label>
-              <input
-                type="text"
+              <Input
                 value={formDatasHeight.find(({ id }) => id === item.id).Height}
                 onChange={handleChange}
                 id={item.id}
                 name="Height"
+                label="Height (feet): "
               />
             </span>
           </li>

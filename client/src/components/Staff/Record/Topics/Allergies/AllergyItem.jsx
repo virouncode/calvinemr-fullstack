@@ -5,7 +5,6 @@ import {
   propertyOfOffendingAgentCT,
   reactionSeverityCT,
   reactionTypeCT,
-  toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import {
   dateISOToTimestampTZ,
@@ -18,7 +17,10 @@ import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
-import GenericList from "../../../../UI/Lists/GenericList";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const AllergyItem = ({
@@ -136,125 +138,84 @@ const AllergyItem = ({
               </>
             ) : (
               <>
-                <input
-                  type="submit"
-                  value="Save"
-                  onClick={handleSubmit}
-                  disabled={progress}
-                />
+                <SaveButton onClick={handleSubmit} disabled={progress} />
                 <CancelButton onClick={handleCancel} disabled={progress} />
               </>
             )}
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="OffendingAgentDescription"
-              type="text"
-              value={itemInfos.OffendingAgentDescription}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.OffendingAgentDescription
-          )}
+          <InputTextToggle
+            value={itemInfos.OffendingAgentDescription}
+            onChange={handleChange}
+            name="OffendingAgentDescription"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={propertyOfOffendingAgentCT}
-              value={itemInfos.PropertyOfOffendingAgent}
-              name="PropertyOfOffendingAgent"
-              handleChange={handleChange}
-            />
-          ) : (
-            toCodeTableName(
-              propertyOfOffendingAgentCT,
-              item.PropertyOfOffendingAgent
-            )
-          )}
+          <GenericListToggle
+            list={propertyOfOffendingAgentCT}
+            value={itemInfos.PropertyOfOffendingAgent}
+            name="PropertyOfOffendingAgent"
+            handleChange={handleChange}
+            editVisible={editVisible}
+            noneOption={false}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={reactionTypeCT}
-              value={itemInfos.ReactionType}
-              name="ReactionType"
-              handleChange={handleChange}
-            />
-          ) : (
-            toCodeTableName(reactionTypeCT, item.ReactionType)
-          )}
+          <GenericListToggle
+            list={reactionTypeCT}
+            value={itemInfos.ReactionType}
+            name="ReactionType"
+            handleChange={handleChange}
+            editVisible={editVisible}
+            noneOption={false}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="StartDate"
-              type="date"
-              value={timestampToDateISOTZ(
-                itemInfos.StartDate,
-                "America/Toronto"
-              )}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(item.StartDate, "America/Toronto")
-          )}
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.StartDate)}
+            onChange={handleChange}
+            name="StartDate"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={lifeStageCT}
-              value={itemInfos.LifeStage}
-              name="LifeStage"
-              handleChange={handleChange}
-            />
-          ) : (
-            toCodeTableName(lifeStageCT, item.LifeStage)
-          )}
+          <GenericListToggle
+            list={lifeStageCT}
+            value={itemInfos.LifeStage}
+            name="LifeStage"
+            handleChange={handleChange}
+            editVisible={editVisible}
+            noneOption={false}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={reactionSeverityCT}
-              value={itemInfos.Severity}
-              name="Severity"
-              handleChange={handleChange}
-            />
-          ) : (
-            toCodeTableName(reactionSeverityCT, item.Severity)
-          )}
+          <GenericListToggle
+            list={reactionSeverityCT}
+            value={itemInfos.Severity}
+            name="Severity"
+            handleChange={handleChange}
+            editVisible={editVisible}
+            noneOption={false}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Reaction"
-              type="text"
-              value={itemInfos.Reaction}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Reaction
-          )}
+          <InputTextToggle
+            value={itemInfos.Reaction}
+            onChange={handleChange}
+            name="Reaction"
+            editVisible={editVisible}
+          />
         </td>
+        <td>{timestampToDateISOTZ(itemInfos.RecordedDate)}</td>
         <td>
-          {timestampToDateISOTZ(itemInfos.RecordedDate, "America/Toronto")}
-        </td>
-        <td>
-          {editVisible ? (
-            <input
-              name="Notes"
-              type="text"
-              value={itemInfos.Notes}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Notes
-          )}
+          <InputTextToggle
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            name="Notes"
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

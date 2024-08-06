@@ -9,6 +9,8 @@ import {
 } from "../../../../../utils/measurements/measurements";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 
 const CareElementsHeightEdit = ({
   heightDatas,
@@ -80,23 +82,19 @@ const CareElementsHeightEdit = ({
       <ul className="care-elements__edit-list">
         {heightFormDatas.map((item) => (
           <li key={item.id} className="care-elements__edit-item">
-            <label>Date</label>
-            <input
-              type="date"
+            <InputDate
               value={timestampToDateISOTZ(item.Date)}
               onChange={handleChange}
-              id={item.id}
               name="Date"
+              id={item.id}
+              label="Date"
             />
-            <label>
-              {topic} ({unit})
-            </label>
-            <input
-              type="text"
+            <Input
               value={item.Height}
               onChange={handleChange}
               name={topic}
               id={item.id}
+              label={`${topic} (${unit}):`}
             />
           </li>
         ))}

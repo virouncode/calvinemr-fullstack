@@ -1,11 +1,10 @@
+import StatusOption from "../../../EventForm/Status/StatusOption";
 
-import StatusOption from "./StatusOption";
-
-const StatusSelect = ({
+const AppointmentStatusSelect = ({
   handleChange,
   selectedStatus,
   statuses,
-  label = true,
+  label = false,
 }) => {
   return (
     <>
@@ -24,4 +23,4 @@ const StatusSelect = ({
   );
 };
 
-export default StatusSelect;
+export default AppointmentStatusSelect;

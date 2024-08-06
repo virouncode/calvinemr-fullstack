@@ -33,13 +33,16 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import DateTimePicker from "../../../../UI/Pickers/DateTimePicker";
 import SignCell from "../../../../UI/Tables/SignCell";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
 import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
 import RoomsSelect from "../../../EventForm/Rooms/RoomsSelect";
 import SiteSelect from "../../../EventForm/SiteSelect";
-import StatusSelect from "../../../EventForm/Status/StatusSelect";
+import AppointmentStatusSelectToggle from "./AppointmentStatusSelectToggle";
 const AppointmentItem = ({
   item,
   editCounter,
@@ -642,17 +645,12 @@ const AppointmentItem = ({
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="AppointmentPurpose"
-              value={itemInfos.AppointmentPurpose}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.AppointmentPurpose
-          )}
+          <InputTextToggle
+            name="AppointmentPurpose"
+            value={itemInfos.AppointmentPurpose}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
           {editVisible ? (
@@ -666,22 +664,18 @@ const AppointmentItem = ({
           )}
         </td>
         <td>
-          {editVisible ? (
-            itemInfos.recurrence !== "Once" ? (
-              <input
-                type="date"
-                value={
-                  itemInfos.rrule?.until
-                    ? itemInfos.rrule?.until.slice(0, 10)
-                    : ""
-                }
-                id="until"
-                onChange={handleUntilChange}
-                disabled={itemInfos.recurrence === "Once"}
-              />
-            ) : null
-          ) : (
-            item.rrule?.until.slice(0, 10)
+          {itemInfos.recurrence !== "Once" && (
+            <InputDateToggle
+              value={
+                itemInfos.rrule?.until
+                  ? itemInfos.rrule?.until.slice(0, 10)
+                  : ""
+              }
+              onChange={handleUntilChange}
+              id="until"
+              disabled={itemInfos.recurrence === "Once"}
+              editVisible={editVisible}
+            />
           )}
         </td>
         <td>
@@ -765,29 +759,19 @@ const AppointmentItem = ({
           )}
         </td>
         <td>
-          {editVisible ? (
-            <StatusSelect
-              handleChange={handleChange}
-              statuses={statuses}
-              selectedStatus={itemInfos.AppointmentStatus}
-              label={false}
-            />
-          ) : (
-            item.AppointmentStatus
-          )}
+          <AppointmentStatusSelectToggle
+            handleChange={handleChange}
+            selectedStatus={itemInfos.AppointmentStatus}
+            statuses={statuses}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="AppointmentNotes"
-              value={itemInfos.AppointmentNotes}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.AppointmentNotes
-          )}
+          <Input
+            name="AppointmentNotes"
+            value={itemInfos.AppointmentNotes}
+            onChange={handleChange}
+          />
         </td>
         <SignCell item={item} staffInfos={staffInfos} />
       </tr>

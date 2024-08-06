@@ -1,17 +1,13 @@
 import { useState } from "react";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { provinceStateTerritoryCT } from "../../../../../omdDatas/codesTables";
-import {
-  nowTZTimestamp,
-  timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
 const PharmacyFaxForm = ({
   editCounter,
@@ -22,7 +18,6 @@ const PharmacyFaxForm = ({
 }) => {
   //HOOKS
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [formDatas, setFormDatas] = useState({
     name: "",
@@ -223,12 +218,7 @@ const PharmacyFaxForm = ({
           autoComplete="off"
         />
       </td>
-      <td>
-        <em>{staffIdToTitleAndName(staffInfos, user.id)}</em>
-      </td>
-      <td>
-        <em>{timestampToDateISOTZ(nowTZTimestamp())}</em>
-      </td>
+      <SignCellForm />
     </tr>
   );
 };

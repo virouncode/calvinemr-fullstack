@@ -1,11 +1,13 @@
-
 import {
-    dateISOToTimestampTZ,
-    timestampToDateISOTZ,
+  dateISOToTimestampTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import CycleTypeList from "../../../../UI/Lists/CycleTypeList";
 import EtiologyList from "../../../../UI/Lists/EtiologyList";
 import ThirdPartyList from "../../../../UI/Lists/ThirdPartyList";
+import CycleStatusSelect from "./CycleStatusSelect";
 
 const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
   const handleChange = (e) => {
@@ -57,49 +59,38 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               className="cycles-form__cycle-infos-item"
               style={{ marginRight: "28px" }}
             >
-              <label htmlFor="cycle_nbr">Cycle#</label>
-              <input
-                type="text"
+              <Input
                 value={formDatas.cycle_nbr}
                 onChange={handleChange}
-                id="cycle_nbr"
                 name="cycle_nbr"
-                autoComplete="off"
-                style={{ width: "50px" }}
+                id="cycle_nbr"
+                label="Cycle#"
+                width={50}
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label htmlFor="status">Status</label>
-              <select
+              <CycleStatusSelect
                 value={formDatas.status}
-                onChange={handleChange}
-                id="status"
-                name="status"
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
+                handleChange={handleChange}
+                label="Status"
+              />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label htmlFor="cycle_length">Cycle length</label>
-              <input
-                type="text"
+              <Input
+                label="Cycle length"
                 value={formDatas.cycle_length}
                 onChange={handleChange}
                 id="cycle_length"
                 name="cycle_length"
-                autoComplete="off"
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label htmlFor="menstruation_length">Menstruation length</label>
-              <input
-                type="text"
+              <Input
+                label="Menstruation length"
                 value={formDatas.menstruation_length}
                 onChange={handleChange}
                 id="menstruation_length"
                 name="menstruation_length"
-                autoComplete="off"
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
@@ -110,22 +101,19 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label htmlFor="amh">AMH (pmol/L)</label>
-              <input
-                type="text"
+              <Input
+                label="AMH (pmol/L)"
                 value={formDatas.amh}
                 name="amh"
                 id="amh"
                 onChange={handleChange}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="cycles-form__cycle-infos-row">
             <div className="cycles-form__cycle-infos-item">
-              <label htmlFor="lmp">LMP</label>
-              <input
-                type="date"
+              <InputDate
+                lavel="LMP"
                 value={timestampToDateISOTZ(formDatas.lmp)}
                 name="lmp"
                 id="lmp"

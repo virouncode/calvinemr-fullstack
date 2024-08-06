@@ -8,6 +8,8 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
@@ -117,9 +119,8 @@ const SmokingHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         {formDatasSmokingStatus?.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block">
-              <label>Date: </label>
-              <input
-                type="date"
+              <InputDate
+                label="Date:"
                 value={timestampToDateISOTZ(
                   formDatasSmokingStatus.find(({ id }) => id === item.id).Date
                 )}
@@ -129,7 +130,6 @@ const SmokingHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
               />
             </span>
             <span className="care-elements__edit-block">
-              <label>Smoking: </label>
               <GenericList
                 list={ynIndicatorsimpleCT}
                 name="SmokingStatus"
@@ -139,12 +139,12 @@ const SmokingHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
                 }
                 noneOption={false}
                 id={item.id}
+                label="Smoking:"
               />
             </span>
             <span className="care-elements__edit-block">
-              <label>Packs Per day: </label>
-              <input
-                type="text"
+              <Input
+                label="Packs Per day:"
                 value={
                   formDatasSmokingPacks.find(({ id }) => id === item.id).PerDay
                 }

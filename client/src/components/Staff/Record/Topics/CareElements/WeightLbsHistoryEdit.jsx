@@ -12,6 +12,8 @@ import {
 } from "../../../../../utils/measurements/measurements";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const WeightLbsHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
@@ -164,9 +166,8 @@ const WeightLbsHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
         {formDatasWeight.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Date: </label>
-              <input
-                type="date"
+              <InputDate
+                label="Date:"
                 value={timestampToDateISOTZ(
                   formDatasWeight.find(({ id }) => id === item.id).Date
                 )}
@@ -176,9 +177,8 @@ const WeightLbsHistoryEdit = ({ datas, careElementPut, setEditVisible }) => {
               />
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
-              <label>Weight (lbs): </label>
-              <input
-                type="text"
+              <Input
+                label="Weight (lbs):"
                 value={formDatasWeight.find(({ id }) => id === item.id).Weight}
                 onChange={handleChange}
                 id={item.id}

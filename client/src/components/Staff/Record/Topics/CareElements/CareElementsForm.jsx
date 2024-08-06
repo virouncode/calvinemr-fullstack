@@ -16,6 +16,8 @@ import {
 import { careElementsSchema } from "../../../../../validation/record/careElementsValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
@@ -308,7 +310,7 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
           <div className="care-elements__row">
             <label className="care-elements__row-label">Date:</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input type="date" onChange={handleDateChange} value={date} />
+              <InputDate onChange={handleDateChange} value={date} />
             </div>
           </div>
           <div className="care-elements__row">
@@ -328,60 +330,50 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
               Smoking Packs (per day):
             </label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="SmokingPacks"
                 onChange={handleChange}
                 value={formDatas.SmokingPacks?.PerDay}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="care-elements__row">
             <label className="care-elements__row-label">Weight (kg):</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="Weight"
                 onChange={handleChange}
                 value={formDatas.Weight?.Weight}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="care-elements__row">
             <label className="care-elements__row-label">Weight (lbs):</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="WeightLbs"
                 onChange={handleChange}
                 value={formDatas.WeightLbs?.Weight}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="care-elements__row">
             <label className="care-elements__row-label">Height (cm):</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="Height"
                 onChange={handleChange}
                 value={formDatas.Height?.Height}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="care-elements__row">
             <label className="care-elements__row-label">Height (feet):</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="HeightFeet"
                 onChange={handleChange}
                 value={formDatas.HeightFeet?.Height}
-                autoComplete="off"
               />
             </div>
           </div>
@@ -390,13 +382,7 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
               Body mass index (kg/m2):
             </label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
-                name="BMI"
-                value={formDatas.bodyMassIndex?.BMI}
-                autoComplete="off"
-                readOnly
-              />
+              <Input name="BMI" value={formDatas.bodyMassIndex?.BMI} readOnly />
             </div>
           </div>
           <div className="care-elements__row">
@@ -404,11 +390,9 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
               Body surface area (m2):
             </label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="BSA"
                 value={formDatas.bodySurfaceArea?.BSA}
-                autoComplete="off"
                 readOnly
               />
             </div>
@@ -418,24 +402,20 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
               Waist circumference (cm):
             </label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="Waist"
                 onChange={handleChange}
                 value={formDatas.WaistCircumference?.WaistCircumference}
-                autoComplete="off"
               />
             </div>
           </div>
           <div className="care-elements__row">
             <label className="care-elements__row-label">Systolic (mmHg):</label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="SystolicBP"
                 onChange={handleChange}
                 value={formDatas.BloodPressure?.SystolicBP}
-                autoComplete="off"
               />
             </div>
           </div>
@@ -444,12 +424,10 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
               Diastolic (mmHg):
             </label>
             <div className="care-elements__row-value care-elements__row-value--add">
-              <input
-                type="text"
+              <Input
                 name="DiastolicBP"
                 onChange={handleChange}
                 value={formDatas.BloodPressure?.DiastolicBP}
-                autoComplete="off"
               />
             </div>
           </div>
