@@ -346,7 +346,7 @@ const MessageThumbnail = ({
       >
         {section === "To-dos" && (
           <i
-            className="fa-solid fa-pen-to-square"
+            className="fa-regular fa-pen-to-square"
             style={{ marginRight: "5px", cursor: "pointer" }}
             onClick={handleEdit}
           />

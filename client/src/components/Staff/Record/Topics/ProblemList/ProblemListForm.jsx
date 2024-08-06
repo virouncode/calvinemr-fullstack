@@ -10,6 +10,8 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { problemListSchema } from "../../../../../validation/record/problemListValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
@@ -101,39 +103,31 @@ const ProblemListForm = ({
         </div>
       </td>
       <td>
-        <input
+        <Input
           name="ProblemDiagnosisDescription"
-          type="text"
           value={formDatas.ProblemDiagnosisDescription}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="ProblemDescription"
-          type="text"
           value={formDatas.ProblemDescription}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="ProblemStatus"
-          type="text"
           value={formDatas.ProblemStatus}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="OnsetDate"
-          type="date"
           value={timestampToDateISOTZ(formDatas.OnsetDate)}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
@@ -145,22 +139,14 @@ const ProblemListForm = ({
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="ResolutionDate"
-          type="date"
           value={timestampToDateISOTZ(formDatas.ResolutionDate)}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
-          name="Notes"
-          type="text"
-          value={formDatas.Notes}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <SignCellForm />
     </tr>

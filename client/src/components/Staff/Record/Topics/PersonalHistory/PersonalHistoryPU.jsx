@@ -15,6 +15,7 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PersonalHistoryForm from "./PersonalHistoryForm";
@@ -206,129 +207,87 @@ const PersonalHistoryPU = ({
         {formDatas ? (
           <>
             <form className="personalhistory-form">
-              {errMsgPost && (
-                <div className="personalhistory-form__err">{errMsgPost}</div>
-              )}
-              <p>
-                <label htmlFor="occupations">Occupations: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.occupations}
-                    name="occupations"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="occupations"
-                  />
-                ) : (
-                  formDatas.occupations
-                )}
-              </p>
-              <p>
-                <label htmlFor="income">Income: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.income}
-                    name="income"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="income"
-                  />
-                ) : (
-                  formDatas.income
-                )}
-              </p>
-              <p>
-                <label htmlFor="religion">Religion: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.religion}
-                    name="religion"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="religion"
-                  />
-                ) : (
-                  formDatas.religion
-                )}
-              </p>
-              <p>
-                <label htmlFor="sexual">Sexual orientation: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.sexual_orientation}
-                    name="sexual_orientation"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="sexual"
-                  />
-                ) : (
-                  formDatas.sexual_orientation
-                )}
-              </p>
-              <p>
-                <label htmlFor="diet">Special diet: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.special_diet}
-                    name="special_diet"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="diet"
-                  />
-                ) : (
-                  formDatas.special_diet
-                )}
-              </p>
-              <p>
-                <label htmlFor="smoking">Smoking: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.smoking}
-                    name="smoking"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="smoking"
-                  />
-                ) : (
-                  formDatas.smoking
-                )}
-              </p>
-              <p>
-                <label htmlFor="alcohol">Alcohol: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.alcohol}
-                    name="alcohol"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="alcohol"
-                  />
-                ) : (
-                  formDatas.alcohol
-                )}
-              </p>
-              <p>
-                <label htmlFor="drugs">Recreational drugs: </label>
-                {editVisible ? (
-                  <input
-                    type="text"
-                    value={formDatas.recreational_drugs}
-                    name="recreational_drugs"
-                    onChange={handleChange}
-                    autoComplete="off"
-                    id="drugs"
-                  />
-                ) : (
-                  formDatas.recreational_drugs
-                )}
-              </p>
+              {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Occupations:"
+                  value={formDatas.occupations}
+                  name="occupations"
+                  onChange={handleChange}
+                  id="occupations"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Income:"
+                  value={formDatas.income}
+                  name="income"
+                  onChange={handleChange}
+                  id="income"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Religion:"
+                  value={formDatas.religion}
+                  name="religion"
+                  onChange={handleChange}
+                  id="religion"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Sexual orientation:"
+                  value={formDatas.sexual_orientation}
+                  name="sexual_orientation"
+                  onChange={handleChange}
+                  id="sexual"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Special diet:"
+                  value={formDatas.special_diet}
+                  name="special_diet"
+                  onChange={handleChange}
+                  id="diet"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Smoking:"
+                  value={formDatas.smoking}
+                  name="smoking"
+                  onChange={handleChange}
+                  id="smoking"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Alcohol:"
+                  value={formDatas.alcohol}
+                  name="alcohol"
+                  onChange={handleChange}
+                  id="alcohol"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="personalhistory-form__row">
+                <InputTextToggle
+                  label="Recreational drugs:"
+                  value={formDatas.recreational_drugs}
+                  name="recreational_drugs"
+                  onChange={handleChange}
+                  id="drugs"
+                  editVisible={editVisible}
+                />
+              </div>
               <div className="personalhistory-card__btns">
                 {!editVisible ? (
                   <>

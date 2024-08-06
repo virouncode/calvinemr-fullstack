@@ -7,6 +7,7 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import PatientChartHealthSearch from "../Billing/PatientChartHealthSearch";
 import ColorPicker from "./ColorPicker";
@@ -81,7 +82,7 @@ const PatientsGroupEdit = ({ group, setEditVisible }) => {
 
   return (
     <div className="patients-groups__edit">
-      {errMsg && <p className="patients-groups__edit-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="patients-groups__edit-color">
         <label>Color</label>
         <ColorPicker

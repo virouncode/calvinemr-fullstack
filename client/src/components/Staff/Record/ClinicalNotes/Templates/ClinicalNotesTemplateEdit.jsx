@@ -5,6 +5,7 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const ClinicalNotesTemplateEdit = ({
   setEditTemplateVisible,
@@ -41,7 +42,7 @@ const ClinicalNotesTemplateEdit = ({
   };
   return (
     <div className="edit-template">
-      {errMsg && <p className="edit-template-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="edit-template-name">
         <Input
           value={editedTemplate.name}

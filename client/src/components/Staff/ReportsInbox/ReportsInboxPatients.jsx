@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "../../UI/Inputs/Input";
 import PatientsList from "../Messaging/PatientsList";
 
 const ReportsInboxPatients = ({ isPatientChecked, handleCheckPatient }) => {
@@ -10,12 +11,7 @@ const ReportsInboxPatients = ({ isPatientChecked, handleCheckPatient }) => {
   };
   return (
     <div className="reportsinbox__patients">
-      <input
-        type="text"
-        value={search}
-        onChange={handleSearch}
-        placeholder="Search..."
-      />
+      <Input value={search} onChange={handleSearch} placeholder="Search..." />
       <div className="reportsinbox__patients-list">
         <PatientsList
           isPatientChecked={isPatientChecked}

@@ -13,6 +13,7 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputTextToggle from "../../UI/Inputs/InputTextToggle";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const MyAccountAdmin = () => {
   //HOOKS
@@ -107,7 +108,7 @@ const MyAccountAdmin = () => {
 
   return (
     <div className="myaccount-section__container" style={{ width: "25%" }}>
-      {errMsg && <p className="myaccount-section__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}{" "}
       {successMsg && <p className="myaccount-section__success">{successMsg}</p>}
       {tempFormDatas && (
         <div className="myaccount-section__form">

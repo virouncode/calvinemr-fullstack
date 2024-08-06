@@ -14,6 +14,7 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import DeleteButton from "../../UI/Buttons/DeleteButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 
 const ReferenceEdocItem = ({
   item,
@@ -126,16 +127,12 @@ const ReferenceEdocItem = ({
           </div>
         </td>
         <td style={{ textAlign: "left" }}>
-          {editVisible ? (
-            <input
-              type="text"
-              value={itemInfos.name}
-              onChange={handleChange}
-              name="name"
-            />
-          ) : (
-            item.name
-          )}
+          <InputTextToggle
+            value={itemInfos.name}
+            onChange={handleChange}
+            name="name"
+            editVisible={editVisible}
+          />
         </td>
         <td
           className="reference-edocs__item-link"
@@ -144,16 +141,12 @@ const ReferenceEdocItem = ({
           {item.file.name}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              value={itemInfos.notes}
-              onChange={handleChange}
-              name="notes"
-            />
-          ) : (
-            item.notes
-          )}
+          <InputTextToggle
+            value={itemInfos.notes}
+            onChange={handleChange}
+            name="notes"
+            editVisible={editVisible}
+          />
         </td>
         <td>{staffIdToTitleAndName(staffInfos, item.created_by_id)}</td>
         <td>{timestampToDateISOTZ(item.date_created)}</td>

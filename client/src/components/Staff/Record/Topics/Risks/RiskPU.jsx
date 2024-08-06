@@ -86,7 +86,7 @@ const RiskPU = ({
         Patient risk factors & prevention{" "}
         <i className="fa-solid fa-triangle-exclamation"></i>
       </h1>
-      {errMsgPost && <div className="risk__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="risk__table-container" ref={rootRef}>
           <table className="risk__table">

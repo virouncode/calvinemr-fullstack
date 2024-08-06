@@ -85,7 +85,7 @@ const AlertsPU = ({
         Alerts and special needs{" "}
         <i className="fa-solid fa-person-circle-question"></i>
       </h1>
-      {errMsgPost && <div className="alerts__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="alerts__table-container" ref={rootRef}>
           <table className="alerts__table">

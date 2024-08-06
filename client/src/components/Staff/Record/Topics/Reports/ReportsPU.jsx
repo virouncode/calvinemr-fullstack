@@ -118,7 +118,7 @@ const ReportsPU = ({
       <h1 className="reports__title">
         Patient reports <i className="fa-regular fa-folder"></i>
       </h1>
-      {errMsgPost && <div className="reports__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <h2 className="reports__title reports__title--subtitle">Received</h2>
       <div className="reports__table-container" ref={rootReceivedRef}>
         <table className="reports__table">

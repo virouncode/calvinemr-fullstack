@@ -7,6 +7,7 @@ import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import FormCredentials from "../../UI/Forms/FormCredentials";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const CredentialsFormAdmin = () => {
   const navigate = useNavigate();
@@ -142,7 +143,7 @@ const CredentialsFormAdmin = () => {
         onSubmit={handleSubmit}
         style={{ border: errMsg && "solid 1px red" }}
       >
-        {errMsg && <div className="credentials-err">{errMsg}</div>}
+        {errMsg && <ErrorParagraph errorMsg={errMsg} />}
         <FormCredentials
           credentials={credentials}
           passwordValidity={passwordValidity}

@@ -96,7 +96,7 @@ const LettersPU = ({
       <h1 className="letters__title">
         Patient letters <i className="fa-regular fa-paper-plane" />
       </h1>
-      {errMsgPost && <div className="letters__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="letters__table-container" ref={rootRef}>
           <table className="letters__table">

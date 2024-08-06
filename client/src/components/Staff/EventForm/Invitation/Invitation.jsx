@@ -288,6 +288,7 @@ const Invitation = ({
                 templateSelected !== "[Blank]" && (
                   <div>
                     <SiteSelect
+                      label="Site"
                       handleSiteChange={handleSiteChange}
                       sites={sites}
                       value={siteSelectedId}

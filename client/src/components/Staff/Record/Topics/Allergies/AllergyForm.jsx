@@ -35,7 +35,7 @@ const AllergyForm = ({
     OffendingAgentDescription: "",
     PropertyOfOffendingAgent: "",
     ReactionType: "",
-    StartDate: "",
+    StartDate: null,
     LifeStage: "",
     Severity: "",
     Reaction: "",
@@ -132,9 +132,9 @@ const AllergyForm = ({
       </td>
       <td>
         <InputDate
-          value={formDatas.StartDate}
+          value={timestampToDateISOTZ(formDatas.StartDate)}
           name="StartDate"
-          handleChange={handleChange}
+          onChange={handleChange}
         />
       </td>
       <td>

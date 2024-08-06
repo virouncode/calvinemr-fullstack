@@ -1,3 +1,4 @@
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import SiteItem from "./SiteItem";
@@ -5,7 +6,7 @@ import SiteItem from "./SiteItem";
 const SitesTable = ({ sites, loading, errMsg, handleEditClick }) => {
   return (
     <>
-      {errMsg && <p className="sites__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {!errMsg && (
         <div className="sites__table-container">
           <table>

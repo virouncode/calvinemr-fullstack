@@ -132,6 +132,7 @@ const ClinicInfos = () => {
           id="website"
           editVisible={editClinicVisible}
           label="Website: "
+          placeholder="https://www.my-clinic.com"
         />
         <div className="clinic__global-infos-btn-container">
           {editClinicVisible ? (
@@ -144,7 +145,7 @@ const ClinicInfos = () => {
           )}
         </div>
       </div>
-      {errMsgPost && <p className="clinic__global-infos-err">{errMsgPost}</p>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="clinic__subtitle">
         <span>Sites</span>
         <Button label="New site" onClick={handleAddNew} />

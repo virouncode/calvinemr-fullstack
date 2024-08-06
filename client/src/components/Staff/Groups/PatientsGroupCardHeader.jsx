@@ -1,4 +1,3 @@
-
 import useUserContext from "../../../hooks/context/useUserContext";
 import { toPatientName } from "../../../utils/names/toPatientName";
 
@@ -36,7 +35,7 @@ const PatientsGroupCardHeader = ({
         {group.name}
         {group.staff_id === user.id && (
           <i
-            className="fa-solid fa-pen-to-square"
+            className="fa-regular fa-pen-to-square"
             style={{ marginLeft: "5px", cursor: "pointer" }}
             onClick={handleEditClick}
           />

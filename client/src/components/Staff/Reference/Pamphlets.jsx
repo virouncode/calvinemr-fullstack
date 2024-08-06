@@ -2,6 +2,8 @@ import { useState } from "react";
 import { usePamphlets } from "../../../hooks/reactquery/queries/pamphletsQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -45,16 +47,15 @@ const Pamphlets = () => {
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
       <div className="reference-edocs__search">
-        <label htmlFor="search-edocs">Search</label>
-        <input
-          type="text"
+        <Input
+          label="Search"
           value={search}
           onChange={handleSearch}
           id="search-edocs"
         />
       </div>
       <div className="reference-edocs__results">
-        {error && <div className="reference-edocs__err">{error.message}</div>}
+        {error && <ErrorParagraph errorMsg={error.message} />}
         <>
           <div className="reference-edocs__table-container" ref={rootRef}>
             <table className="reference-edocs__table">

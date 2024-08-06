@@ -5,6 +5,8 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { personalHistorySchema } from "../../../../../validation/record/personalHistoryValidation";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
   const { user } = useUserContext();
@@ -108,101 +110,83 @@ const PersonalHistoryForm = ({ setPopUpVisible, patientId, topicPost }) => {
   };
   return (
     <form className="personalhistory-form">
-      {errMsgPost && (
-        <div className="personalhistory-form__err">{errMsgPost}</div>
-      )}
-      <p>
-        <label htmlFor="occupations">Occupations: </label>
-        <input
-          type="text"
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+      <div className="personalhistory-form__row">
+        <Input
           value={formDatas.occupations}
           name="occupations"
           onChange={handleChange}
-          autoComplete="off"
           id="occupations"
+          label="Occupations:"
         />
-      </p>
-      <p>
-        <label htmlFor="income">Income: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Income:"
           value={formDatas.income}
           name="income"
           onChange={handleChange}
-          autoComplete="off"
           id="income"
         />
-      </p>
-      <p>
-        <label htmlFor="religion">Religion: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Religion:"
           value={formDatas.religion}
           name="religion"
           onChange={handleChange}
-          autoComplete="off"
           id="religion"
         />
-      </p>
-      <p>
-        <label htmlFor="sexual">Sexual orientation: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Sexual orientation:"
           value={formDatas.sexual_orientation}
           name="sexual_orientation"
           onChange={handleChange}
-          autoComplete="off"
           id="sexual"
         />
-      </p>
-      <p>
-        <label htmlFor="diet">Special diet: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Special diet:"
           value={formDatas.special_diet}
           name="special_diet"
           onChange={handleChange}
-          autoComplete="off"
           id="diet"
         />
-      </p>
-      <p>
-        <label htmlFor="smoking">Smoking: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Smoking:"
           value={formDatas.smoking}
           name="smoking"
           onChange={handleChange}
-          autoComplete="off"
           id="smoking"
         />
-      </p>
-      <p>
-        <label htmlFor="alcohol">Alcohol: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Alcohol:"
           value={formDatas.alcohol}
           name="alcohol"
           onChange={handleChange}
-          autoComplete="off"
           id="alcohol"
         />
-      </p>
-      <p>
-        <label htmlFor="drugs">Recreational drugs: </label>
-        <input
-          type="text"
+      </div>
+      <div className="personalhistory-form__row">
+        <Input
+          label="Recreational drugs:"
           value={formDatas.recreational_drugs}
           name="recreational_drugs"
           onChange={handleChange}
-          autoComplete="off"
           id="drugs"
         />
-      </p>
-      <p className="personalhistory-form__btns">
+      </div>
+      <div className="personalhistory-form__btns">
         <SaveButton onClick={handleSubmit} disabled={progress} />
         <CloseButton onClick={handleClose} disabled={progress} />
-      </p>
+      </div>
     </form>
   );
 };

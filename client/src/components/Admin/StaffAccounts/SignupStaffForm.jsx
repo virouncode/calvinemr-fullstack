@@ -17,6 +17,7 @@ import InputImgFile from "../../UI/Inputs/InputImgFile";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 axios.defaults.withCredentials = true;
 
@@ -313,7 +314,7 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
       className="signup-staff__container"
       style={{ border: errMsg && "solid 1.5px red" }}
     >
-      {errMsg && <p className="signup-staff__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <form className="signup-staff__form">
         <div className="signup-staff__column">
           <div className="signup-staff__row">

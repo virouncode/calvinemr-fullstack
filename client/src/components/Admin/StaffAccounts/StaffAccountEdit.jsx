@@ -15,6 +15,7 @@ import InputImgFile from "../../UI/Inputs/InputImgFile";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
   //HOOKS
@@ -140,7 +141,7 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
       className="staff-account__container"
       style={{ border: errMsg && editVisible && "solid 1.5px red" }}
     >
-      {errMsg && <p className="staff-account__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {formDatas && (
         <div className="staff-account__form">
           <div className="staff-account__column">

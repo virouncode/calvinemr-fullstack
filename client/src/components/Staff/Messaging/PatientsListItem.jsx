@@ -13,7 +13,7 @@ const PatientsListItem = ({
     <li className="patients__list-item" ref={lastItemRef}>
       <Checkbox
         id={info.patient_id}
-        name={info.patient_id}
+        name={patientName}
         onChange={(e) => handleCheckPatient(e, info)}
         checked={isPatientChecked(info.patient_id) || allPatientsChecked}
         disabled={progress}

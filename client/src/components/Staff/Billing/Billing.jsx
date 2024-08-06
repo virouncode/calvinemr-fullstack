@@ -69,7 +69,7 @@ const Billing = () => {
           />
         )}
       </div>
-      {errMsgPost && <p className="billing__err">{errMsgPost}</p>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       {addVisible && (
         <BillingForm
           setAddVisible={setAddVisible}

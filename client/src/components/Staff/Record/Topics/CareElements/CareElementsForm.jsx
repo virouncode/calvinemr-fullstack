@@ -19,6 +19,7 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
   const { user } = useUserContext();
@@ -294,7 +295,7 @@ const CareElementsForm = ({ careElementPost, setPopUpVisible, patientId }) => {
       <h1 className="care-elements__title">
         Patient care elements <i className="fa-solid fa-ruler-combined"></i>
       </h1>
-      {errMsgPost && <div className="care-elements__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div
         className="care-elements__card"
         style={{ border: errMsgPost && "solid 1.5px red" }}

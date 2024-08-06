@@ -59,7 +59,7 @@ const MedTemplateItem = ({ med, handleSelectTemplate, lastItemRef = null }) => {
         </Tooltip>
         {med.author_id === user.id && (
           <i
-            className="fa-solid fa-pen-to-square"
+            className="fa-regular fa-pen-to-square"
             style={{ marginLeft: "5px" }}
             onClick={handleEdit}
           ></i>

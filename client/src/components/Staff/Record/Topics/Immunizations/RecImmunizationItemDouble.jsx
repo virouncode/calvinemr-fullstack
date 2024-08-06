@@ -42,6 +42,10 @@ const RecImmunizationItemDouble = ({
   const handleCheckSecondDose = async (e) => {
     const checked = e.target.checked;
     if (checked) {
+      if (immunizationInfos.length < 1) {
+        alert("Please enter the first dose first.");
+        return;
+      }
       setFormVisibleSecondDose(true);
     } else {
       setEditVisibleSecondDose(true);

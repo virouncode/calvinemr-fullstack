@@ -22,6 +22,8 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
 
@@ -243,16 +245,12 @@ const ReportItemReceived = ({
         </div>
       </td>
       <td>
-        {editVisible ? (
-          <input
-            type="text"
-            value={itemInfos.name}
-            onChange={handleChange}
-            name="name"
-          />
-        ) : (
-          item.name
-        )}
+        <InputTextToggle
+          value={itemInfos.name}
+          onChange={handleChange}
+          name="name"
+          editVisible={editVisible}
+        />
       </td>
       <td>{item.Format}</td>
       <td>{item.FileExtensionAndVersion}</td>
@@ -283,28 +281,21 @@ const ReportItemReceived = ({
         )}
       </td>
       <td>
-        {editVisible ? (
-          <input
-            type="text"
-            name="SubClass"
-            value={itemInfos.SubClass}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-        ) : (
-          item.SubClass
-        )}
+        <InputTextToggle
+          name="SubClass"
+          value={itemInfos.SubClass}
+          onChange={handleChange}
+          editVisible={editVisible}
+        />
       </td>
       <td>{timestampToDateISOTZ(item.EventDateTime)}</td>
       <td>{timestampToDateISOTZ(item.ReceivedDateTime)}</td>
       <td>
         {editVisible ? (
-          <input
-            type="text"
+          <Input
             name="AuthorFreeText"
             value={itemInfos.AuthorFreeText || ""}
             onChange={handleChange}
-            autoComplete="off"
           />
         ) : item.SourceAuthorPhysician?.AuthorFreeText ? (
           item.SourceAuthorPhysician.AuthorFreeText
@@ -338,17 +329,11 @@ const ReportItemReceived = ({
           : ""}
       </td>
       <td>
-        {editVisible ? (
-          <input
-            type="text"
-            name="Notes"
-            value={itemInfos.Notes || ""}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-        ) : (
-          item.Notes
-        )}
+        <InputTextToggle
+          name="Notes"
+          value={itemInfos.Notes || ""}
+          onChange={handleChange}
+        />
       </td>
       <SignCell item={item} />
     </tr>

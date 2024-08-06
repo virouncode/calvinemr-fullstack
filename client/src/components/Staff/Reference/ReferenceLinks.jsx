@@ -3,8 +3,10 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useLinks } from "../../../hooks/reactquery/queries/linksQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LinkForm from "./LinkForm";
 import MyLinkItem from "./MyLinkItem";
 
@@ -355,8 +357,7 @@ const ReferenceLinks = () => {
           <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         </div>
         <div className="reference-links__personal-search">
-          <label htmlFor="search">Search</label>
-          <input type="text" value={search} onChange={handleSearch} />
+          <Input label="Search" value={search} onChange={handleSearch} />
         </div>
         {addVisible && data && (
           <LinkForm
@@ -364,9 +365,7 @@ const ReferenceLinks = () => {
             setAddVisible={setAddVisible}
           />
         )}
-        {error && (
-          <p className="reference-links__personal-err">{error.message}</p>
-        )}
+        {error && <ErrorParagraph errorMsg={error.message} />}
         <ul className="reference-links__personal-links" ref={rootRef}>
           {data && links.length > 0
             ? links.map((link, index) =>

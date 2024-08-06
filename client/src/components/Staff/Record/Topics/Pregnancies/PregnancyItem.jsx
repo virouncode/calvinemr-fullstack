@@ -12,6 +12,8 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 import PregnanciesList from "./PregnanciesList";
 
@@ -152,35 +154,25 @@ const PregnancyItem = ({
               handleChange={handleChangePregnancyEvent}
             />
           ) : (
-            itemInfos.description
+            <p>{itemInfos.description}</p>
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="date_of_event"
-              type="date"
-              value={timestampToDateISOTZ(itemInfos.date_of_event)}
-              onChange={handleChange}
-              className="pregnancies-item__input2"
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.date_of_event)
-          )}
+          <InputDateToggle
+            name="date_of_event"
+            value={timestampToDateISOTZ(itemInfos.date_of_event)}
+            onChange={handleChange}
+            editVisible={editVisible}
+            width={120}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="premises"
-              type="text"
-              value={itemInfos.premises}
-              onChange={handleChange}
-              className="pregnancies-item__input1"
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.premises
-          )}
+          <InputTextToggle
+            name="premises"
+            value={itemInfos.premises}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
           {editVisible ? (
@@ -197,39 +189,33 @@ const PregnancyItem = ({
                 type="number"
                 value={itemInfos.term_nbr_of_weeks}
                 onChange={handleChange}
-                className="pregnancies-item__input3"
+                style={{ width: "50px", marginRight: "5px" }}
                 autoComplete="off"
               />
-              w
+              <span style={{ marginRight: "5px" }}>w</span>
               <input
                 name="term_nbr_of_days"
                 type="number"
                 value={itemInfos.term_nbr_of_days}
                 onChange={handleChange}
-                className="pregnancies-item__input3"
+                style={{ width: "50px", marginRight: "5px" }}
                 autoComplete="off"
               />
-              d
+              <span>d</span>
             </div>
           ) : (
-            <div>
-              {itemInfos.term_nbr_of_weeks}w{itemInfos.term_nbr_of_days}d
-            </div>
+            <p>
+              {`${itemInfos.term_nbr_of_weeks}w ${itemInfos.term_nbr_of_days}d`}
+            </p>
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="notes"
-              type="text"
-              value={itemInfos.notes}
-              onChange={handleChange}
-              className="pregnancies-item__input1"
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.notes
-          )}
+          <InputTextToggle
+            name="notes"
+            value={itemInfos.notes}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

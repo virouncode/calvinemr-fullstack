@@ -8,6 +8,7 @@ import { toInverseRelation } from "../../../../../utils/relationships/toInverseR
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputWithLogoInTable from "../../../../UI/Inputs/InputWithLogoInTable";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import RelationshipList from "./RelationshipList";
 
@@ -109,21 +110,10 @@ const RelationshipForm = ({
         </div>
       </td>
       <td style={{ position: "relative" }}>
-        <input
-          type="text"
-          value={toPatientName(patientSelected)}
+        <InputWithLogoInTable
           name="patient_id"
-          readOnly
-          style={{ outline: "solid 1px grey" }}
-        />
-        <i
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            right: "17px",
-            top: "17px",
-          }}
-          className="fa-solid fa-magnifying-glass"
+          value={toPatientName(patientSelected)}
+          readOnly={true}
           onClick={() => setPatientSearchVisible(true)}
         />
       </td>

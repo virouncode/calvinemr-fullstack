@@ -1,5 +1,6 @@
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 
 const ReportsInboxPracticiansListItem = ({
   info,
@@ -10,16 +11,13 @@ const ReportsInboxPracticiansListItem = ({
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="practicians__list-item">
-      <input
+      <Checkbox
+        label={staffIdToTitleAndName(staffInfos, info.id)}
         id={info.id}
-        type="checkbox"
         onChange={handleCheckPractician}
         checked={isPracticianChecked(info.id)}
         name={categoryName}
       />
-      <label htmlFor={info.id}>
-        {staffIdToTitleAndName(staffInfos, info.id)}
-      </label>
     </li>
   );
 };

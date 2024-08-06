@@ -1,4 +1,3 @@
-
 import { usePatients } from "../../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../../hooks/useIntersection";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -31,7 +30,7 @@ const PatientSearchResult = ({ search }) => {
     patients && (
       <>
         <div className="patient-result__summary">
-          Total number of patients: {patients.pages[0].itemsTotal}
+          Number of patients: {patients.pages[0].itemsTotal}
         </div>
         <div className="patient-result__table-container" ref={rootRef}>
           <table className="patient-result__table">

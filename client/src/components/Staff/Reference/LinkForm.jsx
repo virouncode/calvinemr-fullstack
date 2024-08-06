@@ -5,6 +5,9 @@ import { useLinkPost } from "../../../hooks/reactquery/mutations/linksMutations"
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { linkSchema } from "../../../validation/reference/linkValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const LinkForm = ({ links, setAddVisible }) => {
   const { user } = useUserContext();
@@ -66,30 +69,26 @@ const LinkForm = ({ links, setAddVisible }) => {
       onSubmit={handleSubmit}
       style={{ border: errMsg && "solid 1px red" }}
     >
-      {errMsg && <p className="reference-links__form-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="reference-links__form-row">
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
+        <Input
+          label="Name"
           value={newLink.name}
           id="name"
           onChange={handleChange}
-          autoComplete="off"
           autoFocus
         />
       </div>
       <div className="reference-links__form-row">
-        <label htmlFor="url">URL</label>
-        <input
-          type="text"
+        <Input
+          label="URL"
           value={newLink.url}
           id="url"
           onChange={handleChange}
-          autoComplete="off"
         />
       </div>
       <div className="reference-links__form-btns">
-        <input type="submit" value="Save" disabled={progress} />
+        <SubmitButton label="Save" disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </form>

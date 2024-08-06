@@ -7,6 +7,7 @@ import {
 } from "../../../hooks/reactquery/mutations/labLinksMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
+import Input from "../../UI/Inputs/Input";
 
 const LabLinkItem = ({ link, credentials }) => {
   const { user } = useUserContext();
@@ -93,7 +94,10 @@ const LabLinkItem = ({ link, credentials }) => {
           {link.name}
         </a>
         {credentials && !editVisible && (
-          <i className="fa-solid fa-pen-to-square" onClick={handleClickEdit} />
+          <i
+            className="fa-regular fa-pen-to-square"
+            onClick={handleClickEdit}
+          />
         )}
         {credentials && editVisible && (
           <>
@@ -130,15 +134,14 @@ const LabLinkItem = ({ link, credentials }) => {
           )}
         </label>
         {editVisible || addCredentialsVisible ? (
-          <input
-            type="text"
+          <Input
             value={login}
             onChange={handleChangeLogin}
             ref={loginRef}
             id="lablink-login"
           />
         ) : (
-          <input type="text" value={login} readOnly ref={loginRef} />
+          <Input value={login} readOnly ref={loginRef} />
         )}
       </div>
       <div className="lablink__item-pwd">
@@ -147,20 +150,14 @@ const LabLinkItem = ({ link, credentials }) => {
           {pwd && <i className="fa-solid fa-copy" onClick={handleCopyPwd} />}
         </label>
         {editVisible || addCredentialsVisible ? (
-          <input
-            type="text"
+          <Input
             value={pwd}
             onChange={handleChangePwd}
             ref={pwdRef}
             id="lablink-pwd"
           />
         ) : (
-          <input
-            type="text"
-            value={pwd.replace(/./g, "*")}
-            readOnly
-            ref={pwdRef}
-          />
+          <Input value={pwd.replace(/./g, "*")} readOnly ref={pwdRef} />
         )}
       </div>
     </li>

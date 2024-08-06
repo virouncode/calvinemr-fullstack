@@ -1,8 +1,8 @@
 import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import {
-    toCodeTableName,
-    ynIndicatorsimpleCT,
+  toCodeTableName,
+  ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import SmokingHistoryEdit from "./SmokingHistoryEdit";
@@ -35,7 +35,7 @@ const CareElementsSmoking = ({
           </Tooltip>
           <Tooltip title="Edit history">
             <i
-              className="fa-solid fa-pen-to-square"
+              className="fa-regular fa-pen-to-square"
               onClick={handleEditClick}
             />
           </Tooltip>

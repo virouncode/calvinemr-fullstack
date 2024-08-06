@@ -67,6 +67,7 @@ const CalvinAIChatTemplates = ({ handleSelectTemplate }) => {
           label="Search"
           placeholder="Template name, author name"
           autoFocus={true}
+          width={300}
         />
       </div>
       <div className="calvinai-chat__templates-list" ref={rootRef}>

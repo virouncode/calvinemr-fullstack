@@ -66,7 +66,7 @@ const EformsPU = ({
   const handleAddToRecord = (e) => {
     let input = e.nativeEvent.view.document.createElement("input");
     input.type = "file";
-    input.accept = ".pdf,.jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
     input.onchange = (e) => {
       // getting a hold of the file reference
       let file = e.target.files[0];

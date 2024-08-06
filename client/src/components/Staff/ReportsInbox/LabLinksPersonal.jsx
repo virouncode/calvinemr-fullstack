@@ -3,6 +3,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useLabLinksPersonal } from "../../../hooks/reactquery/queries/labLinksQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
+import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -53,11 +54,10 @@ const LabLinksPersonal = () => {
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
       <div className="lablinks__personal-search">
-        <label htmlFor="search">Search</label>
-        <input type="text" value={search} onChange={handleSearch} />
+        <Input label="Search" value={search} onChange={handleSearch} />
       </div>
       {error && <ErrorParagraph errorMsg={error.message} />}
-      {errMsgPost && <p className="lablinks__form-err">{errMsgPost}</p>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       {addVisible && (
         <LabLinkPersonalForm
           setAddVisible={setAddVisible}

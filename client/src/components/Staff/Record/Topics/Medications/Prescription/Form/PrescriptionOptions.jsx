@@ -22,6 +22,7 @@ const PrescriptionOptions = ({
       />
       <CancelButton onClick={handleCancel} disabled={progress} />
       <SiteSelect
+        label="Site"
         handleSiteChange={handleSiteChange}
         value={siteSelectedId}
         sites={sites}

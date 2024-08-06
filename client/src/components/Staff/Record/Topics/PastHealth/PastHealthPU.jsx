@@ -81,7 +81,7 @@ const PastHealthPU = ({
       <h1 className="pasthealth__title">
         Patient past health <i className="fa-solid fa-laptop-medical"></i>
       </h1>
-      {errMsgPost && <div className="pasthealth__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pasthealth__table-container" ref={rootRef}>
         <table className="pasthealth__table">
           <thead>

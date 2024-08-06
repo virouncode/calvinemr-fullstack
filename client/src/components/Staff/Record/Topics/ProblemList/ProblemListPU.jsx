@@ -86,7 +86,7 @@ const ProblemListPU = ({
         Patient problem list{" "}
         <i className="fa-solid fa-triangle-exclamation"></i>
       </h1>
-      {errMsgPost && <div className="problemlist__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="problemlist__table-container" ref={rootRef}>
         <table className="problemlist__table">
           <thead>

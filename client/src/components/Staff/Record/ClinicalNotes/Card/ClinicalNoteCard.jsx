@@ -15,6 +15,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNoteValidation";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CalvinAIClinical from "../CalvinAIClinical/CalvinAIClinical";
 import ClinicalNotesTemplates from "../Templates/ClinicalNotesTemplates";
@@ -343,7 +344,7 @@ const ClinicalNoteCard = ({
               : "clinical-notes__card-body-container"
           }
         >
-          {errMsg && <p className="clinical-notes__form-err">{errMsg}</p>}
+          {errMsg && <ErrorParagraph errorMsg={errMsg} />}
           <ClinicalNoteCardBody
             clinicalNote={clinicalNote}
             inputText={inputText}

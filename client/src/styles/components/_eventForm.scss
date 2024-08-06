@@ -1,221 +1,225 @@
 .event-form {
+  padding: 10px;
+  &--uneditable {
+    pointer-events: none;
+  }
+  &__container {
+    margin-top: 40px;
+  }
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin: 0 auto 10px;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    // border: solid 1px $grey;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    border-radius: 6px;
     padding: 10px;
-    &--uneditable {
-        pointer-events: none;
+    &--guest {
+      flex-direction: column;
     }
-    &__container {
-        margin-top: 40px;
+    &--radio {
+      flex-direction: column;
+      align-items: flex-start;
+      label {
+        margin-right: 10px;
+      }
+      p {
+        padding: 0;
+        font-weight: bold;
+      }
     }
-    &__err {
-        padding : 10px 20px;
-        font-size: 0.9rem;
-        width : 100%;
-        margin:0 auto 10px;
-        color : red;
-        background-color:rgba(255, 0, 0, 0.403);
-        border-radius: 6px;
-        text-align: center;
+  }
+  &__btns {
+    text-align: center;
+    pointer-events: all;
+    button,
+    input[type="submit"] {
+      margin-right: 5px;
     }
-    &__row {
+  }
+  &__radio-container {
+    display: flex;
+    padding: 10px;
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: 100%;
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    textarea {
+      width: 100%;
+    }
+    &--guestlist {
+      width: 100%;
+      margin-left: 20px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      .guest-patient-item {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    &--guestsearch {
+      width: 100%;
+      height: 200px;
+      margin: 0 auto;
+      display: grid;
+      border: solid 1px $grey;
+      padding: 10px;
+      border-radius: 6px;
+      justify-content: space-between;
+      grid-template-columns: 40% 60%;
+      align-items: flex-start;
+      .results {
+        font-size: 0.75rem;
         display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        // border: solid 1px $grey;
-        box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-        border-radius: 6px;
-        padding: 10px;
-        &--guest {
-            flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        &__sertarien {
+          height: 400px;
         }
-        &--radio {
-            flex-direction: column;
-            align-items: flex-start;
-            p {
-                padding: 0;
-                font-weight: bold;
-            }
+        &__title {
+          font-weight: bold;
+          position: sticky;
+          top: 0;
+          background-color: $white;
+          padding-top: 10px;
         }
-    }
-    &__btns {
-        text-align: center;
-        pointer-events: all;
-        button, input[type="submit"] {
-            margin-right: 5px;
+        &__patients {
+          border: solid 1px $grey;
+          padding: 0 10px 10px;
+          border-radius: 6px;
+          height: 175px;
+          overflow: scroll;
+          width: 50%;
         }
-    }
-    &__radio-container {
+        &__staff {
+          border: solid 1px $grey;
+          padding: 0 10px 10px;
+          border-radius: 6px;
+          height: 175px;
+          overflow: scroll;
+          width: 50%;
+        }
+      }
+
+      .search-bar {
         display: flex;
-        padding: 10px;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 10px;
+        &-title {
+          padding: 0;
+          text-align: left;
+          font-weight: bold;
+        }
+        &-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        &-item {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 5px;
+          label {
+            font-size: 0.75rem;
+          }
+          input {
+            font-size: 0.75rem;
+          }
+        }
+        button {
+          font-size: 0.7rem;
+          cursor: pointer;
+          margin: 20px auto 0;
+          width: 80px;
+        }
+      }
     }
-    &__item {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        width:100%;
-        label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        textarea {
-            width: 100%;
-        }
-        &--guestlist {
-            width:100%;
-            margin-left: 20px;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            .guest-patient-item {
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-        &--guestsearch {
-            width: 100%;
-            height:200px;
-            margin: 0 auto;
-            display:grid;
-            border: solid 1px $grey;
-            padding: 10px;
-            border-radius: 6px;
-            justify-content: space-between;
-            grid-template-columns: 40% 60%;
-            align-items: flex-start;
-            .results {
-                font-size: 0.75rem;
-                display: flex;
-                align-items: flex-start;
-                justify-content: space-between;
-                &__sertarien {
-                    height:400px;
-                }
-                &__title {
-                    font-weight: bold;
-                    position: sticky;
-                    top:0;
-                    background-color: $white;
-                    padding-top: 10px;
-                }
-                &__patients {
-                    border: solid 1px $grey;
-                    padding: 0 10px 10px;
-                    border-radius: 6px;
-                    height:175px;
-                    overflow:scroll;
-                    width: 50%;
-                }
-                &__staff {
-                    border: solid 1px $grey;
-                    padding: 0 10px 10px;
-                    border-radius: 6px;
-                    height:175px;
-                    overflow:scroll;
-                    width: 50%;
-                }
-            }
-            
-        
-            .search-bar {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-            padding:0 10px;
-                &-title {
-                    padding: 0;
-                    text-align: left;
-                    font-weight: bold;
-                }
-                &-row {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                &-item {
-                    display:flex;
-                    align-items: flex-start;
-                    flex-direction: column;
-                    padding: 5px;
-                    label {
-                        font-size: 0.75rem;
-                    }
-                    input {
-                        font-size: 0.75rem;
-                    }
-                }
-                button {
-                    font-size: 0.7rem;
-                    cursor:pointer;
-                    margin:20px auto 0;
-                    width:80px;
-                }
-            }  
-        }
-        &--radio {
-            margin-right: 10px;
-            label{
-                font-weight: normal;
-                margin-left: 5px;
-            }
-        }
-        .guests-list{
-            font-size: 0.7rem;
-            padding:0;
-        }
+    &--radio {
+      margin-right: 10px;
+      label {
+        font-weight: normal;
+        margin-left: 5px;
+      }
     }
+    .guests-list {
+      font-size: 0.7rem;
+      padding: 0;
+    }
+  }
 }
 
 .invitation {
-    margin-top: 40px;
+  margin-top: 40px;
+  padding: 10px;
+  &__row {
+    border: solid 1px $grey;
+    width: 100%;
+    border-radius: 6px;
     padding: 10px;
-    &__row {
-        border: solid 1px $grey;
-        width:100%;
-        border-radius: 6px;
-        padding:10px;
-        margin-bottom: 10px;
-        display: flex;
-        flex-direction: column;
-        label {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      margin-right: 10px;
     }
-    &__radio {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        &-item {
-            label{
-                margin: 0;
-                font-weight: normal;
-            }
-            display: flex;
-            align-items: center;
-            margin-right: 5px;
-            width:20%;
-            input[type="radio"]{
-                margin-right: 5px;
-            }
-        }
+  }
+  &__radio {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &-item {
+      label {
+        margin: 0;
+        font-weight: normal;
+      }
+      display: flex;
+      align-items: center;
+      margin-right: 5px;
+      width: 20%;
+      input[type="radio"] {
+        margin-right: 5px;
+      }
     }
-    &__btns {
-        text-align: center;
-        pointer-events: all;
-        button, input[type="submit"] {
-            margin-right: 5px;
-        }
+  }
+  &__btns {
+    text-align: center;
+    pointer-events: all;
+    button,
+    input[type="submit"] {
+      margin-right: 5px;
     }
-  
+  }
 }
 
 .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-    padding:0;
-    font-size: 0.75rem;
+  padding: 0;
+  font-size: 0.75rem;
 }
 
 .css-zvyeh0-MuiFormControl-root-MuiTextField-root {
-    input {
-        padding:2px 5px;
-        font-size: 0.85rem;
-    }
+  input {
+    padding: 2px 5px;
+    font-size: 0.85rem;
+  }
 }

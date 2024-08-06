@@ -21,6 +21,7 @@ import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import ClinicalNotesTemplates from "../Templates/ClinicalNotesTemplates";
@@ -208,7 +209,7 @@ const ClinicalNoteForm = ({
   const handleAttach = () => {
     let input = document.createElement("input");
     input.type = "file";
-    input.accept = ".pdf,.jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (e) => {
       // getting a hold of the file reference
@@ -344,7 +345,7 @@ const ClinicalNoteForm = ({
           </div>
         </div>
         <div className="clinical-notes__form-body">
-          {errMsg && <p className="clinical-notes__form-err">{errMsg}</p>}
+          {errMsg && <ErrorParagraph errorMsg={errMsg} />}
           {isListening ? (
             <i
               className="fa-solid fa-microphone"

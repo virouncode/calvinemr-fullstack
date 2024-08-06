@@ -5,6 +5,7 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { reminderSchema } from "../../../../../validation/record/reminderValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
 const ReminderForm = ({
@@ -83,12 +84,10 @@ const ReminderForm = ({
         </div>
       </td>
       <td>
-        <input
-          type="text"
+        <Input
           value={formDatas.reminder}
           name="reminder"
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <SignCellForm />

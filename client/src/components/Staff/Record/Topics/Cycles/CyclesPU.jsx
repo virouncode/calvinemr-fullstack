@@ -86,7 +86,7 @@ const CyclesPU = ({
       <h1 className="cycles__title">
         Cycle monitoring <i className="fa-solid fa-person-pregnant"></i>
       </h1>
-      {errMsgPost && <div className="cycles__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="cycles__table-container" ref={rootRef}>
         <table className="cycles__table">
           <thead>

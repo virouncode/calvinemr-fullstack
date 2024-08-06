@@ -118,9 +118,11 @@ const ImmunizationsPU = ({
       />
       <ImmunizationsCaption />
       <h2 className="immunizations__subtitle">Others</h2>
-      {errMsgPost && <p className="immunizations__err">{errMsgPost}</p>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <ImmunizationsTable
-        datas={datas.filter(({ recommended }) => !recommended)}
+        datas={datas
+          .filter(({ recommended }) => !recommended)
+          .sort((a, b) => b.date_created - a.date_created)}
         setErrMsgPost={setErrMsgPost}
         errMsgPost={errMsgPost}
         patientId={patientId}

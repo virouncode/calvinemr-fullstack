@@ -127,7 +127,7 @@ const AvailabilityEditor = ({ setEditAvailabilityVisible }) => {
   return (
     schedule && (
       <div>
-        {errMsg && <p className="availability__err">{errMsg}</p>}
+        {errMsg && <ErrorParagraph errorMsg={errMsg} />}
         <div className="availability__heads">
           <p>Morning</p>
           <p>Afternoon</p>

@@ -13,7 +13,9 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import GenericList from "../../../../UI/Lists/GenericList";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const ProblemListItem = ({
@@ -141,94 +143,62 @@ const ProblemListItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ProblemDiagnosisDescription"
-              type="text"
-              value={itemInfos.ProblemDiagnosisDescription}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.ProblemDiagnosisDescription
-          )}
+          <InputTextToggle
+            name="ProblemDiagnosisDescription"
+            value={itemInfos.ProblemDiagnosisDescription}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ProblemDescription"
-              type="text"
-              value={itemInfos.ProblemDescription}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.ProblemDescription
-          )}
+          <InputTextToggle
+            name="ProblemDescription"
+            value={itemInfos.ProblemDescription}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ProblemStatus"
-              type="text"
-              value={itemInfos.ProblemStatus}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.ProblemStatus
-          )}
+          <InputTextToggle
+            name="ProblemStatus"
+            value={itemInfos.ProblemStatus}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="OnsetDate"
-              type="date"
-              value={timestampToDateISOTZ(itemInfos.OnsetDate)}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.OnsetDate)
-          )}
+          <InputDateToggle
+            name="OnsetDate"
+            value={timestampToDateISOTZ(itemInfos.OnsetDate)}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={lifeStageCT}
-              value={itemInfos.LifeStage}
-              name="LifeStage"
-              handleChange={handleChange}
-            />
-          ) : (
-            lifeStageCT.find(({ code }) => code === itemInfos.LifeStage)?.name
-          )}
+          <GenericListToggle
+            list={lifeStageCT}
+            value={itemInfos.LifeStage}
+            name="LifeStage"
+            handleChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ResolutionDate"
-              type="date"
-              value={timestampToDateISOTZ(itemInfos.ResolutionDate)}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.ResolutionDate)
-          )}
+          <InputDateToggle
+            name="ResolutionDate"
+            type="date"
+            value={timestampToDateISOTZ(itemInfos.ResolutionDate)}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Notes"
-              type="text"
-              value={itemInfos.Notes}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.Notes
-          )}
+          <InputTextToggle
+            name="Notes"
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

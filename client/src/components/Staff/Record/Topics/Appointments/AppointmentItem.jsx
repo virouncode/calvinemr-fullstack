@@ -33,7 +33,6 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import Input from "../../../../UI/Inputs/Input";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import DateTimePicker from "../../../../UI/Pickers/DateTimePicker";
@@ -767,7 +766,7 @@ const AppointmentItem = ({
           />
         </td>
         <td>
-          <Input
+          <InputTextToggle
             name="AppointmentNotes"
             value={itemInfos.AppointmentNotes}
             onChange={handleChange}

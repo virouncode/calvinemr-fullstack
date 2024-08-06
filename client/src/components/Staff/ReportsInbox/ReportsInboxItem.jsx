@@ -25,7 +25,9 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
-import GenericList from "../../UI/Lists/GenericList";
+import Input from "../../UI/Inputs/Input";
+import InputTextToggle from "../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../UI/Lists/GenericListToggle";
 import ErrorRow from "../../UI/Tables/ErrorRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import SignCell from "../../UI/Tables/SignCell";
@@ -237,16 +239,13 @@ const ReportsInboxItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              value={itemInfos.name}
-              onChange={handleChange}
-              name="name"
-            />
-          ) : (
-            item.name
-          )}
+          <InputTextToggle
+            type="text"
+            value={itemInfos.name}
+            onChange={handleChange}
+            name="name"
+            editVisible={editVisible}
+          />
         </td>
         <td>{item.Format}</td>
         <td>{item.FileExtensionAndVersion}</td>
@@ -265,29 +264,21 @@ const ReportsInboxItem = ({
           {item.File ? item.File.name : "See text content"}
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              name="Class"
-              value={itemInfos.Class}
-              handleChange={handleChange}
-              list={reportClassCT}
-            />
-          ) : (
-            item.Class
-          )}
+          <GenericListToggle
+            name="Class"
+            value={itemInfos.Class}
+            handleChange={handleChange}
+            list={reportClassCT}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="SubClass"
-              value={itemInfos.SubClass}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.SubClass
-          )}
+          <InputTextToggle
+            name="SubClass"
+            value={itemInfos.SubClass}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <td>
           <NavLink
@@ -314,12 +305,10 @@ const ReportsInboxItem = ({
         <td>{timestampToDateISOTZ(item.ReceivedDateTime)}</td>
         <td>
           {editVisible ? (
-            <input
-              type="text"
+            <Input
               name="AuthorFreeText"
               value={itemInfos.AuthorFreeText || ""}
               onChange={handleChange}
-              autoComplete="off"
             />
           ) : item.SourceAuthorPhysician?.AuthorFreeText ? (
             item.SourceAuthorPhysician.AuthorFreeText
@@ -330,17 +319,12 @@ const ReportsInboxItem = ({
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="Notes"
-              value={itemInfos.Notes || ""}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Notes
-          )}
+          <InputTextToggle
+            name="Notes"
+            value={itemInfos.Notes || ""}
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} staffInfos={staffInfos} />
       </tr>

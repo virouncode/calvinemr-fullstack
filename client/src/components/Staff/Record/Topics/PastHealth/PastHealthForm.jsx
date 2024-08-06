@@ -10,6 +10,8 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { pastHealthSchema } from "../../../../../validation/record/pastHealthValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
@@ -104,18 +106,15 @@ const PastHealthForm = ({
         </div>
       </td>
       <td>
-        <input
+        <Input
           name="PastHealthProblemDescriptionOrProcedures"
-          type="text"
           value={formDatas.PastHealthProblemDescriptionOrProcedures}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="OnsetOrEventDate"
-          type="date"
           max={timestampToDateISOTZ(nowTZTimestamp())}
           value={timestampToDateISOTZ(formDatas.OnsetOrEventDate)}
           onChange={handleChange}
@@ -132,40 +131,30 @@ const PastHealthForm = ({
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="ProcedureDate"
-          type="date"
           max={timestampToDateISOTZ(nowTZTimestamp())}
           value={timestampToDateISOTZ(formDatas.ProcedureDate)}
           onChange={handleChange}
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="ResolvedDate"
-          type="date"
           max={timestampToDateISOTZ(nowTZTimestamp())}
           value={timestampToDateISOTZ(formDatas.ResolvedDate)}
           onChange={handleChange}
         />
       </td>
       <td>
-        <input
+        <Input
           name="ProblemStatus"
-          type="text"
           value={formDatas.ProblemStatus}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
-          name="Notes"
-          type="text"
-          value={formDatas.Notes}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <SignCellForm />
     </tr>

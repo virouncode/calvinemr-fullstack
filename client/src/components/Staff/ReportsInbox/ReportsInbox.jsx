@@ -62,8 +62,7 @@ const ReportsInbox = () => {
           External Results
         </div>
       )}
-      {errMsgPost && <div className="reportsinbox__err">{errMsgPost}</div>}
-
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="reportsinbox__table-container" ref={rootRef}>
         <table className="reportsinbox__table">
           <thead>

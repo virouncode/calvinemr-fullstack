@@ -72,7 +72,7 @@ const PharmaciesList = ({
           label="Add a new Pharmacy to directory"
         />
       </div>
-      {errMsgPost && <div className="pharmacies-list__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pharmacies-list__table-container" ref={rootRef}>
         <table className="pharmacies-list__table">
           <thead>

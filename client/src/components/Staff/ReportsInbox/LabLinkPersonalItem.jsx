@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -9,12 +9,11 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
 import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import Input from "../../UI/Inputs/Input";
 
 const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
   const { user } = useUserContext();
   const [editVisible, setEditVisible] = useState(false);
-  const loginRef = useRef(null);
-  const pwdRef = useRef(null);
   const [itemInfos, setItemInfos] = useState(link);
   const labLinkPersonalPut = useLabLinksPersonalPut(user.id);
   const labLinkPersonalDelete = useLabLinksPersonalDelete(user.id);
@@ -106,9 +105,8 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
                 marginRight: "20px",
               }}
             >
-              <label htmlFor="lablink-name">Name</label>
-              <input
-                type="text"
+              <Input
+                label="Name"
                 name="name"
                 value={itemInfos.name}
                 onChange={handleChange}
@@ -122,9 +120,8 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
                 flexDirection: "column",
               }}
             >
-              <label htmlFor="lablink-url">URL</label>
-              <input
-                type="text"
+              <Input
+                label="URL"
                 name="url"
                 value={itemInfos.url}
                 onChange={handleChange}
@@ -141,7 +138,7 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
         {!editVisible && (
           <>
             <i
-              className="fa-solid fa-pen-to-square"
+              className="fa-regular fa-pen-to-square"
               onClick={handleClickEdit}
             />
             <i className="fa-solid fa-trash" onClick={handleDelete} />
@@ -163,16 +160,14 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
           Login <i className="fa-solid fa-copy" onClick={handleCopyLogin}></i>
         </label>
         {editVisible ? (
-          <input
-            type="text"
+          <Input
             name="login"
             value={itemInfos.login}
             onChange={handleChange}
-            ref={loginRef}
             id="lablink-login"
           />
         ) : (
-          <input type="text" value={link.login} readOnly ref={loginRef} />
+          <Input value={link.login} readOnly />
         )}
       </div>
       <div className="lablink__item-pwd">
@@ -181,21 +176,14 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
           <i className="fa-solid fa-copy" onClick={handleCopyPwd}></i>
         </label>
         {editVisible ? (
-          <input
-            type="text"
+          <Input
             name="pwd"
             value={itemInfos.pwd}
             onChange={handleChange}
-            ref={pwdRef}
             id="lablink-pwd"
           />
         ) : (
-          <input
-            type="text"
-            value={link.pwd.replace(/./g, "*")}
-            readOnly
-            ref={pwdRef}
-          />
+          <Input value={link.pwd.replace(/./g, "*")} readOnly />
         )}
       </div>
     </li>

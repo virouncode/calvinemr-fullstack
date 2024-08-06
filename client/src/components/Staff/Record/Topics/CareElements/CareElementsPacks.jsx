@@ -32,7 +32,7 @@ const CareElementsPacks = ({
           </Tooltip>
           <Tooltip title="Edit history">
             <i
-              className="fa-solid fa-pen-to-square"
+              className="fa-regular fa-pen-to-square"
               onClick={handleEditClick}
             />
           </Tooltip>

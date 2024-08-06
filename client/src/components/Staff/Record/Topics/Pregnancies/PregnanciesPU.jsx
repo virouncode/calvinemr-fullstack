@@ -83,7 +83,7 @@ const PregnanciesPU = ({
       <h1 className="pregnancies__title">
         Patient pregnancies <i className="fa-solid fa-person-pregnant"></i>
       </h1>
-      {errMsgPost && <div className="pregnancies__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pregnancies__table-container" ref={rootRef}>
         <table className="pregnancies__table">
           <thead>

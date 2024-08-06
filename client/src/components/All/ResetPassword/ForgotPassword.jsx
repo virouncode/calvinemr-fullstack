@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import EmailForm from "./EmailForm";
 import ResetPasswordForm from "./ResetPasswordForm";
 import TempPwdForm from "./TempPwdForm";
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
         <h2 className="reset-container-title">Email Verification</h2>
       )}
       {successMsg && <p className="reset-container-success">{successMsg}</p>}
-      {errMsg && <p className="reset-container-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {!requestSent && !validTempPwd && (
         <EmailForm
           setRequestSent={setRequestSent}

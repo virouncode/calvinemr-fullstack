@@ -1,5 +1,7 @@
 import CancelButton from "../Buttons/CancelButton";
 import SubmitButton from "../Buttons/SubmitButton";
+import Input from "../Inputs/Input";
+import InputPassword from "../Inputs/InputPassword";
 import PasswordValidator from "../Inputs/PasswordValidator";
 
 const FormCredentials = ({
@@ -12,55 +14,42 @@ const FormCredentials = ({
   return (
     <>
       <div className="credentials-form-row">
-        <label htmlFor="email">New email</label>
-        <input
+        <Input
+          label="New email"
           id="email"
-          type="email"
           onChange={handleChange}
           name="email"
           value={credentials.email}
-          autoComplete="off"
-          required
         />
       </div>
       <div className="credentials-form-row">
-        <label htmlFor="password">New password</label>
-        <input
+        <InputPassword
+          label="New password"
           id="password"
-          type="password"
           onChange={handlePasswordChange}
           name="password"
           value={credentials.password}
-          autoFocus
-          autoComplete="off"
-          required
         />
       </div>
       <div className="credentials-form-row">
         <PasswordValidator passwordValidity={passwordValidity} />
       </div>
       <div className="credentials-form-row">
-        <label htmlFor="confirm-password">Confirm new password</label>
-        <input
+        <InputPassword
+          label="Confirm new password"
           id="confirm-password"
-          type="password"
           onChange={handleChange}
           name="confirmPassword"
           value={credentials.confirmPassword}
-          autoComplete="off"
-          required
         />
       </div>
       <div className="credentials-form-row">
-        <label htmlFor="pin">New PIN</label>
-        <input
+        <InputPassword
+          label="New PIN"
           id="pin"
-          type="password"
           onChange={handleChange}
           name="pin"
           value={credentials.pin}
-          autoComplete="off"
-          required
         />
       </div>
       <div className="credentials-form-row-submit">

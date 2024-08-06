@@ -12,6 +12,10 @@ import {
 } from "../../../utils/dates/formatDates";
 import { getExtension } from "../../../utils/files/getExtension";
 import { reportSchema } from "../../../validation/record/reportValidation";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
+import ReportViewer from "../../UI/Documents/ReportViewer";
+import Input from "../../UI/Inputs/Input";
+import InputDate from "../../UI/Inputs/InputDate";
 import GenericList from "../../UI/Lists/GenericList";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import ReportsInboxPatients from "./ReportsInboxPatients";
@@ -174,20 +178,14 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
     >
       <form className="reportsinbox__form-content" onSubmit={handleSubmit}>
         <div className="reportsinbox__form-row reportsinbox__form-row--btns">
-          <input
-            type="submit"
-            value="Post"
-            disabled={isLoadingFile || progress}
-          />
+          <SubmitButton label="Post" disabled={isLoadingFile || progress} />
         </div>
         <div className="reportsinbox__form-row">
-          <label htmlFor="inbox-name">Report Name</label>
-          <input
+          <Input
+            label="Report Name"
             name="name"
-            type="text"
             value={formDatas.name || ""}
             onChange={handleChange}
-            autoComplete="off"
             id="inbox-name"
           />
         </div>
@@ -199,8 +197,8 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
           />
         </div>
         <div className="reportsinbox__form-row">
-          <label>Format</label>
           <GenericList
+            label="Format"
             name="Format"
             value={formDatas.Format || ""}
             handleChange={handleChange}
@@ -219,7 +217,7 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
               required
               type="file"
               onChange={handleUpload}
-              accept=".pdf,.jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
+              accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
               // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx"
               ref={fileInputRef}
             />
@@ -236,8 +234,8 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
           </div>
         )}
         <div className="reportsinbox__form-row">
-          <label>Class</label>
           <GenericList
+            label="Class"
             name="Class"
             value={formDatas.Class || ""}
             handleChange={handleChange}
@@ -245,46 +243,38 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
           />
         </div>
         <div className="reportsinbox__form-row">
-          <label htmlFor="inbox-subclass">Sub class</label>
-          <input
-            type="text"
+          <Input
+            label="Sub class"
             name="SubClass"
             value={formDatas.SubClass || ""}
             onChange={handleChange}
-            autoComplete="off"
             id="inbox-subclass"
           />
         </div>
         <div className="reportsinbox__form-row">
-          <label htmlFor="inbox-date">Date of document</label>
-          <input
-            type="date"
+          <InputDate
+            label="Date of document"
             name="EventDateTime"
             value={timestampToDateISOTZ(formDatas.EventDateTime)}
             onChange={handleChange}
-            autoComplete="off"
             id="inbox-date"
           />
         </div>
         <div className="reportsinbox__form-row">
-          <label htmlFor="inbox-date-received">Date received</label>
-          <input
-            type="date"
+          <InputDate
+            label="Date received"
             name="ReceivedDateTime"
             value={timestampToDateISOTZ(formDatas.ReceivedDateTime)}
             onChange={handleChange}
-            autoComplete="off"
             id="inbox-date-received"
           />
         </div>
         <div className="reportsinbox__form-row">
-          <label htmlFor="inbox-author">Author</label>
-          <input
-            type="text"
+          <Input
+            label="Author"
             name="AuthorFreeText"
             value={formDatas.AuthorFreeText || ""}
             onChange={handleChange}
-            autoComplete="off"
             id="inbox-author"
           />
         </div>
@@ -301,48 +291,7 @@ const ReportsInboxFormSecretary = ({ errMsg, setErrMsg }) => {
       </form>
       <div className="reportsinbox__form-preview">
         {isLoadingFile && <LoadingParagraph />}
-        {formDatas.File && formDatas.File.mime?.includes("image") ? (
-          <img
-            src={`${import.meta.env.VITE_XANO_BASE_URL}${formDatas.File.path}`}
-            alt=""
-            width="100%"
-          />
-        ) : formDatas.File && formDatas.File.mime?.includes("video") ? (
-          <video controls>
-            <source
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.File.path
-              }`}
-              type={formDatas.File.mime}
-            />
-          </video>
-        ) : formDatas.File &&
-          formDatas.File.mime?.includes("officedocument") ? (
-          <div>
-            <iframe
-              title="office document"
-              src={`https://docs.google.com/gview?url=${
-                import.meta.env.VITE_XANO_BASE_URL
-              }${formDatas.File.path}&embedded=true&widget=false`}
-              width="100%"
-              height="900px"
-              frameBorder="0"
-            />
-          </div>
-        ) : (
-          formDatas.File && (
-            <iframe
-              title={formDatas.name}
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.File.path
-              }`}
-              type={formDatas.File.type}
-              width="100%"
-              style={{ border: "none" }}
-              height="900px"
-            />
-          )
-        )}
+        <ReportViewer file={formDatas.File} />
       </div>
     </div>
   );

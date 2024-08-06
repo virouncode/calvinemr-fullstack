@@ -6,6 +6,10 @@ import { useEdocPost } from "../../../hooks/reactquery/mutations/edocsMutations"
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { edocSchema } from "../../../validation/reference/edocValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
+import SubmitButton from "../../UI/Buttons/SubmitButton";
+import ReportViewer from "../../UI/Documents/ReportViewer";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
@@ -98,23 +102,17 @@ const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
       <form className="reference-edocs__content" onSubmit={handleSubmit}>
-        {errMsgPost && <div className="reference-edocs__err">{errMsgPost}</div>}
+        {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
         <div className="reference-edocs__form-btn-container">
-          <input
-            type="submit"
-            value={isLoadingFile ? "Loading" : "Save"}
-            disabled={isLoadingFile || progress}
-          />
+          <SubmitButton label="Save" disabled={isLoadingFile || progress} />
           <CancelButton onClick={handleCancel} />
         </div>
         <div className="reference-edocs__row">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
+          <Input
+            label="Name"
             value={formDatas.name}
             onChange={handleChange}
             name="name"
-            autoComplete="off"
             id="name"
           />
         </div>
@@ -124,7 +122,7 @@ const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
             name="Content"
             type="file"
             onChange={handleUpload}
-            accept=".pdf,.jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
+            accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
             // .jpeg, .jpg, .png, .gif, .tif, , .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx"
           />
         </div>
@@ -141,48 +139,7 @@ const EdocForm = ({ errMsgPost, setErrMsgPost, setAddVisible }) => {
       </form>
       <div className="reference-edocs__preview">
         {isLoadingFile && <LoadingParagraph />}
-        {formDatas.file && formDatas.file.mime?.includes("image") ? (
-          <img
-            src={`${import.meta.env.VITE_XANO_BASE_URL}${formDatas.file.path}`}
-            alt=""
-            width="100%"
-          />
-        ) : formDatas.file && formDatas.file.mime?.includes("video") ? (
-          <video controls>
-            <source
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.file.path
-              }`}
-              type={formDatas.file.mime}
-            />
-          </video>
-        ) : formDatas.file &&
-          formDatas.file.mime?.includes("officedocument") ? (
-          <div>
-            <iframe
-              title="office document"
-              src={`https://docs.google.com/gview?url=${
-                import.meta.env.VITE_XANO_BASE_URL
-              }${formDatas.file.path}&embedded=true&widget=false`}
-              width="100%"
-              height="500px"
-              frameBorder="0"
-            />
-          </div>
-        ) : (
-          formDatas.file && (
-            <iframe
-              title={formDatas.name}
-              src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                formDatas.file.path
-              }`}
-              type={formDatas.file.type}
-              width="100%"
-              style={{ border: "none" }}
-              height="500px"
-            />
-          )
-        )}
+        <ReportViewer file={formDatas.file} />
       </div>
     </div>
   );

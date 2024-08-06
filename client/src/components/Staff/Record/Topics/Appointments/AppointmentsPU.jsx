@@ -91,8 +91,7 @@ const AppointmentsPU = ({
       <h1 className="appointments__title">
         Patient appointments <i className="fa-regular fa-calendar-check"></i>
       </h1>
-      {errMsgPost && <div className="appointments__err">{errMsgPost}</div>}
-
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="appointments__table-container" ref={rootRef}>
         <table className="appointments__table">
           <thead>

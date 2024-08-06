@@ -67,7 +67,7 @@ const TodoTemplateItem = ({
         <>
           {template.author_id === user.id && (
             <i
-              className="fa-solid fa-pen-to-square"
+              className="fa-regular fa-pen-to-square"
               style={{ cursor: "pointer", marginLeft: "5px" }}
               onClick={handleEditClick}
             ></i>

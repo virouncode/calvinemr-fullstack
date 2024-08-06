@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
-import avatarLogo from "../../../assets/img/avatar.png";
+
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
@@ -27,10 +27,15 @@ import { createChartNbr } from "../../../utils/numbers/createChartNbr";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { patientSchema } from "../../../validation/signup/patientValidation";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import InputDate from "../../UI/Inputs/InputDate";
+import InputEmail from "../../UI/Inputs/InputEmail";
+import InputTel from "../../UI/Inputs/InputTel";
 import GenericList from "../../UI/Lists/GenericList";
 import StaffList from "../../UI/Lists/StaffList";
-import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
+import PatientAvatarInput from "./PatientAvatarInput";
 import WebcamCapture from "./WebcamCapture";
 
 axios.defaults.withCredentials = true;
@@ -344,13 +349,13 @@ const SignupPatientForm = () => {
       className="signup-patient__container"
       style={{ border: errMsg && "solid 1.5px red" }}
     >
-      {errMsg && <p className="signup-patient__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {successMsg && <p className="signup-patient__success">{successMsg}</p>}
       <form className="signup-patient__form">
         <div className="signup-patient__column">
           <div className="signup-patient__row">
-            <label>Name Prefix: </label>
             <GenericList
+              label="Name Prefix:"
               name="prefix"
               list={namePrefixCT}
               value={formDatas.prefix}
@@ -359,41 +364,35 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="first-name">First Name*: </label>
-            <input
-              type="text"
+            <Input
+              label="First Name*:"
               value={formDatas.firstName}
               onChange={handleChange}
               name="firstName"
-              autoComplete="off"
               id="first-name"
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="middle-name">Middle Name: </label>
-            <input
-              type="text"
+            <Input
+              label="Middle Name:"
               value={formDatas.middleName}
               onChange={handleChange}
               name="middleName"
-              autoComplete="off"
               id="middle-name"
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="last-name">Last Name*: </label>
-            <input
-              type="text"
+            <Input
+              label="Last Name*:"
               value={formDatas.lastName}
               onChange={handleChange}
               name="lastName"
-              autoComplete="off"
               id="last-name"
             />
           </div>
           <div className="signup-patient__row">
-            <label>Last Name Suffix: </label>
             <GenericList
+              label="Last Name Suffix:"
               name="suffix"
               list={nameSuffixCT}
               value={formDatas.suffix}
@@ -402,19 +401,17 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="nick-name">Nick name: </label>
-            <input
-              type="text"
+            <Input
+              label="Nick name:"
               value={formDatas.nickName}
               onChange={handleChange}
               name="nickName"
-              autoComplete="off"
               id="nick-name"
             />
           </div>
           <div className="signup-patient__row">
-            <label>Gender*: </label>
             <GenericList
+              label="Gender*:"
               name="gender"
               list={genderCT}
               value={formDatas.gender}
@@ -423,9 +420,8 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="dob">Date of birth*: </label>
-            <input
-              type="date"
+            <InputDate
+              label="Date of birth*:"
               value={formDatas.dob}
               onChange={handleChange}
               name="dob"
@@ -434,30 +430,26 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="hcn">Health Card#: </label>
-            <input
-              type="text"
+            <Input
+              label="Health Card#:"
               value={formDatas.healthNbr}
               onChange={handleChange}
               name="healthNbr"
-              autoComplete="off"
               id="hcn"
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="hcv">Health Card Version: </label>
-            <input
-              type="text"
+            <Input
+              label="Health Card Version:"
               value={formDatas.healthVersion}
               onChange={handleChange}
               name="healthVersion"
-              autoComplete="off"
               id="hcv"
             />
           </div>
           <div className="signup-patient__row">
-            <label>Health Card Province: </label>
             <GenericList
+              label="Health Card Province:"
               name="healthProvince"
               list={provinceStateTerritoryCT}
               value={formDatas.healthProvince}
@@ -466,9 +458,8 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="hc_expiry">Health Card Expiry: </label>
-            <input
-              type="date"
+            <InputDate
+              label="Health Card Expiry:"
               value={formDatas.healthExpiry}
               onChange={handleChange}
               name="healthExpiry"
@@ -476,13 +467,11 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="sin">SIN: </label>
-            <input
-              type="text"
+            <Input
+              label="SIN:"
               value={formDatas.sin}
               onChange={handleChange}
               name="sin"
-              autoComplete="off"
               id="sin"
               placeholder="xxx xxx xxx"
             />
@@ -499,30 +488,26 @@ const SignupPatientForm = () => {
         </div>
         <div className="signup-patient__column">
           <div className="signup-patient__row">
-            <label htmlFor="line1">Address*: </label>
-            <input
-              type="text"
+            <Input
+              label="Address*:"
               value={formDatas.line1}
               onChange={handleChange}
               name="line1"
-              autoComplete="off"
               id="line1"
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="city">City*: </label>
-            <input
-              type="text"
+            <Input
+              label="City*:"
               value={formDatas.city}
               onChange={handleChange}
               name="city"
-              autoComplete="off"
               id="city"
             />
           </div>
           <div className="signup-patient__row">
-            <label>Province/State: </label>
             <GenericList
+              label="Province/State:"
               name="province"
               list={provinceStateTerritoryCT}
               value={formDatas.province}
@@ -541,8 +526,7 @@ const SignupPatientForm = () => {
               <option value="postal">Postal</option>
               <option value="zip">Zip</option>
             </select>
-            <input
-              type="text"
+            <Input
               value={
                 postalOrZip === "postal"
                   ? formDatas.postalCode
@@ -550,7 +534,6 @@ const SignupPatientForm = () => {
               }
               onChange={handleChange}
               name="postalZipCode"
-              autoComplete="off"
               id="postalZipCode"
               placeholder={
                 postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
@@ -558,13 +541,11 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="cellphone">Cell Phone*: </label>
-            <input
-              type="tel"
+            <InputTel
+              label="Cell Phone*:"
               value={formDatas.cellphone}
               onChange={handleChange}
               name="cellphone"
-              autoComplete="off"
               id="cellphone"
               placeholder="xxx-xxx-xxxx"
             />
@@ -585,13 +566,11 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="homephone">Home Phone: </label>
-            <input
-              type="tel"
+            <InputTel
+              label="Home Phone:"
               value={formDatas.homephone}
               onChange={handleChange}
               name="homephone"
-              autoComplete="off"
               id="homephone"
               placeholder="xxx-xxx-xxxx"
             />
@@ -612,13 +591,11 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="workphone">Work Phone: </label>
-            <input
-              type="tel"
+            <InputTel
+              label="Work Phone:"
               value={formDatas.workphone}
               onChange={handleChange}
               name="workphone"
-              autoComplete="off"
               id="workphone"
               placeholder="xxx-xxx-xxxx"
             />
@@ -639,8 +616,8 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label htmlFor="email">Email*: </label>
-            <input
+            <InputEmail
+              label="Email*:"
               type="email"
               value={formDatas.email}
               name="email"
@@ -650,8 +627,8 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row">
-            <label>Preferred Official Language: </label>
             <GenericList
+              label="Preferred Official Language:"
               name="preferredOffLang"
               list={officialLanguageCT}
               value={formDatas.preferredOffLang}
@@ -661,38 +638,12 @@ const SignupPatientForm = () => {
             />
           </div>
           <div className="signup-patient__row signup-patient__row--avatar">
-            <label htmlFor="avatar">Avatar: </label>
-            <div className="signup-patient__image">
-              <div className="signup-patient__image-preview">
-                <div className="signup-patient__image-preview-square">
-                  {formDatas.avatar ? (
-                    <img
-                      src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                        formDatas.avatar?.path
-                      }`}
-                      alt="avatar"
-                    />
-                  ) : (
-                    <img src={avatarLogo} alt="user-avatar-placeholder" />
-                  )}
-                </div>
-                <i
-                  className="fa-solid fa-camera"
-                  onClick={() => setWebcamVisible((v) => !v)}
-                  style={{ cursor: "pointer" }}
-                />
-                {isLoadingFile && <CircularProgressSmall />}
-              </div>
-              <div className="signup-patient__image-options">
-                <input
-                  name="avatar"
-                  type="file"
-                  accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
-                  onChange={handleAvatarChange}
-                  id="avatar"
-                />
-              </div>
-            </div>
+            <PatientAvatarInput
+              formDatas={formDatas}
+              setWebcamVisible={setWebcamVisible}
+              isLoadingFile={isLoadingFile}
+              handleAvatarChange={handleAvatarChange}
+            />
           </div>
         </div>
       </form>

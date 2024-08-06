@@ -19,7 +19,7 @@ const PatientSearchForm = ({ search, handleSearch }) => {
           <Input
             label="Email"
             name="email"
-            value={search.name}
+            value={search.email}
             onChange={handleSearch}
             id="email"
           />

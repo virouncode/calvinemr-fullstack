@@ -1023,6 +1023,7 @@ const EventForm = ({
           <div className="event-form__row event-form__row--radio">
             <div style={{ marginBottom: "5px" }}>
               <SiteSelect
+                label="Site"
                 handleSiteChange={handleSiteChange}
                 sites={sites}
                 value={formDatas.site_id}

@@ -14,6 +14,7 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputWithLogoInTable from "../../../../UI/Inputs/InputWithLogoInTable";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelationshipList from "./RelationshipList";
 
@@ -182,26 +183,15 @@ const RelationshipItem = ({
         <td style={{ position: "relative" }}>
           {editVisible ? (
             <>
-              <input
-                type="text"
-                value={toPatientName(patientSelected)}
+              <InputWithLogoInTable
                 name="patient_id"
-                readOnly
-                style={{ outline: "solid 1px grey" }}
-              />
-              <i
-                style={{
-                  cursor: "pointer",
-                  position: "absolute",
-                  right: "17px",
-                  top: "17px",
-                }}
-                className="fa-solid fa-magnifying-glass"
+                value={toPatientName(patientSelected)}
+                readOnly={true}
                 onClick={() => setPatientSearchVisible(true)}
               />
             </>
           ) : (
-            toPatientName(itemInfos.relation_infos)
+            <p>{toPatientName(itemInfos.relation_infos)}</p>
           )}
         </td>
         <SignCell item={item} />

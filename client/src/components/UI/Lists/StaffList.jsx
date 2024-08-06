@@ -1,4 +1,3 @@
-
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 

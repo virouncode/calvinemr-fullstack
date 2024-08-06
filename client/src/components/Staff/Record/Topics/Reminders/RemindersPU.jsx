@@ -82,7 +82,7 @@ const RemindersPU = ({
       <h1 className="reminders__title">
         Reminders <i className="fa-solid fa-bell"></i>
       </h1>
-      {errMsgPost && <div className="reminders__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="reminders__table-container" ref={rootRef}>
           <table className="reminders__table">

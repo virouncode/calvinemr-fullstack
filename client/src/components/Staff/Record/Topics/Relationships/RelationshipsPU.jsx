@@ -91,7 +91,7 @@ const RelationshipsPU = ({
       <h1 className="relationships__title">
         Patient relationships <i className="fa-solid fa-people-group"></i>
       </h1>
-      {errMsgPost && <div className="relationships__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="relationships__table-container" ref={rootRef}>
           <table className="relationships__table">

@@ -8,6 +8,7 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const ReminderItem = ({
@@ -124,17 +125,12 @@ const ReminderItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              value={itemInfos.reminder}
-              name="reminder"
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.reminder
-          )}
+          <InputTextToggle
+            value={itemInfos.reminder}
+            name="reminder"
+            onChange={handleChange}
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

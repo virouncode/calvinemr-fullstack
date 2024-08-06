@@ -5,6 +5,7 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
 
 const LabLinkPersonalForm = ({ setAddVisible, errMsgPost, setErrMsgPost }) => {
   const { user } = useUserContext();
@@ -72,18 +73,16 @@ const LabLinkPersonalForm = ({ setAddVisible, errMsgPost, setErrMsgPost }) => {
       <div className="lablinks__form-inputs">
         <div className="lablinks__form-row">
           <div className="lablinks__form-item">
-            <label htmlFor="lablink-name">Name</label>
-            <input
-              type="text"
+            <Input
+              label="Name"
               value={name}
               onChange={handleNameChange}
               id="lablink-name"
             />
           </div>
           <div className="lablinks__form-item">
-            <label htmlFor="lablink-url">URL</label>
-            <input
-              type="text"
+            <Input
+              label="URL"
               value={url}
               onChange={handleURLChange}
               id="lablink-url"
@@ -92,18 +91,16 @@ const LabLinkPersonalForm = ({ setAddVisible, errMsgPost, setErrMsgPost }) => {
         </div>
         <div className="lablinks__form-row">
           <div className="lablinks__form-item">
-            <label htmlFor="lablink-login">Login</label>
-            <input
-              type="text"
+            <Input
+              label="Login"
               value={login}
               onChange={handleLoginChange}
               id="lablink-login"
             />
           </div>
           <div className="lablinks__form-item">
-            <label htmlFor="lablink-pwd">Password</label>
-            <input
-              type="text"
+            <Input
+              label="Password"
               value={pwd}
               onChange={handlePwdChange}
               id="lablink-pwd"

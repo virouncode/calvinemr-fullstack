@@ -82,7 +82,7 @@ const FamilyHistoryPU = ({
       <h1 className="famhistory__title">
         Patient family history <i className="fa-solid fa-people-roof"></i>
       </h1>
-      {errMsgPost && <div className="famhistory__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="famhistory__table-container" ref={rootRef}>
           <table className="famhistory__table">

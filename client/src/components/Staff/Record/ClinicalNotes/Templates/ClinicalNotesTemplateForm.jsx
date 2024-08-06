@@ -6,6 +6,7 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 const ClinicalNotesTemplateForm = ({ setNewTemplateVisible }) => {
   const { user } = useUserContext();
@@ -43,7 +44,7 @@ const ClinicalNotesTemplateForm = ({ setNewTemplateVisible }) => {
   };
   return (
     <div className="new-template">
-      {errMsg && <p className="new-template-err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="new-template-name">
         <Input
           value={newTemplate.name}

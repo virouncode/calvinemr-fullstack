@@ -20,6 +20,7 @@ import SaveButton from "../../../../../UI/Buttons/SaveButton";
 import Input from "../../../../../UI/Inputs/Input";
 import GenericCombo from "../../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../../UI/Lists/GenericList";
+import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import DurationPickerLong from "../../../../../UI/Pickers/DurationPickerLong";
 
 const MedTemplateForm = ({ setNewVisible }) => {
@@ -467,7 +468,7 @@ const MedTemplateForm = ({ setNewVisible }) => {
 
   return (
     <div className="med-templates__form">
-      {errMsg && <div className="med-templates__form-err">{errMsg}</div>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="med-templates__form-row">
         <Input
           label="Drug identification number"

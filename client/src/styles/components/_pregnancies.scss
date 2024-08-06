@@ -52,7 +52,11 @@
   td {
     text-align: center;
     padding: 10px;
+    min-width: 110px;
     max-width: 380px;
+    p {
+      overflow-wrap: break-word;
+    }
   }
   select {
     width: 180px;

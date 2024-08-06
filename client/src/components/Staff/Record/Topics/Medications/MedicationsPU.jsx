@@ -117,7 +117,7 @@ const MedicationsPU = ({
               .join(", ")
           : "No allergies"}
       </div>
-      {errMsgPost && <div className="medications__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="medications__table-container" ref={rootRef}>
           <table className="medications__table">

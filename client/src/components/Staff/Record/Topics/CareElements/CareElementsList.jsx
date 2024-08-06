@@ -10,6 +10,7 @@ import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CareElementHistory from "./CareElementHistory";
 import CareElementsListAdd from "./CareElementsListAdd";
@@ -337,7 +338,7 @@ const CareElementsList = ({
       <h1 className="care-elements__title">
         Patient care elements <i className="fa-solid fa-ruler-combined"></i>
       </h1>
-      {errMsgPost && <div className="care-elements__err">{errMsgPost}</div>}
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div
         className="care-elements__card"
         style={{ border: errMsgPost && "solid 1.5px red" }}

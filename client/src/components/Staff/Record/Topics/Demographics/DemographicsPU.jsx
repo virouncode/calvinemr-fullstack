@@ -451,13 +451,11 @@ const DemographicsPU = ({
           </div>
         </div>
         {errPatient && <p className="demographics-card__err">{errPatient}</p>}
+        {errMsgPost && editVisible && <ErrorParagraph errorMsg={errMsgPost} />}
         {loadingPatient && <LoadingParagraph />}
         {!loadingPatient && !errPatient && (
           <form className="demographics-card__form">
             <div className="demographics-card__content">
-              {errMsgPost && editVisible && (
-                <ErrorParagraph errorMsg={errMsgPost} />
-              )}
               <div className="demographics-card__content-row">
                 <GenericListToggle
                   label="Name Prefix:"
@@ -562,7 +560,7 @@ const DemographicsPU = ({
                 />
               </div>
               <div className="demographics-card__content-row">
-                <InputTextToggle
+                <InputDateToggle
                   label="Health Card Expiry:"
                   value={formDatas.healthExpiry}
                   onChange={handleChange}

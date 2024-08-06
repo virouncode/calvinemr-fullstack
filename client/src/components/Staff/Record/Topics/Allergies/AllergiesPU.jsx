@@ -86,8 +86,7 @@ const AllergiesPU = ({
         Patient allergies & adverse reactions{" "}
         <i className="fa-solid fa-hand-dots"></i>
       </h1>
-      {errMsgPost && <div className="allergies__err">{errMsgPost}</div>}
-
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pasthealth__table-container" ref={rootRef}>
         <table className="allergies__table">
           <thead>

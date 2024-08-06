@@ -1,5 +1,5 @@
 import SendIcon from "@mui/icons-material/Send";
-import Button from "../../UI/Buttons/Button";
+import { Button } from "@mui/material";
 import TypingDots from "../../UI/Buttons/TypingDots";
 
 const CalvinAIInput = ({

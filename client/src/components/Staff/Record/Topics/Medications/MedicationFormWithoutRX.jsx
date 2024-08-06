@@ -355,6 +355,7 @@ const MedicationFormWithoutRX = ({
         });
         break;
       default:
+        setFormDatas({ ...formDatas, [name]: value });
         break;
     }
   };

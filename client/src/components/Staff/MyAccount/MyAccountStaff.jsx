@@ -14,6 +14,7 @@ import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputTelToggle from "../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../UI/Inputs/InputTextToggle";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import SiteSelect from "../EventForm/SiteSelect";
 
 const MyAccountStaff = () => {
@@ -113,7 +114,7 @@ const MyAccountStaff = () => {
       className="myaccount-section__container"
       style={{ border: errMsg && "solid 1px red" }}
     >
-      {errMsg && <p className="myaccount-section__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {tempFormDatas && (
         <div className="myaccount-section__form">
           <div className="myaccount-section__column">

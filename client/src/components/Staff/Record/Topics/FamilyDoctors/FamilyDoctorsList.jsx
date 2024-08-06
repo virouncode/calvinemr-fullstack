@@ -67,8 +67,7 @@ const FamilyDoctorsList = ({
         External Doctors directory (as of [date])
         <Button onClick={handleAdd} label="Add" />
       </div>
-      {errMsgPost && <div className="doctors-list__err">{errMsgPost}</div>}
-
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="doctors-list__table-container" ref={rootRefDoctors}>
         <table className="doctors-list__table">
           <thead>

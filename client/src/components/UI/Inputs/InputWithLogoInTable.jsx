@@ -17,7 +17,7 @@ const InputWithLogoInTable = ({
         name={name}
         onChange={onChange}
         readOnly={readOnly}
-        id="provider_ohip_billing_nbr"
+        id={id}
       />
       {logo && (
         <i
