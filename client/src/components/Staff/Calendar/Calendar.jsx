@@ -15,6 +15,7 @@ import {
 } from "../../../hooks/reactquery/mutations/appointmentsMutations";
 import { useAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { useStiteClosed } from "../../../hooks/socket/useSiteClosed";
 import useCalendarShortcuts from "../../../hooks/useCalendarShortcuts";
 import { getAvailableRooms } from "../../../utils/appointments/getAvailableRooms";
 import {
@@ -167,17 +168,7 @@ const Calendar = () => {
     }
   }, [events]);
 
-  useEffect(() => {
-    if (!sites) return;
-    if (
-      user.access_level === "staff" &&
-      sites.find(({ id }) => id === user.site_id).site_status === "Closed"
-    ) {
-      alert(
-        "Your site has been closed, please change your site in My account section"
-      );
-    }
-  }, [sites, user.access_level, user.site_id]);
+  useStiteClosed(sites, user);
 
   useCalendarShortcuts(
     fcRef,
