@@ -8,6 +8,7 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
+import Input from "../../../../../UI/Inputs/Input";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -114,31 +115,30 @@ const LetterTemplateForm = ({ setNewTemplateVisible }) => {
   return (
     <div className="letters__template-form">
       <div className="letters__template-form-name">
-        <label htmlFor="letter-template-name">Template name*: </label>
-        <input
-          type="text"
+        <Input
+          label="Template name*:"
           value={name}
           onChange={handleNameChange}
-          autoComplete="off"
           autoFocus
           id="letter-template-name"
         />
       </div>
       <div className="letters__template-form-description">
-        <label htmlFor="letter-template-decription">Description: </label>
-        <input
-          type="text"
+        <Input
+          label="Description:"
           value={description}
           onChange={handleDescriptionChange}
-          autoComplete="off"
-          id="letter-template-decription"
+          id="letter-template-description"
         />
       </div>
-      <SiteSelect
-        handleSiteChange={handleSiteChange}
-        sites={sites}
-        value={siteSelectedId}
-      />
+      <div className="letters__template-form-site">
+        <SiteSelect
+          handleSiteChange={handleSiteChange}
+          sites={sites}
+          value={siteSelectedId}
+          label="Site:"
+        />
+      </div>
       <div className="letters__template-form-subheader">
         <div className="letters__template-form-recipient">
           <label>Addressed to:</label>
@@ -171,11 +171,10 @@ const LetterTemplateForm = ({ setNewTemplateVisible }) => {
         </div>
         <div className="letters__template-form-subject">
           <label htmlFor="letter-template-subject">Subject:</label>
-          <input
-            type="text"
+          <Input
+            label="Subject:"
             value={subject}
             onChange={handleChangeSubject}
-            autoComplete="off"
             id="letter-template-subject"
           />
         </div>

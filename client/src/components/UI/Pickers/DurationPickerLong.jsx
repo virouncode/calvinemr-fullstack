@@ -4,15 +4,11 @@ const DurationPickerLong = ({
   durationWeeks,
   durationDays,
   handleDurationPickerChange,
-  title = true,
+  label,
 }) => {
   return (
     <>
-      {title && (
-        <label style={{ marginRight: "10px", fontWeight: "bold" }}>
-          Duration
-        </label>
-      )}
+      {label && <label style={{ fontWeight: "bold" }}>{label}</label>}
       <div
         style={{
           display: "flex",

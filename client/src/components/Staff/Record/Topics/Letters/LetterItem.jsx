@@ -8,6 +8,7 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 const LetterItem = ({
@@ -163,17 +164,12 @@ const LetterItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="name"
-              type="text"
-              value={itemInfos.name}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.name
-          )}
+          <InputTextToggle
+            value={itemInfos.name}
+            onChange={handleChange}
+            name="name"
+            editVisible={editVisible}
+          />
         </td>
         <td>
           <span
@@ -188,16 +184,12 @@ const LetterItem = ({
           </span>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="description"
-              type="text"
-              value={itemInfos.description}
-              onChange={handleChange}
-            />
-          ) : (
-            itemInfos.description
-          )}
+          <InputTextToggle
+            value={itemInfos.description}
+            onChange={handleChange}
+            name="description"
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

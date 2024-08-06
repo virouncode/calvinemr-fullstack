@@ -14,6 +14,9 @@ import {
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { enrolmentSchema } from "../../../../../validation/record/enrolmentValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SubmitButton from "../../../../UI/Buttons/SubmitButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 
 const EnrolmentEdit = ({
@@ -137,41 +140,34 @@ const EnrolmentEdit = ({
         <div className="new-enrolment__form-physician">
           <label>Enrolled to physician: </label>
           <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <label htmlFor="enrolment-first-name">First Name*: </label>
-            <input
-              type="text"
-              name="EnrolledToPhysicianFirstName"
+            <Input
               value={formDatas?.EnrolledToPhysician?.Name?.FirstName || ""}
               onChange={handleChange}
-              autoComplete="off"
+              name="EnrolledToPhysicianFirstName"
               id="enrolment-first-name"
+              label="First Name*:"
             />
           </div>
           <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <label htmlFor="enrolment-last-name">Last Name*: </label>
-            <input
-              type="text"
-              name="EnrolledToPhysicianLastName"
+            <Input
               value={formDatas?.EnrolledToPhysician?.Name?.LastName || ""}
               onChange={handleChange}
-              autoComplete="off"
+              name="EnrolledToPhysicianLastName"
               id="enrolment-last-name"
+              label="Last Name*:"
             />
           </div>
           <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <label htmlFor="enrolment-ohip">OHIP#: </label>
-            <input
-              type="text"
-              name="EnrolledToPhysicianOHIP"
+            <Input
               value={formDatas?.EnrolledToPhysician?.OHIPPhysicianId || ""}
               onChange={handleChange}
-              autoComplete="off"
+              name="EnrolledToPhysicianOHIP"
               id="enrolment-ohip"
+              label="OHIP#:"
             />
           </div>
         </div>
         <div className="new-enrolment__form-row">
-          <label>Enrolment status*:</label>
           <GenericList
             name="EnrollmentStatus"
             list={enrollmentStatusCT}
@@ -179,39 +175,38 @@ const EnrolmentEdit = ({
             handleChange={handleChange}
             placeHolder="Choose a status..."
             noneOption={true}
+            label="Enrolment status*:"
           />
         </div>
         <div className="new-enrolment__form-row">
-          <label htmlFor="enrolment-date">Enrolment date*:</label>
-          <input
-            type="date"
+          <InputDate
             value={timestampToDateISOTZ(formDatas?.EnrollmentDate)}
             onChange={handleChange}
             name="EnrollmentDate"
             id="enrolment-date"
+            label="Enrolment date*:"
           />
         </div>
         <div className="new-enrolment__form-row">
-          <label htmlFor="enrolment-termination-date">Termination date:</label>
-          <input
-            type="date"
+          <InputDate
             value={timestampToDateISOTZ(formDatas?.EnrollmentTerminationDate)}
             onChange={handleChange}
             name="EnrollmentTerminationDate"
             id="enrolment-termination-date"
+            label="Termination date:"
           />
         </div>
         <div className="new-enrolment__form-row">
-          <label>Termination reason:</label>
           <GenericList
             list={terminationReasonCT}
             value={formDatas?.TerminationReason || ""}
             handleChange={handleChange}
             name="TerminationReason"
+            label="Termination reason:"
           />
         </div>
         <div className="new-enrolment__btn-container">
-          <input type="submit" value="Save" />
+          <SubmitButton label="Save" />
           <CancelButton onClick={handleCancel} />
         </div>
       </form>

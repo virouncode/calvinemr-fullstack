@@ -1,4 +1,4 @@
-
+import Checkbox from "../../../../../UI/Checkbox/Checkbox";
 
 const LetterAddReportItem = ({
   report,
@@ -34,13 +34,12 @@ const LetterAddReportItem = ({
 
   return (
     <li className="letter__options-reports-item" ref={lastItemRef}>
-      <input
-        type="checkbox"
+      <Checkbox
         id={report.name}
-        checked={isChecked(report.id)}
         onChange={handleChange}
+        checked={isChecked(report.id)}
+        label={report.name}
       />
-      <label htmlFor={report.name}>{report.name}</label>
     </li>
   );
 };

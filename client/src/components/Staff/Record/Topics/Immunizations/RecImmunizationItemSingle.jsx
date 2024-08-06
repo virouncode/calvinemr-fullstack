@@ -1,13 +1,9 @@
 import { useState } from "react";
-import {
-    nowTZTimestamp,
-    timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import { getImmunizationLogo } from "../../../../../utils/immunizations/getImmunizationLogo";
-import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import RecImmunizationEdit from "./RecImmunizationEdit";
 import RecImmunizationForm from "./RecImmunizationForm";
+import RecImmunizationLabel from "./RecImmunizationLabel";
 
 const RecImmunizationItemSingle = ({
   age,
@@ -17,8 +13,6 @@ const RecImmunizationItemSingle = ({
   rangeStart,
   rangeEnd,
   patientId,
-  loadingPatient,
-  errPatient,
   topicPost,
   topicPut,
   topicDelete,
@@ -29,9 +23,6 @@ const RecImmunizationItemSingle = ({
   const [errMsgPost, setErrMsgPost] = useState("");
 
   //STYLES
-  const INTERVAL_STYLE = {
-    color: rangeEnd < nowTZTimestamp() ? "orange" : "black",
-  };
 
   //HANDLERS
   const handleCheck = async (e) => {
@@ -49,39 +40,19 @@ const RecImmunizationItemSingle = ({
 
   return (
     <div className="recimmunizations-item__cell">
-      <input
-        type="checkbox"
-        onChange={handleCheck}
-        name={type}
-        checked={isChecked()}
+      <Checkbox
         id="recimmunizations-item__checkbox"
+        name={type}
+        onChange={handleCheck}
+        checked={isChecked()}
       />
-      {loadingPatient && <LoadingParagraph />}
-      {!loadingPatient && !errPatient && immunizationInfos.Date ? (
-        <label
-          style={{
-            color:
-              immunizationInfos.RefusedFlag.ynIndicatorsimple === "Y"
-                ? "red"
-                : "forestgreen",
-          }}
-          htmlFor="recimmunizations-item__checkbox"
-        >
-          {timestampToDateISOTZ(immunizationInfos.Date)}{" "}
-          {getImmunizationLogo(route)}
-        </label>
-      ) : (
-        <label htmlFor="recimmunizations-item__checkbox">
-          <span style={INTERVAL_STYLE}>
-            {age === "Grade 7"
-              ? `Grade 7 to 12 (til ${timestampToDateISOTZ(rangeEnd)})`
-              : `${timestampToDateISOTZ(rangeStart)} to ${timestampToDateISOTZ(
-                  rangeEnd
-                )}`}
-          </span>{" "}
-          {getImmunizationLogo(route)}
-        </label>
-      )}
+      <RecImmunizationLabel
+        immunizationInfos={immunizationInfos}
+        route={route}
+        age={age}
+        rangeStart={rangeStart}
+        rangeEnd={rangeEnd}
+      />
       {formVisible && (
         <FakeWindow
           title={`NEW IMMUNIZATION (${type})`}

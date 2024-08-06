@@ -1,4 +1,3 @@
-
 import { Combobox } from "react-widgets";
 
 const thirdParty = [
@@ -9,14 +8,17 @@ const thirdParty = [
   "Surrogacy",
 ];
 
-const ThirdPartyList = ({ handleChange, value }) => {
+const ThirdPartyList = ({ handleChange, value, label }) => {
   return (
-    <Combobox
-      placeholder="Choose or type..."
-      value={value}
-      onChange={(value) => handleChange(value)}
-      data={thirdParty}
-    />
+    <>
+      {label && <label htmlFor="third-party">{label}</label>}
+      <Combobox
+        placeholder="Choose or type..."
+        value={value}
+        onChange={(value) => handleChange(value)}
+        data={thirdParty}
+      />
+    </>
   );
 };
 

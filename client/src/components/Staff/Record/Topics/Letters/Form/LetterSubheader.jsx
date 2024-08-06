@@ -1,3 +1,4 @@
+import Input from "../../../../../UI/Inputs/Input";
 import LetterDate from "./LetterDate";
 import LetterPatientInfos from "./LetterPatientInfos";
 
@@ -52,9 +53,8 @@ const LetterSubheader = ({
         />
       </div>
       <div className="letter__subject">
-        <label htmlFor="letter-subject">Subject:</label>
-        <input
-          type="text"
+        <Input
+          label="Subject:"
           value={subject}
           onChange={handleChangeSubject}
           autoComplete="off"

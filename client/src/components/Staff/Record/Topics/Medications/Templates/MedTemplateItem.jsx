@@ -4,8 +4,8 @@ import { useState } from "react";
 import useStaffInfosContext from "../../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
-    useMedsTemplateDelete,
-    useMedsTemplatePost,
+  useMedsTemplateDelete,
+  useMedsTemplatePost,
 } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../../utils/names/staffIdToTitleAndName";
@@ -53,8 +53,7 @@ const MedTemplateItem = ({ med, handleSelectTemplate, lastItemRef = null }) => {
           >
             - {med.PrescriptionInstructions}{" "}
             {med.author_id
-              ? `(
-          ${staffIdToTitleAndName(staffInfos, med.author_id)})`
+              ? `(${staffIdToTitleAndName(staffInfos, med.author_id)})`
               : ""}
           </span>
         </Tooltip>

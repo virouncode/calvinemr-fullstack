@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import {
-  lifeStageCT,
-  toCodeTableName,
-} from "../../../../../omdDatas/codesTables";
+import { lifeStageCT } from "../../../../../omdDatas/codesTables";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -16,7 +13,9 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import GenericList from "../../../../UI/Lists/GenericList";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelativesList from "./RelativesList";
 
@@ -146,17 +145,12 @@ const FamilyHistoryItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ProblemDiagnosisProcedureDescription"
-              type="text"
-              value={itemInfos.ProblemDiagnosisProcedureDescription}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.ProblemDiagnosisProcedureDescription
-          )}
+          <InputTextToggle
+            value={itemInfos.ProblemDiagnosisProcedureDescription}
+            onChange={handleChange}
+            name="ProblemDiagnosisProcedureDescription"
+            editVisible={editVisible}
+          />
         </td>
         <td>
           {editVisible ? (
@@ -165,71 +159,51 @@ const FamilyHistoryItem = ({
               value={itemInfos.Relationship}
             />
           ) : (
-            itemInfos.Relationship
+            <p>{itemInfos.Relationship}</p>
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="date"
-              max={timestampToDateISOTZ(nowTZTimestamp())}
-              name="StartDate"
-              value={timestampToDateISOTZ(itemInfos.StartDate)}
-              onChange={handleChange}
-            />
-          ) : (
-            timestampToDateISOTZ(itemInfos.StartDate)
-          )}
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.StartDate)}
+            onChange={handleChange}
+            name="StartDate"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="AgeAtOnset"
-              value={itemInfos.AgeAtOnset}
-              onChange={handleChange}
-            />
-          ) : (
-            itemInfos.AgeAtOnset
-          )}
+          <InputTextToggle
+            value={itemInfos.AgeAtOnset}
+            onChange={handleChange}
+            name="AgeAtOnset"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={lifeStageCT}
-              value={itemInfos.LifeStage}
-              name="LifeStage"
-              handleChange={handleChange}
-              placeHolder="Choose a lifestage..."
-              noneOption={false}
-            />
-          ) : (
-            toCodeTableName(lifeStageCT, itemInfos.LifeStage)
-          )}
+          <GenericListToggle
+            list={lifeStageCT}
+            value={itemInfos.LifeStage}
+            name="LifeStage"
+            handleChange={handleChange}
+            placeHolder="Choose a lifestage..."
+            noneOption={false}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="Treatment"
-              value={itemInfos.Treatment}
-              onChange={handleChange}
-            />
-          ) : (
-            itemInfos.Treatment
-          )}
+          <InputTextToggle
+            value={itemInfos.Treatment}
+            onChange={handleChange}
+            name="Treatment"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="Notes"
-              value={itemInfos.Notes}
-              onChange={handleChange}
-            />
-          ) : (
-            itemInfos.Notes
-          )}
+          <InputTextToggle
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            name="Notes"
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

@@ -1,0 +1,44 @@
+import avatarPlaceholder from "../../../../../assets/img/avatar.png";
+const DemographicsAvatar = ({
+  avatar,
+  editVisible,
+  setWebcamVisible,
+  handleAvatarChange,
+}) => {
+  return (
+    <div className="demographics-card__image">
+      <div className="demographics-card__image-preview">
+        <div className="demographics-card__image-preview-square">
+          {avatar ? (
+            <img
+              src={`${import.meta.env.VITE_XANO_BASE_URL}${avatar.path}`}
+              alt="user-avatar"
+            />
+          ) : (
+            <img src={avatarPlaceholder} alt="user-avatar-placeholder" />
+          )}
+        </div>
+        {editVisible && (
+          <i
+            className="fa-solid fa-camera"
+            onClick={() => setWebcamVisible((v) => !v)}
+            style={{ cursor: "pointer" }}
+          />
+        )}
+      </div>
+      {editVisible && (
+        <div className="signup-patient__image-options">
+          <p>Choose a picture</p>
+          <input
+            name="avatar"
+            type="file"
+            accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
+            onChange={handleAvatarChange}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DemographicsAvatar;

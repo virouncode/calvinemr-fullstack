@@ -10,6 +10,8 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { famHistorySchema } from "../../../../../validation/record/famHistoryValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import RelativesList from "./RelativesList";
@@ -105,12 +107,10 @@ const FamilyHistoryForm = ({
         </div>
       </td>
       <td>
-        <input
+        <Input
           name="ProblemDiagnosisProcedureDescription"
-          type="text"
           value={formDatas.ProblemDiagnosisProcedureDescription}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
@@ -121,8 +121,7 @@ const FamilyHistoryForm = ({
         />
       </td>
       <td>
-        <input
-          type="date"
+        <InputDate
           max={timestampToDateISOTZ(nowTZTimestamp())}
           name="StartDate"
           value={timestampToDateISOTZ(formDatas.StartDate)}
@@ -130,8 +129,7 @@ const FamilyHistoryForm = ({
         />
       </td>
       <td>
-        <input
-          type="text"
+        <Input
           name="AgeAtOnset"
           value={formDatas.AgeAtOnset}
           onChange={handleChange}
@@ -148,20 +146,14 @@ const FamilyHistoryForm = ({
         />
       </td>
       <td>
-        <input
-          type="text"
+        <Input
           name="Treatment"
           value={formDatas.Treatment}
           onChange={handleChange}
         />
       </td>
       <td>
-        <input
-          type="text"
-          name="Notes"
-          value={formDatas.Notes}
-          onChange={handleChange}
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <SignCellForm />
     </tr>

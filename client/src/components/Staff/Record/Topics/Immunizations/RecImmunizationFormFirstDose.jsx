@@ -1,21 +1,12 @@
 import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-  routeCT,
-  siteCT,
-  ynIndicatorsimpleCT,
-} from "../../../../../omdDatas/codesTables";
-import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
-  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
-import CancelButton from "../../../../UI/Buttons/CancelButton";
-import SubmitButton from "../../../../UI/Buttons/SubmitButton";
-import GenericCombo from "../../../../UI/Lists/GenericCombo";
-import GenericList from "../../../../UI/Lists/GenericList";
+import FormRecImmunization from "./FormRecImmunization";
 
 const RecImmunizationFormFirstDose = ({
   setFormVisible,
@@ -117,119 +108,17 @@ const RecImmunizationFormFirstDose = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="recimmunizations-form">
-      {errMsgPost && <p className="immunizations__err">{errMsgPost}</p>}
-      <div className="recimmunizations-form__row">
-        <label>Immunization type: </label>
-        <p>{type}</p>
-      </div>
-      <div className="recimmunizations-form__row">
-        <label htmlFor="recimmunization-brand-name">
-          Immunization brand name:{" "}
-        </label>
-        <input
-          type="text"
-          name="ImmunizationName"
-          onChange={handleChange}
-          value={formDatas.ImmunizationName}
-          autoComplete="off"
-          id="recimmunization-brand-name"
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label htmlFor="recimmunization-manufacturer">Manufacturer: </label>
-        <input
-          type="text"
-          name="Manufacturer"
-          onChange={handleChange}
-          value={formDatas.Manufacturer}
-          autoComplete="off"
-          id="recimmunization-manufacturer"
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label htmlFor="recimmunization-lot">Lot#: </label>
-        <input
-          type="text"
-          name="LotNumber"
-          onChange={handleChange}
-          value={formDatas.LotNumber}
-          autoComplete="off"
-          id="recimmunization-lot"
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label>Route: </label>
-        <GenericCombo
-          list={routeCT}
-          value={formDatas.Route}
-          handleChange={handleRouteChange}
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label>Site: </label>
-        <GenericCombo
-          list={siteCT}
-          value={formDatas.Site}
-          handleChange={handleSiteChange}
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label htmlFor="recimmunization-dose">Dose: </label>
-        <input
-          type="text"
-          name="Dose"
-          onChange={handleChange}
-          value={formDatas.Dose}
-          autoComplete="off"
-          id="recimmunization-dose"
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label htmlFor="recimmunization-date">Date: </label>
-        <input
-          type="date"
-          name="Date"
-          onChange={handleChange}
-          value={timestampToDateISOTZ(formDatas.Date)}
-          autoComplete="off"
-          id="recimmunization-date"
-        />
-      </div>
-      <div className="recimmunizations-form__row">
-        <label>Refused: </label>
-        <GenericList
-          list={ynIndicatorsimpleCT}
-          name="RefusedFlag"
-          handleChange={handleChange}
-          value={formDatas.RefusedFlag.ynIndicatorsimple}
-        />
-      </div>
-      <div className="recimmunizations-form__row recimmunizations-form__row--text">
-        <label htmlFor="recimmunization-instructions">Instructions: </label>
-        <textarea
-          name="Instructions"
-          onChange={handleChange}
-          value={formDatas.Instructions}
-          autoComplete="off"
-          id="recimmunization-instructions"
-        />
-      </div>
-      <div className="recimmunizations-form__row recimmunizations-form__row--text">
-        <label htmlFor="recimmunization-notes">Notes: </label>
-        <textarea
-          name="Notes"
-          onChange={handleChange}
-          value={formDatas.Notes}
-          autoComplete="off"
-          id="recimmunization-notes"
-        />
-      </div>
-      <div className="recimmunizations-form__btns">
-        <SubmitButton label="Save" disabled={progress} />
-        <CancelButton onClick={handleCancel} disabled={progress} />
-      </div>
-    </form>
+    <FormRecImmunization
+      formDatas={formDatas}
+      errMsgPost={errMsgPost}
+      type={type}
+      handleSubmit={handleSubmit}
+      handleChange={handleChange}
+      handleRouteChange={handleRouteChange}
+      handleSiteChange={handleSiteChange}
+      handleCancel={handleCancel}
+      progress={progress}
+    />
   );
 };
 

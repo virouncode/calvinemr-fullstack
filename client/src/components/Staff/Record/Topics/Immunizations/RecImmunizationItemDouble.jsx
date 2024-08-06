@@ -1,20 +1,12 @@
-import { DateTime } from "luxon";
 import { useState } from "react";
-import {
-    nowTZTimestamp,
-    timestampMonthsLaterTZ,
-    timestampToDateISOTZ,
-    timestampToDateMonthsLaterISOTZ,
-    timestampToDateYearsLaterISOTZ,
-    timestampYearsLaterTZ,
-} from "../../../../../utils/dates/formatDates";
-import { getImmunizationLogo } from "../../../../../utils/immunizations/getImmunizationLogo";
-import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import RecImmunizationEditFirstDose from "./RecImmunizationEditFirstDose";
 import RecImmunizationEditSecondDose from "./RecImmunizationEditSecondDose";
+import RecImmunizationFirstDoseLabel from "./RecImmunizationFirstDoseLabel";
 import RecImmunizationFormFirstDose from "./RecImmunizationFormFirstDose";
 import RecImmunizationFormSecondDose from "./RecImmunizationFormSecondDose";
+import RecImmunizationSecondDoseLabel from "./RecImmunizationSecondDoseLabel";
 
 const RecImmunizationItemDouble = ({
   age,
@@ -25,8 +17,6 @@ const RecImmunizationItemDouble = ({
   rangeStart,
   rangeEnd,
   patientId,
-  loadingPatient,
-  errPatient,
   topicPost,
   topicPut,
   topicDelete,
@@ -38,20 +28,6 @@ const RecImmunizationItemDouble = ({
   const [editVisibleFirstDose, setEditVisibleFirstDose] = useState(false);
   const [editVisibleSecondDose, setEditVisibleSecondDose] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
-
-  //STYLES
-  const INTERVAL_GRADE_7_STYLE = {
-    color:
-      timestampYearsLaterTZ(patientDob, 15) < nowTZTimestamp()
-        ? "orange"
-        : "black",
-  };
-  const INTERVAL_65_YEARS_STYLE = {
-    color:
-      timestampYearsLaterTZ(patientDob, 70) < nowTZTimestamp()
-        ? "orange"
-        : "black",
-  };
 
   //HANDLERS
   const handleCheckFirstDose = async (e) => {
@@ -88,57 +64,18 @@ const RecImmunizationItemDouble = ({
   return (
     <>
       <div className="recimmunizations-item__cell">
-        <input
-          type="checkbox"
-          onChange={handleCheckFirstDose}
-          name={type}
-          checked={isFirstDoseChecked()}
+        <Checkbox
           id="first-dose-checkbox"
+          name={type}
+          onChange={handleCheckFirstDose}
+          checked={isFirstDoseChecked()}
         />
-        {loadingPatient && <LoadingParagraph />}
-        {!loadingPatient &&
-        !errPatient &&
-        immunizationInfos.length &&
-        immunizationInfos.find(({ doseNumber }) => doseNumber === 1)?.Date ? (
-          <label
-            style={{
-              color:
-                immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                  .RefusedFlag.ynIndicatorsimple === "Y"
-                  ? "red"
-                  : "forestgreen",
-            }}
-            htmlFor="first-dose-checkbox"
-          >
-            {timestampToDateISOTZ(
-              immunizationInfos.find(({ doseNumber }) => doseNumber === 1).Date
-            )}{" "}
-            {getImmunizationLogo(type)}
-          </label>
-        ) : (
-          <label htmlFor="first-dose-checkbox">
-            {age === "Grade 7" &&
-              type !== "Tdap_pregnancy" && ( //not a pregnancy
-                <span style={INTERVAL_GRADE_7_STYLE}>
-                  Grade 7 to 12 &#40;til{" "}
-                  {timestampToDateYearsLaterISOTZ(patientDob, 15)}
-                  &#41;
-                </span>
-              )}
-            {age === "Grade 7" &&
-              type === "Tdap_pregnancy" &&
-              `One dose in every pregnancy, ideally between 27-32 weeks of gestation`}
-            {age === ">=34 Years" && `Every 10 Years`}
-            {age === "65 Years" && (
-              <span style={INTERVAL_65_YEARS_STYLE}>
-                {timestampToDateYearsLaterISOTZ(patientDob, 65)} to{" "}
-                {timestampToDateYearsLaterISOTZ(patientDob, 70)}
-              </span>
-            )}
-            {age === "6 Months" && `Every year in the fall *`}{" "}
-            {getImmunizationLogo(type)}
-          </label>
-        )}
+        <RecImmunizationFirstDoseLabel
+          immunizationInfos={immunizationInfos}
+          type={type}
+          age={age}
+          patientDob={patientDob}
+        />
         {formVisibleFirstDose && (
           <FakeWindow
             title={`NEW IMMUNIZATION (${type}, first dose)`}
@@ -193,118 +130,17 @@ const RecImmunizationItemDouble = ({
       <div className="recimmunizations-item__cell">
         {type !== "Tdap_pregnancy" && type !== "Inf" && type !== "Td" && (
           <>
-            <input
-              type="checkbox"
-              onChange={handleCheckSecondDose}
-              name={type}
-              checked={isSecondDoseChecked()}
-              disabled={
-                immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                  ? false
-                  : true
-              }
+            <Checkbox
               id="second-dose-checkbox"
+              name={type}
+              onChange={handleCheckSecondDose}
+              checked={isSecondDoseChecked()}
             />
-            {immunizationInfos.length === 2 &&
-            immunizationInfos.find(({ doseNumber }) => doseNumber === 2)
-              ?.Date ? (
-              <label
-                style={{
-                  color:
-                    immunizationInfos.find(({ doseNumber }) => doseNumber === 2)
-                      .RefusedFlag.ynIndicatorsimple === "Y"
-                      ? "red"
-                      : "forestgreen",
-                }}
-                htmlFor="second-dose-checkbox"
-              >
-                {timestampToDateISOTZ(
-                  immunizationInfos.find(({ doseNumber }) => doseNumber === 2)
-                    .Date
-                )}{" "}
-                {getImmunizationLogo(type)}
-              </label>
-            ) : (
-              <label htmlFor="second-dose-checkbox">
-                <span style={{ color: "black" }}>
-                  {age === "Grade 7" &&
-                    (immunizationInfos.length &&
-                    immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                      ?.Date ? (
-                      <span
-                        style={{
-                          color:
-                            timestampMonthsLaterTZ(
-                              immunizationInfos.find(
-                                ({ doseNumber }) => doseNumber === 1
-                              )?.Date,
-                              7
-                            ) <
-                            DateTime.local({
-                              zone: "America/Toronto",
-                            }).toMillis()
-                              ? "orange"
-                              : "black",
-                        }}
-                      >
-                        {timestampToDateMonthsLaterISOTZ(
-                          immunizationInfos.find(
-                            ({ doseNumber }) => doseNumber === 1
-                          )?.Date,
-                          6
-                        ) +
-                          " to " +
-                          timestampToDateMonthsLaterISOTZ(
-                            immunizationInfos.find(
-                              ({ doseNumber }) => doseNumber === 1
-                            )?.Date,
-                            7
-                          )}
-                      </span>
-                    ) : (
-                      `6 months after`
-                    ))}
-                  {age === "65 Years" &&
-                    (immunizationInfos.length &&
-                    immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                      ?.Date ? (
-                      <span
-                        style={{
-                          color:
-                            timestampMonthsLaterTZ(
-                              immunizationInfos.find(
-                                ({ doseNumber }) => doseNumber === 1
-                              )?.Date,
-                              7
-                            ) <
-                            DateTime.local({
-                              zone: "America/Toronto",
-                            }).toMillis()
-                              ? "orange"
-                              : "black",
-                        }}
-                      >
-                        {timestampToDateMonthsLaterISOTZ(
-                          immunizationInfos.find(
-                            ({ doseNumber }) => doseNumber === 1
-                          )?.Date,
-                          2
-                        ) +
-                          " to " +
-                          timestampToDateMonthsLaterISOTZ(
-                            immunizationInfos.find(
-                              ({ doseNumber }) => doseNumber === 1
-                            )?.Date,
-                            7
-                          )}
-                      </span>
-                    ) : (
-                      `2 to 6 months after`
-                    ))}
-                </span>{" "}
-                {getImmunizationLogo(type)}
-              </label>
-            )}
+            <RecImmunizationSecondDoseLabel
+              immunizationInfos={immunizationInfos}
+              type={type}
+              age={age}
+            />
           </>
         )}
         {formVisibleSecondDose && (

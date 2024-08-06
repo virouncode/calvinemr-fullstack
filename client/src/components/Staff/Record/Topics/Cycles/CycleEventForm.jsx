@@ -4,6 +4,8 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import IvfMedsList from "../../../../UI/Lists/IvfMedsList";
 
 const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
@@ -73,64 +75,37 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <Button onClick={handleRemove} label="Remove" />
       </td>
       <td>
-        <input
+        <InputDate
           name="date"
-          type="date"
           value={timestampToDateISOTZ(item.date)}
           onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "110px" }}
+          width={110}
         />
       </td>
       <td>
-        <input
+        <Input
           name="day_of_cycle"
-          type="text"
           value={item.day_of_cycle}
           onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "60px" }}
+          width={60}
         />
       </td>
       <td>
-        <input
+        <Input
           name="endometrial_thickness"
-          type="text"
           value={item.endometrial_thickness}
           onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "60px" }}
+          width={60}
         />
       </td>
       <td>
-        <input
-          name="e2"
-          type="text"
-          value={item.e2}
-          onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "60px" }}
-        />
+        <Input name="e2" value={item.e2} onChange={handleChange} width={60} />
       </td>
       <td>
-        <input
-          name="lh"
-          type="text"
-          value={item.lh}
-          onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "60px" }}
-        />
+        <Input name="lh" value={item.lh} onChange={handleChange} width={60} />
       </td>
       <td>
-        <input
-          name="p4"
-          type="text"
-          value={item.p4}
-          onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "60px" }}
-        />
+        <Input name="p4" value={item.p4} onChange={handleChange} width={60} />
       </td>
       <td>
         <textarea
@@ -158,12 +133,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="1"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_1.notes}
           onChange={(e) => handleChangeMedNotes(e, "1")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -172,12 +145,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="2"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_2.notes}
           onChange={(e) => handleChangeMedNotes(e, "2")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -186,12 +157,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="3"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_3.notes}
           onChange={(e) => handleChangeMedNotes(e, "3")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -200,12 +169,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="4"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_4.notes}
           onChange={(e) => handleChangeMedNotes(e, "4")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -214,12 +181,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="5"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_5.notes}
           onChange={(e) => handleChangeMedNotes(e, "5")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -228,12 +193,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="6"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_6.notes}
           onChange={(e) => handleChangeMedNotes(e, "6")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
       <td>
@@ -242,12 +205,10 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
           handleChange={handleChangeMedName}
           med_number="7"
         />
-        <input
-          type="text"
+        <Input
           value={item.med_7.notes}
           onChange={(e) => handleChangeMedNotes(e, "7")}
-          autoComplete="off"
-          style={{ marginTop: "5px" }}
+          mt={5}
         />
       </td>
     </tr>

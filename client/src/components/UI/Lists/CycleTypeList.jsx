@@ -1,4 +1,3 @@
-
 import { Combobox } from "react-widgets";
 const cycleType = [
   "Natural/Investigative",
@@ -20,14 +19,17 @@ const cycleType = [
   "Split Fertilization - Oocyte cryopreservation",
 ];
 
-const CycleTypeList = ({ handleChange, value }) => {
+const CycleTypeList = ({ handleChange, value, label }) => {
   return (
-    <Combobox
-      placeholder="Choose or type..."
-      value={value}
-      onChange={(value) => handleChange(value)}
-      data={cycleType}
-    />
+    <>
+      {label && <label htmlFor="cycle_type">{label}</label>}
+      <Combobox
+        placeholder="Choose or type..."
+        value={value}
+        onChange={(value) => handleChange(value)}
+        data={cycleType}
+      />
+    </>
   );
 };
 

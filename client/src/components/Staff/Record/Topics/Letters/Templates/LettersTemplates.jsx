@@ -5,6 +5,7 @@ import EmptyLi from "../../../../../UI/Lists/EmptyLi";
 
 import { useLettersTemplates } from "../../../../../../hooks/reactquery/queries/lettersTemplatesQueries";
 import Button from "../../../../../UI/Buttons/Button";
+import Input from "../../../../../UI/Inputs/Input";
 import LoadingLi from "../../../../../UI/Lists/LoadingLi";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import LetterTemplateForm from "./LetterTemplateForm";
@@ -50,14 +51,12 @@ const LettersTemplates = ({ handleSelectTemplate }) => {
         />
       </div>
       <div className="letters__templates-search">
-        <label htmlFor="template-search">Search</label>
-        <input
-          style={{ width: "300px" }}
+        <Input
+          label="Search"
+          width={300}
           id="template-search"
-          type="text"
           value={search}
           onChange={handleSearch}
-          autoComplete="off"
           placeholder="Template name, author name,..."
         />
       </div>

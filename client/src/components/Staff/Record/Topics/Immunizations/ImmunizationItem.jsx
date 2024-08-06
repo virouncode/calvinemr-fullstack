@@ -4,7 +4,6 @@ import {
   immunizationTypeCT,
   routeCT,
   siteCT,
-  toCodeTableName,
   ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
@@ -19,8 +18,10 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
-import GenericList from "../../../../UI/Lists/GenericList";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 import ImmunizationCombo from "./ImmunizationCombo";
 
@@ -157,43 +158,28 @@ const ImmunizationItem = ({
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ImmunizationName"
-              type="text"
-              value={itemInfos.ImmunizationName}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.ImmunizationName
-          )}
+          <InputTextToggle
+            value={itemInfos.ImmunizationName}
+            onChange={handleChange}
+            name="ImmunizationName"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Manufacturer"
-              type="text"
-              value={itemInfos.Manufacturer}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Manufacturer
-          )}
+          <InputTextToggle
+            value={itemInfos.Manufacturer}
+            onChange={handleChange}
+            name="Manufacturer"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="LotNumber"
-              type="text"
-              value={itemInfos.LotNumber}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.LotNumber
-          )}
+          <InputTextToggle
+            value={itemInfos.LotNumber}
+            onChange={handleChange}
+            name="LotNumber"
+            editVisible={editVisible}
+          />
         </td>
         <td>
           {editVisible ? (
@@ -203,7 +189,7 @@ const ImmunizationItem = ({
               handleChange={handleRouteChange}
             />
           ) : (
-            item.Route
+            <p>{item.Route}</p>
           )}
         </td>
         <td>
@@ -214,75 +200,49 @@ const ImmunizationItem = ({
               handleChange={handleSiteChange}
             />
           ) : (
-            item.Site
+            <p>{item.Site}</p>
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Dose"
-              type="text"
-              value={itemInfos.Dose}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Dose
-          )}
+          <InputTextToggle
+            value={itemInfos.Dose}
+            onChange={handleChange}
+            name="Dose"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Date"
-              type="date"
-              value={timestampToDateISOTZ(itemInfos.Date)}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            timestampToDateISOTZ(item.Date)
-          )}
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.Date)}
+            onChange={handleChange}
+            name="Date"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={ynIndicatorsimpleCT}
-              name="RefusedFlag"
-              handleChange={handleChange}
-              value={itemInfos.RefusedFlag.ynIndicatorsimple}
-            />
-          ) : (
-            toCodeTableName(
-              ynIndicatorsimpleCT,
-              item.RefusedFlag.ynIndicatorsimple
-            )
-          )}
+          <GenericListToggle
+            list={ynIndicatorsimpleCT}
+            name="RefusedFlag"
+            handleChange={handleChange}
+            value={itemInfos.RefusedFlag.ynIndicatorsimple}
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Instructions"
-              type="text"
-              value={itemInfos.Instructions}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Instructions
-          )}
+          <InputTextToggle
+            value={itemInfos.Instructions}
+            onChange={handleChange}
+            name="Instructions"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="Notes"
-              type="text"
-              value={itemInfos.Notes}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.Notes
-          )}
+          <InputTextToggle
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            name="Notes"
+            editVisible={editVisible}
+          />
         </td>
         <SignCell item={item} />
       </tr>

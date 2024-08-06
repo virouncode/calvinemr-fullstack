@@ -6,6 +6,9 @@ import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper"
 import { doctorSchema } from "../../../../../validation/record/doctorValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputEmail from "../../../../UI/Inputs/InputEmail";
+import InputTel from "../../../../UI/Inputs/InputTel";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
@@ -137,67 +140,45 @@ const FamilyDoctorForm = ({
         </div>
       </td>
       <td>
-        <input
+        <Input
           name="lastName"
-          type="text"
           value={formDatas.lastName}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="firstName"
-          type="text"
           value={formDatas.firstName}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="speciality"
-          type="text"
           value={formDatas.speciality}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="licence_nbr"
-          type="text"
           value={formDatas.licence_nbr}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="ohip_billing_nbr"
-          type="text"
           value={formDatas.ohip_billing_nbr}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
-          name="line1"
-          type="text"
-          value={formDatas.line1}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="line1" value={formDatas.line1} onChange={handleChange} />
       </td>
       <td>
-        <input
-          name="city"
-          type="text"
-          value={formDatas.city}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="city" value={formDatas.city} onChange={handleChange} />
       </td>
       <td>
         <GenericList
@@ -219,46 +200,38 @@ const FamilyDoctorForm = ({
           <option value="postal">Postal</option>
           <option value="zip">Zip</option>
         </select>
-        <input
+        <Input
           name="postalZipCode"
-          type="text"
           value={
             postalOrZip === "postal" ? formDatas.postalCode : formDatas.zipCode
           }
           onChange={handleChange}
-          autoComplete="off"
           placeholder={
             postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
           }
         />
       </td>
       <td>
-        <input
+        <InputTel
           name="phone"
-          type="text"
           value={formDatas.phone}
           onChange={handleChange}
-          autoComplete="off"
           placeholder="xxx-xxx-xxxx"
         />
       </td>
       <td>
-        <input
+        <InputTel
           name="fax"
-          type="text"
           value={formDatas.fax}
           onChange={handleChange}
-          autoComplete="off"
           placeholder="xxx-xxx-xxxx"
         />
       </td>
       <td>
-        <input
+        <InputEmail
           name="email"
-          type="text"
           value={formDatas.email}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <SignCellForm />

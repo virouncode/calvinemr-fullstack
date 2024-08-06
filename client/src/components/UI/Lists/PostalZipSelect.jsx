@@ -1,7 +1,7 @@
-const PostalZipSelect = ({ onChange, postalOrZip }) => {
+const PostalZipSelect = ({ onChange, postalOrZip, label = true }) => {
   return (
     <>
-      <label htmlFor="postalZipCode">Postal/zip code*:</label>
+      {label && <label htmlFor="postalZipCode">Postal/Zip code*:</label>}
       <select
         style={{ width: "15%", marginRight: "10px" }}
         name="PostalOrZip"

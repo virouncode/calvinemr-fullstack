@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 import Button from "../../../../../UI/Buttons/Button";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
+import Input from "../../../../../UI/Inputs/Input";
+import InputDate from "../../../../../UI/Inputs/InputDate";
 import SiteSelect from "../../../../EventForm/SiteSelect";
 import LetterAddAttachments from "./LetterAddAttachments";
 import LetterAddPatientRecords from "./LetterAddPatientRecords";
@@ -68,33 +70,33 @@ const LetterOptions = ({
 
   return (
     <div className="letter__options">
-      <SiteSelect
-        handleSiteChange={handleSiteChange}
-        sites={sites}
-        value={siteSelectedId}
-      />
+      <div className="letter__options-site">
+        <SiteSelect
+          handleSiteChange={handleSiteChange}
+          sites={sites}
+          value={siteSelectedId}
+          label="Site"
+        />
+      </div>
       <div className="letter__options-name">
-        <label htmlFor="letter-name">Name</label>
-        <input
-          type="text"
+        <Input
+          label="Name"
           value={name}
           onChange={handleNameChange}
           id="letter-name"
         />
       </div>
       <div className="letter__options-date">
-        <label htmlFor="letter-date">Date</label>
-        <input
-          type="date"
+        <InputDate
+          label="Date"
           value={date}
           onChange={handleDateChange}
           id="letter-date"
         />
       </div>
       <div className="letter__options-description">
-        <label htmlFor="letter-description">Description</label>
-        <input
-          type="text"
+        <Input
+          label="Description"
           value={description}
           onChange={handleDescriptionChange}
           id="letter-description"

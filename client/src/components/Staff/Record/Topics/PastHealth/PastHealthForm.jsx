@@ -9,6 +9,7 @@ import {
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pastHealthSchema } from "../../../../../validation/record/pastHealthValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 
@@ -98,13 +99,7 @@ const PastHealthForm = ({
     >
       <td>
         <div className="pasthealth__form-btn-container">
-          <input
-            type="submit"
-            value="Save"
-            onClick={handleSubmit}
-            disabled={progress}
-            className="save-btn"
-          />
+          <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </td>

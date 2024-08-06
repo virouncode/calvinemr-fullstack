@@ -16,6 +16,8 @@ import { toDurationText } from "../../../../../../utils/dates/toDurationText";
 import { toPrescriptionInstructions } from "../../../../../../utils/medications/toPrescriptionInstructions";
 import { medTemplateSchema } from "../../../../../../validation/record/medTemplateValidation";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
+import SaveButton from "../../../../../UI/Buttons/SaveButton";
+import Input from "../../../../../UI/Inputs/Input";
 import GenericCombo from "../../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../../UI/Lists/GenericList";
 import DurationPickerLong from "../../../../../UI/Pickers/DurationPickerLong";
@@ -97,6 +99,8 @@ const MedTemplateForm = ({ setNewVisible }) => {
     setErrMsg("");
     let value = e.target.value;
     const name = e.target.name;
+    console.log(value, name);
+
     switch (name) {
       case "Strength":
         setFormDatas({
@@ -261,6 +265,7 @@ const MedTemplateForm = ({ setNewVisible }) => {
         });
         break;
       default:
+        setFormDatas({ ...formDatas, [name]: value });
         break;
     }
   };
@@ -464,95 +469,84 @@ const MedTemplateForm = ({ setNewVisible }) => {
     <div className="med-templates__form">
       {errMsg && <div className="med-templates__form-err">{errMsg}</div>}
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-drug-number">
-          Drug identification number
-        </label>
-        <input
+        <Input
+          label="Drug identification number"
           name="DrugIdentificationNumber"
-          type="text"
           value={formDatas.DrugIdentificationNumber}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-drug-number"
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-drug-name">Drug name*</label>
-        <input
+        <Input
+          label="Drug name*"
           name="DrugName"
-          type="text"
           value={formDatas.DrugName}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-drug-name"
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-strength">Strength*</label>
-        <input
+        <Input
+          label="Strength*"
           name="Strength"
-          type="text"
           value={formDatas.Strength.Amount}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-strength"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Strength unit of measure*</label>
         <GenericCombo
           list={strengthUnitCT}
           value={formDatas.Strength.UnitOfMeasure}
           handleChange={handleStrengthUnitChange}
+          label="Strength unit of measure*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Form*</label>
         <GenericCombo
           list={formCT}
           value={formDatas.Form}
           handleChange={handleFormChange}
+          label="Form*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-dosage">Dosage*</label>
-        <input
+        <Input
+          label="Dosage*"
           name="Dosage"
-          type="text"
           value={formDatas.Dosage}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-dosage"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Dosage unit of measure*</label>
         <GenericCombo
           list={dosageUnitCT}
           value={formDatas.DosageUnitOfMeasure}
           handleChange={handleDosageUnitChange}
+          label="Dosage unit of measure*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Route*</label>
         <GenericCombo
           list={routeCT}
           value={formDatas.Route}
           handleChange={handleRouteChange}
+          label="Route*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Frequency*</label>
         <GenericCombo
           list={frequencyCT}
           value={formDatas.Frequency}
           handleChange={handleFrequencyChange}
+          label="Frequency*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Duration*</label>
         <DurationPickerLong
-          title={false}
+          label="Duration"
           durationYears={formDatas.duration.Y}
           durationMonths={formDatas.duration.M}
           durationWeeks={formDatas.duration.W}
@@ -561,20 +555,17 @@ const MedTemplateForm = ({ setNewVisible }) => {
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-quantity">Quantity</label>
-        <input
+        <Input
+          label="Quantity"
           name="Quantity"
-          type="text"
           value={formDatas.Quantity}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-quantity"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Refill duration</label>
         <DurationPickerLong
-          title={false}
+          label="Refill duration"
           durationYears={formDatas.refill_duration.Y}
           durationMonths={formDatas.refill_duration.M}
           durationWeeks={formDatas.refill_duration.W}
@@ -583,45 +574,41 @@ const MedTemplateForm = ({ setNewVisible }) => {
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-refill-quantity">Refill quantity</label>
-        <input
+        <Input
+          label="Refill quantity"
           name="RefillQuantity"
-          type="text"
           value={formDatas.RefillQuantity}
           onChange={handleChange}
-          autoComplete="off"
           id="med-template-refill-quantity"
         />
       </div>
       <div className="med-templates__form-row">
-        <label htmlFor="med-template-nbr-refill">Number of refills</label>
-        <input
+        <Input
+          label="Number of refills"
           name="NumberOfRefills"
-          type="text"
           value={formDatas.NumberOfRefills}
           onChange={handleChange}
-          autoComplete="off"
-          id="med-template-nbr-refill"
+          id="med-template-nbr-refills"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Long-term medication*</label>
         <GenericList
           name="LongTermMedication"
           list={ynIndicatorsimpleCT}
           value={formDatas.LongTermMedication.ynIndicatorsimple}
           handleChange={handleChange}
           placeHolder="Choose..."
+          label="Long-term medication*"
         />
       </div>
       <div className="med-templates__form-row">
-        <label>Substitution allowed*</label>
         <GenericList
           name="SubstitutionNotAllowed"
           list={ynIndicatorsimpleCT}
           value={formDatas.SubstitutionNotAllowed === "Y" ? "N" : "Y"}
           handleChange={handleChange}
           placeHolder="Choose..."
+          label="Substitution allowed*"
         />
       </div>
       <div className="med-templates__form-row med-templates__form-row--text">
@@ -640,23 +627,18 @@ const MedTemplateForm = ({ setNewVisible }) => {
           placement="top-start"
           arrow
         >
-          <label>Instructions*</label>
+          <label htmlFor="med-template-instructions">Instructions*</label>
         </Tooltip>
         <textarea
           className="med-templates__form-instructions"
           value={formDatas.PrescriptionInstructions}
           onChange={handleChange}
           name="PrescriptionInstructions"
+          id="med-template-instructions"
         />
       </div>
       <div className="med-templates__form-btn-container">
-        <input
-          type="submit"
-          value="Save"
-          disabled={progress}
-          onClick={handleSubmit}
-          className="save-btn"
-        />
+        <SaveButton onClick={handleSubmit} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
     </div>

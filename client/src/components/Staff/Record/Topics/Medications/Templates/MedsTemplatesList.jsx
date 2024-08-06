@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useIntersection from "../../../../../../hooks/useIntersection";
 import Button from "../../../../../UI/Buttons/Button";
+import Input from "../../../../../UI/Inputs/Input";
 import EmptyLi from "../../../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
@@ -53,15 +54,14 @@ const MedsTemplatesList = ({
         />
       </div>
       <div className="med-templates__search">
-        <label htmlFor="med-template-search">Search</label>
-        <input
+        <Input
+          label="Search"
           placeholder="Drug name, author name..."
-          type="text"
           value={search}
           onChange={handleSearch}
           autoFocus
-          autoComplete="off"
           id="med-template-search"
+          width={300}
         />
       </div>
       <div className="med-templates__allergies">

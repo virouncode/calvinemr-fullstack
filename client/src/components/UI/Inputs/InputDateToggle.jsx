@@ -8,6 +8,7 @@ const InputDateToggle = ({
   disabled = false,
   editVisible,
   min = "1800-01-01",
+  max = "3000-01-01",
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const InputDateToggle = ({
           style={{ width: width ? `${width}px` : "" }}
           disabled={disabled}
           min={min}
+          max={max}
         />
       ) : (
         <p>{value}</p>

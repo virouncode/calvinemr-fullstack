@@ -6,12 +6,14 @@ const Checkbox = ({
   checked,
   disabled,
   label,
+  labelSide = "right",
   mr = 5,
   className = "",
   accentColor = "",
 }) => {
   return (
     <>
+      {label && labelSide === "left" && <label htmlFor={id}>{label}</label>}
       <input
         type="checkbox"
         onChange={onChange}
@@ -23,7 +25,7 @@ const Checkbox = ({
         name={name}
         className={className}
       />
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && labelSide === "right" && <label htmlFor={id}>{label}</label>}
     </>
   );
 };

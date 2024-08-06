@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   immunizationTypeCT,
@@ -12,13 +11,15 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
+import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import GenericComboImmunization from "./ImmunizationCombo";
 
 const ImmunizationForm = ({
@@ -30,7 +31,6 @@ const ImmunizationForm = ({
   topicPost,
 }) => {
   const { user } = useUserContext();
-  const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState({
     patient_id: patientId,
     ImmunizationType: "",
@@ -129,30 +129,24 @@ const ImmunizationForm = ({
         />
       </td>
       <td>
-        <input
+        <Input
           name="ImmunizationName"
-          type="text"
           value={formDatas.ImmunizationName}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="Manufacturer"
-          type="text"
           value={formDatas.Manufacturer}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
+        <Input
           name="LotNumber"
-          type="text"
           value={formDatas.LotNumber}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
@@ -170,21 +164,13 @@ const ImmunizationForm = ({
         />
       </td>
       <td>
-        <input
-          name="Dose"
-          type="text"
-          value={formDatas.Dose}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="Dose" value={formDatas.Dose} onChange={handleChange} />
       </td>
       <td>
-        <input
+        <InputDate
           name="Date"
-          type="date"
           value={timestampToDateISOTZ(formDatas.Date)}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
@@ -196,25 +182,16 @@ const ImmunizationForm = ({
         />
       </td>
       <td>
-        <input
+        <Input
           name="Instructions"
-          type="text"
           value={formDatas.Instructions}
           onChange={handleChange}
-          autoComplete="off"
         />
       </td>
       <td>
-        <input
-          name="Notes"
-          type="text"
-          value={formDatas.Notes}
-          onChange={handleChange}
-          autoComplete="off"
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
-      <td>{staffIdToTitleAndName(staffInfos, user.id)}</td>
-      <td>{timestampToDateISOTZ(nowTZTimestamp())}</td>
+      <SignCellForm />
     </tr>
   );
 };

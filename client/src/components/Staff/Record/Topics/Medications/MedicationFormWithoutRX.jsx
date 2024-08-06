@@ -1,10 +1,9 @@
 import { Tooltip } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useMedsTemplatePost } from "../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { useTopicPost } from "../../../../../hooks/reactquery/mutations/topicMutations";
 import { useMedsTemplates } from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
-import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import {
   dosageUnitCT,
   formCT,
@@ -24,14 +23,21 @@ import { medicationSchema } from "../../../../../validation/record/medicationVal
 import Button from "../../../../UI/Buttons/Button";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import SubmitButton from "../../../../UI/Buttons/SubmitButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import DurationPickerLong from "../../../../UI/Pickers/DurationPickerLong";
-import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import AllergiesList from "./AllergiesList";
 import MedsTemplatesList from "./Templates/MedsTemplatesList";
 
-const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
+const MedicationFormWithoutRX = ({
+  patientId,
+  setMedFormVisible,
+  allergies,
+}) => {
   //HOOKS
   const { user } = useUserContext();
   const [templatesVisible, setTemplatesVisible] = useState(false);
@@ -80,13 +86,6 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
   const [progressTemplates, setProgressTemplates] = useState(false);
 
   const {
-    data: allergies,
-    isPending: isPendingAllergies,
-    error: errorAllergies,
-    fetchNextPage: fetchNextPageAllergies,
-  } = useTopic("ALLERGIES & ADVERSE REACTIONS", patientId);
-
-  const {
     data: templates,
     isPending: isPendingTemplates,
     error: errorTemplates,
@@ -97,17 +96,6 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
 
   const medTemplatePost = useMedsTemplatePost();
   const medPost = useTopicPost("MEDICATIONS & TREATMENTS", patientId);
-
-  useEffect(() => {
-    const fetchAllAllergies = async () => {
-      let hasMore = true;
-      while (hasMore) {
-        const response = await fetchNextPageAllergies();
-        hasMore = response.hasMore;
-      }
-    };
-    fetchAllAllergies();
-  }, [fetchNextPageAllergies]);
 
   //HANDLERS
   const handleSubmit = async (e) => {
@@ -577,8 +565,6 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
     });
   };
 
-  const allergiesDatas = allergies?.pages?.flatMap((page) => page.items);
-
   return (
     <form
       className="medications-form"
@@ -598,124 +584,97 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
           label="Use template"
         />
       </div>
-      {errMsg && <p className="medications-form__err">{errMsg}</p>}
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="medications-form__allergies">
-        <i
-          className="fa-solid fa-triangle-exclamation"
-          style={{ color: "#ff0000" }}
-        ></i>{" "}
-        Patient Allergies :{" "}
-        {isPendingAllergies ? (
-          <CircularProgressSmall />
-        ) : errorAllergies ? (
-          errorAllergies.message
-        ) : allergiesDatas && allergiesDatas.length > 0 ? (
-          allergiesDatas
-            .map((allergy) => allergy.OffendingAgentDescription)
-            .join(", ")
-        ) : (
-          "No allergies"
-        )}
+        <AllergiesList allergies={allergies} />
       </div>
       <div className="medications-form__container medications-form__container--norx">
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-drug-number">Start Date</label>
-          <input
-            type="date"
+          <InputDate
+            label="Start Date"
             value={timestampToDateISOTZ(formDatas.StartDate)}
             onChange={handleStartChange}
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-drug-number">
-            Drug identification number
-          </label>
-          <input
+          <Input
+            label="Drug identification number"
             name="DrugIdentificationNumber"
-            type="text"
             value={formDatas.DrugIdentificationNumber}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-drug-number"
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-drug-name">Drug name*</label>
-          <input
+          <Input
+            label="Drug name*"
             name="DrugName"
-            type="text"
             value={formDatas.DrugName}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-drug-name"
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-strength">Strength*</label>
-          <input
+          <Input
+            label="Strength*"
             name="Strength"
-            type="text"
             value={formDatas.Strength.Amount}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-strength"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Strength unit of measure*</label>
           <GenericCombo
             list={strengthUnitCT}
             value={formDatas.Strength.UnitOfMeasure}
             handleChange={handleStrengthUnitChange}
+            label="Strength unit of measure*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Form*</label>
           <GenericCombo
             list={formCT}
             value={formDatas.Form}
             handleChange={handleFormChange}
+            label="Form*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-dosage">Dosage*</label>
-          <input
+          <Input
+            label="Dosage*"
             name="Dosage"
-            type="text"
             value={formDatas.Dosage}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-dosage"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Dosage unit of measure*</label>
           <GenericCombo
             list={dosageUnitCT}
             value={formDatas.DosageUnitOfMeasure}
             handleChange={handleDosageUnitChange}
+            label="Dosage unit of measure*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Route*</label>
           <GenericCombo
             list={routeCT}
             value={formDatas.Route}
             handleChange={handleRouteChange}
+            label="Route*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Frequency*</label>
           <GenericCombo
             list={frequencyCT}
             value={formDatas.Frequency}
             handleChange={handleFrequencyChange}
+            label="Frequency*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Duration*</label>
           <DurationPickerLong
-            title={false}
+            label="Duration"
             durationYears={formDatas.duration.Y}
             durationMonths={formDatas.duration.M}
             durationWeeks={formDatas.duration.W}
@@ -724,20 +683,17 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-quantity">Quantity</label>
-          <input
+          <Input
+            label="Quantity"
             name="Quantity"
-            type="text"
             value={formDatas.Quantity}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-quantity"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Refill duration</label>
           <DurationPickerLong
-            title={false}
+            label="Refill duration"
             durationYears={formDatas.refill_duration.Y}
             durationMonths={formDatas.refill_duration.M}
             durationWeeks={formDatas.refill_duration.W}
@@ -746,45 +702,41 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-refill-quantity">Refill quantity</label>
-          <input
+          <Input
+            label="Refill quantity"
             name="RefillQuantity"
-            type="text"
             value={formDatas.RefillQuantity}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-refill-quantity"
           />
         </div>
         <div className="med-templates__form-row">
-          <label htmlFor="med-template-nbr-refills">Number of refills</label>
-          <input
+          <Input
+            label="Number of refills"
             name="NumberOfRefills"
-            type="text"
             value={formDatas.NumberOfRefills}
             onChange={handleChange}
-            autoComplete="off"
             id="med-template-nbr-refills"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Long-term medication*</label>
           <GenericList
             name="LongTermMedication"
             list={ynIndicatorsimpleCT}
             value={formDatas.LongTermMedication.ynIndicatorsimple}
             handleChange={handleChange}
             placeHolder="Choose..."
+            label="Long-term medication*"
           />
         </div>
         <div className="med-templates__form-row">
-          <label>Substitution allowed*</label>
           <GenericList
             name="SubstitutionNotAllowed"
             list={ynIndicatorsimpleCT}
             value={formDatas.SubstitutionNotAllowed === "Y" ? "N" : "Y"}
             handleChange={handleChange}
             placeHolder="Choose..."
+            label="Substitution allowed*"
           />
         </div>
         <div className="med-templates__form-row med-templates__form-row--text">
@@ -834,9 +786,7 @@ const MedicationFormWithoutRX = ({ patientId, setMedFormVisible }) => {
             isFetchingTemplates={isFetchingTemplates}
             search={search}
             handleSearch={handleSearch}
-            allergies={allergiesDatas}
-            errorAllergies={errorAllergies}
-            isPendingAllergies={isPendingAllergies}
+            allergies={allergies}
             handleSelectTemplate={handleSelectTemplate}
           />
         </FakeWindow>

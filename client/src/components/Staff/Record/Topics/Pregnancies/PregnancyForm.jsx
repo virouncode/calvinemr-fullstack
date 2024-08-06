@@ -11,6 +11,9 @@ import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstL
 import { pregnancySchema } from "../../../../../validation/record/pregnancyValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import Input from "../../../../UI/Inputs/Input";
+import InputDate from "../../../../UI/Inputs/InputDate";
+import InputNumber from "../../../../UI/Inputs/InputNumber";
 import PregnanciesList from "./PregnanciesList";
 
 const PregnancyForm = ({
@@ -117,22 +120,19 @@ const PregnancyForm = ({
         />
       </td>
       <td>
-        <input
+        <InputDate
           name="date_of_event"
-          type="date"
           value={timestampToDateISOTZ(formDatas.date_of_event)}
           onChange={handleChange}
-          className="pregnancies-form__input2"
+          width={120}
         />
       </td>
       <td>
-        <input
+        <Input
           name="premises"
-          type="text"
           value={formDatas.premises}
           onChange={handleChange}
-          autoComplete="off"
-          className="pregnancies-form__input1"
+          width={100}
         />
       </td>
       <td>
@@ -144,34 +144,28 @@ const PregnancyForm = ({
             width: "100%",
           }}
         >
-          <input
+          <InputNumber
             name="term_nbr_of_weeks"
-            type="number"
             value={formDatas.term_nbr_of_weeks}
             onChange={handleChange}
-            autoComplete="off"
-            className="pregnancies-form__input3"
+            width={50}
           />
           w
-          <input
+          <InputNumber
             name="term_nbr_of_days"
-            type="number"
             value={formDatas.term_nbr_of_days}
             onChange={handleChange}
-            autoComplete="off"
-            className="pregnancies-form__input3"
+            width={50}
           />
           d
         </div>
       </td>
       <td>
-        <input
+        <Input
           name="notes"
-          type="text"
           value={formDatas.notes}
           onChange={handleChange}
-          autoComplete="off"
-          className="pregnancies-form__input1"
+          width={100}
         />
       </td>
       <td>

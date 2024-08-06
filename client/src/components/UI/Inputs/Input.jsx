@@ -9,6 +9,7 @@ const Input = ({
   autoFocus = false,
   readOnly = false,
   className = "",
+  mt = 0,
 }) => {
   return (
     <>
@@ -20,7 +21,7 @@ const Input = ({
         name={name}
         id={id}
         autoComplete="off"
-        style={{ width: width ? `${width}px` : "" }}
+        style={{ width: width ? `${width}px` : "", marginTop: `${mt}px` }}
         placeholder={placeholder}
         autoFocus={autoFocus}
         readOnly={readOnly}

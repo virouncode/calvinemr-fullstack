@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../../hooks/reactquery/useFetchAllPages";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -40,6 +41,7 @@ const MedicationsPU = ({
     isPending: isPendingAllergies,
     error: errorAllergies,
     fetchNextPage: fetchNextPageAllergies,
+    hasNextPage: hasNextPageAllergies,
   } = useTopic("ALLERGIES & ADVERSE REACTIONS", patientId);
 
   //INTERSECTION OBSERVER
@@ -49,16 +51,7 @@ const MedicationsPU = ({
     isFetching
   );
 
-  useEffect(() => {
-    const fetchAllAllergies = async () => {
-      let hasMore = true;
-      while (hasMore) {
-        const response = await fetchNextPageAllergies();
-        hasMore = response.hasMore;
-      }
-    };
-    fetchAllAllergies();
-  }, [fetchNextPageAllergies]);
+  useFetchAllPages(fetchNextPageAllergies, hasNextPageAllergies);
 
   //HANDLERS
   const handleClose = async () => {
@@ -214,6 +207,9 @@ const MedicationsPU = ({
           <MedicationFormWithoutRX
             patientId={patientId}
             setMedFormVisible={setMedFormVisible}
+            allergies={
+              allergies ? allergies.pages.flatMap((page) => page.items) : []
+            }
           />
         </FakeWindow>
       )}

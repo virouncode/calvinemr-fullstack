@@ -1,4 +1,4 @@
-
+import Checkbox from "../../../../../UI/Checkbox/Checkbox";
 
 const LetterAddPatientRecords = ({ isTopicSelected, handleCheckTopic }) => {
   return (
@@ -8,54 +8,49 @@ const LetterAddPatientRecords = ({ isTopicSelected, handleCheckTopic }) => {
       </p>
       <ul className="letter__options-records-list">
         <li className="letter__options-item">
-          <input
-            type="checkbox"
-            checked={isTopicSelected("PAST HEALTH")}
-            onChange={handleCheckTopic}
-            name="PAST HEALTH"
+          <Checkbox
             id="past-health"
+            name="PAST HEALTH"
+            onChange={handleCheckTopic}
+            checked={isTopicSelected("PAST HEALTH")}
+            label="Past health"
           />
-          <label htmlFor="past-health">Past health</label>
         </li>
         <li className="letter__options-item">
-          <input
-            type="checkbox"
-            checked={isTopicSelected("FAMILY HISTORY")}
-            onChange={handleCheckTopic}
+          <Checkbox
+            id="am-history"
             name="FAMILY HISTORY"
-            id="fam-history"
+            onChange={handleCheckTopic}
+            checked={isTopicSelected("FAMILY HISTORY")}
+            label="Family history"
           />
-          <label htmlFor="fam-history">Family history</label>
         </li>
         <li className="letter__options-item">
-          <input
-            type="checkbox"
-            checked={isTopicSelected("MEDICATIONS & TREATMENTS")}
-            onChange={handleCheckTopic}
-            name="MEDICATIONS & TREATMENTS"
+          <Checkbox
             id="medications"
+            name="MEDICATIONS & TREATMENTS"
+            onChange={handleCheckTopic}
+            checked={isTopicSelected("MEDICATIONS & TREATMENTS")}
+            label="Active Meds"
           />
-          <label htmlFor="medications">Active Meds</label>
         </li>
         <li className="letter__options-item">
-          <input
-            type="checkbox"
-            checked={isTopicSelected("ALLERGIES & ADVERSE REACTIONS")}
-            onChange={handleCheckTopic}
-            name="ALLERGIES & ADVERSE REACTIONS"
+          <Checkbox
             id="allergies"
+            name="ALLERGIES & ADVERSE REACTIONS"
+            onChange={handleCheckTopic}
+            checked={isTopicSelected("ALLERGIES & ADVERSE REACTIONS")}
+            label="Allergies"
           />
-          <label htmlFor="allergies">Allergies</label>
         </li>
         <li className="letter__options-item">
-          <input
-            type="checkbox"
-            checked={isTopicSelected("PREGNANCIES")}
-            onChange={handleCheckTopic}
-            name="PREGNANCIES"
+          <Checkbox
             id="pregnancies"
+            name="PREGNANCIES"
+            onChange={handleCheckTopic}
+            checked={isTopicSelected("PREGNANCIES")}
+            label="Pregnancies"
           />
-          <label htmlFor="pregnancies">Pregnancies</label>
         </li>
       </ul>
     </div>

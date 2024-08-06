@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import {
-  provinceStateTerritoryCT,
-  toCodeTableName,
-} from "../../../../../omdDatas/codesTables";
+import { provinceStateTerritoryCT } from "../../../../../omdDatas/codesTables";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { doctorSchema } from "../../../../../validation/record/doctorValidation";
@@ -12,7 +9,11 @@ import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import GenericList from "../../../../UI/Lists/GenericList";
+import Input from "../../../../UI/Inputs/Input";
+import InputEmail from "../../../../UI/Inputs/InputEmail";
+import InputTelToggle from "../../../../UI/Inputs/InputTelToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCellMultipleTypes from "../../../../UI/Tables/SignCellMultipleTypes";
 
 const FamilyDoctorListItem = ({
@@ -221,108 +222,70 @@ const FamilyDoctorListItem = ({
           </div>
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="lastName"
-              type="text"
-              value={itemInfos.lastName}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.lastName
-          )}
+          <InputTextToggle
+            value={itemInfos.lastName}
+            onChange={handleChange}
+            name="lastName"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="firstName"
-              type="text"
-              value={itemInfos.firstName}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.firstName
-          )}
+          <InputTextToggle
+            value={itemInfos.firstName}
+            onChange={handleChange}
+            name="firstName"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="speciality"
-              value={itemInfos.speciality}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.speciality
-          )}
+          <InputTextToggle
+            value={itemInfos.speciality}
+            onChange={handleChange}
+            name="speciality"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              type="text"
-              name="licence_nbr"
-              value={itemInfos.licence_nbr}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.licence_nbr
-          )}
+          <InputTextToggle
+            value={itemInfos.licence_nbr}
+            onChange={handleChange}
+            name="licence_nbr"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="ohip_billing_nbr"
-              type="text"
-              value={itemInfos.ohip_billing_nbr}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            item.ohip_billing_nbr
-          )}
+          <InputTextToggle
+            value={itemInfos.ohip_billing_nbr}
+            onChange={handleChange}
+            name="ohip_billing_nbr"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="line1"
-              type="text"
-              value={itemInfos.line1}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.line1
-          )}
+          <InputTextToggle
+            value={itemInfos.line1}
+            onChange={handleChange}
+            name="line1"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="city"
-              type="text"
-              value={itemInfos.city}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.city
-          )}
+          <InputTextToggle
+            value={itemInfos.city}
+            onChange={handleChange}
+            name="city"
+            editVisible={editVisible}
+          />
         </td>
         <td>
-          {editVisible ? (
-            <GenericList
-              list={provinceStateTerritoryCT}
-              value={itemInfos.province}
-              name="province"
-              handleChange={handleChange}
-              noneOption={false}
-            />
-          ) : (
-            toCodeTableName(provinceStateTerritoryCT, itemInfos.province)
-          )}
+          <GenericListToggle
+            list={provinceStateTerritoryCT}
+            value={itemInfos.province}
+            name="province"
+            handleChange={handleChange}
+            noneOption={false}
+            editVisible={editVisible}
+          />
         </td>
         <td className="td--postal">
           {editVisible ? (
@@ -337,67 +300,50 @@ const FamilyDoctorListItem = ({
                 <option value="postal">Postal</option>
                 <option value="zip">Zip</option>
               </select>
-              <input
+              <Input
                 name="postalZipCode"
-                type="text"
                 value={
                   postalOrZip === "postal"
                     ? itemInfos.postalCode
                     : itemInfos.zipCode
                 }
                 onChange={handleChange}
-                autoComplete="off"
                 placeholder={
                   postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
                 }
               />
             </>
           ) : postalOrZip === "postal" ? (
-            itemInfos.postalCode
+            <p>{itemInfos.postalCode}</p>
           ) : (
-            itemInfos.zipCode
+            <p>{itemInfos.zipCode}</p>
           )}
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="phone"
-              type="text"
-              value={itemInfos.phone}
-              onChange={handleChange}
-              autoComplete="off"
-              placeholder="xxx-xxx-xxxx"
-            />
-          ) : (
-            itemInfos.phone
-          )}
+          <InputTelToggle
+            value={itemInfos.phone}
+            onChange={handleChange}
+            name="phone"
+            editVisible={editVisible}
+            placeholder="xxx-xxx-xxxx"
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="fax"
-              type="text"
-              value={itemInfos.fax}
-              onChange={handleChange}
-              autoComplete="off"
-              placeholder="xxx-xxx-xxxx"
-            />
-          ) : (
-            itemInfos.fax
-          )}
+          <InputTelToggle
+            value={itemInfos.fax}
+            onChange={handleChange}
+            name="fax"
+            editVisible={editVisible}
+            placeholder="xxx-xxx-xxxx"
+          />
         </td>
         <td>
-          {editVisible ? (
-            <input
-              name="email"
-              type="email"
-              value={itemInfos.email}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          ) : (
-            itemInfos.email
-          )}
+          <InputEmail
+            value={itemInfos.email}
+            onChange={handleChange}
+            name="email"
+            editVisible={editVisible}
+          />
         </td>
         <SignCellMultipleTypes item={item} />
       </tr>

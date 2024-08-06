@@ -2,6 +2,7 @@ import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
+import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import CycleTypeList from "../../../../UI/Lists/CycleTypeList";
@@ -113,7 +114,7 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
           <div className="cycles-form__cycle-infos-row">
             <div className="cycles-form__cycle-infos-item">
               <InputDate
-                lavel="LMP"
+                label="LMP"
                 value={timestampToDateISOTZ(formDatas.lmp)}
                 name="lmp"
                 id="lmp"
@@ -121,37 +122,37 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label>OHIP funded</label>
-              <input
-                type="checkbox"
+              <Checkbox
+                label="OHIP funded"
+                labelSide="left"
                 checked={formDatas.ohip_funded}
-                style={{ textAlign: "start", height: "15px" }}
                 name="ohip_funded"
                 onChange={handleChangeCheckbox}
+                mr={0}
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label>Cancelled</label>
-              <input
-                type="checkbox"
+              <Checkbox
+                label="Cancelled"
+                labelSide="left"
                 checked={formDatas.cancelled}
                 name="cancelled"
-                style={{ textAlign: "start", height: "15px" }}
                 onChange={handleChangeCheckbox}
+                mr={0}
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label>Cycle type</label>
               <CycleTypeList
                 value={formDatas.cycle_type}
                 handleChange={handleCycleTypeChange}
+                label="Cycle type"
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
-              <label>3rd party</label>
               <ThirdPartyList
                 value={formDatas.third_party}
                 handleChange={handleThirdPartyChange}
+                label="3rd party"
               />
             </div>
           </div>

@@ -3,6 +3,7 @@ import {
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
+import InputDate from "../../../../UI/Inputs/InputDate";
 
 const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
   const handleRemove = () => {
@@ -33,13 +34,11 @@ const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <Button onClick={handleRemove} label="Remove" />
       </td>
       <td style={{ width: "10%" }}>
-        <input
+        <InputDate
           name="date"
-          type="date"
           value={timestampToDateISOTZ(item.date)}
           onChange={handleChange}
-          autoComplete="off"
-          style={{ width: "110px" }}
+          width={110}
         />
       </td>
       <td style={{ width: "80%" }}>
