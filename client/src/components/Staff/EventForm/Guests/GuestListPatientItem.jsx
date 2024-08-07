@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import TrashIcon from "../../../UI/Icons/TrashIcon";
 
 const GuestListPatientItem = ({ patient, handleRemovePatientGuest }) => {
   return (
@@ -11,13 +12,12 @@ const GuestListPatientItem = ({ patient, handleRemovePatientGuest }) => {
         {toPatientName(patient)}
       </NavLink>
       <span>
-        <i
-          className="fa-solid fa-trash"
+        <TrashIcon
           onClick={(e) => handleRemovePatientGuest(e, patient)}
-          style={{ cursor: "pointer", marginLeft: "5px" }}
+          ml={5}
         />{" "}
         /
-      </span>{" "}
+      </span>
     </>
   );
 };

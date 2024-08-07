@@ -1,4 +1,4 @@
-import EyeButton from "../../UI/Buttons/EyeButton";
+import EyeIcon from "../../UI/Icons/EyeIcon";
 import Input from "../../UI/Inputs/Input";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import InputPassword from "../../UI/Inputs/InputPassword";
@@ -33,7 +33,7 @@ const LoginInputs = ({
               value={formDatas.password}
               label="Password"
             />
-            <EyeButton onClick={handleTogglePwd} />
+            <EyeIcon onClick={handleTogglePwd} />
           </>
         ) : (
           <>
@@ -44,7 +44,7 @@ const LoginInputs = ({
               value={formDatas.password}
               label="Password"
             />
-            <EyeButton onClick={handleTogglePwd} slash={true} />
+            <EyeIcon onClick={handleTogglePwd} slash={true} />
           </>
         )}
       </div>
@@ -58,7 +58,7 @@ const LoginInputs = ({
               value={formDatas.pin}
               label="PIN"
             />
-            <EyeButton onClick={handleTogglePin} />
+            <EyeIcon onClick={handleTogglePin} />
           </>
         ) : (
           <>
@@ -69,7 +69,7 @@ const LoginInputs = ({
               value={formDatas.pin}
               label="PIN"
             />
-            <EyeButton onClick={handleTogglePin} slash={true} />
+            <EyeIcon onClick={handleTogglePin} slash={true} />
           </>
         )}
       </div>

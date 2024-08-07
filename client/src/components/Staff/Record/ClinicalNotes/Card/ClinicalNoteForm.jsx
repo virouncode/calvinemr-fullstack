@@ -17,9 +17,11 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNoteValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
+import PaperclipIcon from "../../../../UI/Icons/PaperclipIcon";
 import Input from "../../../../UI/Inputs/Input";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
@@ -334,40 +336,27 @@ const ClinicalNoteForm = ({
             </div>
             <div>
               <label>
-                <strong>Attach files: </strong>
+                <strong>Attach files </strong>
               </label>
-              <i
-                className="fa-solid fa-paperclip"
-                style={{ cursor: "pointer" }}
-                onClick={handleAttach}
-              ></i>
+              <PaperclipIcon onClick={handleAttach} />
             </div>
           </div>
         </div>
         <div className="clinical-notes__form-body">
           {errMsg && <ErrorParagraph errorMsg={errMsg} />}
           {isListening ? (
-            <i
-              className="fa-solid fa-microphone"
+            <MicrophoneIcon
               onClick={handleStopSpeech}
-              style={{
-                cursor: "pointer",
-                color: "red",
-                position: "absolute",
-                top: "10px",
-                right: "30px",
-              }}
+              color="red"
+              top={10}
+              right={30}
             />
           ) : (
-            <i
-              className="fa-solid fa-microphone"
+            <MicrophoneIcon
               onClick={handleStartSpeech}
-              style={{
-                cursor: "pointer",
-                position: "absolute",
-                top: "10px",
-                right: "30px",
-              }}
+              color="black"
+              top={10}
+              right={30}
             />
           )}
           <textarea

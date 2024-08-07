@@ -1,6 +1,9 @@
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import CloneIcon from "../../../UI/Icons/CloneIcon";
+import PenIcon from "../../../UI/Icons/PenIcon";
+import TrashIcon from "../../../UI/Icons/TrashIcon";
 
 const BillingCodesTemplateDisplay = ({
   lastItemRef,
@@ -23,23 +26,11 @@ const BillingCodesTemplateDisplay = ({
       </span>
       {user.id === template.author_id && (
         <>
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginLeft: "5px" }}
-            onClick={handleEditClick}
-          ></i>
-          <i
-            className="fa-solid fa-trash"
-            onClick={handleDelete}
-            style={{ cursor: "pointer", marginLeft: "5px" }}
-          ></i>
+          <PenIcon ml={5} onClick={handleEditClick}></PenIcon>
+          <TrashIcon ml={5} onClick={handleDelete} />
         </>
       )}
-      <i
-        className="fa-solid fa-clone"
-        onClick={(e) => handleDuplicate(e, template)}
-        style={{ cursor: "pointer", marginLeft: "5px" }}
-      />
+      <CloneIcon onClick={(e) => handleDuplicate(e, template)} ml={5} />
     </li>
   );
 };

@@ -17,10 +17,14 @@ import {
 import { staffIdListToTitleAndName } from "../../../../utils/names/staffIdListToTitleAndName";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import DoneButton from "../../../UI/Buttons/DoneButton";
 import UndoneButton from "../../../UI/Buttons/UndoneButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
+import ExclamationIcon from "../../../UI/Icons/ExclamationIcon";
+import PaperclipIcon from "../../../UI/Icons/PaperclipIcon";
+import PenIcon from "../../../UI/Icons/PenIcon";
+import TrashIcon from "../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import EditTodo from "./EditTodo";
 
@@ -278,9 +282,7 @@ const MessageThumbnail = ({
         }
         onClick={handleMsgClick}
       >
-        {message.high_importance && (
-          <i className="fa-solid fa-circle-exclamation message-thumbnail__subject-exclamation" />
-        )}
+        {message.high_importance && <ExclamationIcon mr={5} />}
         <div
           className={
             section === "To-dos"
@@ -295,10 +297,7 @@ const MessageThumbnail = ({
           {message.subject} - {message.body}
         </div>
         {message.attachments_ids.length !== 0 && (
-          <i
-            className="fa-solid fa-paperclip message-thumbnail__subject-attachment"
-            style={{ marginLeft: "5px" }}
-          />
+          <PaperclipIcon ml={5} clickable={false} />
         )}
         {section === "To-dos" && (
           <div className="message-thumbnail__subject-btn">
@@ -344,19 +343,9 @@ const MessageThumbnail = ({
             : "message-thumbnail__logos message-thumbnail__logos--todo"
         }
       >
-        {section === "To-dos" && (
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginRight: "5px", cursor: "pointer" }}
-            onClick={handleEdit}
-          />
-        )}
+        {section === "To-dos" && <PenIcon mr={5} onClick={handleEdit} />}
         {section !== "Deleted messages" && (
-          <i
-            className="fa-solid fa-trash  message-thumbnail__trash"
-            style={{ cursor: "pointer" }}
-            onClick={handleDeleteMsg}
-          ></i>
+          <TrashIcon onClick={handleDeleteMsg} />
         )}
       </div>
       {editTodoVisible && (

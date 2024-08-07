@@ -11,8 +11,8 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import LinkButton from "../../../../UI/Buttons/LinkButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import TriangleClinicalButton from "../../../../UI/Buttons/TriangleClinicalButton";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
+import TriangleIcon from "../../../../UI/Icons/TriangleIcon";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 
@@ -33,9 +33,9 @@ const ClinicalNoteCardHeader = ({
   handleSaveClick,
   handleCancelClick,
   handleChange,
+  handleClinicalHeaderClick,
   setInputText,
   inputTextBeforeSpeech,
-  handleTriangleClinicalClick,
   addVisible,
   bodyRef,
   selectAll,
@@ -88,7 +88,7 @@ const ClinicalNoteCardHeader = ({
   return (
     <div
       className="clinical-notes__card-header"
-      onClick={handleTriangleClinicalClick}
+      onClick={handleClinicalHeaderClick}
     >
       <div className="clinical-notes__card-header-row">
         <div className="clinical-notes__card-author">
@@ -162,13 +162,7 @@ const ClinicalNoteCardHeader = ({
           )}
         </div>
         <div className="clinical-notes__card-triangle">
-          <TriangleClinicalButton
-            handleTriangleClick={handleTriangleClinicalClick}
-            color="dark"
-            className={
-              "triangle-clinical-notes  triangle-clinical-notes--active"
-            }
-          />
+          <TriangleIcon color="black" rotation={90} />
         </div>
       </div>
       <div className="clinical-notes__card-header-row">

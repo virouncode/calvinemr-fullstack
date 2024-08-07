@@ -6,6 +6,8 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import PrintButton from "../../../../UI/Buttons/PrintButton";
+import EnvelopeIcon from "../../../../UI/Icons/EnvelopeIcon";
+import PhoneIcon from "../../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import ClinicalNoteCardPrint from "./ClinicalNoteCardPrint";
@@ -46,7 +48,7 @@ const ClinicalNotesPrint = ({
 
   return (
     <div className="clinical-notes__print-page">
-      <p style={{ textAlign: "center" }}>
+      <p style={{ textAlign: "center", marginBottom: "10px" }}>
         <PrintButton
           onClick={handlePrint}
           className="clinical-notes__print-page-btn"
@@ -64,9 +66,8 @@ const ClinicalNotesPrint = ({
           {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
           {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
           {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart Nbr:{" "}
-          {demographicsInfos.ChartNumber},{" "}
-          <i className="fa-regular fa-envelope fa-sm"></i>{" "}
-          {demographicsInfos.Email}, <i className="fa-solid fa-phone fa-sm"></i>{" "}
+          {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
+          {demographicsInfos.Email}, <PhoneIcon />{" "}
           {
             demographicsInfos.PhoneNumber?.find(
               ({ _phoneNumberType }) => _phoneNumberType === "C"

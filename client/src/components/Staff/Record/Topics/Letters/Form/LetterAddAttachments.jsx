@@ -1,4 +1,5 @@
-
+import PaperclipIcon from "../../../../../UI/Icons/PaperclipIcon";
+import TrashIcon from "../../../../../UI/Icons/TrashIcon";
 import CircularProgressSmall from "../../../../../UI/Progress/CircularProgressSmall";
 
 const LetterAddAttachments = ({
@@ -11,11 +12,7 @@ const LetterAddAttachments = ({
     <div className="letter__options-attachments">
       <div className="letter__options-attachments-title">
         Add attachments
-        <i
-          className="fa-solid fa-paperclip"
-          onClick={handleAttach}
-          style={{ cursor: "pointer", marginLeft: "5px" }}
-        />
+        <PaperclipIcon onClick={handleAttach} ml={5} />
         {isLoadingFile && <CircularProgressSmall />}
         <div>
           {attachments
@@ -30,10 +27,9 @@ const LetterAddAttachments = ({
                 }}
               >
                 {attachment.alias}{" "}
-                <i
-                  className="fa-solid fa-trash"
+                <TrashIcon
                   onClick={(e) => handleRemoveAttachment(e, attachment.alias)}
-                  style={{ cursor: "pointer", marginLeft: "5px" }}
+                  ml={5}
                 />
                 ,
               </span>

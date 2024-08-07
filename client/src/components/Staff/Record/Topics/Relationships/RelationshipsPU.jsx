@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -66,9 +66,7 @@ const RelationshipsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="relationships__title">
-          Patient relationships <i className="fa-solid fa-people-group"></i>
-        </h1>
+        <h1 className="relationships__title">Patient relationships</h1>
         <LoadingParagraph />
       </>
     );
@@ -76,9 +74,7 @@ const RelationshipsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="relationships__title">
-          Patient relationships <i className="fa-solid fa-people-group"></i>
-        </h1>
+        <h1 className="relationships__title">Patient relationships</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -88,9 +84,7 @@ const RelationshipsPU = ({
 
   return (
     <>
-      <h1 className="relationships__title">
-        Patient relationships <i className="fa-solid fa-people-group"></i>
-      </h1>
+      <h1 className="relationships__title">Patient relationships</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="relationships__table-container" ref={rootRef}>

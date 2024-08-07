@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { confirmAlert } from "../components/All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
 
 const useRetrieveNewClinicalNote = (patientId, setAddVisible) => {
   const [newClinicalNoteInMemory, setNewClinicalNoteInMemory] = useState(null);

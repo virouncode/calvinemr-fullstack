@@ -27,10 +27,6 @@
 @import "./pages/faxPage";
 @import "./pages/patientPamphletsPage";
 @import "./pages/closedPage";
-@import "@fortawesome/fontawesome-free/css/fontawesome";
-@import "@fortawesome/fontawesome-free/css/brands";
-@import "@fortawesome/fontawesome-free/css/solid";
-@import "@fortawesome/fontawesome-free/css/regular";
 @import "./components/header";
 @import "./components/carousel";
 @import "./components/footer";
@@ -43,7 +39,7 @@
 @import "./components/filterCheckboxes";
 @import "./components/slotSelect";
 @import "./components/firstDaySelect";
-@import "./components/welcome";
+@import "./components/subheader";
 @import "./components/toggleView";
 @import "./components/patientSearchForm";
 @import "./components/staffSearchForm";

@@ -3,11 +3,11 @@ import NewWindow from "react-new-window";
 import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPut } from "../../../hooks/reactquery/mutations/messagesMutations";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesExternalPrintPU from "../../Staff/Messaging/External/MessagesExternalPrintPU";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
 import Button from "../../UI/Buttons/Button";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import MessagePatientDetailToolbar from "./MessagePatientDetailToolbar";
 import ReplyMessagePatient from "./ReplyMessagePatient";
 

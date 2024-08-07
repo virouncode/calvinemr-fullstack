@@ -3,12 +3,12 @@ import { Outlet } from "react-router-dom";
 import useTitleContext from "../../../hooks/context/useTitleContext";
 import useAutoLockScreen from "../../../hooks/useAutoLockScreen";
 import LockPage from "../../../pages/All/LockPage";
-import ConfirmGlobal from "../../All/Confirm/ConfirmGlobal";
-import Welcome from "../../All/Welcome/Welcome";
+import Subheader from "../../All/Subheader/Subheader";
+import ConfirmGlobal from "../../UI/Confirm/ConfirmGlobal";
+import CreditsDialog from "../../UI/Confirm/CreditsDialog";
 import ToastCalvin from "../../UI/Toast/ToastCalvin";
 import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
-import CreditsDialog from "../Confirm/CreditsDialog";
 import AdminHeader from "../Headers/AdminHeader";
 
 const AdminLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
@@ -45,7 +45,7 @@ const AdminLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
         setCreditsVisible={setCreditsVisible}
         setLockedScreen={setLockedScreen}
       />
-      <Welcome
+      <Subheader
         title={title}
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}

@@ -20,8 +20,8 @@ import {
 } from "../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewTodo from "../Internal/NewTodo";
 import ForwardMessageExternal from "./ForwardMessageExternal";

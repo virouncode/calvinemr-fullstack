@@ -13,11 +13,11 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CreditsDialog from "../Confirm/CreditsDialog";
+import CreditsDialog from "../../UI/Confirm/CreditsDialog";
 import LoginForm from "./LoginForm";
 
 const Login = () => {

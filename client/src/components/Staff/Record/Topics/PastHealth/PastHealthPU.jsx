@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -57,9 +57,7 @@ const PastHealthPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="pasthealth__title">
-          Patient past health <i className="fa-solid fa-laptop-medical"></i>
-        </h1>
+        <h1 className="pasthealth__title">Patient past health</h1>
         <LoadingParagraph />
       </>
     );
@@ -67,9 +65,7 @@ const PastHealthPU = ({
   if (error) {
     return (
       <>
-        <h1 className="pasthealth__title">
-          Patient past health <i className="fa-solid fa-laptop-medical"></i>
-        </h1>
+        <h1 className="pasthealth__title">Patient past health</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -78,9 +74,7 @@ const PastHealthPU = ({
 
   return (
     <>
-      <h1 className="pasthealth__title">
-        Patient past health <i className="fa-solid fa-laptop-medical"></i>
-      </h1>
+      <h1 className="pasthealth__title">Patient past health</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pasthealth__table-container" ref={rootRef}>
         <table className="pasthealth__table">

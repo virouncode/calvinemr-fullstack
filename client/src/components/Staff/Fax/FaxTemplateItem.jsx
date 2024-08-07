@@ -7,7 +7,10 @@ import {
 } from "../../../hooks/reactquery/mutations/faxesTemplatesMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import CloneIcon from "../../UI/Icons/CloneIcon";
+import PenIcon from "../../UI/Icons/PenIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import FaxTemplateEdit from "./FaxTemplateEdit";
 
@@ -66,24 +69,12 @@ const FaxTemplateItem = ({
         </span>
         <>
           {template.author_id === user.id && (
-            <i
-              className="fa-regular fa-pen-to-square"
-              style={{ cursor: "pointer", marginLeft: "5px" }}
-              onClick={handleEditClick}
-            ></i>
+            <PenIcon ml={5} onClick={handleEditClick} />
           )}
           {template.author_id === user.id && (
-            <i
-              className="fa-solid fa-trash"
-              onClick={handleDelete}
-              style={{ cursor: "pointer", marginLeft: "5px" }}
-            ></i>
+            <TrashIcon onClick={handleDelete} ml={5} />
           )}
-          <i
-            className="fa-solid fa-clone"
-            onClick={(e) => handleDuplicate(e, template)}
-            style={{ cursor: "pointer", marginLeft: "5px" }}
-          ></i>
+          <CloneIcon onClick={(e) => handleDuplicate(e, template)} ml={5} />
         </>
       </li>
       {editTemplateVisible && (

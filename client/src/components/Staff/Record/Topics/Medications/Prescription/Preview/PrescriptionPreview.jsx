@@ -14,7 +14,7 @@ import {
   staffIdToLastName,
   staffIdToOHIP,
 } from "../../../../../../../utils/names/staffIdToName";
-import { confirmAlert } from "../../../../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../../Fax/NewFax";
 import NewMessageExternal from "../../../../../Messaging/External/NewMessageExternal";

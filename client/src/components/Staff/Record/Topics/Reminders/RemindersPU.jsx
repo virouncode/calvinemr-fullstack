@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -57,9 +57,7 @@ const RemindersPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="reminders__title">
-          Reminders <i className="fa-solid fa-bell"></i>
-        </h1>
+        <h1 className="reminders__title">Reminders</h1>
         <LoadingParagraph />
       </>
     );
@@ -67,9 +65,7 @@ const RemindersPU = ({
   if (error) {
     return (
       <>
-        <h1 className="reminders__title">
-          Reminders <i className="fa-solid fa-bell"></i>
-        </h1>
+        <h1 className="reminders__title">Reminders</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -79,9 +75,7 @@ const RemindersPU = ({
 
   return (
     <>
-      <h1 className="reminders__title">
-        Reminders <i className="fa-solid fa-bell"></i>
-      </h1>
+      <h1 className="reminders__title">Reminders</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="reminders__table-container" ref={rootRef}>

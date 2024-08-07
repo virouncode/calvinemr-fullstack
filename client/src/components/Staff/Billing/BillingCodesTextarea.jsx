@@ -1,3 +1,5 @@
+import MagnifyingGlassIcon from "../../UI/Icons/MagnifyingGlassIcon";
+
 const BillingCodesTextarea = ({ value, onChange, onClick }) => {
   return (
     <>
@@ -16,15 +18,7 @@ const BillingCodesTextarea = ({ value, onChange, onClick }) => {
         }}
         id="billing_codes"
       />
-      <i
-        style={{
-          cursor: "pointer",
-          position: "absolute",
-          right: "5px",
-        }}
-        className="fa-solid fa-magnifying-glass"
-        onClick={onClick}
-      ></i>
+      <MagnifyingGlassIcon right={5} top={5} onClick={onClick} />
     </>
   );
 };

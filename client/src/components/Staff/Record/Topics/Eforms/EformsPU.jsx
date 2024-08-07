@@ -132,9 +132,7 @@ const EformsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="eforms__title">
-          Patient e-forms <i className="fa-regular fa-newspaper"></i>
-        </h1>
+        <h1 className="eforms__title">Patient e-forms</h1>
         <LoadingParagraph />
       </>
     );
@@ -142,9 +140,7 @@ const EformsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="eforms__title">
-          Patient e-forms <i className="fa-regular fa-newspaper"></i>
-        </h1>
+        <h1 className="eforms__title">Patient e-forms</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -154,9 +150,7 @@ const EformsPU = ({
 
   return (
     <>
-      <h1 className="eforms__title">
-        Patient e-forms <i className="fa-regular fa-newspaper"></i>
-      </h1>
+      <h1 className="eforms__title">Patient e-forms</h1>
       <>
         <div className="eforms__table-container" ref={rootRef}>
           <table className="eforms__table">

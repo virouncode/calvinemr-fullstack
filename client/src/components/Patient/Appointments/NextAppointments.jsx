@@ -8,8 +8,8 @@ import {
   timestampToHumanDateTimeTZ,
 } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import NextAppointmentItem from "./NextAppointmentItem";
 

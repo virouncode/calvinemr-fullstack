@@ -1,12 +1,12 @@
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { timestampToDateTimeStrTZ } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
-import TriangleClinicalButton from "../../../../UI/Buttons/TriangleClinicalButton";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
+import TriangleIcon from "../../../../UI/Icons/TriangleIcon";
 
 const ClinicalNoteCardHeaderFolded = ({
   tempFormDatas,
-  handleTriangleClinicalClick,
+  handleClinicalHeaderClick,
   isChecked,
   clinicalNote,
   handleCheck,
@@ -16,7 +16,7 @@ const ClinicalNoteCardHeaderFolded = ({
   return (
     <div
       className="clinical-notes__card-header clinical-notes__card-header--folded"
-      onClick={handleTriangleClinicalClick}
+      onClick={handleClinicalHeaderClick}
     >
       <div className="clinical-notes__card-header--folded-title">
         <Checkbox
@@ -36,11 +36,7 @@ const ClinicalNoteCardHeaderFolded = ({
         </p>
       </div>
       <div className="clinical-notes__card-header--folded-triangle">
-        <TriangleClinicalButton
-          handleTriangleClick={handleTriangleClinicalClick}
-          color="dark"
-          className={"triangle-clinical-notes"}
-        />
+        <TriangleIcon color="black" rotation={180} />
       </div>
     </div>
   );

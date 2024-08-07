@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 import { useLinkDelete } from "../../../hooks/reactquery/mutations/linksMutations";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import PenIcon from "../../UI/Icons/PenIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import LinkEdit from "./LinkEdit";
 
 const MyLinkItem = ({ link, setAddVisible, lastItemRef = null }) => {
@@ -28,16 +30,8 @@ const MyLinkItem = ({ link, setAddVisible, lastItemRef = null }) => {
       <a href={link.url} target="_blank" rel="noreferrer">
         {link.name}
       </a>
-      <i
-        className="fa-regular fa-pen-to-square"
-        style={{ cursor: "pointer", marginLeft: "5px" }}
-        onClick={handleEdit}
-      ></i>
-      <i
-        className="fa-solid fa-trash"
-        style={{ cursor: "pointer", marginLeft: "5px" }}
-        onClick={handleRemoveLink}
-      ></i>
+      <PenIcon ml={5} onClick={handleEdit} />
+      <TrashIcon ml={5} onClick={handleRemoveLink}></TrashIcon>
       {editVisible && <LinkEdit link={link} setEditVisible={setEditVisible} />}
     </li>
   );

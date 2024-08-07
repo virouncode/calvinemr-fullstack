@@ -43,9 +43,7 @@ const PharmaciesList = ({
   if (isPending) {
     return (
       <>
-        <div className="pharmacies-list__title">
-          Pharmacies directory <i className="fa-solid fa-laptop-medical" />
-        </div>
+        <div className="pharmacies-list__title">Pharmacies directory</div>
         <LoadingParagraph />
       </>
     );
@@ -53,9 +51,7 @@ const PharmaciesList = ({
   if (error) {
     return (
       <>
-        <div className="pharmacies-list__title">
-          Pharmacies directory <i className="fa-solid fa-laptop-medical" />
-        </div>
+        <div className="pharmacies-list__title">Pharmacies directory</div>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );

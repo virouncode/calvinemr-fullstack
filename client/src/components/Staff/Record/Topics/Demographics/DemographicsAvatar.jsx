@@ -1,4 +1,5 @@
 import avatarPlaceholder from "../../../../../assets/img/avatar.png";
+import CameraIcon from "../../../../UI/Icons/CameraIcon";
 const DemographicsAvatar = ({
   avatar,
   editVisible,
@@ -19,11 +20,7 @@ const DemographicsAvatar = ({
           )}
         </div>
         {editVisible && (
-          <i
-            className="fa-solid fa-camera"
-            onClick={() => setWebcamVisible((v) => !v)}
-            style={{ cursor: "pointer" }}
-          />
+          <CameraIcon onClick={() => setWebcamVisible((v) => !v)} />
         )}
       </div>
       {editVisible && (

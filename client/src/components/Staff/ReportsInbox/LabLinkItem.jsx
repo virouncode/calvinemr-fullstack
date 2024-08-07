@@ -7,6 +7,11 @@ import {
 } from "../../../hooks/reactquery/mutations/labLinksMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
+import CopyIcon from "../../UI/Icons/CopyIcon";
+import PenIcon from "../../UI/Icons/PenIcon";
+import SaveIcon from "../../UI/Icons/SaveIcon";
+import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
+import XmarkIcon from "../../UI/Icons/XmarkIcon";
 import Input from "../../UI/Inputs/Input";
 
 const LabLinkItem = ({ link, credentials }) => {
@@ -94,44 +99,30 @@ const LabLinkItem = ({ link, credentials }) => {
           {link.name}
         </a>
         {credentials && !editVisible && (
-          <i
-            className="fa-regular fa-pen-to-square"
-            onClick={handleClickEdit}
-          />
+          <PenIcon onClick={handleClickEdit} ml={5} />
         )}
         {credentials && editVisible && (
           <>
-            <i
-              className="fa-solid fa-floppy-disk"
-              onClick={handleClickSave}
-              style={{ color: "#f53f77" }}
-            />
-            <i className="fa-solid fa-xmark" onClick={handleCancel} />
+            <SaveIcon onClick={handleClickSave} color="#f53f77" ml={5} />
+            <XmarkIcon onClick={handleCancel} ml={5} />
           </>
         )}
         {addCredentialsVisible && (
           <>
-            <i
-              className="fa-solid fa-floppy-disk"
-              onClick={handleClickSaveNew}
-              style={{ color: "#f53f77" }}
-            />
-            <i className="fa-solid fa-xmark" onClick={handleCancelNew} />
+            <SaveIcon onClick={handleClickSaveNew} color="#f53f77" ml={5} />
+            <XmarkIcon onClick={handleCancelNew} ml={5} />
           </>
         )}
         {!credentials && !addCredentialsVisible && (
-          <i
-            className="fa-solid fa-plus"
+          <SquarePlusIcon
             onClick={() => setAddCredentialsVisible(true)}
-          ></i>
+            ml={5}
+          />
         )}
       </div>
       <div className="lablink__item-login">
         <label htmlFor="lablink-login">
-          Login{" "}
-          {login && (
-            <i className="fa-solid fa-copy" onClick={handleCopyLogin} />
-          )}
+          Login {login && <CopyIcon onClick={handleCopyLogin} ml={5} />}
         </label>
         {editVisible || addCredentialsVisible ? (
           <Input
@@ -147,7 +138,7 @@ const LabLinkItem = ({ link, credentials }) => {
       <div className="lablink__item-pwd">
         <label htmlFor="lablink-pwd">
           Password
-          {pwd && <i className="fa-solid fa-copy" onClick={handleCopyPwd} />}
+          {pwd && <CopyIcon onClick={handleCopyPwd} ml={5} />}
         </label>
         {editVisible || addCredentialsVisible ? (
           <Input

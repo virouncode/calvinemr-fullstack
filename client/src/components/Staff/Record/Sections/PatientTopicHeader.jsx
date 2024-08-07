@@ -1,10 +1,9 @@
-import PaperPlaneButton from "../../../UI/Buttons/PaperPlaneButton";
-import PopUpButton from "../../../UI/Buttons/PopUpButton";
 import TriangleButton from "../../../UI/Buttons/TriangleButton";
+import PaperPlaneIcon from "../../../UI/Icons/PaperPlaneIcon";
+import PopUpIcon from "../../../UI/Icons/PopUpIcon";
 
 const PatientTopicHeader = ({
   topic,
-  handleTriangleClick,
   handlePopUpClick,
   contentsVisible,
   popUpButton,
@@ -13,16 +12,15 @@ const PatientTopicHeader = ({
   return (
     <>
       <TriangleButton
-        handleTriangleClick={handleTriangleClick}
         className={contentsVisible ? "triangle triangle--active" : "triangle"}
         color="#FEFEFE"
         triangleRef={triangleRef}
       />
       {topic}
       {popUpButton === "popUp" ? (
-        <PopUpButton handlePopUpClick={handlePopUpClick} />
+        <PopUpIcon onClick={handlePopUpClick} />
       ) : popUpButton === "paperPlane" ? (
-        <PaperPlaneButton handlePopUpClick={handlePopUpClick} />
+        <PaperPlaneIcon onClick={handlePopUpClick} />
       ) : (
         <div></div>
       )}

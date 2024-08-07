@@ -1,3 +1,4 @@
+import PenIcon from "../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import AvailabilityEditor from "./AvailabilityEditor";
 
@@ -12,11 +13,7 @@ const Availability = ({
     <>
       <div className="calendar__availability">
         <label>Availability</label>
-        <i
-          onClick={handleEdit}
-          style={{ cursor: "pointer" }}
-          className="fa-regular fa-pen-to-square"
-        ></i>
+        <PenIcon onClick={handleEdit}></PenIcon>
       </div>
       {editAvailabilityVisible && (
         <FakeWindow

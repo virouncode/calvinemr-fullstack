@@ -41,9 +41,7 @@ const PrescriptionsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="prescriptions__title">
-          Patient prescriptions <i className="fa-regular fa-newspaper"></i>
-        </h1>
+        <h1 className="prescriptions__title">Patient prescriptions</h1>
         <LoadingParagraph />
       </>
     );
@@ -51,9 +49,7 @@ const PrescriptionsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="prescriptions__title">
-          Patient prescriptions <i className="fa-regular fa-newspaper"></i>
-        </h1>
+        <h1 className="prescriptions__title">Patient prescriptions</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -63,9 +59,7 @@ const PrescriptionsPU = ({
 
   return (
     <>
-      <h1 className="prescriptions__title">
-        Patient prescriptions <i className="fa-regular fa-newspaper"></i>
-      </h1>
+      <h1 className="prescriptions__title">Patient prescriptions</h1>
       <>
         <div className="prescriptions__table-container" ref={rootRef}>
           <table className="prescriptions__table">

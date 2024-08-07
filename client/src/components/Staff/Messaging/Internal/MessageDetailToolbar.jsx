@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import Button from "../../../UI/Buttons/Button";
+import ArrowLeftIcon from "../../../UI/Icons/ArrowLeftIcon";
+import ExclamationIcon from "../../../UI/Icons/ExclamationIcon";
+import PenIcon from "../../../UI/Icons/PenIcon";
+import TrashIcon from "../../../UI/Icons/TrashIcon";
 
 const MessageDetailToolbar = ({
   message,
@@ -17,18 +21,9 @@ const MessageDetailToolbar = ({
   };
   return (
     <div className="message-detail__toolbar">
-      <i
-        className="fa-solid fa-arrow-left message-detail__toolbar-arrow"
-        style={{ cursor: "pointer" }}
-        onClick={handleClickBack}
-      />
+      <ArrowLeftIcon onClick={handleClickBack} mr={20} />
       <div className="message-detail__toolbar-subject">
-        {message.high_importance && (
-          <i
-            className="fa-solid fa-circle-exclamation"
-            style={{ color: "red", marginRight: "5px" }}
-          />
-        )}
+        {message.high_importance && <ExclamationIcon mr={5} />}
         {message.subject}
       </div>
       <div
@@ -68,15 +63,9 @@ const MessageDetailToolbar = ({
             : "message-detail__toolbar-logos"
         }
       >
-        {section === "To-dos" && (
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginRight: "5px" }}
-            onClick={handleEdit}
-          />
-        )}
+        {section === "To-dos" && <PenIcon mr={5} onClick={handleEdit} />}
         {section !== "Deleted messages" && (
-          <i className="fa-solid fa-trash" onClick={handleDeleteMsg} />
+          <TrashIcon onClick={handleDeleteMsg} />
         )}
       </div>
     </div>

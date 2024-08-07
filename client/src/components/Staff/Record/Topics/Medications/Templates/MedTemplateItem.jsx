@@ -9,7 +9,10 @@ import {
 } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../../../UI/Confirm/ConfirmGlobal";
+import CloneIcon from "../../../../../UI/Icons/CloneIcon";
+import PenIcon from "../../../../../UI/Icons/PenIcon";
+import TrashIcon from "../../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import MedTemplateEdit from "./MedTemplateEdit";
 
@@ -57,26 +60,16 @@ const MedTemplateItem = ({ med, handleSelectTemplate, lastItemRef = null }) => {
               : ""}
           </span>
         </Tooltip>
-        {med.author_id === user.id && (
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginLeft: "5px" }}
-            onClick={handleEdit}
-          ></i>
-        )}
+        {med.author_id === user.id && <PenIcon ml={5} onClick={handleEdit} />}
         <Tooltip title="Duplicate" placement="top-start" arrow>
-          <i
-            className="fa-solid fa-clone"
-            style={{ marginLeft: "5px" }}
-            onClick={handleDuplicate}
-          ></i>
+          <span>
+            <CloneIcon ml={5} onClick={handleDuplicate} />
+          </span>
         </Tooltip>
         {med.author_id === user.id && (
-          <i
-            className="fa-solid fa-trash"
-            style={{ marginLeft: "5px" }}
-            onClick={(e) => handleDelete(e, med.id)}
-          ></i>
+          <span>
+            <TrashIcon ml={5} onClick={(e) => handleDelete(e, med.id)} />
+          </span>
         )}
       </li>
       {editVisible && (

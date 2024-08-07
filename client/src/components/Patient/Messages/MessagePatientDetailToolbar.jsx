@@ -1,3 +1,7 @@
+import ArrowLeftIcon from "../../UI/Icons/ArrowLeftIcon";
+import ExclamationIcon from "../../UI/Icons/ExclamationIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
+
 const MessagePatientDetailToolbar = ({
   message,
   section,
@@ -6,27 +10,15 @@ const MessagePatientDetailToolbar = ({
 }) => {
   return (
     <div className="message-detail__toolbar">
-      <i
-        className="fa-solid fa-arrow-left message-detail__toolbar-arrow"
-        style={{ cursor: "pointer" }}
-        onClick={handleClickBack}
-      />
+      <ArrowLeftIcon onClick={handleClickBack} mr={20} />
       <div className="message-detail__toolbar-subject message-detail__toolbar-subject--patient">
-        {message.high_importance && (
-          <i
-            className="fa-solid fa-circle-exclamation"
-            style={{ color: "red", marginRight: "5px" }}
-          />
-        )}
+        {message.high_importance && <ExclamationIcon mr={5} />}
         {message.subject}
       </div>
 
       <div className="message-detail__toolbar-logos">
         {section !== "Deleted messages" && (
-          <i
-            className="fa-solid fa-trash  message-detail__trash"
-            onClick={handleDeleteMsg}
-          />
+          <TrashIcon onClick={handleDeleteMsg} />
         )}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { isObjectEmpty } from "../../../../../utils/js/isObjectEmpty";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import PharmaciesList from "./PharmaciesList";
 import PharmacyCard from "./PharmacyCard";
 
@@ -49,10 +49,7 @@ const PharmaciesPU = ({
 
   return (
     <>
-      <h1 className="pharmacies__title">
-        Patient preferred pharmacy{" "}
-        <i className="fa-solid fa-prescription-bottle-medical"></i>
-      </h1>
+      <h1 className="pharmacies__title">Patient preferred pharmacy</h1>
       {!isObjectEmpty(preferredPharmacy) ? (
         <PharmacyCard
           pharmacy={preferredPharmacy}

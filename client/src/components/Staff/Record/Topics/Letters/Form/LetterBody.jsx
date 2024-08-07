@@ -1,4 +1,4 @@
-
+import MicrophoneIcon from "../../../../../UI/Icons/MicrophoneIcon";
 
 const LetterBody = ({
   body,
@@ -23,27 +23,18 @@ const LetterBody = ({
         ref={bodyRef}
       />
       {isListening ? (
-        <i
-          className="fa-solid fa-microphone"
+        <MicrophoneIcon
           onClick={handleStopSpeech}
-          style={{
-            cursor: "pointer",
-            color: "red",
-            position: "absolute",
-            top: "30px",
-            right: "-20px",
-          }}
+          color="red"
+          top={30}
+          right={-20}
         />
       ) : (
-        <i
-          className="fa-solid fa-microphone"
+        <MicrophoneIcon
           onClick={handleStartSpeech}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: "30px",
-            right: "-20px",
-          }}
+          color="black"
+          top={30}
+          right={-20}
         />
       )}
     </div>

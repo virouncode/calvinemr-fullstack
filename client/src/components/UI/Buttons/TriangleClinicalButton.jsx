@@ -1,16 +1,11 @@
+import TriangleIcon from "../Icons/TriangleIcon";
 
-
-const TriangleClinicalButton = ({
-  handleTriangleClick,
-  className,
-  color,
-  triangleRef = null,
-}) => {
+const TriangleClinicalButton = ({ className, color, triangleRef = null }) => {
   return (
-    <i
-      className={`fa-sharp fa-solid fa-play fa-xs fa-rotate-180 ${className}`}
+    <TriangleIcon
+      className={className}
+      rotate={180}
       style={{ color: { color } }}
-      onClick={handleTriangleClick}
       ref={triangleRef}
     />
   );

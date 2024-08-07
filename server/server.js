@@ -17,6 +17,7 @@ const xmlToJSRouter = require("./routes/xmlToJs/xmlToJs");
 const srfaxRouter = require("./routes/srfax/srfax");
 const openaiRouter = require("./routes/openai/openai");
 const mailgunRouter = require("./routes/mailgun/mailgun");
+const weatherRouter = require("./routes/weather/weather");
 
 const app = express();
 app
@@ -42,7 +43,8 @@ app
   .use("/api/xmlToJs", xmlToJSRouter)
   .use("/api/srfax", srfaxRouter)
   .use("/api/openai", openaiRouter)
-  .use("/api/mailgun", mailgunRouter);
+  .use("/api/mailgun", mailgunRouter)
+  .use("/api/weather", weatherRouter);
 
 //my http server
 const httpServer = createServer(app);

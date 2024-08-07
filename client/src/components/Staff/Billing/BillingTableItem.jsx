@@ -22,15 +22,15 @@ import { toSiteName } from "../../../utils/names/toSiteName";
 import { getLastLetter } from "../../../utils/strings/getLastLetter";
 import { removeLastLetter } from "../../../utils/strings/removeLastLetter";
 import { billingItemSchema } from "../../../validation/billing/billingValidation";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import DeleteButton from "../../UI/Buttons/DeleteButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
-import InputWithLogoInTable from "../../UI/Inputs/InputWithLogoInTable";
+import InputWithSearchInTable from "../../UI/Inputs/InputWithSearchInTable";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
@@ -328,7 +328,7 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <InputWithLogoInTable
+                <InputWithSearchInTable
                   name="referrer_ohip_billing_nbr"
                   value={itemInfos.referrer_ohip_billing_nbr}
                   onChange={handleChange}
@@ -342,7 +342,7 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <InputWithLogoInTable
+                <InputWithSearchInTable
                   name="patient_hcn"
                   value={itemInfos.patient_hcn}
                   readOnly={true}
@@ -356,7 +356,7 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <InputWithLogoInTable
+                <InputWithSearchInTable
                   name="patient_id"
                   value={itemInfos.patient_name}
                   readOnly={true}
@@ -370,7 +370,7 @@ const BillingTableItem = ({
           <td style={{ position: "relative" }}>
             {editVisible ? (
               <>
-                <InputWithLogoInTable
+                <InputWithSearchInTable
                   name="diagnosis_code"
                   value={itemInfos.diagnosis_code}
                   onChange={handleChange}

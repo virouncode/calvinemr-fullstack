@@ -1,3 +1,6 @@
+import ArrowDownIcon from "../../../UI/Icons/ArrowDownIcon";
+import ArrowUpIcon from "../../../UI/Icons/ArrowUpIcon";
+
 const OrderPicker = ({ handleChangeOrder, addVisible, order }) => {
   return (
     <>
@@ -7,23 +10,9 @@ const OrderPicker = ({ handleChangeOrder, addVisible, order }) => {
         style={{ opacity: addVisible && "0.3" }}
       >
         {order === "asc" ? (
-          <i
-            className="fa-solid fa-arrow-down"
-            style={{
-              marginLeft: "5px",
-              marginRight: "2px",
-              cursor: "pointer",
-            }}
-          ></i>
+          <ArrowDownIcon ml={5} mr={2} />
         ) : (
-          <i
-            className="fa-solid fa-arrow-up"
-            style={{
-              marginLeft: "5px",
-              marginRight: "2px",
-              cursor: "pointer",
-            }}
-          ></i>
+          <ArrowUpIcon ml={5} mr={2} />
         )}
         {order === "asc" ? "Bottom" : "Top"}
       </span>

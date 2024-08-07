@@ -1,11 +1,9 @@
+import ExclamationTriangleIcon from "../../../../UI/Icons/ExclamationTriangleIcon";
+
 const AllergiesList = ({ allergies }) => {
   return (
     <>
-      <i
-        className="fa-solid fa-triangle-exclamation"
-        style={{ color: "#ff0000" }}
-      />{" "}
-      Patient Allergies :{" "}
+      <ExclamationTriangleIcon /> Patient Allergies :{" "}
       {allergies && allergies.length > 0
         ? allergies
             .map(({ OffendingAgentDescription }) => OffendingAgentDescription)

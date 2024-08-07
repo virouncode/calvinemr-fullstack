@@ -8,7 +8,12 @@ import {
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import CopyIcon from "../../UI/Icons/CopyIcon";
+import PenIcon from "../../UI/Icons/PenIcon";
+import SaveIcon from "../../UI/Icons/SaveIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
+import XmarkIcon from "../../UI/Icons/XmarkIcon";
 import Input from "../../UI/Inputs/Input";
 
 const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
@@ -137,27 +142,20 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
 
         {!editVisible && (
           <>
-            <i
-              className="fa-regular fa-pen-to-square"
-              onClick={handleClickEdit}
-            />
-            <i className="fa-solid fa-trash" onClick={handleDelete} />
+            <PenIcon onClick={handleClickEdit} />
+            <TrashIcon onClick={handleDelete} />
           </>
         )}
         {editVisible && (
           <>
-            <i
-              className="fa-solid fa-floppy-disk"
-              onClick={handleClickSave}
-              style={{ color: "#f53f77" }}
-            />
-            <i className="fa-solid fa-xmark" onClick={handleCancel} />
+            <SaveIcon onClick={handleClickSave} color="#f53f77" />
+            <XmarkIcon onClick={handleCancel} />
           </>
         )}
       </div>
       <div className="lablink__item-login">
         <label htmlFor="lablink-login">
-          Login <i className="fa-solid fa-copy" onClick={handleCopyLogin}></i>
+          Login <CopyIcon onClick={handleCopyLogin} />
         </label>
         {editVisible ? (
           <Input
@@ -173,7 +171,7 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
       <div className="lablink__item-pwd">
         <label htmlFor="lablink-pwd">
           Password
-          <i className="fa-solid fa-copy" onClick={handleCopyPwd}></i>
+          <CopyIcon onClick={handleCopyPwd} />
         </label>
         {editVisible ? (
           <Input

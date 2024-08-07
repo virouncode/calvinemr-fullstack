@@ -5,9 +5,10 @@ import { useFetchAllPages } from "../../../../../hooks/reactquery/useFetchAllPag
 import useIntersection from "../../../../../hooks/useIntersection";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import ExclamationTriangleIcon from "../../../../UI/Icons/ExclamationTriangleIcon";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -77,9 +78,7 @@ const MedicationsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="medications__title">
-          Patient Medications & Treatments <i className="fa-solid fa-pills"></i>
-        </h1>
+        <h1 className="medications__title">Patient Medications & Treatments</h1>
         <LoadingParagraph />
       </>
     );
@@ -87,9 +86,7 @@ const MedicationsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="medications__title">
-          Patient Medications & Treatments <i className="fa-solid fa-pills"></i>
-        </h1>
+        <h1 className="medications__title">Patient Medications & Treatments</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -99,15 +96,9 @@ const MedicationsPU = ({
 
   return (
     <>
-      <h1 className="medications__title">
-        Patient medications & treatments <i className="fa-solid fa-pills"></i>
-      </h1>
+      <h1 className="medications__title">Patient medications & treatments</h1>
       <div className="medications__allergies">
-        <i
-          className="fa-solid fa-triangle-exclamation"
-          style={{ color: "#ff0000" }}
-        />{" "}
-        <label>Patient allergies: </label>
+        <ExclamationTriangleIcon /> <label>Patient allergies: </label>
         {isPendingAllergies && <LoadingParagraph />}
         {errorAllergies && <ErrorParagraph errorMsg={errorAllergies.message} />}
         {allergies && allergies.pages.flatMap((page) => page.items).length > 0

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import xanoDelete from "../api/xanoCRUD/xanoDelete";
 import xanoGet from "../api/xanoCRUD/xanoGet";
-import { confirmAlert } from "../components/All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
 import useSocketContext from "./context/useSocketContext";
 import useUserContext from "./context/useUserContext";
 

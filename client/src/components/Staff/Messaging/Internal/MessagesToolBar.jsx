@@ -6,8 +6,8 @@ import {
   useMessagePut,
   useTodoDelete,
 } from "../../../../hooks/reactquery/mutations/messagesMutations";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../UI/Inputs/Input";
 
 const MessagesToolBar = ({

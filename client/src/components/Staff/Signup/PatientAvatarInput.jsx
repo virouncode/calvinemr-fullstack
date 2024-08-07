@@ -1,4 +1,5 @@
 import avatarLogo from "../../../assets/img/avatar.png";
+import CameraIcon from "../../UI/Icons/CameraIcon";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 const PatientAvatarInput = ({
@@ -24,11 +25,7 @@ const PatientAvatarInput = ({
               <img src={avatarLogo} alt="user-avatar-placeholder" />
             )}
           </div>
-          <i
-            className="fa-solid fa-camera"
-            onClick={() => setWebcamVisible((v) => !v)}
-            style={{ cursor: "pointer" }}
-          />
+          <CameraIcon onClick={() => setWebcamVisible((v) => !v)} />
           {isLoadingFile && <CircularProgressSmall />}
         </div>
         <div className="signup-patient__image-options">

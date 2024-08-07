@@ -1,9 +1,17 @@
-
+import { Tooltip } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import LockIcon from "../../UI/Icons/LockIcon";
+import QuestionIcon from "../../UI/Icons/QuestionIcon";
 
 const AdminHeader = ({ setCreditsVisible, setLockedScreen }) => {
   const handleLock = () => {
     setLockedScreen(true);
+  };
+  const handleTutorial = () => {
+    window.open(
+      "https://www.youtube.com/watch?v=7yPuVKhl_vo&list=PL18a0lvAx8vrkIR9H_H53BR8KJ5lrAks4",
+      "_blank"
+    );
   };
   return (
     <header className="header header--admin">
@@ -85,8 +93,17 @@ const AdminHeader = ({ setCreditsVisible, setLockedScreen }) => {
               My Account
             </NavLink>
           </li>
-          <li onClick={handleLock}>
-            <i className="fa-solid fa-lock" style={{ cursor: "pointer" }} />
+          <li>
+            <Tooltip title="Lock Screen">
+              <span>
+                <LockIcon mr={15} onClick={handleLock} />
+              </span>
+            </Tooltip>
+            <Tooltip title="Tutorial">
+              <span>
+                <QuestionIcon onClick={handleTutorial} />
+              </span>
+            </Tooltip>
           </li>
         </ul>
       </nav>

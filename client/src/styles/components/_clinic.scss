@@ -4,7 +4,7 @@
   }
   &__subtitle {
     font-weight: bold;
-    padding:0 20px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -14,10 +14,10 @@
     }
   }
 }
-.clinic__global-infos{
+.clinic__global-infos {
   display: flex;
   align-items: center;
-  padding:0 20px;
+  padding: 0 20px;
   margin-bottom: 20px;
   label {
     font-weight: bold;
@@ -25,16 +25,15 @@
     margin-right: 10px;
   }
   p {
-    padding:0;
     font-size: 0.85rem;
     margin-right: 30px;
   }
   input {
     margin-right: 30px;
-    width:270px;
+    width: 270px;
   }
   &-title {
-    padding:0;
+    padding: 0;
     font-size: 1rem;
     font-weight: bold;
     margin-right: 30px;
@@ -50,13 +49,13 @@
     }
   }
   &-err {
-    padding : 10px 20px;
+    padding: 10px 20px;
     font-size: 0.9rem;
-    width : 70%;
-    margin:10px auto;
-    color : red;
-    background-color:rgba(255, 0, 0, 0.403);
+    width: 70%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
     border-radius: 6px;
     text-align: center;
-}
+  }
 }

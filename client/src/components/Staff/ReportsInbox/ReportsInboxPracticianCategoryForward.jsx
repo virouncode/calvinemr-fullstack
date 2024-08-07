@@ -1,4 +1,6 @@
 import { useState } from "react";
+import SquareMinusIcon from "../../UI/Icons/SquareMinusIcon";
+import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import ReportsInboxPracticiansListForward from "./ReportsInboxPracticiansListForward";
 
 const ReportsInboxPracticianCategoryForward = ({
@@ -16,15 +18,9 @@ const ReportsInboxPracticianCategoryForward = ({
     <>
       <div className="practicians-forward__category-overview">
         {!listVisible ? (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-plus fa-lg"
-          ></i>
+          <SquarePlusIcon onClick={handleClick} />
         ) : (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-minus fa-lg"
-          ></i>
+          <SquareMinusIcon onClick={handleClick} />
         )}
         <label>{categoryName}</label>
       </div>

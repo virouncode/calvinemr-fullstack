@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import SquareMinusIcon from "../../UI/Icons/SquareMinusIcon";
+import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import StaffContactsList from "./StaffContactsList";
 
 const StaffContactsCategory = ({
@@ -9,9 +11,9 @@ const StaffContactsCategory = ({
   handleCheckContact,
   isCategoryChecked,
   handleCheckCategory,
-  initiallyVisible,
+  initiallyUnfolded,
 }) => {
-  const [listVisible, setListVisible] = useState(initiallyVisible);
+  const [listVisible, setListVisible] = useState(initiallyUnfolded);
   const handleClick = () => {
     setListVisible((v) => !v);
   };
@@ -19,15 +21,9 @@ const StaffContactsCategory = ({
     <>
       <div className="contacts__category-overview">
         {!listVisible ? (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-plus fa-lg"
-          />
+          <SquarePlusIcon onClick={handleClick} mr={5} />
         ) : (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-minus fa-lg"
-          />
+          <SquareMinusIcon onClick={handleClick} mr={5} />
         )}
         <Checkbox
           id={categoryName}

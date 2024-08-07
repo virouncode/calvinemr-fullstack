@@ -263,67 +263,6 @@
       justify-content: flex-start;
     }
   }
-
-  // &__sample {
-  //   width: 65%;
-  //   display: flex;
-  //   align-items: center;
-  //   &-text {
-  //     overflow: hidden;
-  //     text-overflow: ellipsis;
-  //     white-space: nowrap;
-  //     max-width: 95%;
-  //   }
-  //   &-exclamation {
-  //     color: red;
-  //     margin-right: 5px;
-  //   }
-  //   &-attachment {
-  //     width: 5%;
-  //     margin-left: 5px;
-  //   }
-  //   &-btn {
-  //     width: 10%;
-  //   }
-  //   &--todo {
-  //     width: 100%;
-  //   }
-  // }
-  // &__patient {
-  //   width: 15%;
-  //   overflow: hidden;
-  //   white-space: nowrap;
-  //   text-overflow: ellipsis;
-  //   text-align: center;
-  //   &--todo {
-  //     width: 15%;
-  //   }
-  // }
-  // &__patient-link {
-  //   text-decoration: underline;
-  // }
-  // &__date {
-  //   width: 15%;
-  //   text-align: center;
-  //   &--external {
-  //     width: 15%;
-  //   }
-  //   &--todo {
-  //     width: 13%;
-  //   }
-  // }
-  // &__duedate {
-  //   text-align: center;
-  //   width: 13%;
-  // }
-  // &__logos {
-  //   cursor: pointer;
-  //   text-align: center;
-  //   width: 2%;
-  //   &--todo {
-  //     width: 4%;
-  //   }
-  // }
 }
 .message-detail {
   &__content {
@@ -420,10 +359,6 @@
     align-items: center;
     justify-content: space-between;
   }
-  &__trash {
-    cursor: pointer;
-    font-size: 0.8rem;
-  }
   &__btns {
     padding: 20px;
     button {
@@ -444,9 +379,9 @@
   &__subject,
   &__patient {
     border-bottom: solid 0.3px $grey;
-    height: 30px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     background-color: $blue;
+    padding: 10px;
   }
   &__btn {
     display: flex;
@@ -751,7 +686,6 @@
     align-items: center;
     p {
       margin: 0;
-      padding: 0;
       font-size: 0.8rem;
     }
   }

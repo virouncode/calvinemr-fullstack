@@ -3,11 +3,14 @@ import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
 
 const MessagesExternalPrintPU = ({ message, previousMsgs, attachments }) => {
+  const CONTAINER_STYLE = {
+    fontFamily: "Arial, sans-serif",
+  };
   const handleClickPrint = (e) => {
     e.nativeEvent.view.print();
   };
   return (
-    <div className="messages-print__container">
+    <div className="messages-print__container" style={CONTAINER_STYLE}>
       <div className="messages-print__section">
         <div className="messages-print__title">
           <p className="messages-print__subject">

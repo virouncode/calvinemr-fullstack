@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-
+import ClockIcon from "../../../../UI/Icons/ClockIcon";
 
 const CareElementsBSA = ({ lastDatas, handleClickHistory }) => {
   return (
@@ -13,11 +13,12 @@ const CareElementsBSA = ({ lastDatas, handleClickHistory }) => {
       {lastDatas.bodySurfaceArea?.BSA && (
         <div className="care-elements__row-btns">
           <Tooltip title="Show history">
-            <i
-              className="fa-solid fa-clock-rotate-left"
-              onClick={(e) => handleClickHistory(e, "BODY SURFACE AREA")}
-              style={{ marginRight: "5px" }}
-            />
+            <span>
+              <ClockIcon
+                onClick={(e) => handleClickHistory(e, "BODY SURFACE AREA")}
+                mr={5}
+              />
+            </span>
           </Tooltip>
         </div>
       )}

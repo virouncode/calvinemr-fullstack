@@ -1,11 +1,14 @@
+import CheckIcon from "../Icons/CheckIcon";
+import XmarkIcon from "../Icons/XmarkIcon";
+
 const PasswordValidator = ({ passwordValidity }) => {
   return (
     <ul>
       <li>
         {passwordValidity.size ? (
-          <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
+          <CheckIcon clickable={false} color="#0dbc01" />
         ) : (
-          <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
+          <XmarkIcon clickable={false} color="#ff4d4d" />
         )}{" "}
         <span
           style={{
@@ -17,9 +20,9 @@ const PasswordValidator = ({ passwordValidity }) => {
       </li>
       <li>
         {passwordValidity.uppercase ? (
-          <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
+          <CheckIcon clickable={false} color="#0dbc01" />
         ) : (
-          <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
+          <XmarkIcon clickable={false} color="#ff4d4d" />
         )}{" "}
         <span
           style={{
@@ -31,9 +34,9 @@ const PasswordValidator = ({ passwordValidity }) => {
       </li>
       <li>
         {passwordValidity.lowercase ? (
-          <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
+          <CheckIcon clickable={false} color="#0dbc01" />
         ) : (
-          <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
+          <XmarkIcon clickable={false} color="#ff4d4d" />
         )}{" "}
         <span
           style={{
@@ -45,9 +48,9 @@ const PasswordValidator = ({ passwordValidity }) => {
       </li>
       <li>
         {passwordValidity.number ? (
-          <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
+          <CheckIcon clickable={false} color="#0dbc01" />
         ) : (
-          <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
+          <XmarkIcon clickable={false} color="#ff4d4d" />
         )}{" "}
         <span
           style={{
@@ -59,9 +62,9 @@ const PasswordValidator = ({ passwordValidity }) => {
       </li>
       <li>
         {passwordValidity.special ? (
-          <i className="fa-solid fa-check" style={{ color: "#0dbc01" }}></i>
+          <CheckIcon clickable={false} color="#0dbc01" />
         ) : (
-          <i className="fa-solid fa-xmark" style={{ color: "#ff4d4d" }}></i>
+          <XmarkIcon clickable={false} color="#ff4d4d" />
         )}{" "}
         <span
           style={{

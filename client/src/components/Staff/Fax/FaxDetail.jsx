@@ -5,8 +5,10 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useFax } from "../../../hooks/reactquery/queries/faxQueries";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Button from "../../UI/Buttons/Button";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import ArrowLeftIcon from "../../UI/Icons/ArrowLeftIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
@@ -118,11 +120,7 @@ const FaxDetail = ({
     fax && (
       <>
         <div className="fax-detail__toolbar">
-          <i
-            className="fa-solid fa-arrow-left fax-detail__arrow"
-            style={{ cursor: "pointer" }}
-            onClick={handleClickBack}
-          />
+          <ArrowLeftIcon onClick={handleClickBack} mr={20} />
           <div className="fax-detail__toolbar-btns">
             <Button
               disabled={progress}
@@ -144,7 +142,7 @@ const FaxDetail = ({
             {progress && <CircularProgressSmall />}
           </div>
           <div className="fax-detail__toolbar-logos">
-            <i className="fa-solid fa-trash" onClick={handleDeleteFax} />
+            <TrashIcon onClick={handleDeleteFax} />
           </div>
         </div>
         <div className="fax-detail__content">

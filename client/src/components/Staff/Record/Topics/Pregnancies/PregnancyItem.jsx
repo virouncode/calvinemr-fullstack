@@ -7,11 +7,11 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pregnancySchema } from "../../../../../validation/record/pregnancyValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import SignCell from "../../../../UI/Tables/SignCell";

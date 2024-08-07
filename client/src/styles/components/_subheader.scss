@@ -1,0 +1,52 @@
+.subheader-section {
+  position: sticky;
+  top: 60px;
+  width: 100%;
+  z-index: 100;
+  padding: 10px 15px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(243, 243, 243);
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  justify-content: space-between;
+  align-items: center;
+  height: 45px;
+  &__left {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  &__clinic {
+    font-weight: normal;
+    font-size: 0.8rem;
+    margin-right: 5px;
+  }
+  &__weather {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    &-logo {
+      width: 25px;
+      height: 25px;
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  &__title {
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    text-align: center;
+  }
+  &__right {
+    font-size: 0.8rem;
+    font-style: italic;
+    text-align: end;
+    padding: 0;
+  }
+}

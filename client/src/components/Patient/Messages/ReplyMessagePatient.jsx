@@ -12,6 +12,7 @@ import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import PaperclipIcon from "../../UI/Icons/PaperclipIcon";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 
 const ReplyMessagePatient = ({
@@ -159,7 +160,7 @@ const ReplyMessagePatient = ({
       </div>
       <div className="reply-message__attach">
         <strong>Attach files</strong>
-        <i className="fa-solid fa-paperclip" onClick={handleAttach}></i>
+        <PaperclipIcon onClick={handleAttach} />
         {attachments.map((attachment) => (
           <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
             {attachment.alias},

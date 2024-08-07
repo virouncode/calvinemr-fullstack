@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import { DateTime } from "luxon";
-import NewWindow from "react-new-window";
 import { useNavigate } from "react-router-dom";
 
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -22,10 +21,7 @@ import {
   toLastOccurence,
   toNextOccurence,
 } from "../../../utils/appointments/occurences";
-import {
-  getRemainingStaff,
-  parseToEvents,
-} from "../../../utils/appointments/parseToEvents";
+import { parseToEvents } from "../../../utils/appointments/parseToEvents";
 import {
   getTodayStartTZ,
   getTomorrowStartTZ,
@@ -37,21 +33,15 @@ import {
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { toRoomTitle } from "../../../utils/names/toRoomTitle";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
-import Button from "../../UI/Buttons/Button";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import CloneIcon from "../../UI/Icons/CloneIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-import FakeWindow from "../../UI/Windows/FakeWindow";
-import EventForm from "../EventForm/EventForm";
-import CalendarView from "./CalendarView";
+import CalendarDisplay from "./CalendarDisplay";
+import CalendarLeftBar from "./CalendarLeftBar";
 import ConfirmDialogRecurringChange from "./ConfirmDialogRecurringChange";
 import ConfirmDialogRecurringDelete from "./ConfirmDialogRecurringDelete";
-import DaySheet from "./DaySheet";
-import CalendarFilter from "./Options/CalendarFilter";
 import CalendarOptions from "./Options/CalendarOptions";
-import Shortcutpickr from "./Options/Shortcutpickr";
-import SelectTimelineSite from "./SelectTimelineSite";
-import TimelineView from "./TimelineView";
-import ToggleView from "./ToggleView";
 
 //MY COMPONENT
 const Calendar = () => {
@@ -358,15 +348,12 @@ const Calendar = () => {
             {(event.extendedProps.host === user.id ||
               user.title === "Secretary") && (
               <div style={{ display: "flex" }}>
-                <i
-                  style={{ marginLeft: "5px", marginRight: "5px" }}
-                  className="fa-solid fa-clone"
+                <CloneIcon
+                  ml={5}
+                  mr={5}
                   onClick={(e) => handleCopyEvent(e, info)}
                 />
-                <i
-                  className="fa-solid fa-trash"
-                  onClick={(e) => handleDeleteEvent(e, info)}
-                />
+                <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
               </div>
             )}
           </div>
@@ -530,15 +517,12 @@ const Calendar = () => {
           {(event.extendedProps.host === user.id ||
             user.title === "Secretary") && (
             <div>
-              <i
-                style={{ marginLeft: "5px", marginRight: "5px" }}
-                className="fa-solid fa-clone"
+              <CloneIcon
+                ml={5}
+                mr={5}
                 onClick={(e) => handleCopyEvent(e, info)}
               />
-              <i
-                className="fa-solid fa-trash"
-                onClick={(e) => handleDeleteEvent(e, info)}
-              />
+              <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
             </div>
           )}
         </div>
@@ -582,20 +566,12 @@ const Calendar = () => {
             {(event.extendedProps.host === user.id ||
               user.title === "Secretary") && (
               <div>
-                <i
-                  style={{
-                    marginLeft: "5px",
-                    marginRight: "5px",
-                    cursor: "pointer",
-                  }}
-                  className="fa-solid fa-clone"
+                <CloneIcon
+                  ml={5}
+                  mr={5}
                   onClick={(e) => handleCopyEvent(e, info)}
                 />
-                <i
-                  style={{ cursor: "pointer" }}
-                  className="fa-solid fa-trash"
-                  onClick={(e) => handleDeleteEvent(e, info)}
-                />
+                <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
               </div>
             )}
           </div>
@@ -1591,131 +1567,50 @@ const Calendar = () => {
         isPending={appointments.isPending}
       />
       <div className="calendar">
-        <div className="calendar__left-bar">
-          <Shortcutpickr
-            handleShortcutpickrChange={handleShortcutpickrChange}
-          />
-          <CalendarFilter
-            sites={sites}
-            sitesIds={sitesIds}
-            setSitesIds={setSitesIds}
-            hostsIds={hostsIds}
-            setHostsIds={setHostsIds}
-            remainingStaff={getRemainingStaff(user.id, staffInfos)}
-          />
-        </div>
-        <div className="calendar__display">
-          {timelineVisible && (
-            <SelectTimelineSite
-              sites={sites}
-              timelineSiteId={timelineSiteId}
-              setTimelineSiteId={setTimelineSiteId}
-            />
-          )}
-          <ToggleView
-            setTimelineVisible={setTimelineVisible}
-            timelineVisible={timelineVisible}
-          />
-          {(currentView === "timeGrid" || timelineVisible) && (
-            <Button
-              onClick={handlePrintDay}
-              disabled={events?.length === 0}
-              className="calendar__print-day"
-              label={"Print day sheet"}
-            />
-          )}
-          {printDayVisible && (
-            <NewWindow
-              title={`Day sheet: ${timestampToDateISOTZ(rangeStart)}`}
-              features={{
-                toolbar: "no",
-                scrollbars: "no",
-                menubar: "no",
-                status: "no",
-                directories: "no",
-                width: 793.7,
-                height: 1122.5,
-                left: 320,
-                top: 200,
-              }}
-              onUnload={() => setPrintDayVisible(false)}
-            >
-              <DaySheet
-                events={events}
-                rangeStart={rangeStart}
-                rangeEnd={rangeEnd}
-              />
-            </NewWindow>
-          )}
-          {!timelineVisible ? (
-            <CalendarView
-              initialDate={initialDate}
-              slotDuration={user.settings.slot_duration}
-              firstDay={user.settings.first_day}
-              fcRef={fcRef}
-              isSecretary={user.title === "Secretary"}
-              events={events}
-              handleDatesSet={handleDatesSet}
-              handleDateSelect={handleDateSelect}
-              handleDragStart={handleDragStart}
-              handleEventClick={handleEventClick}
-              handleDrop={handleDrop}
-              handleResize={handleResize}
-              handleResizeStart={handleResizeStart}
-              renderEventContent={renderEventContent}
-              selectable={selectable}
-              currentView={currentView}
-            />
-          ) : (
-            <TimelineView
-              initialDate={initialDate}
-              slotDuration={user.settings.slot_duration}
-              firstDay={user.settings.first_day}
-              fcRef={fcRef}
-              isSecretary={user.title === "Secretary"}
-              events={events}
-              handleDatesSet={handleDatesSet}
-              handleDateSelect={handleDateSelect}
-              handleDragStart={handleDragStart}
-              handleEventClick={handleEventClick}
-              handleDrop={handleDrop}
-              handleResize={handleResize}
-              handleResizeStart={handleResizeStart}
-              renderEventContent={renderEventContent}
-              site={sites.find(({ id }) => id === timelineSiteId)}
-              selectable={selectable}
-            />
-          )}
-          {formVisible && (
-            <FakeWindow
-              title={`APPOINTMENT DETAILS`}
-              width={1050}
-              height={790}
-              x={(window.innerWidth - 1050) / 2}
-              y={(window.innerHeight - 790) / 2}
-              color={formColor}
-              setPopUpVisible={setFormVisible}
-              closeCross={false}
-              textColor="#3D375A"
-            >
-              <EventForm
-                currentEvent={currentEvent}
-                setFormVisible={setFormVisible}
-                remainingStaff={getRemainingStaff(user.id, staffInfos)}
-                setFormColor={setFormColor}
-                setSelectable={setSelectable}
-                hostsIds={hostsIds}
-                setHostsIds={setHostsIds}
-                sites={sites}
-                setTimelineSiteId={setTimelineSiteId}
-                sitesIds={sitesIds}
-                setSitesIds={setSitesIds}
-                isFirstEvent={isFirstEvent}
-                setCalendarSelectable={setSelectable}
-              />
-            </FakeWindow>
-          )}
-        </div>
+        <CalendarLeftBar
+          handleShortcutpickrChange={handleShortcutpickrChange}
+          sites={sites}
+          sitesIds={sitesIds}
+          setSitesIds={setSitesIds}
+          hostsIds={hostsIds}
+          setHostsIds={setHostsIds}
+        />
+        <CalendarDisplay
+          timelineVisible={timelineVisible}
+          setTimelineVisible={setTimelineVisible}
+          timelineSiteId={timelineSiteId}
+          setTimelineSiteId={setTimelineSiteId}
+          events={events}
+          sites={sites}
+          currentView={currentView}
+          printDayVisible={printDayVisible}
+          setPrintDayVisible={setPrintDayVisible}
+          handlePrintDay={handlePrintDay}
+          rangeStart={rangeStart}
+          rangeEnd={rangeEnd}
+          initialDate={initialDate}
+          fcRef={fcRef}
+          handleDatesSet={handleDatesSet}
+          handleDateSelect={handleDateSelect}
+          handleDragStart={handleDragStart}
+          handleEventClick={handleEventClick}
+          handleDrop={handleDrop}
+          handleResize={handleResize}
+          handleResizeStart={handleResizeStart}
+          renderEventContent={renderEventContent}
+          formVisible={formVisible}
+          setFormVisible={setFormVisible}
+          currentEvent={currentEvent}
+          setFormColor={setFormColor}
+          formColor={formColor}
+          setSelectable={setSelectable}
+          selectable={selectable}
+          hostsIds={hostsIds}
+          setHostsIds={setHostsIds}
+          sitesIds={sitesIds}
+          setSitesIds={setSitesIds}
+          isFirstEvent={isFirstEvent}
+        />
       </div>
       {confirmDlgRecChangeVisible && (
         <ConfirmDialogRecurringChange

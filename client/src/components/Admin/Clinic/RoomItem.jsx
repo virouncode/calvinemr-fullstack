@@ -1,4 +1,4 @@
-import TrashButton from "../../UI/Buttons/TrashButton";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import Input from "../../UI/Inputs/Input";
 
 const RoomItem = ({ room, handleDeleteRoom, handleChangeRoomTitle }) => {
@@ -15,7 +15,7 @@ const RoomItem = ({ room, handleDeleteRoom, handleChangeRoomTitle }) => {
         id="room-name"
         label="Name*:"
       />
-      <TrashButton onClick={(e) => handleDeleteRoom(e, room.id)} ml={10} />
+      <TrashIcon onClick={(e) => handleDeleteRoom(e, room.id)} ml={10} />
     </li>
   );
 };

@@ -111,9 +111,6 @@
     input {
       width: 400px;
     }
-    p {
-      padding: 0;
-    }
   }
   &__form-subject {
     display: flex;
@@ -179,9 +176,6 @@
         align-items: center;
         display: flex;
         width: 98%;
-        p {
-          padding: 0;
-        }
       }
       &-triangle {
         width: 2%;
@@ -216,9 +210,6 @@
   &__card-subject {
     display: flex;
     align-items: center;
-    p {
-      padding: 0;
-    }
     label {
       font-weight: bold;
       margin-right: 5px;
@@ -333,7 +324,6 @@
       &-row {
         display: flex;
         p {
-          padding: 0;
           white-space: pre-wrap;
           margin-left: 40px;
         }

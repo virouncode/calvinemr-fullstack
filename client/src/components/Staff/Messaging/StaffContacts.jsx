@@ -1,83 +1,76 @@
+import { useState } from "react";
+import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
+import { splitStaffInfos } from "../../../utils/appointments/splitStaffInfos";
+import { categoryToTitle } from "../../../utils/names/categoryToTitle";
 import StaffContactsCategory from "./StaffContactsCategory";
 
 const StaffContacts = ({
-  staffInfos,
-  handleCheckContact,
-  isContactChecked,
-  handleCheckCategory,
-  isCategoryChecked,
-  visibleCategory = "",
+  unfoldedCategory = "",
+  recipientsIds,
+  setRecipientsIds,
 }) => {
-  console.log(visibleCategory);
+  const { staffInfos } = useStaffInfosContext();
   const activeStaff = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
   );
-  const doctorsInfos = {
-    name: "Doctors",
-    infos: activeStaff.filter(({ title }) => title === "Doctor"),
-  };
-  const medStudentsInfos = {
-    name: "Medical Students",
-    infos: activeStaff.filter(({ title }) => title === "Medical Student"),
-  };
-  const nursesInfos = {
-    name: "Nurses",
-    infos: activeStaff.filter(({ title }) => title === "Nurse"),
-  };
-  const nursingStudentsInfos = {
-    name: "Nursing Students",
-    infos: activeStaff.filter(({ title }) => title === "Nursing Student"),
-  };
-  const secretariesInfos = {
-    name: "Secretaries",
-    infos: activeStaff.filter(({ title }) => title === "Secretary"),
-  };
-  const ultrasoundInfos = {
-    name: "Ultra Sound Techs",
-    infos: activeStaff.filter(
-      ({ title }) => title === "Ultra Sound Technician"
-    ),
-  };
-  const labTechInfos = {
-    name: "Lab Techs",
-    infos: activeStaff.filter(({ title }) => title === "Lab Technician"),
-  };
-  const nutritionistInfos = {
-    name: "Nutritionists",
-    infos: activeStaff.filter(({ title }) => title === "Nutritionist"),
-  };
-  const physiosInfos = {
-    name: "Physiotherapists",
-    infos: activeStaff.filter(({ title }) => title === "Physiotherapist"),
-  };
-  const psychosInfos = {
-    name: "Psychologists",
-    infos: activeStaff.filter(({ title }) => title === "Psychologist"),
-  };
-  const othersInfos = {
-    name: "Others",
-    infos: activeStaff.filter(({ title }) => title === "Other"),
+  const [categories, setCategories] = useState([]);
+  const categoriesInfos = splitStaffInfos(staffInfos);
+  const isContactChecked = (id) => recipientsIds.includes(id);
+  const isCategoryChecked = (category) => categories.includes(category);
+
+  const handleCheckContact = (e) => {
+    const id = parseInt(e.target.id);
+    const checked = e.target.checked;
+    const category = e.target.name;
+    const categoryContactsIds = activeStaff
+      .filter(({ title }) => title === categoryToTitle(category))
+      .map(({ id }) => id);
+    if (checked) {
+      setRecipientsIds([...recipientsIds, id]);
+      if (
+        [...recipientsIds, id].filter((id) => categoryContactsIds.includes(id))
+          .length === categoryContactsIds.length
+      )
+        setCategories([...categories, category]);
+    } else {
+      setRecipientsIds(
+        recipientsIds.filter((recipientId) => recipientId !== id)
+      );
+      if (categories.includes(category))
+        setCategories(categories.filter((name) => name !== category));
+    }
   };
 
-  const allInfos = [
-    doctorsInfos,
-    medStudentsInfos,
-    nursesInfos,
-    nursingStudentsInfos,
-    secretariesInfos,
-    ultrasoundInfos,
-    labTechInfos,
-    nutritionistInfos,
-    physiosInfos,
-    psychosInfos,
-    othersInfos,
-  ];
+  const handleCheckCategory = (e) => {
+    const category = e.target.id;
+    const checked = e.target.checked;
+    const categoryContactsIds = activeStaff
+      .filter(({ title }) => title === categoryToTitle(category))
+      .map(({ id }) => id);
+    if (checked) {
+      setCategories([...categories, category]);
+      let recipientsIdsUpdated = [...recipientsIds];
+      categoryContactsIds.forEach((id) => {
+        if (!recipientsIdsUpdated.includes(id)) {
+          recipientsIdsUpdated.push(id);
+        }
+      });
+      setRecipientsIds(recipientsIdsUpdated);
+    } else {
+      setCategories(categories.filter((cat) => cat !== category));
+      let recipientsIdsUpdated = [...recipientsIds];
+      recipientsIdsUpdated = recipientsIdsUpdated.filter(
+        (id) => !categoryContactsIds.includes(id)
+      );
+      setRecipientsIds(recipientsIdsUpdated);
+    }
+  };
 
   return (
     <div className="contacts">
       <div className="contacts__title">Recipients</div>
       <div className="contacts__list">
-        {allInfos
+        {categoriesInfos
           .filter((category) => category.infos.length !== 0)
           .map((category) => (
             <StaffContactsCategory
@@ -88,7 +81,7 @@ const StaffContacts = ({
               handleCheckCategory={handleCheckCategory}
               isCategoryChecked={isCategoryChecked}
               key={category.name}
-              initiallyVisible={category.name === visibleCategory}
+              initiallyUnfolded={category.name === unfoldedCategory}
             />
           ))}
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import XmarkRectangleIcon from "../Icons/XmarkRectangleIcon";
 
 const FakeWindow = ({
   children,
@@ -154,10 +155,7 @@ const FakeWindow = ({
                 : "window-title-close"
             }
           >
-            <i
-              className="fa-regular fa-rectangle-xmark"
-              style={{ color: textColor && `${textColor}` }}
-            />
+            <XmarkRectangleIcon color={textColor && `${textColor}`} />
           </div>
         )}
       </div>

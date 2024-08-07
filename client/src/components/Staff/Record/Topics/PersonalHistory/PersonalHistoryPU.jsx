@@ -10,11 +10,11 @@ import { getResidualInfo } from "../../../../../utils/migration/exports/getResid
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { personalHistorySchema } from "../../../../../validation/record/personalHistoryValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -174,10 +174,7 @@ const PersonalHistoryPU = ({
   if (isPending) {
     return (
       <>
-        <h1>
-          Patient personal history{" "}
-          <i className="fa-solid fa-champagne-glasses"></i>
-        </h1>
+        <h1>Patient personal history</h1>
         <LoadingParagraph />
       </>
     );
@@ -185,10 +182,7 @@ const PersonalHistoryPU = ({
   if (error) {
     return (
       <>
-        <h1>
-          Patient personal history{" "}
-          <i className="fa-solid fa-champagne-glasses"></i>
-        </h1>
+        <h1>Patient personal history</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -199,10 +193,7 @@ const PersonalHistoryPU = ({
     <>
       <div className="personalhistory-card">
         <div className="personalhistory-card__header">
-          <h1>
-            Patient personal history{" "}
-            <i className="fa-solid fa-champagne-glasses"></i>
-          </h1>
+          <h1>Patient personal history</h1>
         </div>
         {formDatas ? (
           <>

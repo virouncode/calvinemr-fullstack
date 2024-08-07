@@ -13,10 +13,12 @@ import {
 } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import Button from "../../../UI/Buttons/Button";
 import CancelButton from "../../../UI/Buttons/CancelButton";
-import SiteSelect from "../SiteSelect";
-import TemplatesRadio from "../Templates/TemplatesRadio";
+import SaveButton from "../../../UI/Buttons/SaveButton";
+import InvitationTemplatesRadio from "../Templates/InvitationTemplatesRadio";
+import InvitationInfos from "./InvitationInfos";
+import InvitationIntro from "./InvitationIntro";
+import InvitationMessage from "./InvitationMessage";
 
 axios.defaults.withCredentials = true;
 
@@ -247,85 +249,32 @@ const Invitation = ({
   return (
     <form className="invitation">
       <div className="invitation__edit">
-        <div className="invitation__row">
-          <TemplatesRadio
-            handleTemplateChange={handleTemplateChange}
-            templates={user.settings.invitation_templates}
-            templateSelected={templateSelected}
-          />
-        </div>
-        <div className="invitation__row">
-          <label htmlFor="introduction">Introduction</label>
-          <textarea
-            onChange={handleIntroChange}
-            value={intro}
-            style={{ height: "60px" }}
-            id="introduction"
-          />
-        </div>
-        <div className="invitation__row">
-          {templateSelected === "Video appointment" ? (
-            <label>
-              Appointment Infos (read only,{" "}
-              <span style={{ color: "red" }}>
-                please make sure you provided a video call link, see My Account
-                section
-              </span>
-              )
-            </label>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "5px",
-              }}
-            >
-              <label>Appointment Infos (read only)</label>
-              {templateSelected !== "Video appointment" &&
-                templateSelected !== "Phone appointment" &&
-                templateSelected !== "[Blank]" && (
-                  <div>
-                    <SiteSelect
-                      label="Site"
-                      handleSiteChange={handleSiteChange}
-                      sites={sites}
-                      value={siteSelectedId}
-                    />
-                  </div>
-                )}
-            </div>
-          )}
-          <textarea
-            value={
-              user.settings.invitation_templates.find(
-                ({ name }) => name === templateSelected
-              ).infos
-            }
-            readOnly
-            style={{ height: "130px" }}
-          />
-        </div>
-        <div className="invitation__row">
-          <label htmlFor="message">Message</label>
-          <textarea
-            onChange={handleMessageChange}
-            value={message}
-            style={{ height: "170px" }}
-            id="message"
-          />
-        </div>
+        <InvitationTemplatesRadio
+          handleTemplateChange={handleTemplateChange}
+          templates={user.settings.invitation_templates}
+          templateSelected={templateSelected}
+        />
+        <InvitationIntro intro={intro} handleIntroChange={handleIntroChange} />
+        <InvitationInfos
+          templateSelected={templateSelected}
+          handleSiteChange={handleSiteChange}
+          sites={sites}
+          siteSelectedId={siteSelectedId}
+        />
+        <InvitationMessage
+          message={message}
+          handleMessageChange={handleMessageChange}
+        />
       </div>
       <div className="invitation__btns">
         {user.id === hostId && (
-          <Button
+          <SaveButton
             onClick={handleSendAndSave}
             label="Send & Save as template"
             disabled={progress}
           />
         )}
-        <Button onClick={handleSend} label="Send" disabled={progress} />
+        <SaveButton onClick={handleSend} label="Send" disabled={progress} />
         <CancelButton onClick={handleCancel} />
       </div>
     </form>

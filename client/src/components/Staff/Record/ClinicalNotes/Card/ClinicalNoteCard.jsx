@@ -14,7 +14,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNoteValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CalvinAIClinical from "../CalvinAIClinical/CalvinAIClinical";
@@ -130,7 +130,7 @@ const ClinicalNoteCard = ({
       inputText + (inputText ? "\n\n" : "") + template.body + "\n";
   };
 
-  const handleTriangleClinicalClick = (e) => {
+  const handleClinicalHeaderClick = (e) => {
     e.stopPropagation();
     setBodyVisible((v) => !v);
     bodyRef.current.classList.toggle(
@@ -315,7 +315,7 @@ const ClinicalNoteCard = ({
             handleChange={handleChange}
             setInputText={setInputText}
             inputTextBeforeSpeech={inputTextBeforeSpeech}
-            handleTriangleClinicalClick={handleTriangleClinicalClick}
+            handleClinicalHeaderClick={handleClinicalHeaderClick}
             choosenVersionNbr={choosenVersionNbr}
             addVisible={addVisible}
             bodyRef={bodyRef}
@@ -328,7 +328,7 @@ const ClinicalNoteCard = ({
         ) : (
           <ClinicalNoteCardHeaderFolded
             tempFormDatas={tempFormDatas}
-            handleTriangleClinicalClick={handleTriangleClinicalClick}
+            handleClinicalHeaderClick={handleClinicalHeaderClick}
             handleClickVersions={handleClickVersions}
             isChecked={isChecked}
             clinicalNote={clinicalNote}

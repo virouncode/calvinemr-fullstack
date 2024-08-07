@@ -5,6 +5,7 @@ import { usePatientsGroupPut } from "../../../hooks/reactquery/mutations/patient
 import { groupSchema } from "../../../validation/groups/groupValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import UserPlusIcon from "../../UI/Icons/UserPlusIcon";
 import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -119,11 +120,7 @@ const PatientsGroupEdit = ({ group, setEditVisible }) => {
       <div className="patients-groups__edit-patients">
         <label>
           Patients{" "}
-          <i
-            className="fa-solid fa-user-plus"
-            style={{ marginLeft: "5px", cursor: "pointer" }}
-            onClick={() => setAddPatientsVisible(true)}
-          />
+          <UserPlusIcon ml={5} onClick={() => setAddPatientsVisible(true)} />
         </label>
         <Reorder.Group axis="y" values={order} onReorder={setOrder}>
           {order.length > 0 ? (

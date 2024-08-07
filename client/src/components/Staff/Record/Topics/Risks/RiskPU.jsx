@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -58,10 +58,7 @@ const RiskPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="risk__title">
-          Patient risk factors & prevention{" "}
-          <i className="fa-solid fa-triangle-exclamation"></i>
-        </h1>
+        <h1 className="risk__title">Patient risk factors & prevention</h1>
         <LoadingParagraph />
       </>
     );
@@ -69,10 +66,7 @@ const RiskPU = ({
   if (error) {
     return (
       <>
-        <h1 className="risk__title">
-          Patient risk factors & prevention{" "}
-          <i className="fa-solid fa-triangle-exclamation"></i>
-        </h1>
+        <h1 className="risk__title">Patient risk factors & prevention</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -82,10 +76,7 @@ const RiskPU = ({
 
   return (
     <>
-      <h1 className="risk__title">
-        Patient risk factors & prevention{" "}
-        <i className="fa-solid fa-triangle-exclamation"></i>
-      </h1>
+      <h1 className="risk__title">Patient risk factors & prevention</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="risk__table-container" ref={rootRef}>

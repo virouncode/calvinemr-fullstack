@@ -1,6 +1,8 @@
 import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import { kgToLbs } from "../../../../../utils/measurements/measurements";
+import ClockIcon from "../../../../UI/Icons/ClockIcon";
+import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import WeightLbsHistoryEdit from "./WeightLbsHistoryEdit";
 
@@ -23,17 +25,17 @@ const CareElementsWeightLbs = ({
       {lastDatas.Weight?.Weight && (
         <div className="care-elements__row-btns">
           <Tooltip title="Show history">
-            <i
-              className="fa-solid fa-clock-rotate-left"
-              onClick={(e) => handleClickHistory(e, "WEIGHT LBS")}
-              style={{ marginRight: "5px" }}
-            />
+            <span>
+              <ClockIcon
+                onClick={(e) => handleClickHistory(e, "WEIGHT LBS")}
+                mr={5}
+              />
+            </span>
           </Tooltip>
           <Tooltip title="Edit history">
-            <i
-              className="fa-regular fa-pen-to-square"
-              onClick={handleEditClick}
-            />
+            <span>
+              <PenIcon onClick={handleEditClick} />
+            </span>
           </Tooltip>
         </div>
       )}

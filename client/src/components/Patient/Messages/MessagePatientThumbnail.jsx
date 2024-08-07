@@ -6,8 +6,11 @@ import { useMessageExternalPut } from "../../../hooks/reactquery/mutations/messa
 import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import ExclamationIcon from "../../UI/Icons/ExclamationIcon";
+import PaperclipIcon from "../../UI/Icons/PaperclipIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 
 const MessagePatientThumbnail = ({
   message,
@@ -168,14 +171,12 @@ const MessagePatientThumbnail = ({
         className="message-thumbnail__subject message-thumbnail__subject--external"
         onClick={handleMsgClick}
       >
-        {message.high_importance && (
-          <i className="fa-solid fa-circle-exclamation message-thumbnail__subject-exclamation" />
-        )}
+        {message.high_importance && <ExclamationIcon mr={5} />}
         <div className="message-thumbnail__subject-text">
           {message.subject} - {message.body}
         </div>
         {message.attachments_ids.length !== 0 && (
-          <i className="fa-solid fa-paperclip message-thumbnail__subject-attachment" />
+          <PaperclipIcon clickable={false} ml={5} />
         )}
       </div>
       {/*========== DATE =============*/}
@@ -185,11 +186,7 @@ const MessagePatientThumbnail = ({
       {/*========== LOGOS =============*/}
       <div className="message-thumbnail__logos">
         {section !== "Deleted messages" && (
-          <i
-            className="fa-solid fa-trash  message-thumbnail__trash"
-            style={{ cursor: "pointer" }}
-            onClick={handleDeleteMsg}
-          />
+          <TrashIcon onClick={handleDeleteMsg} />
         )}
       </div>
     </div>

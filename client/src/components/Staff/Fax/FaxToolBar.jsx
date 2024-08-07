@@ -1,8 +1,8 @@
 import { useFaxesDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { dateStringToISO } from "../../../utils/dates/formatDates";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Button from "../../UI/Buttons/Button";
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
 

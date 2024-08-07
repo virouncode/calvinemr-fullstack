@@ -1,5 +1,6 @@
-
 import { nowTZ } from "../../../utils/dates/formatDates";
+import ArrowLeftIcon from "../../UI/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../UI/Icons/ArrowRightIcon";
 
 const WeekPicker = ({ handleClickNext, handleClickPrevious, rangeStart }) => {
   return (
@@ -10,11 +11,11 @@ const WeekPicker = ({ handleClickNext, handleClickPrevious, rangeStart }) => {
           rangeStart === nowTZ().plus({ days: 1 }).startOf("day").toMillis()
         }
       >
-        <i className="fa-solid fa-arrow-left"></i>
+        <ArrowLeftIcon clickable={false} />
       </button>
       <label>Change week</label>
       <button onClick={handleClickNext}>
-        <i className="fa-solid fa-arrow-right"></i>
+        <ArrowRightIcon clickable={false} />
       </button>
     </div>
   );

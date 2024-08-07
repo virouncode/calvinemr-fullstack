@@ -1,5 +1,4 @@
-
-import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
+import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import Availability from "./Availability";
 import FirstDaySelect from "./FirstDaySelect";
 import SlotSelect from "./SlotSelect";
@@ -19,11 +18,7 @@ const CalendarOptions = ({
           editAvailabilityVisible={editAvailabilityVisible}
           setEditAvailabilityVisible={setEditAvailabilityVisible}
         />
-        {isPending && (
-          <div style={{ fontSize: "0.8rem", padding: "5px" }}>
-            <LoadingParagraph />
-          </div>
-        )}
+        {isPending && <CircularProgressSmall />}
       </div>
       <Timezone />
     </div>

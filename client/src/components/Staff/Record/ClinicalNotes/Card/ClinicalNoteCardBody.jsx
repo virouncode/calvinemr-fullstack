@@ -1,4 +1,4 @@
-
+import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
 
 const ClinicalNoteCardBody = ({
   clinicalNote,
@@ -17,27 +17,18 @@ const ClinicalNoteCardBody = ({
       ) : (
         <>
           {isListening ? (
-            <i
-              className="fa-solid fa-microphone"
+            <MicrophoneIcon
               onClick={handleStopSpeech}
-              style={{
-                cursor: "pointer",
-                color: "red",
-                position: "absolute",
-                top: "30px",
-                right: "40px",
-              }}
+              color="red"
+              top={30}
+              right={40}
             />
           ) : (
-            <i
-              className="fa-solid fa-microphone"
+            <MicrophoneIcon
               onClick={handleStartSpeech}
-              style={{
-                cursor: "pointer",
-                position: "absolute",
-                top: "30px",
-                right: "40px",
-              }}
+              color="black"
+              top={30}
+              right={40}
             />
           )}
           <textarea

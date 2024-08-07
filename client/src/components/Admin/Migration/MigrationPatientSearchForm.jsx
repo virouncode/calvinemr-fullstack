@@ -37,7 +37,8 @@ const MigrationPatientSearchForm = ({ search, handleSearch }) => {
             onChange={handleSearch}
             name="birth"
             id="birth"
-            label="Date Of Birth"
+            label="Date of birth"
+            placeholder="yyyy-mm-dd"
           />
           <Input
             value={search.chart}

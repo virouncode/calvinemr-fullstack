@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -66,9 +66,7 @@ const AppointmentsPU = ({
   if (isPending || isPendingSites) {
     return (
       <>
-        <h1 className="appointments__title">
-          Patient appointments <i className="fa-regular fa-calendar-check"></i>
-        </h1>
+        <h1 className="appointments__title">Patient appointments</h1>
         <LoadingParagraph />
       </>
     );
@@ -76,9 +74,7 @@ const AppointmentsPU = ({
   if (error || errorSites) {
     return (
       <>
-        <h1 className="appointments__title">
-          Patient appointments <i className="fa-regular fa-calendar-check"></i>
-        </h1>
+        <h1 className="appointments__title">Patient appointments</h1>
         <ErrorParagraph errorMsg={error?.message || errorSites?.message} />
       </>
     );
@@ -88,9 +84,7 @@ const AppointmentsPU = ({
 
   return (
     <>
-      <h1 className="appointments__title">
-        Patient appointments <i className="fa-regular fa-calendar-check"></i>
-      </h1>
+      <h1 className="appointments__title">Patient appointments</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="appointments__table-container" ref={rootRef}>
         <table className="appointments__table">

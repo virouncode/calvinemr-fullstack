@@ -4,7 +4,6 @@ import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagesTemplatePost } from "../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
-import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
 import CancelButton from "../../../UI/Buttons/CancelButton";
@@ -17,7 +16,6 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
   const { staffInfos } = useStaffInfosContext();
   const [name, setName] = useState("");
   const [recipientsIds, setRecipientsIds] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [progress, setProgress] = useState(false);
@@ -33,72 +31,6 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
 
   const handleChangeName = (e) => {
     setName(e.target.value);
-  };
-
-  const isContactChecked = (id) => recipientsIds.includes(id);
-  const isCategoryChecked = (category) => categories.includes(category);
-
-  const handleCheckContact = (e) => {
-    const id = parseInt(e.target.id);
-    const checked = e.target.checked;
-    const category = e.target.name;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      let recipientsIdsUpdated = [...recipientsIds, id];
-      setRecipientsIds(recipientsIdsUpdated);
-      if (
-        categoryContactsIds.every((id) => recipientsIdsUpdated.includes(id))
-      ) {
-        setCategories([...categories, category]);
-      }
-    } else {
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (recipientId) => recipientId !== id
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-      if (categories.includes(category)) {
-        let categoriesUpdated = [...categories];
-        categoriesUpdated = categoriesUpdated.filter(
-          (categoryName) => categoryName !== category
-        );
-        setCategories(categoriesUpdated);
-      }
-    }
-  };
-
-  const handleCheckCategory = (e) => {
-    const category = e.target.id;
-    const checked = e.target.checked;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      setCategories([...categories, category]);
-      //All contacts of category
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      categoryContactsIds.forEach((id) => {
-        if (!recipientsIdsUpdated.includes(id)) {
-          recipientsIdsUpdated.push(id);
-        }
-      });
-      setRecipientsIds(recipientsIdsUpdated);
-    } else {
-      let categoriesUpdated = [...categories];
-      categoriesUpdated = categoriesUpdated.filter((name) => name !== category);
-      setCategories(categoriesUpdated);
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (id) => !categoryContactsIds.includes(id)
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-    }
   };
 
   const handleCancel = () => {
@@ -151,11 +83,8 @@ const MessageTemplateForm = ({ setNewTemplateVisible }) => {
       <div className="new-message new-message--template">
         <div className="new-message__contacts new-message__contacts--template">
           <StaffContacts
-            staffInfos={staffInfos}
-            handleCheckContact={handleCheckContact}
-            isContactChecked={isContactChecked}
-            handleCheckCategory={handleCheckCategory}
-            isCategoryChecked={isCategoryChecked}
+            recipientsIds={recipientsIds}
+            setRecipientsIds={setRecipientsIds}
           />
         </div>
         <div className="new-message__form new-message__form--template">

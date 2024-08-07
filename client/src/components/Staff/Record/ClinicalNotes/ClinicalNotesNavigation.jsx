@@ -1,23 +1,11 @@
+import GoToBottomIcon from "../../../UI/Icons/GoToBottom";
+import GoToTopIcon from "../../../UI/Icons/GoToTopIcon";
+
 const ClinicalNotesNavigation = ({ handleGoToTop, handleGoToEnd }) => {
   return (
     <>
-      <i
-        className="fa-solid fa-angles-up"
-        style={{
-          marginLeft: "5px",
-          marginRight: "2px",
-          cursor: "pointer",
-        }}
-        onClick={handleGoToTop}
-      />
-      <i
-        className="fa-solid fa-angles-down"
-        style={{
-          marginRight: "2px",
-          cursor: "pointer",
-        }}
-        onClick={handleGoToEnd}
-      />
+      <GoToTopIcon ml={5} mr={2} onClick={handleGoToTop} />
+      <GoToBottomIcon mr={2} onClick={handleGoToEnd} />
     </>
   );
 };

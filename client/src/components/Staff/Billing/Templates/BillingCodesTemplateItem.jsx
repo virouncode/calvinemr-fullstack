@@ -8,7 +8,7 @@ import {
 } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { removeLastLetter } from "../../../../utils/strings/removeLastLetter";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import BillingCodesTemplateDisplay from "./BillingCodesTemplateDisplay";
 import BillingCodesTemplateEdit from "./BillingCodesTemplateEdit";
 

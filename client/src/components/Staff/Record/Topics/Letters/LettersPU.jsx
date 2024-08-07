@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import PaperPlaneIcon from "../../../../UI/Icons/PaperPlaneIcon";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -72,7 +73,7 @@ const LettersPU = ({
     return (
       <>
         <h1 className="letters__title">
-          Patient letters <i className="fa-regular fa-paper-plane" />
+          Patient letters <PaperPlaneIcon clickable={false} />
         </h1>
         <LoadingParagraph />
       </>
@@ -82,7 +83,7 @@ const LettersPU = ({
     return (
       <>
         <h1 className="letters__title">
-          Patient letters <i className="fa-regular fa-paper-plane" />
+          Patient letters <PaperPlaneIcon clickable={false} />
         </h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
@@ -94,7 +95,7 @@ const LettersPU = ({
   return (
     <>
       <h1 className="letters__title">
-        Patient letters <i className="fa-regular fa-paper-plane" />
+        Patient letters <PaperPlaneIcon clickable={false} />
       </h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>

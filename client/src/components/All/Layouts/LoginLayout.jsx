@@ -1,6 +1,5 @@
-
 import { Outlet } from "react-router-dom";
-import ConfirmGlobal from "../Confirm/ConfirmGlobal";
+import ConfirmGlobal from "../../UI/Confirm/ConfirmGlobal";
 import LoginHeader from "../Headers/LoginHeader";
 
 const LoginLayout = () => {

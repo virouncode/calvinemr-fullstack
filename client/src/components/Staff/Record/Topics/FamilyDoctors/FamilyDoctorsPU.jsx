@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import DoctorIcon from "../../../../UI/Icons/DoctorIcon";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PatientClinicDoctorsList from "./PatientClinicDoctorsList";
@@ -53,8 +54,7 @@ const FamilyDoctorsPU = ({
     return (
       <>
         <h1 className="doctors__title">
-          Patient family doctors & specialists{" "}
-          <i className="fa-solid fa-user-doctor"></i>
+          Patient family doctors & specialists <DoctorIcon clickable={false} />
         </h1>
         <LoadingParagraph />
       </>
@@ -64,8 +64,7 @@ const FamilyDoctorsPU = ({
     return (
       <>
         <h1 className="doctors__title">
-          Patient family doctors & specialists{" "}
-          <i className="fa-solid fa-user-doctor"></i>
+          Patient family doctors & specialists <DoctorIcon clickable={false} />
         </h1>
         <ErrorParagraph errorMsg={errorPatientDoctors.message} />
       </>
@@ -75,8 +74,7 @@ const FamilyDoctorsPU = ({
   return (
     <>
       <h1 className="doctors__title">
-        Patient family doctors & specialists{" "}
-        <i className="fa-solid fa-user-doctor"></i>
+        Patient family doctors & specialists <DoctorIcon clickable={false} />
       </h1>
       <PatientClinicDoctorsList
         patientId={patientId}

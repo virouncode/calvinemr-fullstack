@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -57,10 +57,7 @@ const AlertsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="alerts__title">
-          Alerts and special needs{" "}
-          <i className="fa-solid fa-person-circle-question"></i>
-        </h1>
+        <h1 className="alerts__title">Alerts and special needs</h1>
         <LoadingParagraph />
       </>
     );
@@ -68,10 +65,7 @@ const AlertsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="alerts__title">
-          Alerts and special needs{" "}
-          <i className="fa-solid fa-person-circle-question"></i>
-        </h1>
+        <h1 className="alerts__title">Alerts and special needs</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -81,10 +75,7 @@ const AlertsPU = ({
 
   return (
     <>
-      <h1 className="alerts__title">
-        Alerts and special needs{" "}
-        <i className="fa-solid fa-person-circle-question"></i>
-      </h1>
+      <h1 className="alerts__title">Alerts and special needs</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="alerts__table-container" ref={rootRef}>

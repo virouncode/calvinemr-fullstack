@@ -5,6 +5,7 @@ import ReportForm from "../../Record/Topics/Reports/ReportForm";
 
 import { useReportPost } from "../../../../hooks/reactquery/mutations/reportsMutations";
 import Button from "../../../UI/Buttons/Button";
+import XmarkIcon from "../../../UI/Icons/XmarkIcon";
 import ReportsInboxForm from "../../ReportsInbox/ReportsInboxForm";
 
 const MessageAttachmentCard = ({
@@ -109,11 +110,9 @@ const MessageAttachmentCard = ({
               {attachment.alias}
             </p>
             {deletable && (
-              <i
-                className="fa-solid fa-xmark"
-                style={{ cursor: "pointer" }}
+              <XmarkIcon
                 onClick={() => handleRemoveAttachment(attachment.file.name)}
-              ></i>
+              />
             )}
           </div>
           {addable && (

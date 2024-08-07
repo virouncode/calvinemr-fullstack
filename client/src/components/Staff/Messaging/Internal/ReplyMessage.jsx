@@ -11,6 +11,7 @@ import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAnd
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
+import PaperclipIcon from "../../../UI/Icons/PaperclipIcon";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Message from "./Message";
@@ -212,11 +213,7 @@ const ReplyMessage = ({
       )}
       <div className="reply-message__attach">
         <strong>Attach files</strong>
-        <i
-          className="fa-solid fa-paperclip"
-          onClick={handleAttach}
-          disabled={progress || isLoadingFile}
-        ></i>
+        <PaperclipIcon onClick={handleAttach} />
         {attachments.map((attachment) => (
           <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
             {attachment.alias},

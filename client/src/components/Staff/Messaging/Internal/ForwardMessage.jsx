@@ -7,7 +7,6 @@ import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
-import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
@@ -34,7 +33,6 @@ const ForwardMessage = ({
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] = useState([]);
   const [recipientsIds, setRecipientsIds] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
@@ -52,9 +50,6 @@ const ForwardMessage = ({
     setImportant(value);
   };
 
-  const isContactChecked = (id) => recipientsIds.includes(id);
-  const isCategoryChecked = (category) => categories.includes(category);
-
   const handleSelectTemplate = (e, template) => {
     if (template.to_staff_ids.length) setRecipientsIds(template.to_staff_ids);
     setBody((b) =>
@@ -65,69 +60,6 @@ const ForwardMessage = ({
       textareaRef.current.value.length,
       textareaRef.current.value.length
     );
-  };
-
-  const handleCheckContact = (e) => {
-    const id = parseInt(e.target.id);
-    const checked = e.target.checked;
-    const category = e.target.name;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      let recipientsIdsUpdated = [...recipientsIds, id];
-      setRecipientsIds(recipientsIdsUpdated);
-      if (
-        categoryContactsIds.every((id) => recipientsIdsUpdated.includes(id))
-      ) {
-        setCategories([...categories, category]);
-      }
-    } else {
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (recipientId) => recipientId !== id
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-      if (categories.includes(category)) {
-        let categoriesUpdated = [...categories];
-        categoriesUpdated = categoriesUpdated.filter(
-          (categoryName) => categoryName !== category
-        );
-        setCategories(categoriesUpdated);
-      }
-    }
-  };
-
-  const handleCheckCategory = (e) => {
-    const category = e.target.id;
-    const checked = e.target.checked;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      setCategories([...categories, category]);
-      //All contacts of category
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      categoryContactsIds.forEach((id) => {
-        if (!recipientsIdsUpdated.includes(id)) {
-          recipientsIdsUpdated.push(id);
-        }
-      });
-      setRecipientsIds(recipientsIdsUpdated);
-    } else {
-      let categoriesUpdated = [...categories];
-      categoriesUpdated = categoriesUpdated.filter((name) => name !== category);
-      setCategories(categoriesUpdated);
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (id) => !categoryContactsIds.includes(id)
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-    }
   };
 
   const handleCancel = () => {
@@ -260,11 +192,8 @@ const ForwardMessage = ({
     <div className="forward-message">
       <div className="forward-message__contacts">
         <StaffContacts
-          staffInfos={staffInfos}
-          handleCheckContact={handleCheckContact}
-          isContactChecked={isContactChecked}
-          handleCheckCategory={handleCheckCategory}
-          isCategoryChecked={isCategoryChecked}
+          recipientsIds={recipientsIds}
+          setRecipientsIds={setRecipientsIds}
         />
       </div>
       <div className="forward-message__form">

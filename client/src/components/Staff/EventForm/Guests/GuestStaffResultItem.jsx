@@ -1,6 +1,6 @@
-
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import UserPlusIcon from "../../../UI/Icons/UserPlusIcon";
 
 const GuestStaffResultItem = ({ staff, handleAddStaffGuest }) => {
   const { staffInfos } = useStaffInfosContext();
@@ -9,11 +9,7 @@ const GuestStaffResultItem = ({ staff, handleAddStaffGuest }) => {
       <span>
         {staffIdToTitleAndName(staffInfos, staff.id, false)} ({staff.title})
       </span>
-      <i
-        style={{ marginLeft: "10px", cursor: "pointer" }}
-        className="fa-solid fa-user-plus"
-        onClick={(e) => handleAddStaffGuest(e, staff)}
-      ></i>
+      <UserPlusIcon ml={10} onClick={(e) => handleAddStaffGuest(e, staff)} />
     </li>
   );
 };

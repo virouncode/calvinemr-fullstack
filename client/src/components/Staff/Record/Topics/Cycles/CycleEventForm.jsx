@@ -2,8 +2,8 @@ import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import IvfMedsList from "../../../../UI/Lists/IvfMedsList";

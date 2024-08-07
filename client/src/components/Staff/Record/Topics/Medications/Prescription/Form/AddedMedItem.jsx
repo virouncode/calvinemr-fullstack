@@ -1,4 +1,4 @@
-
+import TrashIcon from "../../../../../../UI/Icons/TrashIcon";
 
 const AddedMedItem = ({ med, addedMeds, setAddedMeds }) => {
   const handleRemoveFromRx = (e) => {
@@ -26,11 +26,7 @@ const AddedMedItem = ({ med, addedMeds, setAddedMeds }) => {
           onChange={handleChangeItemInstruction}
         />
         <div style={{ textAlign: "end" }}>
-          <i
-            className="fa-solid fa-trash"
-            style={{ cursor: "pointer" }}
-            onClick={handleRemoveFromRx}
-          />
+          <TrashIcon onClick={handleRemoveFromRx} />
         </div>
       </div>
     </li>

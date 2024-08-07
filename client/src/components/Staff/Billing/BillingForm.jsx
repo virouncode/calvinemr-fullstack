@@ -19,7 +19,7 @@ import { billingFormSchema } from "../../../validation/billing/billingValidation
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputDate from "../../UI/Inputs/InputDate";
-import InputWithLogo from "../../UI/Inputs/InputWithLogo";
+import InputWithSearch from "../../UI/Inputs/InputWithSearch";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import SiteSelect from "../EventForm/SiteSelect";
 import BillingCodesTextarea from "./BillingCodesTextarea";
@@ -214,7 +214,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
           />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <InputWithLogo
+          <InputWithSearch
             id="provider_ohip_billing_nbr"
             name="provider_ohip_billing_nbr"
             value={formDatas.provider_ohip_billing_nbr.toString()}
@@ -226,7 +226,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
           />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <InputWithLogo
+          <InputWithSearch
             id="referrer_ohip_billing_nbr"
             name="referrer_ohip_billing_nbr"
             value={formDatas.referrer_ohip_billing_nbr.toString()}
@@ -238,7 +238,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
       </div>
       <div className="billing-form__row">
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <InputWithLogo
+          <InputWithSearch
             id="patient_hcn"
             name="patient_hcn"
             value={formDatas.patient_hcn}
@@ -249,7 +249,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
           />
         </div>
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <InputWithLogo
+          <InputWithSearch
             id="diagnosis_code"
             name="diagnosis_code"
             value={formDatas.diagnosis_code}
@@ -268,7 +268,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
       </div>
       <div className="billing-form__row">
         <div className="billing-form__item" style={{ position: "relative" }}>
-          <InputWithLogo
+          <InputWithSearch
             id="patient_id"
             name="patient_id"
             value={formDatas.patient_name}

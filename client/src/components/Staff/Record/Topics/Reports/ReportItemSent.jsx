@@ -10,12 +10,12 @@ import {
 import { showDocument } from "../../../../../utils/files/showDocument";
 import { showReportTextContent } from "../../../../../utils/reports/showReportTextContent";
 import { reportSchema } from "../../../../../validation/record/reportValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../../UI/Inputs/Input";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../../../UI/Lists/GenericListToggle";

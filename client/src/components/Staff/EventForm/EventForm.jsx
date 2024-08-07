@@ -26,30 +26,20 @@ import {
   staffIdToLastName,
   staffIdToOHIP,
 } from "../../../utils/names/staffIdToName";
-import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toRoomTitle } from "../../../utils/names/toRoomTitle";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../validation/record/appointmentValidation";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
-import Button from "../../UI/Buttons/Button";
-import CancelButton from "../../UI/Buttons/CancelButton";
-import CloseButton from "../../UI/Buttons/CloseButton";
-import SubmitButton from "../../UI/Buttons/SubmitButton";
-import Checkbox from "../../UI/Checkbox/Checkbox";
-import Input from "../../UI/Inputs/Input";
-import InputDate from "../../UI/Inputs/InputDate";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
-import DateTimePicker from "../../UI/Pickers/DateTimePicker";
-import DurationPicker from "../../UI/Pickers/DurationPicker";
 import ConfirmDialogRecurringChange from "../Calendar/ConfirmDialogRecurringChange";
-import EditGuests from "./Guests/EditGuests";
-import HostsSelect from "./Host/HostsSelect";
+import EventFormButtons from "./EventFormButtons";
+import EventFormGuests from "./EventFormGuests";
+import EventFormHostRow from "./EventFormHostRow";
+import EventFormLocation from "./EventFormLocation";
+import EventFormNotes from "./EventFormNotes";
+import EventFormStatus from "./EventFormStatus";
+import EventFormTimeRow from "./EventFormTimeRow";
 import Invitation from "./Invitation/Invitation";
-import RecurrenceSelect from "./RecurrenceSelect";
-import RoomsRadio from "./Rooms/RoomsRadio";
-import SiteSelect from "./SiteSelect";
-import StatusesRadio from "./Status/StatusesRadio";
 
 //MY COMPONENT
 const EventForm = ({
@@ -245,9 +235,7 @@ const EventForm = ({
           value,
           hoursStr,
           minutesStr,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "hours":
@@ -255,9 +243,7 @@ const EventForm = ({
           dateStr,
           value,
           minutesStr,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "minutes":
@@ -265,9 +251,7 @@ const EventForm = ({
           dateStr,
           hoursStr,
           value,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "ampm":
@@ -275,9 +259,7 @@ const EventForm = ({
           dateStr,
           hoursStr,
           minutesStr,
-          value,
-          "America/Toronto",
-          "en-CA"
+          value
         );
         break;
       default:
@@ -351,9 +333,7 @@ const EventForm = ({
           value,
           hoursStr,
           minutesStr,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "hours":
@@ -361,9 +341,7 @@ const EventForm = ({
           dateStr,
           value,
           minutesStr,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "minutes":
@@ -371,9 +349,7 @@ const EventForm = ({
           dateStr,
           hoursStr,
           value,
-          ampmStr,
-          "America/Toronto",
-          "en-CA"
+          ampmStr
         );
         break;
       case "ampm":
@@ -381,9 +357,7 @@ const EventForm = ({
           dateStr,
           hoursStr,
           minutesStr,
-          value,
-          "America/Toronto",
-          "en-CA"
+          value
         );
         break;
       default:
@@ -567,8 +541,8 @@ const EventForm = ({
       Duration: formDatas.Duration,
       AppointmentStatus: formDatas.AppointmentStatus,
       AppointmentDate: formDatas.all_day
-        ? timestampToDateISOTZ(startAllDay, "America/Toronto")
-        : timestampToDateISOTZ(formDatas.start, "America/Toronto"),
+        ? timestampToDateISOTZ(startAllDay)
+        : timestampToDateISOTZ(formDatas.start),
       Provider: {
         Name: {
           FirstName: staffIdToFirstName(
@@ -645,8 +619,8 @@ const EventForm = ({
       Duration: formDatas.Duration,
       AppointmentStatus: formDatas.AppointmentStatus,
       AppointmentDate: formDatas.all_day
-        ? timestampToDateISOTZ(startAllDay, "America/Toronto")
-        : timestampToDateISOTZ(formDatas.start, "America/Toronto"),
+        ? timestampToDateISOTZ(startAllDay)
+        : timestampToDateISOTZ(formDatas.start),
       Provider: {
         Name: {
           FirstName: staffIdToFirstName(
@@ -751,8 +725,8 @@ const EventForm = ({
       Duration: formDatas.Duration,
       AppointmentStatus: formDatas.AppointmentStatus,
       AppointmentDate: formDatas.all_day
-        ? timestampToDateISOTZ(startAllDay, "America/Toronto")
-        : timestampToDateISOTZ(formDatas.start, "America/Toronto"),
+        ? timestampToDateISOTZ(startAllDay)
+        : timestampToDateISOTZ(formDatas.start),
       Provider: {
         Name: {
           FirstName: staffIdToFirstName(
@@ -830,8 +804,8 @@ const EventForm = ({
       Duration: formDatas.Duration,
       AppointmentStatus: formDatas.AppointmentStatus,
       AppointmentDate: formDatas.all_day
-        ? timestampToDateISOTZ(startAllDay, "America/Toronto")
-        : timestampToDateISOTZ(formDatas.start, "America/Toronto"),
+        ? timestampToDateISOTZ(startAllDay)
+        : timestampToDateISOTZ(formDatas.start),
       Provider: {
         Name: {
           FirstName: staffIdToFirstName(
@@ -912,176 +886,60 @@ const EventForm = ({
               <ErrorParagraph errorMsg={errMsgPost} />
             </div>
           )}
-          <div className="event-form__row">
-            <div className="event-form__item">
-              <label>Host </label>
-              {user.title === "Secretary" ? (
-                <HostsSelect
-                  handleHostChange={handleHostChange}
-                  hostId={formDatas.host_id}
-                />
-              ) : (
-                <p>{staffIdToTitleAndName(staffInfos, formDatas.host_id)}</p>
-              )}
-            </div>
-            <div className="event-form__item">
-              <Input
-                value={formDatas.AppointmentPurpose}
-                onChange={handlePurposeChange}
-                name="AppointmentPurpose"
-                id="purpose"
-                label="Purpose"
-              />
-            </div>
-            <div className="event-form__item">
-              <RecurrenceSelect
-                value={formDatas.recurrence}
-                handleRecurrenceChange={handleRecurrenceChange}
-              />
-            </div>
-            <div className="event-form__item">
-              <InputDate
-                value={
-                  formDatas.rrule?.until
-                    ? formDatas.rrule?.until.slice(0, 10)
-                    : ""
-                }
-                onChange={handleUntilChange}
-                id="until"
-                min={timestampToDateISOTZ(formDatas.start)}
-                label="Until"
-              />
-            </div>
-          </div>
-          <div className="event-form__row">
-            <div className="event-form__item">
-              <DateTimePicker
-                value={formDatas.start}
-                refDate={refDateStart}
-                refHours={refHoursStart}
-                refMinutes={refMinutesStart}
-                refAMPM={refAMPMStart}
-                timezone="America/Toronto"
-                locale="en-CA"
-                handleChange={handleStartChange}
-                label="Start"
-              />
-            </div>
-            <div className="event-form__item">
-              <DateTimePicker
-                value={formDatas.end}
-                refDate={refDateEnd}
-                refHours={refHoursEnd}
-                refMinutes={refMinutesEnd}
-                refAMPM={refAMPMEnd}
-                timezone="America/Toronto"
-                locale="en-CA"
-                handleChange={handleEndChange}
-                label="End"
-              />
-            </div>
-            <div className="event-form__item">
-              <DurationPicker
-                durationHours={
-                  formDatas.all_day
-                    ? "24"
-                    : parseInt(formDatas.Duration / 60)
-                        .toString()
-                        .padStart(2, "0")
-                }
-                durationMin={
-                  formDatas.all_day
-                    ? "00"
-                    : parseInt(formDatas.Duration % 60)
-                        .toString()
-                        .padStart(2, "0")
-                }
-                disabled={formDatas.all_day}
-                handleChange={handleDurationChange}
-                label="Duration"
-              />
-            </div>
-            <div className="event-form__item">
-              <Checkbox
-                id="all-day"
-                onChange={handleCheckAllDay}
-                checked={formDatas.all_day}
-                label="All Day"
-              />
-            </div>
-          </div>
-          <div className="event-form__row event-form__row--guest">
-            <EditGuests
-              formDatas={formDatas}
-              setFormDatas={setFormDatas}
-              editable={
-                user.title === "Secretary" || user.id === formDatas.host_id
-              }
-              hostId={formDatas.host_id}
-            />
-          </div>
-          <div className="event-form__row event-form__row--radio">
-            <div style={{ marginBottom: "5px" }}>
-              <SiteSelect
-                label="Site"
-                handleSiteChange={handleSiteChange}
-                sites={sites}
-                value={formDatas.site_id}
-              />
-            </div>
-            {isPending ? (
-              <LoadingParagraph />
-            ) : (
-              <RoomsRadio
-                handleRoomChange={handleRoomChange}
-                roomSelectedId={formDatas.room_id}
-                rooms={sites
-                  .find(({ id }) => id === formDatas.site_id)
-                  ?.rooms.sort((a, b) => a.id.localeCompare(b.id))}
-                isRoomOccupied={isRoomOccupied}
-              />
-            )}
-          </div>
-          <div className="event-form__row event-form__row--radio">
-            <StatusesRadio
-              handleStatusChange={handleStatusChange}
-              statuses={statuses}
-              selectedStatus={formDatas.AppointmentStatus}
-            />
-          </div>
-          <div className="event-form__row">
-            <div className="event-form__item">
-              <label htmlFor="notes">Notes</label>
-              <textarea
-                value={formDatas.AppointmentNotes}
-                onChange={handleNotesChange}
-                name="AppointmentNotes"
-                id="notes"
-                autoComplete="off"
-              />
-            </div>
-          </div>
-          <div className="event-form__btns">
-            {user.title === "Secretary" ||
-            currentEvent.current.extendedProps.host === user.id ? (
-              <>
-                <SubmitButton label="Save" />
-                <CancelButton onClick={handleCancel} disabled={progress} />
-                <Button
-                  onClick={handleInvitation}
-                  disabled={
-                    (!formDatas.staff_guests_ids.length &&
-                      !formDatas.patients_guests_ids.length) ||
-                    !formDatas.host_id ||
-                    progress
-                  }
-                  label="Send Invitation"
-                />
-              </>
-            ) : (
-              <CloseButton onClick={handleCancel} disabled={progress} />
-            )}
-          </div>
+          <EventFormHostRow
+            formDatas={formDatas}
+            handleHostChange={handleHostChange}
+            handlePurposeChange={handlePurposeChange}
+            handleRecurrenceChange={handleRecurrenceChange}
+            handleUntilChange={handleUntilChange}
+          />
+          <EventFormTimeRow
+            formDatas={formDatas}
+            refDateStart={refDateStart}
+            refMinutesStart={refMinutesStart}
+            refHoursStart={refHoursStart}
+            refAMPMStart={refAMPMStart}
+            refDateEnd={refDateEnd}
+            refMinutesEnd={refMinutesEnd}
+            refHoursEnd={refHoursEnd}
+            refAMPMEnd={refAMPMEnd}
+            handleStartChange={handleStartChange}
+            handleEndChange={handleEndChange}
+            handleDurationChange={handleDurationChange}
+            handleCheckAllDay={handleCheckAllDay}
+          />
+          <EventFormGuests
+            formDatas={formDatas}
+            setFormDatas={setFormDatas}
+            editable={
+              user.title === "Secretary" || user.id === formDatas.host_id
+            }
+            hostId={formDatas.host_id}
+          />
+          <EventFormLocation
+            formDatas={formDatas}
+            sites={sites}
+            handleSiteChange={handleSiteChange}
+            handleRoomChange={handleRoomChange}
+            isRoomOccupied={isRoomOccupied}
+            isPending={isPending}
+          />
+          <EventFormStatus
+            handleStatusChange={handleStatusChange}
+            statuses={statuses}
+            selectedStatus={formDatas.AppointmentStatus}
+          />
+          <EventFormNotes
+            formDatas={formDatas}
+            handleNotesChange={handleNotesChange}
+          />
+          <EventFormButtons
+            formDatas={formDatas}
+            currentEvent={currentEvent}
+            handleCancel={handleCancel}
+            handleInvitation={handleInvitation}
+            progress={progress}
+          />
         </form>
       ) : (
         <Invitation

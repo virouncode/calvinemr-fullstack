@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -57,9 +57,7 @@ const FamilyHistoryPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="famhistory__title">
-          Patient family history <i className="fa-solid fa-people-roof"></i>
-        </h1>
+        <h1 className="famhistory__title">Patient family history</h1>
         <LoadingParagraph />
       </>
     );
@@ -67,9 +65,7 @@ const FamilyHistoryPU = ({
   if (error) {
     return (
       <>
-        <h1 className="famhistory__title">
-          Patient family history <i className="fa-solid fa-people-roof"></i>
-        </h1>
+        <h1 className="famhistory__title">Patient family history</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -79,9 +75,7 @@ const FamilyHistoryPU = ({
 
   return (
     <>
-      <h1 className="famhistory__title">
-        Patient family history <i className="fa-solid fa-people-roof"></i>
-      </h1>
+      <h1 className="famhistory__title">Patient family history</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
         <div className="famhistory__table-container" ref={rootRef}>

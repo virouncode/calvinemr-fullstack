@@ -8,6 +8,8 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
+import DoctorAbsoluteIcon from "../../../../../UI/Icons/DoctorAbsoluteIcon";
+import UserPlusAbsoluteIcon from "../../../../../UI/Icons/UserPlusAbsoluteIcon";
 import Input from "../../../../../UI/Inputs/Input";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
@@ -148,26 +150,16 @@ const LetterTemplateForm = ({ setNewTemplateVisible }) => {
             onChange={handleChangeRecipient}
             autoComplete="off"
           />
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "5px",
-              top: "5px",
-            }}
-            className="fa-solid fa-user-doctor no-print"
+          <DoctorAbsoluteIcon
+            top={5}
+            right={5}
             onClick={() => setRefOHIPSearchVisible(true)}
-          ></i>
-          <i
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "20px",
-              top: "5px",
-            }}
-            className="fa-solid fa-user-plus no-print"
+          />
+          <UserPlusAbsoluteIcon
+            right={20}
+            top={5}
             onClick={() => setPatientSearchVisible(true)}
-          ></i>
+          />
         </div>
         <div className="letters__template-form-subject">
           <label htmlFor="letter-template-subject">Subject:</label>

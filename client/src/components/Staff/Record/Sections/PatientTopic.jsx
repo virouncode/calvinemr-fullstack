@@ -99,20 +99,6 @@ const PatientTopic = ({
     e.stopPropagation();
     setPopUpVisible((v) => !v);
   };
-
-  const handleTriangleClick = (e) => {
-    e.stopPropagation();
-    e.target.classList.toggle("triangle--active");
-    containerRef.current.classList.toggle(
-      `patient-record__topic-container--active`
-    );
-    if (topic === "LETTERS/REFERRALS" || topic === "TO-DOS ABOUT PATIENT") {
-      containerRef.current.classList.toggle(
-        `patient-record__topic-container--bottom`
-      );
-    }
-  };
-
   const handleClickHeader = () => {
     if (topic === "AGE CALCULATOR") return;
     triangleRef.current.classList.toggle("triangle--active");
@@ -136,7 +122,6 @@ const PatientTopic = ({
         {topic !== "AGE CALCULATOR" ? (
           <PatientTopicHeader
             topic={topic}
-            handleTriangleClick={handleTriangleClick}
             handlePopUpClick={handlePopUpClick}
             contentsVisible={contentsVisible}
             popUpButton={

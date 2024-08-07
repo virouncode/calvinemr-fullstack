@@ -40,18 +40,19 @@ const SitesCheckboxes = ({ sites, sitesIds, setSitesIds }) => {
             label="Sites"
           />
         </li>
-        {sites
-          .filter(({ site_status }) => site_status !== "Closed")
-          .map((site) => (
-            <li key={site.id} className="site-checkboxes__item">
-              <Checkbox
-                id={`site-${site.id}`}
-                onChange={(e) => handleCheckSiteId(e, site.id)}
-                checked={isSiteIdChecked(site.id)}
-                label={site.name}
-              />
-            </li>
-          ))}
+        {sites &&
+          sites
+            .filter(({ site_status }) => site_status !== "Closed")
+            .map((site) => (
+              <li key={site.id} className="site-checkboxes__item">
+                <Checkbox
+                  id={`site-${site.id}`} //to not confound with staff id
+                  onChange={(e) => handleCheckSiteId(e, site.id)}
+                  checked={isSiteIdChecked(site.id)}
+                  label={site.name}
+                />
+              </li>
+            ))}
       </ul>
     )
   );

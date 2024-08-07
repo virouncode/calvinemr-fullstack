@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -59,8 +59,7 @@ const AllergiesPU = ({
     return (
       <>
         <h1 className="allergies__title">
-          Patient allergies & adverse reactions{" "}
-          <i className="fa-solid fa-hand-dots"></i>
+          Patient allergies & adverse reactions
         </h1>
         <LoadingParagraph />
       </>
@@ -70,8 +69,7 @@ const AllergiesPU = ({
     return (
       <>
         <h1 className="allergies__title">
-          Patient allergies & adverse reactions{" "}
-          <i className="fa-solid fa-hand-dots"></i>
+          Patient allergies & adverse reactions
         </h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
@@ -83,8 +81,7 @@ const AllergiesPU = ({
   return (
     <>
       <h1 className="allergies__title">
-        Patient allergies & adverse reactions{" "}
-        <i className="fa-solid fa-hand-dots"></i>
+        Patient allergies & adverse reactions
       </h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pasthealth__table-container" ref={rootRef}>

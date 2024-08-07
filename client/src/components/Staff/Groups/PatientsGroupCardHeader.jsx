@@ -1,5 +1,9 @@
 import useUserContext from "../../../hooks/context/useUserContext";
 import { toPatientName } from "../../../utils/names/toPatientName";
+import CloneIcon from "../../UI/Icons/CloneIcon";
+import PaperPlaneIcon from "../../UI/Icons/PaperPlaneIcon";
+import PenIcon from "../../UI/Icons/PenIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 
 const PatientsGroupCardHeader = ({
   group,
@@ -34,30 +38,14 @@ const PatientsGroupCardHeader = ({
       <div className="patients-groups__card-name">
         {group.name}
         {group.staff_id === user.id && (
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginLeft: "5px", cursor: "pointer" }}
-            onClick={handleEditClick}
-          />
+          <PenIcon ml={5} onClick={handleEditClick} />
         )}
-        <i
-          className="fa-solid fa-clone"
-          onClick={handleDuplicate}
-          style={{ cursor: "pointer", marginLeft: "5px" }}
-        />
-        <i
-          className="fa-regular fa-paper-plane"
-          style={{ cursor: "pointer", marginLeft: "5px" }}
-          onClick={handleSend}
-        />
+        <CloneIcon onClick={handleDuplicate} ml={5} />
+        <PaperPlaneIcon ml={5} onClick={handleSend} />
       </div>
       <div className="patients-groups__card-count">
         {group.staff_id === user.id && (
-          <i
-            className="fa-solid fa-trash"
-            style={{ marginRight: "5px", cursor: "pointer" }}
-            onClick={handleDelete}
-          />
+          <TrashIcon mr={5} onClick={handleDelete} />
         )}
         ({group.patients.length})
       </div>

@@ -7,7 +7,7 @@ import {
   usePatientsGroupPost,
 } from "../../../hooks/reactquery/mutations/patientsGroupsMutations";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import PatientsGroupCardContent from "./PatientsGroupCardContent";
 import PatientsGroupCardHeader from "./PatientsGroupCardHeader";

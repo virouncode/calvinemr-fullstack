@@ -7,9 +7,9 @@ import {
   toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import SignCell from "../../../../UI/Tables/SignCell";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MedicationDetails from "./MedicationDetails";

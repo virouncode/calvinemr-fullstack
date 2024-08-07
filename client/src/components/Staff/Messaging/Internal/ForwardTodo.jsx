@@ -13,12 +13,11 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../utils/dates/formatDates";
-import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../UI/Inputs/Input";
 import InputDate from "../../../UI/Inputs/InputDate";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -37,7 +36,6 @@ const ForwardTodo = ({
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [recipientsIds, setRecipientsIds] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [body, setBody] = useState(todo.body);
   const [important, setImportant] = useState(todo.high_importance);
   const [progress, setProgress] = useState(false);
@@ -53,9 +51,6 @@ const ForwardTodo = ({
     setBody(e.target.value);
   };
 
-  const isContactChecked = (id) => recipientsIds.includes(id);
-  const isCategoryChecked = (category) => categories.includes(category);
-
   const handleSelectTemplate = (e, template) => {
     setBody((b) =>
       b ? b + "\n\n" + template.body + "\n" : template.body + "\n"
@@ -65,68 +60,6 @@ const ForwardTodo = ({
       textareaRef.current.value.length,
       textareaRef.current.value.length
     );
-  };
-  const handleCheckContact = (e) => {
-    const id = parseInt(e.target.id);
-    const checked = e.target.checked;
-    const category = e.target.name;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      let recipientsIdsUpdated = [...recipientsIds, id];
-      setRecipientsIds(recipientsIdsUpdated);
-      if (
-        categoryContactsIds.every((id) => recipientsIdsUpdated.includes(id))
-      ) {
-        setCategories([...categories, category]);
-      }
-    } else {
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (recipientId) => recipientId !== id
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-      if (categories.includes(category)) {
-        let categoriesUpdated = [...categories];
-        categoriesUpdated = categoriesUpdated.filter(
-          (categoryName) => categoryName !== category
-        );
-        setCategories(categoriesUpdated);
-      }
-    }
-  };
-
-  const handleCheckCategory = (e) => {
-    const category = e.target.id;
-    const checked = e.target.checked;
-    const categoryContactsIds = staffInfos
-      .filter(({ title }) => title === categoryToTitle(category))
-      .map(({ id }) => id);
-
-    if (checked) {
-      setCategories([...categories, category]);
-      //All contacts of category
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      categoryContactsIds.forEach((id) => {
-        if (!recipientsIdsUpdated.includes(id)) {
-          recipientsIdsUpdated.push(id);
-        }
-      });
-      setRecipientsIds(recipientsIdsUpdated);
-    } else {
-      let categoriesUpdated = [...categories];
-      categoriesUpdated = categoriesUpdated.filter((name) => name !== category);
-      setCategories(categoriesUpdated);
-
-      let recipientsIdsUpdated = [...recipientsIds];
-      recipientsIdsUpdated = recipientsIdsUpdated.filter(
-        (id) => !categoryContactsIds.includes(id)
-      );
-      setRecipientsIds(recipientsIdsUpdated);
-    }
   };
 
   const handleChangeDueDate = (e) => {
@@ -209,11 +142,8 @@ const ForwardTodo = ({
     <div className="forward-message">
       <div className="forward-message__contacts">
         <StaffContacts
-          staffInfos={staffInfos}
-          handleCheckContact={handleCheckContact}
-          isContactChecked={isContactChecked}
-          handleCheckCategory={handleCheckCategory}
-          isCategoryChecked={isCategoryChecked}
+          recipientsIds={recipientsIds}
+          setRecipientsIds={setRecipientsIds}
         />
       </div>
       <div className="forward-message__form">

@@ -4,14 +4,14 @@ import useTitleContext from "../../../hooks/context/useTitleContext";
 import useAutoLockScreen from "../../../hooks/useAutoLockScreen";
 import LockPage from "../../../pages/All/LockPage";
 import Notepad from "../../Staff/Notepad/Notepad";
+import ConfirmGlobal from "../../UI/Confirm/ConfirmGlobal";
+import CreditsDialog from "../../UI/Confirm/CreditsDialog";
 import ToastCalvin from "../../UI/Toast/ToastCalvin";
 import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import ConfirmGlobal from "../Confirm/ConfirmGlobal";
-import CreditsDialog from "../Confirm/CreditsDialog";
 import StaffHeader from "../Headers/StaffHeader";
-import Welcome from "../Welcome/Welcome";
+import Subheader from "../Subheader/Subheader";
 
 const StaffLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
   const { title } = useTitleContext();
@@ -50,7 +50,7 @@ const StaffLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
         setLockedScreen={setLockedScreen}
         setNotepadVisible={setNotepadVisible}
       />
-      <Welcome
+      <Subheader
         title={title}
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}

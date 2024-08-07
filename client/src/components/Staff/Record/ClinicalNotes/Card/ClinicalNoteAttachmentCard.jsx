@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NewWindow from "react-new-window";
 import Button from "../../../../UI/Buttons/Button";
+import XmarkIcon from "../../../../UI/Icons/XmarkIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import AddToReportsForm from "../AddToReportsForm";
 
@@ -101,11 +102,9 @@ const ClinicalNoteAttachmentCard = ({
                 {attachment.alias}
               </p>
               {deletable && (
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ cursor: "pointer" }}
+                <XmarkIcon
                   onClick={() => handleRemoveAttachment(attachment.file.name)}
-                ></i>
+                />
               )}
             </div>
             {addable && (

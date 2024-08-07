@@ -1,6 +1,8 @@
 import { Reorder, useDragControls } from "framer-motion";
 
 import { toPatientName } from "../../../utils/names/toPatientName";
+import CrossArrowIcon from "../../UI/Icons/CrossArrowIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 
 const PatientsGroupEditPatientItem = ({
   patient,
@@ -17,15 +19,8 @@ const PatientsGroupEditPatientItem = ({
           {toPatientName(patient.patient_infos)}
         </div>
         <div>
-          <i
-            className="fa-solid fa-trash"
-            onClick={(e) => handleRemovePatient(e, item)}
-          />
-          <i
-            className="fa-solid fa-up-down-left-right"
-            style={{ marginLeft: "5px", touchAction: "none" }}
-            onPointerDown={(e) => controls.start(e)}
-          />
+          <TrashIcon onClick={(e) => handleRemovePatient(e, item)} />
+          <CrossArrowIcon ml={5} onPointerDown={(e) => controls.start(e)} />
         </div>
       </div>
     </Reorder.Item>

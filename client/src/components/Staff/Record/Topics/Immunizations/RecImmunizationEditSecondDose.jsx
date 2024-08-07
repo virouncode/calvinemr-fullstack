@@ -6,7 +6,7 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import FormRecImmunization from "./FormRecImmunization";
 
 const RecImmunizationEditSecondDose = ({

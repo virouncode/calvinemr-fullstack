@@ -2,6 +2,9 @@ import { Tooltip } from "@mui/material";
 
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
+import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
+import LockIcon from "../../UI/Icons/LockIcon";
+import QuestionIcon from "../../UI/Icons/QuestionIcon";
 
 const StaffHeader = ({
   setCreditsVisible,
@@ -166,25 +169,22 @@ const StaffHeader = ({
           </li>
           <li>
             <Tooltip title="Notepad">
-              <i
-                className="fa-solid fa-clipboard"
-                style={{ cursor: "pointer", marginRight: "15px" }}
-                onClick={() => setNotepadVisible((v) => !v)}
-              />
+              <span>
+                <ClipboardIcon
+                  mr={15}
+                  onClick={() => setNotepadVisible((v) => !v)}
+                />
+              </span>
             </Tooltip>
             <Tooltip title="Lock Screen">
-              <i
-                className="fa-solid fa-lock"
-                style={{ cursor: "pointer", marginRight: "15px" }}
-                onClick={handleLock}
-              />
+              <span>
+                <LockIcon mr={15} onClick={handleLock} />
+              </span>
             </Tooltip>
             <Tooltip title="Tutorial">
-              <i
-                className="fa-solid fa-circle-question"
-                style={{ cursor: "pointer" }}
-                onClick={handleTutorial}
-              />
+              <span>
+                <QuestionIcon onClick={handleTutorial} />
+              </span>
             </Tooltip>
           </li>
         </ul>

@@ -9,12 +9,12 @@ import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { relations } from "../../../../../utils/relationships/relations";
 import { toInverseRelation } from "../../../../../utils/relationships/toInverseRelation";
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import InputWithLogoInTable from "../../../../UI/Inputs/InputWithLogoInTable";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import InputWithSearchInTable from "../../../../UI/Inputs/InputWithSearchInTable";
 import SignCell from "../../../../UI/Tables/SignCell";
 import RelationshipList from "./RelationshipList";
 
@@ -183,7 +183,7 @@ const RelationshipItem = ({
         <td style={{ position: "relative" }}>
           {editVisible ? (
             <>
-              <InputWithLogoInTable
+              <InputWithSearchInTable
                 name="patient_id"
                 value={toPatientName(patientSelected)}
                 readOnly={true}

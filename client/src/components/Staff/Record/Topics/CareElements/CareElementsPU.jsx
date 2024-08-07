@@ -16,9 +16,7 @@ const CareElementsPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="care-elements__title">
-          Patient care elements <i className="fa-solid fa-ruler-combined"></i>
-        </h1>
+        <h1 className="care-elements__title">Patient care elements</h1>
         <LoadingParagraph />
       </>
     );
@@ -26,9 +24,7 @@ const CareElementsPU = ({
   if (error) {
     return (
       <>
-        <h1 className="care-elements__title">
-          Patient care elements <i className="fa-solid fa-ruler-combined"></i>
-        </h1>
+        <h1 className="care-elements__title">Patient care elements</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import useTitleContext from "../../../hooks/context/useTitleContext";
+
+import ConfirmGlobal from "../../UI/Confirm/ConfirmGlobal";
+import CreditsDialog from "../../UI/Confirm/CreditsDialog";
 import ToastCalvin from "../../UI/Toast/ToastCalvin";
 import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
-import ConfirmGlobal from "../Confirm/ConfirmGlobal";
-import CreditsDialog from "../Confirm/CreditsDialog";
 import PatientHeader from "../Headers/PatientHeader";
-import Welcome from "../Welcome/Welcome";
+import Subheader from "../Subheader/Subheader";
 
 const PatientLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
   const { title } = useTitleContext();
@@ -16,7 +17,7 @@ const PatientLayout = ({ toastExpiredID, tokenLimitVerifierID }) => {
   return (
     <div className="wrapper">
       <PatientHeader setCreditsVisible={setCreditsVisible} />
-      <Welcome
+      <Subheader
         title={title}
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}

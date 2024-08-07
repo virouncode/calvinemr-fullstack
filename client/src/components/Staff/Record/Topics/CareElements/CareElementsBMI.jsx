@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-
+import ClockIcon from "../../../../UI/Icons/ClockIcon";
 
 const CareElementsBMI = ({ lastDatas, handleClickHistory }) => {
   return (
@@ -13,11 +13,12 @@ const CareElementsBMI = ({ lastDatas, handleClickHistory }) => {
       {lastDatas.bodyMassIndex?.BMI && (
         <div className="care-elements__row-btns">
           <Tooltip title="Show history">
-            <i
-              className="fa-solid fa-clock-rotate-left"
-              onClick={(e) => handleClickHistory(e, "BODY MASS INDEX")}
-              style={{ marginRight: "5px" }}
-            />
+            <span>
+              <ClockIcon
+                onClick={(e) => handleClickHistory(e, "BODY MASS INDEX")}
+                mr={5}
+              />
+            </span>
           </Tooltip>
         </div>
       )}

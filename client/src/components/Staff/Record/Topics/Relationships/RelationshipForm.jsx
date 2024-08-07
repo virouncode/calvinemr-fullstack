@@ -8,7 +8,7 @@ import { toInverseRelation } from "../../../../../utils/relationships/toInverseR
 import { relationshipSchema } from "../../../../../validation/record/relationshipValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
-import InputWithLogoInTable from "../../../../UI/Inputs/InputWithLogoInTable";
+import InputWithSearchInTable from "../../../../UI/Inputs/InputWithSearchInTable";
 import SignCellForm from "../../../../UI/Tables/SignCellForm";
 import RelationshipList from "./RelationshipList";
 
@@ -110,7 +110,7 @@ const RelationshipForm = ({
         </div>
       </td>
       <td style={{ position: "relative" }}>
-        <InputWithLogoInTable
+        <InputWithSearchInTable
           name="patient_id"
           value={toPatientName(patientSelected)}
           readOnly={true}

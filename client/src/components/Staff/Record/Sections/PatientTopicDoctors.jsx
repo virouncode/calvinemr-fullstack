@@ -49,14 +49,6 @@ const PatientTopicDoctors = ({
     setPopUpVisible((v) => !v);
   };
 
-  const handleTriangleClick = (e) => {
-    e.stopPropagation();
-    e.target.classList.toggle("triangle--active");
-    containerRef.current.classList.toggle(
-      `patient-record__topic-container--active`
-    );
-  };
-
   const handleClickHeader = () => {
     triangleRef.current.classList.toggle("triangle--active");
     containerRef.current.classList.toggle(
@@ -73,7 +65,6 @@ const PatientTopicDoctors = ({
       >
         <PatientTopicHeader
           topic="FAMILY DOCTORS/SPECIALISTS"
-          handleTriangleClick={handleTriangleClick}
           handlePopUpClick={handlePopUpClick}
           contentsVisible={contentsVisible}
           popUpButton="popUp"

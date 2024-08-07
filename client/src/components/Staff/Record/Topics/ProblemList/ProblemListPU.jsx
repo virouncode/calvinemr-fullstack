@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -58,10 +58,7 @@ const ProblemListPU = ({
   if (isPending) {
     return (
       <>
-        <h1 className="problemlist__title">
-          Patient problem list{" "}
-          <i className="fa-solid fa-triangle-exclamation"></i>
-        </h1>
+        <h1 className="problemlist__title">Patient problem list</h1>
         <LoadingParagraph />
       </>
     );
@@ -69,10 +66,7 @@ const ProblemListPU = ({
   if (error) {
     return (
       <>
-        <h1 className="problemlist__title">
-          Patient problem list{" "}
-          <i className="fa-solid fa-triangle-exclamation"></i>
-        </h1>
+        <h1 className="problemlist__title">Patient problem list</h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
     );
@@ -82,10 +76,7 @@ const ProblemListPU = ({
 
   return (
     <>
-      <h1 className="problemlist__title">
-        Patient problem list{" "}
-        <i className="fa-solid fa-triangle-exclamation"></i>
-      </h1>
+      <h1 className="problemlist__title">Patient problem list</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="problemlist__table-container" ref={rootRef}>
         <table className="problemlist__table">

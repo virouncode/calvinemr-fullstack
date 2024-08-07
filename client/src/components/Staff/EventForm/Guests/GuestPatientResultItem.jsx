@@ -1,5 +1,5 @@
-
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import UserPlusIcon from "../../../UI/Icons/UserPlusIcon";
 
 const GuestPatientResultItem = ({
   guest,
@@ -9,11 +9,7 @@ const GuestPatientResultItem = ({
   return (
     <li ref={lastItemRef}>
       <span>{toPatientName(guest)}</span>
-      <i
-        style={{ marginLeft: "10px", cursor: "pointer" }}
-        className="fa-solid fa-user-plus"
-        onClick={(e) => handleAddPatientGuest(e, guest)}
-      ></i>
+      <UserPlusIcon ml={10} onClick={(e) => handleAddPatientGuest(e, guest)} />
     </li>
   );
 };

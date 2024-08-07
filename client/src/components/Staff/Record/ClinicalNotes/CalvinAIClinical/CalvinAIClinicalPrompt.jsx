@@ -84,9 +84,7 @@ const CalvinAIClinicalPrompt = ({
   };
   return (
     <div className="calvinai-prompt">
-      <h2 className="calvinai-prompt__title">
-        Prepare prompt to CalvinAI <i className="fa-solid fa-robot"></i>
-      </h2>
+      <h2 className="calvinai-prompt__title">Prepare prompt to CalvinAI</h2>
       <label htmlFor="introduction">Introduction</label>
       <textarea
         className="calvinai-prompt__intro-textarea"

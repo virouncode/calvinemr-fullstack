@@ -36,7 +36,7 @@ const ReportInboxPatientSearch = ({ search, handleSearch }) => {
         </div>
         <div className="patient-search__item">
           <Input
-            label="Date Of Birth"
+            label="Date of birth"
             name="birth"
             value={search.birth}
             onChange={handleSearch}

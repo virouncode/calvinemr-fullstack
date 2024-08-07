@@ -23,8 +23,8 @@ import {
 } from "../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";

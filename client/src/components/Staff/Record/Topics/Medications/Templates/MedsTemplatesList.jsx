@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useIntersection from "../../../../../../hooks/useIntersection";
 import Button from "../../../../../UI/Buttons/Button";
+import ExclamationTriangleIcon from "../../../../../UI/Icons/ExclamationTriangleIcon";
 import Input from "../../../../../UI/Inputs/Input";
 import EmptyLi from "../../../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../../../UI/Lists/LoadingLi";
@@ -65,11 +66,7 @@ const MedsTemplatesList = ({
         />
       </div>
       <div className="med-templates__allergies">
-        <i
-          className="fa-solid fa-triangle-exclamation"
-          style={{ color: "#ff0000" }}
-        ></i>{" "}
-        Patient Allergies :{" "}
+        <ExclamationTriangleIcon /> Patient Allergies :{" "}
         {allergies && allergies.length > 0
           ? allergies
               .map(({ OffendingAgentDescription }) => OffendingAgentDescription)

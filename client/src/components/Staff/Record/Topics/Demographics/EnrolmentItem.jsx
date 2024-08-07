@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { enrolmentCaptionComplete } from "../../../../../utils/names/enrolmentCaption";
+import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import EnrolmentEdit from "./EnrolmentEdit";
 
@@ -18,11 +19,7 @@ const EnrolmentItem = ({
     <>
       <li className="enrolment-history__item" key={enrolment.EnrollmentDate}>
         - {enrolmentCaptionComplete(enrolment)}{" "}
-        <i
-          className="fa-regular fa-pen-to-square"
-          style={{ marginLeft: "5px", cursor: "pointer" }}
-          onClick={handleEdit}
-        ></i>
+        <PenIcon ml={5} onClick={handleEdit}></PenIcon>
       </li>
       {editVisible && (
         <FakeWindow

@@ -1,6 +1,7 @@
 import SendIcon from "@mui/icons-material/Send";
 import { Button } from "@mui/material";
 import TypingDots from "../../UI/Buttons/TypingDots";
+import MicrophoneIcon from "../../UI/Icons/MicrophoneIcon";
 
 const CalvinAIInput = ({
   handleChangeInput,
@@ -15,27 +16,18 @@ const CalvinAIInput = ({
   return (
     <div className="calvinai-chat__input">
       {isListening ? (
-        <i
-          className="fa-solid fa-microphone"
+        <MicrophoneIcon
           onClick={handleStopSpeech}
-          style={{
-            cursor: "pointer",
-            color: "red",
-            position: "absolute",
-            top: "15px",
-            right: "30px",
-          }}
+          color="red"
+          top={15}
+          right={30}
         />
       ) : (
-        <i
-          className="fa-solid fa-microphone"
+        <MicrophoneIcon
           onClick={handleStartSpeech}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: "15px",
-            right: "30px",
-          }}
+          top={15}
+          right={30}
+          color="black"
         />
       )}
       <textarea

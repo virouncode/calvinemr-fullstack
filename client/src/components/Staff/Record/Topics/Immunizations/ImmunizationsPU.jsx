@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import ImmunizationsCaption from "./ImmunizationsCaption";
@@ -55,11 +55,7 @@ const ImmunizationsPU = ({
     return (
       <>
         <h1 className="immunizations__title">
-          Patient immunizations{" "}
-          <i
-            className="fa-solid fa-syringe"
-            style={{ marginRight: "10px" }}
-          ></i>
+          Patient immunizations
           <CloseButton onClick={handleClose} />
         </h1>
         <LoadingParagraph />
@@ -70,12 +66,7 @@ const ImmunizationsPU = ({
     return (
       <>
         <h1 className="immunizations__title">
-          Patient immunizations{" "}
-          <i
-            className="fa-solid fa-syringe"
-            style={{ marginRight: "10px" }}
-          ></i>
-          <CloseButton onClick={handleClose} />
+          Patient immunizations <CloseButton onClick={handleClose} />
         </h1>
         <ErrorParagraph errorMsg={error.message} />
       </>
@@ -87,12 +78,11 @@ const ImmunizationsPU = ({
   return (
     <>
       <h1 className="immunizations__title">
-        Patient immunizations{" "}
-        <i className="fa-solid fa-syringe" style={{ marginRight: "10px" }}></i>
+        Patient immunizations
         <CloseButton onClick={handleClose} />
       </h1>
       <h2 className="immunizations__subtitle">
-        Recommended{" "}
+        Recommended
         <span
           style={{
             textDecoration: "underline",

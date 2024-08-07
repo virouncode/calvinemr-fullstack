@@ -32,11 +32,13 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { demographicsSchema } from "../../../../../validation/record/demographicsValidation";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import ClockIcon from "../../../../UI/Icons/ClockIcon";
+import SquarePlusIcon from "../../../../UI/Icons/SquarePlusIcon";
 import Input from "../../../../UI/Inputs/Input";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputEmail from "../../../../UI/Inputs/InputEmail";
@@ -424,9 +426,7 @@ const DemographicsPU = ({
         style={{ border: errMsgPost && "solid 1px red" }}
       >
         <div className="demographics-card__header">
-          <h1>
-            Patient demographics <i className="fa-regular fa-id-card"></i>
-          </h1>
+          <h1>Patient demographics</h1>
           <div className="demographics-card__btns">
             {!editVisible ? (
               <>
@@ -764,22 +764,18 @@ const DemographicsPU = ({
                 <label>Enrolled to physician: </label>
                 {enrolmentCaption(lastEnrolment)}
                 <Tooltip title="Add new enrolment" placement="top-start" arrow>
-                  <i
-                    className="fa-regular fa-square-plus"
-                    onClick={handleClickNewEnrolment}
-                    style={{ marginLeft: "5px", cursor: "pointer" }}
-                  ></i>
+                  <span>
+                    <SquarePlusIcon onClick={handleClickNewEnrolment} ml={5} />
+                  </span>
                 </Tooltip>
                 <Tooltip
                   title="See enrolment history"
                   placement="top-start"
                   arrow
                 >
-                  <i
-                    className="fa-solid fa-clock-rotate-left"
-                    onClick={handleClickHistory}
-                    style={{ marginLeft: "5px", cursor: "pointer" }}
-                  />
+                  <span>
+                    <ClockIcon onClick={handleClickHistory} ml={5} />
+                  </span>
                 </Tooltip>
               </div>
               <div className="demographics-card__content-row">

@@ -3,8 +3,10 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./ContactFaxForm";
 
@@ -134,22 +136,14 @@ const FaxThumbnail = ({
             : callerIDToFaxNumber(fax.ToFaxNumber)}{" "}
           / {contactName}
         </div>
-        <i
-          className="fa-regular fa-square-plus"
-          onClick={handleAddFaxNumber}
-          style={{ marginLeft: "5px", cursor: "pointer" }}
-        />
+        <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>
       <div className="fax-thumbnail__pages">{fax.Pages}</div>
       <div className="fax-thumbnail__date">
         {timestampToDateTimeStrTZ(fax.EpochTime * 1000)}
       </div>
       <div className="fax-thumbnail__logos">
-        <i
-          className="fa-solid fa-trash  fax-thumbnail__trash"
-          style={{ cursor: "pointer" }}
-          onClick={handleDeleteFax}
-        />
+        <TrashIcon onClick={handleDeleteFax} />
       </div>
       {addFaxNumberVisible && (
         <FakeWindow

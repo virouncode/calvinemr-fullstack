@@ -16,8 +16,8 @@ import {
 } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
-import { confirmAlert } from "../../All/Confirm/ConfirmGlobal";
 import SaveButton from "../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import AppointmentsSlots from "./AppointmentsSlots";

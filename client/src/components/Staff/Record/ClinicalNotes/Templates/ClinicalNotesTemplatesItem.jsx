@@ -6,7 +6,10 @@ import {
 } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import CloneIcon from "../../../../UI/Icons/CloneIcon";
+import PenIcon from "../../../../UI/Icons/PenIcon";
+import TrashIcon from "../../../../UI/Icons/TrashIcon";
 
 const ClinicalNotesTemplatesItem = ({
   template,
@@ -50,23 +53,11 @@ const ClinicalNotesTemplatesItem = ({
       </span>
       {user.id === template.author_id && (
         <>
-          <i
-            className="fa-regular fa-pen-to-square"
-            style={{ marginLeft: "5px" }}
-            onClick={(e) => handleEdit(e, template.id)}
-          />
-          <i
-            className="fa-solid fa-trash"
-            style={{ marginLeft: "5px" }}
-            onClick={handleDelete}
-          />
+          <PenIcon ml={5} onClick={(e) => handleEdit(e, template.id)} />
+          <TrashIcon ml={5} onClick={handleDelete} />
         </>
       )}
-      <i
-        className="fa-solid fa-clone"
-        onClick={(e) => handleDuplicate(e, template)}
-        style={{ cursor: "pointer", marginLeft: "5px" }}
-      />
+      <CloneIcon onClick={(e) => handleDuplicate(e, template)} ml={5} />
     </li>
   );
 };

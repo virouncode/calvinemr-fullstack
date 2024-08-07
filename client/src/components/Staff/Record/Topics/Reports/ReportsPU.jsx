@@ -6,9 +6,9 @@ import {
 } from "../../../../../hooks/reactquery/mutations/reportsMutations";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
-import { confirmAlert } from "../../../../All/Confirm/ConfirmGlobal";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
@@ -88,9 +88,7 @@ const ReportsPU = ({
   if (isPendingReportsReceived || isPendingReportsSent) {
     return (
       <>
-        <h1 className="reports__title">
-          Patient reports <i className="fa-regular fa-folder"></i>
-        </h1>
+        <h1 className="reports__title">Patient reports</h1>
         <LoadingParagraph />
       </>
     );
@@ -98,9 +96,7 @@ const ReportsPU = ({
   if (errorReportsReceived || errorReportsSent) {
     return (
       <>
-        <h1 className="reports__title">
-          Patient reports <i className="fa-regular fa-folder"></i>
-        </h1>
+        <h1 className="reports__title">Patient reports</h1>
         <ErrorParagraph
           errorMsg={errorReportsReceived?.message || errorReportsSent?.message}
         />
@@ -115,9 +111,7 @@ const ReportsPU = ({
 
   return (
     <>
-      <h1 className="reports__title">
-        Patient reports <i className="fa-regular fa-folder"></i>
-      </h1>
+      <h1 className="reports__title">Patient reports</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <h2 className="reports__title reports__title--subtitle">Received</h2>
       <div className="reports__table-container" ref={rootReceivedRef}>

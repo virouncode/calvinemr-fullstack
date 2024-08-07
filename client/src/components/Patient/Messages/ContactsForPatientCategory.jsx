@@ -1,5 +1,7 @@
 import { useState } from "react";
 import StaffContactsList from "../../Staff/Messaging/StaffContactsList";
+import SquareMinusIcon from "../../UI/Icons/SquareMinusIcon";
+import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 
 const ContactsForPatientCategory = ({
   categoryInfos,
@@ -16,15 +18,9 @@ const ContactsForPatientCategory = ({
     <>
       <div className="contacts__category-overview">
         {!listVisible ? (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-plus fa-lg"
-          ></i>
+          <SquarePlusIcon onClick={handleClick} mr={5} />
         ) : (
-          <i
-            onClick={handleClick}
-            className="fa-regular fa-square-minus fa-lg"
-          ></i>
+          <SquareMinusIcon onClick={handleClick} mr={5} />
         )}
         <label>{categoryName}</label>
       </div>

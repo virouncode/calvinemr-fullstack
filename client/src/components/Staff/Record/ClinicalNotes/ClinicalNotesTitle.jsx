@@ -11,6 +11,8 @@ import {
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import TriangleButton from "../../../UI/Buttons/TriangleButton";
+import EnvelopeIcon from "../../../UI/Icons/EnvelopeIcon";
+import PhoneIcon from "../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 
@@ -36,13 +38,6 @@ const ClinicalNotesTitle = ({
 
   useFetchAllPages(fetchNextPage, hasNextPage);
 
-  const handleTriangleClick = (e) => {
-    e.stopPropagation();
-    if (!contentRef.current) return;
-    e.target.classList.toggle("triangle--active");
-    contentRef.current.classList.toggle("clinical-notes__content--active");
-    setNotesVisible((v) => !v);
-  };
   const handleTitleClick = () => {
     if (!contentRef.current) return;
     triangleRef.current.classList.toggle("triangle--active");
@@ -76,7 +71,6 @@ const ClinicalNotesTitle = ({
     <div className="clinical-notes__title" onClick={handleTitleClick}>
       <div>
         <TriangleButton
-          handleTriangleClick={handleTriangleClick}
           className={notesVisible ? "triangle triangle--active" : "triangle"}
           color="#21201e"
           triangleRef={triangleRef}
@@ -90,15 +84,14 @@ const ClinicalNotesTitle = ({
           {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
           {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
           {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
-          {demographicsInfos.ChartNumber},{" "}
-          <i className="fa-regular fa-envelope fa-sm"></i>{" "}
+          {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
           <span
             style={{ cursor: "pointer", textDecoration: "underline" }}
             onClick={handleClickMail}
           >
             {demographicsInfos.Email}
           </span>
-          , <i className="fa-solid fa-phone fa-sm"></i>{" "}
+          , <PhoneIcon />{" "}
           {
             demographicsInfos.PhoneNumber?.find(
               ({ _phoneNumberType }) => _phoneNumberType === "C"
