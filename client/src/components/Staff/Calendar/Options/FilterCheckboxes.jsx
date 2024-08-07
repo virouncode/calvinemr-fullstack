@@ -1,401 +1,278 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
+import { toCategoriesLength } from "../../../../utils/appointments/toCategoriesLength";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import FilterCheckboxesSection from "./FilterCheckboxesSection";
 
 const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
   //======================= HOOKS ==========================//
   const { staffInfos } = useStaffInfosContext();
+  const [
+    doctorsLength,
+    nursesLength,
+    secretariesLength,
+    medStudentsLength,
+    nursingStudentsLength,
+    labTechsLength,
+    usTechsLength,
+    nutritionistsLength,
+    psychosLength,
+    physiosLength,
+    othersLength,
+  ] = toCategoriesLength(staffInfos);
+
   const activeStaff = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
   );
-  const [hostsCategories, sethostsCategories] = useState([]); //Array
-  const [hostsDoctorsIds, setHostsDoctorsIds] = useState([]); //Array
-  const [hostsNursesIds, setHostsNursesIds] = useState([]); //Array
-  const [hostsSecretariesIds, setHostsSecretariesIds] = useState([]); //Array
-  const [hostsMedStudentsIds, setHostsMedStudentsIds] = useState([]); //Array
-  const [hostsNursingStudentsIds, setHostsNursingStudentsIds] = useState([]); //Array
-  const [hostsLabTechsIds, setHostsLabTechsIds] = useState([]); //Array
-  const [hostsUSTechsIds, setHostsUSTechsIds] = useState([]); //Array
-  const [hostsNutritionistsIds, setHostsNutritionistsIds] = useState([]); //Array
-  const [hostsPhysiosIds, setHostsPhysiosIds] = useState([]); //Array
-  const [hostsPsychosIds, setHostsPsychosIds] = useState([]); //Array
-  const [hostsOthersIds, setHostsOthersIds] = useState([]); //Array
 
-  const doctorsLength = useRef(0);
-  const nursesLength = useRef(0);
-  const secretariesLength = useRef(0);
-  const medStudentsLength = useRef(0);
-  const nursingStudentsLength = useRef(0);
-  const labTechsLength = useRef(0);
-  const usTechsLength = useRef(0);
-  const nutritionistsLength = useRef(0);
-  const psychosLength = useRef(0);
-  const physiosLength = useRef(0);
-  const othersLength = useRef(0);
-
-  useEffect(() => {
-    const activeStaff = staffInfos.filter(
-      ({ account_status }) => account_status !== "Closed"
-    );
-    setHostsDoctorsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Doctor")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsNursesIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Nurse")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsSecretariesIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Secretary")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsMedStudentsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Medical Student")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsNursingStudentsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Nursing Student")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsLabTechsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Lab Technician")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsUSTechsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Ultra Sound Technician")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsNutritionistsIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Nutritionist")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsPhysiosIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Physiotherapist")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsPsychosIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Psychotherapist")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-    setHostsOthersIds(
-      activeStaff
-        .filter((staff) => staff.account_status !== "Closed")
-        .filter(({ title }) => title === "Other")
-        .filter(({ id }) => hostsIds.includes(id))
-        .map(({ id }) => id)
-    );
-
-    doctorsLength.current = activeStaff.filter(
-      ({ title }) => title === "Doctor"
-    ).length;
-    nursesLength.current = activeStaff.filter(
-      ({ title }) => title === "Nurse"
-    ).length;
-    secretariesLength.current = activeStaff.filter(
-      ({ title }) => title === "Secretary"
-    ).length;
-    medStudentsLength.current = activeStaff.filter(
-      ({ title }) => title === "Medical Student"
-    ).length;
-    nursingStudentsLength.current = activeStaff.filter(
-      ({ title }) => title === "Nursing Student"
-    ).length;
-    labTechsLength.current = activeStaff.filter(
-      ({ title }) => title === "Lab Technician"
-    ).length;
-    usTechsLength.current = activeStaff.filter(
-      ({ title }) => title === "Ultra Sound Technician"
-    ).length;
-    nutritionistsLength.current = activeStaff.filter(
-      ({ title }) => title === "Nutritionist"
-    ).length;
-    psychosLength.current = activeStaff.filter(
-      ({ title }) => title === "Psychologist"
-    ).length;
-    physiosLength.current = activeStaff.filter(
-      ({ title }) => title === "Physiotherapist"
-    ).length;
-    othersLength.current = activeStaff.filter(
-      ({ title }) => title === "Other"
-    ).length;
-  }, [hostsIds, staffInfos]);
+  const [hostsCategories, setHostsCategories] = useState([]);
+  const [hostsDoctorsIds, setHostsDoctorsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Doctor")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsNursesIds, setHostsNursesIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Nurse")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsSecretariesIds, setHostsSecretariesIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Secretary")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsMedStudentsIds, setHostsMedStudentsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Medical Student")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsNursingStudentsIds, setHostsNursingStudentsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Nursing Student")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsLabTechsIds, setHostsLabTechsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Lab Technician")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsUSTechsIds, setHostsUSTechsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Ultra Sound Technician")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsNutritionistsIds, setHostsNutritionistsIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Nutritionist")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsPhysiosIds, setHostsPhysiosIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Physiotherapist")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsPsychosIds, setHostsPsychosIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Psychotherapist")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
+  const [hostsOthersIds, setHostsOthersIds] = useState(
+    activeStaff
+      .filter(({ title }) => title === "Other")
+      .filter(({ id }) => hostsIds.includes(id))
+      .map(({ id }) => id)
+  );
 
   //======================== EVENT HANDLERS ===================//
 
   const handleCheck = async (e, staffId) => {
-    let newHostsIds = [...hostsIds];
-    let newHostsDoctorsIds = [...hostsDoctorsIds];
-    let newHostsNursesIds = [...hostsNursesIds];
-    let newHostsSecretariesIds = [...hostsSecretariesIds];
-    let newHostsMedStudentsIds = [...hostsMedStudentsIds];
-    let newHostsNursingStudentsIds = [...hostsNursingStudentsIds];
-    let newHostsLabTechsIds = [...hostsLabTechsIds];
-    let newHostsUSTechsIds = [...hostsUSTechsIds];
-    let newHostsNutritionistsIds = [...hostsNutritionistsIds];
-    let newHostsPhysiosIds = [...hostsPhysiosIds];
-    let newHostsPsychosIds = [...hostsPsychosIds];
-    let newHostsOthersIds = [...hostsOthersIds];
-    let newHostsCategories = [...hostsCategories];
-
     const id = parseInt(staffId);
     const name = e.target.name;
 
     if (e.target.checked) {
-      newHostsIds = [...newHostsIds, id];
+      setHostsIds([...hostsIds, id]);
       switch (name) {
         case "doctor":
-          newHostsDoctorsIds = [...newHostsDoctorsIds, id];
-          if (newHostsDoctorsIds.length === doctorsLength.current) {
-            newHostsCategories = [...newHostsCategories, "Doctors"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsDoctorsIds(newHostsDoctorsIds);
+          setHostsDoctorsIds([...hostsDoctorsIds, id]);
+          if ([...hostsDoctorsIds, id].length === doctorsLength)
+            setHostsCategories([...hostsCategories, "Doctors"]);
           break;
         case "nurse":
-          newHostsNursesIds = [...newHostsNursesIds, id];
-          if (newHostsNursesIds.length === nursesLength.current) {
-            newHostsCategories = [...newHostsCategories, "Nurses"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsNursesIds(newHostsNursesIds);
+          setHostsNursesIds([...hostsNursesIds, id]);
+          if ([...hostsNursesIds, id].length === nursesLength)
+            setHostsCategories([...hostsCategories, "Nurses"]);
           break;
         case "secretary":
-          newHostsSecretariesIds = [...newHostsSecretariesIds, id];
-          if (newHostsSecretariesIds.length === secretariesLength.current) {
-            newHostsCategories = [...newHostsCategories, "Secretaries"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsSecretariesIds(newHostsSecretariesIds);
+          setHostsSecretariesIds([...hostsSecretariesIds, id]);
+          if ([...hostsSecretariesIds, id].length === secretariesLength)
+            setHostsCategories([...hostsCategories, "Secretaries"]);
           break;
         case "medical student":
-          newHostsMedStudentsIds = [...newHostsMedStudentsIds, id];
-          if (newHostsMedStudentsIds.length === medStudentsLength.current) {
-            newHostsCategories = [...newHostsCategories, "Medical Students"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsMedStudentsIds(newHostsMedStudentsIds);
+          setHostsMedStudentsIds([...hostsMedStudentsIds, id]);
+          if ([...hostsMedStudentsIds, id].length === medStudentsLength)
+            setHostsCategories([...hostsCategories, "Medical Students"]);
           break;
         case "nursing student":
-          newHostsNursingStudentsIds = [...newHostsNursingStudentsIds, id];
-          if (
-            newHostsNursingStudentsIds.length === nursingStudentsLength.current
-          ) {
-            newHostsCategories = [...newHostsCategories, "Nursing Students"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsNursingStudentsIds(newHostsNursingStudentsIds);
+          setHostsNursingStudentsIds([...hostsNursingStudentsIds, id]);
+          if ([...hostsNursingStudentsIds, id].length === nursingStudentsLength)
+            setHostsCategories([...hostsCategories, "Nursing Students"]);
           break;
         case "nutritionist":
-          newHostsNutritionistsIds = [...newHostsNutritionistsIds, id];
-          if (newHostsNutritionistsIds.length === nutritionistsLength.current) {
-            newHostsCategories = [...newHostsCategories, "Nutritionists"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsNutritionistsIds(newHostsNutritionistsIds);
+          setHostsNutritionistsIds([...hostsNutritionistsIds, id]);
+          if ([...hostsNutritionistsIds, id].length === nutritionistsLength)
+            setHostsCategories([...hostsCategories, "Nutritionists"]);
           break;
         case "physiotherapist":
-          newHostsPhysiosIds = [...newHostsPhysiosIds, id];
-          if (newHostsPhysiosIds.length === physiosLength.current) {
-            newHostsCategories = [...newHostsCategories, "Physiotherapists"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsPhysiosIds(newHostsPhysiosIds);
+          setHostsPhysiosIds([...hostsPhysiosIds, id]);
+          if ([...hostsPhysiosIds, id].length === physiosLength)
+            setHostsCategories([...hostsCategories, "Physiotherapists"]);
           break;
         case "psychologist":
-          newHostsPsychosIds = [...newHostsPsychosIds, id];
-          if (newHostsPsychosIds.length === psychosLength.current) {
-            newHostsCategories = [...newHostsCategories, "Psychologists"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsPsychosIds(newHostsPsychosIds);
+          setHostsPsychosIds([...hostsPsychosIds, id]);
+          if ([...hostsPsychosIds, id].length === psychosLength)
+            setHostsCategories([...hostsCategories, "Psychologists"]);
           break;
         case "lab technician":
-          newHostsLabTechsIds = [...newHostsLabTechsIds, id];
-          if (newHostsLabTechsIds.length === labTechsLength.current) {
-            newHostsCategories = [...newHostsCategories, "Lab Techs"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsLabTechsIds(newHostsLabTechsIds);
+          setHostsLabTechsIds([...hostsLabTechsIds, id]);
+          if ([...hostsLabTechsIds, id].length === labTechsLength)
+            setHostsCategories([...hostsCategories, "Lab Techs"]);
           break;
         case "ultra sound technician":
-          newHostsUSTechsIds = [...newHostsUSTechsIds, id];
-          if (newHostsUSTechsIds.length === usTechsLength.current) {
-            newHostsCategories = [...newHostsCategories, "Ultra Sound Techs"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsUSTechsIds(newHostsUSTechsIds);
+          setHostsUSTechsIds([...hostsUSTechsIds, id]);
+          if ([...hostsUSTechsIds, id].length === usTechsLength)
+            setHostsCategories([...hostsCategories, "Ultra Sound Techs"]);
           break;
         case "other":
-          newHostsOthersIds = [...newHostsOthersIds, id];
-          if (newHostsOthersIds.length === othersLength.current) {
-            newHostsCategories = [...newHostsCategories, "Others"];
-            sethostsCategories(newHostsCategories);
-          }
-          setHostsOthersIds(newHostsOthersIds);
+          setHostsOthersIds([...hostsOthersIds, id]);
+          if ([...hostsOthersIds, id].length === othersLength)
+            setHostsCategories([...hostsCategories, "Others"]);
           break;
         default:
           break;
       }
     } else {
-      newHostsIds.splice(newHostsIds.indexOf(id), 1);
+      setHostsIds(hostsIds.filter((hostId) => hostId !== id));
       switch (name) {
         case "doctor":
-          newHostsDoctorsIds.splice(newHostsDoctorsIds.indexOf(id), 1);
-          newHostsCategories.splice(newHostsCategories.indexOf("Doctors"), 1);
-          sethostsCategories(newHostsCategories);
-          setHostsDoctorsIds(newHostsDoctorsIds);
+          setHostsDoctorsIds(hostsDoctorsIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Doctors")
+          );
           break;
         case "nurse":
-          newHostsNursesIds.splice(newHostsNursesIds.indexOf(id), 1);
-          newHostsCategories.splice(newHostsCategories.indexOf("Nurses"), 1);
-          sethostsCategories(newHostsCategories);
-          setHostsNursesIds(newHostsNursesIds);
+          setHostsNursesIds(hostsNursesIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Nurses")
+          );
           break;
         case "secretary":
-          newHostsSecretariesIds.splice(newHostsSecretariesIds.indexOf(id), 1);
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Secretaries"),
-            1
+          setHostsSecretariesIds(
+            hostsSecretariesIds.filter((hostId) => hostId !== id)
           );
-          sethostsCategories(newHostsCategories);
-          setHostsSecretariesIds(newHostsSecretariesIds);
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Secretaries")
+          );
           break;
         case "medical student":
-          newHostsMedStudentsIds.splice(newHostsMedStudentsIds.indexOf(id), 1);
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Medical Students"),
-            1
+          setHostsMedStudentsIds(
+            hostsMedStudentsIds.filter((hostId) => hostId !== id)
           );
-          sethostsCategories(newHostsCategories);
-          setHostsMedStudentsIds(newHostsMedStudentsIds);
+          setHostsCategories(
+            hostsCategories.filter(
+              (category) => category !== "Medical Students"
+            )
+          );
           break;
         case "nursing student":
-          newHostsNursingStudentsIds.splice(
-            newHostsNursingStudentsIds.indexOf(id),
-            1
+          setHostsNursingStudentsIds(
+            hostsNursingStudentsIds.filter((hostId) => hostId !== id)
           );
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Nursing Students"),
-            1
+          setHostsCategories(
+            hostsCategories.filter(
+              (category) => category !== "Nursing Students"
+            )
           );
-          sethostsCategories(newHostsCategories);
-          setHostsNursingStudentsIds(newHostsNursingStudentsIds);
           break;
         case "nutritionist":
-          newHostsNutritionistsIds.splice(
-            newHostsNutritionistsIds.indexOf(id),
-            1
+          setHostsNutritionistsIds(
+            hostsNutritionistsIds.filter((hostId) => hostId !== id)
           );
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Nutritionists"),
-            1
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Nutritionists")
           );
-          sethostsCategories(newHostsCategories);
-          setHostsNutritionistsIds(newHostsNutritionistsIds);
           break;
         case "physiotherapist":
-          newHostsPhysiosIds.splice(newHostsPhysiosIds.indexOf(id), 1);
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Physiotherapists"),
-            1
+          setHostsPhysiosIds(hostsPhysiosIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter(
+              (category) => category !== "Physiotherapists"
+            )
           );
-          sethostsCategories(newHostsCategories);
-          setHostsPhysiosIds(newHostsPhysiosIds);
           break;
         case "psychotherapist":
-          newHostsPsychosIds.splice(newHostsPsychosIds.indexOf(id), 1);
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Psychologists"),
-            1
+          setHostsPsychosIds(hostsPsychosIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter(
+              (category) => category !== "Psychotherapists"
+            )
           );
-          sethostsCategories(newHostsCategories);
-          setHostsPsychosIds(newHostsPsychosIds);
           break;
         case "lab technician":
-          newHostsLabTechsIds.splice(newHostsLabTechsIds.indexOf(id), 1);
-          newHostsCategories.splice(newHostsCategories.indexOf("Lab Techs"), 1);
-          sethostsCategories(newHostsCategories);
-          setHostsLabTechsIds(newHostsLabTechsIds);
+          setHostsLabTechsIds(
+            hostsLabTechsIds.filter((hostId) => hostId !== id)
+          );
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Lab Techs")
+          );
           break;
         case "ultra sound technician":
-          newHostsUSTechsIds.splice(newHostsUSTechsIds.indexOf(id), 1);
-          newHostsCategories.splice(
-            newHostsCategories.indexOf("Ultra Sound Techs"),
-            1
+          setHostsUSTechsIds(hostsUSTechsIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter(
+              (category) => category !== "Ultra Sound Techs"
+            )
           );
-          sethostsCategories(newHostsCategories);
-          setHostsUSTechsIds(newHostsUSTechsIds);
           break;
         case "other":
-          newHostsOthersIds.splice(newHostsOthersIds.indexOf(id), 1);
-          newHostsCategories.splice(newHostsCategories.indexOf("Others"), 1);
-          sethostsCategories(newHostsCategories);
-          setHostsOthersIds(newHostsOthersIds);
+          setHostsOthersIds(hostsOthersIds.filter((hostId) => hostId !== id));
+          setHostsCategories(
+            hostsCategories.filter((category) => category !== "Others")
+          );
           break;
         default:
           break;
       }
     }
-    setHostsIds(newHostsIds);
   };
 
-  const handleCheckCategory = async (category, e) => {
-    let newHostsCategories = [...hostsCategories];
-    let newHostsIds = [...hostsIds];
-    const id = e.target.id;
-
-    if (e.target.checked) {
-      newHostsCategories = [...newHostsCategories, category];
-
+  const handleCheckCategory = async (e, category) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setHostsCategories([...hostsCategories, category]);
       //Add all the hosts from the category
       let hostsIdsToAdd = activeStaff
         .filter(({ title }) => title === categoryToTitle(category))
-        .filter(({ id }) => !newHostsIds.includes(id))
+        .filter(({ id }) => !hostsIds.includes(id))
         .map(({ id }) => id);
-      newHostsIds = [...newHostsIds, ...hostsIdsToAdd];
+      setHostsIds([...hostsIds, ...hostsIdsToAdd]);
     } else {
-      newHostsCategories.splice(newHostsCategories.indexOf(id), 1);
+      setHostsCategories(hostsCategories.filter((cat) => cat !== category));
       let hostsIdsToRemove = activeStaff
         .filter(({ title }) => title === categoryToTitle(category))
-        .filter(({ id }) => newHostsIds.includes(id))
+        .filter(({ id }) => hostsIds.includes(id))
         .map(({ id }) => id);
-      newHostsIds = newHostsIds.filter(
-        (staffId) => !hostsIdsToRemove.includes(staffId)
-      );
+      setHostsIds(hostsIds.filter((id) => !hostsIdsToRemove.includes(id)));
     }
-    sethostsCategories(newHostsCategories);
-    setHostsIds(newHostsIds);
   };
 
   //======================== FUNCTIONS =====================//
@@ -406,7 +283,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
 
   return (
     <form className="filter-checkboxes">
-      {doctorsLength.current !== 0 && (
+      {doctorsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -418,7 +295,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {nursesLength.current !== 0 && (
+      {nursesLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -430,7 +307,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {secretariesLength.current !== 0 && (
+      {secretariesLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -442,7 +319,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {labTechsLength.current !== 0 && (
+      {labTechsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -454,7 +331,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {usTechsLength.current !== 0 && (
+      {usTechsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -466,7 +343,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {nutritionistsLength.current !== 0 && (
+      {nutritionistsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -478,7 +355,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {psychosLength.current !== 0 && (
+      {psychosLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -490,7 +367,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {physiosLength.current !== 0 && (
+      {physiosLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -502,7 +379,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {medStudentsLength.current !== 0 && (
+      {medStudentsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -514,7 +391,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {nursingStudentsLength.current !== 0 && (
+      {nursingStudentsLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}
@@ -526,7 +403,7 @@ const FilterCheckboxes = ({ hostsIds, setHostsIds, remainingStaff }) => {
           />
         </div>
       )}
-      {othersLength.current !== 0 && (
+      {othersLength !== 0 && (
         <div className="filter-checkboxes-section">
           <FilterCheckboxesSection
             isCategoryChecked={isCategoryChecked}

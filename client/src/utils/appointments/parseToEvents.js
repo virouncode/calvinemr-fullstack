@@ -45,6 +45,7 @@ export const parseToEvents = (
   //give a color to each remaining member of the staff
   if (!sites || sites.length === 0 || !appointments) return null;
   const remainingStaffObjects = staffInfos
+    .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ id }) => id !== userId)
     .map((staff, index) => {
       return {

@@ -23,7 +23,7 @@ const FilterCheckboxesSection = ({
         <Checkbox
           id={category}
           name={category}
-          onChange={(e) => handleCheckCategory(category, e)}
+          onChange={(e) => handleCheckCategory(e, category)}
           checked={isCategoryChecked(category)}
           label={category}
         />
