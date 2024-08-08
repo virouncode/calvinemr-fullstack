@@ -1,4 +1,4 @@
-export const showDocument = async (docUrl, docMime) => {
+export const showDocument = async (docUrl: string, docMime: string) => {
   let docWindow;
   if (!docMime.includes("officedocument")) {
     docWindow = window.open(

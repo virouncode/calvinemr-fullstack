@@ -111,7 +111,7 @@ const NewMessageExternal = ({
           })
         );
         setAllPatientsChecked(true);
-      } catch (err) {
+      } catch {
         toast.error("Error: unable to load all patients", { containerId: "A" });
       }
     } else {

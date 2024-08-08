@@ -34,7 +34,7 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
     try {
       await copyCredentialToClipboard(link.login);
       toast.success("Copied !", { containerId: "A" });
-    } catch (err) {
+    } catch {
       toast.error("Unable to copy login", { containerId: "A" });
     }
   };
@@ -42,7 +42,7 @@ const LabLinkPersonalItem = ({ link, setErrMsgPost }) => {
     try {
       await copyCredentialToClipboard(link.pwd);
       toast.success("Copied !", { containerId: "A" });
-    } catch (err) {
+    } catch {
       toast.error("Unable to copy password", { containerId: "A" });
     }
   };

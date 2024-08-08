@@ -1,4 +1,4 @@
-export const firstLetterUpper = (str) => {
+export const firstLetterUpper = (str: string) => {
   if (!str) return "";
   if (str.includes(" ") || str.includes(",")) {
     const names = str.split(/[\s,-]+/);
@@ -15,7 +15,8 @@ export const firstLetterUpper = (str) => {
   }
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
-export const firstLetterOfFirstWordUpper = (str) => {
+
+export const firstLetterOfFirstWordUpper = (str: string) => {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

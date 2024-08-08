@@ -2,12 +2,12 @@ import { DateTime } from "luxon";
 import { nowTZ } from "../dates/formatDates";
 
 export const getImmunizationInterval = (
-  age,
-  patientDob,
-  timezone = "America/Toronto"
+  age: string,
+  patientDob: number,
+  timezone: string = "America/Toronto"
 ) => {
-  let rangeStart = nowTZ();
-  let rangeEnd = nowTZ();
+  let rangeStart: DateTime<true> | DateTime<false> = nowTZ();
+  let rangeEnd: DateTime<true> | DateTime<false> = nowTZ();
   const dob = DateTime.fromMillis(patientDob, { zone: timezone });
 
   switch (age) {
@@ -57,7 +57,7 @@ export const getImmunizationInterval = (
       break;
     }
     case "Grade 7": {
-      rangeStart = "";
+      rangeStart = dob.plus({ years: 12 });
       rangeEnd = dob.plus({ years: 15 });
       break;
     }

@@ -1,7 +1,14 @@
-export const toDurationText = (y, m, w, d, type, value) => {
-  let yearText,
-    monthText,
-    weekText,
+export const toDurationText = (
+  y: number,
+  m: number,
+  w: number,
+  d: number,
+  type: string,
+  value: number
+) => {
+  let yearText = "",
+    monthText = "",
+    weekText = "",
     daysText = "";
   if (type === "Y") {
     yearText = value

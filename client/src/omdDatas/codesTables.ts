@@ -1,4 +1,9 @@
-export const namePrefixCT = [
+export type CodeTable = {
+  code: string;
+  name: string;
+};
+
+export const namePrefixCT: CodeTable[] = [
   //CT-001
   { code: "Bro", name: "Brother" },
   { code: "Capt", name: "Captain" },
@@ -28,7 +33,7 @@ export const namePrefixCT = [
   { code: "Sr", name: "Sister" },
 ];
 
-export const nameSuffixCT = [
+export const nameSuffixCT: CodeTable[] = [
   //CT-005
   { code: "Jr", name: "Junior" },
   { code: "Sr", name: "Senior" },
@@ -37,7 +42,7 @@ export const nameSuffixCT = [
   { code: "IV", name: "The Fourth" },
 ];
 
-export const genderCT = [
+export const genderCT: CodeTable[] = [
   //CT-006
   { code: "M", name: "Male" },
   { code: "F", name: "Female" },
@@ -45,39 +50,39 @@ export const genderCT = [
   { code: "U", name: "Unknown" },
 ];
 
-export const officialLanguageCT = [
+export const officialLanguageCT: CodeTable[] = [
   //CT-007
   { code: "ENG", name: "English" },
   { code: "FRE", name: "French" },
 ];
 
-export const personStatusCT = [
+export const personStatusCT: CodeTable[] = [
   //CT-008
   { code: "A", name: "Active" }, //patient is part of the practice
   { code: "I", name: "Inactive" },
   { code: "D", name: "Deceased" },
 ];
 
-export const enrollmentStatusCT = [
+export const enrollmentStatusCT: CodeTable[] = [
   //CT-009
   { code: "1", name: "Enrolled" }, //patient enrolled to a physician
   { code: "0", name: "Not Enrolled" },
 ];
 
-export const adressTypeCT = [
+export const adressTypeCT: CodeTable[] = [
   //CT-011
   { code: "M", name: "Mailing" },
   { code: "R", name: "Residential" },
 ];
 
-export const _phoneNumberTypeCT = [
+export const _phoneNumberTypeCT: CodeTable[] = [
   //CT-012
   { code: "R", name: "Residence" },
   { code: "C", name: "Cellular/Mobile" },
   { code: "W", name: "Work" },
 ];
 
-export const provinceStateTerritoryCT = [
+export const provinceStateTerritoryCT: CodeTable[] = [
   //CT-013
   { code: "CA-AB", name: "Alberta" },
   { code: "CA-BC", name: "British Columbia" },
@@ -152,7 +157,7 @@ export const provinceStateTerritoryCT = [
   // {code:"-90",name:"Not Applicable"},
 ];
 
-export const contactPurposeCT = [
+export const contactPurposeCT: CodeTable[] = [
   //CT-014
   { code: "EC", name: "Emergency Contact" },
   { code: "NK", name: "Next of kin" },
@@ -164,7 +169,7 @@ export const contactPurposeCT = [
   { code: "SDM", name: "Substitute Decision Maker" },
 ];
 
-export const lifeStageCT = [
+export const lifeStageCT: CodeTable[] = [
   //CT-016
   { code: "N", name: "New born (birth - 28 days)" },
   { code: "I", name: "Infant (29 days < 2 years" },
@@ -173,25 +178,25 @@ export const lifeStageCT = [
   { code: "A", name: "Adult (>= 18 years)" },
 ];
 
-export const propertyOfOffendingAgentCT = [
+export const propertyOfOffendingAgentCT: CodeTable[] = [
   { code: "DR", name: "Drug" },
   { code: "ND", name: "Non-drug" },
   { code: "UK", name: "Unknown" },
 ];
 
-export const reactionTypeCT = [
+export const reactionTypeCT: CodeTable[] = [
   { code: "AL", name: "Allergy" },
   { code: "AR", name: "Adverse Reaction" },
 ];
 
-export const reactionSeverityCT = [
+export const reactionSeverityCT: CodeTable[] = [
   { code: "NO", name: "No Reaction" },
   { code: "MI", name: "Mild" },
   { code: "MO", name: "Moderate" },
   { code: "LT", name: "Severe Life Threatening" },
 ];
 
-export const immunizationTypeCT = [
+export const immunizationTypeCT: CodeTable[] = [
   { code: "BCG", name: "Bacilius Calmette-Guerin" },
   { code: "Chol-O", name: "Cholera-Oral" },
   { code: "CholEcol", name: "Cholera, Entertoxogenic Escheria coli" },
@@ -259,7 +264,7 @@ export const immunizationTypeCT = [
   { code: "Zos", name: "Herpes Zoster" },
 ];
 
-export const prescriptionStatusCT = [
+export const prescriptionStatusCT: CodeTable[] = [
   { code: "New", name: "New" },
   { code: "Active", name: "Active" },
   { code: "Suspended", name: "Suspended" },
@@ -269,12 +274,12 @@ export const prescriptionStatusCT = [
   { code: "Nullified", name: "Nullified" },
 ];
 
-export const ynIndicatorsimpleCT = [
+export const ynIndicatorsimpleCT: CodeTable[] = [
   { code: "Y", name: "Yes" },
   { code: "N", name: "No" },
 ];
 
-export const treatmentTypesCT = [
+export const treatmentTypesCT: CodeTable[] = [
   { code: "CHRON", name: "Continuous/chronic" },
   { code: "ACU", name: "Acute" },
   { code: "ONET", name: "One Time" },
@@ -282,7 +287,7 @@ export const treatmentTypesCT = [
   { code: "PRN Short-term", name: "As needed (short-term)" },
 ];
 
-export const routeCT = [
+export const routeCT: CodeTable[] = [
   { code: "BIN", name: "Block infiltration" },
   { code: "BUC", name: "Buccal" },
   { code: "CAU", name: "Caudal block" },
@@ -380,7 +385,7 @@ export const routeCT = [
   { code: "VAG", name: "Vaginal" },
 ];
 
-export const formCT = [
+export const formCT: CodeTable[] = [
   { code: "AEM", name: "Aerosol metered-dose" },
   { code: "AER", name: "Aerosol with propellants" },
   { code: "BAR", name: "Bar chewable" },
@@ -478,7 +483,7 @@ export const formCT = [
   { code: "WIP", name: "Wipe" },
 ];
 
-export const frequencyCT = [
+export const frequencyCT: CodeTable[] = [
   { code: "QD", name: "Once a day" },
   { code: "BID", name: "Two times a day" },
   { code: "TID", name: "Three times a day" },
@@ -512,7 +517,7 @@ export const frequencyCT = [
   { code: "PRN", name: "as needed" },
 ];
 
-export const strengthUnitCT = [
+export const strengthUnitCT: CodeTable[] = [
   { code: "AMP", name: "Ampoule" },
   { code: "AU", name: "Allergy unit" },
   { code: "B", name: "Billion" },
@@ -598,7 +603,7 @@ export const strengthUnitCT = [
   { code: "X", name: "Homeopathic unit" },
 ];
 
-export const dosageUnitCT = [
+export const dosageUnitCT: CodeTable[] = [
   { code: "tsp", name: "teaspoon" },
   { code: "tbls", name: "tablespoon" },
   { code: "puff", name: "puff" },
@@ -619,7 +624,7 @@ export const dosageUnitCT = [
   { code: "mcL", name: "microliter" },
 ];
 
-export const siteCT = [
+export const siteCT: CodeTable[] = [
   { code: "LVL", name: "Left Vasus Lateralis" },
   { code: "RVL", name: "Right Vasus Lateralis" },
   { code: "LD", name: "Left Deltoid" },
@@ -632,12 +637,12 @@ export const siteCT = [
   { code: "RFA", name: "Right ForeArm" },
 ];
 
-export const reportFormatCT = [
+export const reportFormatCT: CodeTable[] = [
   { code: "Text", name: "Text" },
   { code: "Binary", name: "Binary" },
 ];
 
-export const reportClassCT = [
+export const reportClassCT: CodeTable[] = [
   { code: "Diagnostic Imaging Report", name: "Diagnostic Imaging Report" },
   { code: "Diagnostic Test Report", name: "Diagnostic Test Report" },
   { code: "Cardio Respiratory Report", name: "Cardio Respiratory Report" },
@@ -647,7 +652,7 @@ export const reportClassCT = [
   { code: "Other Letter", name: "Other Letter" },
 ];
 
-export const reportMediaCT = [
+export const reportMediaCT: CodeTable[] = [
   { code: "Email", name: "Email" },
   { code: "Download", name: "Download" },
   { code: "Portable Media", name: "Portable Media" },
@@ -732,18 +737,18 @@ export const terminationReasonCT = [
   },
 ];
 
-export const diabetesComplicationsScreeningCT = [
+export const diabetesComplicationsScreeningCT: CodeTable[] = [
   { code: "32468-1", name: "Retinal Exam" },
   { code: "11397-7", name: "Foot Exam" },
   { code: "67536-3", name: "Neurological Exam" },
 ];
-export const diabetesMotivationalCounsellingCT = [
+export const diabetesMotivationalCounsellingCT: CodeTable[] = [
   { code: "Nutrition", name: "Nutrition" },
   { code: "Exercise", name: "Exercise" },
   { code: "Smoking Cessation", name: "Smoking Cessation" },
   { code: "Other", name: "Others" },
 ];
 
-export const toCodeTableName = (codeTable, code) => {
+export const toCodeTableName = (codeTable: CodeTable[], code: string) => {
   return codeTable.find((item) => item.code === code)?.name || "";
 };

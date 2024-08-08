@@ -1,4 +1,4 @@
-export const bodyMassIndex = (heightCm, weightKg) => {
+export const bodyMassIndex = (heightCm: string, weightKg: string) => {
   if (!heightCm || !weightKg) return "";
   return (
     Math.round(
@@ -9,7 +9,7 @@ export const bodyMassIndex = (heightCm, weightKg) => {
   );
 };
 
-export const bodySurfaceArea = (heightCm, weightKg) => {
+export const bodySurfaceArea = (heightCm: string, weightKg: string) => {
   if (!heightCm || !weightKg) return "";
   return (
     Math.round(
@@ -21,22 +21,22 @@ export const bodySurfaceArea = (heightCm, weightKg) => {
   );
 };
 
-export const kgToLbs = (weightKg) => {
+export const kgToLbs = (weightKg: string) => {
   if (!weightKg) return "";
   return Math.round(parseFloat(weightKg) * 2.205 * 10) / 10;
 };
 
-export const lbsToKg = (weightLbs) => {
+export const lbsToKg = (weightLbs: string) => {
   if (!weightLbs) return "";
   return Math.round(parseFloat(weightLbs) / 2.205);
 };
 
-export const cmToFeet = (heightCm) => {
+export const cmToFeet = (heightCm: string) => {
   if (!heightCm) return "";
   return Math.round((parseFloat(heightCm) / 30.48) * 10) / 10;
 };
 
-export const feetToCm = (heightFeet) => {
+export const feetToCm = (heightFeet: string) => {
   if (!heightFeet) return "";
   return Math.round(parseFloat(heightFeet) * 30.48);
 };

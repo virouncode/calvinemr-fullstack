@@ -7,10 +7,9 @@ export const generatePassword = () => {
     Math.floor(Math.random() * listSpecial.length)
   );
 
-  for (var i = 0; i < 8; i++) {
-    var rnd = Math.floor(Math.random() * listLettersNumbers.length);
+  for (let i = 0; i < 8; i++) {
+    const rnd = Math.floor(Math.random() * listLettersNumbers.length);
     resLettersNumbers = resLettersNumbers + listLettersNumbers.charAt(rnd);
   }
-
   return resLettersNumbers + resSpecial;
 };

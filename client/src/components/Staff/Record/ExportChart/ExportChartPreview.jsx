@@ -423,7 +423,7 @@ const ExportChartPreview = ({
       setChart(pdfURI);
       setProgress(false);
       return pdfURI;
-    } catch (err) {
+    } catch {
       setProgress(false);
       toast.error("An error occured while generating the PDF");
     }

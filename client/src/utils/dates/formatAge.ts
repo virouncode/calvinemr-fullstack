@@ -1,4 +1,4 @@
-export const formatAge = (age) => {
+export const formatAge = (age: string) => {
   switch (age) {
     case "2_months":
       return "2 Months";

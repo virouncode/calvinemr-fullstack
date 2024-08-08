@@ -1,4 +1,4 @@
-export const callerIDToFaxNumber = (callerID) => {
+export const callerIDToFaxNumber = (callerID: string) => {
   let faxNumber;
   if (callerID.length >= 11) {
     faxNumber = callerID.slice(1);

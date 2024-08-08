@@ -59,12 +59,12 @@ const SubheaderWelcome = ({ toastExpiredID, tokenLimitVerifierID }) => {
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
     clearInterval(tokenLimitVerifierID.current);
-    toastExpiredID.current && toast.dismiss(toastExpiredID.current);
+    if (toastExpiredID.current) toast.dismiss(toastExpiredID.current);
     navigate("/");
   };
   return (
     <div className="subheader-section__right">
-      <span style={{ marginRight: "10px" }}>
+      <span style={{ marginRight: "5px" }}>
         {helloMessage} {toWelcomeName(user, staffInfos, adminsInfos)}
       </span>
       <strong

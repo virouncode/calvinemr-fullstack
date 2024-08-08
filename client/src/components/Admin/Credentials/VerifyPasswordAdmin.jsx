@@ -37,7 +37,7 @@ const VerifyPasswordAdmin = ({ setVerified }) => {
         pin,
       });
       setVerified(true);
-    } catch (err) {
+    } catch {
       setVerified(false);
       setErrMsg("Invalid Password");
     }

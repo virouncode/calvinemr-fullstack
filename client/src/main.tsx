@@ -13,7 +13,9 @@ import { TitleProvider } from "./context/TitleProvider";
 import { UserProvider } from "./context/UserProvider";
 import "./styles/index.scss";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

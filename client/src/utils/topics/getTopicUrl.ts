@@ -1,4 +1,4 @@
-export const getTopicUrl = (topic) => {
+export const getTopicUrl = (topic: string) => {
   switch (topic) {
     case "PAST HEALTH":
       return "/past_health_of_patient";
@@ -53,7 +53,7 @@ export const getTopicUrl = (topic) => {
   }
 };
 
-export const getTopicUrlMutation = (topic) => {
+export const getTopicUrlMutation = (topic: string) => {
   switch (topic) {
     case "PAST HEALTH":
       return "/past_health";

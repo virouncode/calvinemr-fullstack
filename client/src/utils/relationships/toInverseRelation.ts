@@ -1,4 +1,4 @@
-export const toInverseRelation = (relation, gender) => {
+export const toInverseRelation = (relation: string, gender: string) => {
   switch (relation) {
     case "Aunt - maternal":
       return gender === "Female" || gender === "Other"

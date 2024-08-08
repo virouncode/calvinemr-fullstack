@@ -1,5 +1,5 @@
-const abreviateName = (name, formatted = true) => {
-  if (!name) return;
+const abreviateName = (name: string, formatted = true) => {
+  if (!name) return "";
   const nameArray = name.split(" ");
   const lastName = nameArray.pop();
   const nameInitials = nameArray

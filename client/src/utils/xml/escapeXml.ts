@@ -1,4 +1,4 @@
-export const escapeXml = (xmlString) => {
+export const escapeXml = (xmlString: string) => {
   if (typeof xmlString === "number") return xmlString;
   if (xmlString === "") return "";
   return xmlString.replace(/[<>&'"]/g, (c) => {

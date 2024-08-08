@@ -15,11 +15,3 @@ export const getLastUpdate = (data) => {
     return data.updates.sort((a, b) => b.date_updated - a.date_updated)[0];
   }
 };
-
-export const sortClinicalNotesByDate = (array, order) => {
-  if (order === "asc") {
-    return array.sort((a, b) => a.date_created - b.date_created);
-  } else {
-    return array.sort((a, b) => b.date_created - a.date_created);
-  }
-};

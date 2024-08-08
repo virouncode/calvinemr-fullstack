@@ -1,4 +1,4 @@
-export const getImmunizationLogo = (type) => {
+export const getImmunizationLogo = (type: "IM" | "IM/SC" | "SC" | "ORL") => {
   let logo = "";
   switch (type) {
     case "IM":
