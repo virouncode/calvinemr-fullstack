@@ -52,7 +52,7 @@ import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
 
 const App = () => {
-  const [serverErrorMsg, setServerErrorMsg] = useState(null);
+  const [serverErrorMsg, setServerErrorMsg] = useState<string | null>(null);
   //REFRESH TOKEN
   const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
   //LOCAL STORAGE

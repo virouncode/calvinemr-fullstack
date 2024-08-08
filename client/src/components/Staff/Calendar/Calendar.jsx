@@ -14,7 +14,7 @@ import {
 } from "../../../hooks/reactquery/mutations/appointmentsMutations";
 import { useAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
-import { useStiteClosed } from "../../../hooks/socket/useSiteClosed";
+import { useSiteClosed } from "../../../hooks/socket/useSiteClosed";
 import useCalendarShortcuts from "../../../hooks/useCalendarShortcuts";
 import { getAvailableRooms } from "../../../utils/appointments/getAvailableRooms";
 import {
@@ -158,7 +158,7 @@ const Calendar = () => {
     }
   }, [events]);
 
-  useStiteClosed(sites, user);
+  useSiteClosed(sites, user);
 
   useCalendarShortcuts(
     fcRef,

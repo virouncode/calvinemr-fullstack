@@ -12,7 +12,7 @@ export const nowTZ = (timezone = "America/Toronto") => {
 
 //ISO
 export const timestampToDateISOTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {

@@ -1,9 +1,6 @@
-export type CodeTable = {
-  code: string;
-  name: string;
-};
+import { CodeTableType } from "../types/app";
 
-export const namePrefixCT: CodeTable[] = [
+export const namePrefixCT: CodeTableType[] = [
   //CT-001
   { code: "Bro", name: "Brother" },
   { code: "Capt", name: "Captain" },
@@ -33,7 +30,7 @@ export const namePrefixCT: CodeTable[] = [
   { code: "Sr", name: "Sister" },
 ];
 
-export const nameSuffixCT: CodeTable[] = [
+export const nameSuffixCT: CodeTableType[] = [
   //CT-005
   { code: "Jr", name: "Junior" },
   { code: "Sr", name: "Senior" },
@@ -42,7 +39,7 @@ export const nameSuffixCT: CodeTable[] = [
   { code: "IV", name: "The Fourth" },
 ];
 
-export const genderCT: CodeTable[] = [
+export const genderCT: CodeTableType[] = [
   //CT-006
   { code: "M", name: "Male" },
   { code: "F", name: "Female" },
@@ -50,39 +47,39 @@ export const genderCT: CodeTable[] = [
   { code: "U", name: "Unknown" },
 ];
 
-export const officialLanguageCT: CodeTable[] = [
+export const officialLanguageCT: CodeTableType[] = [
   //CT-007
   { code: "ENG", name: "English" },
   { code: "FRE", name: "French" },
 ];
 
-export const personStatusCT: CodeTable[] = [
+export const personStatusCT: CodeTableType[] = [
   //CT-008
   { code: "A", name: "Active" }, //patient is part of the practice
   { code: "I", name: "Inactive" },
   { code: "D", name: "Deceased" },
 ];
 
-export const enrollmentStatusCT: CodeTable[] = [
+export const enrollmentStatusCT: CodeTableType[] = [
   //CT-009
   { code: "1", name: "Enrolled" }, //patient enrolled to a physician
   { code: "0", name: "Not Enrolled" },
 ];
 
-export const adressTypeCT: CodeTable[] = [
+export const adressTypeCT: CodeTableType[] = [
   //CT-011
   { code: "M", name: "Mailing" },
   { code: "R", name: "Residential" },
 ];
 
-export const _phoneNumberTypeCT: CodeTable[] = [
+export const _phoneNumberTypeCT: CodeTableType[] = [
   //CT-012
   { code: "R", name: "Residence" },
   { code: "C", name: "Cellular/Mobile" },
   { code: "W", name: "Work" },
 ];
 
-export const provinceStateTerritoryCT: CodeTable[] = [
+export const provinceStateTerritoryCT: CodeTableType[] = [
   //CT-013
   { code: "CA-AB", name: "Alberta" },
   { code: "CA-BC", name: "British Columbia" },
@@ -157,7 +154,7 @@ export const provinceStateTerritoryCT: CodeTable[] = [
   // {code:"-90",name:"Not Applicable"},
 ];
 
-export const contactPurposeCT: CodeTable[] = [
+export const contactPurposeCT: CodeTableType[] = [
   //CT-014
   { code: "EC", name: "Emergency Contact" },
   { code: "NK", name: "Next of kin" },
@@ -169,7 +166,7 @@ export const contactPurposeCT: CodeTable[] = [
   { code: "SDM", name: "Substitute Decision Maker" },
 ];
 
-export const lifeStageCT: CodeTable[] = [
+export const lifeStageCT: CodeTableType[] = [
   //CT-016
   { code: "N", name: "New born (birth - 28 days)" },
   { code: "I", name: "Infant (29 days < 2 years" },
@@ -178,25 +175,25 @@ export const lifeStageCT: CodeTable[] = [
   { code: "A", name: "Adult (>= 18 years)" },
 ];
 
-export const propertyOfOffendingAgentCT: CodeTable[] = [
+export const propertyOfOffendingAgentCT: CodeTableType[] = [
   { code: "DR", name: "Drug" },
   { code: "ND", name: "Non-drug" },
   { code: "UK", name: "Unknown" },
 ];
 
-export const reactionTypeCT: CodeTable[] = [
+export const reactionTypeCT: CodeTableType[] = [
   { code: "AL", name: "Allergy" },
   { code: "AR", name: "Adverse Reaction" },
 ];
 
-export const reactionSeverityCT: CodeTable[] = [
+export const reactionSeverityCT: CodeTableType[] = [
   { code: "NO", name: "No Reaction" },
   { code: "MI", name: "Mild" },
   { code: "MO", name: "Moderate" },
   { code: "LT", name: "Severe Life Threatening" },
 ];
 
-export const immunizationTypeCT: CodeTable[] = [
+export const immunizationTypeCT: CodeTableType[] = [
   { code: "BCG", name: "Bacilius Calmette-Guerin" },
   { code: "Chol-O", name: "Cholera-Oral" },
   { code: "CholEcol", name: "Cholera, Entertoxogenic Escheria coli" },
@@ -264,7 +261,7 @@ export const immunizationTypeCT: CodeTable[] = [
   { code: "Zos", name: "Herpes Zoster" },
 ];
 
-export const prescriptionStatusCT: CodeTable[] = [
+export const prescriptionStatusCT: CodeTableType[] = [
   { code: "New", name: "New" },
   { code: "Active", name: "Active" },
   { code: "Suspended", name: "Suspended" },
@@ -274,12 +271,12 @@ export const prescriptionStatusCT: CodeTable[] = [
   { code: "Nullified", name: "Nullified" },
 ];
 
-export const ynIndicatorsimpleCT: CodeTable[] = [
+export const ynIndicatorsimpleCT: CodeTableType[] = [
   { code: "Y", name: "Yes" },
   { code: "N", name: "No" },
 ];
 
-export const treatmentTypesCT: CodeTable[] = [
+export const treatmentTypesCT: CodeTableType[] = [
   { code: "CHRON", name: "Continuous/chronic" },
   { code: "ACU", name: "Acute" },
   { code: "ONET", name: "One Time" },
@@ -287,7 +284,7 @@ export const treatmentTypesCT: CodeTable[] = [
   { code: "PRN Short-term", name: "As needed (short-term)" },
 ];
 
-export const routeCT: CodeTable[] = [
+export const routeCT: CodeTableType[] = [
   { code: "BIN", name: "Block infiltration" },
   { code: "BUC", name: "Buccal" },
   { code: "CAU", name: "Caudal block" },
@@ -385,7 +382,7 @@ export const routeCT: CodeTable[] = [
   { code: "VAG", name: "Vaginal" },
 ];
 
-export const formCT: CodeTable[] = [
+export const formCT: CodeTableType[] = [
   { code: "AEM", name: "Aerosol metered-dose" },
   { code: "AER", name: "Aerosol with propellants" },
   { code: "BAR", name: "Bar chewable" },
@@ -483,7 +480,7 @@ export const formCT: CodeTable[] = [
   { code: "WIP", name: "Wipe" },
 ];
 
-export const frequencyCT: CodeTable[] = [
+export const frequencyCT: CodeTableType[] = [
   { code: "QD", name: "Once a day" },
   { code: "BID", name: "Two times a day" },
   { code: "TID", name: "Three times a day" },
@@ -517,7 +514,7 @@ export const frequencyCT: CodeTable[] = [
   { code: "PRN", name: "as needed" },
 ];
 
-export const strengthUnitCT: CodeTable[] = [
+export const strengthUnitCT: CodeTableType[] = [
   { code: "AMP", name: "Ampoule" },
   { code: "AU", name: "Allergy unit" },
   { code: "B", name: "Billion" },
@@ -603,7 +600,7 @@ export const strengthUnitCT: CodeTable[] = [
   { code: "X", name: "Homeopathic unit" },
 ];
 
-export const dosageUnitCT: CodeTable[] = [
+export const dosageUnitCT: CodeTableType[] = [
   { code: "tsp", name: "teaspoon" },
   { code: "tbls", name: "tablespoon" },
   { code: "puff", name: "puff" },
@@ -624,7 +621,7 @@ export const dosageUnitCT: CodeTable[] = [
   { code: "mcL", name: "microliter" },
 ];
 
-export const siteCT: CodeTable[] = [
+export const siteCT: CodeTableType[] = [
   { code: "LVL", name: "Left Vasus Lateralis" },
   { code: "RVL", name: "Right Vasus Lateralis" },
   { code: "LD", name: "Left Deltoid" },
@@ -637,12 +634,12 @@ export const siteCT: CodeTable[] = [
   { code: "RFA", name: "Right ForeArm" },
 ];
 
-export const reportFormatCT: CodeTable[] = [
+export const reportFormatCT: CodeTableType[] = [
   { code: "Text", name: "Text" },
   { code: "Binary", name: "Binary" },
 ];
 
-export const reportClassCT: CodeTable[] = [
+export const reportClassCT: CodeTableType[] = [
   { code: "Diagnostic Imaging Report", name: "Diagnostic Imaging Report" },
   { code: "Diagnostic Test Report", name: "Diagnostic Test Report" },
   { code: "Cardio Respiratory Report", name: "Cardio Respiratory Report" },
@@ -652,7 +649,7 @@ export const reportClassCT: CodeTable[] = [
   { code: "Other Letter", name: "Other Letter" },
 ];
 
-export const reportMediaCT: CodeTable[] = [
+export const reportMediaCT: CodeTableType[] = [
   { code: "Email", name: "Email" },
   { code: "Download", name: "Download" },
   { code: "Portable Media", name: "Portable Media" },
@@ -737,18 +734,18 @@ export const terminationReasonCT = [
   },
 ];
 
-export const diabetesComplicationsScreeningCT: CodeTable[] = [
+export const diabetesComplicationsScreeningCT: CodeTableType[] = [
   { code: "32468-1", name: "Retinal Exam" },
   { code: "11397-7", name: "Foot Exam" },
   { code: "67536-3", name: "Neurological Exam" },
 ];
-export const diabetesMotivationalCounsellingCT: CodeTable[] = [
+export const diabetesMotivationalCounsellingCT: CodeTableType[] = [
   { code: "Nutrition", name: "Nutrition" },
   { code: "Exercise", name: "Exercise" },
   { code: "Smoking Cessation", name: "Smoking Cessation" },
   { code: "Other", name: "Others" },
 ];
 
-export const toCodeTableName = (codeTable: CodeTable[], code: string) => {
+export const toCodeTableName = (codeTable: CodeTableType[], code: string) => {
   return codeTable.find((item) => item.code === code)?.name || "";
 };
