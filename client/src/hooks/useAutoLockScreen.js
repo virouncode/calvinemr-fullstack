@@ -6,8 +6,8 @@ const useAutoLockScreen = (setLockedScreen) => {
   const { user } = useUserContext();
   const timeMin =
     user.access_level === "admin"
-      ? user.autolock_time_min
-      : user.settings.autolock_time_min;
+      ? user?.autolock_time_min
+      : user?.settings?.autolock_time_min || 0;
   let logoutTimerID = useRef(null);
 
   const lockScreen = useCallback(() => {

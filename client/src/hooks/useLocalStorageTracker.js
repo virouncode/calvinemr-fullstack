@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 export const useLocalStorageTracker = () => {
   const handleTabClosing = useCallback(() => {
     if (localStorage.getItem("tabCounter") === "1") {
-      localStorage.clear(); //remove if we want to be able to refresh or type a URL without signing in again (but it keeps the user indefinitely connected even if he closes and comes back)
+      localStorage.clear(); //remove if we want to be able to refresh or type a URL without signing in again (but it keeps the user indefinitely connected even if he closes the last tab and comes back)
       // localStorage.removeItem("tabCounter");
     } else {
       localStorage.setItem(

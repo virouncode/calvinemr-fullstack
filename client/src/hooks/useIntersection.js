@@ -10,13 +10,7 @@ const useIntersection = (
   const observer = useRef(null);
   const lastItemRef = useCallback(
     (node) => {
-      if (
-        isFetchingNextPage ||
-        addVisible
-        // (addVisible && order === "asc") ||
-        // (!addVisible && goToEnd)
-      )
-        return;
+      if (isFetchingNextPage || addVisible) return;
       if (observer.current) {
         observer.current.disconnect();
       }

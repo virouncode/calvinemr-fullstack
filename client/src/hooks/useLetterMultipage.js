@@ -12,7 +12,6 @@ const useLetterMultipage = (
       let additionalPages = [];
       let mainbody = "";
       let additionalbodies = [];
-
       //Main page (page -1)
       const wordArray = body.split(" "); //All the words
       //Create an overflow test div
@@ -57,7 +56,7 @@ const useLetterMultipage = (
         myDivAdditional.style.textAlign = "justify";
         document.body.appendChild(myDivAdditional);
         let j = 0;
-        //tant qu'il n'y a pas d'overflow on ajoute des mots jusqu'à la fin de wordArrayAdditional
+        //While no overflow add words until wordArrayAdditional end
         while (
           myDivAdditional.scrollHeight === myDivAdditional.clientHeight &&
           j < wordArrayAdditional.length
@@ -67,10 +66,10 @@ const useLetterMultipage = (
         }
         document.body.removeChild(myDivAdditional);
         if (j === wordArrayAdditional.length) {
-          //il n'y a pas eu d'overflow
+          //overflow
           wordArrayAdditional = [];
         } else {
-          //il y a eu overflow
+          //no overflow
           additionalbodies[counter - 1] = wordArrayAdditional
             .slice(0, j - 1)
             .join(" ");

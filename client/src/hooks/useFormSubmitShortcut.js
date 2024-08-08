@@ -4,7 +4,7 @@ const useFormSubmitShortcut = (handleSubmit) => {
   useEffect(() => {
     const handleKeyboardShortcut = async (e) => {
       if (e.keyCode === 13) {
-        handleSubmit(e);
+        handleSubmit();
       }
     };
     window.addEventListener("keydown", handleKeyboardShortcut);
