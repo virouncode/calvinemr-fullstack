@@ -1,4 +1,6 @@
+import React from "react";
 import { provinceStateTerritoryCT } from "../../../omdDatas/codesTables";
+import { SiteType } from "../../../types/api";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
@@ -9,6 +11,24 @@ import GenericList from "../../UI/Lists/GenericList";
 import PostalZipSelect from "../../UI/Lists/PostalZipSelect";
 import SiteStatusSelect from "../../UI/Lists/SiteStatusSelect";
 import RoomsForm from "./RoomsForm";
+
+type FormSiteProps = {
+  formDatas: SiteType;
+  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
+  handleChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => void;
+  postalOrZip: string;
+  handleChangePostalOrZip: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleLogoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isLoadingFile: boolean;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: () => void;
+  handleCancel: () => void;
+  progress: boolean;
+};
 
 const FormSite = ({
   formDatas,
@@ -22,7 +42,7 @@ const FormSite = ({
   handleSubmit,
   handleCancel,
   progress,
-}) => {
+}: FormSiteProps) => {
   return (
     <>
       <form className="site-form">
@@ -60,7 +80,6 @@ const FormSite = ({
               value={formDatas.province_state}
               handleChange={handleChange}
               name="province_state"
-              autoComplete="off"
               label="Province/State*:"
             />
           </div>

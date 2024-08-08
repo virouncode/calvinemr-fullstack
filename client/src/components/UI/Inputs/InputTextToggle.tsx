@@ -1,20 +1,33 @@
-const InputEmailToggle = ({
+import React from "react";
+type InputTextToggleProps = {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
+  name: string;
+  id: string;
+  editVisible: boolean;
+  label?: string;
+  placeholder?: string;
+};
+const InputTextToggle = ({
   value,
   onChange,
+  onClick,
   name,
   id,
   editVisible,
   label,
   placeholder,
-}) => {
+}: InputTextToggleProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
       {editVisible ? (
         <input
-          type="email"
+          type="text"
           value={value}
           onChange={onChange}
+          onClick={onClick}
           name={name}
           id={id}
           autoComplete="off"
@@ -27,4 +40,4 @@ const InputEmailToggle = ({
   );
 };
 
-export default InputEmailToggle;
+export default InputTextToggle;

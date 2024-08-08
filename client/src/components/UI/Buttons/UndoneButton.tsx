@@ -1,3 +1,10 @@
+import React from "react";
+
+type UndoneButtonProps = {
+  onClick: () => void;
+  disabled?: boolean;
+};
+
 const UndoneButton = ({ onClick, disabled = false }) => {
   return (
     <button

@@ -1,13 +1,14 @@
 import axios from "axios";
+import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
 const xanoGet = async (
-  URL, //URL to xano endpoint
-  userType,
-  queryParams = null,
-  abortController = null
+  URL: string, //URL to xano endpoint
+  userType: string, //staff, patient, admin
+  queryParams?: object,
+  abortController?: AbortController
 ) => {
-  const config = {
+  const config: AxiosXanoConfigType = {
     url: `/api/xano`,
     method: "get",
     //query parameters !!! Not route parameters

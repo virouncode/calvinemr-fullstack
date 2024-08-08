@@ -1,4 +1,9 @@
+import React from "react";
 
+type TypingDotsProps = {
+  text?: string;
+  style?: React.CSSProperties;
+};
 
 const TypingDots = ({ text = "Please wait for CalvinAI...", style }) => {
   return (

@@ -1,6 +1,19 @@
+import React from "react";
 import CircularProgressSmallBlack from "../Progress/CircularProgressSmallBlack";
 
-const LoginButton = ({ label, onClick, disabled = false, loading }) => {
+type LoginButtonProps = {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+};
+
+const LoginButton = ({
+  label,
+  onClick,
+  disabled = false,
+  loading,
+}: LoginButtonProps) => {
   return (
     <button
       type="button"

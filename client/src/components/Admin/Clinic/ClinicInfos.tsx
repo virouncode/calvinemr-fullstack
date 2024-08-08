@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { ClinicType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { clinicSchema } from "../../../validation/clinic/clinicValidation";
 import Button from "../../UI/Buttons/Button";
@@ -27,16 +28,21 @@ const ClinicInfos = () => {
   const [addVisible, setAddVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [editClinicVisible, setEditClinicVisible] = useState(false);
-  const [selectedSiteId, setSelectedSiteId] = useState();
+  const [selectedSiteId, setSelectedSiteId] = useState<number | undefined>();
   const { clinic } = useClinicContext();
-  const [formDatas, setFormDatas] = useState(clinic);
+  const [formDatas, setFormDatas] = useState<Exclude<ClinicType, null>>(
+    clinic as Exclude<ClinicType, null>
+  );
   const [errMsgPost, setErrMsgPost] = useState("");
   const { data: sites, isPending, error } = useSites();
 
   const handleAddNew = () => {
     setAddVisible(true);
   };
-  const handleEditClick = (e, siteId) => {
+  const handleEditClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    siteId: number
+  ) => {
     e.preventDefault();
     setSelectedSiteId(siteId);
     setEditVisible(true);
@@ -58,31 +64,31 @@ const ClinicInfos = () => {
     }
     try {
       setErrMsgPost("");
-      let websiteFormatted = formDatas.website;
+      let websiteFormatted = formDatas?.website;
       if (
-        !formDatas.website.includes("http") ||
-        !formDatas.website.includes("https")
+        !formDatas?.website.includes("http") ||
+        !formDatas?.website.includes("https")
       ) {
-        websiteFormatted = ["https://", formDatas.website].join("");
+        websiteFormatted = ["https://", formDatas?.website].join("");
       }
       const datasToPut = {
         ...formDatas,
         website: websiteFormatted,
         updates: [
-          ...formDatas.updates,
-          { updated_by_id: user.id, date_updated: nowTZTimestamp() },
+          ...(formDatas?.updates || []),
+          { updated_by_id: user?.id, date_updated: nowTZTimestamp() },
         ],
       };
       const response = await xanoPut(
-        `/clinic/${clinic.id}`,
+        `/clinic/${clinic?.id}`,
         "admin",
         datasToPut
       );
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "CLINIC",
         action: "update",
         content: {
-          id: clinic.id,
+          id: clinic?.id,
           data: response,
         },
       });
@@ -95,7 +101,7 @@ const ClinicInfos = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const name = e.target.name;
     const value = e.target.value;
@@ -110,7 +116,7 @@ const ClinicInfos = () => {
       <div className="clinic__global-infos">
         <span className="clinic__global-infos-title">Global clinic infos</span>
         <InputTextToggle
-          value={formDatas.name}
+          value={formDatas?.name}
           onChange={handleChange}
           name="name"
           id="name"
@@ -118,7 +124,7 @@ const ClinicInfos = () => {
           label="Name: "
         />
         <InputEmailToggle
-          value={formDatas.email}
+          value={formDatas?.email}
           onChange={handleChange}
           name="email"
           id="email"
@@ -126,7 +132,7 @@ const ClinicInfos = () => {
           label="Email: "
         />
         <InputTextToggleLink
-          value={formDatas.website}
+          value={formDatas?.website}
           onChange={handleChange}
           name="website"
           id="website"
@@ -168,7 +174,7 @@ const ClinicInfos = () => {
         <FakeWindow
           title={`EDIT ${sites
             .find(({ id }) => id === selectedSiteId)
-            .name.toUpperCase()} Site`}
+            ?.name.toUpperCase()} Site`}
           width={1000}
           height={600}
           x={(window.innerWidth - 1000) / 2}
@@ -177,9 +183,8 @@ const ClinicInfos = () => {
           setPopUpVisible={setEditVisible}
         >
           <SiteEdit
-            infos={sites.find(({ id }) => id === selectedSiteId)}
+            site={sites.find(({ id }) => id === selectedSiteId) as SiteType}
             setEditVisible={setEditVisible}
-            handleEditClick={handleEditClick}
             editVisible={editVisible}
           />
         </FakeWindow>

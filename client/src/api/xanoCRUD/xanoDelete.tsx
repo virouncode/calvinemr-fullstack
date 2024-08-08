@@ -1,8 +1,13 @@
 import axios from "axios";
+import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
-const xanoDelete = async (URL, userType, abortController = null) => {
-  const config = {
+const xanoDelete = async (
+  URL: string,
+  userType: string,
+  abortController?: AbortController
+) => {
+  const config: AxiosXanoConfigType = {
     url: `/api/xano`,
     method: "delete",
     params: {

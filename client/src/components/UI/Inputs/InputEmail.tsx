@@ -1,3 +1,15 @@
+import React from "react";
+type InputEmailProps = {
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  id?: string;
+  label?: string;
+  width?: number;
+  placeholder?: string;
+  autoFocus?: boolean;
+};
+
 const InputEmail = ({
   value,
   onChange,
@@ -7,7 +19,7 @@ const InputEmail = ({
   width,
   placeholder,
   autoFocus = false,
-}) => {
+}: InputEmailProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}

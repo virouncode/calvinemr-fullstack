@@ -1,20 +1,27 @@
 import axios from "axios";
+import { AxiosXanoConfigType } from "../../types/app";
+
 axios.defaults.withCredentials = true;
 
-const xanoPost = async (URL, userType, data, abortController = null) => {
-  const config = {
+const xanoPut = async (
+  URL: string,
+  userType: string,
+  data: object,
+  abortController?: AbortController
+) => {
+  const config: AxiosXanoConfigType = {
     url: `/api/xano`,
-    method: "post",
-    data,
+    method: "put",
     params: {
       //query parameters !!! Not route parameters
       URL,
       userType,
     },
+    data,
   };
   if (abortController) config.signal = abortController.signal;
   const response = await axios(config);
   return response.data;
 };
 
-export default xanoPost;
+export default xanoPut;

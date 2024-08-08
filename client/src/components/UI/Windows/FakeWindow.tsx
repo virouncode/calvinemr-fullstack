@@ -1,5 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import XmarkRectangleIcon from "../Icons/XmarkRectangleIcon";
+type FakeWindowProps = {
+  children: React.ReactNode;
+  title: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: string;
+  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  textColor?: string;
+  closeCross?: boolean;
+  closeDisabled?: boolean;
+};
 
 const FakeWindow = ({
   children,
@@ -13,10 +26,10 @@ const FakeWindow = ({
   textColor = "#FEFEFE",
   closeCross = true,
   closeDisabled = false,
-}) => {
+}: FakeWindowProps) => {
   const isDragging = useRef(false);
   const isResizing = useRef(false);
-  const windowRef = useRef(null);
+  const windowRef = useRef<HTMLDivElement>(null);
   const [windowPosition, setWindowPosition] = useState({ x, y });
   const [windowSize, setWindowSize] = useState({ width, height });
 
@@ -32,12 +45,13 @@ const FakeWindow = ({
         maxZIndex = zIndex;
       }
     });
-    windowRef.current.style.zIndex = (maxZIndex + 1).toString();
+    if (windowRef.current)
+      windowRef.current.style.zIndex = (maxZIndex + 1).toString();
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.altKey && event.keyCode === 87) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.altKey && event.key === "w") {
         event.preventDefault();
         setPopUpVisible(false);
       }
@@ -48,7 +62,7 @@ const FakeWindow = ({
     };
   }, [setPopUpVisible]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     //Faire passer l'element devant
     const elements = document.querySelectorAll(".window");
     let maxZIndex = 0;
@@ -60,14 +74,15 @@ const FakeWindow = ({
         maxZIndex = zIndex;
       }
     });
-    windowRef.current.style.zIndex = (maxZIndex + 1).toString();
+    if (windowRef.current)
+      windowRef.current.style.zIndex = (maxZIndex + 1).toString();
 
     isDragging.current = true;
     // Calculate the initial mouse position relative to the window
     const offsetX = e.clientX - windowPosition.x;
     const offsetY = e.clientY - windowPosition.y;
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (isDragging.current) {
         document.body.style.userSelect = "none";
         setWindowPosition({
@@ -96,7 +111,7 @@ const FakeWindow = ({
   // Functions to handle resizing
   const handleResizeMouseDown = () => {
     isResizing.current = true;
-    const handleResizeMouseMove = (e) => {
+    const handleResizeMouseMove = (e: MouseEvent) => {
       if (isResizing.current) {
         // Update window size based on mouse movement
         setWindowSize({
@@ -139,7 +154,7 @@ const FakeWindow = ({
         <p
           style={{
             color: textColor && `${textColor}`,
-            fontWeight: textColor !== "#FEFEFE" && "bold",
+            fontWeight: textColor !== "#FEFEFE" ? "bold" : "normal",
           }}
         >
           {title}

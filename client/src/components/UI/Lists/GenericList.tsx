@@ -1,3 +1,16 @@
+import React from "react";
+
+type GenericListProps = {
+  list: { code: string; name: string }[];
+  value: string;
+  name?: string;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  placeHolder?: string;
+  noneOption?: boolean;
+  id?: string;
+  label?: string;
+};
+
 const GenericList = ({
   list,
   value,
@@ -5,9 +18,9 @@ const GenericList = ({
   handleChange,
   placeHolder,
   noneOption = true,
-  id = null,
+  id,
   label,
-}) => {
+}: GenericListProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}

@@ -1,25 +1,32 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FormSite from "./FormSite";
 
-const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
+type SiteEditProps = {
+  site: SiteType;
+  editVisible: boolean;
+  setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState(infos);
+  const [formDatas, setFormDatas] = useState<SiteType>(site);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
 
-  const handleChangePostalOrZip = (e) => {
+  const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsg("");
     setPostalOrZip(e.target.value);
     setFormDatas({
@@ -33,8 +40,8 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     setEditVisible(false);
   };
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
     if (file.size > 25000000) {
@@ -45,13 +52,13 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     }
     setIsLoadingFile(true);
     // setting up the reader
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     // here we tell the reader what to do when it's done reading...
     reader.onload = async (e) => {
-      let content = e.target.result; // this is the content!
+      const content = e.target?.result; // this is the content!
       try {
-        let fileToUpload = await xanoPost("/upload/attachment", "admin", {
+        const fileToUpload = await xanoPost("/upload/attachment", "admin", {
           content,
         });
         setFormDatas({ ...formDatas, logo: fileToUpload });
@@ -65,7 +72,11 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     };
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
@@ -81,13 +92,12 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formDatas.rooms.find((room) => !room.title)) {
+  const handleSubmit = async () => {
+    if (formDatas?.rooms.find((room) => !room.title)) {
       setErrMsg("All rooms should have a Name");
       return;
     }
-    if (formDatas.site_status === "Closed") {
+    if (formDatas?.site_status === "Closed") {
       alert(
         "You have decided to close this site. Please inform all staff members to update their site information in the 'My Account' section."
       );
@@ -95,9 +105,9 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     //Formatting
     const datasToPut = {
       ...formDatas,
-      name: firstLetterUpper(formDatas.name),
-      address: firstLetterUpper(formDatas.address),
-      city: firstLetterUpper(formDatas.city),
+      name: firstLetterUpper(formDatas?.name),
+      address: firstLetterUpper(formDatas?.address),
+      city: firstLetterUpper(formDatas?.city),
       rooms: [
         ...formDatas.rooms
           .filter((room) => room.title)
@@ -107,12 +117,12 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
       ],
       updates: [
         ...formDatas.updates,
-        { updated_by_id: user.id, date_updated: nowTZTimestamp() },
+        { updated_by_id: user?.id, date_updated: nowTZTimestamp() },
       ],
-      email: formDatas.email.toLowerCase(),
+      email: formDatas?.email.toLowerCase(),
     };
     //Validation
-    if (formDatas.rooms.length === 0) {
+    if (formDatas?.rooms.length === 0) {
       alert("Please add at least one room for the appointments");
       return;
     }
@@ -125,11 +135,11 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
     //Submission
     try {
       setProgress(true);
-      const response = await xanoPut(`/sites/${infos.id}`, "admin", datasToPut);
-      socket.emit("message", {
+      const response = await xanoPut(`/sites/${site.id}`, "admin", datasToPut);
+      socket?.emit("message", {
         route: "SITES",
         action: "update",
-        content: { id: infos.id, data: response },
+        content: { id: site.id, data: response },
       });
       setEditVisible(false);
       toast.success(`Site successfully updated`, {
@@ -147,7 +157,7 @@ const SiteEdit = ({ infos, editVisible, setEditVisible }) => {
   return (
     <div
       className="site-form__container"
-      style={{ border: errMsg && editVisible && "solid 1.5px red" }}
+      style={{ border: errMsg && editVisible ? "solid 1.5px red" : "" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <FormSite

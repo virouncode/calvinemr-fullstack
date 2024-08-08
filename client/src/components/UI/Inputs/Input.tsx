@@ -1,3 +1,17 @@
+import React from "react";
+type InputProps = {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  id?: string;
+  label?: string;
+  width?: number;
+  placeholder?: string;
+  autoFocus?: boolean;
+  readOnly?: boolean;
+  className?: string;
+  mt?: number;
+};
 const Input = ({
   value,
   onChange,
@@ -10,7 +24,7 @@ const Input = ({
   readOnly = false,
   className = "",
   mt = 0,
-}) => {
+}: InputProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}

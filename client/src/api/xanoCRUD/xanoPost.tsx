@@ -1,23 +1,21 @@
 import axios from "axios";
-
+import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
-const xanoPostReset = async (
-  URL,
-  userType,
-  tempToken,
-  data,
-  abortController = null
+const xanoPost = async (
+  URL: string,
+  userType: string,
+  data: object,
+  abortController?: AbortController
 ) => {
-  const config = {
-    url: `/api/xano/reset`,
+  const config: AxiosXanoConfigType = {
+    url: `/api/xano`,
     method: "post",
     data,
     params: {
       //query parameters !!! Not route parameters
       URL,
       userType,
-      tempToken,
     },
   };
   if (abortController) config.signal = abortController.signal;
@@ -25,4 +23,4 @@ const xanoPostReset = async (
   return response.data;
 };
 
-export default xanoPostReset;
+export default xanoPost;

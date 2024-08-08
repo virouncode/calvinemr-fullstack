@@ -67,3 +67,17 @@ export type ClinicContextType = {
   clinic: ClinicType;
   setClinic: React.Dispatch<React.SetStateAction<ClinicType>>;
 };
+
+export type AxiosXanoConfigType = {
+  url: string;
+  method: string;
+  data?: object;
+  params: {
+    //query parameters !!! Not route parameters
+    URL: string;
+    userType: string;
+    queryParams?: object;
+    tempToken?: string;
+  };
+  signal?: AbortSignal;
+};
