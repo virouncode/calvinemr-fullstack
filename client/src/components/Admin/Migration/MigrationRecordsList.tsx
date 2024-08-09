@@ -1,6 +1,18 @@
+import React from "react";
 import { recordCategories } from "../../../utils/migration/exports/recordCategories";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import MigrationRecordItem from "./MigrationRecordItem";
+
+type MigrationRecordsListProps = {
+  isRecordIdChecked: (id: number) => boolean;
+  handleCheckRecordId: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    recordId: number
+  ) => void;
+  handleCheckAllRecordsIds: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isAllRecordsIdsChecked: () => boolean;
+  isLoading: boolean;
+};
 
 const MigrationRecordsList = ({
   isRecordIdChecked,
@@ -8,7 +20,7 @@ const MigrationRecordsList = ({
   handleCheckAllRecordsIds,
   isAllRecordsIdsChecked,
   isLoading,
-}) => {
+}: MigrationRecordsListProps) => {
   return (
     <ul className="migration-export__records-list">
       <li className="migration-export__records-list-item">
@@ -24,7 +36,6 @@ const MigrationRecordsList = ({
       {recordCategories.map((record) => (
         <MigrationRecordItem
           key={record.id}
-          name={record.name}
           label={record.label}
           handleCheckRecord={handleCheckRecordId}
           isRecordChecked={isRecordIdChecked}

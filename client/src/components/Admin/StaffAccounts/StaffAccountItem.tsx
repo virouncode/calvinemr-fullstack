@@ -1,12 +1,21 @@
+import React from "react";
+import { StaffType } from "../../../types/api";
 import EditButton from "../../UI/Buttons/EditButton";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
+
+type StaffAccountItemProps = {
+  staff: StaffType;
+  setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  id: number;
+  setSelectedStaffId: React.Dispatch<React.SetStateAction<number>>;
+};
 
 const StaffAccountItem = ({
   staff,
   setEditVisible,
   id,
   setSelectedStaffId,
-}) => {
+}: StaffAccountItemProps) => {
   const handleEdit = () => {
     setSelectedStaffId(id);
     setEditVisible((v) => !v);
@@ -16,9 +25,10 @@ const StaffAccountItem = ({
     <tr
       style={{
         color:
-          (staff.account_status === "Suspended" ||
-            staff.account_status === "Closed") &&
-          "red",
+          staff.account_status === "Suspended" ||
+          staff.account_status === "Closed"
+            ? "red"
+            : "",
       }}
     >
       <td>
@@ -29,7 +39,7 @@ const StaffAccountItem = ({
       <td>{staff.last_name}</td>
       <td>{staff.first_name}</td>
       <td>{staff.middle_name}</td>
-      <td>{staff.site_infos.name}</td>
+      <td>{staff.site_infos?.name}</td>
       <td>{staff.gender}</td>
       <td>{staff.email}</td>
       <td>{staff.cell_phone}</td>

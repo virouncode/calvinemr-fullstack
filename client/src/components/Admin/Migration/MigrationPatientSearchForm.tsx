@@ -1,8 +1,18 @@
+import React from "react";
+import { SearchPatientType } from "../../../types/app";
 import Input from "../../UI/Inputs/Input";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import InputTel from "../../UI/Inputs/InputTel";
 
-const MigrationPatientSearchForm = ({ search, handleSearch }) => {
+type MigrationPatientSearchFormProps = {
+  search: SearchPatientType;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const MigrationPatientSearchForm = ({
+  search,
+  handleSearch,
+}: MigrationPatientSearchFormProps) => {
   return (
     <div className="migration-export__patient-search">
       <form className="migration-export__patient-search__form">

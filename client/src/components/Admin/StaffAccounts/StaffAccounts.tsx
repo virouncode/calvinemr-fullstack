@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { SearchStaffType, StaffType } from "../../../types/api";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -15,8 +16,8 @@ const StaffAccounts = () => {
   const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
-  const [selectedStaffId, setSelectedStaffId] = useState();
-  const [search, setSearch] = useState({
+  const [selectedStaffId, setSelectedStaffId] = useState(0);
+  const [search, setSearch] = useState<SearchStaffType>({
     email: "",
     name: "",
     title: "All",
@@ -72,7 +73,9 @@ const StaffAccounts = () => {
             setPopUpVisible={setEditVisible}
           >
             <StaffAccountEdit
-              infos={staffInfos.find(({ id }) => id === selectedStaffId)}
+              infos={
+                staffInfos.find(({ id }) => id === selectedStaffId) as StaffType
+              }
               setEditVisible={setEditVisible}
               editVisible={editVisible}
               sites={sites}

@@ -1,5 +1,7 @@
+import React from "react";
 import { usePatients } from "../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../hooks/useIntersection";
+import { DemographicsType } from "../../../types/api";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import PatientsListItem from "../../Staff/Messaging/PatientsListItem";
 import Checkbox from "../../UI/Checkbox/Checkbox";
@@ -32,7 +34,9 @@ const MigrationPatientsList = ({
 
   if (isPending) return <LoadingParagraph />;
   if (error) return <ErrorParagraph errorMsg={error.message} />;
-  const patientsDemographics = data?.pages?.flatMap((page) => page.items);
+  const patientsDemographics: DemographicsType[] = data?.pages?.flatMap(
+    (page) => page.items
+  );
 
   return (
     <ul className="migration-export__patients-list" ref={rootRef}>

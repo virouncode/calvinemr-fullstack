@@ -1,13 +1,22 @@
+import React from "react";
+import { SearchStaffType, StaffType } from "../../../types/api";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import StaffAccountItem from "./StaffAccountItem";
+
+type StaffAccountsTableProps = {
+  search: SearchStaffType;
+  staffInfos: StaffType[];
+  setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedStaffId: React.Dispatch<React.SetStateAction<number>>;
+};
 
 const StaffAccountsTable = ({
   search,
   staffInfos,
   setEditVisible,
   setSelectedStaffId,
-}) => {
+}: StaffAccountsTableProps) => {
   const filteredStaffInfos =
     staffInfos.length > 0
       ? staffInfos.filter(
@@ -34,7 +43,7 @@ const StaffAccountsTable = ({
             (search.title === "All" || staff.title === search.title)
         )
       : [];
-  console.log("filteredInfos", filteredStaffInfos);
+
   return staffInfos ? (
     <div className="staff-result">
       <table>
@@ -67,7 +76,7 @@ const StaffAccountsTable = ({
                 key={staff.id}
                 setEditVisible={setEditVisible}
                 setSelectedStaffId={setSelectedStaffId}
-                id={staff.id}
+                id={staff.id as number}
               />
             ))
           ) : (

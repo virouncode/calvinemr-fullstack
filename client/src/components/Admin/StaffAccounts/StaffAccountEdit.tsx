@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { SiteType, StaffType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
@@ -17,9 +18,21 @@ import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
-const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
+type StaffAccountEditProps = {
+  infos: StaffType;
+  editVisible: boolean;
+  setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  sites: SiteType[];
+};
+
+const StaffAccountEdit = ({
+  infos,
+  editVisible,
+  setEditVisible,
+  sites,
+}: StaffAccountEditProps) => {
   //HOOKS
-  const [formDatas, setFormDatas] = useState(infos);
+  const [formDatas, setFormDatas] = useState<StaffType>(infos);
   const { user } = useUserContext();
   const { socket } = useSocketContext();
   const [errMsg, setErrMsg] = useState("");
@@ -27,14 +40,16 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
   const [progress, setProgress] = useState(false);
 
   //HANDLERS
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSiteChange = (e) => {
+  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsg("");
     const value = e.target.value;
     setFormDatas({ ...formDatas, site_id: parseInt(value) });
@@ -44,8 +59,8 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
     setEditVisible(false);
   };
 
-  const handleSignChange = async (e) => {
-    const file = e.target.files[0];
+  const handleSignChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
     if (file.size > 25000000) {
@@ -54,13 +69,13 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
     }
     // setting up the reader
     setIsLoadingFile(true);
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     // here we tell the reader what to do when it's done reading...
     reader.onload = async (e) => {
-      let content = e.target.result; // this is the content!
+      const content = e.target?.result; // this is the content!
       try {
-        let fileToUpload = await xanoPost(
+        const fileToUpload = await xanoPost(
           "/upload/attachment",
           "admin",
 
@@ -85,7 +100,7 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
         (formDatas.middle_name ? formDatas.middle_name + " " : "") +
         formDatas.last_name;
 
-      const datasToPut = { ...formDatas };
+      const datasToPut: StaffType = { ...formDatas };
 
       //Formatting
       datasToPut.first_name = firstLetterUpper(datasToPut.first_name);
@@ -95,10 +110,10 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
       datasToPut.speciality = firstLetterUpper(datasToPut.speciality);
       datasToPut.subspeciality = firstLetterUpper(datasToPut.subspeciality);
       datasToPut.updates = [
-        ...infos.updates,
+        ...(infos.updates ?? []),
         {
           date_updated: nowTZTimestamp(),
-          updated_by_id: user.id,
+          updated_by_id: user?.id as number,
           updated_by_user_type: "admin",
         },
       ];
@@ -119,7 +134,7 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
       }
       //Submission
       const response = await xanoPut(`/staff/${infos.id}`, "admin", datasToPut);
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "STAFF INFOS",
         action: "update",
         content: {
@@ -139,7 +154,7 @@ const StaffAccountEdit = ({ infos, editVisible, setEditVisible, sites }) => {
   return (
     <div
       className="staff-account__container"
-      style={{ border: errMsg && editVisible && "solid 1.5px red" }}
+      style={{ border: errMsg && editVisible ? "solid 1.5px red" : "" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {formDatas && (

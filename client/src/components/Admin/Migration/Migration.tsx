@@ -1,17 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import MigrationExport from "./MigrationExport";
 import MigrationImport from "./MigrationImport";
 import MigrationToggle from "./MigrationToggle";
 
 const Migration = () => {
-  const [type, setType] = useState("Export");
-  const isTypeChecked = (option) => (option === type ? true : false);
-  const handleMigrationTypeChanged = (e) => {
+  const [type, setType] = useState<"Import" | "Export">("Export");
+  const isTypeChecked = (option: "Import" | "Export") =>
+    option === type ? true : false;
+  const handleMigrationTypeChanged = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.name === "Import") {
       alert("Available soon...");
       return;
     }
-    setType(e.target.value);
+    setType(e.target.value as "Import" | "Export");
   };
 
   return (

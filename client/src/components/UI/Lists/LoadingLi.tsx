@@ -1,7 +1,11 @@
-
+import React from "react";
 import CircularProgressSmall from "../Progress/CircularProgressSmall";
 
-const LoadingLi = ({ paddingLateral }) => {
+type LoadingLiProps = {
+  paddingLateral?: number;
+};
+
+const LoadingLi = ({ paddingLateral = 0 }: LoadingLiProps) => {
   return (
     <li
       className="loading-li"

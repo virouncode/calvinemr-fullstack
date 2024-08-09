@@ -1,6 +1,15 @@
+import React from "react";
 import Radio from "../../UI/Radio/Radio";
 
-const MigrationToggle = ({ isTypeChecked, handleMigrationTypeChanged }) => {
+type MigrationToggleProps = {
+  isTypeChecked: (option: "Import" | "Export") => boolean;
+  handleMigrationTypeChanged: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const MigrationToggle = ({
+  isTypeChecked,
+  handleMigrationTypeChanged,
+}: MigrationToggleProps) => {
   return (
     <div className="migration-toggle">
       <div className="migration-toggle__radio">

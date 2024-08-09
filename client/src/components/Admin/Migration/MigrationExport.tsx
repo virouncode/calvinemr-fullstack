@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { DateTime } from "luxon";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
+import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { DemographicsType } from "../../../types/api";
+import { SearchPatientType } from "../../../types/app";
+import { nowTZ } from "../../../utils/dates/formatDates";
 import { exportPatientEMR } from "../../../utils/migration/exports/exportsXML";
 import { recordCategories } from "../../../utils/migration/exports/recordCategories";
-
-import { DateTime } from "luxon";
-import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { nowTZ } from "../../../utils/dates/formatDates";
 import {
   staffIdToFirstName,
   staffIdToLastName,
@@ -26,7 +27,7 @@ import MigrationRecordsList from "./MigrationRecordsList";
 const MigrationExport = () => {
   const { user } = useUserContext();
   const { staffInfos } = useStaffInfosContext();
-  const [search, setSearch] = useState({
+  const [search, setSearch] = useState<SearchPatientType>({
     name: "",
     email: "",
     phone: "",
@@ -34,22 +35,24 @@ const MigrationExport = () => {
     chart: "",
     health: "",
   });
-
-  const [checkedPatients, setCheckedPatients] = useState([]);
+  const [checkedPatients, setCheckedPatients] = useState<DemographicsType[]>(
+    []
+  );
   const [allPatientsChecked, setAllPatientsChecked] = useState(false);
   const [checkedRecordsIds, setCheckedRecordsIds] = useState([1]);
   const [allRecordsIdsChecked, setAllRecordsIdsChecked] = useState(false);
   const [progress, setProgress] = useState(false);
 
-  const isPatientChecked = (id) => {
-    return checkedPatients
-      .map(({ patient_id }) => patient_id)
-      .includes(parseInt(id));
+  const isPatientChecked = (id: number) => {
+    return checkedPatients.map(({ patient_id }) => patient_id).includes(id);
   };
-  const isRecordIdChecked = (id) => {
-    return checkedRecordsIds.includes(parseInt(id)) ? true : false;
+  const isRecordIdChecked = (id: number) => {
+    return checkedRecordsIds.includes(id) ? true : false;
   };
-  const handleCheckPatient = (e, patient) => {
+  const handleCheckPatient = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    patient: DemographicsType
+  ) => {
     const checked = e.target.checked;
     if (checked) {
       setCheckedPatients([...checkedPatients, patient]);
@@ -62,10 +65,16 @@ const MigrationExport = () => {
       );
     }
   };
-  const handleCheckRecordId = (e, id) => {
+  const handleCheckRecordId = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
     const checked = e.target.checked;
     if (checked) {
       setCheckedRecordsIds([...checkedRecordsIds, id]);
+      if ([...checkedRecordsIds, id].length === recordCategories.length) {
+        setAllRecordsIdsChecked(true);
+      }
     } else {
       setAllRecordsIdsChecked(false);
       setCheckedRecordsIds(
@@ -80,7 +89,9 @@ const MigrationExport = () => {
     return allRecordsIdsChecked ? true : false;
   };
 
-  const handleCheckAllPatients = async (e) => {
+  const handleCheckAllPatients = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const checked = e.target.checked;
     if (checked) {
       const allPatients = await xanoGet("/demographics", "admin");
@@ -91,7 +102,7 @@ const MigrationExport = () => {
       setAllPatientsChecked(false);
     }
   };
-  const handleCheckAllRecordsIds = (e) => {
+  const handleCheckAllRecordsIds = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked) {
       setAllRecordsIdsChecked(true);
@@ -110,7 +121,7 @@ const MigrationExport = () => {
     setProgress(true);
     const dateOfExport = nowTZ().toFormat("yyyy-LL-dd_hh-mm-ss_a");
     try {
-      for (let patient of checkedPatients) {
+      for (const patient of checkedPatients) {
         const patientFirstName = toPatientFirstName(patient);
         const patientLastName = toPatientLastName(patient);
         const patientDob = DateTime.fromMillis(patient.DateOfBirth, {
@@ -138,7 +149,7 @@ const MigrationExport = () => {
           doctorFirstName,
           doctorLastName,
           doctorOHIP,
-          user.full_name,
+          user?.full_name,
           dateOfExport,
           patient
         );
@@ -157,7 +168,7 @@ const MigrationExport = () => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const name = e.target.name;
     setSearch({ ...search, [name]: value });
@@ -188,7 +199,7 @@ const MigrationExport = () => {
             handleCheckRecordId={handleCheckRecordId}
             handleCheckAllRecordsIds={handleCheckAllRecordsIds}
             isAllRecordsIdsChecked={isAllRecordsIdsChecked}
-            progress={progress}
+            isLoading={progress}
           />
         </div>
       </div>

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { AdminType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { myAccountAdminSchema } from "../../../validation/accounts/myAccountAdminValidation";
@@ -22,17 +22,15 @@ const MyAccountAdmin = () => {
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
   const [tempFormDatas, setTempFormDatas] = useState(
-    adminsInfos.find(({ id }) => id === user.id)
+    adminsInfos.find(({ id }) => id === user?.id) as AdminType
   );
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 
-  const initialDatas = adminsInfos.find(({ id }) => id === user.id);
-
   //HANDLERS
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
@@ -72,21 +70,21 @@ const MyAccountAdmin = () => {
           " " +
           firstLetterUpper(tempFormDatas.last_name),
       };
-      const response = await xanoPut(`/admin/${user.id}`, "admin", datasToPut);
+      const response = await xanoPut(`/admin/${user?.id}`, "admin", datasToPut);
       setSuccessMsg("Infos changed successfully");
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "USER",
         action: "update",
         content: {
-          id: user.id,
+          id: user?.id,
           data: response,
         },
       });
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "ADMINS INFOS",
         action: "update",
         content: {
-          id: user.id,
+          id: user?.id,
           data: response,
         },
       });
@@ -102,7 +100,6 @@ const MyAccountAdmin = () => {
 
   const handleCancel = () => {
     setErrMsg("");
-    setTempFormDatas(initialDatas);
     setEditVisible(false);
   };
 

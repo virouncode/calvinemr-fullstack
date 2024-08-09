@@ -1,17 +1,29 @@
+import React from "react";
+import { SearchStaffType, SiteType } from "../../../types/api";
 import SiteSelect from "../../Staff/EventForm/SiteSelect";
 import Input from "../../UI/Inputs/Input";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import InputTel from "../../UI/Inputs/InputTel";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
 
-const StaffAccountSearch = ({ search, setSearch, sites }) => {
-  const handleChange = (e) => {
+type StaffAccountSearchProps = {
+  search: SearchStaffType;
+  setSearch: React.Dispatch<React.SetStateAction<SearchStaffType>>;
+  sites: SiteType[];
+};
+
+const StaffAccountSearch = ({
+  search,
+  setSearch,
+  sites,
+}: StaffAccountSearchProps) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setSearch({ ...search, [name]: value });
   };
 
-  const handleSiteChange = (e) => {
+  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSearch({ ...search, site_id: parseInt(e.target.value) });
   };
   return (

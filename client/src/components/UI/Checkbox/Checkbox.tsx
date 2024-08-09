@@ -1,3 +1,19 @@
+import React from "react";
+
+type CheckboxProps = {
+  id?: string;
+  name?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+  checked: boolean;
+  disabled?: boolean;
+  label?: string;
+  labelSide?: "left" | "right";
+  mr?: number;
+  className?: string;
+  accentColor?: string;
+};
+
 const Checkbox = ({
   id,
   name,
@@ -10,7 +26,7 @@ const Checkbox = ({
   mr = 5,
   className = "",
   accentColor = "",
-}) => {
+}: CheckboxProps) => {
   return (
     <>
       {label && labelSide === "left" && <label htmlFor={id}>{label}</label>}

@@ -1072,13 +1072,13 @@ export type SiteType = {
 };
 
 export type StaffType = {
-  id: number;
+  id?: number;
   email: string;
-  password: string;
+  password?: string;
   first_name: string;
   middle_name: string;
   last_name: string;
-  full_name: string;
+  full_name?: string;
   gender: string;
   title: string;
   speciality: string;
@@ -1089,29 +1089,34 @@ export type StaffType = {
   cell_phone: string;
   backup_phone: string;
   video_link: string;
-  sign: {
-    access: string;
-    path: string;
-    name: string;
-    type: string;
-    size: number;
-    mime: string;
-    meta: { width: number; height: number };
-    url: string;
-  };
-  temp_login: { temp_password: string; expiration: number; used: boolean };
-  ai_consent: boolean;
+  sign?: AttachmentType;
+  temp_login?: { temp_password: string; expiration: number; used: boolean };
+  ai_consent?: boolean;
   ohip_billing_nbr: string;
-  date_created: number;
-  updates: {
+  date_created?: number;
+  updates?: {
     date_updated: number;
     updated_by_id: number;
     updated_by_user_type: string;
   }[];
-  created_by_id: number;
+  created_by_id?: number;
   site_id: number;
-  patients: number[];
-  pin: string;
+  patients?: number[];
+  pin?: string;
+  //add-ons
+  site_infos?: SiteType;
+};
+
+export type SearchStaffType = {
+  email: string;
+  name: string;
+  title: string;
+  speciality: string;
+  subspeciality: string;
+  phone: string;
+  licence_nbr: string;
+  ohip_billing_nbr: string;
+  site_id: number;
 };
 
 export type TodoType = {

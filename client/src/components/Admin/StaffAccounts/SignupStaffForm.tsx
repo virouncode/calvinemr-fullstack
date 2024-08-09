@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { SiteType, StaffType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
@@ -18,16 +19,20 @@ import InputTel from "../../UI/Inputs/InputTel";
 import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-
 axios.defaults.withCredentials = true;
 
-const SignupStaffForm = ({ setAddVisible, sites }) => {
+type SignupStaffFormProps = {
+  setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  sites: SiteType[];
+};
+
+const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [formDatas, setFormDatas] = useState({
+  const [formDatas, setFormDatas] = useState<StaffType>({
     email: "",
     first_name: "",
     middle_name: "",
@@ -45,11 +50,10 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
     backup_phone: "",
     video_link: "",
     ai_consent: true,
-    sign: null,
   });
   const [progress, setProgress] = useState(false);
 
-  const handleSiteChange = (e) => {
+  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsg("");
     const value = e.target.value;
     setFormDatas({ ...formDatas, site_id: parseInt(value) });
@@ -59,14 +63,14 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
     setAddVisible(false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
     setFormDatas({ ...formDatas, [name]: value });
   };
-  const handleSignChange = async (e) => {
-    const file = e.target.files[0];
+  const handleSignChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
     if (file.size > 25000000) {
@@ -77,13 +81,13 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
     }
     setIsLoadingFile(true);
     // setting up the reader
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     // here we tell the reader what to do when it's done reading...
     reader.onload = async (e) => {
-      let content = e.target.result; // this is the content!
+      const content = e.target?.result; // this is the content!
       try {
-        let fileToUpload = await xanoPost(
+        const fileToUpload = await xanoPost(
           "/upload/attachment",
           "admin",
 
@@ -99,7 +103,9 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
       }
     };
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setErrMsg("");
     setProgress(true);
@@ -111,9 +117,9 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
         (formDatas.middle_name ? formDatas.middle_name + " " : "") +
         formDatas.last_name;
 
-      const datasToPost = {
+      const datasToPost: StaffType = {
         ...formDatas,
-        created_by_id: user.id,
+        created_by_id: user?.id,
         date_created: nowTZTimestamp(),
       };
 
@@ -132,7 +138,6 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
       ) {
         datasToPost.video_link = ["https://", datasToPost.video_link].join("");
       }
-      datasToPost.clinic_name = clinic.name; //For the email sent to the new staff member
       //Validation
       try {
         await staffSchema.validate(datasToPost);
@@ -160,7 +165,7 @@ const SignupStaffForm = ({ setAddVisible, sites }) => {
       }
       //Submission
       const response = await axios.post(`/api/xano/new_staff`, datasToPost);
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "STAFF INFOS",
         action: "create",
         content: { data: response.data },

@@ -125,3 +125,12 @@ export type TotalStaffDurationBySiteType = {
   longest: number | null;
   shortest: number | null;
 };
+
+export type SearchPatientType = {
+  name: string;
+  email: string;
+  phone: string;
+  birth: string;
+  chart: string;
+  health: string;
+};
