@@ -15,7 +15,7 @@ export type CodeTableType = {
 
 export type AuthType = {
   email: string;
-  tokenLimit?: string;
+  tokenLimit?: number;
 } | null;
 
 export type AuthContextType = {

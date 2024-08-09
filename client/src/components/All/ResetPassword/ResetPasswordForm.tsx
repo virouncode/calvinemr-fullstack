@@ -1,10 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import xanoPostReset from "../../../api/xanoCRUD/xanoPostReset";
+import { PasswordValidityType } from "../../../types/app";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputPassword from "../../UI/Inputs/InputPassword";
 import PasswordValidator from "../../UI/Inputs/PasswordValidator";
+
+type ResetPasswordFormProps = {
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  setSuccesMsg: React.Dispatch<React.SetStateAction<string>>;
+  setResetOk: React.Dispatch<React.SetStateAction<boolean>>;
+  type: string;
+  tempToken: string;
+};
 
 const ResetPasswordForm = ({
   setErrMsg,
@@ -12,7 +20,7 @@ const ResetPasswordForm = ({
   setResetOk,
   type,
   tempToken,
-}) => {
+}: ResetPasswordFormProps) => {
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pin, setPin] = useState("");
@@ -25,8 +33,14 @@ const ResetPasswordForm = ({
   });
   const handlePasswordChange = (e) => {
     setErrMsg("");
-    let value = e.target.value;
-    let newValidity = {};
+    const value = e.target.value;
+    const newValidity: PasswordValidityType = {
+      uppercase: false,
+      lowercase: false,
+      number: false,
+      special: false,
+      size: false,
+    };
     if (/[A-Z]/.test(value)) {
       newValidity.uppercase = true;
     } else {

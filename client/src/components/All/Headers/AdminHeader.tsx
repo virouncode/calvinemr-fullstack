@@ -1,9 +1,18 @@
 import { Tooltip } from "@mui/material";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import LockIcon from "../../UI/Icons/LockIcon";
 import QuestionIcon from "../../UI/Icons/QuestionIcon";
 
-const AdminHeader = ({ setCreditsVisible, setLockedScreen }) => {
+type AdminHeaderProps = {
+  setCreditsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const AdminHeader = ({
+  setCreditsVisible,
+  setLockedScreen,
+}: AdminHeaderProps) => {
   const handleLock = () => {
     setLockedScreen(true);
   };
@@ -13,12 +22,10 @@ const AdminHeader = ({ setCreditsVisible, setLockedScreen }) => {
       "_blank"
     );
   };
+  const handleClickCredits = () => setCreditsVisible((p) => !p);
   return (
     <header className="header header--admin">
-      <div
-        className="header__logo"
-        onClick={() => setCreditsVisible((p) => !p)}
-      ></div>
+      <div className="header__logo" onClick={handleClickCredits}></div>
       <nav className="header__nav header__nav--admin">
         <ul>
           <li>

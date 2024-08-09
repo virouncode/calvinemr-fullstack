@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { WeatherType } from "../../../types/api";
 
 const fetchWeather = async () => {
   const response = await axios.get("/api/weather");
-  return response.data;
+  return response.data.data;
 };
 
 export const useWeather = () => {
-  return useQuery({
+  return useQuery<WeatherType>({
     queryKey: ["weather"],
     queryFn: fetchWeather,
     refetchInterval: 3600000,

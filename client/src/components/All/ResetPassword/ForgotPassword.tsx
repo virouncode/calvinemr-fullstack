@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import EmailForm from "./EmailForm";
 import ResetPasswordForm from "./ResetPasswordForm";

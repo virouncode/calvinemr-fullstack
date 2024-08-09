@@ -2,7 +2,7 @@ import React from "react";
 
 type CancelButtonProps = {
   label?: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
 };
 

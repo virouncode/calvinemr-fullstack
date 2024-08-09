@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useClinicContext from "../../../hooks/context/useClinicContext";
@@ -9,7 +9,15 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { nowTZ } from "../../../utils/dates/formatDates";
 import { toWelcomeName } from "../../../utils/names/toWelcomeName";
 
-const SubheaderWelcome = ({ toastExpiredID, tokenLimitVerifierID }) => {
+type SubheaderWelcomeProps = {
+  toastExpiredID: React.MutableRefObject<Id | null>;
+  tokenLimitVerifierID: React.MutableRefObject<number | null>;
+};
+
+const SubheaderWelcome = ({
+  toastExpiredID,
+  tokenLimitVerifierID,
+}: SubheaderWelcomeProps) => {
   const [helloMessage, setHelloMessage] = useState("");
   const { user, setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -42,11 +50,11 @@ const SubheaderWelcome = ({ toastExpiredID, tokenLimitVerifierID }) => {
   }, []);
 
   const handleLogout = () => {
-    setAuth({});
-    setUser({});
-    setStaffInfos({});
-    setAdminsInfos({});
-    setClinic({});
+    setAuth(null);
+    setUser(null);
+    setStaffInfos([]);
+    setAdminsInfos([]);
+    setClinic(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");
@@ -58,7 +66,8 @@ const SubheaderWelcome = ({ toastExpiredID, tokenLimitVerifierID }) => {
     localStorage.removeItem("currentEditClinicalNote");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
-    clearInterval(tokenLimitVerifierID.current);
+    if (tokenLimitVerifierID.current)
+      clearInterval(tokenLimitVerifierID.current);
     if (toastExpiredID.current) toast.dismiss(toastExpiredID.current);
     navigate("/");
   };

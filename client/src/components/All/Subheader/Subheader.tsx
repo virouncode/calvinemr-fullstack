@@ -1,9 +1,21 @@
+import React from "react";
+import { Id } from "react-toastify";
 import SubheaderClinic from "./SubheaderClinic";
 import SubheaderTitle from "./SubheaderTitle";
 import SubheaderWelcome from "./SubheaderWelcome";
 import WeatherLogo from "./WeatherLogo";
 
-const Subheader = ({ title, toastExpiredID, tokenLimitVerifierID }) => {
+type SubheaderProps = {
+  title: string;
+  toastExpiredID: React.MutableRefObject<Id | null>;
+  tokenLimitVerifierID: React.MutableRefObject<number | null>;
+};
+
+const Subheader = ({
+  title,
+  toastExpiredID,
+  tokenLimitVerifierID,
+}: SubheaderProps) => {
   //=================== STATES =======================//
   return (
     <section className="subheader-section">

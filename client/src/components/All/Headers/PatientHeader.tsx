@@ -1,10 +1,14 @@
-//Librairies
-
+import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { UserPatientType } from "../../../types/app";
 
-const PatientHeader = ({ setCreditsVisible }) => {
-  const { user } = useUserContext();
+type PatientHeaderProps = {
+  setCreditsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PatientHeader = ({ setCreditsVisible }: PatientHeaderProps) => {
+  const { user } = useUserContext() as { user: UserPatientType };
   return (
     <header className="header header--patient">
       <div
@@ -22,7 +26,7 @@ const PatientHeader = ({ setCreditsVisible }) => {
                   : "header__link header__link--patient"
               }
             >
-              {"Messages" + (user.unreadNbr ? ` (${user.unreadNbr})` : "")}
+              {"Messages" + (user?.unreadNbr ? ` (${user?.unreadNbr})` : "")}
             </NavLink>
           </li>
           <li>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -8,8 +8,16 @@ import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 import UserTypeRadioGroup from "../../UI/Radio/UserTypeRadioGroup";
-
 axios.defaults.withCredentials = true;
+
+type EmailFormProps = {
+  setRequestSent: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  type: string;
+  setType: React.Dispatch<React.SetStateAction<string>>;
+  setEmailInput: React.Dispatch<React.SetStateAction<string>>;
+  emailInput: string;
+};
 
 const EmailForm = ({
   setRequestSent,
@@ -18,21 +26,21 @@ const EmailForm = ({
   setType,
   setEmailInput,
   emailInput,
-}) => {
+}: EmailFormProps) => {
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 
-  const handleTypeChange = (e) => {
+  const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     setType(e.target.value);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     navigate("/");
   };
 
-  const handleSubmitEmail = async (e) => {
+  const handleSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //verifier l'email
     try {

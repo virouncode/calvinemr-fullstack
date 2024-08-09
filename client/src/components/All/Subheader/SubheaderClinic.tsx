@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import { nowHumanTZ } from "../../../utils/dates/formatDates";
 
@@ -17,7 +17,7 @@ const SubheaderClinic = () => {
 
   return (
     <p className="subheader-section__clinic">
-      {clinic.name}, {clock}
+      {clinic?.name}, {clock}
     </p>
   );
 };

@@ -1,4 +1,8 @@
-const SubheaderTitle = ({ title }) => {
+import React from "react";
+type SubheaderTitleProps = {
+  title: string;
+};
+const SubheaderTitle = ({ title }: SubheaderTitleProps) => {
   return (
     <h2 className="subheader-section__title">
       {title}{" "}

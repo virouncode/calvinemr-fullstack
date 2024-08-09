@@ -1,17 +1,25 @@
 import { Tooltip } from "@mui/material";
-
+import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { UserStaffType } from "../../../types/app";
 import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
 import LockIcon from "../../UI/Icons/LockIcon";
 import QuestionIcon from "../../UI/Icons/QuestionIcon";
+
+type StaffHeaderProps = {
+  setCreditsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  setNotepadVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const StaffHeader = ({
   setCreditsVisible,
   setLockedScreen,
   setNotepadVisible,
-}) => {
-  const { user } = useUserContext();
+}: StaffHeaderProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+
   const handleLock = () => {
     setLockedScreen(true);
     localStorage.setItem("locked", "true");
