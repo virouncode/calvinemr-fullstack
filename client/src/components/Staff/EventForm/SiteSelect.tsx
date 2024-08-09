@@ -1,4 +1,19 @@
-const SiteSelect = ({ handleSiteChange, sites, value, label, all = false }) => {
+import React from "react";
+import { SiteType } from "../../../types/api";
+type SiteSelectProps = {
+  handleSiteChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  sites: SiteType[];
+  value: number;
+  label?: string;
+  all?: boolean;
+};
+const SiteSelect = ({
+  handleSiteChange,
+  sites,
+  value,
+  label,
+  all = false,
+}: SiteSelectProps) => {
   return (
     <>
       {label && (
@@ -12,9 +27,8 @@ const SiteSelect = ({ handleSiteChange, sites, value, label, all = false }) => {
           sites.map((site) => (
             <option
               value={site.id}
-              name={site.id}
               key={site.id}
-              style={{ color: site.site_status === "Closed" && "red" }}
+              style={{ color: site.site_status === "Closed" ? "red" : "" }}
             >
               {site.name} {site.site_status === "Closed" && "(Closed)"}
             </option>

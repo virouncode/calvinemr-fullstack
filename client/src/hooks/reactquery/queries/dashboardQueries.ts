@@ -1,9 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import {
+  AppointmentType,
+  BillingType,
+  MedType,
+  SiteType,
+} from "../../../types/api";
 import { getLimitTimestampForAge } from "../../../utils/dates/formatDates";
 
-export const useDashboardVisits = (rangeStart, rangeEnd) => {
-  return useQuery({
+export const useDashboardVisits = (rangeStart: number, rangeEnd: number) => {
+  return useQuery<AppointmentType[]>({
     queryKey: ["dashboardVisits", rangeStart, rangeEnd],
     queryFn: () =>
       xanoGet(`/dashboard/visits_in_range`, "admin", {
@@ -13,8 +19,8 @@ export const useDashboardVisits = (rangeStart, rangeEnd) => {
   });
 };
 
-export const useDashboardBillings = (rangeStart, rangeEnd) => {
-  return useQuery({
+export const useDashboardBillings = (rangeStart: number, rangeEnd: number) => {
+  return useQuery<BillingType[]>({
     queryKey: ["dashboardBillings", rangeStart, rangeEnd],
     queryFn: () =>
       xanoGet(`/dashboard/billings_in_range`, "admin", {
@@ -24,8 +30,11 @@ export const useDashboardBillings = (rangeStart, rangeEnd) => {
   });
 };
 
-export const useDashboardMedications = (rangeStart, rangeEnd) => {
-  return useQuery({
+export const useDashboardMedications = (
+  rangeStart: number,
+  rangeEnd: number
+) => {
+  return useQuery<MedType[]>({
     queryKey: ["dashboardMedications", rangeStart, rangeEnd],
     queryFn: () =>
       xanoGet(`/dashboard/medications_in_range`, "admin", {
@@ -35,11 +44,17 @@ export const useDashboardMedications = (rangeStart, rangeEnd) => {
   });
 };
 
-const fetchPatientsPerGender = async (sites) => {
+type TotalsForSitePerGenderType = { M: number; F: number; O: number };
+
+const fetchPatientsPerGender = async (sites: SiteType[]) => {
   const genders = ["M", "F", "O"];
-  let totals = [];
+  let totals: TotalsForSitePerGenderType[] = [];
   for (const site of sites) {
-    let totalsForSite = {};
+    const totalsForSite: TotalsForSitePerGenderType = {
+      M: 0,
+      F: 0,
+      O: 0,
+    };
     for (let i = 0; i < genders.length; i++) {
       const response = await xanoGet(
         "/dashboard/patients_gender_site",
@@ -71,10 +86,24 @@ export const useDashboardPatientsPerGender = (sites) => {
   });
 };
 
-const fetchPatientsPerAge = async (sites) => {
-  let totals = [];
+type TotalsForSitePerAgeType = {
+  under18: number;
+  from18to35: number;
+  from36to50: number;
+  from51to70: number;
+  over70: number;
+};
+
+const fetchPatientsPerAge = async (sites: SiteType[]) => {
+  let totals: TotalsForSitePerAgeType[] = [];
   for (const site of sites) {
-    let totalsForSite = {};
+    const totalsForSite: TotalsForSitePerAgeType = {
+      under18: 0,
+      from18to35: 0,
+      from36to50: 0,
+      from51to70: 0,
+      over70: 0,
+    };
     //<18
     totalsForSite.under18 = await xanoGet(
       "/dashboard/patients_under_age_site",
@@ -149,8 +178,8 @@ const fetchPatientsPerAge = async (sites) => {
   return totals;
 };
 
-export const useDashboardPatientsPerAge = (sites) => {
-  return useQuery({
+export const useDashboardPatientsPerAge = (sites: SiteType[]) => {
+  return useQuery<TotalsForSitePerAgeType[]>({
     queryKey: ["dashboardPatientsPerAge"],
     queryFn: () => fetchPatientsPerAge(sites),
     enabled: !!sites,

@@ -1,12 +1,15 @@
-import { useState } from "react";
-
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import FormVerifyPassword from "../../UI/Forms/FormVerifyPassword";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
-const VerifyPasswordAdmin = ({ setVerified }) => {
+type VerifyPasswordAdminProps = {
+  setVerified: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const VerifyPasswordAdmin = ({ setVerified }: VerifyPasswordAdminProps) => {
   const LOGIN_URL = "/auth/login";
   const { auth } = useAuthContext();
   const navigate = useNavigate();
@@ -14,11 +17,11 @@ const VerifyPasswordAdmin = ({ setVerified }) => {
   const [pin, setPin] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  const handlePwdChange = (e) => {
+  const handlePwdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     setPassword(e.target.value);
   };
-  const handlePinChange = (e) => {
+  const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     setPin(e.target.value);
   };
@@ -27,12 +30,12 @@ const VerifyPasswordAdmin = ({ setVerified }) => {
     navigate("/admin/my-account");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       //=============== AUTH =================//
       await xanoPost(LOGIN_URL, "admin", {
-        email: auth.email,
+        email: auth?.email,
         password,
         pin,
       });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -6,6 +6,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { CredentialsType, PasswordValidityType } from "../../../types/app";
 import FormCredentials from "../../UI/Forms/FormCredentials";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
@@ -14,22 +15,23 @@ const CredentialsFormAdmin = () => {
   const { auth } = useAuthContext();
   const { user } = useUserContext();
   const { socket } = useSocketContext();
-  const [credentials, setCredentials] = useState({
-    email: auth.email,
+  const [credentials, setCredentials] = useState<CredentialsType>({
+    email: auth?.email,
     password: "",
     confirmPassword: "",
     pin: "",
   });
-  const [passwordValidity, setPasswordValidity] = useState({
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    special: false,
-    size: false,
-  });
+  const [passwordValidity, setPasswordValidity] =
+    useState<PasswordValidityType>({
+      uppercase: false,
+      lowercase: false,
+      number: false,
+      special: false,
+      size: false,
+    });
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
     const value = e.target.value;
@@ -38,10 +40,16 @@ const CredentialsFormAdmin = () => {
   const handleCancel = () => {
     navigate("/admin/my-account");
   };
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
-    let value = e.target.value;
-    let newValidity = {};
+    const value = e.target.value;
+    const newValidity: PasswordValidityType = {
+      uppercase: false,
+      lowercase: false,
+      number: false,
+      special: false,
+      size: false,
+    };
     if (/[A-Z]/.test(value)) {
       newValidity.uppercase = true;
     } else {
@@ -67,11 +75,10 @@ const CredentialsFormAdmin = () => {
     } else {
       newValidity.size = false;
     }
-
     setPasswordValidity(newValidity);
     setCredentials({ ...credentials, password: value });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!credentials.email) {
       setErrMsg("Email is required");
@@ -98,7 +105,7 @@ const CredentialsFormAdmin = () => {
       return;
     }
 
-    if (credentials.email.toLowerCase() !== auth.email.toLowerCase()) {
+    if (credentials.email.toLowerCase() !== auth?.email.toLowerCase()) {
       try {
         const response = await xanoGet(`/admin_with_email`, "admin", {
           email: credentials.email.toLowerCase(),
@@ -115,15 +122,19 @@ const CredentialsFormAdmin = () => {
 
     try {
       //get my infos
-      const me = await xanoGet(`/admin/${user.id}`, "admin");
+      const me = await xanoGet(`/admin/${user?.id}`, "admin");
       me.email = credentials.email.toLowerCase();
       me.password = credentials.password;
       me.pin = credentials.pin;
-      const response = await xanoPut(`/admin/password/${user.id}`, "admin", me);
-      socket.emit("message", {
+      const response = await xanoPut(
+        `/admin/password/${user?.id}`,
+        "admin",
+        me
+      );
+      socket?.emit("message", {
         route: "ADMINS INFOS",
         action: "update",
-        content: { id: user.id, data: response },
+        content: { id: user?.id, data: response },
       });
       //pas besoin de socket sur USER car il va se relogger
       setSuccessMsg("Credentials changed succesfully");
@@ -140,15 +151,15 @@ const CredentialsFormAdmin = () => {
     <>
       <form
         className="credentials-form"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit}
         style={{ border: errMsg && "solid 1px red" }}
       >
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
         <FormCredentials
           credentials={credentials}
           passwordValidity={passwordValidity}
-          handleChangeChange={handleChange}
-          onPasswordChange={handlePasswordChange}
+          handleChange={handleChange}
+          handlePasswordChange={handlePasswordChange}
           handleCancel={handleCancel}
         />
       </form>

@@ -17,10 +17,12 @@ export const timestampToDateISOTZ = (
   locale = "en-CA"
 ) => {
   if (!timestamp) return "";
-  return DateTime.fromMillis(timestamp, {
-    zone: timezone,
-    locale,
-  }).toISODate();
+  return (
+    DateTime.fromMillis(timestamp, {
+      zone: timezone,
+      locale,
+    }).toISODate() || ""
+  );
 };
 export const timestampToTimeISOTZ = (
   timestamp: number,
@@ -28,10 +30,12 @@ export const timestampToTimeISOTZ = (
   locale = "en-CA"
 ) => {
   if (!timestamp) return "";
-  return DateTime.fromMillis(timestamp, {
-    zone: timezone,
-    locale,
-  }).toISOTime();
+  return (
+    DateTime.fromMillis(timestamp, {
+      zone: timezone,
+      locale,
+    }).toISOTime() || ""
+  );
 };
 export const timestampToDateTimeSecondsISOTZ = (
   timestamp: number,
@@ -41,10 +45,12 @@ export const timestampToDateTimeSecondsISOTZ = (
   locale = "en-CA"
 ) => {
   if (!timestamp) return "";
-  return DateTime.fromMillis(timestamp, {
-    zone: timezone,
-    locale,
-  }).toISO({ includeOffset: withOffset, suppressMilliseconds: !withMs });
+  return (
+    DateTime.fromMillis(timestamp, {
+      zone: timezone,
+      locale,
+    }).toISO({ includeOffset: withOffset, suppressMilliseconds: !withMs }) || ""
+  );
 };
 export const timestampToDateMonthsLaterISOTZ = (
   timestamp: number,
@@ -274,7 +280,7 @@ export const dateISOToTimestampTZ = (
   dateISO: string,
   timezone = "America/Toronto"
 ) => {
-  if (!dateISO) return null;
+  if (!dateISO) return 0;
   return DateTime.fromISO(dateISO, { zone: timezone }).toMillis();
 };
 
@@ -290,7 +296,7 @@ export const tzComponentsToTimestamp = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
-  if (!dateStr) return null;
+  if (!dateStr) return 0;
   const [yearStr, monthStr, dayStr] = dateStr.split("-");
   let hour = hoursStr ? parseInt(hoursStr, 10) : 0;
   hour = AMPMto24(hour, ampm);

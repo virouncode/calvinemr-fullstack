@@ -1,22 +1,33 @@
+import React from "react";
 import {
   provinceStateTerritoryCT,
   toCodeTableName,
 } from "../../../omdDatas/codesTables";
+import { SiteType } from "../../../types/api";
 import { showDocument } from "../../../utils/files/showDocument";
 import EditButton from "../../UI/Buttons/EditButton";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 
-const SiteItem = ({ site, handleEditClick }) => {
+type SiteItemProps = {
+  site: SiteType;
+  handleEditClick: (e: React.MouseEvent<HTMLButtonElement>, id: number) => void;
+};
+
+const SiteItem = ({ site, handleEditClick }: SiteItemProps) => {
   const handleClickLogo = () => {
-    showDocument(site.logo?.url, site.logo?.mime);
+    showDocument(site.logo?.url as string, site.logo?.mime as string);
   };
 
   return (
     <>
-      <tr style={{ color: site.site_status === "Closed" && "red" }}>
+      <tr style={{ color: site.site_status === "Closed" ? "red" : "" }}>
         <td>
           <div className="site-item__btn-container">
-            <EditButton onClick={(e) => handleEditClick(e, site.id)} />
+            <EditButton
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                handleEditClick(e, site.id as number)
+              }
+            />
           </div>
         </td>
         <td>{site.name || ""}</td>

@@ -1,7 +1,7 @@
 import React from "react";
 
 type EditButtonProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
 };
 

@@ -1,3 +1,16 @@
+import React from "react";
+
+type InputPasswordProps = {
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  id?: string;
+  label?: string;
+  width?: number;
+  placeholder?: string;
+  autoFocus?: boolean;
+};
+
 const InputPassword = ({
   value,
   onChange,
@@ -7,7 +20,7 @@ const InputPassword = ({
   width,
   placeholder,
   autoFocus = false,
-}) => {
+}: InputPasswordProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}

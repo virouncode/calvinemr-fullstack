@@ -1,5 +1,5 @@
 import { BarChart } from "@mui/x-charts/BarChart";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDashboardVisits } from "../../../hooks/reactquery/queries/dashboardQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { getVisitsPerAge } from "../../../utils/dashboard/getVisitsPerAge";
@@ -8,12 +8,11 @@ import {
   dateISOToTimestampTZ,
   getEndOfTheMonthTZ,
   getStartOfTheMonthTZ,
-  timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
-import InputDate from "../../UI/Inputs/InputDate";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
+import DashboardDateFilter from "./DashboardDateFilter";
 
 const DashboardCardVisits = () => {
   const [rangeStartVisits, setRangeStartVisits] = useState(
@@ -33,13 +32,13 @@ const DashboardCardVisits = () => {
     error: errorSites,
   } = useSites();
 
-  const handleChangeStart = (e) => {
+  const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartVisits(value === "" ? null : dateISOToTimestampTZ(value));
+    setRangeStartVisits(dateISOToTimestampTZ(value));
   };
-  const handleChangeEnd = (e) => {
+  const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndVisits(value === "" ? null : dateISOToTimestampTZ(value));
+    setRangeEndVisits(dateISOToTimestampTZ(value));
   };
 
   if (isPendingSites || isPendingVisits)
@@ -60,37 +59,6 @@ const DashboardCardVisits = () => {
       </div>
     );
 
-  const chartSetting = {
-    xAxis: [
-      {
-        data: [...sites.map(({ name }) => name), "Total"],
-        scaleType: "band",
-      },
-    ],
-    yAxis: [
-      {
-        label: "visits",
-      },
-    ],
-    width: 500,
-    height: 350,
-    slotProps: {
-      legend: {
-        direction: "row",
-        position: {
-          vertical: "top",
-          horizontal: "center",
-        },
-        labelStyle: {
-          fontSize: 12,
-        },
-        itemMarkWidth: 10,
-        itemMarkHeight: 10,
-        markGap: 5,
-        itemGap: 10,
-      },
-    },
-  };
   const visitsPerGender = getVisitsPerGender(sites, visits);
   const visitsPerAge = getVisitsPerAge(sites, visits);
 
@@ -98,22 +66,12 @@ const DashboardCardVisits = () => {
     <div className="dashboard-card">
       <div className="dashboard-card__title">Visits</div>
       <div className="dashboard-card__filter">
-        <div>
-          <InputDate
-            value={timestampToDateISOTZ(rangeStartVisits)}
-            onChange={handleChangeStart}
-            name="from"
-            id="from"
-            label="From"
-          />
-          <InputDate
-            value={timestampToDateISOTZ(rangeEndVisits)}
-            onChange={handleChangeEnd}
-            name="to"
-            id="to"
-            label="To"
-          />
-        </div>
+        <DashboardDateFilter
+          rangeStart={rangeStartVisits}
+          rangeEnd={rangeEndVisits}
+          onChangeStart={handleChangeStart}
+          onChangeEnd={handleChangeEnd}
+        />
         {visitsPerGender.length > 0 ? (
           <div>
             <label>Total visits: </label>
@@ -137,7 +95,35 @@ const DashboardCardVisits = () => {
                   { dataKey: "female", label: "Females" },
                   { dataKey: "other", label: "Others" },
                 ]}
-                {...chartSetting}
+                xAxis={[
+                  {
+                    data: [...sites.map(({ name }) => name), "Total"],
+                    scaleType: "band",
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: "visits",
+                  },
+                ]}
+                width={500}
+                height={350}
+                slotProps={{
+                  legend: {
+                    direction: "row",
+                    position: {
+                      vertical: "top",
+                      horizontal: "middle",
+                    },
+                    labelStyle: {
+                      fontSize: 12,
+                    },
+                    itemMarkWidth: 10,
+                    itemMarkHeight: 10,
+                    markGap: 5,
+                    itemGap: 10,
+                  },
+                }}
               />
             ) : (
               <EmptyParagraph text="No visits per gender available" />
@@ -155,7 +141,35 @@ const DashboardCardVisits = () => {
                   { dataKey: "from51to70", label: "51-70" },
                   { dataKey: "over70", label: ">70" },
                 ]}
-                {...chartSetting}
+                xAxis={[
+                  {
+                    data: [...sites.map(({ name }) => name), "Total"],
+                    scaleType: "band",
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: "visits",
+                  },
+                ]}
+                width={500}
+                height={350}
+                slotProps={{
+                  legend: {
+                    direction: "row",
+                    position: {
+                      vertical: "top",
+                      horizontal: "middle",
+                    },
+                    labelStyle: {
+                      fontSize: 12,
+                    },
+                    itemMarkWidth: 10,
+                    itemMarkHeight: 10,
+                    markGap: 5,
+                    itemGap: 10,
+                  },
+                }}
               />
             ) : (
               <EmptyParagraph text="No visits per age available" />

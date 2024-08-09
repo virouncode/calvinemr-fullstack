@@ -25,7 +25,7 @@ type FormSiteProps = {
   handleLogoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isLoadingFile: boolean;
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: () => void;
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   handleCancel: () => void;
   progress: boolean;
 };

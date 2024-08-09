@@ -1,4 +1,4 @@
-
+import React from "react";
 import DashboardCardBillings from "./DashboardCardBillings";
 import DashboardCardMeds from "./DashboardCardMeds";
 import DashboardCardPatients from "./DashboardCardPatients";

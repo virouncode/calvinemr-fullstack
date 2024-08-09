@@ -1,5 +1,5 @@
 import { BarChart } from "@mui/x-charts/BarChart";
-
+import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import { getStaffDuration } from "../../../utils/dashboard/getStaffDuration";
@@ -58,74 +58,11 @@ const DashboardCardStaff = () => {
     staffInfos.filter(({ account_status }) => account_status !== "Closed"),
     sites
   );
-  const staffDuration = getStaffDuration(
+  const staffDurations = getStaffDuration(
     staffInfos.filter(({ account_status }) => account_status !== "Closed"),
     sites
   );
 
-  const chartSettingDuration = {
-    xAxis: [
-      {
-        data: [...sites.map(({ name }) => name), "Total"],
-        scaleType: "band",
-      },
-    ],
-    yAxis: [
-      {
-        label: "days",
-      },
-    ],
-    width: 500,
-    height: 400,
-    slotProps: {
-      legend: {
-        direction: "row",
-        position: {
-          vertical: "top",
-          horizontal: "center",
-        },
-        labelStyle: {
-          fontSize: 12,
-        },
-        itemMarkWidth: 10,
-        itemMarkHeight: 10,
-        markGap: 5,
-        itemGap: 10,
-      },
-    },
-  };
-  const chartSettingCategory = {
-    xAxis: [
-      {
-        data: [...sites.map(({ name }) => name), "Total"],
-        scaleType: "band",
-      },
-    ],
-    yAxis: [
-      {
-        label: "people",
-      },
-    ],
-    width: 500,
-    height: 400,
-    margin: { top: 90 },
-    slotProps: {
-      legend: {
-        direction: "row",
-        position: {
-          vertical: "top",
-          horizontal: "center",
-        },
-        labelStyle: {
-          fontSize: 12,
-        },
-        itemMarkWidth: 10,
-        itemMarkHeight: 10,
-        markGap: 5,
-        itemGap: 10,
-      },
-    },
-  };
   return (
     staffPerCategory && (
       <div className="dashboard-card">
@@ -134,7 +71,7 @@ const DashboardCardStaff = () => {
           <label>Total staff members: </label>
           {staffInfos.length}
         </div>
-        {staffPerCategory.length > 0 && staffDuration.length > 0 ? (
+        {staffPerCategory.length > 0 && staffDurations.length > 0 ? (
           <div className="dashboard-card__content">
             <div className="dashboard-card__chart">
               <p className="dashboard-card__chart-title">By occupation</p>
@@ -147,7 +84,36 @@ const DashboardCardStaff = () => {
                     color: colorsPalette[index],
                   };
                 })}
-                {...chartSettingCategory}
+                xAxis={[
+                  {
+                    data: [...sites.map(({ name }) => name), "Total"],
+                    scaleType: "band",
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: "people",
+                  },
+                ]}
+                width={500}
+                height={400}
+                margin={{ top: 90 }}
+                slotProps={{
+                  legend: {
+                    direction: "row",
+                    position: {
+                      vertical: "top",
+                      horizontal: "middle",
+                    },
+                    labelStyle: {
+                      fontSize: 12,
+                    },
+                    itemMarkWidth: 10,
+                    itemMarkHeight: 10,
+                    markGap: 5,
+                    itemGap: 10,
+                  },
+                }}
               />
             </div>
             <div className="dashboard-card__chart">
@@ -155,7 +121,7 @@ const DashboardCardStaff = () => {
                 By employment duration
               </p>
               <BarChart
-                dataset={staffDuration}
+                dataset={staffDurations}
                 series={[
                   {
                     dataKey: "shortest",
@@ -168,7 +134,35 @@ const DashboardCardStaff = () => {
                     valueFormatter: (value) => `${value} days`,
                   },
                 ]}
-                {...chartSettingDuration}
+                xAxis={[
+                  {
+                    data: [...sites.map(({ name }) => name), "Total"],
+                    scaleType: "band",
+                  },
+                ]}
+                yAxis={[
+                  {
+                    label: "days",
+                  },
+                ]}
+                width={500}
+                height={400}
+                slotProps={{
+                  legend: {
+                    direction: "row",
+                    position: {
+                      vertical: "top",
+                      horizontal: "middle",
+                    },
+                    labelStyle: {
+                      fontSize: 12,
+                    },
+                    itemMarkWidth: 10,
+                    itemMarkHeight: 10,
+                    markGap: 5,
+                    itemGap: 10,
+                  },
+                }}
               />
             </div>
           </div>

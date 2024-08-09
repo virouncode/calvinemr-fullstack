@@ -1,3 +1,16 @@
+import React from "react";
+type InputDateProps = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  id?: string;
+  label?: string;
+  width?: number;
+  disabled?: boolean;
+  min?: string;
+  max?: string;
+};
+
 const InputDate = ({
   value,
   onChange,
@@ -8,7 +21,7 @@ const InputDate = ({
   disabled = false,
   min = "1800-01-01",
   max = "3000-01-01",
-}) => {
+}: InputDateProps) => {
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}

@@ -81,3 +81,47 @@ export type AxiosXanoConfigType = {
   };
   signal?: AbortSignal;
 };
+
+export type CredentialsType = {
+  email?: string;
+  password: string;
+  confirmPassword: string;
+  pin: string;
+};
+
+export type PasswordValidityType = {
+  uppercase: boolean;
+  lowercase: boolean;
+  number: boolean;
+  special: boolean;
+  size: boolean;
+};
+
+export type TopKFrequentType = {
+  id: number;
+  [key: string]: number | string;
+  frequency: number;
+};
+
+export type TotalRevenueBySiteType = {
+  revenue: number;
+};
+
+export type TotalStaffBySiteType = {
+  Doctors: number;
+  ["Medical students"]: number;
+  Nurses: number;
+  ["Nursing students"]: number;
+  Secretaries: number;
+  ["Ultra sound techs"]: number;
+  ["Lab techs"]: number;
+  Nutritionists: number;
+  Physiotherapists: number;
+  Psychologists: number;
+  Others: number;
+};
+
+export type TotalStaffDurationBySiteType = {
+  longest: number | null;
+  shortest: number | null;
+};

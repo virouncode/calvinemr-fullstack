@@ -79,6 +79,19 @@ export type AppointmentType = {
   recurrence: string;
 };
 
+export type AttachmentType = {
+  access: string;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
+  mime: string;
+  meta: {
+    width: number;
+    height: number;
+  };
+  url: string;
+};
 export type AvailabilityType = {
   id: number;
   staff_id: number;
@@ -151,6 +164,7 @@ export type BillingType = {
     anaesthetist_fee: number;
     non_anaesthetist_fee: number;
   };
+  diagnosis_name?: { diagnosis: string };
 };
 
 export type CalvinAITemplateType = {
@@ -242,7 +256,7 @@ export type ClinicalNoteType = {
 
 export type ClinicalNoteAttachmentType = {
   id: number;
-  file: string;
+  file: AttachmentType;
   alias: string;
   date_created: number;
   created_by_id: number;
@@ -343,7 +357,7 @@ export type DemographicsType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
-  avatar: string;
+  avatar: AttachmentType;
   assigned_staff_id: number;
   Names: {
     NamePrefix: string;
@@ -490,7 +504,7 @@ export type EdocType = {
   id: number;
   date_created: number;
   created_by_id: number;
-  file: string;
+  file: AttachmentType;
   notes: string;
   name: string;
 };
@@ -501,14 +515,14 @@ export type EformType = {
   created_by_id: number;
   name: string;
   updates: { updated_by_id: number; date_updated: number }[];
-  file: string;
+  file: AttachmentType;
   patient_id: number;
 };
 
 export type EformBlankType = {
   id: number;
   name: string;
-  file: string;
+  file: AttachmentType;
   date_created: number;
 };
 
@@ -627,7 +641,7 @@ export type LetterType = {
   date_created: number;
   created_by_id: number;
   patient_id: number;
-  file: string;
+  file: AttachmentType;
   name: string;
   description: string;
   updates: { date_updated: number; updated_by_id: number }[];
@@ -746,7 +760,7 @@ export type MessageType = {
 
 export type MessageAttachmentType = {
   id: number;
-  file: string;
+  file: AttachmentType;
   alias: string;
   date_created: number;
   created_by_user_type: string;
@@ -814,7 +828,7 @@ export type PamphletType = {
   id: number;
   date_created: number;
   created_by_id: number;
-  file: string;
+  file: AttachmentType;
   notes: string;
   name: string;
 };
@@ -1000,7 +1014,7 @@ export type ReportType = {
   DateTimeSent: number;
   acknowledged: boolean;
   assigned_staff_id: number;
-  File: string;
+  File: AttachmentType;
 };
 
 export type RiskFactorType = {
@@ -1039,7 +1053,7 @@ export type SettingType = {
 };
 
 export type SiteType = {
-  id: number;
+  id?: number;
   name: string;
   address: string;
   postal_code: string;
@@ -1048,11 +1062,11 @@ export type SiteType = {
   city: string;
   phone: string;
   fax: string;
-  logo: string;
+  logo?: AttachmentType;
   rooms: { id: string; title: string }[];
-  created_by_id: number;
-  date_created: number;
-  updates: { updated_by_id: number; date_updated: number }[];
+  created_by_id?: number;
+  date_created?: number;
+  updates?: { updated_by_id: number; date_updated: number }[];
   email: string;
   site_status: string;
 };

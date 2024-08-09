@@ -1,20 +1,25 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FormSite from "./FormSite";
 
+type SiteFormProps = {
+  setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const SiteForm = ({ setAddVisible }) => {
   const { user } = useUserContext();
   const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [errMsg, setErrMsg] = useState(false);
-  const [formDatas, setFormDatas] = useState({
+  const [errMsg, setErrMsg] = useState("");
+  const [formDatas, setFormDatas] = useState<SiteType>({
     name: "",
     address: "",
     postal_code: "",
@@ -24,7 +29,6 @@ const SiteForm = ({ setAddVisible }) => {
     phone: "",
     fax: "",
     email: "",
-    logo: null,
     rooms: [],
     site_status: "Open",
   });
@@ -35,8 +39,8 @@ const SiteForm = ({ setAddVisible }) => {
     setAddVisible(false);
   };
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
     if (file.size > 25000000) {
@@ -47,13 +51,13 @@ const SiteForm = ({ setAddVisible }) => {
     }
     setIsLoadingFile(true);
     // setting up the reader
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     // here we tell the reader what to do when it's done reading...
     reader.onload = async (e) => {
-      let content = e.target.result; // this is the content!
+      const content = e.target?.result; // this is the content!
       try {
-        let fileToUpload = await xanoPost(
+        const fileToUpload = await xanoPost(
           "/upload/attachment",
           "admin",
 
@@ -70,7 +74,7 @@ const SiteForm = ({ setAddVisible }) => {
     };
   };
 
-  const handleChangePostalOrZip = (e) => {
+  const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsg("");
     setPostalOrZip(e.target.value);
     setFormDatas({
@@ -80,7 +84,11 @@ const SiteForm = ({ setAddVisible }) => {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
@@ -96,7 +104,9 @@ const SiteForm = ({ setAddVisible }) => {
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     //Formatting
     const datasToPost = {
@@ -110,7 +120,7 @@ const SiteForm = ({ setAddVisible }) => {
         }),
         { id: "z", title: "To Be Determined" },
       ],
-      created_by_id: user.id,
+      created_by_id: user?.id,
       date_created: nowTZTimestamp(),
     };
     //Validation
@@ -132,7 +142,7 @@ const SiteForm = ({ setAddVisible }) => {
     try {
       setProgress(true);
       const response = await xanoPost("/sites", "admin", datasToPost);
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "SITES",
         action: "create",
         content: { data: response },
