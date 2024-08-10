@@ -1,6 +1,7 @@
-
+import React from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
+import { UserPatientType } from "../../../types/app";
 import { getNextPatientAppointments } from "../../../utils/appointments/getNextPatientAppointments";
 import { getPastPatientAppointments } from "../../../utils/appointments/getPastPatientAppointments";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -10,7 +11,7 @@ import NextAppointments from "./NextAppointments";
 import PastAppointments from "./PastAppointments";
 
 const PatientAppointments = () => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: UserPatientType };
   const {
     data: patientAppointments,
     error,

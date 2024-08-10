@@ -1,15 +1,17 @@
 import { DateTime } from "luxon";
+import { ExruleType, RruleType } from "../../types/api";
+import { EventType } from "../../types/app";
 import { dateISOToTimestampTZ } from "../dates/formatDates";
 
 export const toNextOccurence = (
-  currentOccurenceStart,
-  currentOccurenceEnd,
-  rrule,
-  exrule
+  currentOccurenceStart: number,
+  currentOccurenceEnd: number,
+  rrule: RruleType,
+  exrule: ExruleType
 ) => {
-  let nextOccurenceStart;
-  let nextOccurenceEnd;
-  switch (rrule.freq) {
+  let nextOccurenceStart: number = 0;
+  let nextOccurenceEnd: number = 0;
+  switch (rrule?.freq) {
     case "daily":
       nextOccurenceStart = DateTime.fromMillis(currentOccurenceStart, {
         zone: "America/Toronto",
@@ -62,7 +64,10 @@ export const toNextOccurence = (
       break;
   }
   if (exrule?.length) {
-    for (let rule of exrule.sort((a, b) => a.dtstart - b.dtstart)) {
+    for (const rule of exrule.sort(
+      (a, b) =>
+        dateISOToTimestampTZ(a.dtstart) - dateISOToTimestampTZ(b.dtstart)
+    )) {
       if (
         nextOccurenceStart >= dateISOToTimestampTZ(rule.dtstart) &&
         nextOccurenceEnd <= dateISOToTimestampTZ(rule.until)
@@ -86,14 +91,14 @@ export const toNextOccurence = (
 };
 
 export const toLastOccurence = (
-  currentOccurenceStart,
-  currentOccurenceEnd,
-  rrule,
-  exrule
+  currentOccurenceStart: number,
+  currentOccurenceEnd: number,
+  rrule: RruleType,
+  exrule: ExruleType
 ) => {
   let lastOccurenceStart;
   let lastOccurenceEnd;
-  switch (rrule.freq) {
+  switch (rrule?.freq) {
     case "daily":
       lastOccurenceStart = DateTime.fromMillis(currentOccurenceStart, {
         zone: "America/Toronto",
@@ -146,7 +151,10 @@ export const toLastOccurence = (
       break;
   }
   if (exrule?.length) {
-    for (let rule of exrule.sort((a, b) => b.dtstart - a.dtstart)) {
+    for (const rule of exrule.sort(
+      (a, b) =>
+        dateISOToTimestampTZ(b.dtstart) - dateISOToTimestampTZ(a.dtstart)
+    )) {
       if (
         lastOccurenceStart >= dateISOToTimestampTZ(rule.dtstart) &&
         lastOccurenceEnd <= dateISOToTimestampTZ(rule.until)
@@ -169,19 +177,23 @@ export const toLastOccurence = (
   return [lastOccurenceStart, lastOccurenceEnd];
 };
 
-export const getTodaysEvents = (events, rangeStart, rangeEnd) => {
+export const getTodaysEvents = (
+  events: EventType[],
+  rangeStart: number,
+  rangeEnd: number
+) => {
   const todaysNonRecurringEvents = events.filter(
     (event) => event.extendedProps.recurrence === "Once"
   );
   const possibleRecurringEvents = events.filter(
     (event) => event.extendedProps.recurrence !== "Once"
   );
-  let todaysRecurringEvents = [];
-  for (let recurringEvent of possibleRecurringEvents) {
-    let occurence = recurringEvent;
+  const todaysRecurringEvents: EventType[] = [];
+  for (const recurringEvent of possibleRecurringEvents) {
+    const occurence = recurringEvent;
     let occurenceStart = recurringEvent.start;
     let occurenceEnd = recurringEvent.end;
-    switch (occurence.extendedProps.rrule.freq) {
+    switch (occurence.extendedProps.rrule?.freq) {
       case "daily":
         while (occurenceStart < rangeStart) {
           occurenceStart = toNextOccurence(

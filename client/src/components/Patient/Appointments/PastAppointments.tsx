@@ -1,8 +1,13 @@
-
+import React from "react";
+import { AppointmentType } from "../../../types/api";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import PastAppointmentItem from "./PastAppointmentItem";
 
-const PastAppointments = ({ pastAppointments }) => {
+type PastAppointmentsProps = {
+  pastAppointments: AppointmentType[];
+};
+
+const PastAppointments = ({ pastAppointments }: PastAppointmentsProps) => {
   return (
     <div className="appointments-patient appointments-patient--past">
       <div className="appointments-patient__title">Past Appointments</div>

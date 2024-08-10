@@ -1,3 +1,4 @@
+import { AppointmentType } from "../../types/api";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -6,17 +7,22 @@ import {
 } from "../dates/formatDates";
 import { toNextOccurence } from "./occurences";
 
-export const getNextPatientAppointments = (patientAppointments) => {
+export const getNextPatientAppointments = (
+  patientAppointments: AppointmentType[]
+) => {
   if (!patientAppointments || !patientAppointments.length) return [];
-  let nextPatientAppointments = [];
-  for (let appointment of patientAppointments) {
+  const nextPatientAppointments: AppointmentType[] = [];
+  for (const appointment of patientAppointments) {
     if (
       appointment.recurrence === "Once" &&
       appointment.start >= nowTZTimestamp()
     ) {
       nextPatientAppointments.push(appointment);
     } else if (appointment.recurrence !== "Once") {
-      if (dateISOToTimestampTZ(appointment.rrule.dtstart) >= nowTZTimestamp()) {
+      if (
+        dateISOToTimestampTZ(appointment.rrule?.dtstart as string) >=
+        nowTZTimestamp()
+      ) {
         nextPatientAppointments.push({
           ...appointment,
           rrule: null,
@@ -35,9 +41,9 @@ export const getNextPatientAppointments = (patientAppointments) => {
           );
         }
         if (
-          (appointment.rrule.until &&
+          (appointment.rrule?.until &&
             start < dateISOToTimestampTZ(appointment.rrule.until)) ||
-          !appointment.rrule.until
+          !appointment.rrule?.until
         )
           nextPatientAppointments.push({
             ...appointment,

@@ -1,4 +1,10 @@
-import _ from "lodash";
+import * as _ from "lodash";
+import {
+  AppointmentType,
+  RoomType,
+  SiteType,
+  StaffType,
+} from "../../types/api";
 import { staffIdToTitleAndName } from "../names/staffIdToTitleAndName";
 const colorsPalette = [
   { background: "#ffe119", text: "#3D375A" },
@@ -22,7 +28,7 @@ const colorsPalette = [
   { background: "#808080", text: "#3D375A" },
 ];
 
-export const getRemainingStaff = (userId, staffInfos) => {
+export const getRemainingStaff = (userId: number, staffInfos: StaffType[]) => {
   return staffInfos
     .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ id }) => id !== userId)
@@ -36,14 +42,14 @@ export const getRemainingStaff = (userId, staffInfos) => {
 };
 
 export const parseToEvents = (
-  appointments,
-  staffInfos,
-  sites,
-  isSecretary,
-  userId
+  appointments: AppointmentType[],
+  staffInfos: StaffType[],
+  sites: SiteType[],
+  isSecretary: boolean,
+  userId: number
 ) => {
   //give a color to each remaining member of the staff
-  if (!sites || sites.length === 0 || !appointments) return null;
+  if (!sites || sites.length === 0 || !appointments) return [];
   const remainingStaffObjects = staffInfos
     .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ id }) => id !== userId)
@@ -64,7 +70,8 @@ export const parseToEvents = (
               "#3D375A",
               isSecretary,
               userId,
-              sites?.find(({ id }) => id === appointment.site_id)?.rooms,
+              sites?.find(({ id }) => id === appointment.site_id)
+                ?.rooms as RoomType[],
               staffInfos
             ) //grey
           : parseToEvent(
@@ -81,7 +88,8 @@ export const parseToEvents = (
               ].textColor,
               isSecretary,
               userId,
-              sites?.find(({ id }) => id === appointment.site_id)?.rooms,
+              sites?.find(({ id }) => id === appointment.site_id)
+                ?.rooms as RoomType[],
               staffInfos
             )
         : parseToEvent(
@@ -90,20 +98,21 @@ export const parseToEvents = (
             "#3D375A",
             isSecretary,
             userId,
-            sites?.find(({ id }) => id === appointment.site_id)?.rooms,
+            sites?.find(({ id }) => id === appointment.site_id)
+              ?.rooms as RoomType[],
             staffInfos
           ) //blue
   );
 };
 
 export const parseToEvent = (
-  appointment,
-  color,
-  textColor,
-  isSecretary,
-  userId,
-  rooms,
-  staffInfos
+  appointment: AppointmentType,
+  color: string,
+  textColor: string,
+  isSecretary: boolean,
+  userId: number,
+  rooms: RoomType[],
+  staffInfos: StaffType[]
 ) => {
   return {
     id: appointment.id.toString(),
@@ -116,7 +125,7 @@ export const parseToEvent = (
     editable: appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
     resourceEditable:
       appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
-    resourceId: rooms?.find(({ id }) => id === appointment.room_id).id,
+    resourceId: rooms?.find(({ id }) => id === appointment.room_id)?.id,
     rrule: appointment.rrule?.freq ? appointment.rrule : null,
     exrule: appointment.exrule?.length ? appointment.exrule : null,
     duration: appointment.Duration * 60000,
@@ -144,7 +153,7 @@ export const parseToEvent = (
       roomId: appointment.room_id,
       roomTitle: appointment.site_infos?.rooms.find(
         ({ id }) => id === appointment.room_id
-      ).title,
+      )?.title,
       updates: appointment.updates,
       date_created: appointment.date_created,
       created_by_id: appointment.created_by_id,
@@ -155,8 +164,6 @@ export const parseToEvent = (
       recurrence: appointment.recurrence,
       rrule: appointment.rrule?.freq ? appointment.rrule : null,
       exrule: appointment.exrule?.length ? appointment.exrule : null,
-      modifiedFormId: appointment.modified_from_id,
-      initialStart: appointment.initial_start,
     },
   };
 };

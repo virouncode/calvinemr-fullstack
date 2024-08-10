@@ -1,6 +1,12 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const TrashIcon = ({ onClick, ml = 0, mr = 0 }) => {
+import React from "react";
+type TrashIconProps = {
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
+  ml?: number;
+  mr?: number;
+};
+const TrashIcon = ({ onClick, ml = 0, mr = 0 }: TrashIconProps) => {
   return (
     <FontAwesomeIcon
       icon={faTrash}

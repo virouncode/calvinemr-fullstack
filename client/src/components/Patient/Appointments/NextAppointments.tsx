@@ -1,8 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/messagesMutations";
+import { AppointmentType, MessageExternalType } from "../../../types/api";
+import { UserPatientType } from "../../../types/app";
 import {
   nowTZTimestamp,
   timestampToHumanDateTimeTZ,
@@ -13,19 +15,23 @@ import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import NextAppointmentItem from "./NextAppointmentItem";
 
-const NextAppointments = ({ nextAppointments }) => {
-  const { user } = useUserContext();
+type NextAppointmentsProps = {
+  nextAppointments: AppointmentType[];
+};
+
+const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
+  const { user } = useUserContext() as { user: UserPatientType };
   const { staffInfos } = useStaffInfosContext();
-  const [appointmentSelectedId, setAppointmentSelectedId] = useState(null);
+  const [appointmentSelectedId, setAppointmentSelectedId] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
   const messagePost = useMessageExternalPost();
 
-  const isAppointmentSelected = (id) => appointmentSelectedId === id;
-  const handleCheck = (e) => {
+  const isAppointmentSelected = (id: number) => appointmentSelectedId === id;
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);
     if (checked) setAppointmentSelectedId(id);
-    else setAppointmentSelectedId(null);
+    else setAppointmentSelectedId(0);
   };
   const handleDeleteAppointment = async () => {
     if (
@@ -37,7 +43,7 @@ const NextAppointments = ({ nextAppointments }) => {
         //get all secretaries id
         const secretariesIds = staffInfos
           .filter(({ title }) => title === "Secretary")
-          .map(({ id }) => id);
+          .map(({ id }) => id) as number[];
         //create the message
         //send to all secretaries
         const appointment = nextAppointments.find(
@@ -45,20 +51,20 @@ const NextAppointments = ({ nextAppointments }) => {
         );
 
         for (const secretaryId of secretariesIds) {
-          const messageToPost = {
-            from_patient_id: user.id,
+          const messageToPost: MessageExternalType = {
+            from_patient_id: user?.id,
             to_staff_id: secretaryId,
             subject: "Appointment cancelation",
             body: `Hello ${staffIdToTitleAndName(staffInfos, secretaryId)},
 
 I would like to cancel my appointment with ${staffIdToTitleAndName(
               staffInfos,
-              appointment.host_id
+              appointment?.host_id
             )},
 
 From ${timestampToHumanDateTimeTZ(
-              appointment.start
-            )} to ${timestampToHumanDateTimeTZ(appointment.end)}
+              appointment?.start || 0
+            )} to ${timestampToHumanDateTimeTZ(appointment?.end || 0)}
 
 Please contact me to confirm cancelation
 
@@ -80,7 +86,7 @@ Cellphone: ${
         toast.success("Appointment cancelation request sent successfully", {
           containerId: "A",
         });
-        setAppointmentSelectedId(null);
+        setAppointmentSelectedId(0);
       } catch (err) {
         toast.error(`Unable to send appointment cancelation: ${err.message}`, {
           containerId: "A",

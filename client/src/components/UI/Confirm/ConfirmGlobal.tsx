@@ -7,7 +7,17 @@ const confirmAction = {
 };
 
 //When calling confirm alert we call confirmAction.current with the parameters of confirmAlert
-export const confirmAlert = ({ title, content, yes, no }) => {
+export const confirmAlert = ({
+  title,
+  content,
+  yes,
+  no,
+}: {
+  title?: string;
+  content: string;
+  yes?: string;
+  no?: string;
+}) => {
   return confirmAction.current({ title, content, yes, no });
 };
 type ConfirmGlobalProps = {

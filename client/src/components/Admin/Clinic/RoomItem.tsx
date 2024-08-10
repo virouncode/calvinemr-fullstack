@@ -1,7 +1,24 @@
+import React from "react";
 import TrashIcon from "../../UI/Icons/TrashIcon";
 import Input from "../../UI/Inputs/Input";
 
-const RoomItem = ({ room, handleDeleteRoom, handleChangeRoomTitle }) => {
+type RoomItemProps = {
+  room: { id: string; title: string };
+  handleDeleteRoom: (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    id: string
+  ) => void;
+  handleChangeRoomTitle: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => void;
+};
+
+const RoomItem = ({
+  room,
+  handleDeleteRoom,
+  handleChangeRoomTitle,
+}: RoomItemProps) => {
   return (
     <li className="site-form__room-item">
       <div className="site-form__room-item-id">

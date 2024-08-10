@@ -66,9 +66,8 @@ const SubheaderWelcome = ({
     localStorage.removeItem("currentEditClinicalNote");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
-    if (tokenLimitVerifierID.current)
-      clearInterval(tokenLimitVerifierID.current);
-    if (toastExpiredID.current) toast.dismiss(toastExpiredID.current);
+    tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
+    toastExpiredID.current && toast.dismiss(toastExpiredID.current);
     navigate("/");
   };
   return (

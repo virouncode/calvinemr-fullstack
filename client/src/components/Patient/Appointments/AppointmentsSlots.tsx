@@ -1,7 +1,25 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  AppointmentType,
+  AvailabilityType,
+  StaffType,
+} from "../../../types/api";
+import { AppointmentProposalType } from "../../../types/app";
 import { getAvailableAppointments } from "../../../utils/appointments/getAvailableAppointments";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import AppointmentSlotItem from "./AppointmentSlotItem";
+
+type AppointmentsSlotsProps = {
+  availability: AvailabilityType;
+  appointmentsInRange: AppointmentType[] | null;
+  practicianSelectedId: number;
+  staffInfos: StaffType[];
+  rangeStart: number;
+  setAppointmentSelected: React.Dispatch<
+    React.SetStateAction<AppointmentProposalType | null>
+  >;
+  appointmentSelected: AppointmentProposalType | null;
+};
 
 const AppointmentsSlots = ({
   availability,
@@ -11,8 +29,10 @@ const AppointmentsSlots = ({
   rangeStart,
   setAppointmentSelected,
   appointmentSelected,
-}) => {
-  const [appointmentsOptions, setAppointmentsOptions] = useState([]);
+}: AppointmentsSlotsProps) => {
+  const [appointmentsOptions, setAppointmentsOptions] = useState<
+    AppointmentProposalType[]
+  >([]);
 
   useEffect(() => {
     setAppointmentsOptions(

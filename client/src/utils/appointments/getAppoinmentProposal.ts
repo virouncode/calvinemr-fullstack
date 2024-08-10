@@ -1,18 +1,24 @@
 import { DateTime } from "luxon";
+import { AppointmentType, AvailabilityType } from "../../types/api";
+import { AppointmentProposalType } from "../../types/app";
 import { AMPMto24 } from "../dates/formatDates";
 
 export const getAppointmentProposal = (
-  availability,
-  appointmentsInRange,
-  day,
-  delta,
-  defaulDurationMs,
-  practicianSelectedId,
-  rangeStart,
-  id
-) => {
+  availability: AvailabilityType,
+  appointmentsInRange: AppointmentType[] | null,
+  day: string,
+  delta: number,
+  defaulDurationMs: number,
+  practicianSelectedId: number,
+  rangeStart: number,
+  id: number
+): AppointmentProposalType | null => {
   //Morning
-  const availabilityMorning = availability.schedule_morning[day];
+  const availabilityMorning: {
+    hours: string;
+    min: string;
+    ampm: string;
+  } = availability.schedule_morning[day];
   let startMorningMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })
@@ -26,7 +32,7 @@ export const getAppointmentProposal = (
     })
     .toMillis();
 
-  let endMorningMs = DateTime.fromMillis(rangeStart, {
+  const endMorningMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })
     .plus({
@@ -40,7 +46,11 @@ export const getAppointmentProposal = (
     .toMillis();
 
   //Afternoon
-  const availabilityAfternoon = availability.schedule_afternoon[day];
+  const availabilityAfternoon: {
+    hours: string;
+    min: string;
+    ampm: string;
+  } = availability.schedule_afternoon[day];
   let startAfternoonMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })
@@ -54,7 +64,7 @@ export const getAppointmentProposal = (
     })
     .toMillis();
 
-  let endAfternoonMs = DateTime.fromMillis(rangeStart, {
+  const endAfternoonMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })
     .plus({
@@ -69,7 +79,7 @@ export const getAppointmentProposal = (
 
   while (
     appointmentsInRange
-      .filter(
+      ?.filter(
         // eslint-disable-next-line no-loop-func
         (appointment) =>
           (appointment.start >= startMorningMs &&
@@ -82,7 +92,7 @@ export const getAppointmentProposal = (
       .sort((a, b) => b.end - a.end).length
   ) {
     startMorningMs = appointmentsInRange
-      .filter(
+      ?.filter(
         // eslint-disable-next-line no-loop-func
         (appointment) =>
           (appointment.start >= startMorningMs &&
@@ -97,7 +107,7 @@ export const getAppointmentProposal = (
   if (startMorningMs + defaulDurationMs > endMorningMs) {
     while (
       appointmentsInRange
-        .filter(
+        ?.filter(
           // eslint-disable-next-line no-loop-func
           (appointment) =>
             (appointment.start >= startAfternoonMs &&
@@ -129,9 +139,6 @@ export const getAppointmentProposal = (
         id: id,
         host_id: practicianSelectedId,
         start: startAfternoonMs,
-        startDate: DateTime.fromMillis(startAfternoonMs, {
-          zone: "America/Toronto",
-        }),
         end: startAfternoonMs + defaulDurationMs,
         reason: "Appointment",
         all_day: false,
@@ -141,9 +148,6 @@ export const getAppointmentProposal = (
       id: id,
       host_id: practicianSelectedId,
       start: startMorningMs,
-      startDate: DateTime.fromMillis(startMorningMs, {
-        zone: "America/Toronto",
-      }),
       end: startMorningMs + defaulDurationMs,
       reason: "Appointment",
       all_day: false,

@@ -1,10 +1,13 @@
+import React from "react";
+import { AppointmentType } from "../../../types/api";
 import { toNextOccurence } from "../../../utils/appointments/occurences";
 import {
   timestampToHumanDateTimeTZ,
   timestampToHumanDateTZ,
 } from "../../../utils/dates/formatDates";
+type NextAppointmentDateProps = { appointment: AppointmentType };
 
-const NextAppointmentDate = ({ appointment }) => {
+const NextAppointmentDate = ({ appointment }: NextAppointmentDateProps) => {
   return !appointment.all_day ? (
     <>
       <div style={{ width: "45%", textAlign: "center" }}>

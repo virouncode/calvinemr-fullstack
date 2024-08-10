@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
 
@@ -32,10 +32,12 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }) => {
   ];
   const roomIdCounter = useRef("a");
 
-  const handleAddRoom = (e) => {
+  const handleAddRoom = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setErrMsg("");
-    const idsTaken = [...formDatas.rooms].map(({ id }) => id);
+    const idsTaken: string[] = [...formDatas.rooms].map(({ id }) => id);
     let nextId = roomIdCounter.current;
     let i = 0;
     while (idsTaken.includes(nextId)) {
@@ -50,24 +52,32 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }) => {
     });
   };
 
-  const handleChangeRoomTitle = (e, id) => {
+  const handleChangeRoomTitle = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      rooms: formDatas.rooms.map((room) => {
+      rooms: formDatas.rooms.map((room: { id: string; title: string }) => {
         return room.id === id ? { id: id, title: value } : room;
       }),
     });
   };
 
-  const handleDeleteRoom = (e, id) => {
+  const handleDeleteRoom = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    id: string
+  ) => {
     setFormDatas({
       ...formDatas,
-      rooms: formDatas.rooms.filter((room) => room.id !== id),
+      rooms: formDatas.rooms.filter(
+        (room: { id: string; title: string }) => room.id !== id
+      ),
     });
-    const idsTaken = formDatas.rooms
-      .filter((room) => room.id !== id)
+    const idsTaken: string[] = formDatas.rooms
+      .filter((room: { id: string; title: string }) => room.id !== id)
       .map(({ id }) => id);
     let nextId = "a";
     let i = 0;

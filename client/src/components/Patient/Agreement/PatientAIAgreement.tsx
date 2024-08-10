@@ -1,39 +1,51 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { DemographicsType } from "../../../types/api";
+import { UserPatientType } from "../../../types/app";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Radio from "../../UI/Radio/Radio";
 
-const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
-  const { user } = useUserContext();
+type PatientAIAgreementProps = {
+  demographicsInfos: DemographicsType;
+  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PatientAIAgreement = ({
+  demographicsInfos,
+  setPopUpVisible,
+}: PatientAIAgreementProps) => {
+  const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const [agreed, setAgreed] = useState(true);
-  const handleChange = (e) => {
-    const id = e.target.id;
-    if (id === "yes") setAgreed(true);
-    else setAgreed(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAgreed(value === "Yes" ? true : false);
   };
   const handleConfirm = async () => {
-    const datasToPut = { ...demographicsInfos };
+    const datasToPut: DemographicsType = { ...demographicsInfos };
     datasToPut.ai_consent_read = true;
     datasToPut.ai_consent = agreed;
     try {
       await xanoPut(
-        `/demographics/${user.demographics.id}`,
+        `/demographics/${(user as UserPatientType)?.demographics.id}`,
         "patient",
         datasToPut
       );
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "DEMOGRAPHICS",
         action: "update",
-        content: { id: user.demographics.id, data: datasToPut },
+        content: {
+          id: (user as UserPatientType)?.demographics.id,
+          data: datasToPut,
+        },
       });
-      socket.emit("message", {
+      socket?.emit("message", {
         route: "PATIENT USER DEMOGRAPHICS",
         action: "update",
-        content: { id: user.id, data: datasToPut },
+        content: { id: user?.id, data: datasToPut },
       });
       setPopUpVisible(false);
       toast.success("Saved preference", {
@@ -195,7 +207,7 @@ const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
             <Radio
               id="yes"
               name="agreement"
-              value={true}
+              value="Yes"
               checked={agreed}
               onChange={handleChange}
               label="I agree to the terms and conditions outlined in this consent form."
@@ -205,7 +217,7 @@ const PatientAIAgreement = ({ demographicsInfos, setPopUpVisible }) => {
             <Radio
               id="no"
               name="agreement"
-              value={false}
+              value="No"
               checked={!agreed}
               onChange={handleChange}
               label="I don't agree to the terms and conditions outlined in this consent form."

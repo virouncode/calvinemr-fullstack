@@ -58,8 +58,8 @@ export type AppointmentType = {
   created_by_id: number;
   start: number;
   end: number;
-  patients_guests_ids: number[];
-  staff_guests_ids: number[];
+  patients_guests_ids: number[] | { patient_infos: DemographicsType }[];
+  staff_guests_ids: number[] | { staff_infos: StaffType }[];
   room_id: string;
   all_day: boolean;
   updates: { updated_by_id: number; date_updated: number }[];
@@ -74,10 +74,29 @@ export type AppointmentType = {
   AppointmentPurpose: string;
   AppointmentNotes: string;
   site_id: number;
-  rrule: { freq: string; interval: number; dtstart: string; until: string };
-  exrule: { freq: string; interval: number; dtstart: string; until: string }[];
+  rrule: RruleType;
+  exrule: ExruleType;
   recurrence: string;
+  //add-ons
+  site_infos?: SiteType;
+  host_infos?: StaffType;
 };
+
+export type RruleType = {
+  freq: string;
+  interval: number;
+  dtstart: string;
+  until: string;
+} | null;
+
+export type ExruleType =
+  | {
+      freq: string;
+      interval: number;
+      dtstart: string;
+      until: string;
+    }[]
+  | null;
 
 export type AttachmentType = {
   access: string;
@@ -768,22 +787,22 @@ export type MessageAttachmentType = {
 };
 
 export type MessageExternalType = {
-  id: number;
-  from_staff_id: number;
-  from_patient_id: number;
-  to_staff_id: number;
-  to_patients_ids: number[];
+  id?: number;
+  from_staff_id?: number;
+  from_patient_id?: number;
+  to_staff_id?: number;
+  to_patients_ids?: number[];
   subject: string;
   body: string;
-  attachments_ids: number[];
-  read_by_staff_id: number;
-  read_by_patients_ids: number[];
-  deleted_by_staff_id: number;
-  deleted_by_patients_ids: number[];
-  previous_messages_ids: number[];
-  date_created: number;
+  attachments_ids?: number[];
+  read_by_staff_id?: number;
+  read_by_patients_ids?: number[];
+  deleted_by_staff_id?: number;
+  deleted_by_patients_ids?: number[];
+  previous_messages_ids?: number[];
+  date_created?: number;
   type: string;
-  high_importance: boolean;
+  high_importance?: boolean;
 };
 
 export type MessageExternalTemplate = {
@@ -1063,13 +1082,15 @@ export type SiteType = {
   phone: string;
   fax: string;
   logo?: AttachmentType;
-  rooms: { id: string; title: string }[];
+  rooms: RoomType[];
   created_by_id?: number;
   date_created?: number;
   updates?: { updated_by_id: number; date_updated: number }[];
   email: string;
   site_status: string;
 };
+
+export type RoomType = { id: string; title: string };
 
 export type StaffType = {
   id?: number;

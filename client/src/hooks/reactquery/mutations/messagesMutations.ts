@@ -3,35 +3,38 @@ import { toast } from "react-toastify";
 import xanoDelete from "../../../api/xanoCRUD/xanoDelete";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
+import { MessageExternalType, MessageType, TodoType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
 import useUserContext from "../../context/useUserContext";
 
-export const useMessagePost = (staffId, section) => {
+export const useMessagePost = (staffId: number, section: string) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPost) => {
+    mutationFn: (messageToPost: MessageType) => {
       if (section === "To-dos") {
         return xanoPost("/todos", "staff", messageToPost);
       } else {
         return xanoPost("/messages", "staff", messageToPost);
       }
     },
-    onSuccess: (data) => {
-      socket.emit("message", { key: ["messages", staffId] });
+    onSuccess: (data: MessageType | TodoType) => {
+      socket?.emit("message", { key: ["messages", staffId] });
       if (section === "To-dos") {
-        socket.emit("message", { key: ["messages", data.staff_id] });
+        socket?.emit("message", {
+          key: ["messages", (data as TodoType).to_staff_id],
+        });
       } else {
-        for (let staff_id of data.to_staff_ids) {
-          socket.emit("message", { key: ["messages", staff_id] });
+        for (const staff_id of (data as MessageType).to_staff_ids) {
+          socket?.emit("message", { key: ["messages", staff_id] });
         }
       }
       if (data.related_patient_id) {
         if (section === "To-dos") {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
           });
         } else {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
           });
         }
@@ -46,10 +49,10 @@ export const useMessagePost = (staffId, section) => {
   });
 };
 
-export const useMessagePut = (staffId, section) => {
+export const useMessagePut = (staffId: number, section: string) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPut) => {
+    mutationFn: (messageToPut: MessageType | TodoType) => {
       if (section === "To-dos") {
         return xanoPut(`/todos/${messageToPut.id}`, "staff", messageToPut);
       } else {
@@ -57,14 +60,14 @@ export const useMessagePut = (staffId, section) => {
       }
     },
     onSuccess: (data) => {
-      socket.emit("message", { key: ["messages", staffId] });
+      socket?.emit("message", { key: ["messages", staffId] });
       if (data.related_patient_id) {
         if (section === "To-dos") {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
           });
         } else {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
           });
         }
@@ -73,14 +76,14 @@ export const useMessagePut = (staffId, section) => {
   });
 };
 
-export const useTodoDelete = (staffId) => {
+export const useTodoDelete = (staffId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
     mutationFn: (todoToDeleteId) =>
       xanoDelete(`/todos/${todoToDeleteId}`, "staff"),
     onSuccess: () => {
-      socket.emit("message", { key: ["messages", staffId] });
-      socket.emit("message", {
+      socket?.emit("message", { key: ["messages", staffId] });
+      socket?.emit("message", {
         key: ["TODOS ABOUT PATIENT"],
       });
       toast.success("To-do deleted succesfully", { containerId: "A" });
@@ -95,36 +98,38 @@ export const useTodoDelete = (staffId) => {
 
 export const useMessageExternalPost = () => {
   const { user } = useUserContext();
-  const userType = user.access_level;
+  const userType = user?.access_level as string;
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPost) =>
+    mutationFn: (messageToPost: MessageExternalType) =>
       xanoPost("/messages_external", userType, messageToPost),
     onSuccess: (data) => {
       if (userType === "staff") {
-        socket.emit("message", { key: ["messagesExternal", "staff", user.id] });
+        socket?.emit("message", {
+          key: ["messagesExternal", "staff", user?.id],
+        });
         if (data.to_patients_ids) {
-          for (let patientId of data.to_patients_ids.map(
+          for (const patientId of data.to_patients_ids.map(
             ({ to_patient_infos }) => to_patient_infos.id
           )) {
-            socket.emit("message", {
+            socket?.emit("message", {
               key: ["messagesExternal", "patient", patientId],
             });
-            socket.emit("message", {
+            socket?.emit("message", {
               key: ["MESSAGES WITH PATIENT", patientId],
             });
           }
         }
       } else {
-        socket.emit("message", {
-          key: ["messagesExternal", "patient", user.id],
+        socket?.emit("message", {
+          key: ["messagesExternal", "patient", user?.id],
         });
         if (data.to_staff_id) {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["messagesExternal", "staff", data.to_staff_id],
           });
-          socket.emit("message", {
-            key: ["MESSAGES WITH PATIENT", user.id],
+          socket?.emit("message", {
+            key: ["MESSAGES WITH PATIENT", user?.id],
           });
         }
       }
@@ -140,10 +145,10 @@ export const useMessageExternalPost = () => {
 
 export const useMessageExternalPut = () => {
   const { user } = useUserContext();
-  const userType = user.access_level;
+  const userType = user?.access_level as string;
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPut) => {
+    mutationFn: (messageToPut: MessageExternalType) => {
       return xanoPut(
         `/messages_external/${messageToPut.id}`,
         userType,
@@ -152,29 +157,31 @@ export const useMessageExternalPut = () => {
     },
     onSuccess: (data) => {
       if (userType === "staff") {
-        socket.emit("message", { key: ["messagesExternal", "staff", user.id] });
+        socket?.emit("message", {
+          key: ["messagesExternal", "staff", user?.id],
+        });
         if (data.to_patients_ids) {
-          for (let patientId of data.to_patients_ids.map(
+          for (const patientId of data.to_patients_ids.map(
             ({ to_patient_infos }) => to_patient_infos.id
           )) {
-            socket.emit("message", {
+            socket?.emit("message", {
               key: ["messagesExternal", "patient", patientId],
             });
-            socket.emit("message", {
+            socket?.emit("message", {
               key: ["MESSAGES WITH PATIENT", patientId],
             });
           }
         }
       } else {
-        socket.emit("message", {
-          key: ["messagesExternal", "patient", user.id],
+        socket?.emit("message", {
+          key: ["messagesExternal", "patient", user?.id],
         });
         if (data.to_staff_id) {
-          socket.emit("message", {
+          socket?.emit("message", {
             key: ["messagesExternal", "staff", data.to_staff_id],
           });
-          socket.emit("message", {
-            key: ["MESSAGES WITH PATIENT", user.id],
+          socket?.emit("message", {
+            key: ["MESSAGES WITH PATIENT", user?.id],
           });
         }
       }

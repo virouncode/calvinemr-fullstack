@@ -5,7 +5,7 @@ import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
-import { ClinicType, SiteType } from "../../../types/api";
+import { AdminType, ClinicType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { clinicSchema } from "../../../validation/clinic/clinicValidation";
 import Button from "../../UI/Buttons/Button";
@@ -23,7 +23,7 @@ import SiteForm from "./SiteForm";
 import SitesTable from "./SitesTable";
 
 const ClinicInfos = () => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [addVisible, setAddVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);

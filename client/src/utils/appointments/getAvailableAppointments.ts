@@ -1,11 +1,13 @@
+import { AppointmentType, AvailabilityType } from "../../types/api";
+import { AppointmentProposalType } from "../../types/app";
 import { nowTZ } from "../dates/formatDates";
 import { getAppointmentProposal } from "./getAppoinmentProposal";
 
 export const getAvailableAppointments = (
-  availability,
-  appointmentsInRange,
-  practicianSelectedId,
-  rangeStart
+  availability: AvailabilityType,
+  appointmentsInRange: AppointmentType[] | null,
+  practicianSelectedId: number,
+  rangeStart: number
 ) => {
   const days = [
     "monday",
@@ -22,8 +24,8 @@ export const getAvailableAppointments = (
 
   const now = nowTZ();
   const today = now.weekday - 1; //0 is Monday, 6 is Sunday (cf Luxon)
-  let proposals = [];
-  let tomorrow = (today + 1) % 7; //On commence à regarder à partir de demain
+  const proposals: AppointmentProposalType[] = [];
+  const tomorrow = (today + 1) % 7; //On commence à regarder à partir de demain
   let counter = 0;
 
   let newDay = tomorrow;
@@ -38,16 +40,17 @@ export const getAvailableAppointments = (
     const deltaNewDay =
       newDay - tomorrow >= 0 ? newDay - tomorrow : 7 + (newDay - tomorrow);
 
-    const appointmentProposal = getAppointmentProposal(
-      availability,
-      appointmentsInRange,
-      days[newDay],
-      deltaNewDay,
-      defaulDurationMs,
-      practicianSelectedId,
-      rangeStart,
-      newDay
-    );
+    const appointmentProposal: AppointmentProposalType | null =
+      getAppointmentProposal(
+        availability,
+        appointmentsInRange,
+        days[newDay],
+        deltaNewDay,
+        defaulDurationMs,
+        practicianSelectedId,
+        rangeStart,
+        newDay
+      );
     if (appointmentProposal) proposals.push(appointmentProposal);
     newDay = (newDay + 1) % 7; //On incrémente
     counter++;

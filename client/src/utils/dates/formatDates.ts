@@ -57,6 +57,7 @@ export const timestampToDateMonthsLaterISOTZ = (
   monthsLater: number,
   timezone = "America/Toronto"
 ) => {
+  if (!timestamp) return "";
   return timestampToDateISOTZ(
     timestampMonthsLaterTZ(timestamp, monthsLater, timezone)
   );
@@ -67,6 +68,7 @@ export const timestampToDateYearsLaterISOTZ = (
   yearsLater: number,
   timezone = "America/Toronto"
 ) => {
+  if (!timestamp) return "";
   return timestampToDateISOTZ(
     timestampYearsLaterTZ(timestamp, yearsLater, timezone)
   );
@@ -158,6 +160,7 @@ export const timestampToDateTimeSecondsStrTZ = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
+  if (!timestamp) return "";
   return DateTime.fromMillis(timestamp, {
     zone: timezone,
     locale,
@@ -170,6 +173,7 @@ export const timestampToHumanDateTimeTZ = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
+  if (!timestamp) return "";
   return DateTime.fromMillis(timestamp, {
     zone: timezone,
     locale,
@@ -187,6 +191,7 @@ export const timestampToHumanDateTZ = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
+  if (!timestamp) return "";
   return DateTime.fromMillis(timestamp, {
     zone: timezone,
     locale,
@@ -202,6 +207,7 @@ export const timestampToHumanDateYearTZ = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
+  if (!timestamp) return "";
   return DateTime.fromMillis(timestamp, {
     zone: timezone,
     locale,
@@ -213,6 +219,7 @@ export const timestampToHumanTimeTZ = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
+  if (!timestamp) return "";
   return DateTime.fromMillis(timestamp, {
     zone: timezone,
     locale,

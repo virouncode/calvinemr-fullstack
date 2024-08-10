@@ -3,7 +3,9 @@ import {
   AdminType,
   ClinicType,
   DemographicsType,
+  ExruleType,
   PatientType,
+  RruleType,
   SettingType,
   StaffType,
 } from "./api";
@@ -23,16 +25,20 @@ export type AuthContextType = {
   setAuth: React.Dispatch<React.SetStateAction<AuthType>>;
 };
 
-export type UserStaffType = StaffType &
-  SettingType & {
-    unreadMessagesNbr: number;
-    unreadMessagesExternalNbr: number;
-    unreadTodosNbr: number;
-    unreadNbr: number;
-  };
+export type UserStaffType = StaffType & {
+  settings: SettingType;
+  unreadMessagesNbr: number;
+  unreadMessagesExternalNbr: number;
+  unreadTodosNbr: number;
+  unreadNbr: number;
+};
 
-export type UserPatientType = PatientType &
-  DemographicsType & { full_name: string; unreadNbr: number; title?: string };
+export type UserPatientType = PatientType & {
+  demographics: DemographicsType;
+  full_name: string;
+  unreadNbr: number;
+  title?: string;
+};
 
 export type UserAdminType = AdminType;
 
@@ -133,4 +139,55 @@ export type SearchPatientType = {
   birth: string;
   chart: string;
   health: string;
+};
+
+export type EventType = {
+  id: string;
+  start: number;
+  end: number;
+  color: string;
+  textColor: string;
+  display: string;
+  allDay: boolean;
+  editable: boolean;
+  resourceEditable: boolean;
+  resourceId: string;
+  rrule: RruleType;
+  exrule: ExruleType;
+  duration: number;
+  extendedProps: {
+    host: number;
+    hostName: string;
+    hostFirstName: string;
+    hostLastName: string;
+    hostOHIP: string;
+    duration: number;
+    purpose: string;
+    status: string;
+    staffGuestsIds: { staff_infos: StaffType }[];
+    patientsGuestsIds: { patient_infos: PatientType }[];
+    siteId: number;
+    siteName: string;
+    roomId: string;
+    roomTitle: string;
+    updates: { updated_by_id: number; date_updated: number }[];
+    date_created: number;
+    created_by_id: number;
+    notes: string;
+    providerFirstName: string;
+    providerLastName: string;
+    providerOHIP: string;
+    recurrence: string;
+    rrule: RruleType;
+    exrule: ExruleType;
+  };
+};
+
+export type AppointmentProposalType = {
+  id: number;
+  host_id: number;
+  start: number;
+  end: number;
+  reason: string;
+  all_day: boolean;
 };

@@ -1,12 +1,17 @@
-
+import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
+import { AppointmentType } from "../../../types/api";
 import {
-    timestampToHumanDateTZ,
-    timestampToHumanDateTimeTZ,
+  timestampToHumanDateTZ,
+  timestampToHumanDateTimeTZ,
 } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 
-const PastAppointmentItem = ({ appointment }) => {
+type PastAppointmentItemProps = {
+  appointment: AppointmentType;
+};
+
+const PastAppointmentItem = ({ appointment }: PastAppointmentItemProps) => {
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="appointments-patient__item">

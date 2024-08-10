@@ -1,3 +1,4 @@
+import { AppointmentType } from "../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -7,25 +8,25 @@ import { toNextOccurence } from "./occurences";
 
 //Funtion to take recurring events into account
 export const getAppointmentsInRange = (
-  staffAppointmentsInRange,
-  rangeStart,
-  rangeEnd
+  staffAppointmentsInRange: AppointmentType[],
+  rangeStart: number,
+  rangeEnd: number
 ) => {
   if (!staffAppointmentsInRange || !staffAppointmentsInRange?.length)
     return null;
-  let appointmentsInRange = [];
-  for (let appointment of staffAppointmentsInRange) {
+  const appointmentsInRange: AppointmentType[] = [];
+  for (const appointment of staffAppointmentsInRange) {
     if (appointment.recurrence === "Once") {
       appointmentsInRange.push(appointment);
     } else {
-      if (dateISOToTimestampTZ(appointment.rrule.dtstart) < rangeEnd) {
+      if (dateISOToTimestampTZ(appointment.rrule?.dtstart || "") < rangeEnd) {
         let start = appointment.start;
         let end = appointment.end;
         while (start <= rangeEnd) {
           if (start >= rangeStart) {
             if (
-              !appointment.rrule.until ||
-              (appointment.rrule.until &&
+              !appointment.rrule?.until ||
+              (appointment.rrule?.until &&
                 start <= dateISOToTimestampTZ(appointment.rrule.until))
             )
               appointmentsInRange.push({
@@ -39,7 +40,7 @@ export const getAppointmentsInRange = (
                 exrule: null,
               });
           }
-          let nextOccurence = toNextOccurence(
+          const nextOccurence = toNextOccurence(
             start,
             end,
             appointment.rrule,

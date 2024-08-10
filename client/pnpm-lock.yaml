@@ -74,6 +74,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.51.11
         version: 5.51.21(@tanstack/react-query@5.51.21(react@18.3.1))(react@18.3.1)
+      '@types/lodash':
+        specifier: ^4.17.7
+        version: 4.17.7
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.0.1
         version: 8.0.1(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
@@ -924,6 +927,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/lodash@4.17.7':
+    resolution: {integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==}
 
   '@types/luxon@3.4.2':
     resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
@@ -3175,6 +3181,8 @@ snapshots:
       classnames: 2.5.1
 
   '@types/estree@1.0.5': {}
+
+  '@types/lodash@4.17.7': {}
 
   '@types/luxon@3.4.2': {}
 

@@ -1,7 +1,13 @@
-import { DateTime } from "luxon";
+import { DateTime, DateTimeFormatOptions } from "luxon";
+import React from "react";
+import { AppointmentProposalType } from "../../../types/app";
 
-const NewAppointmentDate = ({ appointment }) => {
-  const optionsDate = {
+type NewAppointmentDateProps = {
+  appointment: AppointmentProposalType;
+};
+
+const NewAppointmentDate = ({ appointment }: NewAppointmentDateProps) => {
+  const optionsDate: DateTimeFormatOptions = {
     weekday: "short",
     year: "numeric",
     month: "short",

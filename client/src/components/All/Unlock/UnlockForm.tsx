@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
@@ -9,19 +9,26 @@ import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { AdminType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import Button from "../../UI/Buttons/Button";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputPassword from "../../UI/Inputs/InputPassword";
 import AutoLockTimeSelect from "../../UI/Lists/AutoLockTimeSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-
 axios.defaults.withCredentials = true;
+
+type UnlockFormProps = {
+  setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  toastExpiredID: React.MutableRefObject<Id | null>;
+  tokenLimitVerifierID: React.MutableRefObject<number | null>;
+};
 
 const UnlockForm = ({
   setLockedScreen,
   toastExpiredID,
   tokenLimitVerifierID,
-}) => {
+}: UnlockFormProps) => {
   const { user, setUser } = useUserContext();
   const { socket } = useSocketContext();
   const { setAuth } = useAuthContext();
@@ -30,26 +37,26 @@ const UnlockForm = ({
   const { setClinic } = useClinicContext();
   const [errMsg, setErrMsg] = useState("");
   const [autolockTime, setAutoLockTime] = useState(
-    user.access_level === "admin"
-      ? user.autolock_time_min.toString()
-      : user.settings.autolock_time_min.toString()
+    user?.access_level === "admin"
+      ? (user as AdminType)?.autolock_time_min.toString()
+      : (user as UserStaffType)?.settings.autolock_time_min.toString()
   );
   const navigate = useNavigate();
 
   const [pin, setPin] = useState("");
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     setPin(e.target.value);
   };
-  const handleAutoLockChange = (e) => {
+  const handleAutoLockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setAutoLockTime(e.target.value);
   };
   const handleSubmit = useCallback(async () => {
     try {
       const response = await axios.post(`/api/xano/unlock`, {
         pin: parseInt(pin),
-        user_id: user.id,
-        userType: user.access_level,
+        user_id: user?.id,
+        userType: user?.access_level,
       });
       if (response.data) {
         setLockedScreen(false);
@@ -58,8 +65,8 @@ const UnlockForm = ({
         localStorage.removeItem("message");
 
         if (
-          user.access_level === "admin" &&
-          autolockTime !== user.autolock_time_min.toString()
+          user?.access_level === "admin" &&
+          autolockTime !== (user as AdminType)?.autolock_time_min.toString()
         ) {
           const userToPut = {
             ...user,
@@ -70,7 +77,7 @@ const UnlockForm = ({
             "admin",
             userToPut
           );
-          socket.emit("message", {
+          socket?.emit("message", {
             route: "USER",
             action: "update",
             content: {
@@ -78,7 +85,7 @@ const UnlockForm = ({
               data: response,
             },
           });
-          socket.emit("message", {
+          socket?.emit("message", {
             route: "ADMINS INFOS",
             action: "update",
             content: {
@@ -90,23 +97,24 @@ const UnlockForm = ({
             containerId: "A",
           });
         } else if (
-          user.access_level !== "admin" &&
-          autolockTime !== user.settings.autolock_time_min.toString()
+          user?.access_level !== "admin" &&
+          autolockTime !==
+            (user as UserStaffType)?.settings.autolock_time_min.toString()
         ) {
           const settingsToPut = {
-            ...user.settings,
+            ...(user as UserStaffType)?.settings,
             autolock_time_min: parseInt(autolockTime),
           };
           const response = await xanoPut(
-            `/settings/${user.settings.id}`,
+            `/settings/${(user as UserStaffType)?.settings.id}`,
             "staff",
             settingsToPut
           );
-          socket.emit("message", {
+          socket?.emit("message", {
             route: "USER",
             action: "update",
             content: {
-              id: user.id,
+              id: user?.id,
               data: {
                 ...user,
                 settings: response,
@@ -126,11 +134,11 @@ const UnlockForm = ({
   }, [autolockTime, pin, setLockedScreen, socket, user]);
 
   const handleLogout = () => {
-    setAuth({});
-    setUser({});
-    setStaffInfos({});
-    setAdminsInfos({});
-    setClinic({});
+    setAuth(null);
+    setUser(null);
+    setStaffInfos([]);
+    setAdminsInfos([]);
+    setClinic(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");
@@ -141,8 +149,7 @@ const UnlockForm = ({
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
     localStorage.setItem("message", "logout");
-    localStorage.removeItem("message");
-    clearInterval(tokenLimitVerifierID.current);
+    tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
     toastExpiredID.current && toast.dismiss(toastExpiredID.current);
     navigate("/");
   };
@@ -164,7 +171,7 @@ const UnlockForm = ({
   return (
     <div className="unlock-form">
       <div className="unlock-form__message">
-        This session was locked by <strong>{user.full_name}</strong>
+        This session was locked by <strong>{user?.full_name}</strong>
         <br />
         <br />
         Please enter PIN to unlock:

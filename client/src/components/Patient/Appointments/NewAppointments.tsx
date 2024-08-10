@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { DateTime } from "luxon";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -8,6 +8,8 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useStaffAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useAssignedPracticianSchedule } from "../../../hooks/reactquery/queries/userScheduleQueries";
+import { AppointmentType } from "../../../types/api";
+import { UserPatientType } from "../../../types/app";
 import { getAppointmentsInRange } from "../../../utils/appointments/getAppointmentsInRange";
 import {
   nowTZ,
@@ -24,7 +26,7 @@ import AppointmentsSlots from "./AppointmentsSlots";
 import WeekPicker from "./WeekPicker";
 
 const NewAppointments = () => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [rangeStart, setRangeStart] = useState(
@@ -33,7 +35,8 @@ const NewAppointments = () => {
   const [rangeEnd, setRangeEnd] = useState(
     nowTZ().plus({ days: 1, weeks: 1 }).startOf("day").toMillis()
   );
-  const [appointmentSelected, setAppointmentSelected] = useState({});
+  const [appointmentSelected, setAppointmentSelected] =
+    useState<AppointmentType | null>(null);
   const [requestSent, setRequestSent] = useState(false);
 
   const {
@@ -53,11 +56,6 @@ const NewAppointments = () => {
   } = useAssignedPracticianSchedule(user.demographics.assigned_staff_id);
 
   //Take recurring events into account
-  const appointmentsInRange = getAppointmentsInRange(
-    staffAppointmentsInRange,
-    rangeStart,
-    rangeEnd
-  );
 
   const handleClickNext = async () => {
     setRangeStart((rs) =>
@@ -70,7 +68,7 @@ const NewAppointments = () => {
         .plus({ weeks: 1 })
         .toMillis()
     );
-    setAppointmentSelected({});
+    setAppointmentSelected(null);
   };
   const handleClickPrevious = () => {
     setRangeStart((rs) =>
@@ -83,7 +81,7 @@ const NewAppointments = () => {
         .minus({ weeks: 1 })
         .toMillis()
     );
-    setAppointmentSelected({});
+    setAppointmentSelected(null);
   };
 
   const handleSubmit = async () => {
@@ -93,9 +91,9 @@ const NewAppointments = () => {
           staffInfos,
           user.demographics.assigned_staff_id
         )}, from ${timestampToHumanDateTimeTZ(
-          appointmentSelected.start
+          appointmentSelected?.start || 0
         )} to ${timestampToHumanDateTimeTZ(
-          appointmentSelected.end
+          appointmentSelected?.end || 0
         )}, do you confirm ?`,
       })
     ) {
@@ -119,8 +117,8 @@ I would like to have an appointment with ${staffIdToTitleAndName(
             )},
 
 From ${timestampToHumanDateTimeTZ(
-              appointmentSelected.start
-            )} to ${timestampToHumanDateTimeTZ(appointmentSelected.end)}
+              appointmentSelected?.start || 0
+            )} to ${timestampToHumanDateTimeTZ(appointmentSelected?.end || 0)}
   
 Please call me or send me a message to confirm the appointment.
 
@@ -140,12 +138,12 @@ Cellphone: ${
             "patient",
             message
           );
-          socket.emit("message", {
+          socket?.emit("message", {
             route: "MESSAGES INBOX EXTERNAL",
             action: "create",
             content: { data: response },
           });
-          socket.emit("message", {
+          socket?.emit("message", {
             route: "MESSAGES WITH PATIENT",
             action: "create",
             content: { data: response },
@@ -205,7 +203,7 @@ Cellphone: ${
       </p>
       {(error || errorAvailability) && (
         <ErrorParagraph
-          errorMsg={error?.message || errorAvailability.message}
+          errorMsg={error?.message || errorAvailability?.message}
         />
       )}
       {isPending || isPendingAvailability ? (
@@ -213,11 +211,14 @@ Cellphone: ${
       ) : (
         !error &&
         !errorAvailability &&
-        appointmentsInRange &&
         availability.id && (
           <AppointmentsSlots
             availability={availability}
-            appointmentsInRange={appointmentsInRange}
+            appointmentsInRange={getAppointmentsInRange(
+              staffAppointmentsInRange,
+              rangeStart,
+              rangeEnd
+            )}
             practicianSelectedId={user.demographics.assigned_staff_id}
             staffInfos={staffInfos}
             rangeStart={rangeStart}
@@ -231,7 +232,6 @@ Cellphone: ${
           handleClickNext={handleClickNext}
           handleClickPrevious={handleClickPrevious}
           rangeStart={rangeStart}
-          rangeEnd={rangeEnd}
         />
         <div className="new-appointments__submit">
           <SaveButton
