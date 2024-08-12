@@ -1,0 +1,176 @@
+import React, { useState } from "react";
+import NewWindow from "react-new-window";
+import { toast } from "react-toastify";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { useMessageExternalPut } from "../../../hooks/reactquery/mutations/messagesMutations";
+import {
+  DemographicsType,
+  MessageAttachmentType,
+  MessageExternalType,
+} from "../../../types/api";
+import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
+import MessagesExternalPrintPU from "../../Staff/Messaging/External/MessagesExternalPrintPU";
+import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import Button from "../../UI/Buttons/Button";
+import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import MessagePatientDetailToolbar from "./MessagePatientDetailToolbar";
+import ReplyMessagePatient from "./ReplyMessagePatient";
+
+type MessagePatientDetailProps = {
+  setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
+  message: MessageExternalType;
+  section: string;
+  printVisible: boolean;
+  setPrintVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const MessagePatientDetail = ({
+  setCurrentMsgId,
+  message,
+  section,
+  printVisible,
+  setPrintVisible,
+}: MessagePatientDetailProps) => {
+  const { user } = useUserContext();
+  const [replyVisible, setReplyVisible] = useState(false);
+  const previousMsgs: MessageExternalType[] = (
+    message.previous_messages_ids as { previous_message: MessageExternalType }[]
+  )
+    ?.map(
+      ({ previous_message }: { previous_message: MessageExternalType }) =>
+        previous_message
+    )
+    ?.sort((a, b) => (b.date_created as number) - (a.date_created as number));
+
+  const attachments: MessageAttachmentType[] = (
+    message.attachments_ids as { attachment: MessageAttachmentType }[]
+  ).map(({ attachment }) => attachment);
+  const messagePut = useMessageExternalPut();
+
+  const handleClickBack = () => {
+    setCurrentMsgId(0);
+  };
+
+  const handleDeleteMsg = async () => {
+    if (
+      await confirmAlert({
+        content: "Do you really want to delete this message ?",
+      })
+    ) {
+      const messageToPut: MessageExternalType = {
+        ...message,
+        deleted_by_patients_ids: [
+          ...(message.deleted_by_patients_ids ?? []),
+          user?.id as number,
+        ],
+        attachments_ids: (
+          message.attachments_ids as { attachment: MessageAttachmentType }[]
+        ).map(({ attachment }) => attachment.id as number),
+        previous_messages_ids: (
+          message.previous_messages_ids as {
+            previous_message: MessageExternalType;
+          }[]
+        )
+          .map(({ previous_message }) => previous_message.id)
+          .filter((id): id is number => id !== undefined), // Filter out undefined values
+        to_patients_ids: (
+          message.to_patients_ids as { to_patient_infos: DemographicsType }[]
+        )
+          .map(({ to_patient_infos }) => to_patient_infos.id)
+          .filter((id): id is number => id !== undefined) as number[], // Ensure this is a number[]
+      };
+
+      // delete messageToPut.to_patient_infos;
+      // delete messageToPut.form_patient_infos;
+      messagePut.mutate(messageToPut, {
+        onSuccess: () => {
+          toast.success("Message deleted successfully", {
+            containerId: "A",
+          });
+          setCurrentMsgId(0);
+        },
+        onError: (error) => {
+          toast.error(`Error: unable to delete message: ${error.message}`, {
+            containerId: "A",
+          });
+        },
+      });
+    }
+  };
+
+  const handleClickReply = () => {
+    setReplyVisible(true);
+  };
+
+  return (
+    message && (
+      <>
+        <MessagePatientDetailToolbar
+          message={message}
+          section={section}
+          handleClickBack={handleClickBack}
+          handleDeleteMsg={handleDeleteMsg}
+        />
+        <div className="message-detail__content">
+          <MessageExternal message={message} key={message.id} index={0} />
+          {previousMsgs &&
+            previousMsgs.length > 0 &&
+            previousMsgs.map((message, index) => (
+              <MessageExternal
+                message={message}
+                key={message.id}
+                index={index + 1}
+              />
+            ))}
+          <MessagesAttachments
+            attachments={attachments}
+            deletable={false}
+            cardWidth="15%"
+            addable={false}
+            message={message}
+          />
+        </div>
+        {printVisible && (
+          <NewWindow
+            title={`Message(s) / Subject: ${message.subject}`}
+            features={{
+              toolbar: "no",
+              scrollbars: "no",
+              menubar: "no",
+              status: "no",
+              directories: "no",
+              width: 793.7,
+              height: 1122.5,
+              left: 320,
+              top: 200,
+            }}
+            onUnload={() => setPrintVisible(false)}
+          >
+            <MessagesExternalPrintPU
+              message={message}
+              previousMsgs={previousMsgs}
+              attachments={attachments}
+            />
+          </NewWindow>
+        )}
+        {replyVisible && (
+          <ReplyMessagePatient
+            setReplyVisible={setReplyVisible}
+            message={message}
+            previousMsgs={previousMsgs}
+            setCurrentMsgId={setCurrentMsgId}
+          />
+        )}
+        {section !== "Deleted messages" && !replyVisible && (
+          <div className="message-detail__btns">
+            {section !== "Sent messages" && (
+              <Button onClick={handleClickReply} label="Reply" />
+            )}
+          </div>
+        )}
+      </>
+    )
+  );
+};
+
+export default MessagePatientDetail;

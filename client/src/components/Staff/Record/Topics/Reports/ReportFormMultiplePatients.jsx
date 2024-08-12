@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-
 import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -9,7 +8,7 @@ import {
   nowTZTimestamp,
 } from "../../../../../utils/dates/formatDates";
 import { getExtension } from "../../../../../utils/files/getExtension";
-import { patientIdToAssignedStaffTitleAndName } from "../../../../../utils/names/patientIdToName";
+import { patientIdToAssignedStaffTitleAndName } from "../../../../../utils/names/patientIdToAssignedStaffName";
 import { reportMultipleSchema } from "../../../../../validation/record/reportValidation";
 import FormReport from "./FormReport";
 

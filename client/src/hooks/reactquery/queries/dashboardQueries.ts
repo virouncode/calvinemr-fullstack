@@ -9,9 +9,9 @@ import {
 import { getLimitTimestampForAge } from "../../../utils/dates/formatDates";
 
 export const useDashboardVisits = (rangeStart: number, rangeEnd: number) => {
-  return useQuery<AppointmentType[]>({
+  return useQuery({
     queryKey: ["dashboardVisits", rangeStart, rangeEnd],
-    queryFn: () =>
+    queryFn: (): Promise<AppointmentType[]> =>
       xanoGet(`/dashboard/visits_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -20,9 +20,9 @@ export const useDashboardVisits = (rangeStart: number, rangeEnd: number) => {
 };
 
 export const useDashboardBillings = (rangeStart: number, rangeEnd: number) => {
-  return useQuery<BillingType[]>({
+  return useQuery({
     queryKey: ["dashboardBillings", rangeStart, rangeEnd],
-    queryFn: () =>
+    queryFn: (): Promise<BillingType[]> =>
       xanoGet(`/dashboard/billings_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -34,9 +34,9 @@ export const useDashboardMedications = (
   rangeStart: number,
   rangeEnd: number
 ) => {
-  return useQuery<MedType[]>({
+  return useQuery({
     queryKey: ["dashboardMedications", rangeStart, rangeEnd],
-    queryFn: () =>
+    queryFn: (): Promise<MedType[]> =>
       xanoGet(`/dashboard/medications_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -78,7 +78,7 @@ const fetchPatientsPerGender = async (sites: SiteType[]) => {
   return [...totals, { M: totalMale, F: totalFemale, O: totalOther }];
 };
 
-export const useDashboardPatientsPerGender = (sites) => {
+export const useDashboardPatientsPerGender = (sites: SiteType[]) => {
   return useQuery({
     queryKey: ["dashboardPatientsPerGender"],
     queryFn: () => fetchPatientsPerGender(sites),

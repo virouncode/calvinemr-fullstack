@@ -4,7 +4,7 @@ import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { SiteType } from "../../../types/api";
+import { AdminType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
@@ -18,7 +18,7 @@ type SiteEditProps = {
 };
 
 const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -99,7 +99,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
     }
     if (formDatas?.site_status === "Closed") {
       alert(
-        "You have decided to close this site. Please inform all staff members to update their site information in the 'My Account' section."
+        "You have decided to close this site. Please inform all staff members to update their site information in their 'My Account' section."
       );
     }
     //Formatting
@@ -116,8 +116,8 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
           }),
       ],
       updates: [
-        ...formDatas.updates,
-        { updated_by_id: user?.id, date_updated: nowTZTimestamp() },
+        ...(formDatas.updates || []),
+        { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
       email: formDatas?.email.toLowerCase(),
     };

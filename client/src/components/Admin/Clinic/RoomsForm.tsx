@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { RoomType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
 
@@ -95,8 +96,8 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }) => {
       <ul>
         {formDatas.rooms
           .filter(({ id }) => id !== "z")
-          .sort((a, b) => a.id.localeCompare(b.id))
-          .map((room) => (
+          .sort((a: RoomType, b: RoomType) => a.id.localeCompare(b.id))
+          .map((room: RoomType) => (
             <RoomItem
               room={room}
               key={room.id}

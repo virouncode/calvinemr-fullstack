@@ -1,0 +1,20 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
+import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import { PaginatedDiagnosisType } from "../../../types/api";
+import useUserContext from "../../context/useUserContext";
+
+export const useDiagnosis = (search: string) => {
+  const { user } = useUserContext();
+  const userType = user?.access_level;
+  return useInfiniteQuery({
+    queryKey: ["diagnosis", search],
+    queryFn: ({ pageParam }): Promise<PaginatedDiagnosisType> => {
+      return xanoGet(`/diagnosis_codes_search`, userType as string, {
+        search,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (prevData) => prevData.nextPage,
+  });
+};

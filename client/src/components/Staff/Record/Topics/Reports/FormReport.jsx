@@ -158,7 +158,7 @@ const FormReport = ({
           <Input
             label="Author"
             name="AuthorFreeText"
-            value={formDatas.AuthorFreeText || ""}
+            value={formDatas.SourceAuthorPhysician.AuthorFreeText || ""}
             onChange={handleChange}
             id="report-author"
           />
@@ -171,7 +171,7 @@ const FormReport = ({
                 <Input
                   label="First name"
                   name="FirstName"
-                  value={formDatas.ReportReviewed?.Name?.FirstName || ""}
+                  value={formDatas.ReportReviewed?.[0].Name?.FirstName || ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-first-name"
                 />
@@ -180,7 +180,7 @@ const FormReport = ({
                 <Input
                   label="Last name"
                   name="LastName"
-                  value={formDatas.ReportReviewed?.Name?.LastName || ""}
+                  value={formDatas.ReportReviewed?.[0].Name?.LastName || ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-last-name"
                 />
@@ -190,7 +190,7 @@ const FormReport = ({
                   label="OHIP#"
                   name="ReviewingOHIPPhysicianId"
                   value={
-                    formDatas.ReportReviewed?.ReviewingOHIPPhysicianId || ""
+                    formDatas.ReportReviewed?.[0].ReviewingOHIPPhysicianId || ""
                   }
                   onChange={handleReviewedOHIP}
                   id="report-reviewed-ohip"
@@ -201,7 +201,7 @@ const FormReport = ({
                   label="Date reviewed"
                   name="DateTimeReportReviewed"
                   value={timestampToDateISOTZ(
-                    formDatas.ReportReviewed?.DateTimeReportReviewed
+                    formDatas.ReportReviewed?.[0].DateTimeReportReviewed
                   )}
                   onChange={handleReviewedDate}
                   id="report-reviewed-date"

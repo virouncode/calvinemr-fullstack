@@ -3,6 +3,7 @@ import React from "react";
 type SubmitButtonProps = {
   label?: string;
   disabled?: boolean;
+  mr?: number;
 };
 
 const SubmitButton = ({

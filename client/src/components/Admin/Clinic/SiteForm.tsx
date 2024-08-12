@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { SiteType } from "../../../types/api";
+import { AdminType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
@@ -15,7 +15,7 @@ type SiteFormProps = {
 };
 
 const SiteForm = ({ setAddVisible }) => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -120,7 +120,7 @@ const SiteForm = ({ setAddVisible }) => {
         }),
         { id: "z", title: "To Be Determined" },
       ],
-      created_by_id: user?.id,
+      created_by_id: user.id,
       date_created: nowTZTimestamp(),
     };
     //Validation

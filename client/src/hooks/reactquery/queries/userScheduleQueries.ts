@@ -3,9 +3,9 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { AvailabilityType } from "../../../types/api";
 
 export const useUserSchedule = (userId: number) => {
-  return useQuery<AvailabilityType>({
+  return useQuery({
     queryKey: ["schedule", userId],
-    queryFn: () =>
+    queryFn: (): Promise<AvailabilityType> =>
       xanoGet("/availability_of_staff", "staff", {
         staff_id: userId,
       }),
@@ -13,9 +13,9 @@ export const useUserSchedule = (userId: number) => {
 };
 
 export const useAssignedPracticianSchedule = (practicianId: number) => {
-  return useQuery<AvailabilityType>({
+  return useQuery({
     queryKey: ["schedule", practicianId],
-    queryFn: () =>
+    queryFn: (): Promise<AvailabilityType> =>
       xanoGet("/availability_of_staff", "patient", {
         staff_id: practicianId,
       }),

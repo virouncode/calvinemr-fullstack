@@ -52,6 +52,7 @@ const Pamphlets = () => {
           value={search}
           onChange={handleSearch}
           id="search-edocs"
+          width={300}
         />
       </div>
       <div className="reference-edocs__results">

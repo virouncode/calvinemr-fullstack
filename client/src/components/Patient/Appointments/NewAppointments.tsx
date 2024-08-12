@@ -8,8 +8,7 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useStaffAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useAssignedPracticianSchedule } from "../../../hooks/reactquery/queries/userScheduleQueries";
-import { AppointmentType } from "../../../types/api";
-import { UserPatientType } from "../../../types/app";
+import { AppointmentProposalType, UserPatientType } from "../../../types/app";
 import { getAppointmentsInRange } from "../../../utils/appointments/getAppointmentsInRange";
 import {
   nowTZ,
@@ -36,7 +35,7 @@ const NewAppointments = () => {
     nowTZ().plus({ days: 1, weeks: 1 }).startOf("day").toMillis()
   );
   const [appointmentSelected, setAppointmentSelected] =
-    useState<AppointmentType | null>(null);
+    useState<AppointmentProposalType | null>(null);
   const [requestSent, setRequestSent] = useState(false);
 
   const {
@@ -91,16 +90,16 @@ const NewAppointments = () => {
           staffInfos,
           user.demographics.assigned_staff_id
         )}, from ${timestampToHumanDateTimeTZ(
-          appointmentSelected?.start || 0
+          appointmentSelected?.start
         )} to ${timestampToHumanDateTimeTZ(
-          appointmentSelected?.end || 0
+          appointmentSelected?.end
         )}, do you confirm ?`,
       })
     ) {
       //get all secretaries id
       const secretariesIds = staffInfos
         .filter(({ title }) => title === "Secretary")
-        .map(({ id }) => id);
+        .map(({ id }) => id) as number[];
 
       //create the message
       try {
@@ -117,8 +116,8 @@ I would like to have an appointment with ${staffIdToTitleAndName(
             )},
 
 From ${timestampToHumanDateTimeTZ(
-              appointmentSelected?.start || 0
-            )} to ${timestampToHumanDateTimeTZ(appointmentSelected?.end || 0)}
+              appointmentSelected?.start
+            )} to ${timestampToHumanDateTimeTZ(appointmentSelected?.end)}
   
 Please call me or send me a message to confirm the appointment.
 

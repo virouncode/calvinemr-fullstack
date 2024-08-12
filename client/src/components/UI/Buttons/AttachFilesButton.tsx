@@ -1,9 +1,13 @@
 import React from "react";
+import {
+  ClinicalNoteAttachmentType,
+  MessageAttachmentType,
+} from "../../../types/api";
 import PaperclipIcon from "../Icons/PaperclipIcon";
 
 type AttachFilesButtonProps = {
-  onClick: () => void;
-  attachments: { file: File; alias: string }[];
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
+  attachments: (MessageAttachmentType | ClinicalNoteAttachmentType)[];
 };
 
 const AttachFilesButton = ({

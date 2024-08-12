@@ -14,7 +14,7 @@ type ExportCSVButtonProps = {
   headers: {
     label: string;
     key: string;
-  };
+  }[];
 };
 
 const ExportCSVButton = ({

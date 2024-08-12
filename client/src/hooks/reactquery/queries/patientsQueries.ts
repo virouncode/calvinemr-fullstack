@@ -1,5 +1,9 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import {
+  DemographicsType,
+  PaginatedDemographicsType,
+} from "../../../types/api";
 import useUserContext from "../../context/useUserContext";
 
 export const usePatients = (search: string) => {
@@ -7,7 +11,7 @@ export const usePatients = (search: string) => {
   const userType = user?.access_level;
   return useInfiniteQuery({
     queryKey: ["patients", search],
-    queryFn: ({ pageParam }) => {
+    queryFn: ({ pageParam }): Promise<PaginatedDemographicsType> => {
       return xanoGet("/demographics_search", userType as string, {
         page: pageParam,
         search,
@@ -23,7 +27,7 @@ export const usePatientsSimpleSearch = (search: string) => {
   const userType = user?.access_level;
   return useInfiniteQuery({
     queryKey: ["patients", search],
-    queryFn: ({ pageParam }) => {
+    queryFn: ({ pageParam }): Promise<PaginatedDemographicsType> => {
       return xanoGet("/demographics_simple_search", userType as string, {
         page: pageParam,
         search,
@@ -37,7 +41,7 @@ export const usePatientsSimpleSearch = (search: string) => {
 export const usePatient = (patientId: number) => {
   return useQuery({
     queryKey: ["patient", patientId],
-    queryFn: () => {
+    queryFn: (): Promise<DemographicsType> => {
       return xanoGet(`/demographics_of_patient`, "staff", {
         patient_id: patientId,
       });

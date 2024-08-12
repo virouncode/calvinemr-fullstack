@@ -3,10 +3,10 @@ import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import InputDate from "../../UI/Inputs/InputDate";
 
 type DashboardDateFilterProps = {
-  rangeStart: number,
-  rangeEnd: number,
-  onChangeStart: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  onChangeEnd: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  rangeStart: number;
+  rangeEnd: number;
+  onChangeStart: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeEnd: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const DashboardDateFilter = ({

@@ -4,7 +4,7 @@ import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { SiteType, StaffType } from "../../../types/api";
+import { AdminType, SiteType, StaffType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
@@ -33,7 +33,7 @@ const StaffAccountEdit = ({
 }: StaffAccountEditProps) => {
   //HOOKS
   const [formDatas, setFormDatas] = useState<StaffType>(infos);
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);

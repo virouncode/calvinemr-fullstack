@@ -63,8 +63,8 @@ I would like to cancel my appointment with ${staffIdToTitleAndName(
             )},
 
 From ${timestampToHumanDateTimeTZ(
-              appointment?.start || 0
-            )} to ${timestampToHumanDateTimeTZ(appointment?.end || 0)}
+              appointment?.start
+            )} to ${timestampToHumanDateTimeTZ(appointment?.end)}
 
 Please contact me to confirm cancelation
 

@@ -15,7 +15,7 @@ type SiteItemProps = {
 
 const SiteItem = ({ site, handleEditClick }: SiteItemProps) => {
   const handleClickLogo = () => {
-    showDocument(site.logo?.url as string, site.logo?.mime as string);
+    showDocument(site.logo?.url ?? "", site.logo?.mime ?? "");
   };
 
   return (

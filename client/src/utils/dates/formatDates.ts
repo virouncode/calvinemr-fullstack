@@ -25,7 +25,7 @@ export const timestampToDateISOTZ = (
   );
 };
 export const timestampToTimeISOTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -38,7 +38,7 @@ export const timestampToTimeISOTZ = (
   );
 };
 export const timestampToDateTimeSecondsISOTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   withMs = true,
   withOffset = true,
   timezone = "America/Toronto",
@@ -53,7 +53,7 @@ export const timestampToDateTimeSecondsISOTZ = (
   );
 };
 export const timestampToDateMonthsLaterISOTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   monthsLater: number,
   timezone = "America/Toronto"
 ) => {
@@ -64,7 +64,7 @@ export const timestampToDateMonthsLaterISOTZ = (
 };
 
 export const timestampToDateYearsLaterISOTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   yearsLater: number,
   timezone = "America/Toronto"
 ) => {
@@ -76,7 +76,7 @@ export const timestampToDateYearsLaterISOTZ = (
 
 //STR
 export const timestampToHoursStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -92,7 +92,7 @@ export const timestampToHoursStrTZ = (
   return hours.toString().padStart(2, "0");
 };
 export const timestampToMinutesStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -107,7 +107,7 @@ export const timestampToMinutesStrTZ = (
   );
 };
 export const timestampToAMPMStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -123,7 +123,7 @@ export const timestampToAMPMStrTZ = (
 };
 
 export const timestampToTimeStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -134,7 +134,7 @@ export const timestampToTimeStrTZ = (
   }).toLocaleString(DateTime.TIME_SIMPLE);
 };
 export const timestampToDateTimeStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -145,7 +145,7 @@ export const timestampToDateTimeStrTZ = (
   }).toLocaleString(DateTime.DATETIME_SHORT);
 };
 export const timestampToDateStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -156,7 +156,7 @@ export const timestampToDateStrTZ = (
   }).toLocaleString(DateTime.DATE_SHORT);
 };
 export const timestampToDateTimeSecondsStrTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -169,7 +169,7 @@ export const timestampToDateTimeSecondsStrTZ = (
 
 //HUMAN
 export const timestampToHumanDateTimeTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -187,7 +187,7 @@ export const timestampToHumanDateTimeTZ = (
 };
 
 export const timestampToHumanDateTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -203,7 +203,7 @@ export const timestampToHumanDateTZ = (
 };
 
 export const timestampToHumanDateYearTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
@@ -215,7 +215,7 @@ export const timestampToHumanDateYearTZ = (
 };
 
 export const timestampToHumanTimeTZ = (
-  timestamp: number,
+  timestamp: number | undefined,
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {

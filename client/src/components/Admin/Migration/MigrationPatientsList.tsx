@@ -26,7 +26,8 @@ const MigrationPatientsList = ({
     fetchNextPage,
     isFetching,
   } = usePatients(search);
-  const { rootRef, lastItemRef } = useIntersection(
+
+  const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -39,7 +40,7 @@ const MigrationPatientsList = ({
   );
 
   return (
-    <ul className="migration-export__patients-list" ref={rootRef}>
+    <ul className="migration-export__patients-list" ref={ulRef}>
       <li className="patients__list-item">
         <Checkbox
           id="all-patients"

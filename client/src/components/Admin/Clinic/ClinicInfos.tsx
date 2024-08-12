@@ -110,7 +110,6 @@ const ClinicInfos = () => {
 
   if (isPending) return <LoadingParagraph />;
   if (error) return <ErrorParagraph errorMsg={error.message} />;
-  console.log(sites);
 
   return (
     <>

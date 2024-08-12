@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
-import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { SiteType, StaffType } from "../../../types/api";
+import { AdminType, SiteType, StaffType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
@@ -27,9 +26,8 @@ type SignupStaffFormProps = {
 };
 
 const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
-  const { clinic } = useClinicContext();
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [formDatas, setFormDatas] = useState<StaffType>({

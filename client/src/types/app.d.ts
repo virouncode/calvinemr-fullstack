@@ -10,6 +10,32 @@ import {
   StaffType,
 } from "./api";
 
+export type Topic =
+  | "PAST HEALTH"
+  | "FAMILY HISTORY"
+  | "RELATIONSHIPS"
+  | "ALERTS & SPECIAL NEEDS"
+  | "RISK FACTORS"
+  | "MEDICATIONS & TREATMENTS"
+  | "PAST PRESCRIPTIONS"
+  | "PHARMACIES"
+  | "E-FORMS"
+  | "REMINDERS"
+  | "LETTERS/REFERRALS"
+  | "GROUPS"
+  | "PERSONAL HISTORY"
+  | "CARE ELEMENTS"
+  | "PROBLEM LIST"
+  | "PREGNANCIES"
+  | "CYCLES"
+  | "ALLERGIES & ADVERSE REACTIONS"
+  | "REPORTS"
+  | "IMMUNIZATIONS"
+  | "APPOINTMENTS"
+  | "MESSAGES ABOUT PATIENT"
+  | "MESSAGES WITH PATIENT"
+  | "TO-DOS ABOUT PATIENT";
+
 export type CodeTableType = {
   code: string;
   name: string;
@@ -89,7 +115,7 @@ export type AxiosXanoConfigType = {
 };
 
 export type CredentialsType = {
-  email?: string;
+  email: string;
   password: string;
   confirmPassword: string;
   pin: string;

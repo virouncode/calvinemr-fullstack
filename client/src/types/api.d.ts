@@ -29,6 +29,10 @@ export type AlertType = {
   DateActive: number;
   EndDate: number;
 };
+export type PaginatedAlertsType = {
+  items: AlertType[];
+  nextPage: number | null;
+};
 
 export type AllergyType = {
   id: number;
@@ -49,6 +53,11 @@ export type AllergyType = {
   Reaction: string;
   RecordedDate: number;
   Notes: string;
+};
+
+export type PaginatedAllergiesType = {
+  items: AllergyType[];
+  nextPage: number | null;
 };
 
 export type AppointmentType = {
@@ -80,6 +89,11 @@ export type AppointmentType = {
   //add-ons
   site_infos?: SiteType;
   host_infos?: StaffType;
+};
+
+export type PaginatedAppointmentsType = {
+  items: AppointmentType[];
+  nextPage: number | null;
 };
 
 export type RruleType = {
@@ -147,15 +161,20 @@ export type AvailabilityType = {
 };
 
 export type BillingCodeTemplateType = {
-  id: number;
+  id?: number;
   name: string;
   author_id: number;
-  date_created: number;
+  date_created?: number;
   billing_codes: string[];
 };
 
+export type PaginatedBillingCodesTemplatesType = {
+  items: BillingCodeTemplateType[];
+  nextPage: number | null;
+};
+
 export type BillingType = {
-  id: number;
+  id?: number;
   date: number;
   date_created: number;
   provider_id: number;
@@ -163,7 +182,7 @@ export type BillingType = {
   patient_id: number;
   diagnosis_id: number;
   billing_code_id: number;
-  updates: {
+  updates?: {
     updated_by_id: number;
     date_updated: number;
     updated_by_user_type: string;
@@ -186,12 +205,21 @@ export type BillingType = {
   diagnosis_name?: { diagnosis: string };
 };
 
+export type PaginatedBillingsType = {
+  items: BillingType[];
+  nextPage: number | null;
+};
+
 export type CalvinAITemplateType = {
   id: number;
   author_id: number;
   name: string;
   date_created: number;
   prompt: string;
+};
+export type PaginatedCalvinAITemplatesType = {
+  items: CalvinAITemplateType[];
+  nextPage: number | null;
 };
 
 export type CareElementType = {
@@ -239,6 +267,10 @@ export type CareElementType = {
   bodyMassIndex: { BMI: string; Date: number }[];
   bodySurfaceArea: { BSA: string; Date: number }[];
 };
+export type PaginatedCareElementsType = {
+  items: CareElementType[];
+  nextPage: number | null;
+};
 
 export type ClinicType = {
   id: number;
@@ -271,6 +303,11 @@ export type ClinicalNoteType = {
   version_nbr: number;
   attachments_ids: number[];
   date_updated: number;
+};
+
+export type PaginatedClinicalNotesType = {
+  items: ClinicalNoteType[];
+  nextPage: number | null;
 };
 
 export type ClinicalNoteAttachmentType = {
@@ -311,6 +348,11 @@ export type ClinicalNoteTemplateType = {
   author_id: number;
   body: string;
   date_created: number;
+};
+
+export type PaginatedClinicalNoteTemplatesType = {
+  items: ClinicalNoteTemplateType[];
+  nextPage: number | null;
 };
 
 export type CycleType = {
@@ -370,6 +412,26 @@ export type CycleType = {
   status: string;
 };
 
+export type PaginatedCyclesType = {
+  items: CycleType[];
+  nextPage: number | null;
+};
+
+export type EmergencyContactType = {
+  ContactPurpose: { PurposeAsEnum: string; PurposeAsPlainText: string };
+  Name: { FirstName: string; MiddleName: string; LastName: string };
+  EmailAddress: string;
+  Note: string;
+  PhoneNumber: {
+    areaCode: string;
+    number: string;
+    extension: string;
+    exchange: string;
+    phoneNumber: string;
+    _phoneNumberType: string;
+  }[];
+};
+
 export type DemographicsType = {
   id: number;
   patient_id: number;
@@ -420,20 +482,7 @@ export type DemographicsType = {
   }[];
   PreferredOfficialLanguage: string;
   PreferredSpokenLanguage: string;
-  Contact: {
-    ContactPurpose: { PurposeAsEnum: string; PurposeAsPlainText: string };
-    Name: { FirstName: string; MiddleName: string; LastName: string };
-    EmailAddress: string;
-    Note: string;
-    PhoneNumber: {
-      areaCode: string;
-      number: string;
-      extension: string;
-      exchange: string;
-      phoneNumber: string;
-      _phoneNumberType: string;
-    }[];
-  }[];
+  Contact: EmergencyContactType[];
   NoteAboutPatient: string;
   Enrolment: {
     EnrolmentHistory: {
@@ -466,11 +515,21 @@ export type DemographicsType = {
   ai_consent_read: boolean;
 };
 
-export type DiagnosisCodeType = {
+export type PaginatedDemographicsType = {
+  items: DemographicsType[];
+  nextPage: number | null;
+};
+
+export type DiagnosisType = {
   id: number;
   code: number;
   diagnosis: string;
   category: string;
+};
+
+export type PaginatedDiagnosisType = {
+  items: DiagnosisType[];
+  nextPage: number | null;
 };
 
 export type DoctorType = {
@@ -519,6 +578,11 @@ export type DoctorType = {
   licence_nbr: string;
 };
 
+export type PaginatedDoctorsType = {
+  items: DoctorType[];
+  nextPage: number | null;
+};
+
 export type EdocType = {
   id: number;
   date_created: number;
@@ -526,6 +590,11 @@ export type EdocType = {
   file: AttachmentType;
   notes: string;
   name: string;
+};
+
+export type PaginatedEdocsType = {
+  items: EdocType[];
+  nextPage: number | null;
 };
 
 export type EformType = {
@@ -536,6 +605,11 @@ export type EformType = {
   updates: { updated_by_id: number; date_updated: number }[];
   file: AttachmentType;
   patient_id: number;
+};
+
+export type PaginatedEformsType = {
+  items: EformType[];
+  nextPage: number | null;
 };
 
 export type EformBlankType = {
@@ -568,6 +642,11 @@ export type FamilyHistoryType = {
   Notes: string;
 };
 
+export type PaginatedFamilyHistoriesType = {
+  items: FamilyHistoryType[];
+  nextPage: number | null;
+};
+
 export type FaxContactType = {
   id: number;
   name: string;
@@ -575,6 +654,11 @@ export type FaxContactType = {
   fax_number: string;
   date_created: number;
   created_by_id: number;
+};
+
+export type PaginatedFaxContactsType = {
+  items: FaxContactType[];
+  nextPage: number | null;
 };
 
 export type FaxTemplateType = {
@@ -586,6 +670,11 @@ export type FaxTemplateType = {
   body: string;
 };
 
+export type PaginatedFaxTemplatesType = {
+  items: FaxTemplateType[];
+  nextPage: number | null;
+};
+
 export type GroupType = {
   id: number;
   date_created: number;
@@ -595,6 +684,11 @@ export type GroupType = {
   description: string;
   color: string;
   global: boolean;
+};
+
+export type PaginatedGroupsType = {
+  items: GroupType[];
+  nextPage: number | null;
 };
 
 export type ImmunizationType = {
@@ -627,6 +721,11 @@ export type ImmunizationType = {
   recommended: boolean;
 };
 
+export type PaginatedImmunizationsType = {
+  items: ImmunizationType[];
+  nextPage: number | null;
+};
+
 export type LabLinkType = {
   id: number;
   date_created: number;
@@ -655,6 +754,11 @@ export type LabLinkPersonalType = {
   pwd: string;
 };
 
+export type PaginatedLabLinksPersonalType = {
+  items: LabLinkPersonalType[];
+  nextPage: number | null;
+};
+
 export type LetterType = {
   id: number;
   date_created: number;
@@ -666,7 +770,12 @@ export type LetterType = {
   updates: { date_updated: number; updated_by_id: number }[];
 };
 
-export type LetterTemplate = {
+export type PaginatedLettersType = {
+  items: LetterType[];
+  nextPage: number | null;
+};
+
+export type LetterTemplateType = {
   id: number;
   date_created: number;
   author_id: number;
@@ -678,6 +787,11 @@ export type LetterTemplate = {
   recipient_infos: string;
 };
 
+export type PaginatedLetterTemplatesType = {
+  items: LetterTemplateType[];
+  nextPage: number | null;
+};
+
 export type LinkType = {
   id: number;
   staff_id: number;
@@ -686,6 +800,11 @@ export type LinkType = {
   date_created: number;
   created_by_id: number;
   updates: { updated_by_id: number; date_updated: number }[];
+};
+
+export type PaginatedLinksType = {
+  items: LinkType[];
+  nextPage: number | null;
 };
 
 export type MedType = {
@@ -736,6 +855,11 @@ export type MedType = {
   site_id: number;
 };
 
+export type PaginatedMedsType = {
+  items: MedType[];
+  nextPage: number | null;
+};
+
 export type MedTemplateType = {
   id: number;
   author_id: number;
@@ -761,13 +885,18 @@ export type MedTemplateType = {
   refill_duration: { Y: number; M: number; W: number; D: number };
 };
 
+export type PaginatedMedsTemplatesType = {
+  items: MedTemplateType[];
+  nextPage: number | null;
+};
+
 export type MessageType = {
   id: number;
   from_id: number;
   to_staff_ids: number[];
   subject: string;
   body: string;
-  attachments_ids: number[];
+  attachments_ids: number[] | { attachment: MessageAttachmentType }[];
   related_patient_id: number;
   read_by_staff_ids: number[];
   deleted_by_staff_ids: number[];
@@ -775,10 +904,17 @@ export type MessageType = {
   date_created: number;
   type: string;
   high_importance: boolean;
+  //add-on
+  patient_infos?: DemographicsType;
+};
+
+export type PaginatedMessagesType = {
+  items: MessageType[];
+  nextPage: number | null;
 };
 
 export type MessageAttachmentType = {
-  id: number;
+  id: number | string;
   file: AttachmentType;
   alias: string;
   date_created: number;
@@ -791,27 +927,41 @@ export type MessageExternalType = {
   from_staff_id?: number;
   from_patient_id?: number;
   to_staff_id?: number;
-  to_patients_ids?: number[];
+  to_patients_ids?: number[] | { to_patient_infos: DemographicsType }[];
   subject: string;
   body: string;
-  attachments_ids?: number[];
+  attachments_ids?: number[] | { attachment: MessageAttachmentType }[];
   read_by_staff_id?: number;
   read_by_patients_ids?: number[];
   deleted_by_staff_id?: number;
   deleted_by_patients_ids?: number[];
-  previous_messages_ids?: number[];
+  previous_messages_ids?:
+    | number[]
+    | { previous_message: MessageExternalType }[];
   date_created?: number;
   type: string;
   high_importance?: boolean;
+  //Add-on
+  from_patient_infos?: DemographicsType;
 };
 
-export type MessageExternalTemplate = {
+export type PaginatedMessagesExternalType = {
+  items: MessageExternalType[];
+  nextPage: number | null;
+};
+
+export type MessageExternalTemplateType = {
   id: number;
   name: string;
   date_created: number;
   author_id: number;
   subject: string;
   body: string;
+};
+
+export type PaginatedMessageExternalTemplatesType = {
+  items: MessageExternalTemplateType[];
+  nextPage: number | null;
 };
 
 export type MessageTemplateType = {
@@ -822,6 +972,11 @@ export type MessageTemplateType = {
   subject: string;
   body: string;
   date_created: number;
+};
+
+export type PaginatedMessageTemplatesType = {
+  items: MessageTemplateType[];
+  nextPage: number | null;
 };
 
 export type NotepadType = {
@@ -852,6 +1007,11 @@ export type PamphletType = {
   name: string;
 };
 
+export type PaginatedPamphletsType = {
+  items: PamphletType[];
+  nextPage: number | null;
+};
+
 export type PastHealthType = {
   id: number;
   patient_id: number;
@@ -875,6 +1035,11 @@ export type PastHealthType = {
   ProblemStatus: string;
 };
 
+export type PaginatedPastHealthsType = {
+  items: PastHealthType[];
+  nextPage: number | null;
+};
+
 export type PatientType = {
   id: number;
   email: string;
@@ -896,6 +1061,11 @@ export type PersonalHistoryType = {
   ResidualInfo: {
     DataElement: { Name: string; DataType: string; Content: string }[];
   };
+};
+
+export type PaginatedPersonalHistoryType = {
+  items: PersonalHistoryType[];
+  nextPage: number | null;
 };
 
 export type PharmacyType = {
@@ -928,6 +1098,11 @@ export type PharmacyType = {
   EmailAddress: string;
 };
 
+export type PaginatedPharmaciesType = {
+  items: PharmacyType[];
+  nextPage: number | null;
+};
+
 export type PregnancyType = {
   id: number;
   patient_id: number;
@@ -942,12 +1117,22 @@ export type PregnancyType = {
   notes: string;
 };
 
+export type PaginatedPregnanciesType = {
+  items: PregnancyType[];
+  nextPage: number | null;
+};
+
 export type PrescriptionType = {
   id: number;
   patient_id: number;
   attachment_id: number;
   unique_id: string;
   date_created: number;
+};
+
+export type PaginatedPrescriptionType = {
+  items: PrescriptionType[];
+  nextPage: number | null;
 };
 
 export type ProblemListType = {
@@ -973,6 +1158,11 @@ export type ProblemListType = {
   Notes: string;
 };
 
+export type PaginatedProblemListsType = {
+  items: ProblemListType[];
+  nextPage: number | null;
+};
+
 export type RelationshipType = {
   id: number;
   patient_id: number;
@@ -981,6 +1171,11 @@ export type RelationshipType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
+};
+
+export type PaginatedRelationshipsType = {
+  items: RelationshipType[];
+  nextPage: number | null;
 };
 
 export type ReminderType = {
@@ -992,48 +1187,58 @@ export type ReminderType = {
   updates: { updated_by_id: number; date_updated: number }[];
 };
 
+export type PaginatedRemindersType = {
+  items: ReminderType[];
+  nextPage: number | null;
+};
+
 export type ReportType = {
-  id: number;
+  id?: number;
   patient_id: number;
-  date_created: number;
-  created_by_id: number;
-  updates: { updated_by_id: number; date_updated: number }[];
-  name: string;
-  Media: string;
-  Format: string;
+  date_created?: number;
+  created_by_id?: number;
+  updates?: { updated_by_id: number; date_updated: number }[];
+  name?: string;
+  Media?: string;
+  Format?: string;
   FileExtensionAndVersion: string;
-  FilePath: string;
-  Content: { TextContent: string; Media: string };
-  Class: string;
-  SubClass: string;
-  EventDateTime: number;
-  ReceivedDateTime: number;
-  SourceAuthorPhysician: {
+  FilePath?: string;
+  Content?: { TextContent: string; Media: string };
+  Class?: string;
+  SubClass?: string;
+  EventDateTime?: number;
+  ReceivedDateTime?: number;
+  SourceAuthorPhysician?: {
     AuthorName: { FirstName: string; LastName: string };
     AuthorFreeText: string;
   };
-  SourceFacility: string;
-  ReportReviewed: {
+  SourceFacility?: string;
+  ReportReviewed?: {
     Name: { FirstName: string; LastName: string };
     ReviewingOHIPPhysicianId: string;
     DateTimeReportReviewed: number;
   }[];
-  SendingFacilityId: string;
-  SendingFacilityReport: string;
-  OBRContent: {
+  SendingFacilityId?: string;
+  SendingFacilityReport?: string;
+  OBRContent?: {
     AccompanyingSubClass: string;
     AccompanyingMnemonic: string;
     AccompanyingDescription: string;
     ObservationDateTime: number;
   }[];
-  HRMResultStatus: string;
-  MessageUniqueID: string;
-  Notes: string;
-  RecipientName: { FirstName: string; LastName: string };
-  DateTimeSent: number;
-  acknowledged: boolean;
+  HRMResultStatus?: string;
+  MessageUniqueID?: string;
+  Notes?: string;
+  RecipientName?: { FirstName: string; LastName: string };
+  DateTimeSent?: number;
+  acknowledged?: boolean;
   assigned_staff_id: number;
-  File: AttachmentType;
+  File: AttachmentType | null;
+};
+
+export type PaginatedReportsType = {
+  items: ReportType[];
+  nextPage: number | null;
 };
 
 export type RiskFactorType = {
@@ -1052,6 +1257,11 @@ export type RiskFactorType = {
   EndDate: string;
   LifeStage: string;
   Notes: string;
+};
+
+export type PaginatedRiskFactorsType = {
+  items: RiskFactorType[];
+  nextPage: number | null;
 };
 
 export type SettingType = {
@@ -1126,6 +1336,9 @@ export type StaffType = {
   pin?: string;
   //add-ons
   site_infos?: SiteType;
+  staff_settings?: {
+    authorized_messages_patients_ids: number[];
+  };
 };
 
 export type SearchStaffType = {
@@ -1155,6 +1368,11 @@ export type TodoType = {
   from_staff_id: number;
 };
 
+export type PaginatedTodosType = {
+  items: TodoType[];
+  nextPage: number | null;
+};
+
 export type TodoTemplateType = {
   id: number;
   name: string;
@@ -1162,6 +1380,11 @@ export type TodoTemplateType = {
   body: string;
   author_id: number;
   date_created: number;
+};
+
+export type PaginatedTodoTemplatesType = {
+  items: TodoTemplateType[];
+  nextPage: number | null;
 };
 
 //WEATHER API Types
@@ -1211,4 +1434,55 @@ export type WeatherType = {
     gust_mph: number;
     gust_kph: number;
   };
+};
+
+//SRFAX API Types
+export type FaxInboxType = {
+  FileName: string;
+  ReceiveStatus: string;
+  Date: string;
+  EpochTime: string;
+  CallerID: string;
+  RemoteID: string;
+  Pages: number;
+  Size: number;
+  ViewedStatus: string;
+};
+
+export type FaxOutboxType = {
+  FileName: string;
+  SentStatus: string;
+  DateQueued: string;
+  DateSent: string;
+  EpochTime: string;
+  ToFaxNumber: string;
+  Pages: number;
+  Duration: number;
+  RemoteID: string;
+  ErrorCode: string;
+  AccountCode: string;
+  SenderEmail: string;
+  Subject: string;
+  Size: number;
+  SubmittedFiles: string;
+};
+
+export type FaxToPostType = {
+  sToFaxNumber: string;
+  sCPFromName: string;
+  sCPToName: string;
+  sCPOrganization: string;
+  sCPSubject: string;
+  sCPComments: string;
+  sFileName_1: string;
+  fileURL: string;
+};
+
+export type FaxToDeleteType = {
+  faxFileName: string;
+  direction: "IN" | "OUT";
+};
+export type FaxesToDeleteType = {
+  faxFileNames: string[];
+  direction: "IN" | "OUT";
 };

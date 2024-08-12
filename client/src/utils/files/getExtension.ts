@@ -1,5 +1,6 @@
 export const getExtension = (path: string) => {
-  const baseName = path.split(/[\\/]/).pop(), // extracts file name from full path
+  if (!path) return "";
+  const baseName = path.split(/[\\/]/).pop() as string, // extracts file name from full path
     // (supports separators `\\` and `/`)
     pos = baseName?.lastIndexOf("."); // gets the last position of `.`
   if (pos) {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
-import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { AdminType } from "../../../types/api";
@@ -17,13 +16,10 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const MyAccountAdmin = () => {
   //HOOKS
-  const { user } = useUserContext();
-  const { adminsInfos } = useAdminsInfosContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
-  const [tempFormDatas, setTempFormDatas] = useState(
-    adminsInfos.find(({ id }) => id === user?.id) as AdminType
-  );
+  const [tempFormDatas, setTempFormDatas] = useState(user);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [progress, setProgress] = useState(false);
@@ -70,7 +66,7 @@ const MyAccountAdmin = () => {
           " " +
           firstLetterUpper(tempFormDatas.last_name),
       };
-      const response = await xanoPut(`/admin/${user?.id}`, "admin", datasToPut);
+      const response = await xanoPut(`/admin/${user.id}`, "admin", datasToPut);
       setSuccessMsg("Infos changed successfully");
       socket?.emit("message", {
         route: "USER",

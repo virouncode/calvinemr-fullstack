@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { DemographicsType } from "../../../types/api";
+import { AdminType, DemographicsType } from "../../../types/api";
 import { SearchPatientType } from "../../../types/app";
 import { nowTZ } from "../../../utils/dates/formatDates";
 import { exportPatientEMR } from "../../../utils/migration/exports/exportsXML";
@@ -25,7 +25,7 @@ import MigrationPatientsList from "./MigrationPatientsList";
 import MigrationRecordsList from "./MigrationRecordsList";
 
 const MigrationExport = () => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [search, setSearch] = useState<SearchPatientType>({
     name: "",
@@ -149,7 +149,7 @@ const MigrationExport = () => {
           doctorFirstName,
           doctorLastName,
           doctorOHIP,
-          user?.full_name,
+          user.full_name,
           dateOfExport,
           patient
         );

@@ -1,8 +1,8 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 
 import {
-    useDashboardPatientsPerAge,
-    useDashboardPatientsPerGender,
+  useDashboardPatientsPerAge,
+  useDashboardPatientsPerGender,
 } from "../../../hooks/reactquery/queries/dashboardQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";

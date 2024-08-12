@@ -6,6 +6,7 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { AdminType } from "../../../types/api";
 import { CredentialsType, PasswordValidityType } from "../../../types/app";
 import FormCredentials from "../../UI/Forms/FormCredentials";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -13,10 +14,10 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 const CredentialsFormAdmin = () => {
   const navigate = useNavigate();
   const { auth } = useAuthContext();
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [credentials, setCredentials] = useState<CredentialsType>({
-    email: auth?.email,
+    email: auth?.email as string,
     password: "",
     confirmPassword: "",
     pin: "",
@@ -122,19 +123,15 @@ const CredentialsFormAdmin = () => {
 
     try {
       //get my infos
-      const me = await xanoGet(`/admin/${user?.id}`, "admin");
+      const me = await xanoGet(`/admin/${user.id}`, "admin");
       me.email = credentials.email.toLowerCase();
       me.password = credentials.password;
       me.pin = credentials.pin;
-      const response = await xanoPut(
-        `/admin/password/${user?.id}`,
-        "admin",
-        me
-      );
+      const response = await xanoPut(`/admin/password/${user.id}`, "admin", me);
       socket?.emit("message", {
         route: "ADMINS INFOS",
         action: "update",
-        content: { id: user?.id, data: response },
+        content: { id: user.id, data: response },
       });
       //pas besoin de socket sur USER car il va se relogger
       setSuccessMsg("Credentials changed succesfully");
