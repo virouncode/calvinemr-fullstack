@@ -13,7 +13,7 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 import RelativesList from "./RelativesList";
 
 const FamilyHistoryForm = ({
@@ -155,7 +155,7 @@ const FamilyHistoryForm = ({
       <td>
         <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

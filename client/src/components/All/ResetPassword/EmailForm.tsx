@@ -35,8 +35,7 @@ const EmailForm = ({
     setType(e.target.value);
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     navigate("/");
   };
 
@@ -68,6 +67,11 @@ const EmailForm = ({
     setProgress(false);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailInput(e.target.value);
+    setErrMsg("");
+  };
+
   return (
     <form onSubmit={handleSubmitEmail}>
       <div className="email-form-row-radio">
@@ -76,10 +80,7 @@ const EmailForm = ({
       <div className="email-form-row">
         <InputEmail
           value={emailInput}
-          onChange={(e) => {
-            setEmailInput(e.target.value);
-            setErrMsg("");
-          }}
+          onChange={handleChange}
           name="email"
           id="email"
           label="Enter your email: "

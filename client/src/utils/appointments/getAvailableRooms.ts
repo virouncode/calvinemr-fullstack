@@ -1,6 +1,11 @@
 import _ from "lodash";
 import xanoGet from "../../api/xanoCRUD/xanoGet";
-import { AppointmentType, SiteType } from "../../types/api";
+import {
+  AppointmentType,
+  ExruleType,
+  RruleType,
+  SiteType,
+} from "../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -43,8 +48,8 @@ export const getAvailableRooms = async (
         const nextOccurence = toNextOccurence(
           start,
           end,
-          otherRecAppointment.rrule,
-          otherRecAppointment.exrule
+          otherRecAppointment.rrule as RruleType,
+          otherRecAppointment.exrule as ExruleType
         );
         start = nextOccurence[0];
         end = nextOccurence[1];
@@ -74,13 +79,15 @@ export const getAvailableRooms = async (
     const occupiedRooms = _.uniq(
       otherAppointments
         .filter(({ room_id }) => room_id !== "z")
-        .map(({ room_id }) => room_id)
-    );
-    const allRooms = sites
-      .find(({ id }) => id === siteId)
-      ?.rooms.filter(({ id }) => id !== "z")
-      .map(({ id }) => id);
-    const availableRooms = _.difference(allRooms, occupiedRooms);
+        .map(({ room_id }) => room_id) ?? []
+    ) as string[];
+    const allRooms =
+      sites
+        .find(({ id }) => id === siteId)
+        ?.rooms.filter(({ id }) => id !== "z")
+        .map(({ id }) => id) ?? [];
+    const availableRooms =
+      (_.difference(allRooms, occupiedRooms) as string[]) ?? [];
     return availableRooms;
   } catch (err) {
     if (err.name !== "CanceledError") throw err;

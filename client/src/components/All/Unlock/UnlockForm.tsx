@@ -155,7 +155,7 @@ const UnlockForm = ({
   };
 
   useEffect(() => {
-    const handleEnterShortcut = (e) => {
+    const handleEnterShortcut = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         e.preventDefault();
         e.stopPropagation();

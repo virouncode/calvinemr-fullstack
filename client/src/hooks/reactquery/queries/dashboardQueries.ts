@@ -78,10 +78,10 @@ const fetchPatientsPerGender = async (sites: SiteType[]) => {
   return [...totals, { M: totalMale, F: totalFemale, O: totalOther }];
 };
 
-export const useDashboardPatientsPerGender = (sites: SiteType[]) => {
+export const useDashboardPatientsPerGender = (sites?: SiteType[]) => {
   return useQuery({
     queryKey: ["dashboardPatientsPerGender"],
-    queryFn: () => fetchPatientsPerGender(sites),
+    queryFn: () => fetchPatientsPerGender(sites as SiteType[]),
     enabled: !!sites,
   });
 };
@@ -178,10 +178,10 @@ const fetchPatientsPerAge = async (sites: SiteType[]) => {
   return totals;
 };
 
-export const useDashboardPatientsPerAge = (sites: SiteType[]) => {
+export const useDashboardPatientsPerAge = (sites?: SiteType[]) => {
   return useQuery<TotalsForSitePerAgeType[]>({
     queryKey: ["dashboardPatientsPerAge"],
-    queryFn: () => fetchPatientsPerAge(sites),
+    queryFn: () => fetchPatientsPerAge(sites as SiteType[]),
     enabled: !!sites,
   });
 };

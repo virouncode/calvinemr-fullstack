@@ -7,7 +7,6 @@ import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGrid from "@fullcalendar/timegrid";
 
-
 const CalendarView = ({
   initialDate,
   slotDuration,

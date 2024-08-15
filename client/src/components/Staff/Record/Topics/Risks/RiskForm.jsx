@@ -13,7 +13,7 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
 const RiskForm = ({
   editCounter,
@@ -146,7 +146,7 @@ const RiskForm = ({
       <td>
         <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

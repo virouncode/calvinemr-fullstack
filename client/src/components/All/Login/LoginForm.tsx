@@ -12,7 +12,7 @@ import {
   ClinicType,
   DemographicsType,
   PatientType,
-  SettingType,
+  SettingsType,
   StaffType,
 } from "../../../types/api";
 import { toPatientName } from "../../../utils/names/toPatientName";
@@ -53,10 +53,7 @@ const LoginForm = () => {
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmitStaff = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmitStaff = async () => {
     //Validation
     try {
       await loginSchema.validate(formDatas);
@@ -102,7 +99,7 @@ const LoginForm = () => {
       }
 
       //================ USER SETTINGS ===================//
-      const settings: SettingType = await xanoGet(
+      const settings: SettingsType = await xanoGet(
         "/settings_of_staff",
         "staff",
         {
@@ -192,10 +189,7 @@ const LoginForm = () => {
     }
   };
 
-  const handleSubmitPatient = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmitPatient = async () => {
     //Validation
     try {
       await loginSchema.validate(formDatas);
@@ -301,10 +295,7 @@ const LoginForm = () => {
     }
   };
 
-  const handleSubmitAdmin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmitAdmin = async () => {
     //Validation
     try {
       await loginSchema.validate(formDatas);

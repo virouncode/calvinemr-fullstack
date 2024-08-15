@@ -29,7 +29,7 @@ import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import { DateTimePicker } from "../../../../UI/Pickers/DateTimePicker";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 import HostsSelect from "../../../EventForm/Host/HostsSelect";
 import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
 import RoomsSelect from "../../../EventForm/Rooms/RoomsSelect";
@@ -637,7 +637,7 @@ const AppointmentForm = ({
           onChange={handleChange}
         />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

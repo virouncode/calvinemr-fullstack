@@ -1,3 +1,4 @@
+import React from "react";
 import { Socket } from "socket.io-client";
 import {
   AdminType,
@@ -6,7 +7,7 @@ import {
   ExruleType,
   PatientType,
   RruleType,
-  SettingType,
+  SettingsType,
   StaffType,
 } from "./api";
 
@@ -44,7 +45,7 @@ export type CodeTableType = {
 export type AuthType = {
   email: string;
   tokenLimit?: number;
-} | null;
+};
 
 export type AuthContextType = {
   auth: AuthType;
@@ -52,7 +53,7 @@ export type AuthContextType = {
 };
 
 export type UserStaffType = StaffType & {
-  settings: SettingType;
+  settings: SettingsType;
   unreadMessagesNbr: number;
   unreadMessagesExternalNbr: number;
   unreadTodosNbr: number;
@@ -96,8 +97,8 @@ export type SocketContextType = {
 };
 
 export type ClinicContextType = {
-  clinic: ClinicType;
-  setClinic: React.Dispatch<React.SetStateAction<ClinicType>>;
+  clinic: ClinicType | null;
+  setClinic: React.Dispatch<React.SetStateAction<ClinicType | null>>;
 };
 
 export type AxiosXanoConfigType = {
@@ -114,7 +115,7 @@ export type AxiosXanoConfigType = {
   signal?: AbortSignal;
 };
 
-export type CredentialsType = {
+export type CredentialsFormType = {
   email: string;
   password: string;
   confirmPassword: string;
@@ -191,7 +192,7 @@ export type EventType = {
     purpose: string;
     status: string;
     staffGuestsIds: { staff_infos: StaffType }[];
-    patientsGuestsIds: { patient_infos: PatientType }[];
+    patientsGuestsIds: { patient_infos: DemographicsType }[];
     siteId: number;
     siteName: string;
     roomId: string;
@@ -216,4 +217,10 @@ export type AppointmentProposalType = {
   end: number;
   reason: string;
   all_day: boolean;
+};
+
+export type RemainingStaffType = {
+  id: number;
+  color: string;
+  textColor: string;
 };

@@ -9,7 +9,7 @@ import { relationshipSchema } from "../../../../../validation/record/relationshi
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import InputWithSearchInTable from "../../../../UI/Inputs/InputWithSearchInTable";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 import RelationshipList from "./RelationshipList";
 
 const RelationshipForm = ({
@@ -117,7 +117,7 @@ const RelationshipForm = ({
           onClick={() => setPatientSearchVisible(true)}
         />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

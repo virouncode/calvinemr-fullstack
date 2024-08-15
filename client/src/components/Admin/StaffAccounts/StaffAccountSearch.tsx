@@ -17,7 +17,9 @@ const StaffAccountSearch = ({
   setSearch,
   sites,
 }: StaffAccountSearchProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => {
     const name = e.target.name;
     const value = e.target.value;
     setSearch({ ...search, [name]: value });

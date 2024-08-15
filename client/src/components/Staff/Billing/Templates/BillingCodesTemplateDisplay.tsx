@@ -44,11 +44,16 @@ const BillingCodesTemplateDisplay = ({
       </span>
       {user.id === template.author_id && (
         <>
-          <PenIcon ml={5} onClick={handleEditClick}></PenIcon>
+          <PenIcon ml={5} onClick={handleEditClick} />
           <TrashIcon ml={5} onClick={handleDelete} />
         </>
       )}
-      <CloneIcon onClick={(e) => handleDuplicate(e, template)} ml={5} />
+      <CloneIcon
+        onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
+          handleDuplicate(e, template)
+        }
+        ml={5}
+      />
     </li>
   );
 };

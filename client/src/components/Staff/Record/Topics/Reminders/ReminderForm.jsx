@@ -6,7 +6,7 @@ import { reminderSchema } from "../../../../../validation/record/reminderValidat
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
 const ReminderForm = ({
   editCounter,
@@ -90,7 +90,7 @@ const ReminderForm = ({
           onChange={handleChange}
         />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

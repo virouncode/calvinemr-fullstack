@@ -13,8 +13,8 @@ import SiteStatusSelect from "../../UI/Lists/SiteStatusSelect";
 import RoomsForm from "./RoomsForm";
 
 type FormSiteProps = {
-  formDatas: SiteType;
-  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
+  formDatas: Partial<SiteType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<SiteType>>>;
   handleChange: (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -25,7 +25,7 @@ type FormSiteProps = {
   handleLogoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isLoadingFile: boolean;
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleSubmit: () => Promise<void>;
   handleCancel: () => void;
   progress: boolean;
 };
@@ -77,7 +77,7 @@ const FormSite = ({
           <div className="site-form__row">
             <GenericList
               list={provinceStateTerritoryCT}
-              value={formDatas.province_state}
+              value={formDatas.province_state as string}
               handleChange={handleChange}
               name="province_state"
               label="Province/State*:"
@@ -134,7 +134,7 @@ const FormSite = ({
           </div>
           <div className="site-form__row">
             <SiteStatusSelect
-              value={formDatas.site_status}
+              value={formDatas.site_status as string}
               onChange={handleChange}
             />
           </div>
@@ -144,7 +144,7 @@ const FormSite = ({
               <InputImgFile
                 isLoadingFile={isLoadingFile}
                 onChange={handleLogoChange}
-                img={formDatas.logo}
+                img={formDatas.logo ?? null}
                 alt="site-logo"
                 width={150}
               />

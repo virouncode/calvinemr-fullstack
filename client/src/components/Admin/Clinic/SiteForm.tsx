@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { AdminType, SiteType } from "../../../types/api";
+import { AdminType, AttachmentType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
@@ -14,12 +14,12 @@ type SiteFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SiteForm = ({ setAddVisible }) => {
+const SiteForm = ({ setAddVisible }: SiteFormProps) => {
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState<SiteType>({
+  const [formDatas, setFormDatas] = useState<Partial<SiteType>>({
     name: "",
     address: "",
     postal_code: "",
@@ -31,6 +31,7 @@ const SiteForm = ({ setAddVisible }) => {
     email: "",
     rooms: [],
     site_status: "Open",
+    logo: null,
   });
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
@@ -57,13 +58,13 @@ const SiteForm = ({ setAddVisible }) => {
     reader.onload = async (e) => {
       const content = e.target?.result; // this is the content!
       try {
-        const fileToUpload = await xanoPost(
+        const fileToUpload: AttachmentType = await xanoPost(
           "/upload/attachment",
           "admin",
 
           { content }
         );
-        setFormDatas({ ...formDatas, logo: fileToUpload });
+        setFormDatas({ ...formDatas, logo: fileToUpload ?? null });
         setIsLoadingFile(false);
       } catch (err) {
         toast.error(`Error unable to load file: ${err.message}`, {
@@ -104,31 +105,28 @@ const SiteForm = ({ setAddVisible }) => {
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const datasToPost = {
+    const datasToPost: Partial<SiteType> = {
       ...formDatas,
-      name: firstLetterUpper(formDatas.name),
-      address: firstLetterUpper(formDatas.address),
-      city: firstLetterUpper(formDatas.city),
+      name: firstLetterUpper(formDatas.name ?? ""),
+      address: firstLetterUpper(formDatas.address ?? ""),
+      city: firstLetterUpper(formDatas.city ?? ""),
       rooms: [
-        ...formDatas.rooms.map((room) => {
+        ...(formDatas.rooms?.map((room) => {
           return { id: room.id, title: firstLetterUpper(room.title) };
-        }),
+        }) ?? []),
         { id: "z", title: "To Be Determined" },
       ],
       created_by_id: user.id,
       date_created: nowTZTimestamp(),
     };
     //Validation
-    if (formDatas.rooms.length === 0) {
+    if (formDatas.rooms?.length === 0) {
       setErrMsg("Please add at least one room for the appointments");
       return;
     }
-    if (formDatas.rooms.find((room) => !room.title)) {
+    if (formDatas.rooms?.find((room) => !room.title)) {
       setErrMsg("All rooms should have a Name");
       return;
     }
@@ -141,7 +139,7 @@ const SiteForm = ({ setAddVisible }) => {
     //Submission
     try {
       setProgress(true);
-      const response = await xanoPost("/sites", "admin", datasToPost);
+      const response: SiteType = await xanoPost("/sites", "admin", datasToPost);
       socket?.emit("message", {
         route: "SITES",
         action: "create",

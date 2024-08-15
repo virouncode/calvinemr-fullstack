@@ -17,7 +17,7 @@ export const useAppointments = (
   timelineVisible: boolean,
   timelineSiteId: number,
   sitesIds: number[],
-  sites: SiteType[]
+  sites?: SiteType[]
 ) => {
   return useQuery({
     queryKey: [

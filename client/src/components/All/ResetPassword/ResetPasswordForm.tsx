@@ -31,7 +31,7 @@ const ResetPasswordForm = ({
     special: false,
     size: false,
   });
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
     const newValidity: PasswordValidityType = {
@@ -70,7 +70,7 @@ const ResetPasswordForm = ({
     setPwd(value);
   };
   const navigate = useNavigate();
-  const handleSubmitPwd = async (e) => {
+  const handleSubmitPwd = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (pwd !== confirmPwd) {
       setErrMsg("Passwords do not match");
@@ -104,6 +104,17 @@ const ResetPasswordForm = ({
       setErrMsg(`Unable to reset password: ${err.message}`);
     }
   };
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPwd(e.target.value);
+    setErrMsg("");
+  };
+  const handlePINChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPin(e.target.value);
+    setErrMsg("");
+  };
+
   return (
     <form onSubmit={handleSubmitPwd} className="reset-password-form">
       <div className="reset-password-form-row">
@@ -122,10 +133,7 @@ const ResetPasswordForm = ({
       <div className="reset-password-form-row">
         <InputPassword
           value={confirmPwd}
-          onChange={(e) => {
-            setConfirmPwd(e.target.value);
-            setErrMsg("");
-          }}
+          onChange={handleConfirmPasswordChange}
           name="confirm-password"
           id="confirm-password"
           label="Confirm new password:"
@@ -134,10 +142,7 @@ const ResetPasswordForm = ({
       <div className="reset-password-form-row">
         <InputPassword
           value={pin}
-          onChange={(e) => {
-            setPin(e.target.value);
-            setErrMsg("");
-          }}
+          onChange={handlePINChange}
           name="pin"
           id="pin"
           label="Enter a new PIN:"

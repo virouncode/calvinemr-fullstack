@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { SiteType, StaffType } from "../../types/api";
 
-export const useSiteClosed = (sites: SiteType[], user: StaffType) => {
+export const useSiteClosed = (
+  sites: SiteType[] | undefined,
+  user: StaffType
+) => {
   useEffect(() => {
     if (!sites) return;
     if (

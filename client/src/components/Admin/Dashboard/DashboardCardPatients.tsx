@@ -1,0 +1,193 @@
+import { BarChart } from "@mui/x-charts/BarChart";
+import React from "react";
+import {
+  useDashboardPatientsPerAge,
+  useDashboardPatientsPerGender,
+} from "../../../hooks/reactquery/queries/dashboardQueries";
+import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
+
+const DashboardCardPatients = () => {
+  const {
+    data: sites,
+    isPending: isPendingSites,
+    error: errorSites,
+  } = useSites();
+  const {
+    data: patientsPerGender,
+    isPending: isPendingPatientsPerGender,
+    error: errorPatientsPerGender,
+  } = useDashboardPatientsPerGender(sites);
+  const {
+    data: patientsPerAge,
+    isPending: isPendingPatientsPerAge,
+    error: errorPatientsPerAge,
+  } = useDashboardPatientsPerAge(sites);
+
+  if (isPendingSites || isPendingPatientsPerGender || isPendingPatientsPerAge)
+    return (
+      <div className="dashboard-card">
+        <div className="dashboard-card__title">Patients</div>
+        <LoadingParagraph />
+      </div>
+    );
+
+  if (errorSites || errorPatientsPerGender || errorPatientsPerAge)
+    return (
+      <div className="dashboard-card">
+        <div className="dashboard-card__title">Patients</div>
+        <ErrorParagraph
+          errorMsg={
+            errorSites?.message ||
+            errorPatientsPerGender?.message ||
+            errorPatientsPerAge?.message ||
+            ""
+          }
+        />
+      </div>
+    );
+
+  const chartSetting = {
+    xAxis: [
+      {
+        data: [...sites.map(({ name }) => name), "Total"],
+        scaleType: "band",
+      },
+    ],
+    yAxis: [
+      {
+        label: "people",
+      },
+    ],
+    width: 500,
+    height: 350,
+    slotProps: {
+      legend: {
+        direction: "row",
+        position: {
+          vertical: "top",
+          horizontal: "center",
+        },
+        labelStyle: {
+          fontSize: 12,
+        },
+        itemMarkWidth: 10,
+        itemMarkHeight: 10,
+        markGap: 5,
+        itemGap: 10,
+      },
+    },
+  };
+
+  return (
+    <div className="dashboard-card">
+      <div className="dashboard-card__title">Patients</div>
+      <div className="dashboard-card__total">
+        <label>Total patients: </label>
+        {patientsPerGender.length > 0
+          ? patientsPerGender.slice(-1)[0]["M"] +
+            patientsPerGender.slice(-1)[0]["F"] +
+            patientsPerGender.slice(-1)[0]["O"]
+          : "0"}
+      </div>
+      <div className="dashboard-card__content">
+        <div className="dashboard-card__chart">
+          <p className="dashboard-card__chart-title">By gender</p>
+
+          {patientsPerGender && patientsPerGender?.length > 0 ? (
+            <BarChart
+              dataset={patientsPerGender}
+              series={[
+                { dataKey: "M", label: "Males" },
+                { dataKey: "F", label: "Females" },
+                { dataKey: "O", label: "Others" },
+              ]}
+              xAxis={[
+                {
+                  data: [...sites.map(({ name }) => name), "Total"],
+                  scaleType: "band",
+                },
+              ]}
+              yAxis={[
+                {
+                  label: "people",
+                },
+              ]}
+              width={500}
+              height={350}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: {
+                    vertical: "top",
+                    horizontal: "middle",
+                  },
+                  labelStyle: {
+                    fontSize: 12,
+                  },
+                  itemMarkWidth: 10,
+                  itemMarkHeight: 10,
+                  markGap: 5,
+                  itemGap: 10,
+                },
+              }}
+            />
+          ) : (
+            <EmptyParagraph text="No patients by gender available" />
+          )}
+        </div>
+        <div className="dashboard-card__chart">
+          <p className="dashboard-card__chart-title">By age range</p>
+
+          {patientsPerAge && patientsPerAge?.length > 0 ? (
+            <BarChart
+              dataset={patientsPerAge}
+              series={[
+                { dataKey: "under18", label: "<18" },
+                { dataKey: "from18to35", label: "18-35" },
+                { dataKey: "from36to50", label: "36-50" },
+                { dataKey: "from51to70", label: "51-70" },
+                { dataKey: "over70", label: ">70" },
+              ]}
+              xAxis={[
+                {
+                  data: [...sites.map(({ name }) => name), "Total"],
+                  scaleType: "band",
+                },
+              ]}
+              yAxis={[
+                {
+                  label: "people",
+                },
+              ]}
+              width={500}
+              height={350}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: {
+                    vertical: "top",
+                    horizontal: "middle",
+                  },
+                  labelStyle: {
+                    fontSize: 12,
+                  },
+                  itemMarkWidth: 10,
+                  itemMarkHeight: 10,
+                  markGap: 5,
+                  itemGap: 10,
+                },
+              }}
+            />
+          ) : (
+            <EmptyParagraph text="No patients by age available" />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardCardPatients;

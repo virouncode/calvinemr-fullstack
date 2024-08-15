@@ -7,7 +7,7 @@ import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { AdminType } from "../../../types/api";
-import { CredentialsType, PasswordValidityType } from "../../../types/app";
+import { CredentialsFormType, PasswordValidityType } from "../../../types/app";
 import FormCredentials from "../../UI/Forms/FormCredentials";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
@@ -16,7 +16,7 @@ const CredentialsFormAdmin = () => {
   const { auth } = useAuthContext();
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
-  const [credentials, setCredentials] = useState<CredentialsType>({
+  const [credentials, setCredentials] = useState<CredentialsFormType>({
     email: auth?.email as string,
     password: "",
     confirmPassword: "",
@@ -32,6 +32,7 @@ const CredentialsFormAdmin = () => {
     });
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
@@ -123,7 +124,7 @@ const CredentialsFormAdmin = () => {
 
     try {
       //get my infos
-      const me = await xanoGet(`/admin/${user.id}`, "admin");
+      const me: AdminType = await xanoGet(`/admin/${user.id}`, "admin");
       me.email = credentials.email.toLowerCase();
       me.password = credentials.password;
       me.pin = credentials.pin;
@@ -148,7 +149,7 @@ const CredentialsFormAdmin = () => {
     <>
       <form
         className="credentials-form"
-        onSubmit={(e) => handleSubmit}
+        onSubmit={handleSubmit}
         style={{ border: errMsg && "solid 1px red" }}
       >
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}

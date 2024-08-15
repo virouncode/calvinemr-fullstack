@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useBillingCodeTemplatePost } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
-import { AdminType, BillingCodeTemplateType } from "../../../../types/api";
+import {
+  AdminType,
+  BillingCodeTemplateFormType,
+  BillingCodeTemplateType,
+} from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
@@ -23,7 +27,7 @@ const BillingCodesTemplateForm = ({
 }: BillingCodesTemplateFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const userType = user.access_level;
-  const [formDatas, setFormDatas] = useState<BillingCodeTemplateType>({
+  const [formDatas, setFormDatas] = useState<BillingCodeTemplateFormType>({
     name: "",
     author_id: user.id as number,
     billing_codes: [],
@@ -40,10 +44,7 @@ const BillingCodesTemplateForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     setErrMsgPost("");
     if (!formDatas.billing_codes.join(",") || !formDatas.name) {
       setErrMsgPost("All fields are required");
@@ -71,8 +72,7 @@ const BillingCodesTemplateForm = ({
       onSuccess: () => setNewTemplateVisible(false),
     });
   };
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setErrMsgPost("");
     setNewTemplateVisible(false);
   };

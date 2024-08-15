@@ -30,7 +30,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   const { socket } = useSocketContext();
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [formDatas, setFormDatas] = useState<StaffType>({
+  const [formDatas, setFormDatas] = useState<Partial<StaffType>>({
     email: "",
     first_name: "",
     middle_name: "",
@@ -48,6 +48,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     backup_phone: "",
     video_link: "",
     ai_consent: true,
+    sign: null,
   });
   const [progress, setProgress] = useState(false);
 
@@ -61,7 +62,9 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     setAddVisible(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
@@ -101,10 +104,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       }
     };
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setErrMsg("");
     setProgress(true);
     //Validation
@@ -115,22 +115,24 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         (formDatas.middle_name ? formDatas.middle_name + " " : "") +
         formDatas.last_name;
 
-      const datasToPost: StaffType = {
+      const datasToPost: Partial<StaffType> = {
         ...formDatas,
         created_by_id: user?.id,
         date_created: nowTZTimestamp(),
       };
 
       //Formatting
-      datasToPost.email = datasToPost.email.toLowerCase();
-      datasToPost.first_name = firstLetterUpper(datasToPost.first_name);
-      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name);
-      datasToPost.last_name = firstLetterUpper(datasToPost.last_name);
+      datasToPost.email = datasToPost.email?.toLowerCase() ?? "";
+      datasToPost.first_name = firstLetterUpper(datasToPost.first_name ?? "");
+      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name ?? "");
+      datasToPost.last_name = firstLetterUpper(datasToPost.last_name ?? "");
       datasToPost.full_name = firstLetterUpper(full_name);
-      datasToPost.speciality = firstLetterUpper(datasToPost.speciality);
-      datasToPost.subspeciality = firstLetterUpper(datasToPost.subspeciality);
+      datasToPost.speciality = firstLetterUpper(datasToPost.speciality ?? "");
+      datasToPost.subspeciality = firstLetterUpper(
+        datasToPost.subspeciality ?? ""
+      );
       if (
-        datasToPost.video_link.trim() &&
+        datasToPost.video_link?.trim() &&
         (!datasToPost.video_link.includes("http") ||
           !datasToPost.video_link.includes("https"))
       ) {
@@ -360,7 +362,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <SiteSelect
               handleSiteChange={handleSiteChange}
               sites={sites}
-              value={formDatas.site_id}
+              value={formDatas.site_id as number}
               label="Site*: "
             />
           </div>
@@ -368,7 +370,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <GenderSelect
               id="gender"
               name="gender"
-              value={formDatas.gender}
+              value={formDatas.gender as string}
               onChange={handleChange}
               label="Gender*: "
             />
@@ -377,7 +379,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <OccupationsSelect
               id="occupation"
               name="title"
-              value={formDatas.title}
+              value={formDatas.title as string}
               onChange={handleChange}
               label="Occupation*: "
             />
@@ -457,7 +459,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
               <InputImgFile
                 isLoadingFile={isLoadingFile}
                 onChange={handleSignChange}
-                img={formDatas.sign}
+                img={formDatas.sign ?? null}
                 alt="staff-sign"
                 width={150}
               />

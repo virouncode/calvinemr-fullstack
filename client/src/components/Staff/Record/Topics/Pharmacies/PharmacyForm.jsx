@@ -10,7 +10,7 @@ import Input from "../../../../UI/Inputs/Input";
 import InputEmail from "../../../../UI/Inputs/InputEmail";
 import InputTel from "../../../../UI/Inputs/InputTel";
 import GenericList from "../../../../UI/Lists/GenericList";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
 const PharmacyFaxForm = ({
   editCounter,
@@ -195,7 +195,7 @@ const PharmacyFaxForm = ({
           onChange={handleChange}
         />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

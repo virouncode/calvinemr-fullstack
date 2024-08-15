@@ -1,10 +1,12 @@
 import * as _ from "lodash";
 import {
   AppointmentType,
+  DemographicsType,
   RoomType,
   SiteType,
   StaffType,
 } from "../../types/api";
+import { EventType, RemainingStaffType } from "../../types/app";
 import { staffIdToTitleAndName } from "../names/staffIdToTitleAndName";
 const colorsPalette = [
   { background: "#ffe119", text: "#3D375A" },
@@ -33,18 +35,19 @@ export const getRemainingStaff = (userId: number, staffInfos: StaffType[]) => {
     .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ id }) => id !== userId)
     .map((staff, index) => {
-      return {
-        id: staff.id,
+      const remainingStaff: RemainingStaffType = {
+        id: staff.id as number,
         color: colorsPalette[index % colorsPalette.length].background,
         textColor: colorsPalette[index % colorsPalette.length].text,
       };
+      return remainingStaff;
     });
 };
 
 export const parseToEvents = (
-  appointments: AppointmentType[],
+  appointments: AppointmentType[] | undefined,
   staffInfos: StaffType[],
-  sites: SiteType[],
+  sites: SiteType[] | undefined,
   isSecretary: boolean,
   userId: number
 ) => {
@@ -114,8 +117,8 @@ export const parseToEvent = (
   rooms: RoomType[],
   staffInfos: StaffType[]
 ) => {
-  return {
-    id: appointment.id.toString(),
+  const event: EventType = {
+    id: (appointment.id ?? -1).toString(),
     start: appointment.start,
     end: appointment.end,
     color: color,
@@ -125,7 +128,8 @@ export const parseToEvent = (
     editable: appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
     resourceEditable:
       appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
-    resourceId: rooms?.find(({ id }) => id === appointment.room_id)?.id,
+    resourceId: rooms?.find(({ id }) => id === appointment.room_id)
+      ?.id as string,
     rrule: appointment.rrule?.freq ? appointment.rrule : null,
     exrule: appointment.exrule?.length ? appointment.exrule : null,
     duration: appointment.Duration * 60000,
@@ -146,18 +150,22 @@ export const parseToEvent = (
       duration: appointment.Duration,
       purpose: appointment.AppointmentPurpose,
       status: appointment.AppointmentStatus,
-      staffGuestsIds: appointment.staff_guests_ids,
-      patientsGuestsIds: appointment.patients_guests_ids,
+      staffGuestsIds: appointment.staff_guests_ids as {
+        staff_infos: StaffType;
+      }[],
+      patientsGuestsIds: appointment.patients_guests_ids as {
+        patient_infos: DemographicsType;
+      }[],
       siteId: appointment.site_id,
-      siteName: appointment.site_infos?.name,
+      siteName: appointment.site_infos?.name as string,
       roomId: appointment.room_id,
       roomTitle: appointment.site_infos?.rooms.find(
         ({ id }) => id === appointment.room_id
-      )?.title,
-      updates: appointment.updates,
+      )?.title as string,
+      updates: appointment.updates ?? [],
       date_created: appointment.date_created,
       created_by_id: appointment.created_by_id,
-      notes: appointment.AppointmentNotes,
+      notes: appointment.AppointmentNotes as string,
       providerFirstName: appointment.Provider?.Name?.FirstName,
       providerLastName: appointment.Provider?.Name?.LastName,
       providerOHIP: appointment.Provider?.OHIPPhysicianId,
@@ -166,4 +174,5 @@ export const parseToEvent = (
       exrule: appointment.exrule?.length ? appointment.exrule : null,
     },
   };
+  return event;
 };

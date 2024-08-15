@@ -67,10 +67,7 @@ const BillingCodesTemplateItem = ({
     billingCodeTemplatePost.mutate(billingCodeTemplateToToPost);
   };
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     setErrMsgPost("");
     if (!formDatas.billing_codes.join(",") || !formDatas.name) {
       setErrMsgPost("All fields are required");
@@ -94,8 +91,7 @@ const BillingCodesTemplateItem = ({
       onSuccess: () => setEditVisible(false),
     });
   };
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setErrMsgPost("");
     setFormDatas(template);
     setEditVisible(false);

@@ -1,4 +1,3 @@
-
 import SplittedHeader from "../../../../UI/Tables/SplittedHeader";
 import RecImmunizationRow from "./RecImmunizationRow";
 
@@ -41,7 +40,7 @@ const RecImmunizationsTable = ({
     <table className="recimmunizations__table">
       <thead>
         <tr>
-          <SplittedHeader left="Immunization Type" right="Age" />
+          <SplittedHeader leftTitle="Immunization Type" rightTitle="Age" />
           <th style={H_STYLE}>2 Months</th>
           <th style={H_STYLE}>4 Months</th>
           <th style={H_STYLE}>6 Months</th>

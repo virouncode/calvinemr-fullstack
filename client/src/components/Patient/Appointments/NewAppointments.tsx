@@ -7,7 +7,7 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useStaffAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
-import { useAssignedPracticianSchedule } from "../../../hooks/reactquery/queries/userScheduleQueries";
+import { useAssignedPracticianAvailability } from "../../../hooks/reactquery/queries/availabilityQueries";
 import { AppointmentProposalType, UserPatientType } from "../../../types/app";
 import { getAppointmentsInRange } from "../../../utils/appointments/getAppointmentsInRange";
 import {
@@ -52,7 +52,7 @@ const NewAppointments = () => {
     data: availability,
     isPending: isPendingAvailability,
     error: errorAvailability,
-  } = useAssignedPracticianSchedule(user.demographics.assigned_staff_id);
+  } = useAssignedPracticianAvailability(user.demographics.assigned_staff_id);
 
   //Take recurring events into account
 

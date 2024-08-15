@@ -3,7 +3,7 @@ import CircularProgressSmallBlack from "../Progress/CircularProgressSmallBlack";
 
 type LoginButtonProps = {
   label: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick: () => Promise<void>;
   disabled?: boolean;
   loading?: boolean;
 };

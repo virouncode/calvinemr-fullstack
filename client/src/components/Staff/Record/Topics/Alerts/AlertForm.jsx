@@ -11,7 +11,7 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
 const AlertForm = ({
   editCounter,
@@ -115,7 +115,7 @@ const AlertForm = ({
       <td>
         <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

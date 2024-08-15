@@ -8,8 +8,8 @@ type BillingCodesTemplateEditProps = {
   formDatas: BillingCodeTemplateType;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   lastItemRef?: (node: Element | null) => void;
-  handleSave: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleCancel: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleSave: () => Promise<void>;
+  handleCancel: () => void;
   errMsgPost: string;
 };
 

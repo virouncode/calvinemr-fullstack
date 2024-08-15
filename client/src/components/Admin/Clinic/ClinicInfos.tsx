@@ -28,11 +28,9 @@ const ClinicInfos = () => {
   const [addVisible, setAddVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [editClinicVisible, setEditClinicVisible] = useState(false);
-  const [selectedSiteId, setSelectedSiteId] = useState<number | undefined>();
+  const [selectedSiteId, setSelectedSiteId] = useState(0);
   const { clinic } = useClinicContext();
-  const [formDatas, setFormDatas] = useState<Exclude<ClinicType, null>>(
-    clinic as Exclude<ClinicType, null>
-  );
+  const [formDatas, setFormDatas] = useState<ClinicType>(clinic as ClinicType);
   const [errMsgPost, setErrMsgPost] = useState("");
   const { data: sites, isPending, error } = useSites();
 
@@ -43,7 +41,6 @@ const ClinicInfos = () => {
     e: React.MouseEvent<HTMLButtonElement>,
     siteId: number
   ) => {
-    e.preventDefault();
     setSelectedSiteId(siteId);
     setEditVisible(true);
   };
@@ -71,7 +68,7 @@ const ClinicInfos = () => {
       ) {
         websiteFormatted = ["https://", formDatas?.website].join("");
       }
-      const datasToPut = {
+      const datasToPut: ClinicType = {
         ...formDatas,
         website: websiteFormatted,
         updates: [
@@ -79,7 +76,7 @@ const ClinicInfos = () => {
           { updated_by_id: user?.id, date_updated: nowTZTimestamp() },
         ],
       };
-      const response = await xanoPut(
+      const response: ClinicType = await xanoPut(
         `/clinic/${clinic?.id}`,
         "admin",
         datasToPut

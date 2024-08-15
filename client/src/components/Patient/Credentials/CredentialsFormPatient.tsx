@@ -5,8 +5,9 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { PatientType } from "../../../types/api";
 import {
-  CredentialsType,
+  CredentialsFormType,
   PasswordValidityType,
   UserPatientType,
 } from "../../../types/app";
@@ -18,7 +19,7 @@ const CredentialsFormPatient = () => {
   const { auth } = useAuthContext();
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
-  const [credentials, setCredentials] = useState<CredentialsType>({
+  const [credentials, setCredentials] = useState<CredentialsFormType>({
     email: auth?.email as string,
     password: "",
     confirmPassword: "",
@@ -46,7 +47,7 @@ const CredentialsFormPatient = () => {
     navigate("/patient/my-account");
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
     const newValidity: PasswordValidityType = {
@@ -85,7 +86,7 @@ const CredentialsFormPatient = () => {
     setCredentials({ ...credentials, password: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!credentials.email) {
       setErrMsg("Email is required");
@@ -129,7 +130,7 @@ const CredentialsFormPatient = () => {
 
     try {
       //get patientInfo
-      const me = await xanoGet(`/patients/${user.id}`, "patient");
+      const me: PatientType = await xanoGet(`/patients/${user.id}`, "patient");
       me.email = credentials.email.toLowerCase();
       me.password = credentials.password;
       me.pin = credentials.pin;

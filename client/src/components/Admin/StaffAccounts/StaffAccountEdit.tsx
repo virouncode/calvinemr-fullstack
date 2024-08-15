@@ -133,7 +133,11 @@ const StaffAccountEdit = ({
         return;
       }
       //Submission
-      const response = await xanoPut(`/staff/${infos.id}`, "admin", datasToPut);
+      const response: StaffType = await xanoPut(
+        `/staff/${infos.id}`,
+        "admin",
+        datasToPut
+      );
       socket?.emit("message", {
         route: "STAFF INFOS",
         action: "update",

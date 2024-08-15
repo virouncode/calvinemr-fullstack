@@ -2,7 +2,7 @@ import React from "react";
 
 type SaveButtonProps = {
   label?: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick: () => Promise<void>;
   disabled?: boolean;
 };
 const SaveButton = ({

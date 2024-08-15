@@ -7,6 +7,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useBillingPost } from "../../../hooks/reactquery/mutations/billingsMutations";
 import {
   AdminType,
+  BillingFormType,
   BillingType,
   DemographicsType,
   DoctorType,
@@ -43,13 +44,18 @@ type BillingFormProps = {
   sites: SiteType[];
 };
 
-const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
+const BillingForm = ({
+  setAddVisible,
+  setErrMsgPost,
+  errMsgPost,
+  sites,
+}: BillingFormProps) => {
   const navigate = useNavigate();
   const { pid, pName, hcn, date } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
-  const [formDatas, setFormDatas] = useState({
+  const [formDatas, setFormDatas] = useState<BillingFormType>({
     date: date
       ? timestampToDateISOTZ(parseInt(date))
       : timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto"),
@@ -97,7 +103,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
   };
   const handleClickDiagnosis = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    code: string
+    code: number
   ) => {
     setErrMsgPost("");
     setFormDatas({ ...formDatas, diagnosis_code: code });
@@ -156,6 +162,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
     setErrMsgPost("");
     setAddVisible(false);
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const billingCodesArray = formDatas.billing_codes
@@ -198,9 +205,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
           created_by_id: user.id as number,
           created_by_user_type: user.access_level,
           provider_id: user.id as number,
-          referrer_ohip_billing_nbr: parseInt(
-            formDatas.referrer_ohip_billing_nbr
-          ),
+          referrer_ohip_billing_nbr: formDatas.referrer_ohip_billing_nbr,
           patient_id: formDatas.patient_id,
           diagnosis_id: (
             await xanoGet(`/diagnosis_codes_for_code`, userType, {
@@ -283,7 +288,7 @@ const BillingForm = ({ setAddVisible, setErrMsgPost, errMsgPost, sites }) => {
           <InputWithSearch
             id="diagnosis_code"
             name="diagnosis_code"
-            value={formDatas.diagnosis_code}
+            value={formDatas.diagnosis_code.toString()}
             onChange={handleChange}
             onClick={() => setDiagnosisSearchVisible(true)}
             label="Diagnosis code*"

@@ -19,7 +19,7 @@ import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericCombo from "../../../../UI/Lists/GenericCombo";
 import GenericList from "../../../../UI/Lists/GenericList";
-import SignCellForm from "../../../../UI/Tables/SignCellForm";
+import FormSignCell from "../../../../UI/Tables/FormSignCell";
 import GenericComboImmunization from "./ImmunizationCombo";
 
 const ImmunizationForm = ({
@@ -191,7 +191,7 @@ const ImmunizationForm = ({
       <td>
         <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
-      <SignCellForm />
+      <FormSignCell />
     </tr>
   );
 };

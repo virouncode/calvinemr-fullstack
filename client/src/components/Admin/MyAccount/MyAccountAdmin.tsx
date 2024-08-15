@@ -19,7 +19,7 @@ const MyAccountAdmin = () => {
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
-  const [tempFormDatas, setTempFormDatas] = useState(user);
+  const [formDatas, setFormDatas] = useState(user);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [progress, setProgress] = useState(false);
@@ -30,7 +30,7 @@ const MyAccountAdmin = () => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
-    setTempFormDatas({ ...tempFormDatas, [name]: value });
+    setFormDatas({ ...formDatas, [name]: value });
   };
 
   const handleChangeCredentials = () => {
@@ -44,7 +44,7 @@ const MyAccountAdmin = () => {
   const handleSave = async () => {
     //Validation
     try {
-      await myAccountAdminSchema.validate(tempFormDatas);
+      await myAccountAdminSchema.validate(formDatas);
     } catch (err) {
       setErrMsg(err.message);
       return;
@@ -52,21 +52,22 @@ const MyAccountAdmin = () => {
     try {
       //Submission
       setProgress(true);
-      const datasToPut = {
-        id: tempFormDatas.id,
-        date_created: tempFormDatas.date_created,
-        updates: [...tempFormDatas.updates, { date_updated: nowTZTimestamp() }],
-        email: tempFormDatas.email.toLowerCase(),
-        access_level: tempFormDatas.access_level,
-        temp_login: tempFormDatas.temp_login,
-        first_name: firstLetterUpper(tempFormDatas.first_name),
-        last_name: firstLetterUpper(tempFormDatas.last_name),
+      const datasToPut: AdminType = {
+        ...formDatas,
+        updates: [...formDatas.updates, { date_updated: nowTZTimestamp() }],
+        email: formDatas.email.toLowerCase(),
+        first_name: firstLetterUpper(formDatas.first_name),
+        last_name: firstLetterUpper(formDatas.last_name),
         full_name:
-          firstLetterUpper(tempFormDatas.first_name) +
+          firstLetterUpper(formDatas.first_name) +
           " " +
-          firstLetterUpper(tempFormDatas.last_name),
+          firstLetterUpper(formDatas.last_name),
       };
-      const response = await xanoPut(`/admin/${user.id}`, "admin", datasToPut);
+      const response: AdminType = await xanoPut(
+        `/admin/${user.id}`,
+        "admin",
+        datasToPut
+      );
       setSuccessMsg("Infos changed successfully");
       socket?.emit("message", {
         route: "USER",
@@ -103,16 +104,16 @@ const MyAccountAdmin = () => {
     <div className="myaccount-section__container" style={{ width: "25%" }}>
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}{" "}
       {successMsg && <p className="myaccount-section__success">{successMsg}</p>}
-      {tempFormDatas && (
+      {formDatas && (
         <div className="myaccount-section__form">
           <div style={{ margin: "0 auto" }}>
             <div className="myaccount-section__row">
               <label>Email*: </label>
-              <p>{tempFormDatas.email}</p>
+              <p>{formDatas.email}</p>
             </div>
             <div className="myaccount-section__row">
               <InputTextToggle
-                value={tempFormDatas.first_name}
+                value={formDatas.first_name}
                 onChange={handleChange}
                 name="first_name"
                 id="first_name"
@@ -122,7 +123,7 @@ const MyAccountAdmin = () => {
             </div>
             <div className="myaccount-section__row">
               <InputTextToggle
-                value={tempFormDatas.last_name}
+                value={formDatas.last_name}
                 onChange={handleChange}
                 name="last_name"
                 id="last_name"

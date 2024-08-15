@@ -8,7 +8,7 @@ type SquareMinusIconProps = {
   mr?: number;
 };
 
-const SquareMinusIcon = ({ onClick, ml = 0, mr = 0 }) => {
+const SquareMinusIcon = ({ onClick, ml = 0, mr = 0 }: SquareMinusIconProps) => {
   return (
     <FontAwesomeIcon
       icon={faSquareMinus}

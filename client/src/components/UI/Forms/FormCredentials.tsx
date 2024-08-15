@@ -1,5 +1,5 @@
 import React from "react";
-import { CredentialsType, PasswordValidityType } from "../../../types/app";
+import { CredentialsFormType, PasswordValidityType } from "../../../types/app";
 import CancelButton from "../Buttons/CancelButton";
 import SubmitButton from "../Buttons/SubmitButton";
 import Input from "../Inputs/Input";
@@ -7,7 +7,7 @@ import InputPassword from "../Inputs/InputPassword";
 import PasswordValidator from "../Inputs/PasswordValidator";
 
 type FormCredentialsProps = {
-  credentials: CredentialsType;
+  credentials: CredentialsFormType;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   passwordValidity: PasswordValidityType;

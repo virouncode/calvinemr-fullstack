@@ -6,7 +6,11 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/messagesMutations";
-import { AttachmentType, MessageAttachmentType } from "../../../types/api";
+import {
+  AttachmentType,
+  MessageAttachmentType,
+  MessageExternalType,
+} from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
@@ -79,7 +83,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
       });
     }
     //create the message
-    const messageToPost = {
+    const messageToPost: MessageExternalType = {
       from_patient_id: user.id,
       to_staff_id: recipientId,
       subject: subject,
