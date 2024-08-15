@@ -74,6 +74,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.51.11
         version: 5.51.21(@tanstack/react-query@5.51.21(react@18.3.1))(react@18.3.1)
+      '@types/dom-speech-recognition':
+        specifier: ^0.0.4
+        version: 0.0.4
       '@types/lodash':
         specifier: ^4.17.7
         version: 4.17.7
@@ -930,6 +933,9 @@ packages:
   '@types/classnames@2.3.1':
     resolution: {integrity: sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==}
     deprecated: This is a stub types definition. classnames provides its own type definitions, so you do not need this installed.
+
+  '@types/dom-speech-recognition@0.0.4':
+    resolution: {integrity: sha512-zf2GwV/G6TdaLwpLDcGTIkHnXf8JEf/viMux+khqKQKDa8/8BAUtXXZS563GnvJ4Fg0PBLGAaFf2GekEVSZ6GQ==}
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -3192,6 +3198,8 @@ snapshots:
   '@types/classnames@2.3.1':
     dependencies:
       classnames: 2.5.1
+
+  '@types/dom-speech-recognition@0.0.4': {}
 
   '@types/estree@1.0.5': {}
 

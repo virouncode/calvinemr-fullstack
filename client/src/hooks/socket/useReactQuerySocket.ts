@@ -8,7 +8,7 @@ const useReactQuerySocket = () => {
   const queryClient = useQueryClient();
   useEffect(() => {
     if (!socket) return;
-    const onMessage = (message) => {
+    const onMessage = (message: { key: string[] }) => {
       const queryKey = message.key;
       try {
         queryClient.invalidateQueries({ queryKey });

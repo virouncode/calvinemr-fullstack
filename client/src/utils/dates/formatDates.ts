@@ -347,7 +347,7 @@ export const getTodayEndTZ = () => {
 
 //OTHER FUNCTIONS
 export const getAgeTZ = (dateOfBirthMs: number) => {
-  if (!dateOfBirthMs) return "";
+  if (!dateOfBirthMs) return 0;
   const dateOfBirth = DateTime.fromMillis(dateOfBirthMs, {
     zone: "America/Toronto",
   });

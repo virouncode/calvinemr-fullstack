@@ -11,7 +11,7 @@ const RequireAuth = ({ allowedAccesses }: RequireAuthProps) => {
   const { user } = useUserContext();
   const location = useLocation();
 
-  return allowedAccesses.includes(user.access_level) ? (
+  return allowedAccesses.includes(user?.access_level as string) ? (
     <Outlet />
   ) : auth?.email ? ( //user is logged in but not allowed to access this page
     <Navigate to="/unauthorized" state={{ from: location }} replace />

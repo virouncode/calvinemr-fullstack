@@ -99,6 +99,7 @@ const ClinicalNotes = ({
     );
   // console.log("clinicalNotes", clinicalNotes);
   // console.log("hasNextPage", hasNextPage);
+  console.log(clinicalNotes);
 
   return (
     <div className="clinical-notes">

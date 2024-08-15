@@ -30,8 +30,8 @@ export type AlertType = {
   EndDate: number;
 };
 export type PaginatedAlertsType = {
-  items: AlertType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: AlertType[] } & PagesPropertiesType)[];
 };
 
 export type AllergyType = {
@@ -56,8 +56,8 @@ export type AllergyType = {
 };
 
 export type PaginatedAllergiesType = {
-  items: AllergyType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: AllergyType[] } & PagesPropertiesType)[];
 };
 
 export type AppointmentType = {
@@ -92,8 +92,8 @@ export type AppointmentType = {
 };
 
 export type PaginatedAppointmentsType = {
-  items: AppointmentType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: AppointmentType[] } & PagesPropertiesType)[];
 };
 
 export type RruleType = {
@@ -161,8 +161,8 @@ export type BillingCodeTemplateType = {
 };
 
 export type PaginatedBillingCodesTemplatesType = {
-  items: BillingCodeTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: BillingCodeTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type BillingType = {
@@ -212,8 +212,8 @@ export type BillingFormType = {
 };
 
 export type PaginatedBillingsType = {
-  items: BillingType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: BillingType[] } & PagesPropertiesType)[];
 };
 
 export type CalvinAITemplateType = {
@@ -274,8 +274,8 @@ export type CareElementType = {
   bodySurfaceArea: { BSA: string; Date: number }[];
 };
 export type PaginatedCareElementsType = {
-  items: CareElementType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: CareElementType[] } & PagesPropertiesType)[];
 };
 
 export type ClinicType = {
@@ -311,9 +311,19 @@ export type ClinicalNoteType = {
   date_updated: number;
 };
 
-export type PaginatedClinicalNotesType = {
-  items: ClinicalNoteType[];
+export type PagesPropertiesType = {
+  curPage: number;
+  itemsReceived: number;
+  itemsTotal: number;
   nextPage: number | null;
+  offset: number;
+  pageTotal: number;
+  prevPage: number | null;
+};
+
+export type PaginatedClinicalNotesType = {
+  pageParams: number[];
+  pages: ({ items: ClinicalNoteType[] } & PagesPropertiesType)[];
 };
 
 export type ClinicalNoteAttachmentType = {
@@ -357,8 +367,8 @@ export type ClinicalNoteTemplateType = {
 };
 
 export type PaginatedClinicalNoteTemplatesType = {
-  items: ClinicalNoteTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: ClinicalNoteTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type CycleType = {
@@ -419,8 +429,8 @@ export type CycleType = {
 };
 
 export type PaginatedCyclesType = {
-  items: CycleType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: CycleType[] } & PagesPropertiesType)[];
 };
 
 export type EmergencyContactType = {
@@ -521,9 +531,57 @@ export type DemographicsType = {
   ai_consent_read: boolean;
 };
 
+export type DemographicsFormType = {
+  prefix: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  suffix: string;
+  nickName: string;
+  chart: string;
+  dob: string;
+  age: number;
+  healthNbr: string;
+  healthVersion: string;
+  healthExpiry: string;
+  healthProvince: string;
+  gender: string;
+  sin: string;
+  email: string;
+  cellphone: string;
+  cellphoneExt: string;
+  homephone: string;
+  homephoneExt: string;
+  workphone: string;
+  workphoneExt: string;
+  line1: string;
+  province: string;
+  postalCode: string;
+  zipCode: string;
+  city: string;
+  preferredOff: string;
+  status: string;
+  assignedMd: number;
+  enrolled: string; // A GERER
+  pPhysicianFirstName: string;
+  pPhysicianLastName: string;
+  pPhysicianOHIP: string;
+  pPhysicianCPSO: string;
+  rPhysicianFirstName: string;
+  rPhysicianLastName: string;
+  fPhysicianFirstName: string;
+  fPhysicianLastName: string;
+  emergencyFirstName: string;
+  emergencyMiddleName: string;
+  emergencyLastName: string;
+  emergencyEmail: string;
+  emergencyPhone: string;
+  avatar: AttachmentType | null;
+};
+
 export type PaginatedDemographicsType = {
-  items: DemographicsType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: DemographicsType[] } & PagesPropertiesType)[];
 };
 
 export type DiagnosisType = {
@@ -534,8 +592,8 @@ export type DiagnosisType = {
 };
 
 export type PaginatedDiagnosisType = {
-  items: DiagnosisType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: DiagnosisType[] } & PagesPropertiesType)[];
 };
 
 export type DoctorType = {
@@ -585,8 +643,8 @@ export type DoctorType = {
 };
 
 export type PaginatedDoctorsType = {
-  items: DoctorType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: DoctorType[] } & PagesPropertiesType)[];
 };
 
 export type EdocType = {
@@ -599,8 +657,8 @@ export type EdocType = {
 };
 
 export type PaginatedEdocsType = {
-  items: EdocType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: EdocType[] } & PagesPropertiesType)[];
 };
 
 export type EformType = {
@@ -614,8 +672,8 @@ export type EformType = {
 };
 
 export type PaginatedEformsType = {
-  items: EformType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: EformType[] } & PagesPropertiesType)[];
 };
 
 export type EformBlankType = {
@@ -649,8 +707,8 @@ export type FamilyHistoryType = {
 };
 
 export type PaginatedFamilyHistoriesType = {
-  items: FamilyHistoryType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: FamilyHistoryType[] } & PagesPropertiesType)[];
 };
 
 export type FaxContactType = {
@@ -663,8 +721,8 @@ export type FaxContactType = {
 };
 
 export type PaginatedFaxContactsType = {
-  items: FaxContactType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: FaxContactType[] } & PagesPropertiesType)[];
 };
 
 export type FaxTemplateType = {
@@ -677,8 +735,8 @@ export type FaxTemplateType = {
 };
 
 export type PaginatedFaxTemplatesType = {
-  items: FaxTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: FaxTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type GroupType = {
@@ -693,8 +751,8 @@ export type GroupType = {
 };
 
 export type PaginatedGroupsType = {
-  items: GroupType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: GroupType[] } & PagesPropertiesType)[];
 };
 
 export type ImmunizationType = {
@@ -728,8 +786,8 @@ export type ImmunizationType = {
 };
 
 export type PaginatedImmunizationsType = {
-  items: ImmunizationType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: ImmunizationType[] } & PagesPropertiesType)[];
 };
 
 export type LabLinkType = {
@@ -761,8 +819,8 @@ export type LabLinkPersonalType = {
 };
 
 export type PaginatedLabLinksPersonalType = {
-  items: LabLinkPersonalType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: LabLinkPersonalType[] } & PagesPropertiesType)[];
 };
 
 export type LetterType = {
@@ -777,8 +835,8 @@ export type LetterType = {
 };
 
 export type PaginatedLettersType = {
-  items: LetterType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: LetterType[] } & PagesPropertiesType)[];
 };
 
 export type LetterTemplateType = {
@@ -794,8 +852,8 @@ export type LetterTemplateType = {
 };
 
 export type PaginatedLetterTemplatesType = {
-  items: LetterTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: LetterTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type LinkType = {
@@ -809,8 +867,8 @@ export type LinkType = {
 };
 
 export type PaginatedLinksType = {
-  items: LinkType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: LinkType[] } & PagesPropertiesType)[];
 };
 
 export type MedType = {
@@ -862,8 +920,8 @@ export type MedType = {
 };
 
 export type PaginatedMedsType = {
-  items: MedType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MedType[] } & PagesPropertiesType)[];
 };
 
 export type MedTemplateType = {
@@ -892,8 +950,8 @@ export type MedTemplateType = {
 };
 
 export type PaginatedMedsTemplatesType = {
-  items: MedTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MedTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type MessageType = {
@@ -915,8 +973,8 @@ export type MessageType = {
 };
 
 export type PaginatedMessagesType = {
-  items: MessageType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MessageType[] } & PagesPropertiesType)[];
 };
 
 export type MessageAttachmentType = {
@@ -950,8 +1008,8 @@ export type MessageExternalType = {
 };
 
 export type PaginatedMessagesExternalType = {
-  items: MessageExternalType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MessageExternalType[] } & PagesPropertiesType)[];
 };
 
 export type MessageExternalTemplateType = {
@@ -964,8 +1022,8 @@ export type MessageExternalTemplateType = {
 };
 
 export type PaginatedMessageExternalTemplatesType = {
-  items: MessageExternalTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MessageExternalTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type MessageTemplateType = {
@@ -979,8 +1037,8 @@ export type MessageTemplateType = {
 };
 
 export type PaginatedMessageTemplatesType = {
-  items: MessageTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: MessageTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type NotepadType = {
@@ -1012,8 +1070,8 @@ export type PamphletType = {
 };
 
 export type PaginatedPamphletsType = {
-  items: PamphletType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PamphletType[] } & PagesPropertiesType)[];
 };
 
 export type PastHealthType = {
@@ -1040,8 +1098,8 @@ export type PastHealthType = {
 };
 
 export type PaginatedPastHealthsType = {
-  items: PastHealthType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PastHealthType[] } & PagesPropertiesType)[];
 };
 
 export type PatientType = {
@@ -1068,8 +1126,8 @@ export type PersonalHistoryType = {
 };
 
 export type PaginatedPersonalHistoryType = {
-  items: PersonalHistoryType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PersonalHistoryType[] } & PagesPropertiesType)[];
 };
 
 export type PharmacyType = {
@@ -1103,8 +1161,8 @@ export type PharmacyType = {
 };
 
 export type PaginatedPharmaciesType = {
-  items: PharmacyType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PharmacyType[] } & PagesPropertiesType)[];
 };
 
 export type PregnancyType = {
@@ -1122,8 +1180,8 @@ export type PregnancyType = {
 };
 
 export type PaginatedPregnanciesType = {
-  items: PregnancyType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PregnancyType[] } & PagesPropertiesType)[];
 };
 
 export type PrescriptionType = {
@@ -1135,8 +1193,8 @@ export type PrescriptionType = {
 };
 
 export type PaginatedPrescriptionType = {
-  items: PrescriptionType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: PrescriptionType[] } & PagesPropertiesType)[];
 };
 
 export type ProblemListType = {
@@ -1163,8 +1221,8 @@ export type ProblemListType = {
 };
 
 export type PaginatedProblemListsType = {
-  items: ProblemListType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: ProblemListType[] } & PagesPropertiesType)[];
 };
 
 export type RelationshipType = {
@@ -1178,8 +1236,8 @@ export type RelationshipType = {
 };
 
 export type PaginatedRelationshipsType = {
-  items: RelationshipType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: RelationshipType[] } & PagesPropertiesType)[];
 };
 
 export type ReminderType = {
@@ -1192,8 +1250,8 @@ export type ReminderType = {
 };
 
 export type PaginatedRemindersType = {
-  items: ReminderType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: ReminderType[] } & PagesPropertiesType)[];
 };
 
 export type ReportType = {
@@ -1241,8 +1299,8 @@ export type ReportType = {
 };
 
 export type PaginatedReportsType = {
-  items: ReportType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: ReportType[] } & PagesPropertiesType)[];
 };
 
 export type RiskFactorType = {
@@ -1264,8 +1322,8 @@ export type RiskFactorType = {
 };
 
 export type PaginatedRiskFactorsType = {
-  items: RiskFactorType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: RiskFactorType[] } & PagesPropertiesType)[];
 };
 
 export type SettingsType = {
@@ -1373,8 +1431,8 @@ export type TodoType = {
 };
 
 export type PaginatedTodosType = {
-  items: TodoType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: TodoType[] } & PagesPropertiesType)[];
 };
 
 export type TodoTemplateType = {
@@ -1387,8 +1445,8 @@ export type TodoTemplateType = {
 };
 
 export type PaginatedTodoTemplatesType = {
-  items: TodoTemplateType[];
-  nextPage: number | null;
+  pageParams: number[];
+  pages: ({ items: TodoTemplateType[] } & PagesPropertiesType)[];
 };
 
 //WEATHER API Types

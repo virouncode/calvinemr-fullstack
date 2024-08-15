@@ -207,7 +207,7 @@ const CalendarDisplay = ({
           <EventForm
             currentEvent={currentEvent}
             setFormVisible={setFormVisible}
-            remainingStaff={getRemainingStaff(user.id, staffInfos)}
+            remainingStaff={getRemainingStaff(user.id as number, staffInfos)}
             setFormColor={setFormColor}
             setSelectable={setSelectable}
             hostsIds={hostsIds}

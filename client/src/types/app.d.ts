@@ -48,8 +48,8 @@ export type AuthType = {
 };
 
 export type AuthContextType = {
-  auth: AuthType;
-  setAuth: React.Dispatch<React.SetStateAction<AuthType>>;
+  auth: AuthType | null;
+  setAuth: React.Dispatch<React.SetStateAction<AuthType | null>>;
 };
 
 export type UserStaffType = StaffType & {
@@ -223,4 +223,14 @@ export type RemainingStaffType = {
   id: number;
   color: string;
   textColor: string;
+};
+
+export type SocketMessageType<TData> = {
+  route: string;
+  action: string;
+  content: {
+    id: number;
+    data: TData;
+    userId?: number;
+  };
 };

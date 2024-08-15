@@ -5,7 +5,7 @@ import { ClinicContextType } from "../types/app";
 const ClinicContext = createContext<ClinicContextType | null>(null);
 
 export const ClinicProvider = ({ children }) => {
-  const [clinic, setClinic] = useState<ClinicType>(() => {
+  const [clinic, setClinic] = useState<ClinicType | null>(() => {
     const storedClinic = localStorage.getItem("clinic");
     return storedClinic ? JSON.parse(storedClinic) : {};
   });

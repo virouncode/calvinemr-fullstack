@@ -8,7 +8,11 @@ import useClinicContext from "./context/useClinicContext";
 import useStaffInfosContext from "./context/useStaffInfosContext";
 import useUserContext from "./context/useUserContext";
 
-const useAutoLogout = (timeMin, toastExpiredID, tokenLimitVerifierID) => {
+const useAutoLogout = (
+  timeMin: number,
+  toastExpiredID: React.MutableRefObject<Id | null>,
+  tokenLimitVerifierID: React.MutableRefObject<number | null>
+) => {
   const { setUser } = useUserContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAuth } = useAuthContext();

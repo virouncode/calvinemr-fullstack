@@ -1,0 +1,145 @@
+import { EventImpl } from "@fullcalendar/core/internal";
+import FullCalendar from "@fullcalendar/react";
+import { DateTime } from "luxon";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+import xanoDelete from "../api/xanoCRUD/xanoDelete";
+import xanoGet from "../api/xanoCRUD/xanoGet";
+import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
+import { AppointmentType } from "../types/api";
+import { EventType, UserStaffType } from "../types/app";
+import useSocketContext from "./context/useSocketContext";
+import useUserContext from "./context/useUserContext";
+
+const useCalendarShortcuts = (
+  fcRef: React.MutableRefObject<FullCalendar>,
+  currentEvent: React.MutableRefObject<EventType | EventImpl | null>,
+  lastCurrentId: React.MutableRefObject<string>,
+  eventCounter: React.MutableRefObject<number>,
+  formVisible: boolean,
+  setFormVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setCalendarSelectable: React.Dispatch<React.SetStateAction<boolean>>,
+  editAvailabilityVisible: boolean,
+  setIsFirstEvent: React.Dispatch<React.SetStateAction<boolean>>,
+  setConfirmDlgRecDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
+  useEffect(() => {
+    const handleKeyboardShortcut = async (e) => {
+      if (editAvailabilityVisible || formVisible) return;
+      if (e.keyCode === 37 && e.shiftKey) {
+        //arrow left
+        fcRef.current.getApi().prev();
+      } else if (e.keyCode === 39 && e.shiftKey) {
+        //arrow right
+        fcRef.current.getApi().next();
+      } else if (e.keyCode === 84 && e.shiftKey) {
+        //T
+        fcRef.current.getApi().today();
+      } else if (
+        currentEvent.current &&
+        (currentEvent.current.extendedProps.host === user.id ||
+          user.title === "Secretary") &&
+        (e.key === "Backspace" || e.key === "Delete")
+      ) {
+        //backspace
+        if (currentEvent.current.extendedProps.recurrence !== "Once") {
+          const appointment: AppointmentType = await xanoGet(
+            `/appointments/${parseInt(currentEvent.current.id)}`,
+            "staff"
+          );
+          if (
+            DateTime.fromJSDate(currentEvent.current.start as Date, {
+              zone: "America/Toronto",
+            }).toMillis() === appointment.start
+          ) {
+            setIsFirstEvent(true);
+          } else {
+            setIsFirstEvent(false);
+          }
+          setConfirmDlgRecDeleteVisible(true);
+          return;
+        }
+        if (
+          await confirmAlert({
+            content: "Do you really want to remove this event ?",
+          })
+        ) {
+          try {
+            await xanoDelete(
+              `/appointments/${parseInt(currentEvent.current.id)}`,
+              "staff"
+            );
+            toast.success("Deleted Successfully", { containerId: "A" });
+            socket?.emit("message", {
+              route: "EVENTS",
+              action: "delete",
+              content: { id: parseInt(currentEvent.current.id) },
+            });
+            socket?.emit("message", {
+              route: "APPOINTMENTS",
+              action: "delete",
+              content: { id: parseInt(currentEvent.current.id) },
+            });
+            setFormVisible(false);
+            setCalendarSelectable(true);
+            currentEvent.current = null;
+            lastCurrentId.current = "";
+          } catch (err) {
+            toast.error(`Error: unable to delete appointment: ${err.message}`, {
+              containerId: "A",
+            });
+          }
+        }
+      } else if (e.keyCode === 40 && e.shiftKey) {
+        const eventsList = document.getElementsByClassName("fc-event");
+        eventCounter.current += 1;
+        (
+          eventsList[eventCounter.current % eventsList.length] as HTMLElement
+        ).click();
+        eventsList[eventCounter.current % eventsList.length].scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      } else if (e.keyCode === 38 && e.shiftKey) {
+        const eventsList = document.getElementsByClassName("fc-event");
+        eventCounter.current - 1 < 0
+          ? (eventCounter.current = eventsList.length - 1)
+          : (eventCounter.current -= 1);
+        (
+          eventsList[eventCounter.current % eventsList.length] as HTMLElement
+        ).click();
+        eventsList[eventCounter.current % eventsList.length].scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyboardShortcut);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyboardShortcut);
+    };
+  }, [
+    currentEvent,
+    eventCounter,
+    fcRef,
+    formVisible,
+    lastCurrentId,
+    setCalendarSelectable,
+    setFormVisible,
+    socket,
+    user.id,
+    user.title,
+    editAvailabilityVisible,
+    setConfirmDlgRecDeleteVisible,
+    setIsFirstEvent,
+  ]);
+};
+
+export default useCalendarShortcuts;
