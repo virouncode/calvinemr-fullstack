@@ -9,7 +9,6 @@ import { AdminType, SiteType, StaffType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
-import SiteSelect from "../../Staff/EventForm/SiteSelect";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
@@ -17,6 +16,7 @@ import InputImgFile from "../../UI/Inputs/InputImgFile";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 axios.defaults.withCredentials = true;
 

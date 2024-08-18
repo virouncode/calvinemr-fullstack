@@ -1,4 +1,4 @@
-import StatusOption from "../../../EventForm/Status/StatusOption";
+import StatusOption from "../../../Calendar/EventForm/Status/StatusOption";
 
 const AppointmentStatusSelect = ({
   handleChange,

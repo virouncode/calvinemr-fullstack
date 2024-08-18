@@ -1,5 +1,5 @@
 import React from "react";
-import Radio from "../../../../UI/Radio/Radio";
+import Radio from "../../../../../UI/Radio/Radio";
 
 type InvitationTemplateRadioItemProps = {
   templateName: string;

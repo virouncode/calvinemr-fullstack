@@ -44,8 +44,8 @@ import ConfirmDialogRecurringChange from "../ConfirmDialogRecurringChange";
 import EventFormButtons from "./EventFormButtons";
 import EventFormGuests from "./EventFormGuests";
 import EventFormHostRow from "./EventFormHostRow";
-import EventFormLocation from "./EventFormLocation";
 import EventFormNotes from "./EventFormNotes";
+import EventFormRooms from "./EventFormRooms";
 import EventFormStatus from "./EventFormStatus";
 import EventFormTimeRow from "./EventFormTimeRow";
 import Invitation from "./Invitation/Invitation";
@@ -969,7 +969,7 @@ const EventForm = ({
             }
             hostId={formDatas.host_id}
           />
-          <EventFormLocation
+          <EventFormRooms
             formDatas={formDatas}
             sites={sites}
             handleSiteChange={handleSiteChange}

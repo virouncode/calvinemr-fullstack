@@ -14,8 +14,8 @@ import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputTelToggle from "../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../UI/Inputs/InputTextToggle";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-import SiteSelect from "../EventForm/SiteSelect";
 
 const MyAccountStaff = () => {
   //HOOKS

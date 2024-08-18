@@ -11,12 +11,12 @@ import SaveButton from "../../../../../UI/Buttons/SaveButton";
 import DoctorAbsoluteIcon from "../../../../../UI/Icons/DoctorAbsoluteIcon";
 import UserPlusAbsoluteIcon from "../../../../../UI/Icons/UserPlusAbsoluteIcon";
 import Input from "../../../../../UI/Inputs/Input";
+import SiteSelect from "../../../../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import PatientChartHealthSearch from "../../../../Billing/PatientChartHealthSearch";
 import ReferringOHIPSearch from "../../../../Billing/ReferringOHIPSearch";
-import SiteSelect from "../../../../EventForm/SiteSelect";
 
 const LetterTemplateEdit = ({ setEditTemplateVisible, template }) => {
   const { user } = useUserContext();

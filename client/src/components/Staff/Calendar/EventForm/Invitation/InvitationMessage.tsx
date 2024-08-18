@@ -1,4 +1,5 @@
 import React from "react";
+
 type InvitationMessageProps = {
   message: string;
   handleMessageChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;

@@ -5,10 +5,10 @@ import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosCont
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import { copyToClipboard } from "../../../../../utils/js/copyToClipboard";
 import PrintButton from "../../../../UI/Buttons/PrintButton";
+import SiteSelect from "../../../../UI/Lists/SiteSelect";
 import EmptyParagraph from "../../../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
-import SiteSelect from "../../../EventForm/SiteSelect";
 
 const ClinicSiteLabel = ({ demographicsInfos, windowRef }) => {
   const { clinic } = useClinicContext();

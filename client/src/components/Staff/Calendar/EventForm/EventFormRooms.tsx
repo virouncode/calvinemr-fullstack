@@ -1,10 +1,10 @@
 import React from "react";
 import { AppointmentType, SiteType } from "../../../../types/api";
+import SiteSelect from "../../../UI/Lists/SiteSelect";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import RoomsRadio from "./Rooms/RoomsRadio";
-import SiteSelect from "./SiteSelect";
 
-type EventFormLocationProps = {
+type EventFormRoomsProps = {
   formDatas: AppointmentType;
   sites: SiteType[];
   handleSiteChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -13,14 +13,14 @@ type EventFormLocationProps = {
   isPending: boolean;
 };
 
-const EventFormLocation = ({
+const EventFormRooms = ({
   formDatas,
   sites,
   handleSiteChange,
   handleRoomChange,
   isRoomOccupied,
   isPending,
-}) => {
+}: EventFormRoomsProps) => {
   return (
     <div className="event-form__row event-form__row--radio">
       <div style={{ marginBottom: "5px" }}>
@@ -37,9 +37,11 @@ const EventFormLocation = ({
         <RoomsRadio
           handleRoomChange={handleRoomChange}
           roomSelectedId={formDatas.room_id}
-          rooms={sites
-            .find(({ id }) => id === formDatas.site_id)
-            ?.rooms.sort((a, b) => a.id.localeCompare(b.id))}
+          rooms={
+            sites
+              .find(({ id }) => id === formDatas.site_id)
+              ?.rooms.sort((a, b) => a.id.localeCompare(b.id)) ?? []
+          }
           isRoomOccupied={isRoomOccupied}
         />
       )}
@@ -47,4 +49,4 @@ const EventFormLocation = ({
   );
 };
 
-export default EventFormLocation;
+export default EventFormRooms;

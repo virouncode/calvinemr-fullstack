@@ -3,7 +3,7 @@ import Button from "../../../../../UI/Buttons/Button";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import Input from "../../../../../UI/Inputs/Input";
 import InputDate from "../../../../../UI/Inputs/InputDate";
-import SiteSelect from "../../../../EventForm/SiteSelect";
+import SiteSelect from "../../../../../UI/Lists/SiteSelect";
 import LetterAddAttachments from "./LetterAddAttachments";
 import LetterAddPatientRecords from "./LetterAddPatientRecords";
 import LetterAddReports from "./LetterAddReports";

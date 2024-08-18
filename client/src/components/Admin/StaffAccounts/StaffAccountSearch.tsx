@@ -1,10 +1,10 @@
 import React from "react";
 import { SearchStaffType, SiteType } from "../../../types/api";
-import SiteSelect from "../../Staff/EventForm/SiteSelect";
 import Input from "../../UI/Inputs/Input";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import InputTel from "../../UI/Inputs/InputTel";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type StaffAccountSearchProps = {
   search: SearchStaffType;

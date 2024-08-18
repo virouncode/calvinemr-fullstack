@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/availableRoomsQueries";
@@ -35,13 +34,14 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import SiteSelect from "../../../../UI/Lists/SiteSelect";
 import DateTimePicker from "../../../../UI/Pickers/DateTimePicker";
 import SignCell from "../../../../UI/Tables/SignCell";
-import HostsSelect from "../../../EventForm/Host/HostsSelect";
-import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
-import RoomsSelect from "../../../EventForm/Rooms/RoomsSelect";
-import SiteSelect from "../../../EventForm/SiteSelect";
+import HostsSelect from "../../../Calendar/EventForm/Host/HostsSelect";
+import RecurrenceSelect from "../../../Calendar/EventForm/RecurrenceSelect";
+import RoomsSelect from "../../../Calendar/EventForm/Rooms/RoomsSelect";
 import AppointmentStatusSelectToggle from "./AppointmentStatusSelectToggle";
+
 const AppointmentItem = ({
   item,
   editCounter,

@@ -28,12 +28,12 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
+import SiteSelect from "../../../../UI/Lists/SiteSelect";
 import { DateTimePicker } from "../../../../UI/Pickers/DateTimePicker";
 import FormSignCell from "../../../../UI/Tables/FormSignCell";
-import HostsSelect from "../../../EventForm/Host/HostsSelect";
-import RecurrenceSelect from "../../../EventForm/RecurrenceSelect";
-import RoomsSelect from "../../../EventForm/Rooms/RoomsSelect";
-import SiteSelect from "../../../EventForm/SiteSelect";
+import HostsSelect from "../../../Calendar/EventForm/Host/HostsSelect";
+import RecurrenceSelect from "../../../Calendar/EventForm/RecurrenceSelect";
+import RoomsSelect from "../../../Calendar/EventForm/Rooms/RoomsSelect";
 import AllDaySelect from "./AllDaySelect";
 import AppointmentStatusSelect from "./AppointmentStatusSelect";
 

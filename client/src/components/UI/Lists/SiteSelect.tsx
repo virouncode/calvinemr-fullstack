@@ -1,5 +1,5 @@
 import React from "react";
-import { SiteType } from "../../../../types/api";
+import { SiteType } from "../../../types/api";
 type SiteSelectProps = {
   handleSiteChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   sites: SiteType[];

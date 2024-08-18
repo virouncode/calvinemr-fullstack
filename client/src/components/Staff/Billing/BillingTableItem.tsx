@@ -39,10 +39,10 @@ import InputDate from "../../UI/Inputs/InputDate";
 import InputWithSearchInTable from "../../UI/Inputs/InputWithSearchInTable";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import SiteSelect from "../EventForm/SiteSelect";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type BillingTableItemProps = {
   billing: BillingType;

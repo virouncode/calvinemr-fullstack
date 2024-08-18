@@ -30,12 +30,12 @@ import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputDate from "../../UI/Inputs/InputDate";
 import InputWithSearch from "../../UI/Inputs/InputWithSearch";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import SiteSelect from "../EventForm/SiteSelect";
 import BillingCodesTextarea from "./BillingCodesTextarea";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
 import BillingCodesTemplates from "./Templates/BillingCodesTemplates";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type BillingFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;

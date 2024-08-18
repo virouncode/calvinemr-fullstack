@@ -25,9 +25,9 @@ import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalendarView from "./CalendarView";
 import DaySheet from "./DaySheet";
 import EventForm from "./EventForm/EventForm";
-import SiteSelect from "./EventForm/SiteSelect";
 import TimelineView from "./TimelineView";
 import ToggleView from "./ToggleView";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type CalendarDisplayProps = {
   timelineVisible: boolean;

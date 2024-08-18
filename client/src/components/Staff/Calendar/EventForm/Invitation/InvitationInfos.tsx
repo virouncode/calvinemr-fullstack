@@ -2,7 +2,7 @@ import React from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { SiteType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import SiteSelect from "../SiteSelect";
+import SiteSelect from "../../../../UI/Lists/SiteSelect";
 
 type InvitationInfosProps = {
   templateSelected: string;
