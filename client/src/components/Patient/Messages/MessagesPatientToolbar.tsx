@@ -50,7 +50,7 @@ const MessagesPatientToolBar = ({
 
   const handleSelectAll = () => {
     const allMessagesIds = messages.map(({ id }) => id);
-    setMsgsSelectedIds(allMessagesIds as number[]);
+    setMsgsSelectedIds(allMessagesIds);
     setSelectAllVisible(false);
   };
 

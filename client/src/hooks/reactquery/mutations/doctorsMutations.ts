@@ -10,7 +10,7 @@ export const useDoctorPost = () => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (doctorToPost: DoctorType) =>
+    mutationFn: (doctorToPost: Partial<DoctorType>) =>
       xanoPost("/doctors", "staff", doctorToPost),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["doctors"] });

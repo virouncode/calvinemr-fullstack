@@ -103,11 +103,11 @@ const DashboardCardBillings = () => {
             {billings.reduce(
               (acc, current) =>
                 acc +
-                (current.billing_infos?.anaesthetist_fee || 0) +
-                (current.billing_infos?.assistant_fee || 0) +
-                (current.billing_infos?.non_anaesthetist_fee || 0) +
-                (current.billing_infos?.provider_fee || 0) +
-                (current.billing_infos?.specialist_fee || 0),
+                (current.billing_infos?.anaesthetist_fee ?? 0) +
+                (current.billing_infos?.assistant_fee ?? 0) +
+                (current.billing_infos?.non_anaesthetist_fee ?? 0) +
+                (current.billing_infos?.provider_fee ?? 0) +
+                (current.billing_infos?.specialist_fee ?? 0),
               0
             ) / 1000}
             {" $"}

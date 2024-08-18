@@ -1,7 +1,7 @@
 import React from "react";
 
 type PlusButtonProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
 };
 const PlusButton = ({ onClick, className }: PlusButtonProps) => {

@@ -54,14 +54,11 @@ const BillingCodesTemplateItem = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleDuplicate = async (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    template: BillingCodeTemplateType
-  ) => {
+  const handleDuplicate = async (template: BillingCodeTemplateType) => {
     setErrMsgPost("");
     const billingCodeTemplateToToPost: BillingCodeTemplateType = {
       ...template,
-      author_id: user.id as number,
+      author_id: user.id,
       date_created: nowTZTimestamp(),
     };
     billingCodeTemplatePost.mutate(billingCodeTemplateToToPost);
@@ -104,7 +101,7 @@ const BillingCodesTemplateItem = ({
         content: "Do you really want to remove this template ?",
       })
     ) {
-      billingCodeTemplateDelete.mutate(template.id as number);
+      billingCodeTemplateDelete.mutate(template.id);
     }
   };
   return editVisible ? (

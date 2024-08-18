@@ -60,9 +60,7 @@ const BillingForm = ({
       ? timestampToDateISOTZ(parseInt(date))
       : timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto"),
     provider_ohip_billing_nbr:
-      user.access_level === "admin"
-        ? ""
-        : staffIdToOHIP(staffInfos, user.id as number),
+      user.access_level === "admin" ? "" : staffIdToOHIP(staffInfos, user.id),
     referrer_ohip_billing_nbr: "",
     patient_id: pid ? parseInt(pid) : 0,
     patient_hcn: hcn || "",
@@ -199,12 +197,12 @@ const BillingForm = ({
     try {
       setProgress(true);
       for (const billing_code of billingCodesArray) {
-        const billingToPost: BillingType = {
+        const billingToPost: Partial<BillingType> = {
           date: dateISOToTimestampTZ(formDatas.date),
           date_created: nowTZTimestamp(),
-          created_by_id: user.id as number,
+          created_by_id: user.id,
           created_by_user_type: user.access_level,
-          provider_id: user.id as number,
+          provider_id: user.id,
           referrer_ohip_billing_nbr: formDatas.referrer_ohip_billing_nbr,
           patient_id: formDatas.patient_id,
           diagnosis_id: (

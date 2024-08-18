@@ -4,8 +4,8 @@ import {
   EventClickArg,
   EventContentArg,
   EventDropArg,
+  EventInput,
 } from "@fullcalendar/core";
-import { EventImpl } from "@fullcalendar/core/internal";
 import {
   EventDragStartArg,
   EventResizeDoneArg,
@@ -36,7 +36,8 @@ import {
   SiteType,
   StaffType,
 } from "../../../types/api";
-import { EventType, UserStaffType } from "../../../types/app";
+import { UserStaffType } from "../../../types/app";
+import { eventImplToEventInput } from "../../../utils/appointments/eventImplToEventInput";
 import { getAvailableRooms } from "../../../utils/appointments/getAvailableRooms";
 import {
   toLastOccurence,
@@ -51,17 +52,16 @@ import {
   timestampToDateTimeSecondsISOTZ,
   timestampToTimeISOTZ,
 } from "../../../utils/dates/formatDates";
-import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
-import { toPatientName } from "../../../utils/names/toPatientName";
 import { toRoomTitle } from "../../../utils/names/toRoomTitle";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
-import CloneIcon from "../../UI/Icons/CloneIcon";
-import TrashIcon from "../../UI/Icons/TrashIcon";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import CalendarDisplay from "./CalendarDisplay";
 import CalendarLeftBar from "./CalendarLeftBar";
 import ConfirmDialogRecurringChange from "./ConfirmDialogRecurringChange";
 import ConfirmDialogRecurringDelete from "./ConfirmDialogRecurringDelete";
+import EventElement from "./EventElement";
+import EventElementListWeek from "./EventElementListWeek";
+import EventElementTimegrid from "./EventElementTimegrid";
 import CalendarOptions from "./Options/CalendarOptions";
 
 //MY COMPONENT
@@ -69,7 +69,7 @@ const Calendar = () => {
   //================================= HOOKS ========================================//
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [initialDate, setInitialDate] = useState(nowTZTimestamp());
+  const [initialDate, setInitialDate] = useState(nowTZTimestamp()); //the date when toggling between timeline and calendar
   const [selectable, setSelectable] = useState(true);
   const [timelineVisible, setTimelineVisible] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
@@ -77,20 +77,49 @@ const Calendar = () => {
   const [rangeEnd, setRangeEnd] = useState(getTomorrowStartTZ());
   const [formColor, setFormColor] = useState("#93B5E9");
   const [sitesIds, setSitesIds] = useState([user.site_id]); //Sites for CalendarFilter
-  const [timelineSiteId, setTimelineSiteId] = useState(user.site_id); //SelectTimelineSite
-  const [editAvailabilityVisible, setEditAvailabilityVisible] = useState(false);
+  const [timelineSiteId, setTimelineSiteId] = useState(user.site_id); //Selected Timeline Site
+  const [editAvailability, setEditAvailability] = useState(false);
+  const [printDayVisible, setPrintDayVisible] = useState(false);
   const [hostsIds, setHostsIds] = useState(
     user.title === "Secretary"
       ? [
-          0,
+          0, //no host yet
           ...(staffInfos
             .filter(({ site_id }) => site_id === user.site_id)
-            .map(({ id }) => id) as number[]),
+            .map(({ id }) => id) as number[]), //all staff from the secretary site
         ]
-      : [user.id as number]
+      : [user.id]
   );
-  //Queries
+
+  //Calendar Elements
+  const fcRef = useRef<FullCalendar | null>(null);
+  const currentEvent = useRef<EventInput | null>(null);
+  const currentElement = useRef<HTMLElement | null>(null);
+  const currentInfo = useRef<
+    | EventClickArg
+    | EventResizeDoneArg
+    | EventContentArg
+    | DateSelectArg
+    | EventDropArg
+    | null
+  >(null); //we need union type because of all different handlers
+  const initialInfo = useRef<EventResizeStartArg | EventDragStartArg | null>(
+    null
+  ); //we need union type because of all different handlers
+  const [currentView, setCurrentView] = useState("timeGrid");
+  const lastCurrentId = useRef("");
+  const eventCounter = useRef(0); //for keyboard shortcuts
+  //for recurring events
+  const [isFirstEvent, setIsFirstEvent] = useState(false);
+  const [confirmDlgRecChangeVisible, setConfirmDlgRecChangeVisible] =
+    useState(false);
+  const [confirmDlgRecDeleteVisible, setConfirmDlgRecDeleteVisible] =
+    useState(false);
+  //navigation
+  const navigate = useNavigate();
+
   const { data: sites } = useSites();
+  //CRUD appointments
   const appointments = useAppointments(
     hostsIds,
     rangeStart,
@@ -125,7 +154,7 @@ const Calendar = () => {
     sitesIds
   );
 
-  const events: EventType[] = useMemo(
+  const events: EventInput[] | undefined = useMemo(
     () =>
       parseToEvents(
         appointments?.data,
@@ -137,55 +166,24 @@ const Calendar = () => {
     [appointments?.data, sites, staffInfos, user.id, user.title]
   );
 
-  const [printDayVisible, setPrintDayVisible] = useState(false);
-
-  //Calendar Elements
-  const fcRef = useRef<FullCalendar>(null); //fullcalendar
-  const currentEvent = useRef<EventImpl | EventType | null>(null); //event can come from parseToEvents or from fullcalendar handlers
-  const currentInfo = useRef<
-    | EventClickArg
-    | EventResizeDoneArg
-    | EventContentArg
-    | DateSelectArg
-    | EventDropArg
-    | null
-  >(null); //we need union type because of all different handlers
-  const initialInfo = useRef<EventResizeStartArg | EventDragStartArg | null>(
-    null
-  ); //we need union type because of all different handlers
-  const currentEventElt = useRef<HTMLElement | null>(null);
-  const [currentView, setCurrentView] = useState("timeGrid");
-  const lastCurrentId = useRef("");
-  const eventCounter = useRef(0);
-  const [isFirstEvent, setIsFirstEvent] = useState(false);
-  const [confirmDlgRecChangeVisible, setConfirmDlgRecChangeVisible] =
-    useState(false);
-  const [confirmDlgRecDeleteVisible, setConfirmDlgRecDeleteVisible] =
-    useState(false);
-
-  //navigation
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (!events) return;
     if (lastCurrentId.current) {
-      console.log(currentEvent);
-      console.log(currentEventElt);
-      console.log(lastCurrentId);
-
-      //remove the red border from last currentEventElt
-      if (currentEventElt.current)
-        (currentEventElt.current as HTMLElement).style.border = "none";
-      //change the currentEventElt and change the border to red
-      currentEventElt.current = document.getElementsByClassName(
-        `event-${lastCurrentId.current}`
-      )[0] as HTMLElement;
-      currentEventElt.current.style.border = "solid 1px red";
+      //remove red border from last currentElement
+      if (currentElement.current)
+        (currentElement.current as HTMLElement).style.border = "none";
+      //change the currentElement and change the border to red
+      if (
+        document.getElementsByClassName(`event-${lastCurrentId.current}`)[0]
+      ) {
+        currentElement.current = document.getElementsByClassName(
+          `event-${lastCurrentId.current}`
+        )[0] as HTMLElement;
+        currentElement.current.style.border = "solid 1px red";
+      }
       //change the currentEvent
       currentEvent.current =
-        events.find(
-          ({ id }) => parseInt(id) === parseInt(lastCurrentId.current)
-        ) ?? null;
+        events.find(({ id }) => id === lastCurrentId.current) ?? null;
     }
   }, [events]);
 
@@ -199,10 +197,11 @@ const Calendar = () => {
     formVisible,
     setFormVisible,
     setSelectable,
-    editAvailabilityVisible,
+    editAvailability,
     setIsFirstEvent,
     setConfirmDlgRecDeleteVisible
   );
+
   //=============================== EVENTS HANDLERS =================================//
   const handleShortcutpickrChange = (
     selectedDates: Date[],
@@ -240,36 +239,29 @@ const Calendar = () => {
     e.stopPropagation();
     if (formVisible) return;
     const event = info.event; //the event i clicked on
-    const view = info.view.type; //the view i clicked on
-    const eventElt = document.getElementsByClassName(
+    const element = document.getElementsByClassName(
       `event-${event.id}`
-    )[0] as HTMLElement; //the element i clicked on
+    )[0] as HTMLElement;
+    const view = info.view.type; //the view i clicked on
+
+    //CALENDAR
+    //change current event
+    currentEvent.current = eventImplToEventInput(event);
+    currentElement.current = element;
+    lastCurrentId.current = event.id;
+    element.style.border = "solid 1px red";
+    !timelineVisible && setCurrentView(view);
     //If the event event i clicked on is not the same as the current event or the start date is different (for recurring events)
     if (
       currentEvent.current &&
       (currentEvent.current.id !== event.id ||
-        (typeof currentEvent.current.start !== "number" &&
-          DateTime.fromJSDate(currentEvent.current.start as Date).toMillis() !==
-            DateTime.fromJSDate(event.start as Date).toMillis()) ||
-        (typeof currentEvent.current.start === "number" &&
-          currentEvent.current.start !==
-            DateTime.fromJSDate(event.start as Date).toMillis()))
-    ) {
-      //change current event
-      (currentEventElt.current as HTMLElement).style.border = "none";
-      currentEvent.current = event;
-      lastCurrentId.current = event.id;
-      currentEventElt.current = eventElt;
-      eventElt.style.border = "solid 1px red";
-      !timelineVisible && setCurrentView(view);
-    } else if (currentEvent.current === null) {
-      //If there was no current event
-      currentEvent.current = event;
-      lastCurrentId.current = event.id;
-      currentEventElt.current = eventElt;
-      eventElt.style.border = "solid 1px red";
-      !timelineVisible && setCurrentView(view);
-    }
+        currentEvent.current.start !==
+          DateTime.fromJSDate(event.start as Date).toMillis())
+    )
+      //remove red border on former current element
+      (currentElement.current as HTMLElement).style.border = "none";
+
+    //XANO
     //If the event is recurring
     if (event.extendedProps.recurrence !== "Once") {
       currentInfo.current = info;
@@ -286,7 +278,7 @@ const Calendar = () => {
       } else {
         setIsFirstEvent(false);
       }
-      //open dialog
+      //open dialog for recurring events
       setConfirmDlgRecDeleteVisible(true);
       return;
     }
@@ -300,7 +292,7 @@ const Calendar = () => {
       setFormVisible(false);
       setSelectable(true);
       currentEvent.current = null;
-      currentEventElt.current = null;
+      currentElement.current = null;
       lastCurrentId.current = "";
     }
   };
@@ -312,10 +304,14 @@ const Calendar = () => {
     e.stopPropagation();
     if (formVisible) return;
     const event = info.event;
+
+    //CALENDAR
     //remove red border on current element
-    if (currentEventElt.current) {
-      currentEventElt.current.style.border = "none";
+    if (currentElement.current) {
+      currentElement.current.style.border = "none";
     }
+
+    //XANO
     const startDate = DateTime.fromJSDate(event.start as Date, {
       zone: "America/Toronto",
     }).toMillis();
@@ -328,27 +324,28 @@ const Calendar = () => {
       "staff"
     );
     appointmentToPost.recurrence = "Once";
-    appointmentToPost.start = startDate;
-    appointmentToPost.end = endDate;
+    appointmentToPost.start = startDate; //we need this because it can be a recurring event copy
+    appointmentToPost.end = endDate; //we need this because it can be a recurring event copy
     appointmentToPost.AppointmentDate = timestampToDateISOTZ(startDate);
     appointmentToPost.AppointmentTime = timestampToTimeISOTZ(startDate);
-    delete appointmentToPost.rrule;
-    delete appointmentToPost.exrule;
+    appointmentToPost.rrule = { freq: "", interval: 0, dtstart: "", until: "" };
+    appointmentToPost.exrule = [];
     appointmentPost.mutate(appointmentToPost, {
       onSuccess: (data) => {
         setFormVisible(false);
         setSelectable(true);
-        lastCurrentId.current = data.id.toString();
+        lastCurrentId.current = data.id.toString(); //to change the current event as the new one
       },
     });
   };
-  //EVENT LAYOUT
+
+  //EVENTS LAYOUT
   const renderEventContent = (info: EventContentArg) => {
     const event = info.event;
     const staffGuestsIds: { staff_infos: StaffType }[] =
-      event.extendedProps.staffGuestsIds;
+      event.extendedProps.staffGuestsIds ?? []; //after handleDateSelect staffGuestsIds is undefined
     const patientsGuestsIds: { patient_infos: DemographicsType }[] =
-      event.extendedProps.patientsGuestsIds;
+      event.extendedProps.patientsGuestsIds ?? []; //after handleDateSelect patientsGuestsIds is undefined
     if (
       //wEEK, MONTH, YEAR, ROOMS
       info.view.type === "timeGridWeek" ||
@@ -357,385 +354,90 @@ const Calendar = () => {
       info.view.type === "resourceTimeGridDay"
     ) {
       return (
-        <div
-          style={{
-            fontSize: "0.7rem",
-            height: "100%",
-            backgroundImage:
-              event.extendedProps.status === "Cancelled"
-                ? `repeating-linear-gradient(
-                45deg,
-                ${event.backgroundColor},
-                ${event.backgroundColor} 10px,
-                #aaaaaa 10px,
-                #aaaaaa 20px
-              )`
-                : undefined,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "0 2px",
-            }}
-          >
-            <p
-              style={{
-                padding: "0",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {event.allDay ? "All Day" : info.timeText} -{" "}
-              {event.extendedProps.purpose ?? "Appointment"}
-            </p>
-            {(event.extendedProps.host === user.id ||
-              user.title === "Secretary") && (
-              <div style={{ display: "flex" }}>
-                <CloneIcon
-                  ml={5}
-                  mr={5}
-                  onClick={(e) => handleCopyEvent(e, info)}
-                />
-                <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
-              </div>
-            )}
-          </div>
-          <div>
-            <span>
-              {patientsGuestsIds.length
-                ? patientsGuestsIds.map(
-                    (patient_guest) =>
-                      patient_guest && (
-                        <span
-                          className="calendar__patient-link"
-                          onClick={(e) =>
-                            handlePatientClick(
-                              e,
-                              patient_guest.patient_infos.patient_id
-                            )
-                          }
-                          key={patient_guest.patient_infos.patient_id}
-                        >
-                          <strong>
-                            {toPatientName(
-                              patient_guest.patient_infos
-                            ).toUpperCase()}
-                          </strong>
-                          {" / "}
-                        </span>
-                      )
-                  )
-                : null}
-              {staffGuestsIds.length
-                ? staffGuestsIds.map(
-                    (staff_guest, index) =>
-                      staff_guest && (
-                        <span key={staff_guest.staff_infos.id}>
-                          <strong>
-                            {staffIdToTitleAndName(
-                              staffInfos,
-                              staff_guest.staff_infos.id
-                            ).toUpperCase()}
-                          </strong>
-                          {index !== staffGuestsIds.length - 1 ? " / " : ""}
-                        </span>
-                      )
-                  )
-                : null}
-            </span>
-          </div>
-          <div>
-            <strong>Host: </strong>
-            {event.extendedProps.hostName}
-          </div>
-          <div>
-            <strong>Site: </strong>
-            {event.extendedProps.siteName}
-          </div>
-          <div>
-            <strong>Room: </strong>
-            {event.extendedProps.roomTitle}
-          </div>
-          <div>
-            <strong>{event.extendedProps.status?.toUpperCase()}</strong>
-          </div>
-        </div>
+        <EventElement
+          event={event}
+          info={info}
+          handleCopyEvent={handleCopyEvent}
+          handleDeleteEvent={handleDeleteEvent}
+          handlePatientClick={handlePatientClick}
+          patientsGuestsIds={patientsGuestsIds}
+          staffGuestsIds={staffGuestsIds}
+        />
       );
     } else if (info.view.type === "timeGrid") {
       //DAY
       return (
-        <div
-          style={{
-            fontSize: "0.7rem",
-            height: "100%",
-            backgroundImage:
-              event.extendedProps.status === "Cancelled"
-                ? `repeating-linear-gradient(
-                45deg,
-                ${event.backgroundColor},
-                ${event.backgroundColor} 10px,
-                #aaaaaa 10px,
-                #aaaaaa 20px
-              )`
-                : undefined,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <div
-            style={{
-              padding: "0 2px",
-              alignItems: "center",
-            }}
-          >
-            <span
-              style={{
-                width: "70px",
-                textAlign: "left",
-                display: "inline-block",
-              }}
-            >
-              {event.allDay ? "All Day" : info.timeText}
-            </span>
-            <span style={{ marginLeft: "10px" }}>
-              {patientsGuestsIds.length
-                ? patientsGuestsIds.map(
-                    (patient_guest) =>
-                      patient_guest && (
-                        <span
-                          className="calendar__patient-link"
-                          onClick={(e) =>
-                            handlePatientClick(
-                              e,
-                              patient_guest.patient_infos.patient_id
-                            )
-                          }
-                          key={patient_guest.patient_infos.patient_id}
-                        >
-                          <strong>
-                            {toPatientName(
-                              patient_guest.patient_infos
-                            ).toUpperCase()}
-                          </strong>
-                          {" / "}
-                        </span>
-                      )
-                  )
-                : null}
-              {staffGuestsIds.length
-                ? staffGuestsIds.map(
-                    (staff_guest) =>
-                      staff_guest && (
-                        <span key={staff_guest.staff_infos.id}>
-                          <strong>
-                            {staffIdToTitleAndName(
-                              staffInfos,
-                              staff_guest.staff_infos.id
-                            ).toUpperCase()}
-                          </strong>
-                          {" / "}
-                        </span>
-                      )
-                  )
-                : null}
-            </span>
-            <span>
-              <strong>
-                {event.extendedProps.purpose?.toUpperCase() ?? "APPOINTMENT"}
-              </strong>
-              {" / "}
-            </span>
-            <strong>Host: </strong>
-            {event.extendedProps.hostName} / <strong>Site:</strong>{" "}
-            {event.extendedProps.siteName} / <strong>Room: </strong>
-            {event.extendedProps.roomTitle} /{" "}
-            <strong>{event.extendedProps.status?.toUpperCase()}</strong>
-            {event.extendedProps.notes && (
-              <>
-                {" "}
-                / <strong>Notes: </strong>
-                {event.extendedProps.notes}
-              </>
-            )}
-          </div>
-          {(event.extendedProps.host === user.id ||
-            user.title === "Secretary") && (
-            <div>
-              <CloneIcon
-                ml={5}
-                mr={5}
-                onClick={(e) => handleCopyEvent(e, info)}
-              />
-              <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
-            </div>
-          )}
-        </div>
+        <EventElementTimegrid
+          event={event}
+          info={info}
+          handleCopyEvent={handleCopyEvent}
+          handleDeleteEvent={handleDeleteEvent}
+          handlePatientClick={handlePatientClick}
+          patientsGuestsIds={patientsGuestsIds}
+          staffGuestsIds={staffGuestsIds}
+        />
       );
     } else if (info.view.type === "listWeek") {
       //LIST
       return (
-        <div
-          style={{
-            height: "100%",
-            backgroundImage:
-              event.extendedProps.status === "Cancelled"
-                ? `repeating-linear-gradient(
-          45deg,
-          ${event.backgroundColor},
-          ${event.backgroundColor} 10px,
-          #aaaaaa 10px,
-          #aaaaaa 20px
-        )`
-                : undefined,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                padding: "0",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "clip",
-              }}
-            >
-              <strong>
-                {event.extendedProps.purpose?.toUpperCase() ?? "APPOINTMENT"}
-              </strong>
-            </p>
-            {(event.extendedProps.host === user.id ||
-              user.title === "Secretary") && (
-              <div>
-                <CloneIcon
-                  ml={5}
-                  mr={5}
-                  onClick={(e) => handleCopyEvent(e, info)}
-                />
-                <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
-              </div>
-            )}
-          </div>
-          <div>
-            <span>
-              {patientsGuestsIds.length
-                ? patientsGuestsIds.map(
-                    (patient_guest) =>
-                      patient_guest && (
-                        <span
-                          className="calendar__patient-link calendar__patient-link--list"
-                          onClick={(e) =>
-                            handlePatientClick(
-                              e,
-                              patient_guest.patient_infos.patient_id
-                            )
-                          }
-                          key={patient_guest.patient_infos.patient_id}
-                        >
-                          <strong>
-                            {toPatientName(
-                              patient_guest.patient_infos
-                            ).toUpperCase()}
-                          </strong>
-                          {" / "}
-                        </span>
-                      )
-                  )
-                : null}
-              {staffGuestsIds.length
-                ? staffGuestsIds.map(
-                    (staff_guest, index) =>
-                      staff_guest && (
-                        <span key={staff_guest.staff_infos.id}>
-                          <strong>
-                            {staffIdToTitleAndName(
-                              staffInfos,
-                              staff_guest.staff_infos.id
-                            ).toUpperCase()}
-                          </strong>
-                          {index !== staffGuestsIds.length - 1 ? " / " : ""}
-                        </span>
-                      )
-                  )
-                : null}
-            </span>
-          </div>
-          <div>
-            <strong>Host: </strong>
-            {event.extendedProps.hostName}
-          </div>
-          <div>
-            <strong>Site: </strong>
-            {event.extendedProps.siteName}
-          </div>
-          <div>
-            <strong>Room: </strong>
-            {event.extendedProps.rommTitle}
-          </div>
-          <div>
-            <strong>{event.extendedProps.status?.toUpperCase()}</strong>
-          </div>
-          {event.extendedProps.notes && (
-            <div>
-              <strong>Notes: </strong>
-              {event.extendedProps.notes}
-            </div>
-          )}
-        </div>
+        <EventElementListWeek
+          event={event}
+          info={info}
+          handleCopyEvent={handleCopyEvent}
+          handleDeleteEvent={handleDeleteEvent}
+          handlePatientClick={handlePatientClick}
+          patientsGuestsIds={patientsGuestsIds}
+          staffGuestsIds={staffGuestsIds}
+        />
       );
     }
   };
+
   //EVENT CLICK
   const handleEventClick = async (info: EventClickArg) => {
     if (formVisible) return;
-    const eventElt = info.el;
+    const element = info.el;
     const event = info.event;
     const view = info.view.type;
     currentInfo.current = info;
+
+    //CALENDAR
+    //we clicked on the current event
     if (
       currentEvent.current &&
-      (currentEvent.current.id !== event.id ||
-        (typeof currentEvent.current.start !== "number" &&
-          DateTime.fromJSDate(currentEvent.current.start as Date).toMillis() !==
-            DateTime.fromJSDate(event.start as Date).toMillis()) ||
-        (typeof currentEvent.current.start === "number" &&
-          currentEvent.current.start !==
-            DateTime.fromJSDate(event.start as Date).toMillis()))
+      currentEvent.current.id === event.id &&
+      currentEvent.current.start ===
+        DateTime.fromJSDate(event.start as Date).toMillis()
     ) {
-      //event selection change
-      (currentEventElt.current as HTMLElement).style.border = "none";
-      currentEvent.current = event;
-      lastCurrentId.current = event.id;
-      currentEventElt.current = eventElt;
-      eventElt.style.border = "solid 1px red";
-      !timelineVisible && setCurrentView(view);
-    } else if (currentEvent.current === null) {
-      //first event selection
-      currentEvent.current = event;
-      lastCurrentId.current = event.id;
-      currentEventElt.current = eventElt;
-      eventElt.style.border = "solid 1px red";
-      !timelineVisible && setCurrentView(view);
-    } else {
       setFormColor(event.backgroundColor);
       setFormVisible(true);
       setSelectable(false);
     }
+    //we clicked on another event
+    else if (
+      (currentEvent.current &&
+        (currentEvent.current.id !== event.id ||
+          currentEvent.current.start !==
+            DateTime.fromJSDate(event.start as Date).toMillis())) ||
+      currentEvent.current === null
+    ) {
+      if (currentEvent.current)
+        (currentElement.current as HTMLElement).style.border = "none";
+      currentEvent.current = eventImplToEventInput(event);
+      lastCurrentId.current = event.id;
+      currentElement.current = element;
+      element.style.border = "solid 1px red";
+      !timelineVisible && setCurrentView(view);
+    }
+
+    //XANO
     if (event.extendedProps.recurrence !== "Once") {
       const appointment = await xanoGet(
         `/appointments/${parseInt(info.event.id)}`,
         "staff"
       );
       if (
-        DateTime.fromJSDate(info.event.start as Date, {
+        DateTime.fromJSDate(event.start as Date, {
           zone: "America/Toronto",
         }).toMillis() === appointment.start
       ) {
@@ -745,6 +447,7 @@ const Calendar = () => {
       }
     }
   };
+
   // DATES SET
   const handleDatesSet = (info: DatesSetArg) => {
     setRangeStart(
@@ -756,20 +459,21 @@ const Calendar = () => {
     setInitialDate(
       DateTime.fromJSDate(info.start, { zone: "America/Toronto" }).toMillis()
     );
-    if (currentEventElt.current) {
-      currentEventElt.current.style.border = "none";
+    if (currentElement.current) {
+      currentElement.current.style.border = "none";
     }
     currentEvent.current = null;
+    currentElement.current = null;
     lastCurrentId.current = "";
-    currentEventElt.current = null;
+    currentInfo.current = null;
     !timelineVisible && setCurrentView(info.view.type);
   };
+
   //DATE SELECT
   const handleDateSelect = async (info: DateSelectArg) => {
-    //Change event focus on calendar
-    if (currentEventElt.current) currentEventElt.current.style.border = "none";
+    //CALENDAR
+    if (currentElement.current) currentElement.current.style.border = "none";
 
-    //Event
     const startDate = DateTime.fromJSDate(info.start, {
       zone: "America/Toronto",
     }).toMillis();
@@ -785,10 +489,10 @@ const Calendar = () => {
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
-    const appointmentToPost: AppointmentType = {
-      host_id: user.title === "Secretary" ? 0 : (user.id as number),
+    const appointmentToPost: Partial<AppointmentType> = {
+      host_id: user.title === "Secretary" ? 0 : user.id,
       date_created: nowTZTimestamp(),
-      created_by_id: user.id as number,
+      created_by_id: user.id,
       start: info.allDay ? startAllDay : startDate,
       end: info.allDay ? endAllDay : endDate,
       room_id: timelineVisible ? info.resource?.id ?? "z" : "z",
@@ -817,17 +521,17 @@ const Calendar = () => {
               OHIPPhysicianId: user.ohip_billing_nbr,
             },
     };
+
     if (timelineVisible) {
       let availableRooms: string[];
       try {
-        availableRooms =
-          (await getAvailableRooms(
-            0,
-            startDate,
-            endDate,
-            sites as SiteType[],
-            timelineSiteId
-          )) ?? [];
+        availableRooms = await getAvailableRooms(
+          0,
+          startDate,
+          endDate,
+          sites as SiteType[],
+          timelineSiteId
+        );
       } catch (err) {
         toast.error(`Error: unable to get available rooms: ${err.message}`, {
           containerId: "A",
@@ -865,33 +569,37 @@ const Calendar = () => {
     }
     fcRef.current?.getApi().unselect();
   };
+
   //DRAG AND DROP
   const handleDragStart = (info: EventDragStartArg) => {
-    if (currentEventElt.current) {
-      currentEventElt.current.style.border = "none";
-    }
+    if (currentElement.current) currentElement.current.style.border = "none";
     initialInfo.current = info;
     setFormVisible(false);
   };
+
   const handleDrop = async (info: EventDropArg) => {
     const event = info.event;
-    const eventElt = info.el;
-    eventElt.style.border = "solid 1px red";
-    currentEvent.current = event;
-    lastCurrentId.current = event.id;
-    currentEventElt.current = eventElt;
+    const element = info.el;
 
+    //CALENDAR
+    currentElement.current = element;
+    currentEvent.current = eventImplToEventInput(event);
+    lastCurrentId.current = event.id;
+    element.style.border = "solid 1px red";
+
+    //XANO
+    //Recurring events
     if (event.extendedProps.recurrence !== "Once") {
-      if (timelineVisible) {
-        const newRoomId = info.newResource
-          ? info.newResource.id
-          : event.extendedProps.roomId;
-        if (newRoomId !== "z") {
-          alert("You can't occupy a room with a recurring event !");
-          info.revert();
-          return;
-        }
-      }
+      // if (timelineVisible) {
+      //   const newRoomId = info.newResource
+      //     ? info.newResource.id
+      //     : event.extendedProps.roomId;
+      //   if (newRoomId !== "z") {
+      //     alert("You can't occupy a room with a recurring event !");
+      //     info.revert();
+      //     return;
+      //   }
+      // } commented because i want to be able to occupy a room with a recurring event
       currentInfo.current = info;
       const appointment = await xanoGet(
         `/appointments/${parseInt(event.id)}`,
@@ -910,6 +618,7 @@ const Calendar = () => {
       return;
     }
 
+    //Not recurring events
     const startDate = DateTime.fromJSDate(event.start as Date, {
       zone: "America/Toronto",
     }).toMillis();
@@ -924,7 +633,7 @@ const Calendar = () => {
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
-    let availableRooms: string[] | undefined = [];
+    let availableRooms: string[] = [];
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -981,6 +690,7 @@ const Calendar = () => {
       recurrence: event.extendedProps.recurrence,
       rrule: event.extendedProps.rrule,
       exrule: event.extendedProps.exrule,
+      room_id: event.extendedProps.roomId,
     };
 
     if (!timelineVisible) {
@@ -1026,21 +736,25 @@ const Calendar = () => {
       }
     }
   };
+
   //RESIZE
   const handleResizeStart = (info: EventResizeStartArg) => {
-    if (currentEventElt.current) {
-      currentEventElt.current.style.border = "none";
-    }
+    if (currentElement.current) currentElement.current.style.border = "none";
     initialInfo.current = info;
+    setFormVisible(false);
   };
   const handleResize = async (info: EventResizeDoneArg) => {
     const event = info.event;
-    const eventElt = info.el;
-    eventElt.style.border = "solid 1px red";
-    currentEvent.current = event;
-    lastCurrentId.current = event.id;
-    currentEventElt.current = eventElt;
+    const element = info.el;
 
+    //CALENDAR
+    currentEvent.current = eventImplToEventInput(event);
+    currentElement.current = element;
+    lastCurrentId.current = event.id;
+    element.style.border = "solid 1px red";
+
+    //XANO
+    //Recurring events
     if (event.extendedProps.recurrence !== "Once") {
       currentInfo.current = info;
       const appointment = await xanoGet(
@@ -1060,6 +774,7 @@ const Calendar = () => {
       return;
     }
 
+    //Not recurring events
     const startDate = DateTime.fromJSDate(event.start as Date, {
       zone: "America/Toronto",
     }).toMillis();
@@ -1069,13 +784,13 @@ const Calendar = () => {
     //same as a drop
     let availableRooms: string[] = [];
     try {
-      availableRooms = (await getAvailableRooms(
+      availableRooms = await getAvailableRooms(
         parseInt(event.id),
         startDate,
         endDate,
         sites as SiteType[],
         timelineVisible ? timelineSiteId : user.site_id
-      )) as string[];
+      );
     } catch (err) {
       toast.error(`Error: unable to get available rooms: ${err.message}`, {
         containerId: "A",
@@ -1142,11 +857,13 @@ const Calendar = () => {
       info.revert();
     }
   };
+
   //DAYSHEET
   const handlePrintDay = () => {
     setPrintDayVisible((v) => !v);
   };
-  //RECURRING EVENT
+
+  //RECURRING EVENTS
   const handleCancelRecurringChange = () => {
     if (
       currentInfo.current &&
@@ -1186,26 +903,30 @@ const Calendar = () => {
 
     let availableRooms: string[] = [];
     try {
-      availableRooms = (await getAvailableRooms(
+      availableRooms = await getAvailableRooms(
         parseInt(event.id),
         startDate,
         endDate,
         sites as SiteType[],
         timelineVisible ? timelineSiteId : user.site_id
-      )) as string[];
+      );
     } catch (err) {
       toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
         containerId: "A",
       });
       return;
     }
-    //Créer un nouvel évènement B
-    const appointmentToPost: AppointmentType = {
+    //Create a new appointment B
+    const appointmentToPost: Partial<AppointmentType> = {
       host_id: event.extendedProps.host,
       start: event.allDay ? startAllDay : startDate,
       end: event.allDay ? endAllDay : endDate,
-      patients_guests_ids: event.extendedProps.patientsGuestsIds,
-      staff_guests_ids: event.extendedProps.staffGuestsIds,
+      patients_guests_ids: event.extendedProps.patientsGuestsIds.map(
+        ({ patient_infos }) => patient_infos.patient_id
+      ),
+      staff_guests_ids: event.extendedProps.staffGuestsIds.map(
+        ({ staff_infos }) => staff_infos.id
+      ),
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
@@ -1231,7 +952,7 @@ const Calendar = () => {
       site_id: event.extendedProps.siteId,
       recurrence: "Once",
     };
-    //Update l’évènement d’origine A en excluant la date du nouvel évènement
+    //Update original appointment A excluding appointment B
     const appointmentToPut = await xanoGet(
       `/appointments/${event.id}`,
       "staff"
@@ -1293,7 +1014,7 @@ const Calendar = () => {
     } else {
       const newRoomId =
         currentInfo.current && "newResource" in currentInfo.current
-          ? (currentInfo.current as EventDropArg).newResource?.id
+          ? currentInfo.current.newResource?.id
           : event.extendedProps.roomId;
       if (
         newRoomId === "z" ||
@@ -1324,6 +1045,7 @@ const Calendar = () => {
       }
     }
   };
+
   const handleChangeAllEvents = async () => {
     const event = (
       currentInfo.current as Exclude<
@@ -1347,7 +1069,7 @@ const Calendar = () => {
       .set({ hour: 0, minute: 0, second: 0 })
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
-    let availableRooms;
+    let availableRooms: string[] = [];
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -1377,12 +1099,9 @@ const Calendar = () => {
     appointmentToPut.Duration = event.allDay
       ? 1440
       : Math.floor((endDate - startDate) / (1000 * 60));
-    appointmentToPut.rrule = {
-      ...(appointmentToPut.rrule as Exclude<RruleType, null>),
-      dtstart: timestampToDateTimeSecondsISOTZ(
-        event.allDay ? startAllDay : startDate
-      ),
-    };
+    appointmentToPut.rrule.dtstart = timestampToDateTimeSecondsISOTZ(
+      event.allDay ? startAllDay : startDate
+    );
     if (!timelineVisible) {
       if (
         event.extendedProps.roomId === "z" ||
@@ -1463,26 +1182,30 @@ const Calendar = () => {
     const endAllDay = startAllDay + 24 * 3600 * 1000;
     let availableRooms: string[] = [];
     try {
-      availableRooms = (await getAvailableRooms(
+      availableRooms = await getAvailableRooms(
         parseInt(event.id),
         startDate,
         endDate,
         sites as SiteType[],
         timelineVisible ? timelineSiteId : user.site_id
-      )) as string[];
+      );
     } catch (err) {
       toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
         containerId: "A",
       });
       return;
     }
-    //Créer un nouvel evenement récurrent B
-    const appointmentToPost: AppointmentType = {
+    //Create a new recurring event B
+    const appointmentToPost: Partial<AppointmentType> = {
       host_id: event.extendedProps.host,
       start: event.allDay ? startAllDay : startDate,
       end: event.allDay ? endAllDay : endDate,
-      patients_guests_ids: event.extendedProps.patientsGuestsIds,
-      staff_guests_ids: event.extendedProps.staffGuestsIds,
+      patients_guests_ids: event.extendedProps.patientsGuestsIds.map(
+        ({ patient_infos }) => patient_infos.patient_id
+      ),
+      staff_guests_ids: event.extendedProps.staffGuestsIds.map(
+        ({ staff_infos }) => staff_infos.id
+      ),
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
@@ -1514,15 +1237,14 @@ const Calendar = () => {
         ),
       },
     };
-    //Update l’évènement d’origine A en excluant la date du nouvel évènement
+    //Update original event A en exclude event B date
     const appointmentToPut: AppointmentType = await xanoGet(
       `/appointments/${event.id}`,
       "staff"
     );
-    appointmentToPut.rrule = {
-      ...(appointmentToPut.rrule as Exclude<RruleType, null>),
-      until: timestampToDateTimeSecondsISOTZ(startAllDay - 1000),
-    };
+    appointmentToPut.rrule.until = timestampToDateTimeSecondsISOTZ(
+      startAllDay - 1000
+    );
     if (!timelineVisible) {
       if (
         event.extendedProps.roomId === "z" ||
@@ -1622,14 +1344,13 @@ const Calendar = () => {
       appointmentToPut.end = nextOccurence[1];
       appointmentToPut.AppointmentDate = timestampToDateISOTZ(nextOccurence[0]);
       appointmentToPut.AppointmentTime = timestampToTimeISOTZ(nextOccurence[0]);
-      appointmentToPut.rrule = {
-        ...(appointmentToPut.rrule as Exclude<RruleType, null>),
-        dtstart: timestampToDateTimeSecondsISOTZ(nextOccurence[0]),
-      };
+      appointmentToPut.rrule.dtstart = timestampToDateTimeSecondsISOTZ(
+        nextOccurence[0]
+      );
     } else {
       appointmentToPut.exrule = appointmentToPut.exrule?.length
         ? [
-            ...(appointmentToPut.exrule as Exclude<ExruleType, null>),
+            ...appointmentToPut.exrule,
             {
               freq: appointmentToPut.rrule?.freq as string,
               interval: appointmentToPut.rrule?.interval as number,
@@ -1698,17 +1419,14 @@ const Calendar = () => {
     const endDate = DateTime.fromJSDate(event.end as Date, {
       zone: "America/Toronto",
     }).toMillis();
-    appointmentToPut.rrule = {
-      ...(appointmentToPut.rrule as Exclude<RruleType, null>),
-      until: timestampToDateTimeSecondsISOTZ(
-        toLastOccurence(
-          startDate,
-          endDate,
-          appointmentToPut.rrule as RruleType,
-          appointmentToPut.exrule as ExruleType
-        )[0]
-      ),
-    };
+    appointmentToPut.rrule.until = timestampToDateTimeSecondsISOTZ(
+      toLastOccurence(
+        startDate,
+        endDate,
+        appointmentToPut.rrule as RruleType,
+        appointmentToPut.exrule as ExruleType
+      )[0]
+    );
     appointmentPut.mutate(appointmentToPut);
     currentEvent.current = null;
     lastCurrentId.current = "";
@@ -1721,8 +1439,8 @@ const Calendar = () => {
   return (
     <>
       <CalendarOptions
-        editAvailabilityVisible={editAvailabilityVisible}
-        setEditAvailabilityVisible={setEditAvailabilityVisible}
+        editAvailability={editAvailability}
+        setEditAvailability={setEditAvailability}
         isPending={appointments.isPending}
       />
       <div className="calendar">

@@ -4,8 +4,8 @@ import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
 
 type RoomsFormProps = {
-  formDatas: Partial<SiteType>;
-  setFormDatas: React.Dispatch<React.SetStateAction<Partial<SiteType>>>;
+  formDatas: SiteType;
+  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -41,7 +41,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
 
   const handleAddRoom = () => {
     setErrMsg("");
-    const idsTaken = [...(formDatas.rooms ?? [])].map(({ id }) => id);
+    const idsTaken = [...(formDatas?.rooms ?? [])].map(({ id }) => id);
     let nextId = roomIdCounter.current;
     let i = 0;
     while (idsTaken.includes(nextId)) {
@@ -52,7 +52,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
     setFormDatas({
       ...formDatas,
       rooms: [
-        ...(formDatas.rooms ?? []),
+        ...(formDatas?.rooms ?? []),
         { id: roomIdCounter.current, title: "" },
       ],
     });
@@ -66,7 +66,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      rooms: (formDatas.rooms ?? []).map(
+      rooms: (formDatas?.rooms ?? []).map(
         (room: { id: string; title: string }) => {
           return room.id === id ? { id: id, title: value } : room;
         }
@@ -74,17 +74,14 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
     });
   };
 
-  const handleDeleteRoom = (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: string
-  ) => {
+  const handleDeleteRoom = (id: string) => {
     setFormDatas({
       ...formDatas,
-      rooms: (formDatas.rooms ?? []).filter(
+      rooms: (formDatas?.rooms ?? []).filter(
         (room: { id: string; title: string }) => room.id !== id
       ),
     });
-    const idsTaken = (formDatas.rooms ?? [])
+    const idsTaken = (formDatas?.rooms ?? [])
       .filter((room: { id: string; title: string }) => room.id !== id)
       .map(({ id }) => id);
     let nextId = "a";
@@ -101,7 +98,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
       <label>Rooms*:</label>
       <Button onClick={handleAddRoom} label="Add a new room" />
       <ul>
-        {(formDatas.rooms ?? [])
+        {(formDatas?.rooms ?? [])
           .filter(({ id }) => id !== "z")
           .sort((a: RoomType, b: RoomType) => a.id.localeCompare(b.id))
           .map((room: RoomType) => (

@@ -5,8 +5,10 @@ import MigrationToggle from "./MigrationToggle";
 
 const Migration = () => {
   const [type, setType] = useState<"Import" | "Export">("Export");
+
   const isTypeChecked = (option: "Import" | "Export") =>
     option === type ? true : false;
+
   const handleMigrationTypeChanged = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

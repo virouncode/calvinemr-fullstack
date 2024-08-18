@@ -1,7 +1,7 @@
 import React from "react";
 
 type DeleteButtonProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
 };
 

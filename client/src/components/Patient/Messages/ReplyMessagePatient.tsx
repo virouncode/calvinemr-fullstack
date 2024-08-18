@@ -54,19 +54,19 @@ const ReplyMessagePatient = ({
         attachments_array: attachments,
       });
       attach_ids = [
-        ...((
+        ...(
           message.attachments_ids as { attachment: MessageAttachmentType }[]
-        ).map(({ attachment }) => attachment.id) as number[]),
+        ).map(({ attachment }) => attachment.id as number),
         ...response,
       ];
     } else {
       attach_ids = [
-        ...((
+        ...(
           message.attachments_ids as { attachment: MessageAttachmentType }[]
-        ).map(({ attachment }) => attachment.id) as number[]),
+        ).map(({ attachment }) => attachment.id as number),
       ];
     }
-    const messageToPost: MessageExternalType = {
+    const messageToPost: Partial<MessageExternalType> = {
       from_patient_id: user.id,
       to_staff_id: message.from_staff_id,
       subject: previousMsgs.length
@@ -75,10 +75,7 @@ const ReplyMessagePatient = ({
       body: body,
       attachments_ids: attach_ids,
       read_by_patients_ids: [user.id],
-      previous_messages_ids: [
-        ...previousMsgs.map(({ id }) => id),
-        message.id,
-      ] as number[],
+      previous_messages_ids: [...previousMsgs.map(({ id }) => id), message.id],
       date_created: nowTZTimestamp(),
       type: "External",
     };
@@ -127,7 +124,7 @@ const ReplyMessagePatient = ({
         setIsLoadingFile(true);
         // setting up the reader`
         const reader = new FileReader();
-        reader.readAsDataURL(file as File);
+        reader.readAsDataURL(file);
         // here we tell the reader what to do when it's done reading...
         reader.onload = async (e) => {
           const content = e.target?.result; // this is the content!
@@ -175,7 +172,7 @@ const ReplyMessagePatient = ({
       <div className="reply-message__title">
         <p>
           <strong>To: </strong>
-          {staffIdToTitleAndName(staffInfos, message.from_staff_id as number)}
+          {staffIdToTitleAndName(staffInfos, message.from_staff_id)}
         </p>
       </div>
       <div className="reply-message__subject">

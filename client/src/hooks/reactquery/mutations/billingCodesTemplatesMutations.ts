@@ -12,7 +12,7 @@ export const useBillingCodeTemplatePost = () => {
   const userType = user?.access_level;
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (billingCodeTemplateToPost: BillingCodeTemplateType) =>
+    mutationFn: (billingCodeTemplateToPost: Partial<BillingCodeTemplateType>) =>
       xanoPost(
         "/billing_codes_templates",
         userType as string,

@@ -25,28 +25,28 @@ const queryClient = new QueryClient({
 });
 
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <UserProvider>
-            <SocketProvider>
-              <StaffInfosProvider>
-                <AdminsInfosProvider>
-                  <TitleProvider>
-                    <ClinicProvider>
-                      <Routes>
-                        <Route path="/*" element={<App />} />
-                      </Routes>
-                    </ClinicProvider>
-                  </TitleProvider>
-                </AdminsInfosProvider>
-              </StaffInfosProvider>
-            </SocketProvider>
-          </UserProvider>
-        </AuthProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <UserProvider>
+          <SocketProvider>
+            <StaffInfosProvider>
+              <AdminsInfosProvider>
+                <TitleProvider>
+                  <ClinicProvider>
+                    <Routes>
+                      <Route path="/*" element={<App />} />
+                    </Routes>
+                  </ClinicProvider>
+                </TitleProvider>
+              </AdminsInfosProvider>
+            </StaffInfosProvider>
+          </SocketProvider>
+        </UserProvider>
+      </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

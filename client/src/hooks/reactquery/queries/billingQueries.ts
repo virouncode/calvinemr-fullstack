@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { AdminType, PaginatedBillingsType } from "../../../types/api";
+import { AdminType, BillingType, PaginatedDatasType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import useUserContext from "../../context/useUserContext";
 
@@ -12,7 +12,7 @@ export const useBillings = (rangeStart: number, rangeEnd: number) => {
       user.title !== "Secretary" && user.access_level !== "admin"
         ? ["billings", user.id, rangeStart, rangeEnd]
         : ["billings", rangeStart, rangeEnd],
-    queryFn: ({ pageParam }): Promise<PaginatedBillingsType> => {
+    queryFn: ({ pageParam }): Promise<PaginatedDatasType<BillingType>> => {
       if (user.title !== "Secretary" && user.access_level !== "admin") {
         return xanoGet("/billings_of_staff_in_range", "staff", {
           staff_id: user.id,

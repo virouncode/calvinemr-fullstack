@@ -34,7 +34,6 @@ const MessagesPatient = () => {
         <ErrorParagraph errorMsg={error.message} />E
       </div>
     );
-  console.log("messages", messages);
 
   const messagesDatas: MessageExternalType[] = filterAndSortExternalMessages(
     section,

@@ -12,7 +12,7 @@ export const useBillingPost = () => {
   const userType = user?.access_level;
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (billingToPost: BillingType) =>
+    mutationFn: (billingToPost: Partial<BillingType>) =>
       xanoPost("/billings", userType as string, billingToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["billings"] });

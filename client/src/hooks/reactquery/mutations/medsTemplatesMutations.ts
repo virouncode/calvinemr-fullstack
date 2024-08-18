@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useMedsTemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: MedTemplateType) =>
+    mutationFn: (templateToPost: Partial<MedTemplateType>) =>
       xanoPost("/medications_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["medsTemplates"] });

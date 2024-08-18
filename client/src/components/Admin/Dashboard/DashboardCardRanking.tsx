@@ -27,6 +27,7 @@ const DashboardCardRanking = ({
         sites={sites}
         value={siteSelectedId}
         all={true}
+        label="Site"
       />
       {top10Infos && top10Infos.length > 0 ? (
         <ul className="dashboard-card__ranking-content">

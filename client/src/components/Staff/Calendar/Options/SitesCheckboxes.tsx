@@ -16,7 +16,7 @@ const SitesCheckboxes = ({
   const handleCheckAllSitesIds = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked) {
-      setSitesIds(sites.map(({ id }) => id) as number[]);
+      setSitesIds(sites.map(({ id }) => id));
     } else {
       setSitesIds([]);
     }
@@ -31,7 +31,7 @@ const SitesCheckboxes = ({
         [...sitesIds, siteId].length ===
         sites.filter(({ site_status }) => site_status !== "Closed").length
       )
-        setSitesIds(sites.map(({ id }) => id) as number[]);
+        setSitesIds(sites.map(({ id }) => id));
       else setSitesIds([...sitesIds, siteId]);
     } else {
       setSitesIds(sitesIds.filter((id) => id !== siteId));

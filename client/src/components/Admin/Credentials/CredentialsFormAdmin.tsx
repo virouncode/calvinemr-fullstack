@@ -17,7 +17,7 @@ const CredentialsFormAdmin = () => {
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [credentials, setCredentials] = useState<CredentialsFormType>({
-    email: auth?.email as string,
+    email: auth?.email ?? "",
     password: "",
     confirmPassword: "",
     pin: "",

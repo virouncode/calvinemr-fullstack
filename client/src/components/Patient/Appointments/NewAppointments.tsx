@@ -99,7 +99,7 @@ const NewAppointments = () => {
       //get all secretaries id
       const secretariesIds = staffInfos
         .filter(({ title }) => title === "Secretary")
-        .map(({ id }) => id) as number[];
+        .map(({ id }) => id);
 
       //create the message
       try {
@@ -202,7 +202,7 @@ Cellphone: ${
       </p>
       {(error || errorAvailability) && (
         <ErrorParagraph
-          errorMsg={error?.message || errorAvailability?.message}
+          errorMsg={error?.message || errorAvailability?.message || ""}
         />
       )}
       {isPending || isPendingAvailability ? (

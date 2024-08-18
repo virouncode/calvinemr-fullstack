@@ -1,15 +1,18 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
-  PaginatedMessageExternalTemplatesType,
-  PaginatedMessageTemplatesType,
-  PaginatedTodosType,
+  MessageExternalTemplateType,
+  MessageTemplateType,
+  PaginatedDatasType,
+  TodoTemplateType,
 } from "../../../types/api";
 
 export const useMessagesTemplates = (search: string) => {
   return useInfiniteQuery({
     queryKey: ["messagesTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedMessageTemplatesType> =>
+    queryFn: ({
+      pageParam,
+    }): Promise<PaginatedDatasType<MessageTemplateType>> =>
       xanoGet("/messages_templates", "staff", {
         search,
         page: pageParam,
@@ -22,7 +25,9 @@ export const useMessagesTemplates = (search: string) => {
 export const useMessagesExternalTemplates = (search) => {
   return useInfiniteQuery({
     queryKey: ["messagesExternalTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedMessageExternalTemplatesType> =>
+    queryFn: ({
+      pageParam,
+    }): Promise<PaginatedDatasType<MessageExternalTemplateType>> =>
       xanoGet("/messages_external_templates", "staff", {
         search,
         page: pageParam,
@@ -35,7 +40,7 @@ export const useMessagesExternalTemplates = (search) => {
 export const useTodosTemplates = (search) => {
   return useInfiniteQuery({
     queryKey: ["todosTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedTodosType> =>
+    queryFn: ({ pageParam }): Promise<PaginatedDatasType<TodoTemplateType>> =>
       xanoGet("/todos_templates", "staff", {
         search,
         page: pageParam,

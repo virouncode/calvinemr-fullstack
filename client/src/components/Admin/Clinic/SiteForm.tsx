@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
-import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { useSitesPost } from "../../../hooks/reactquery/mutations/sitesMutations";
 import { AdminType, AttachmentType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
+import { initialSite } from "../../../utils/initialDatas/initialDatas";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -16,25 +17,12 @@ type SiteFormProps = {
 
 const SiteForm = ({ setAddVisible }: SiteFormProps) => {
   const { user } = useUserContext() as { user: AdminType };
-  const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState<Partial<SiteType>>({
-    name: "",
-    address: "",
-    postal_code: "",
-    zip_code: "",
-    province_state: "",
-    city: "",
-    phone: "",
-    fax: "",
-    email: "",
-    rooms: [],
-    site_status: "Open",
-    logo: null,
-  });
+  const [formDatas, setFormDatas] = useState(initialSite);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  const sitePost = useSitesPost();
 
   const handleCancel = () => {
     setAddVisible(false);
@@ -107,55 +95,46 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
 
   const handleSubmit = async () => {
     //Formatting
-    const datasToPost: Partial<SiteType> = {
+    const siteToPost: Partial<SiteType> = {
       ...formDatas,
-      name: firstLetterUpper(formDatas.name ?? ""),
-      address: firstLetterUpper(formDatas.address ?? ""),
-      city: firstLetterUpper(formDatas.city ?? ""),
+      name: firstLetterUpper(formDatas.name),
+      address: firstLetterUpper(formDatas.address),
+      city: firstLetterUpper(formDatas.city),
       rooms: [
-        ...(formDatas.rooms?.map((room) => {
+        ...formDatas.rooms.map((room) => {
           return { id: room.id, title: firstLetterUpper(room.title) };
-        }) ?? []),
+        }),
         { id: "z", title: "To Be Determined" },
       ],
       created_by_id: user.id,
       date_created: nowTZTimestamp(),
     };
     //Validation
-    if (formDatas.rooms?.length === 0) {
+    if (formDatas?.rooms?.length === 0) {
       setErrMsg("Please add at least one room for the appointments");
       return;
     }
-    if (formDatas.rooms?.find((room) => !room.title)) {
+    if (formDatas?.rooms?.find((room) => !room.title)) {
       setErrMsg("All rooms should have a Name");
       return;
     }
+
     try {
-      await siteSchema.validate(datasToPost);
+      await siteSchema.validate(siteToPost);
     } catch (err) {
       setErrMsg(err.message);
       return;
     }
-    //Submission
-    try {
-      setProgress(true);
-      const response: SiteType = await xanoPost("/sites", "admin", datasToPost);
-      socket?.emit("message", {
-        route: "SITES",
-        action: "create",
-        content: { data: response },
-      });
-      setAddVisible(false);
-      toast.success(`New site successfully added to database`, {
-        containerId: "A",
-      });
-      setProgress(false);
-    } catch (err) {
-      toast.error(`Unable to add new site to database: ${err.message}`, {
-        containerId: "A",
-      });
-      setProgress(false);
-    }
+    setProgress(true);
+    sitePost.mutate(siteToPost, {
+      onSuccess: () => {
+        setAddVisible(false);
+        setProgress(false);
+      },
+      onError: () => {
+        setProgress(false);
+      },
+    });
   };
 
   return (

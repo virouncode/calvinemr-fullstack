@@ -10,12 +10,10 @@ type DateTimePickerProps = {
   value: number;
   timezone: string;
   locale: string;
-  readOnlyTime: boolean;
-  readOnlyDate: boolean;
+  readOnlyTime?: boolean;
+  readOnlyDate?: boolean;
   handleChange: (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   refDate: React.RefObject<HTMLInputElement>;
   refHours: React.RefObject<HTMLSelectElement>;
@@ -28,8 +26,8 @@ export const DateTimePicker = ({
   value,
   timezone,
   locale,
-  readOnlyTime,
-  readOnlyDate,
+  readOnlyTime = false,
+  readOnlyDate = false,
   handleChange,
   refDate,
   refHours,

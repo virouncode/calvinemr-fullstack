@@ -1,9 +1,9 @@
+import { EventInput } from "@fullcalendar/core";
 import React from "react";
-import { EventType } from "../../../types/app";
 import { timestampToHumanTimeTZ } from "../../../utils/dates/formatDates";
 
 type DaySheetEventCardHeaderProps = {
-  event: EventType;
+  event: EventInput;
 };
 
 const DaySheetEventCardHeader = ({ event }: DaySheetEventCardHeaderProps) => {
@@ -11,15 +11,15 @@ const DaySheetEventCardHeader = ({ event }: DaySheetEventCardHeaderProps) => {
     <div>
       {!event.allDay ? (
         <span>
-          {timestampToHumanTimeTZ(event.start)}
+          {timestampToHumanTimeTZ(event.start as number)}
           {" - "}
-          {timestampToHumanTimeTZ(event.end)}
+          {timestampToHumanTimeTZ(event.end as number)}
         </span>
       ) : (
         <span>All day</span>
       )}
       {" : "}
-      {event.extendedProps.purpose ?? "Appointment"}
+      {event.extendedProps?.purpose ?? "Appointment"}
     </div>
   );
 };

@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useBillingCodeTemplatePost } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
-import {
-  AdminType,
-  BillingCodeTemplateFormType,
-  BillingCodeTemplateType,
-} from "../../../../types/api";
+import { AdminType, BillingCodeTemplateType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../utils/strings/firstLetterUpper";
@@ -27,11 +23,9 @@ const BillingCodesTemplateForm = ({
 }: BillingCodesTemplateFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const userType = user.access_level;
-  const [formDatas, setFormDatas] = useState<BillingCodeTemplateFormType>({
-    name: "",
-    author_id: user.id as number,
-    billing_codes: [],
-  });
+  const [formDatas, setFormDatas] = useState<
+    Partial<BillingCodeTemplateType> | undefined
+  >();
   const billingCodeTemplatePost = useBillingCodeTemplatePost();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +40,11 @@ const BillingCodesTemplateForm = ({
 
   const handleSave = async () => {
     setErrMsgPost("");
-    if (!formDatas.billing_codes.join(",") || !formDatas.name) {
+    if (!(formDatas?.billing_codes ?? [].join(",")) || !formDatas?.name) {
       setErrMsgPost("All fields are required");
       return;
     }
-    for (let billing_code of formDatas.billing_codes) {
+    for (let billing_code of formDatas?.billing_codes ?? []) {
       billing_code = removeLastLetter(billing_code.toUpperCase());
       const response = await xanoGet("/ohip_fee_schedule_for_code", userType, {
         billing_code,
@@ -60,13 +54,14 @@ const BillingCodesTemplateForm = ({
         return;
       }
     }
-    const billingCodeTemplateToPost: BillingCodeTemplateType = {
+    const billingCodeTemplateToPost: Partial<BillingCodeTemplateType> = {
       ...formDatas,
-      name: firstLetterOfFirstWordUpper(formDatas.name),
+      name: firstLetterOfFirstWordUpper(formDatas?.name ?? ""),
       date_created: nowTZTimestamp(),
-      billing_codes: formDatas.billing_codes.map((billing_code) =>
+      billing_codes: (formDatas?.billing_codes ?? []).map((billing_code) =>
         billing_code.toUpperCase()
       ),
+      author_id: user.id,
     };
     billingCodeTemplatePost.mutate(billingCodeTemplateToPost, {
       onSuccess: () => setNewTemplateVisible(false),
@@ -83,7 +78,7 @@ const BillingCodesTemplateForm = ({
       style={{ border: errMsgPost && "solid 1px red" }}
     >
       <Input
-        value={formDatas.name}
+        value={formDatas?.name ?? ""}
         onChange={handleChange}
         name="name"
         id="template-billing-name"
@@ -92,11 +87,7 @@ const BillingCodesTemplateForm = ({
       />
       <Input
         placeholder="A001,B423,F404,..."
-        value={
-          formDatas.billing_codes.length > 0
-            ? formDatas.billing_codes.join(",")
-            : ""
-        }
+        value={(formDatas?.billing_codes ?? []).join(",")}
         onChange={handleChange}
         name="billing_codes"
         id="template-billing-code"

@@ -17,7 +17,7 @@ export const useTopicPost = <TData extends object>(
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
   return useMutation({
-    mutationFn: (topicToPost: TData) =>
+    mutationFn: (topicToPost: Partial<TData>) =>
       xanoPost(topicUrlMutation, "staff", topicToPost),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [topic, patientId] });

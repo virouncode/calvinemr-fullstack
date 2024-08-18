@@ -30,26 +30,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   const { socket } = useSocketContext();
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [formDatas, setFormDatas] = useState<Partial<StaffType>>({
-    email: "",
-    first_name: "",
-    middle_name: "",
-    last_name: "",
-    site_id: 1,
-    gender: "Male",
-    title: "Doctor",
-    access_level: "staff",
-    speciality: "",
-    subspeciality: "",
-    licence_nbr: "",
-    ohip_billing_nbr: "",
-    account_status: "Active",
-    cell_phone: "",
-    backup_phone: "",
-    video_link: "",
-    ai_consent: true,
-    sign: null,
-  });
+  const [formDatas, setFormDatas] = useState<Partial<StaffType> | undefined>();
   const [progress, setProgress] = useState(false);
 
   const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -110,15 +91,18 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     //Validation
     try {
       const full_name =
-        formDatas.first_name +
+        formDatas?.first_name +
         " " +
-        (formDatas.middle_name ? formDatas.middle_name + " " : "") +
-        formDatas.last_name;
+        (formDatas?.middle_name ? formDatas.middle_name + " " : "") +
+        formDatas?.last_name;
 
       const datasToPost: Partial<StaffType> = {
         ...formDatas,
         created_by_id: user?.id,
         date_created: nowTZTimestamp(),
+        access_level: "staff",
+        account_status: "Active",
+        ai_consent: true,
       };
 
       //Formatting
@@ -173,7 +157,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       await xanoPost("/settings", "admin", {
         staff_id: response.data.id,
         slot_duration: "00:15",
-        first_day: "1",
+        first_day: 1,
         autolock_time_min: 30,
         authorized_messages_patients_ids: [],
         invitation_templates: [
@@ -324,7 +308,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         <div className="signup-staff__column">
           <div className="signup-staff__row">
             <Input
-              value={formDatas.email}
+              value={formDatas?.email ?? ""}
               onChange={handleChange}
               name="email"
               id="email"
@@ -333,7 +317,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.first_name}
+              value={formDatas?.first_name ?? ""}
               onChange={handleChange}
               name="first_name"
               id="first_name"
@@ -342,7 +326,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.middle_name}
+              value={formDatas?.middle_name ?? ""}
               onChange={handleChange}
               name="middle_name"
               id="middle_name"
@@ -351,7 +335,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.last_name}
+              value={formDatas?.last_name ?? ""}
               onChange={handleChange}
               name="last_name"
               id="last_name"
@@ -362,7 +346,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <SiteSelect
               handleSiteChange={handleSiteChange}
               sites={sites}
-              value={formDatas.site_id as number}
+              value={formDatas?.site_id ?? 1}
               label="Site*: "
             />
           </div>
@@ -370,7 +354,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <GenderSelect
               id="gender"
               name="gender"
-              value={formDatas.gender as string}
+              value={formDatas?.gender ?? "Male"}
               onChange={handleChange}
               label="Gender*: "
             />
@@ -379,7 +363,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <OccupationsSelect
               id="occupation"
               name="title"
-              value={formDatas.title as string}
+              value={formDatas?.title ?? "Doctor"}
               onChange={handleChange}
               label="Occupation*: "
             />
@@ -389,7 +373,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         <div className="signup-staff__column">
           <div className="signup-staff__row">
             <Input
-              value={formDatas.speciality}
+              value={formDatas?.speciality ?? ""}
               onChange={handleChange}
               name="speciality"
               id="speciality"
@@ -398,7 +382,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.subspeciality}
+              value={formDatas?.subspeciality ?? ""}
               onChange={handleChange}
               name="subspeciality"
               id="subspeciality"
@@ -407,7 +391,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.licence_nbr}
+              value={formDatas?.licence_nbr ?? ""}
               onChange={handleChange}
               name="licence_nbr"
               id="licence_nbr"
@@ -416,7 +400,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.ohip_billing_nbr}
+              value={formDatas?.ohip_billing_nbr ?? ""}
               onChange={handleChange}
               name="ohip_billing_nbr"
               id="ohip_billing_nbr"
@@ -425,7 +409,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <InputTel
-              value={formDatas.cell_phone}
+              value={formDatas?.cell_phone ?? ""}
               onChange={handleChange}
               name="cell_phone"
               id="cell_phone"
@@ -435,7 +419,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <InputTel
-              value={formDatas.backup_phone}
+              value={formDatas?.backup_phone ?? ""}
               onChange={handleChange}
               name="backup_phone"
               id="backup_phone"
@@ -445,7 +429,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           </div>
           <div className="signup-staff__row">
             <Input
-              value={formDatas.video_link}
+              value={formDatas?.video_link ?? ""}
               onChange={handleChange}
               name="video_link"
               id="video_link"
@@ -459,7 +443,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
               <InputImgFile
                 isLoadingFile={isLoadingFile}
                 onChange={handleSignChange}
-                img={formDatas.sign ?? null}
+                img={formDatas?.sign ?? null}
                 alt="staff-sign"
                 width={150}
               />

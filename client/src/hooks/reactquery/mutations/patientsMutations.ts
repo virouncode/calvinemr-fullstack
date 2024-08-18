@@ -42,7 +42,7 @@ export const usePatientPut = (patientId: number) => {
 export const usePatientPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (demographicsToPost: DemographicsType) =>
+    mutationFn: (demographicsToPost: Partial<DemographicsType>) =>
       xanoPost(`/demographics`, "staff", demographicsToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["patients"] });

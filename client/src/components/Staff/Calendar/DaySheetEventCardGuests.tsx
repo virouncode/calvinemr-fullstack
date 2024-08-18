@@ -1,11 +1,11 @@
+import { EventInput } from "@fullcalendar/core";
 import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import { EventType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 
 type DaySheetEventCardGuestsProps = {
-  event: EventType;
+  event: EventInput;
 };
 
 const DaySheetEventCardGuests = ({ event }: DaySheetEventCardGuestsProps) => {
@@ -13,7 +13,7 @@ const DaySheetEventCardGuests = ({ event }: DaySheetEventCardGuestsProps) => {
   return (
     <div>
       <span>
-        {event.extendedProps.patientsGuestsIds?.length
+        {event.extendedProps?.patientsGuestsIds?.length
           ? event.extendedProps.patientsGuestsIds.map(
               (patient_guest) =>
                 patient_guest && (
@@ -26,7 +26,7 @@ const DaySheetEventCardGuests = ({ event }: DaySheetEventCardGuestsProps) => {
                 )
             )
           : null}
-        {event.extendedProps.staffGuestsIds?.length
+        {event.extendedProps?.staffGuestsIds?.length
           ? event.extendedProps.staffGuestsIds.map(
               (staff_guest, index) =>
                 staff_guest && (
@@ -37,7 +37,7 @@ const DaySheetEventCardGuests = ({ event }: DaySheetEventCardGuestsProps) => {
                         staff_guest.staff_infos.id
                       ).toUpperCase()}
                     </strong>
-                    {index !== event.extendedProps.staffGuestsIds?.length - 1
+                    {index !== event.extendedProps?.staffGuestsIds?.length - 1
                       ? " / "
                       : ""}
                   </span>

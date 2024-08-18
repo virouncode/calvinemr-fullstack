@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { PaginatedPamphletsType } from "../../../types/api";
+import { PaginatedDatasType, PamphletType } from "../../../types/api";
 import { UserPatientType, UserStaffType } from "../../../types/app";
 import useUserContext from "../../context/useUserContext";
 
@@ -10,7 +10,7 @@ export const usePamphlets = (search: string) => {
   };
   return useInfiniteQuery({
     queryKey: ["pamphlets", search],
-    queryFn: ({ pageParam }): Promise<PaginatedPamphletsType> => {
+    queryFn: ({ pageParam }): Promise<PaginatedDatasType<PamphletType>> => {
       if (user.access_level === "staff")
         return xanoGet("/pamphlets", "staff", {
           search,

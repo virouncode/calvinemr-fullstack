@@ -1,10 +1,10 @@
+import { EventInput } from "@fullcalendar/core";
 import React from "react";
-import { EventType } from "../../../types/app";
 import DaySheetEventCardGuests from "./DaySheetEventCardGuests";
 import DaySheetEventCardHeader from "./DaySheetEventCardHeader";
 
 type DaySheetEventCardProps = {
-  event: EventType;
+  event: EventInput;
 };
 
 const DaySheetEventCard = ({ event }: DaySheetEventCardProps) => {
@@ -17,22 +17,22 @@ const DaySheetEventCard = ({ event }: DaySheetEventCardProps) => {
         <DaySheetEventCardGuests event={event} />
         <div>
           <strong>Host: </strong>
-          {event.extendedProps.hostName}
+          {event.extendedProps?.hostName}
         </div>
         <div>
           <strong>Site: </strong>
-          {event.extendedProps.siteName}
+          {event.extendedProps?.siteName}
         </div>
         <div>
           <strong>Room: </strong>
-          {event.extendedProps.roomTitle}
+          {event.extendedProps?.roomTitle}
         </div>
         <div>
-          <strong>{event.extendedProps.status.toUpperCase()}</strong>
+          <strong>{event.extendedProps?.status.toUpperCase()}</strong>
         </div>
         <div>
           <strong>Notes: </strong>
-          {event.extendedProps.notes}
+          {event.extendedProps?.notes}
         </div>
       </div>
     </div>

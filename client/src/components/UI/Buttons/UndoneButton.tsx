@@ -1,11 +1,11 @@
 import React from "react";
 
 type UndoneButtonProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
 };
 
-const UndoneButton = ({ onClick, disabled = false }) => {
+const UndoneButton = ({ onClick, disabled = false }: UndoneButtonProps) => {
   return (
     <button
       type="button"

@@ -44,7 +44,7 @@ const SitesTable = ({ sites, handleEditClick }: SitesTableProps) => {
                 />
               ))
             ) : (
-              <EmptyRow colSpan="12" text="No clinic sites" />
+              <EmptyRow colSpan={12} text="No clinic sites" />
             )}
           </tbody>
         </table>

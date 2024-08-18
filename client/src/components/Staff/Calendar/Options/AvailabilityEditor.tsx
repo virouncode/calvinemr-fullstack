@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useAvailabilityPut } from "../../../../hooks/reactquery/mutations/availabilityMutations";
 import { useAvailability } from "../../../../hooks/reactquery/queries/availabilityQueries";
-import {
-  AvailabilityType,
-  ScheduleType,
-  UnavailabilityType,
-} from "../../../../types/api";
+import { AvailabilityType, ScheduleType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
+import { initialAvailability } from "../../../../utils/initialDatas/initialDatas";
 import { availabilitySchema } from "../../../../validation/calendar/availabilityValidation";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SubmitButton from "../../../UI/Buttons/SubmitButton";
@@ -18,25 +15,30 @@ import DurationPicker from "../../../UI/Pickers/DurationPicker";
 import AvailabilityItem from "./AvailabilityItem";
 
 type AvailabilityEditorProps = {
-  setEditAvailabilityVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditAvailability: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AvailabilityEditor = ({
-  setEditAvailabilityVisible,
+  setEditAvailability,
 }: AvailabilityEditorProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
-  const userAvailability = useAvailability(user.id as number);
-  const schedulePut = useAvailabilityPut(user.id as number);
-  const [availability, setAvailability] = useState<AvailabilityType | null>(
-    null
-  );
+  const [availability, setAvailability] =
+    useState<AvailabilityType>(initialAvailability);
+
+  const {
+    data: availabilityQuery,
+    isPending,
+    isError,
+    error,
+  } = useAvailability(user.id);
+  const availabilityPut = useAvailabilityPut(user.id);
 
   useEffect(() => {
-    if (userAvailability.data) {
-      setAvailability(userAvailability.data);
+    if (availabilityQuery) {
+      setAvailability(availabilityQuery);
     }
-  }, [userAvailability.data]);
+  }, [availabilityQuery]);
 
   const [errMsg, setErrMsg] = useState("");
   const days = [
@@ -53,7 +55,7 @@ const AvailabilityEditor = ({
     e.preventDefault();
     //Validation
     const scheduleToPut: AvailabilityType = {
-      ...(availability as AvailabilityType),
+      ...availability,
       date_created: nowTZTimestamp(),
     };
 
@@ -64,10 +66,10 @@ const AvailabilityEditor = ({
       return;
     }
     setProgress(true);
-    schedulePut.mutate(scheduleToPut, {
+    availabilityPut.mutate(scheduleToPut, {
       onSuccess: () => {
         setProgress(false);
-        setEditAvailabilityVisible(false);
+        setEditAvailability(false);
       },
       onError: () => setProgress(false),
     });
@@ -79,11 +81,11 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
-      ...(availability?.schedule_morning as ScheduleType),
+      ...availability.schedule_morning,
     };
     scheduleMorningUpdated[day][0][name] = value;
     setAvailability({
-      ...(availability as AvailabilityType),
+      ...availability,
       schedule_morning: scheduleMorningUpdated,
     });
   };
@@ -94,11 +96,11 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
-      ...(availability?.schedule_morning as ScheduleType),
+      ...availability.schedule_morning,
     };
     scheduleMorningUpdated[day][1][name] = value;
     setAvailability({
-      ...(availability as AvailabilityType),
+      ...availability,
       schedule_morning: scheduleMorningUpdated,
     });
   };
@@ -109,12 +111,12 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
-      ...(availability?.schedule_afternoon as ScheduleType),
+      ...availability.schedule_afternoon,
     };
     scheduleAfternoonUpdated[day][0][name] = value;
     setAvailability({
-      ...(availability as AvailabilityType),
-      schedule_morning: scheduleAfternoonUpdated,
+      ...availability,
+      schedule_afternoon: scheduleAfternoonUpdated,
     });
   };
   const handleEndAfternoonChange = (
@@ -124,22 +126,22 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
-      ...(availability?.schedule_afternoon as ScheduleType),
+      ...availability.schedule_afternoon,
     };
     scheduleAfternoonUpdated[day][1][name] = value;
     setAvailability({
-      ...(availability as AvailabilityType),
-      schedule_morning: scheduleAfternoonUpdated,
+      ...availability,
+      schedule_afternoon: scheduleAfternoonUpdated,
     });
   };
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>, day: string) => {
     const checked = e.target.checked;
     setAvailability({
-      ...(availability as AvailabilityType),
+      ...availability,
       unavailability: {
-        ...availability?.unavailability,
+        ...availability.unavailability,
         [day]: checked,
-      } as UnavailabilityType,
+      },
     });
   };
   const handleDurationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -149,13 +151,13 @@ const AvailabilityEditor = ({
     switch (name) {
       case "hoursDuration":
         setAvailability({
-          ...(availability as AvailabilityType),
+          ...availability,
           default_duration_hours: value,
         });
         break;
       case "minutesDuration":
         setAvailability({
-          ...(availability as AvailabilityType),
+          ...availability,
           default_duration_min: value,
         });
         break;
@@ -165,19 +167,20 @@ const AvailabilityEditor = ({
   };
 
   const handleCancel = () => {
-    setEditAvailabilityVisible(false);
+    setAvailability(initialAvailability);
+    setEditAvailability(false);
   };
 
-  if (userAvailability.isPending)
+  if (isPending)
     return (
       <div className="availability__heads">
         <LoadingParagraph />
       </div>
     );
-  if (userAvailability.isError)
+  if (isError)
     return (
       <div className="availability__heads">
-        <ErrorParagraph errorMsg={userAvailability.error.message} />
+        <ErrorParagraph errorMsg={error.message} />
       </div>
     );
 

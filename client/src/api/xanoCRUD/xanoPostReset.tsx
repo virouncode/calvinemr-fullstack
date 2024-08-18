@@ -7,7 +7,7 @@ const xanoPostReset = async (
   URL: string,
   userType: string,
   tempToken: string,
-  data: object,
+  data: Record<string, unknown>,
   abortController?: AbortController
 ) => {
   const config: AxiosXanoConfigType = {

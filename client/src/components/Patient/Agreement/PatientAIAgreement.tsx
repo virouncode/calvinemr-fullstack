@@ -30,7 +30,7 @@ const PatientAIAgreement = ({
     datasToPut.ai_consent = agreed;
     try {
       await xanoPut(
-        `/demographics/${(user as UserPatientType)?.demographics.id}`,
+        `/demographics/${user.demographics.id}`,
         "patient",
         datasToPut
       );
@@ -38,7 +38,7 @@ const PatientAIAgreement = ({
         route: "DEMOGRAPHICS",
         action: "update",
         content: {
-          id: (user as UserPatientType)?.demographics.id,
+          id: user.demographics.id,
           data: datasToPut,
         },
       });

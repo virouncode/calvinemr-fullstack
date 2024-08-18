@@ -9,9 +9,9 @@ export const useSitesPost = () => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (siteToPost: SiteType) =>
+    mutationFn: (siteToPost: Partial<SiteType>) =>
       xanoPost("/sites", "admin", siteToPost),
-    onMutate: async (siteToPost: SiteType) => {
+    onMutate: async (siteToPost: Partial<SiteType>) => {
       await queryClient.cancelQueries({
         queryKey: ["sites"],
       });

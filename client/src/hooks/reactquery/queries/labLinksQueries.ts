@@ -2,8 +2,9 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
   LabLinkCredentialsType,
+  LabLinkPersonalType,
   LabLinkType,
-  PaginatedLabLinksPersonalType,
+  PaginatedDatasType,
 } from "../../../types/api";
 
 export const useLabLinks = () => {
@@ -15,7 +16,9 @@ export const useLabLinks = () => {
 export const useLabLinksPersonal = (staffId: number, search: string) => {
   return useInfiniteQuery({
     queryKey: ["labLinksPersonal", staffId, search],
-    queryFn: ({ pageParam }): Promise<PaginatedLabLinksPersonalType> =>
+    queryFn: ({
+      pageParam,
+    }): Promise<PaginatedDatasType<LabLinkPersonalType>> =>
       xanoGet("/lablinks_personal_of_staff", "staff", {
         staff_id: staffId,
         search,

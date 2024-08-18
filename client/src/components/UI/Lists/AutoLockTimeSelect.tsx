@@ -1,7 +1,7 @@
 import React from "react";
 
 type AutoLockTimeSelectProps = {
-  autolockTime: string;
+  autolockTime: number;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   label: string;
 };

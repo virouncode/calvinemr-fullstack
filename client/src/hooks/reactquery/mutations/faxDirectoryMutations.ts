@@ -7,7 +7,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useFaxDirectoryPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (otherToPost: FaxContactType) => {
+    mutationFn: (otherToPost: Partial<FaxContactType>) => {
       return xanoPost("/fax_directory", "staff", otherToPost);
     },
     onSuccess: () => {

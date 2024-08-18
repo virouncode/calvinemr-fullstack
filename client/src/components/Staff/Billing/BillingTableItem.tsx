@@ -12,7 +12,6 @@ import {
 import {
   AdminType,
   BillingType,
-  DemographicsType,
   DoctorType,
   SiteType,
   StaffType,
@@ -73,7 +72,7 @@ const BillingTableItem = ({
     referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
     patient_id: billing.patient_id,
     patient_hcn: billing.patient_infos?.HealthCard?.Number,
-    patient_name: toPatientName(billing.patient_infos as DemographicsType),
+    patient_name: toPatientName(billing.patient_infos),
     diagnosis_code: billing.diagnosis_code?.code,
     billing_code:
       billing.billing_infos?.billing_code + billing.billing_code_suffix,
@@ -149,10 +148,10 @@ const BillingTableItem = ({
     const lastBillingCodeId = (await xanoGet("/last_billing_code_id", userType))
       .id;
     setProgress(true);
-    const billingToPost: BillingType = {
+    const billingToPost: Partial<BillingType> = {
       date: itemInfos.date + lastBillingCodeId,
       date_created: nowTZTimestamp(),
-      created_by_id: user.id as number,
+      created_by_id: user.id,
       created_by_user_type: user.access_level,
       provider_id: billing.provider_id,
       referrer_ohip_billing_nbr: itemInfos.referrer_ohip_billing_nbr,
@@ -217,12 +216,8 @@ const BillingTableItem = ({
     }
     //Submission
     const billingToPut: BillingType = {
-      id: billing.id,
+      ...billing,
       date: itemInfos.date,
-      date_created: billing.date_created,
-      created_by_id: billing.created_by_id,
-      created_by_user_type: billing.created_by_user_type,
-      provider_id: billing.provider_id,
       referrer_ohip_billing_nbr: itemInfos.referrer_ohip_billing_nbr,
       patient_id: itemInfos.patient_id,
       diagnosis_id: (
@@ -238,7 +233,7 @@ const BillingTableItem = ({
       updates: [
         ...(billing.updates ?? []),
         {
-          updated_by_id: user.id as number,
+          updated_by_id: user.id,
           date_updated: nowTZTimestamp(),
           updated_by_user_type: user.access_level,
         },
@@ -264,7 +259,7 @@ const BillingTableItem = ({
       })
     ) {
       setProgress(true);
-      billingDelete.mutate(billing.id as number, {
+      billingDelete.mutate(billing.id, {
         onSuccess: () => {
           setProgress(false);
         },

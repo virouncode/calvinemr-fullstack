@@ -26,8 +26,8 @@ type AvailabilityItemProps = {
     name: string
   ) => void;
   handleCheck: (e: React.ChangeEvent<HTMLInputElement>, day: string) => void;
-  scheduleMorning: { hours: string; min: string; ampm: string }[];
-  scheduleAfternoon: { hours: string; min: string; ampm: string }[];
+  scheduleMorning: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  scheduleAfternoon: { hours: string; min: string; ampm: "AM" | "PM" }[];
   unavailable: boolean;
 };
 

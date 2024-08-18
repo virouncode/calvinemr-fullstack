@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
-import xanoPut from "../../../api/xanoCRUD/xanoPut";
-import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { useSitesPut } from "../../../hooks/reactquery/mutations/sitesMutations";
 import { AdminType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
@@ -19,12 +18,12 @@ type SiteEditProps = {
 
 const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
   const { user } = useUserContext() as { user: AdminType };
-  const { socket } = useSocketContext();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState<SiteType>(site);
+  const [formDatas, setFormDatas] = useState(site);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  const sitePut = useSitesPut();
 
   const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsg("");
@@ -93,7 +92,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
   };
 
   const handleSubmit = async () => {
-    if (formDatas?.rooms.find((room) => !room.title)) {
+    if (formDatas?.rooms?.find((room) => !room.title)) {
       setErrMsg("All rooms should have a Name");
       return;
     }
@@ -103,77 +102,70 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
       );
     }
     //Formatting
-    const datasToPut = {
-      ...formDatas,
-      name: firstLetterUpper(formDatas?.name),
-      address: firstLetterUpper(formDatas?.address),
-      city: firstLetterUpper(formDatas?.city),
+    const siteToPut: SiteType = {
+      ...(formDatas as SiteType),
+      name: firstLetterUpper(formDatas?.name ?? ""),
+      address: firstLetterUpper(formDatas?.address ?? ""),
+      city: firstLetterUpper(formDatas?.city ?? ""),
       rooms: [
-        ...formDatas.rooms
+        ...(formDatas?.rooms ?? [])
           .filter((room) => room.title)
           .map((room) => {
             return { id: room.id, title: firstLetterUpper(room.title) };
           }),
       ],
       updates: [
-        ...(formDatas.updates || []),
+        ...(formDatas?.updates || []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
-      email: formDatas?.email.toLowerCase(),
+      email: (formDatas as SiteType).email.toLowerCase(),
     };
     //Validation
-    if (formDatas?.rooms.length === 0) {
+    if (formDatas?.rooms?.length === 0) {
       alert("Please add at least one room for the appointments");
       return;
     }
     try {
-      await siteSchema.validate(datasToPut);
+      await siteSchema.validate(siteToPut);
     } catch (err) {
       setErrMsg(err.message);
       return;
     }
     //Submission
-    try {
-      setProgress(true);
-      const response = await xanoPut(`/sites/${site.id}`, "admin", datasToPut);
-      socket?.emit("message", {
-        route: "SITES",
-        action: "update",
-        content: { id: site.id, data: response },
-      });
-      setEditVisible(false);
-      toast.success(`Site successfully updated`, {
-        containerId: "A",
-      });
-      setProgress(false);
-    } catch (err) {
-      toast.error(`Unable to update site: ${err.message}`, {
-        containerId: "A",
-      });
-      setProgress(false);
-    }
+    setProgress(true);
+    sitePut.mutate(siteToPut, {
+      onSuccess: () => {
+        setEditVisible(false);
+        setProgress(false);
+      },
+      onError: () => {
+        setProgress(false);
+      },
+    });
   };
 
   return (
-    <div
-      className="site-form__container"
-      style={{ border: errMsg && editVisible ? "solid 1.5px red" : "" }}
-    >
-      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <FormSite
-        formDatas={formDatas}
-        setFormDatas={setFormDatas}
-        handleChange={handleChange}
-        postalOrZip={postalOrZip}
-        handleChangePostalOrZip={handleChangePostalOrZip}
-        handleLogoChange={handleLogoChange}
-        isLoadingFile={isLoadingFile}
-        setErrMsg={setErrMsg}
-        handleSubmit={handleSubmit}
-        handleCancel={handleCancel}
-        progress={progress}
-      />
-    </div>
+    site && (
+      <div
+        className="site-form__container"
+        style={{ border: errMsg && editVisible ? "solid 1.5px red" : "" }}
+      >
+        {errMsg && <ErrorParagraph errorMsg={errMsg} />}
+        <FormSite
+          formDatas={formDatas}
+          setFormDatas={setFormDatas}
+          handleChange={handleChange}
+          postalOrZip={postalOrZip}
+          handleChangePostalOrZip={handleChangePostalOrZip}
+          handleLogoChange={handleLogoChange}
+          isLoadingFile={isLoadingFile}
+          setErrMsg={setErrMsg}
+          handleSubmit={handleSubmit}
+          handleCancel={handleCancel}
+          progress={progress}
+        />
+      </div>
+    )
   );
 };
 

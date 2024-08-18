@@ -1,6 +1,6 @@
 import React from "react";
 type InputEmailProps = {
-  value?: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   id?: string;

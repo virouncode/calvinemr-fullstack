@@ -2,7 +2,11 @@ import axios from "axios";
 import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
-const xanoPostAuth = async (URL: string, userType: string, data: object) => {
+const xanoPostAuth = async (
+  URL: string,
+  userType: string,
+  data: Record<string, unknown>
+) => {
   const config: AxiosXanoConfigType = {
     url: `/api/xano/auth`,
     method: "post",

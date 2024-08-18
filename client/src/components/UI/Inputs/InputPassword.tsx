@@ -1,7 +1,7 @@
 import React from "react";
 
 type InputPasswordProps = {
-  value?: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   id?: string;

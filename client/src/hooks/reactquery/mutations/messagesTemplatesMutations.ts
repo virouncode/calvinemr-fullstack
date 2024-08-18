@@ -13,7 +13,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useMessagesTemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: MessageTemplateType) =>
+    mutationFn: (templateToPost: Partial<MessageTemplateType>) =>
       xanoPost("/messages_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesTemplates"] });

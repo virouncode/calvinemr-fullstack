@@ -1,12 +1,12 @@
+import { EventInput } from "@fullcalendar/core";
 import { DateTime } from "luxon";
 import { ExruleType, RruleType } from "../../types/api";
-import { EventType } from "../../types/app";
 import { dateISOToTimestampTZ } from "../dates/formatDates";
 
 export const toNextOccurence = (
   currentOccurenceStart: number,
   currentOccurenceEnd: number,
-  rrule: RruleType,
+  rrule: RruleType | undefined,
   exrule: ExruleType
 ) => {
   let nextOccurenceStart: number = 0;
@@ -93,11 +93,11 @@ export const toNextOccurence = (
 export const toLastOccurence = (
   currentOccurenceStart: number,
   currentOccurenceEnd: number,
-  rrule: RruleType,
+  rrule: RruleType | undefined,
   exrule: ExruleType
 ) => {
-  let lastOccurenceStart;
-  let lastOccurenceEnd;
+  let lastOccurenceStart: number = 0;
+  let lastOccurenceEnd: number = 0;
   switch (rrule?.freq) {
     case "daily":
       lastOccurenceStart = DateTime.fromMillis(currentOccurenceStart, {
@@ -178,35 +178,35 @@ export const toLastOccurence = (
 };
 
 export const getTodaysEvents = (
-  events: EventType[],
+  events: EventInput[],
   rangeStart: number,
   rangeEnd: number
 ) => {
   const todaysNonRecurringEvents = events.filter(
-    (event) => event.extendedProps.recurrence === "Once"
+    (event) => event.extendedProps?.recurrence === "Once"
   );
   const possibleRecurringEvents = events.filter(
-    (event) => event.extendedProps.recurrence !== "Once"
+    (event) => event.extendedProps?.recurrence !== "Once"
   );
-  const todaysRecurringEvents: EventType[] = [];
+  const todaysRecurringEvents: EventInput[] = [];
   for (const recurringEvent of possibleRecurringEvents) {
     const occurence = recurringEvent;
-    let occurenceStart = recurringEvent.start;
-    let occurenceEnd = recurringEvent.end;
-    switch (occurence.extendedProps.rrule?.freq) {
+    let occurenceStart = recurringEvent.start as number;
+    let occurenceEnd = recurringEvent.end as number;
+    switch (occurence.extendedProps?.rrule?.freq) {
       case "daily":
         while (occurenceStart < rangeStart) {
           occurenceStart = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[0];
           occurenceEnd = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[1];
         }
         if (
@@ -226,14 +226,14 @@ export const getTodaysEvents = (
           occurenceStart = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[0];
           occurenceEnd = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[1];
         }
         if (
@@ -253,14 +253,14 @@ export const getTodaysEvents = (
           occurenceStart = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[0];
           occurenceEnd = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[1];
         }
         if (
@@ -280,14 +280,14 @@ export const getTodaysEvents = (
           occurenceStart = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[0];
           occurenceEnd = toNextOccurence(
             occurenceStart,
             occurenceEnd,
-            recurringEvent.rrule,
-            recurringEvent.exrule
+            recurringEvent.extendedProps?.rrule,
+            recurringEvent.extendedProps?.exrule
           )[1];
         }
         if (

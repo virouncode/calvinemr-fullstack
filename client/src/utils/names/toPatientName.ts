@@ -1,7 +1,7 @@
 import { DemographicsType } from "../../types/api";
 
 export const toPatientName = (
-  patientInfos: DemographicsType,
+  patientInfos?: DemographicsType,
   formatted = true
 ) => {
   if (!patientInfos) return "";

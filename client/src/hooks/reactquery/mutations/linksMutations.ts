@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useLinkPost = (staffId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (linkToPost: LinkType) =>
+    mutationFn: (linkToPost: Partial<LinkType>) =>
       xanoPost("/links", "staff", linkToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["links", staffId] });

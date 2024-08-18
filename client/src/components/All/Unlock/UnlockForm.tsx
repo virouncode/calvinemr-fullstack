@@ -9,7 +9,7 @@ import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { AdminType } from "../../../types/api";
+import { AdminType, SettingsType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import Button from "../../UI/Buttons/Button";
 import SaveButton from "../../UI/Buttons/SaveButton";
@@ -38,8 +38,8 @@ const UnlockForm = ({
   const [errMsg, setErrMsg] = useState("");
   const [autolockTime, setAutoLockTime] = useState(
     user?.access_level === "admin"
-      ? (user as AdminType)?.autolock_time_min.toString()
-      : (user as UserStaffType)?.settings.autolock_time_min.toString()
+      ? (user as AdminType)?.autolock_time_min
+      : (user as UserStaffType)?.settings.autolock_time_min
   );
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const UnlockForm = ({
     setPin(e.target.value);
   };
   const handleAutoLockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAutoLockTime(e.target.value);
+    setAutoLockTime(parseInt(e.target.value));
   };
   const handleSubmit = useCallback(async () => {
     try {
@@ -66,11 +66,11 @@ const UnlockForm = ({
 
         if (
           user?.access_level === "admin" &&
-          autolockTime !== (user as AdminType)?.autolock_time_min.toString()
+          autolockTime !== (user as AdminType)?.autolock_time_min
         ) {
-          const userToPut = {
-            ...user,
-            autolock_time_min: parseInt(autolockTime),
+          const userToPut: AdminType = {
+            ...(user as AdminType),
+            autolock_time_min: autolockTime,
           };
           const response = await xanoPut(
             `/admin/${user.id}`,
@@ -97,15 +97,14 @@ const UnlockForm = ({
             containerId: "A",
           });
         } else if (
-          user?.access_level !== "admin" &&
-          autolockTime !==
-            (user as UserStaffType)?.settings.autolock_time_min.toString()
+          user?.access_level === "staff" &&
+          autolockTime !== (user as UserStaffType)?.settings.autolock_time_min
         ) {
-          const settingsToPut = {
+          const settingsToPut: SettingsType = {
             ...(user as UserStaffType)?.settings,
-            autolock_time_min: parseInt(autolockTime),
+            autolock_time_min: autolockTime,
           };
-          const response = await xanoPut(
+          const response: SettingsType = await xanoPut(
             `/settings/${(user as UserStaffType)?.settings.id}`,
             "staff",
             settingsToPut

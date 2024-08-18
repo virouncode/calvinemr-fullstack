@@ -1,11 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { PaginatedClinicalNoteTemplatesType } from "../../../types/api";
+import {
+  PaginatedDatasType,
+  ClinicalNoteTemplateType,
+} from "../../../types/api";
 
 export const useClinicalNotesTemplates = (search: string) => {
   return useInfiniteQuery({
     queryKey: ["clinicalNotesTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedClinicalNoteTemplatesType> =>
+    queryFn: ({
+      pageParam,
+    }): Promise<PaginatedDatasType<ClinicalNoteTemplateType>> =>
       xanoGet("/clinical_notes_templates", "staff", {
         search,
         page: pageParam,

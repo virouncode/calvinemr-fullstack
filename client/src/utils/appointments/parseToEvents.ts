@@ -1,3 +1,4 @@
+import { EventInput } from "@fullcalendar/core";
 import * as _ from "lodash";
 import {
   AppointmentType,
@@ -6,27 +7,27 @@ import {
   SiteType,
   StaffType,
 } from "../../types/api";
-import { EventType, RemainingStaffType } from "../../types/app";
+import { RemainingStaffType } from "../../types/app";
 import { staffIdToTitleAndName } from "../names/staffIdToTitleAndName";
 const colorsPalette = [
   { background: "#ffe119", text: "#3D375A" },
   { background: "#e6194b", text: "#3D375A" },
   { background: "#3cb44b", text: "#3D375A" },
   { background: "#f58231", text: "#3D375A" },
-  { background: "#911eb4", text: "#3D375A" },
+  { background: "#911eb4", text: "#FEFEFE" },
   { background: "#42d4f4", text: "#3D375A" },
   { background: "#f032e6", text: "#3D375A" },
   { background: "#bfef45", text: "#3D375A" },
   { background: "#fabed4", text: "#3D375A" },
   { background: "#469990", text: "#3D375A" },
   { background: "#dcbeff", text: "#3D375A" },
-  { background: "#9a6324", text: "#3D375A" },
+  { background: "#9a6324", text: "#FEFEFE" },
   { background: "#fffac8", text: "#3D375A" },
-  { background: "#800000", text: "#3D375A" },
+  { background: "#800000", text: "#FEFEFE" },
   { background: "#aaffc3", text: "#3D375A" },
   { background: "#808000", text: "#3D375A" },
   { background: "#ffd8b1", text: "#3D375A" },
-  { background: "#000075", text: "#3D375A" },
+  { background: "#000075", text: "#FEFEFE" },
   { background: "#808080", text: "#3D375A" },
 ];
 
@@ -52,7 +53,7 @@ export const parseToEvents = (
   userId: number
 ) => {
   //give a color to each remaining member of the staff
-  if (!sites || sites.length === 0 || !appointments) return [];
+  if (!sites || sites.length === 0 || !appointments) return undefined;
   const remainingStaffObjects = staffInfos
     .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ id }) => id !== userId)
@@ -63,7 +64,7 @@ export const parseToEvents = (
         textColor: colorsPalette[index % colorsPalette.length].text,
       };
     });
-  return appointments.map(
+  const events: EventInput[] = appointments.map(
     (appointment) =>
       appointment.host_id !== userId
         ? appointment.host_id === 0
@@ -106,6 +107,7 @@ export const parseToEvents = (
             staffInfos
           ) //blue
   );
+  return events;
 };
 
 export const parseToEvent = (
@@ -117,7 +119,7 @@ export const parseToEvent = (
   rooms: RoomType[],
   staffInfos: StaffType[]
 ) => {
-  const event: EventType = {
+  const event: EventInput = {
     id: (appointment.id ?? -1).toString(),
     start: appointment.start,
     end: appointment.end,
@@ -130,8 +132,8 @@ export const parseToEvent = (
       appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
     resourceId: rooms?.find(({ id }) => id === appointment.room_id)
       ?.id as string,
-    rrule: appointment.rrule?.freq ? appointment.rrule : null,
-    exrule: appointment.exrule?.length ? appointment.exrule : null,
+    rrule: appointment.rrule?.freq ? appointment.rrule : undefined,
+    exrule: appointment.exrule?.length ? appointment.exrule : [],
     duration: appointment.Duration * 60000,
     extendedProps: {
       host: appointment.host_id,
@@ -170,8 +172,8 @@ export const parseToEvent = (
       providerLastName: appointment.Provider?.Name?.LastName,
       providerOHIP: appointment.Provider?.OHIPPhysicianId,
       recurrence: appointment.recurrence,
-      rrule: appointment.rrule?.freq ? appointment.rrule : null,
-      exrule: appointment.exrule?.length ? appointment.exrule : null,
+      rrule: appointment.rrule?.freq ? appointment.rrule : undefined,
+      exrule: appointment.exrule?.length ? appointment.exrule : [],
     },
   };
   return event;

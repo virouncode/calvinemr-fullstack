@@ -21,75 +21,71 @@ export const getAvailableRooms = async (
   siteId: number,
   abortController?: AbortController
 ) => {
-  try {
-    const appointmentsInRange: AppointmentType[] = await xanoGet(
-      "/appointments_in_range_and_sites",
-      "staff",
-      {
-        range_start: rangeStart,
-        range_end: rangeEnd,
-        sites_ids: [siteId],
-      },
-      abortController
-    );
-    const otherNonRecAppointments: AppointmentType[] = appointmentsInRange
-      .filter(({ id }) => id !== currentAppointmentId)
-      .filter(({ recurrence }) => recurrence === "Once");
+  const appointmentsInRange: AppointmentType[] = await xanoGet(
+    "/appointments_in_range_and_sites",
+    "staff",
+    {
+      range_start: rangeStart,
+      range_end: rangeEnd,
+      sites_ids: [siteId],
+    },
+    abortController
+  );
+  const otherNonRecAppointments: AppointmentType[] = appointmentsInRange
+    .filter(({ id }) => id !== currentAppointmentId)
+    .filter(({ recurrence }) => recurrence === "Once");
 
-    const otherRecAppointments: AppointmentType[] = appointmentsInRange
-      .filter(({ id }) => id !== currentAppointmentId)
-      .filter(({ recurrence }) => recurrence !== "Once");
+  const otherRecAppointments: AppointmentType[] = appointmentsInRange
+    .filter(({ id }) => id !== currentAppointmentId)
+    .filter(({ recurrence }) => recurrence !== "Once");
 
-    const otherRecAppointmentsInRange: AppointmentType[] = [];
-    for (const otherRecAppointment of otherRecAppointments) {
-      let start = otherRecAppointment.start;
-      let end = otherRecAppointment.end;
-      while (end <= rangeStart) {
-        const nextOccurence = toNextOccurence(
-          start,
-          end,
-          otherRecAppointment.rrule as RruleType,
-          otherRecAppointment.exrule as ExruleType
-        );
-        start = nextOccurence[0];
-        end = nextOccurence[1];
-      }
-      if (
-        start < rangeEnd &&
-        ((otherRecAppointment.rrule?.until &&
-          start < dateISOToTimestampTZ(otherRecAppointment.rrule.until)) ||
-          !otherRecAppointment.rrule?.until)
-      ) {
-        otherRecAppointmentsInRange.push({
-          ...otherRecAppointment,
-          start,
-          end,
-          AppointmentDate: timestampToDateISOTZ(start),
-          AppointmentTime: timestampToTimeISOTZ(start),
-          rrule: null,
-          recurrence: "Once",
-          exrule: null,
-        });
-      }
+  const otherRecAppointmentsInRange: AppointmentType[] = [];
+  for (const otherRecAppointment of otherRecAppointments) {
+    let start = otherRecAppointment.start;
+    let end = otherRecAppointment.end;
+    while (end <= rangeStart) {
+      const nextOccurence = toNextOccurence(
+        start,
+        end,
+        otherRecAppointment.rrule as RruleType,
+        otherRecAppointment.exrule as ExruleType
+      );
+      start = nextOccurence[0];
+      end = nextOccurence[1];
     }
-    const otherAppointments = [
-      ...otherNonRecAppointments,
-      ...otherRecAppointmentsInRange,
-    ];
-    const occupiedRooms = _.uniq(
-      otherAppointments
-        .filter(({ room_id }) => room_id !== "z")
-        .map(({ room_id }) => room_id) ?? []
-    ) as string[];
-    const allRooms =
-      sites
-        .find(({ id }) => id === siteId)
-        ?.rooms.filter(({ id }) => id !== "z")
-        .map(({ id }) => id) ?? [];
-    const availableRooms =
-      (_.difference(allRooms, occupiedRooms) as string[]) ?? [];
-    return availableRooms;
-  } catch (err) {
-    if (err.name !== "CanceledError") throw err;
+    if (
+      start < rangeEnd &&
+      ((otherRecAppointment.rrule?.until &&
+        start < dateISOToTimestampTZ(otherRecAppointment.rrule.until)) ||
+        !otherRecAppointment.rrule?.until)
+    ) {
+      otherRecAppointmentsInRange.push({
+        ...otherRecAppointment,
+        start,
+        end,
+        AppointmentDate: timestampToDateISOTZ(start),
+        AppointmentTime: timestampToTimeISOTZ(start),
+        rrule: { freq: "", interval: 0, dtstart: "", until: "" },
+        recurrence: "Once",
+        exrule: [],
+      });
+    }
   }
+  const otherAppointments = [
+    ...otherNonRecAppointments,
+    ...otherRecAppointmentsInRange,
+  ];
+  const occupiedRooms = _.uniq(
+    otherAppointments
+      .filter(({ room_id }) => room_id !== "z")
+      .map(({ room_id }) => room_id) ?? []
+  ) as string[];
+  const allRooms =
+    sites
+      .find(({ id }) => id === siteId)
+      ?.rooms.filter(({ id }) => id !== "z")
+      .map(({ id }) => id) ?? [];
+  const availableRooms =
+    (_.difference(allRooms, occupiedRooms) as string[]) ?? [];
+  return availableRooms;
 };

@@ -6,14 +6,14 @@ import SlotSelect from "./SlotSelect";
 import Timezone from "./Timezone";
 
 type CalendarOptionsProps = {
-  editAvailabilityVisible: boolean;
-  setEditAvailabilityVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  editAvailability: boolean;
+  setEditAvailability: React.Dispatch<React.SetStateAction<boolean>>;
   isPending: boolean;
 };
 
 const CalendarOptions = ({
-  editAvailabilityVisible,
-  setEditAvailabilityVisible,
+  editAvailability,
+  setEditAvailability,
   isPending,
 }: CalendarOptionsProps) => {
   return (
@@ -22,8 +22,8 @@ const CalendarOptions = ({
         <SlotSelect />
         <FirstDaySelect />
         <Availability
-          editAvailabilityVisible={editAvailabilityVisible}
-          setEditAvailabilityVisible={setEditAvailabilityVisible}
+          editAvailability={editAvailability}
+          setEditAvailability={setEditAvailability}
         />
         {isPending && <CircularProgressSmall />}
       </div>

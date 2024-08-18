@@ -8,7 +8,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useClinicalNotePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (clinicalNoteToPost: ClinicalNoteType) =>
+    mutationFn: (clinicalNoteToPost: Partial<ClinicalNoteType>) =>
       xanoPost("/clinical_notes", "staff", clinicalNoteToPost),
     onSuccess: (data) => {
       socket?.emit("message", {
@@ -27,7 +27,7 @@ export const useClinicalNotePost = () => {
 export const useClinicalNoteLogPost = (patientId) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (clinicalNoteLogToPost: ClinicalNoteLogType) =>
+    mutationFn: (clinicalNoteLogToPost: Partial<ClinicalNoteLogType>) =>
       xanoPost("/clinical_notes_log", "staff", clinicalNoteLogToPost),
     onSuccess: () => {
       socket?.emit("message", {

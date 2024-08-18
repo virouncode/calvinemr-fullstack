@@ -17,6 +17,7 @@ const MessagesPatientLeftBar = ({
   setMsgsSelectedIds,
   setSelectAllVisible,
 }: MessagesPatientLeftBarProps) => {
+  const { user } = useUserContext() as { user: UserPatientType };
   const handleClickSection = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
@@ -30,8 +31,6 @@ const MessagesPatientLeftBar = ({
     section === id
       ? "messages-content__category messages-content__category--active"
       : "messages-content__category";
-
-  const { user } = useUserContext() as { user: UserPatientType };
 
   return (
     <div className="messages-content__leftbar">

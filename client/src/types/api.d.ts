@@ -4,7 +4,7 @@ export type AdminType = {
   date_created: number;
   email: string;
   password: string;
-  access_level: string;
+  access_level: "admin";
   temp_login: { temp_password: string; expiration: number; used: boolean };
   first_name: string;
   last_name: string;
@@ -87,8 +87,8 @@ export type AppointmentType = {
   exrule: ExruleType;
   recurrence: string;
   //add-ons
-  site_infos: SiteType;
-  host_infos: StaffType;
+  site_infos?: SiteType;
+  host_infos?: StaffType;
 };
 
 export type PaginatedAppointmentsType = {
@@ -124,13 +124,13 @@ export type AttachmentType = {
   url: string;
 };
 export type ScheduleType = {
-  monday: { hours: string; min: string; ampm: string }[];
-  tuesday: { hours: string; min: string; ampm: string }[];
-  wednesday: { hours: string; min: string; ampm: string }[];
-  thursday: { hours: string; min: string; ampm: string }[];
-  friday: { hours: string; min: string; ampm: string }[];
-  saturday: { hours: string; min: string; ampm: string }[];
-  sunday: { hours: string; min: string; ampm: string }[];
+  monday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  tuesday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  wednesday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  thursday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  friday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  saturday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+  sunday: { hours: string; min: string; ampm: "AM" | "PM" }[];
 };
 export type UnavailabilityType = {
   monday: boolean;
@@ -181,12 +181,12 @@ export type BillingType = {
   }[];
   site_id: number;
   created_by_id: number;
-  created_by_user_type: string;
+  created_by_user_type: "staff" | "admin";
   billing_code_suffix: string;
   //add-ons
-  site_infos: SiteType;
-  patient_infos: DemographicsType;
-  billing_infos: {
+  site_infos?: SiteType;
+  patient_infos?: DemographicsType;
+  billing_infos?: {
     billing_code: string;
     provider_fee: number;
     assistant_fee: number;
@@ -194,9 +194,9 @@ export type BillingType = {
     anaesthetist_fee: number;
     non_anaesthetist_fee: number;
   };
-  diagnosis_name: { diagnosis: string };
-  provider_ohip_billing_nbr: { ohip_billing_nbr: string };
-  diagnosis_code: { code: number };
+  diagnosis_name?: { diagnosis: string };
+  provider_ohip_billing_nbr?: { ohip_billing_nbr: string };
+  diagnosis_code?: { code: number };
 };
 
 export type BillingFormType = {
@@ -579,9 +579,15 @@ export type DemographicsFormType = {
   avatar: AttachmentType | null;
 };
 
-export type PaginatedDemographicsType = {
-  pageParams: number[];
-  pages: ({ items: DemographicsType[] } & PagesPropertiesType)[];
+export type PaginatedDatasType<T> = {
+  items: T[];
+  curPage: number;
+  itemsReceived: number;
+  itemsTotal: number;
+  nextPage: number | null;
+  offset: number;
+  pageTotal: number;
+  prevPage: number | null;
 };
 
 export type DiagnosisType = {
@@ -969,7 +975,7 @@ export type MessageType = {
   type: string;
   high_importance: boolean;
   //add-on
-  patient_infos: DemographicsType;
+  patient_infos?: DemographicsType;
 };
 
 export type PaginatedMessagesType = {
@@ -982,7 +988,7 @@ export type MessageAttachmentType = {
   file: AttachmentType;
   alias: string;
   date_created: number;
-  created_by_user_type: string;
+  created_by_user_type: "staff" | "patient";
   created_by_id: number;
 };
 
@@ -1004,7 +1010,7 @@ export type MessageExternalType = {
   type: string;
   high_importance: boolean;
   //Add-on
-  from_patient_infos: DemographicsType;
+  from_patient_infos?: DemographicsType;
 };
 
 export type PaginatedMessagesExternalType = {
@@ -1106,7 +1112,7 @@ export type PatientType = {
   id: number;
   email: string;
   password: string;
-  access_level: string;
+  access_level: "patient";
   account_status: string;
   created_by_id: number;
   date_created: number;
@@ -1326,17 +1332,19 @@ export type PaginatedRiskFactorsType = {
   pages: ({ items: RiskFactorType[] } & PagesPropertiesType)[];
 };
 
+export type InvitationTemplateType = {
+  name: string;
+  intro: string;
+  infos: string;
+  message: string;
+};
+
 export type SettingsType = {
   id: number;
   staff_id: number;
   slot_duration: string;
-  first_day: string;
-  invitation_templates: {
-    name: string;
-    intro: string;
-    infos: string;
-    message: string;
-  }[];
+  first_day: number;
+  invitation_templates: InvitationTemplateType[];
   clinical_notes_order: string;
   date_created: number;
   autolock_time_min: number;
@@ -1359,7 +1367,7 @@ export type SiteType = {
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
   email: string;
-  site_status: string;
+  site_status: "Open" | "Closed";
 };
 
 export type RoomType = { id: string; title: string };
@@ -1367,7 +1375,6 @@ export type RoomType = { id: string; title: string };
 export type StaffType = {
   id: number;
   email: string;
-  password: string;
   first_name: string;
   middle_name: string;
   last_name: string;
@@ -1377,7 +1384,7 @@ export type StaffType = {
   speciality: string;
   subspeciality: string;
   licence_nbr: string;
-  access_level: string;
+  access_level: "staff";
   account_status: string;
   cell_phone: string;
   backup_phone: string;
@@ -1395,10 +1402,9 @@ export type StaffType = {
   created_by_id: number;
   site_id: number;
   patients: number[];
-  pin: string;
   //add-ons
-  site_infos: SiteType;
-  staff_settings: {
+  site_infos?: SiteType;
+  staff_settings?: {
     authorized_messages_patients_ids: number[];
   };
 };

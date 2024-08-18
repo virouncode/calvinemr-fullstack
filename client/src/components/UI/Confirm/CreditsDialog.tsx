@@ -17,9 +17,9 @@ const CreditsDialog = ({ onConfirm, isPopUp, props }: CreditsDialogProps) => {
     : window.innerHeight / 2 + window.scrollY;
 
   useEffect(() => {
-    const handleKeyboardShortcut = (e) => {
+    const handleKeyboardShortcut = (e: KeyboardEvent) => {
       e.stopPropagation();
-      if (e.keyCode === 13) {
+      if (e.key === "Enter") {
         e.preventDefault();
         onConfirm();
       }

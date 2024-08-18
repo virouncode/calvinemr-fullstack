@@ -5,7 +5,10 @@ type TypingDotsProps = {
   style?: React.CSSProperties;
 };
 
-const TypingDots = ({ text = "Please wait for CalvinAI...", style }) => {
+const TypingDots = ({
+  text = "Please wait for CalvinAI...",
+  style,
+}: TypingDotsProps) => {
   return (
     <div className="typing" style={style}>
       <div className="typing__progress">

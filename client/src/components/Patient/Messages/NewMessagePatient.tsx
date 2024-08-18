@@ -83,7 +83,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
       });
     }
     //create the message
-    const messageToPost: MessageExternalType = {
+    const messageToPost: Partial<MessageExternalType> = {
       from_patient_id: user.id,
       to_staff_id: recipientId,
       subject: subject,
@@ -133,7 +133,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
         setIsLoadingFile(true);
         // setting up the reader`
         const reader = new FileReader();
-        reader.readAsDataURL(file as File);
+        reader.readAsDataURL(file);
         // here we tell the reader what to do when it's done reading...
         reader.onload = async (e) => {
           const content = e.target?.result; // this is the content!

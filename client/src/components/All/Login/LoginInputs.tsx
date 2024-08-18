@@ -12,8 +12,8 @@ type LoginInputsProps = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   passwordVisible: boolean;
   pinVisible: boolean;
-  handleTogglePwd: React.MouseEventHandler<SVGSVGElement>;
-  handleTogglePin: React.MouseEventHandler<SVGSVGElement>;
+  handleTogglePwd: () => void;
+  handleTogglePin: () => void;
 };
 
 const LoginInputs = ({

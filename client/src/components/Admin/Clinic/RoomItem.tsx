@@ -4,10 +4,7 @@ import Input from "../../UI/Inputs/Input";
 
 type RoomItemProps = {
   room: { id: string; title: string };
-  handleDeleteRoom: (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: string
-  ) => void;
+  handleDeleteRoom: (id: string) => void;
   handleChangeRoomTitle: (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -32,7 +29,7 @@ const RoomItem = ({
         id="room-name"
         label="Name*:"
       />
-      <TrashIcon onClick={(e) => handleDeleteRoom(e, room.id)} ml={10} />
+      <TrashIcon onClick={() => handleDeleteRoom(room.id)} ml={10} />
     </li>
   );
 };

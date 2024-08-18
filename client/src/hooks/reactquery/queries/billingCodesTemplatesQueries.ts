@@ -2,7 +2,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
   AdminType,
-  PaginatedBillingCodesTemplatesType,
+  BillingCodeTemplateType,
+  PaginatedDatasType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import useUserContext from "../../context/useUserContext";
@@ -12,7 +13,9 @@ export const useBillingCodesTemplates = (search: string) => {
   const userType = user.access_level;
   return useInfiniteQuery({
     queryKey: ["billingCodesTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedBillingCodesTemplatesType> =>
+    queryFn: ({
+      pageParam,
+    }): Promise<PaginatedDatasType<BillingCodeTemplateType>> =>
       xanoGet("/billing_codes_templates", userType, {
         page: pageParam,
         search,

@@ -8,6 +8,7 @@ import {
   MessageAttachmentType,
   MessageExternalType,
 } from "../../../types/api";
+import { UserPatientType } from "../../../types/app";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesExternalPrintPU from "../../Staff/Messaging/External/MessagesExternalPrintPU";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
@@ -31,20 +32,23 @@ const MessagePatientDetail = ({
   printVisible,
   setPrintVisible,
 }: MessagePatientDetailProps) => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: UserPatientType };
   const [replyVisible, setReplyVisible] = useState(false);
-  const previousMsgs: MessageExternalType[] = (
-    message.previous_messages_ids as { previous_message: MessageExternalType }[]
-  )
-    ?.map(
-      ({ previous_message }: { previous_message: MessageExternalType }) =>
-        previous_message
-    )
-    ?.sort((a, b) => (b.date_created as number) - (a.date_created as number));
+  const previousMsgs: MessageExternalType[] = message
+    ? (
+        message.previous_messages_ids as {
+          previous_message: MessageExternalType;
+        }[]
+      )
+        .map(({ previous_message }) => previous_message)
+        .sort((a, b) => b.date_created - a.date_created)
+    : [];
 
-  const attachments: MessageAttachmentType[] = (
-    message.attachments_ids as { attachment: MessageAttachmentType }[]
-  ).map(({ attachment }) => attachment);
+  const attachments: MessageAttachmentType[] = message
+    ? (message.attachments_ids as { attachment: MessageAttachmentType }[]).map(
+        ({ attachment }) => attachment
+      )
+    : [];
   const messagePut = useMessageExternalPut();
 
   const handleClickBack = () => {
@@ -60,28 +64,22 @@ const MessagePatientDetail = ({
       const messageToPut: MessageExternalType = {
         ...message,
         deleted_by_patients_ids: [
-          ...(message.deleted_by_patients_ids ?? []),
-          user?.id as number,
+          ...(message?.deleted_by_patients_ids ?? []),
+          user.id,
         ],
         attachments_ids: (
-          message.attachments_ids as { attachment: MessageAttachmentType }[]
+          message?.attachments_ids as { attachment: MessageAttachmentType }[]
         ).map(({ attachment }) => attachment.id as number),
         previous_messages_ids: (
-          message.previous_messages_ids as {
+          message?.previous_messages_ids as {
             previous_message: MessageExternalType;
           }[]
-        )
-          .map(({ previous_message }) => previous_message.id)
-          .filter((id): id is number => id !== undefined), // Filter out undefined values
+        ).map(({ previous_message }) => previous_message.id),
         to_patients_ids: (
-          message.to_patients_ids as { to_patient_infos: DemographicsType }[]
-        )
-          .map(({ to_patient_infos }) => to_patient_infos.id)
-          .filter((id): id is number => id !== undefined) as number[], // Ensure this is a number[]
+          message?.to_patients_ids as { to_patient_infos: DemographicsType }[]
+        ).map(({ to_patient_infos }) => to_patient_infos.patient_id),
       };
 
-      // delete messageToPut.to_patient_infos;
-      // delete messageToPut.form_patient_infos;
       messagePut.mutate(messageToPut, {
         onSuccess: () => {
           toast.success("Message deleted successfully", {

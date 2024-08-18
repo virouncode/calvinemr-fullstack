@@ -1,6 +1,6 @@
 import React from "react";
 type InputTextToggleProps = {
-  value?: string;
+  value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   name: string;

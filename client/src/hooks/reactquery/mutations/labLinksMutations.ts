@@ -13,7 +13,7 @@ export const useLabLinksCredentialsPost = (staffId: number) => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (credentialsToPost: LabLinkCredentialsType) =>
+    mutationFn: (credentialsToPost: Partial<LabLinkCredentialsType>) =>
       xanoPost("/lablinks_credentials", "staff", credentialsToPost),
     onMutate: async (credentialsToPost: LabLinkCredentialsType) => {
       await queryClient.cancelQueries({

@@ -17,10 +17,7 @@ type BillingCodesTemplateDisplayProps = {
   template: BillingCodeTemplateType;
   handleEditClick: () => void;
   handleDelete: () => void;
-  handleDuplicate: (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    template: BillingCodeTemplateType
-  ) => Promise<void>;
+  handleDuplicate: (template: BillingCodeTemplateType) => Promise<void>;
 };
 
 const BillingCodesTemplateDisplay = ({
@@ -48,12 +45,7 @@ const BillingCodesTemplateDisplay = ({
           <TrashIcon ml={5} onClick={handleDelete} />
         </>
       )}
-      <CloneIcon
-        onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
-          handleDuplicate(e, template)
-        }
-        ml={5}
-      />
+      <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
     </li>
   );
 };

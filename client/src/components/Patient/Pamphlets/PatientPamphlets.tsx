@@ -70,9 +70,9 @@ const PatientPamphlets = () => {
                       )
                     )
                   : !isFetchingNextPage &&
-                    !isPending && <EmptyRow colSpan="6" text="No pamphlets" />}
+                    !isPending && <EmptyRow colSpan={6} text="No pamphlets" />}
                 {(isPending || isFetchingNextPage) && (
-                  <LoadingRow colSpan="6" />
+                  <LoadingRow colSpan={6} />
                 )}
               </tbody>
             </table>

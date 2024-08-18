@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 const xanoPut = async (
   URL: string,
   userType: string,
-  data: object,
+  data: Record<string, unknown>,
   abortController?: AbortController
 ) => {
   const config: AxiosXanoConfigType = {

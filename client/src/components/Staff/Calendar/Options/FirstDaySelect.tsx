@@ -13,7 +13,10 @@ const FirstDaySelect = () => {
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     try {
-      const datasToPut: SettingsType = { ...user.settings, first_day: value };
+      const datasToPut: SettingsType = {
+        ...user.settings,
+        first_day: parseInt(value),
+      };
       const response = await xanoPut(
         `/settings/${user.settings.id}`,
         "staff",

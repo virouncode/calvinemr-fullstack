@@ -21,7 +21,6 @@ const ReferringOHIPSearch = ({
   doctorsIdToRemove = [],
 }: ReferringOHIPSearchProps) => {
   const [search, setSearch] = useState("");
-
   const {
     data: doctors,
     isPending,

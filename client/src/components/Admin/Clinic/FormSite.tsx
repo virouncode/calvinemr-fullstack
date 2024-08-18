@@ -13,8 +13,8 @@ import SiteStatusSelect from "../../UI/Lists/SiteStatusSelect";
 import RoomsForm from "./RoomsForm";
 
 type FormSiteProps = {
-  formDatas: Partial<SiteType>;
-  setFormDatas: React.Dispatch<React.SetStateAction<Partial<SiteType>>>;
+  formDatas: SiteType;
+  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
   handleChange: (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -52,7 +52,7 @@ const FormSite = ({
               label="Site name*:"
               name="name"
               id="name"
-              value={formDatas.name}
+              value={formDatas?.name ?? ""}
               onChange={handleChange}
             />
           </div>
@@ -61,7 +61,7 @@ const FormSite = ({
               label="Address*:"
               name="address"
               id="address"
-              value={formDatas.address}
+              value={formDatas?.address ?? ""}
               onChange={handleChange}
             />
           </div>
@@ -70,14 +70,14 @@ const FormSite = ({
               label="City*:"
               name="city"
               id="city"
-              value={formDatas.city}
+              value={formDatas?.city ?? ""}
               onChange={handleChange}
             />
           </div>
           <div className="site-form__row">
             <GenericList
               list={provinceStateTerritoryCT}
-              value={formDatas.province_state as string}
+              value={formDatas?.province_state ?? ""}
               handleChange={handleChange}
               name="province_state"
               label="Province/State*:"
@@ -91,8 +91,8 @@ const FormSite = ({
             <Input
               value={
                 postalOrZip === "postal"
-                  ? formDatas.postal_code
-                  : formDatas.zip_code
+                  ? formDatas?.postal_code ?? ""
+                  : formDatas?.zip_code ?? ""
               }
               onChange={handleChange}
               name="postalZipCode"
@@ -105,7 +105,7 @@ const FormSite = ({
           </div>
           <div className="site-form__row">
             <InputTel
-              value={formDatas.phone}
+              value={formDatas?.phone ?? ""}
               onChange={handleChange}
               name="phone"
               id="phone"
@@ -115,7 +115,7 @@ const FormSite = ({
           </div>
           <div className="site-form__row">
             <InputTel
-              value={formDatas.fax}
+              value={formDatas?.fax ?? ""}
               onChange={handleChange}
               name="fax"
               id="fax"
@@ -125,7 +125,7 @@ const FormSite = ({
           </div>
           <div className="site-form__row">
             <InputEmail
-              value={formDatas.email}
+              value={formDatas?.email ?? ""}
               onChange={handleChange}
               name="email"
               id="email"
@@ -134,7 +134,7 @@ const FormSite = ({
           </div>
           <div className="site-form__row">
             <SiteStatusSelect
-              value={formDatas.site_status as string}
+              value={formDatas?.site_status ?? "Open"}
               onChange={handleChange}
             />
           </div>
@@ -144,7 +144,7 @@ const FormSite = ({
               <InputImgFile
                 isLoadingFile={isLoadingFile}
                 onChange={handleLogoChange}
-                img={formDatas.logo ?? null}
+                img={formDatas?.logo ?? null}
                 alt="site-logo"
                 width={150}
               />

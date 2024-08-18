@@ -1,4 +1,4 @@
-import { EventImpl } from "@fullcalendar/core/internal";
+import { EventInput } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
 import { DateTime } from "luxon";
 import React, { useEffect } from "react";
@@ -7,19 +7,19 @@ import xanoDelete from "../api/xanoCRUD/xanoDelete";
 import xanoGet from "../api/xanoCRUD/xanoGet";
 import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
 import { AppointmentType } from "../types/api";
-import { EventType, UserStaffType } from "../types/app";
+import { UserStaffType } from "../types/app";
 import useSocketContext from "./context/useSocketContext";
 import useUserContext from "./context/useUserContext";
 
 const useCalendarShortcuts = (
-  fcRef: React.MutableRefObject<FullCalendar>,
-  currentEvent: React.MutableRefObject<EventType | EventImpl | null>,
+  fcRef: React.MutableRefObject<FullCalendar | null>,
+  currentEvent: React.MutableRefObject<EventInput | null>,
   lastCurrentId: React.MutableRefObject<string>,
   eventCounter: React.MutableRefObject<number>,
   formVisible: boolean,
   setFormVisible: React.Dispatch<React.SetStateAction<boolean>>,
-  setCalendarSelectable: React.Dispatch<React.SetStateAction<boolean>>,
-  editAvailabilityVisible: boolean,
+  setSelectable: React.Dispatch<React.SetStateAction<boolean>>,
+  editAvailability: boolean,
   setIsFirstEvent: React.Dispatch<React.SetStateAction<boolean>>,
   setConfirmDlgRecDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -27,26 +27,26 @@ const useCalendarShortcuts = (
   const { socket } = useSocketContext();
   useEffect(() => {
     const handleKeyboardShortcut = async (e) => {
-      if (editAvailabilityVisible || formVisible) return;
+      if (editAvailability || formVisible) return;
       if (e.keyCode === 37 && e.shiftKey) {
         //arrow left
-        fcRef.current.getApi().prev();
+        fcRef.current && fcRef.current.getApi().prev();
       } else if (e.keyCode === 39 && e.shiftKey) {
         //arrow right
-        fcRef.current.getApi().next();
+        fcRef.current && fcRef.current.getApi().next();
       } else if (e.keyCode === 84 && e.shiftKey) {
         //T
-        fcRef.current.getApi().today();
+        fcRef.current && fcRef.current.getApi().today();
       } else if (
         currentEvent.current &&
-        (currentEvent.current.extendedProps.host === user.id ||
+        (currentEvent.current.extendedProps?.host === user.id ||
           user.title === "Secretary") &&
         (e.key === "Backspace" || e.key === "Delete")
       ) {
         //backspace
-        if (currentEvent.current.extendedProps.recurrence !== "Once") {
+        if (currentEvent.current.extendedProps?.recurrence !== "Once") {
           const appointment: AppointmentType = await xanoGet(
-            `/appointments/${parseInt(currentEvent.current.id)}`,
+            `/appointments/${parseInt(currentEvent.current.id as string)}`,
             "staff"
           );
           if (
@@ -68,22 +68,22 @@ const useCalendarShortcuts = (
         ) {
           try {
             await xanoDelete(
-              `/appointments/${parseInt(currentEvent.current.id)}`,
+              `/appointments/${parseInt(currentEvent.current.id as string)}`,
               "staff"
             );
             toast.success("Deleted Successfully", { containerId: "A" });
             socket?.emit("message", {
               route: "EVENTS",
               action: "delete",
-              content: { id: parseInt(currentEvent.current.id) },
+              content: { id: parseInt(currentEvent.current.id as string) },
             });
             socket?.emit("message", {
               route: "APPOINTMENTS",
               action: "delete",
-              content: { id: parseInt(currentEvent.current.id) },
+              content: { id: parseInt(currentEvent.current.id as string) },
             });
             setFormVisible(false);
-            setCalendarSelectable(true);
+            setSelectable(true);
             currentEvent.current = null;
             lastCurrentId.current = "";
           } catch (err) {
@@ -131,12 +131,12 @@ const useCalendarShortcuts = (
     fcRef,
     formVisible,
     lastCurrentId,
-    setCalendarSelectable,
+    setSelectable,
     setFormVisible,
     socket,
     user.id,
     user.title,
-    editAvailabilityVisible,
+    editAvailability,
     setConfirmDlgRecDeleteVisible,
     setIsFirstEvent,
   ]);

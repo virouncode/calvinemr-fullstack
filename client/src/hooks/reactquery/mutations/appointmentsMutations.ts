@@ -25,21 +25,10 @@ export const useAppointmentsPost = (
   const queryClient = useQueryClient();
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (appointmentToPost: AppointmentType) => {
-      const transformedAppointmentToPost = {
-        ...appointmentToPost,
-        patients_guests_ids: (
-          appointmentToPost.patients_guests_ids as {
-            patient_infos: DemographicsType;
-          }[]
-        ).map(({ patient_infos }) => patient_infos.patient_id),
-        staff_guests_ids: (
-          appointmentToPost.staff_guests_ids as { staff_infos: StaffType }[]
-        ).map(({ staff_infos }) => staff_infos.id),
-      };
-      return xanoPost("/appointments", "staff", transformedAppointmentToPost);
+    mutationFn: (appointmentToPost: Partial<AppointmentType>) => {
+      return xanoPost("/appointments", "staff", appointmentToPost);
     },
-    onMutate: async (appointmentToPost: AppointmentType) => {
+    onMutate: async (appointmentToPost: Partial<AppointmentType>) => {
       await queryClient.cancelQueries({
         queryKey: [
           "appointments",
@@ -284,19 +273,8 @@ export const useAppointmentsDelete = (
 export const useAppointmentPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (appointmentToPost: AppointmentType) => {
-      const transformedAppointmentToPost = {
-        ...appointmentToPost,
-        patients_guests_ids: (
-          appointmentToPost.patients_guests_ids as {
-            patient_infos: DemographicsType;
-          }[]
-        ).map(({ patient_infos }) => patient_infos.patient_id),
-        staff_guests_ids: (
-          appointmentToPost.staff_guests_ids as { staff_infos: StaffType }[]
-        ).map(({ staff_infos }) => staff_infos.id),
-      };
-      return xanoPost("/appointments", "staff", transformedAppointmentToPost);
+    mutationFn: (appointmentToPost: Partial<AppointmentType>) => {
+      return xanoPost("/appointments", "staff", appointmentToPost);
     },
     onSuccess: () => {
       socket?.emit("message", { key: ["appointments"] });
@@ -329,7 +307,8 @@ export const useAppointmentPut = () => {
           }[]
         ).map(({ patient_infos }) => patient_infos.patient_id),
         staff_guests_ids: (
-          appointmentToPut.staff_guests_ids as { staff_infos: StaffType }[]
+          (appointmentToPut.staff_guests_ids as { staff_infos: StaffType }[]) ??
+          []
         ).map(({ staff_infos }) => staff_infos.id),
       };
       return xanoPut(

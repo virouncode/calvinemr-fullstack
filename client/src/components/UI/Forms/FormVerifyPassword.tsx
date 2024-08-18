@@ -8,7 +8,7 @@ type FormVerifyPasswordProps = {
   pin: string;
   handlePwdChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePinChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCancel: () => void;
+  handleCancel: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const FormVerifyPassword = ({

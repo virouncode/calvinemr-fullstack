@@ -17,7 +17,7 @@ const MagnifyingGlassIcon = ({
   top = 0,
   right = 0,
   clickable = true,
-}) => {
+}: MagnifyingGlassIconProps) => {
   return (
     <FontAwesomeIcon
       icon={faMagnifyingGlass}

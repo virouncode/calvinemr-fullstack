@@ -93,7 +93,7 @@ const LoginForm = () => {
         navigate("/suspended");
         return;
       }
-      if (user.account_status === "Suspended") {
+      if (user.account_status === "Closed") {
         navigate("/closed");
         return;
       }

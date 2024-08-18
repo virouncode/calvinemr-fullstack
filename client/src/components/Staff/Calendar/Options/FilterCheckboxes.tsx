@@ -59,8 +59,8 @@ const FilterCheckboxes = ({
       setCategories([...categories, category]);
       const recipientsIdsUpdated = [...hostsIds];
       categoryContactsIds.forEach((id) => {
-        if (!recipientsIdsUpdated.includes(id as number)) {
-          recipientsIdsUpdated.push(id as number);
+        if (!recipientsIdsUpdated.includes(id)) {
+          recipientsIdsUpdated.push(id);
         }
       });
       setHostsIds(recipientsIdsUpdated);

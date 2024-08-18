@@ -4,8 +4,8 @@ import {
   EventClickArg,
   EventContentArg,
   EventDropArg,
+  EventInput,
 } from "@fullcalendar/core";
-import { EventImpl } from "@fullcalendar/core/internal";
 import {
   EventDragStartArg,
   EventResizeDoneArg,
@@ -17,15 +17,15 @@ import NewWindow from "react-new-window";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { SiteType } from "../../../types/api";
-import { EventType, UserStaffType } from "../../../types/app";
+import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import Button from "../../UI/Buttons/Button";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import EventForm from "../EventForm/EventForm";
-import SiteSelect from "../EventForm/SiteSelect";
 import CalendarView from "./CalendarView";
 import DaySheet from "./DaySheet";
+import EventForm from "./EventForm/EventForm";
+import SiteSelect from "./EventForm/SiteSelect";
 import TimelineView from "./TimelineView";
 import ToggleView from "./ToggleView";
 
@@ -34,7 +34,7 @@ type CalendarDisplayProps = {
   setTimelineVisible: React.Dispatch<React.SetStateAction<boolean>>;
   timelineSiteId: number;
   setTimelineSiteId: React.Dispatch<React.SetStateAction<number>>;
-  events: EventType[];
+  events: EventInput[] | undefined;
   sites: SiteType[];
   currentView: string;
   printDayVisible: boolean;
@@ -43,9 +43,9 @@ type CalendarDisplayProps = {
   rangeStart: number;
   rangeEnd: number;
   initialDate: number;
-  fcRef: React.LegacyRef<FullCalendar>;
+  fcRef: React.MutableRefObject<FullCalendar | null>;
   handleDatesSet: (info: DatesSetArg) => void;
-  handleDateSelect: (info: DateSelectArg) => void;
+  handleDateSelect: (info: DateSelectArg) => Promise<void>;
   handleDragStart: (info: EventDragStartArg) => void;
   handleEventClick: (info: EventClickArg) => void;
   handleDrop: (info: EventDropArg) => void;
@@ -54,7 +54,7 @@ type CalendarDisplayProps = {
   renderEventContent: (info: EventContentArg) => React.JSX.Element | undefined;
   formVisible: boolean;
   setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  currentEvent: React.MutableRefObject<EventImpl | EventType | null>;
+  currentEvent: React.MutableRefObject<EventInput | null>;
   setFormColor: React.Dispatch<React.SetStateAction<string>>;
   formColor: string;
   setSelectable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -207,9 +207,9 @@ const CalendarDisplay = ({
           <EventForm
             currentEvent={currentEvent}
             setFormVisible={setFormVisible}
-            remainingStaff={getRemainingStaff(user.id as number, staffInfos)}
+            remainingStaff={getRemainingStaff(user.id, staffInfos)}
             setFormColor={setFormColor}
-            setSelectable={setSelectable}
+            setCalendarSelectable={setSelectable}
             hostsIds={hostsIds}
             setHostsIds={setHostsIds}
             sites={sites}
@@ -217,7 +217,6 @@ const CalendarDisplay = ({
             sitesIds={sitesIds}
             setSitesIds={setSitesIds}
             isFirstEvent={isFirstEvent}
-            setCalendarSelectable={setSelectable}
           />
         </FakeWindow>
       )}

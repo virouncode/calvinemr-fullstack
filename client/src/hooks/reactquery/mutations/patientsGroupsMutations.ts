@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const usePatientsGroupPost = (staffId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (groupToPost: GroupType) =>
+    mutationFn: (groupToPost: Partial<GroupType>) =>
       xanoPost("/groups", "staff", groupToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["groups", staffId] });

@@ -7,12 +7,12 @@ import CalvinAIInput from "./CalvinAIInput";
 import CalvinAIChatTemplates from "./ClavinAIChatTemplates";
 
 const CalvinAIChat = () => {
+  const [messages, setMessages] = useState([]);
   const msgEndRef = useRef(null);
   const contentRef = useRef(null);
-  const [inputText, setInputText] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [lastResponse, setLastResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [inputText, setInputText] = useState("");
+  const [lastResponse, setLastResponse] = useState("");
   const [autoScroll, setAutoScroll] = useState(true);
   const abortController = useRef(null);
   const inputTextRef = useRef(null);

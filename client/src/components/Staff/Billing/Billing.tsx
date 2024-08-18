@@ -55,7 +55,9 @@ const Billing = () => {
   if (error || errorSites)
     return (
       <div className="billing">
-        <ErrorParagraph errorMsg={error?.message || errorSites?.message} />
+        <ErrorParagraph
+          errorMsg={error?.message || errorSites?.message || ""}
+        />
       </div>
     );
   const billings = data?.pages.flatMap((page) => page.items);

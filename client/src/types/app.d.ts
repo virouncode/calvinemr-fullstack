@@ -179,7 +179,7 @@ export type EventType = {
   editable: boolean;
   resourceEditable: boolean;
   resourceId: string;
-  rrule: RruleType;
+  rrule: RruleType | null;
   exrule: ExruleType;
   duration: number;
   extendedProps: {
@@ -205,7 +205,7 @@ export type EventType = {
     providerLastName: string;
     providerOHIP: string;
     recurrence: string;
-    rrule: RruleType;
+    rrule: RruleType | null;
     exrule: ExruleType;
   };
 };

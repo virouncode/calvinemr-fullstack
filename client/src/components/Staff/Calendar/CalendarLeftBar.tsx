@@ -35,7 +35,7 @@ const CalendarLeftBar = ({
         setSitesIds={setSitesIds}
         hostsIds={hostsIds}
         setHostsIds={setHostsIds}
-        remainingStaff={getRemainingStaff(user.id as number, staffInfos)}
+        remainingStaff={getRemainingStaff(user.id, staffInfos)}
       />
     </div>
   );

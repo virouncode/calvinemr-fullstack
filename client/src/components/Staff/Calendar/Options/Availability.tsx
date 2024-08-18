@@ -4,16 +4,16 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import AvailabilityEditor from "./AvailabilityEditor";
 
 type AvailabilityProps = {
-  editAvailabilityVisible: boolean;
-  setEditAvailabilityVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  editAvailability: boolean;
+  setEditAvailability: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Availability = ({
-  editAvailabilityVisible,
-  setEditAvailabilityVisible,
+  editAvailability,
+  setEditAvailability,
 }: AvailabilityProps) => {
   const handleEdit = () => {
-    setEditAvailabilityVisible((v) => !v);
+    setEditAvailability((v) => !v);
   };
   return (
     <>
@@ -21,7 +21,7 @@ const Availability = ({
         <label>Availability</label>
         <PenIcon onClick={handleEdit}></PenIcon>
       </div>
-      {editAvailabilityVisible && (
+      {editAvailability && (
         <FakeWindow
           title="MY AVAILABILITY"
           width={1000}
@@ -29,11 +29,9 @@ const Availability = ({
           x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 400) / 2}
           color={"#94bae8"}
-          setPopUpVisible={setEditAvailabilityVisible}
+          setPopUpVisible={setEditAvailability}
         >
-          <AvailabilityEditor
-            setEditAvailabilityVisible={setEditAvailabilityVisible}
-          />
+          <AvailabilityEditor setEditAvailability={setEditAvailability} />
         </FakeWindow>
       )}
     </>

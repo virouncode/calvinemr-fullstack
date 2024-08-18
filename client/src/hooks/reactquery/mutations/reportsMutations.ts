@@ -10,7 +10,7 @@ export const useReportPost = () => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (reportToPost: ReportType) =>
+    mutationFn: (reportToPost: Partial<ReportType>) =>
       xanoPost("/reports", "staff", reportToPost),
     onMutate: async (reportToPost) => {
       await queryClient.cancelQueries({
@@ -44,7 +44,7 @@ export const useReportInboxPost = () => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (reportToPost: ReportType) =>
+    mutationFn: (reportToPost: Partial<ReportType>) =>
       xanoPost("/reports", "staff", reportToPost),
     onMutate: async (reportToPost: ReportType) => {
       await queryClient.cancelQueries({

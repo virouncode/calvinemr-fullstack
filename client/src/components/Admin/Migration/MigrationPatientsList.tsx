@@ -2,6 +2,7 @@ import React from "react";
 import { usePatients } from "../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../hooks/useIntersection";
 import { DemographicsType } from "../../../types/api";
+import { SearchPatientType } from "../../../types/app";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import PatientsListItem from "../../Staff/Messaging/PatientsListItem";
 import Checkbox from "../../UI/Checkbox/Checkbox";
@@ -10,6 +11,18 @@ import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
+type MigrationPatientsListProps = {
+  isPatientChecked: (id: number) => boolean;
+  handleCheckPatient: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    patient: DemographicsType
+  ) => void;
+  handleCheckAllPatients: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isAllPatientsChecked: () => boolean;
+  progress: boolean;
+  search: SearchPatientType;
+};
+
 const MigrationPatientsList = ({
   isPatientChecked,
   handleCheckPatient,
@@ -17,7 +30,7 @@ const MigrationPatientsList = ({
   isAllPatientsChecked,
   progress,
   search,
-}) => {
+}: MigrationPatientsListProps) => {
   const {
     data,
     isPending,
@@ -35,7 +48,8 @@ const MigrationPatientsList = ({
 
   if (isPending) return <LoadingParagraph />;
   if (error) return <ErrorParagraph errorMsg={error.message} />;
-  const patientsDemographics: DemographicsType[] = data?.pages?.flatMap(
+
+  const patientsDemographics: DemographicsType[] = data.pages.flatMap(
     (page) => page.items
   );
 

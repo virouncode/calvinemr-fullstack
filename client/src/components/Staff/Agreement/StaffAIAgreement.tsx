@@ -15,7 +15,10 @@ type StaffAIAgreementProps = {
   setChatVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const StaffAIAgreement = ({ setStart, setChatVisible }) => {
+const StaffAIAgreement = ({
+  setStart,
+  setChatVisible,
+}: StaffAIAgreementProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const [agreed, setAgreed] = useState(false);

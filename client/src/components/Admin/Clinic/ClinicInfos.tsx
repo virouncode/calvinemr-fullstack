@@ -25,11 +25,11 @@ import SitesTable from "./SitesTable";
 const ClinicInfos = () => {
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
+  const { clinic } = useClinicContext();
   const [addVisible, setAddVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [editClinicVisible, setEditClinicVisible] = useState(false);
   const [selectedSiteId, setSelectedSiteId] = useState(0);
-  const { clinic } = useClinicContext();
   const [formDatas, setFormDatas] = useState<ClinicType>(clinic as ClinicType);
   const [errMsgPost, setErrMsgPost] = useState("");
   const { data: sites, isPending, error } = useSites();
@@ -37,6 +37,7 @@ const ClinicInfos = () => {
   const handleAddNew = () => {
     setAddVisible(true);
   };
+
   const handleEditClick = (
     e: React.MouseEvent<HTMLButtonElement>,
     siteId: number
@@ -52,6 +53,7 @@ const ClinicInfos = () => {
   const handleCancelClinic = () => {
     setEditClinicVisible(false);
   };
+
   const handleSaveClinic = async () => {
     try {
       await clinicSchema.validate(formDatas);
@@ -73,7 +75,7 @@ const ClinicInfos = () => {
         website: websiteFormatted,
         updates: [
           ...(formDatas?.updates || []),
-          { updated_by_id: user?.id, date_updated: nowTZTimestamp() },
+          { updated_by_id: user.id, date_updated: nowTZTimestamp() },
         ],
       };
       const response: ClinicType = await xanoPut(
@@ -169,9 +171,10 @@ const ClinicInfos = () => {
       )}
       {editVisible && (
         <FakeWindow
-          title={`EDIT ${sites
-            .find(({ id }) => id === selectedSiteId)
-            ?.name.toUpperCase()} Site`}
+          title={`EDIT ${
+            sites.find(({ id }) => id === selectedSiteId)?.name.toUpperCase() ??
+            ""
+          } Site`}
           width={1000}
           height={600}
           x={(window.innerWidth - 1000) / 2}

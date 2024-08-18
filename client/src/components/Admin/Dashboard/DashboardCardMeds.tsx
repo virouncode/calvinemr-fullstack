@@ -54,7 +54,7 @@ const DashboardCardMeds = () => {
       <div className="dashboard-card">
         <div className="dashboard-card__title">Medications</div>
         <ErrorParagraph
-          errorMsg={errorSites?.message || errorMedications?.message}
+          errorMsg={errorSites?.message || errorMedications?.message || ""}
         />
       </div>
     );

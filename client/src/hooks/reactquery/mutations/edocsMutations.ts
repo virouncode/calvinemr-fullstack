@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useEdocPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (edocToPost: EdocType) =>
+    mutationFn: (edocToPost: Partial<EdocType>) =>
       xanoPost("/edocs", "staff", edocToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["edocs"] });

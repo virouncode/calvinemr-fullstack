@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useCalvinAITemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: CalvinAITemplateType) =>
+    mutationFn: (templateToPost: Partial<CalvinAITemplateType>) =>
       xanoPost("/calvinai_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["calvinaiTemplates"] });

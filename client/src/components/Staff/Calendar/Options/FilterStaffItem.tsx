@@ -26,7 +26,7 @@ const FilterStaffItem = ({
         id={info.id?.toString()}
         name={categoryName}
         onChange={handleCheck}
-        checked={isChecked(info.id as number)}
+        checked={isChecked(info.id)}
         label={staffIdToTitleAndName(staffInfos, info.id)}
         accentColor={color}
       />

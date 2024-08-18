@@ -1,14 +1,11 @@
 import {
   FetchNextPageOptions,
+  InfiniteData,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
 import React from "react";
 import useIntersection from "../../../hooks/useIntersection";
-import {
-  BillingType,
-  PaginatedBillingsType,
-  SiteType,
-} from "../../../types/api";
+import { BillingType, PaginatedDatasType, SiteType } from "../../../types/api";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import BillingTableItem from "./BillingTableItem";
@@ -20,7 +17,12 @@ type BillingTableProps = {
   isFetchingNextPage: boolean;
   fetchNextPage: (
     options?: FetchNextPageOptions
-  ) => Promise<InfiniteQueryObserverResult<PaginatedBillingsType, Error>>;
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<PaginatedDatasType<BillingType>, unknown>,
+      Error
+    >
+  >;
   isFetching: boolean;
   sites: SiteType[];
   addVisible: boolean;
@@ -93,9 +95,9 @@ const BillingTable = ({
                 )
               )
             : !isFetchingNextPage && (
-                <EmptyRow colSpan="13" text="No Billings" />
+                <EmptyRow colSpan={13} text="No Billings" />
               )}
-          {isFetchingNextPage && <LoadingRow colSpan="13" />}
+          {isFetchingNextPage && <LoadingRow colSpan={13} />}
         </tbody>
         <tfoot>
           <tr className="billing-table__item">
@@ -110,7 +112,7 @@ const BillingTable = ({
                 billings
                   .map(
                     ({ billing_infos }) =>
-                      billing_infos?.provider_fee ?? 0 / 10000
+                      (billing_infos?.provider_fee ?? 0) / 10000
                   )
                   .reduce((acc, current) => {
                     return acc + current;
@@ -123,7 +125,7 @@ const BillingTable = ({
                 billings
                   .map(
                     ({ billing_infos }) =>
-                      billing_infos?.assistant_fee ?? 0 / 10000
+                      (billing_infos?.assistant_fee ?? 0) / 10000
                   )
                   .reduce((acc, current) => {
                     return acc + current;
@@ -136,7 +138,7 @@ const BillingTable = ({
                 billings
                   .map(
                     ({ billing_infos }) =>
-                      billing_infos?.specialist_fee ?? 0 / 10000
+                      (billing_infos?.specialist_fee ?? 0) / 10000
                   )
                   .reduce((acc, current) => {
                     return acc + current;
@@ -149,7 +151,7 @@ const BillingTable = ({
                 billings
                   .map(
                     ({ billing_infos }) =>
-                      billing_infos?.anaesthetist_fee ?? 0 / 10000
+                      (billing_infos?.anaesthetist_fee ?? 0) / 10000
                   )
                   .reduce((acc, current) => {
                     return acc + current;
@@ -162,7 +164,7 @@ const BillingTable = ({
                 billings
                   .map(
                     ({ billing_infos }) =>
-                      billing_infos?.non_anaesthetist_fee ?? 0 / 10000
+                      (billing_infos?.non_anaesthetist_fee ?? 0) / 10000
                   )
                   .reduce((acc, current) => {
                     return acc + current;

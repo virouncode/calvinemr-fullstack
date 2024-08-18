@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { PaginatedEdocsType } from "../../../types/api";
+import { PaginatedDatasType, EdocType } from "../../../types/api";
 
 export const useEdocs = (search) => {
   return useInfiniteQuery({
     queryKey: ["edocs", search],
-    queryFn: ({ pageParam }): Promise<PaginatedEdocsType> =>
+    queryFn: ({ pageParam }): Promise<PaginatedDatasType<EdocType>> =>
       xanoGet("/edocs", "staff", {
         search,
         page: pageParam,

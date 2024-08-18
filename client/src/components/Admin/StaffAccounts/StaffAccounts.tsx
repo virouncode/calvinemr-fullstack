@@ -26,7 +26,7 @@ const StaffAccounts = () => {
     phone: "",
     licence_nbr: "",
     ohip_billing_nbr: "",
-    site_id: -1,
+    site_id: -1, //All
   });
   const {
     data: sites,

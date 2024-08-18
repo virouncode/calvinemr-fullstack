@@ -32,9 +32,9 @@ const StaffAccountEdit = ({
   sites,
 }: StaffAccountEditProps) => {
   //HOOKS
-  const [formDatas, setFormDatas] = useState<StaffType>(infos);
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
+  const [formDatas, setFormDatas] = useState<StaffType>(infos);
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -113,7 +113,7 @@ const StaffAccountEdit = ({
         ...(infos.updates ?? []),
         {
           date_updated: nowTZTimestamp(),
-          updated_by_id: user?.id as number,
+          updated_by_id: user.id,
           updated_by_user_type: "admin",
         },
       ];

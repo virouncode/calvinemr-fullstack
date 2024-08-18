@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true;
 const xanoGet = async (
   URL: string, //URL to xano endpoint
   userType: string, //staff, patient, admin
-  queryParams?: object,
+  queryParams?: Record<string, unknown>,
   abortController?: AbortController
 ) => {
   const config: AxiosXanoConfigType = {

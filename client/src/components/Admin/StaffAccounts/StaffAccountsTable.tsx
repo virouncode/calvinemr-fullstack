@@ -76,7 +76,7 @@ const StaffAccountsTable = ({
                 key={staff.id}
                 setEditVisible={setEditVisible}
                 setSelectedStaffId={setSelectedStaffId}
-                id={staff.id as number}
+                id={staff.id}
               />
             ))
           ) : (

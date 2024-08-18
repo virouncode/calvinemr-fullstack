@@ -4,10 +4,16 @@ import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
 
 type ConfirmDialogRecurringChangeProps = {
-  handleChangeThisEvent: () => Promise<void>;
-  handleChangeAllEvents: () => Promise<void>;
-  handleChangeAllFutureEvents: () => Promise<void>;
-  handleCancel: () => void;
+  handleChangeThisEvent: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void>;
+  handleChangeAllEvents: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void>;
+  handleChangeAllFutureEvents: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void>;
+  handleCancel: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   isFirstEvent?: boolean;
   statusAdvice?: boolean;
 };

@@ -52,12 +52,12 @@ const MessagePatientThumbnail = ({
         ],
         attachments_ids: (
           message.attachments_ids as { attachment: MessageAttachmentType }[]
-        ).map(({ attachment }) => attachment.id) as number[],
+        ).map(({ attachment }) => attachment.id as number),
         previous_messages_ids: (
           message.previous_messages_ids as {
             previous_message: MessageExternalType;
           }[]
-        ).map(({ previous_message }) => previous_message.id) as number[],
+        ).map(({ previous_message }) => previous_message.id),
         to_patients_ids: (
           message.to_patients_ids as { to_patient_infos: DemographicsType }[]
         ).map(({ to_patient_infos }) => to_patient_infos.id),
@@ -78,7 +78,7 @@ const MessagePatientThumbnail = ({
         });
       }
     }
-    setCurrentMsgId(message.id as number);
+    setCurrentMsgId(message.id);
   };
 
   const handleCheckMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +107,7 @@ const MessagePatientThumbnail = ({
         content: "Do you really want to remove this message ?",
       })
     ) {
-      const messageToPut = {
+      const messageToPut: MessageExternalType = {
         ...message,
         deleted_by_patients_ids: [
           ...(message.deleted_by_patients_ids ?? []),
@@ -115,12 +115,12 @@ const MessagePatientThumbnail = ({
         ],
         attachments_ids: (
           message.attachments_ids as { attachment: MessageAttachmentType }[]
-        ).map(({ attachment }) => attachment.id) as number[],
+        ).map(({ attachment }) => attachment.id as number),
         previous_messages_ids: (
           message.previous_messages_ids as {
             previous_message: MessageExternalType;
           }[]
-        ).map(({ previous_message }) => previous_message.id) as number[],
+        ).map(({ previous_message }) => previous_message.id),
         to_patients_ids: (
           message.to_patients_ids as { to_patient_infos: DemographicsType }[]
         ).map(({ to_patient_infos }) => to_patient_infos.id),
@@ -175,7 +175,7 @@ const MessagePatientThumbnail = ({
         <Checkbox
           id={message.id?.toString()}
           onChange={handleCheckMsg}
-          checked={isMsgSelected(message.id as number)}
+          checked={isMsgSelected(message.id)}
         />
         <div
           onClick={handleMsgClick}
@@ -183,7 +183,7 @@ const MessagePatientThumbnail = ({
         >
           {section !== "Sent messages" //messages reçus ou effacés
             ? message.from_patient_id //le from est un patient ou un staff
-              ? toPatientName(message.from_patient_infos as DemographicsType)
+              ? toPatientName(message.from_patient_infos)
               : staffIdToTitleAndName(staffInfos, message.from_staff_id)
             : /*messages envoyés, le "To" est un staff*/
               staffIdToTitleAndName(staffInfos, message.to_staff_id)}
@@ -204,7 +204,7 @@ const MessagePatientThumbnail = ({
       </div>
       {/*========== DATE =============*/}
       <div className="message-thumbnail__date message-thumbnail__date--external">
-        {timestampToDateTimeStrTZ(message.date_created as number)}
+        {timestampToDateTimeStrTZ(message.date_created)}
       </div>
       {/*========== LOGOS =============*/}
       <div className="message-thumbnail__logos">

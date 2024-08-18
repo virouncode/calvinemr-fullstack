@@ -9,7 +9,7 @@ import useSocketContext from "../../context/useSocketContext";
 export const useFaxTemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: FaxTemplateType) =>
+    mutationFn: (templateToPost: Partial<FaxTemplateType>) =>
       xanoPost("/faxes_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["faxesTemplates"] });

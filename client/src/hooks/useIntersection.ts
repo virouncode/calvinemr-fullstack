@@ -14,7 +14,6 @@ const useIntersection = <TData, TError>(
   addVisible: boolean = false
 ) => {
   const observer = useRef<IntersectionObserver | null>(null);
-
   const ulRef = useRef<HTMLUListElement | null>(null);
   const divRef = useRef<HTMLDivElement | null>(null);
 

@@ -43,7 +43,7 @@ const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
         //get all secretaries id
         const secretariesIds = staffInfos
           .filter(({ title }) => title === "Secretary")
-          .map(({ id }) => id) as number[];
+          .map(({ id }) => id);
         //create the message
         //send to all secretaries
         const appointment = nextAppointments.find(
@@ -51,7 +51,7 @@ const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
         );
 
         for (const secretaryId of secretariesIds) {
-          const messageToPost: MessageExternalType = {
+          const messageToPost: Partial<MessageExternalType> = {
             from_patient_id: user?.id,
             to_staff_id: secretaryId,
             subject: "Appointment cancelation",

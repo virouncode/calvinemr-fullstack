@@ -2,7 +2,7 @@ import React from "react";
 
 type PrintButtonProps = {
   label?: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
   className?: string;
 };

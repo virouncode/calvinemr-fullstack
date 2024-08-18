@@ -83,6 +83,9 @@ importers:
       '@types/react-flatpickr':
         specifier: ^3.8.11
         version: 3.8.11
+      '@types/react-speech-recognition':
+        specifier: ^3.9.5
+        version: 3.9.5
       '@types/react-toastify':
         specifier: ^4.1.0
         version: 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -140,6 +143,9 @@ importers:
       react-router-dom:
         specifier: ^6.25.1
         version: 6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-speech-recognition:
+        specifier: ^3.10.0
+        version: 3.10.0(react@18.3.1)
       react-toastify:
         specifier: ^10.0.5
         version: 10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -957,6 +963,9 @@ packages:
 
   '@types/react-flatpickr@3.8.11':
     resolution: {integrity: sha512-wXGyGRpUjiGknioxWzWJdNvF2XxKw5lAI7H64Iv7w4iL+1iT7QvAzrigz5FkW4lTg9IJOww6t7g21FzsrmRV6A==}
+
+  '@types/react-speech-recognition@3.9.5':
+    resolution: {integrity: sha512-m3Sg3Xtj/YcEUu+nLPGwI6oq1wcSblsuyAmXgBfW6Nprfmtl+A+kH4ruPzzFKnFkq6WmmRxdsLvt0nLRAAJtBw==}
 
   '@types/react-toastify@4.1.0':
     resolution: {integrity: sha512-u7Ie/7LHBsPVz/iJxi/WlRDS7Gh9csCJACTDXx+pSLuZCm94xpkwzhM3jV1L5ZxP/in0Gp2tFbJ91VrSGr1gyQ==}
@@ -2046,6 +2055,11 @@ packages:
     resolution: {integrity: sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==}
     peerDependencies:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
+
+  react-speech-recognition@3.10.0:
+    resolution: {integrity: sha512-EVSr4Ik8l9urwdPiK2r0+ADrLyDDrjB0qBRdUWO+w2MfwEBrj6NuRmy1GD3x7BU/V6/hab0pl8Lupen0zwlJyw==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   react-toastify@10.0.5:
     resolution: {integrity: sha512-mNKt2jBXJg4O7pSdbNUfDdTsK9FIdikfsIE/yUCxbAEXl4HMyJaivrVFcn3Elvt5xvCQYhUZm+hqTIu1UXM3Pw==}
@@ -3219,6 +3233,10 @@ snapshots:
     dependencies:
       '@types/react': 18.3.3
       flatpickr: 4.6.13
+
+  '@types/react-speech-recognition@3.9.5':
+    dependencies:
+      '@types/dom-speech-recognition': 0.0.4
 
   '@types/react-toastify@4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -4477,6 +4495,10 @@ snapshots:
       react: 18.3.1
 
   react-side-effect@2.1.2(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
+  react-speech-recognition@3.10.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 

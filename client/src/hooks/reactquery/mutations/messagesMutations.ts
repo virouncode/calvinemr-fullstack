@@ -10,7 +10,7 @@ import useUserContext from "../../context/useUserContext";
 export const useMessagePost = (staffId: number, section: string) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPost: MessageType) => {
+    mutationFn: (messageToPost: Partial<MessageType | TodoType>) => {
       if (section === "To-dos") {
         return xanoPost("/todos", "staff", messageToPost);
       } else {
@@ -101,7 +101,7 @@ export const useMessageExternalPost = () => {
   const userType = user?.access_level as string;
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (messageToPost: MessageExternalType) =>
+    mutationFn: (messageToPost: Partial<MessageExternalType>) =>
       xanoPost("/messages_external", userType, messageToPost),
     onSuccess: (data) => {
       if (userType === "staff") {

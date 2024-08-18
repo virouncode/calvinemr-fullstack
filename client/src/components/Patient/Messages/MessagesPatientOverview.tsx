@@ -37,7 +37,7 @@ const MessagesPatientOverview = ({
           ? `No results in deleted messages`
           : `No deleted messages`;
       default:
-        break;
+        return "";
     }
   };
   return (

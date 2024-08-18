@@ -20,7 +20,7 @@ const CredentialsFormPatient = () => {
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const [credentials, setCredentials] = useState<CredentialsFormType>({
-    email: auth?.email as string,
+    email: auth?.email ?? "",
     password: "",
     confirmPassword: "",
     pin: "",
