@@ -58,7 +58,7 @@ const ClinicInfos = () => {
     try {
       await clinicSchema.validate(formDatas);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     try {
@@ -94,9 +94,10 @@ const ClinicInfos = () => {
       toast.success(`Clinic infos changed successfully`, { containerId: "A" });
       setEditClinicVisible(false);
     } catch (err) {
-      toast.error(`Unable to change clinic infos: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Unable to change clinic infos: ${err.message}`, {
+          containerId: "A",
+        });
     }
   };
 

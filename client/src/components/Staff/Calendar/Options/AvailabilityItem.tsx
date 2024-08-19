@@ -1,29 +1,30 @@
 import React from "react";
+import { DayType } from "../../../../types/app";
 import { firstLetterUpper } from "../../../../utils/strings/firstLetterUpper";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
 import TimePickerAvailability from "../../../UI/Pickers/TimePickerAvailability";
 
 type AvailabilityItemProps = {
-  day: string;
+  day: DayType;
   handleStartMorningChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => void;
   handleEndMorningChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => void;
   handleStartAfternoonChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => void;
   handleEndAfternoonChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => void;
   handleCheck: (e: React.ChangeEvent<HTMLInputElement>, day: string) => void;
   scheduleMorning: { hours: string; min: string; ampm: "AM" | "PM" }[];

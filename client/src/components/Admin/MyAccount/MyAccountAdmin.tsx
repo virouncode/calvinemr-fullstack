@@ -46,7 +46,7 @@ const MyAccountAdmin = () => {
     try {
       await myAccountAdminSchema.validate(formDatas);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       return;
     }
     try {
@@ -90,7 +90,8 @@ const MyAccountAdmin = () => {
       setProgress(false);
       setTimeout(() => setSuccessMsg(""), 2000);
     } catch (err) {
-      setErrMsg(`Error: unable to save infos: ${err.message}`);
+      if (err instanceof Error)
+        setErrMsg(`Error: unable to save infos: ${err.message}`);
       setProgress(false);
     }
   };

@@ -52,9 +52,13 @@ const PatientAIAgreement = ({
         containerId: "A",
       });
     } catch (err) {
-      toast.error(`Unable to confirm agreement/disagreement: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(
+          `Unable to confirm agreement/disagreement: ${err.message}`,
+          {
+            containerId: "A",
+          }
+        );
     }
   };
   return (

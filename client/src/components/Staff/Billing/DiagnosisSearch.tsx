@@ -6,10 +6,7 @@ import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 
 type DiagnosisSearchProps = {
-  handleClickDiagnosis: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    itemCode: number
-  ) => void;
+  handleClickDiagnosis: (itemCode: number) => void;
 };
 
 const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
@@ -55,7 +52,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
                 <li
                   className="diagnosis-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickDiagnosis(e, item.code)}
+                  onClick={() => handleClickDiagnosis(item.code)}
                   ref={lastItemRef}
                 >
                   <span className="diagnosis-results__code">{item.code}</span>{" "}
@@ -67,7 +64,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
                 <li
                   className="diagnosis-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickDiagnosis(e, item.code)}
+                  onClick={() => handleClickDiagnosis(item.code)}
                 >
                   <span className="diagnosis-results__code">{item.code}</span>{" "}
                   <span className="diagnosis-results__name">

@@ -12,6 +12,7 @@ import {
 import {
   AdminType,
   BillingType,
+  DemographicsType,
   DoctorType,
   SiteType,
   StaffType,
@@ -37,12 +38,12 @@ import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
 import InputWithSearchInTable from "../../UI/Inputs/InputWithSearchInTable";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
-import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type BillingTableItemProps = {
   billing: BillingType;
@@ -109,15 +110,12 @@ const BillingTableItem = ({
     setErrMsgPost("");
     setEditVisible(true);
   };
-  const handleClickDiagnosis = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    code: number
-  ) => {
+  const handleClickDiagnosis = (code: number) => {
     setErrMsgPost("");
     setItemInfos({ ...itemInfos, diagnosis_code: code });
     setDiagnosisSearchVisible(false);
   };
-  const handleClickPatient = (e, item) => {
+  const handleClickPatient = (item: DemographicsType) => {
     setErrMsgPost("");
     setItemInfos({
       ...itemInfos,
@@ -127,10 +125,7 @@ const BillingTableItem = ({
     });
     setPatientSearchVisible(false);
   };
-  const handleClickRefOHIP = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: StaffType | DoctorType
-  ) => {
+  const handleClickRefOHIP = (item: StaffType | DoctorType) => {
     setErrMsgPost("");
     setItemInfos({
       ...itemInfos,
@@ -186,7 +181,7 @@ const BillingTableItem = ({
     try {
       await billingItemSchema.validate(itemInfos);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     setProgress(true);

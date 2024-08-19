@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -58,7 +59,7 @@ const LoginForm = () => {
     try {
       await loginSchema.validate(formDatas);
     } catch (err) {
-      setErr(err.message);
+      if (err instanceof Error) setErr(err.message);
       return;
     }
     //Formatting
@@ -177,14 +178,16 @@ const LoginForm = () => {
       ); //go where we wanted to go and replace history (the back button will not go to the login page)
     } catch (err) {
       setLoadingStaff(false);
-      if (!err?.response) {
-        setErr("No server response");
-      } else if (err.response?.status === 400) {
-        setErr("Missing email or password");
-      } else if (err.response?.status === 401) {
-        setErr("Unhauthorized");
-      } else {
-        setErr("Login failed, please try again");
+      if (err instanceof AxiosError) {
+        if (!err?.response) {
+          setErr("No server response");
+        } else if (err.response?.status === 400) {
+          setErr("Missing email or password");
+        } else if (err.response?.status === 401) {
+          setErr("Unhauthorized");
+        } else {
+          setErr("Login failed, please try again");
+        }
       }
     }
   };
@@ -194,7 +197,7 @@ const LoginForm = () => {
     try {
       await loginSchema.validate(formDatas);
     } catch (err) {
-      setErr(err.message);
+      if (err instanceof Error) setErr(err.message);
       return;
     }
     //Formatting
@@ -283,14 +286,16 @@ const LoginForm = () => {
       ); //on renvoit vers là où on voulait aller
     } catch (err) {
       setLoadingPatient(false);
-      if (!err?.response) {
-        setErr("No server response");
-      } else if (err.response?.status === 400) {
-        setErr("Missing email or password");
-      } else if (err.response?.status === 401) {
-        setErr("Unhauthorized");
-      } else {
-        setErr("Login failed, please try again");
+      if (err instanceof AxiosError) {
+        if (!err?.response) {
+          setErr("No server response");
+        } else if (err.response?.status === 400) {
+          setErr("Missing email or password");
+        } else if (err.response?.status === 401) {
+          setErr("Unhauthorized");
+        } else {
+          setErr("Login failed, please try again");
+        }
       }
     }
   };
@@ -300,7 +305,7 @@ const LoginForm = () => {
     try {
       await loginSchema.validate(formDatas);
     } catch (err) {
-      setErr(err.message);
+      if (err instanceof Error) setErr(err.message);
       return;
     }
     //Formatting
@@ -355,14 +360,16 @@ const LoginForm = () => {
       ); //on renvoit vers là où on voulait aller
     } catch (err) {
       setLoadingAdmin(false);
-      if (!err?.response) {
-        setErr("No server response");
-      } else if (err.response?.status === 400) {
-        setErr("Missing email or password");
-      } else if (err.response?.status === 401) {
-        setErr("Unhauthorized");
-      } else {
-        setErr("Login failed, please try again");
+      if (err instanceof AxiosError) {
+        if (!err?.response) {
+          setErr("No server response");
+        } else if (err.response?.status === 400) {
+          setErr("Missing email or password");
+        } else if (err.response?.status === 401) {
+          setErr("Unhauthorized");
+        } else {
+          setErr("Login failed, please try again");
+        }
       }
     }
   };

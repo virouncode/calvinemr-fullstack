@@ -29,13 +29,13 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputDate from "../../UI/Inputs/InputDate";
 import InputWithSearch from "../../UI/Inputs/InputWithSearch";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import BillingCodesTextarea from "./BillingCodesTextarea";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
 import BillingCodesTemplates from "./Templates/BillingCodesTemplates";
-import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type BillingFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -99,18 +99,12 @@ const BillingForm = ({
     const value = e.target.value;
     setFormDatas({ ...formDatas, site_id: parseInt(value) });
   };
-  const handleClickDiagnosis = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    code: number
-  ) => {
+  const handleClickDiagnosis = (code: number) => {
     setErrMsgPost("");
     setFormDatas({ ...formDatas, diagnosis_code: code });
     setDiagnosisSearchVisible(false);
   };
-  const handleClickPatient = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: DemographicsType
-  ) => {
+  const handleClickPatient = (item: DemographicsType) => {
     setErrMsgPost("");
     setFormDatas({
       ...formDatas,
@@ -121,10 +115,7 @@ const BillingForm = ({
     setPatientSearchVisible(false);
   };
 
-  const handleClickRefOHIP = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: StaffType | DoctorType
-  ) => {
+  const handleClickRefOHIP = (item: StaffType | DoctorType) => {
     setErrMsgPost("");
     setFormDatas({
       ...formDatas,
@@ -133,10 +124,7 @@ const BillingForm = ({
     setRefOHIPSearchVisible(false);
   };
 
-  const handleClickProviderOHIP = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: StaffType | DoctorType
-  ) => {
+  const handleClickProviderOHIP = (item: StaffType | DoctorType) => {
     setErrMsgPost("");
     setFormDatas({
       ...formDatas,
@@ -173,7 +161,7 @@ const BillingForm = ({
         ...formDatas,
       });
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     if (
@@ -224,9 +212,10 @@ const BillingForm = ({
       toast.success(`Billing(s) saved successfully`, { containerId: "A" });
       setProgress(false);
     } catch (err) {
-      toast.error(`Can't save billing(s): ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Can't save billing(s): ${err.message}`, {
+          containerId: "A",
+        });
       setProgress(false);
     }
   };

@@ -140,12 +140,13 @@ const Invitation = ({
           containerId: "A",
         });
       } catch (err) {
-        toast.error(
-          `Couldn't send the email invitation to ${patientName}: ${err.message}`,
-          {
-            containerId: "A",
-          }
-        );
+        if (err instanceof Error)
+          toast.error(
+            `Couldn't send the email invitation to ${patientName}: ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
       }
       try {
         await axios({
@@ -179,12 +180,13 @@ const Invitation = ({
         });
         setProgress(false);
       } catch (err) {
-        toast.error(
-          `Couldn't send the SMS invitation to ${patientName}: ${err.message}`,
-          {
-            containerId: "A",
-          }
-        );
+        if (err instanceof Error)
+          toast.error(
+            `Couldn't send the SMS invitation to ${patientName}: ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
         setProgress(false);
       }
     }
@@ -211,12 +213,13 @@ const Invitation = ({
         });
         setProgress(false);
       } catch (err) {
-        toast.error(
-          `Couldn't send the email invitation to ${staffName}: ${err.message}`,
-          {
-            containerId: "A",
-          }
-        );
+        if (err instanceof Error)
+          toast.error(
+            `Couldn't send the email invitation to ${staffName}: ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
         setProgress(false);
       }
     }
@@ -248,9 +251,10 @@ const Invitation = ({
     try {
       await xanoPut(`/settings/${user.settings.id}`, "staff", settingsToPut);
     } catch (err) {
-      toast.error(`Error: unable to save templates: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to save templates: ${err.message}`, {
+          containerId: "A",
+        });
       setProgress(false);
     }
   };
@@ -277,7 +281,7 @@ const Invitation = ({
       )?.message ?? ""
     );
   };
-  const handleSiteChange = async (e) => {
+  const handleSiteChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSiteSelectedId(parseInt(e.target.value));
   };
 

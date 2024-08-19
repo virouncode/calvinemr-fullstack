@@ -317,9 +317,10 @@ const EventForm = ({
         formDatas.site_id
       )) as string[];
     } catch (err) {
-      toast.error(`Error: unable to get available rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get available rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     if (
@@ -413,9 +414,10 @@ const EventForm = ({
         formDatas.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get available rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get available rooms: ${err.message}`, {
+          containerId: "A",
+        });
     }
     if (
       formDatas.room_id === "z" ||
@@ -520,9 +522,10 @@ const EventForm = ({
         formDatas.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get available rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get available rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     if (
@@ -638,7 +641,7 @@ const EventForm = ({
     try {
       await appointmentSchema.validate(appointmentToPut);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     appointmentPut.mutate(appointmentToPut, {
@@ -715,7 +718,7 @@ const EventForm = ({
     try {
       await appointmentSchema.validate(appointmentToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     appointmentPost.mutate(appointmentToPost);
@@ -814,7 +817,7 @@ const EventForm = ({
     try {
       await appointmentSchema.validate(appointmentToPut);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     appointmentPut.mutate(appointmentToPut, {
@@ -882,7 +885,7 @@ const EventForm = ({
     try {
       await appointmentSchema.validate(appointmentToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     appointmentPost.mutate(appointmentToPost);

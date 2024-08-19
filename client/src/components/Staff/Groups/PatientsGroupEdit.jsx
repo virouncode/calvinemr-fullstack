@@ -64,7 +64,7 @@ const PatientsGroupEdit = ({ group, setEditVisible }) => {
     try {
       await groupSchema.validate(groupToPut);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       setProgress(false);
       return;
     }

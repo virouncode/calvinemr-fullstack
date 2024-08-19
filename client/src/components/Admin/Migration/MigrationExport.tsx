@@ -82,9 +82,6 @@ const MigrationExport = () => {
       );
     }
   };
-  const isAllPatientsChecked = () => {
-    return allPatientsChecked ? true : false;
-  };
   const isAllRecordsIdsChecked = () => {
     return allRecordsIdsChecked ? true : false;
   };
@@ -161,10 +158,14 @@ const MigrationExport = () => {
       });
     } catch (err) {
       setProgress(false);
-      toast.error(`EMR export fail, please contact CalvinEMR: ${err.message}`, {
-        containerId: "A",
-        autoClose: 5000,
-      });
+      if (err instanceof Error)
+        toast.error(
+          `EMR export fail, please contact CalvinEMR: ${err.message}`,
+          {
+            containerId: "A",
+            autoClose: 5000,
+          }
+        );
     }
   };
 
@@ -187,7 +188,7 @@ const MigrationExport = () => {
             isPatientChecked={isPatientChecked}
             handleCheckPatient={handleCheckPatient}
             handleCheckAllPatients={handleCheckAllPatients}
-            isAllPatientsChecked={isAllPatientsChecked}
+            allPatientsChecked={allPatientsChecked}
             progress={progress}
             search={search}
           />

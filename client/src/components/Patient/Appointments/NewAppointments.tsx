@@ -154,9 +154,13 @@ Cellphone: ${
         setRequestSent(true);
         setTimeout(() => setRequestSent(false), 6000);
       } catch (err) {
-        toast.error(`Couldn't send the appointment request : ${err.text}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(
+            `Couldn't send the appointment request : ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
       }
     }
   };

@@ -614,30 +614,30 @@ export type DoctorType = {
   FirstName: string;
   LastName: string;
   Address: {
-    Formatted: string;
+    Formatted?: string;
     Structured: {
       Line1: string;
-      Line2: string;
-      Line3: string;
+      Line2?: string;
+      Line3?: string;
       City: string;
       CountrySubDivisionCode: string;
       PostalZipCode: { PostalCode: string; ZipCode: string };
     };
-    addressType: string;
+    _addressType: string;
   };
   PhoneNumber: {
-    areaCode: string;
-    number: string;
-    extension: string;
-    exchange: string;
+    areaCode?: string;
+    number?: string;
+    extension?: string;
+    exchange?: string;
     phoneNumber: string;
     _phoneNumberType: string;
   }[];
   FaxNumber: {
-    areaCode: string;
-    number: string;
-    extension: string;
-    exchange: string;
+    areaCode?: string;
+    number?: string;
+    extension?: string;
+    exchange?: string;
     phoneNumber: string;
     _phoneNumberType: string;
   };
@@ -1145,8 +1145,8 @@ export type PharmacyType = {
   Address: {
     Structured: {
       Line1: string;
-      Line2: string;
-      Line3: string;
+      Line2?: string;
+      Line3?: string;
       City: string;
       CountrySubDivisionCode: string;
       PostalZipCode: { PostalCode: string; ZipCode: string };
@@ -1154,14 +1154,14 @@ export type PharmacyType = {
     _addressType: string;
   };
   PhoneNumber: {
-    extension: string;
+    extension?: string;
     phoneNumber: string;
     _phoneNumberType: string;
   }[];
   FaxNumber: {
     _phoneNumberType: string;
     phoneNumber: string;
-    extension: string;
+    extension?: string;
   };
   EmailAddress: string;
 };
@@ -1274,10 +1274,10 @@ export type ReportType = {
   Content: { TextContent: string; Media: string };
   Class: string;
   SubClass: string;
-  EventDateTime: number;
-  ReceivedDateTime: number;
+  EventDateTime: number | null;
+  ReceivedDateTime: number | null;
   SourceAuthorPhysician: {
-    AuthorName: { FirstName: string; LastName: string };
+    AuthorName?: { FirstName: string; LastName: string };
     AuthorFreeText: string;
   };
   SourceFacility: string;
@@ -1302,6 +1302,26 @@ export type ReportType = {
   acknowledged: boolean;
   assigned_staff_id: number;
   File: AttachmentType | null;
+};
+
+export type ReportFormType = {
+  name: string;
+  patient_id: number;
+  assigned_staff_id: number;
+  Media: string;
+  Format: string;
+  FileExtensionAndVersion: string;
+  File: AttachmentType | null;
+  AuthorFreeText: string;
+  Content: {
+    TextContent: string;
+    Media: string;
+  };
+  Class: string;
+  SubClass: string;
+  EventDateTime: number | null;
+  ReceivedDateTime: number | null;
+  Notes: "";
 };
 
 export type PaginatedReportsType = {
@@ -1542,8 +1562,8 @@ export type FaxToPostType = {
   sCPOrganization: string;
   sCPSubject: string;
   sCPComments: string;
-  sFileName_1: string;
-  fileURL: string;
+  sFileName_1?: string;
+  fileURL?: string;
 };
 
 export type FaxToDeleteType = {

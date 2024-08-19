@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type SquarePlusIconProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   ml?: number;
   mr?: number;
 };

@@ -46,7 +46,7 @@ export const useReportInboxPost = () => {
   return useMutation({
     mutationFn: (reportToPost: Partial<ReportType>) =>
       xanoPost("/reports", "staff", reportToPost),
-    onMutate: async (reportToPost: ReportType) => {
+    onMutate: async (reportToPost) => {
       await queryClient.cancelQueries({
         queryKey: ["reportsReceived", reportToPost.patient_id],
       });

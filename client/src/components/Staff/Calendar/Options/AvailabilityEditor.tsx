@@ -3,7 +3,7 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useAvailabilityPut } from "../../../../hooks/reactquery/mutations/availabilityMutations";
 import { useAvailability } from "../../../../hooks/reactquery/queries/availabilityQueries";
 import { AvailabilityType, ScheduleType } from "../../../../types/api";
-import { UserStaffType } from "../../../../types/app";
+import { DayType, UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { initialAvailability } from "../../../../utils/initialDatas/initialDatas";
 import { availabilitySchema } from "../../../../validation/calendar/availabilityValidation";
@@ -41,7 +41,8 @@ const AvailabilityEditor = ({
   }, [availabilityQuery]);
 
   const [errMsg, setErrMsg] = useState("");
-  const days = [
+
+  const days: DayType[] = [
     "monday",
     "tuesday",
     "wednesday",
@@ -62,7 +63,7 @@ const AvailabilityEditor = ({
     try {
       await availabilitySchema.validate(scheduleToPut);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       return;
     }
     setProgress(true);
@@ -76,14 +77,16 @@ const AvailabilityEditor = ({
   };
   const handleStartMorningChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
       ...availability.schedule_morning,
     };
-    scheduleMorningUpdated[day][0][name] = value;
+    if (name === "ampm")
+      scheduleMorningUpdated[day][0][name] = value as "AM" | "PM";
+    else scheduleMorningUpdated[day][0][name] = value;
     setAvailability({
       ...availability,
       schedule_morning: scheduleMorningUpdated,
@@ -91,14 +94,16 @@ const AvailabilityEditor = ({
   };
   const handleEndMorningChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
       ...availability.schedule_morning,
     };
-    scheduleMorningUpdated[day][1][name] = value;
+    if (name === "ampm")
+      scheduleMorningUpdated[day][1][name] = value as "AM" | "PM";
+    else scheduleMorningUpdated[day][1][name] = value;
     setAvailability({
       ...availability,
       schedule_morning: scheduleMorningUpdated,
@@ -106,14 +111,16 @@ const AvailabilityEditor = ({
   };
   const handleStartAfternoonChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
       ...availability.schedule_afternoon,
     };
-    scheduleAfternoonUpdated[day][0][name] = value;
+    if (name === "ampm")
+      scheduleAfternoonUpdated[day][0][name] = value as "AM" | "PM";
+    else scheduleAfternoonUpdated[day][0][name] = value;
     setAvailability({
       ...availability,
       schedule_afternoon: scheduleAfternoonUpdated,
@@ -121,14 +128,16 @@ const AvailabilityEditor = ({
   };
   const handleEndAfternoonChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    name: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
       ...availability.schedule_afternoon,
     };
-    scheduleAfternoonUpdated[day][1][name] = value;
+    if (name === "ampm")
+      scheduleAfternoonUpdated[day][1][name] = value as "AM" | "PM";
+    else scheduleAfternoonUpdated[day][1][name] = value;
     setAvailability({
       ...availability,
       schedule_afternoon: scheduleAfternoonUpdated,

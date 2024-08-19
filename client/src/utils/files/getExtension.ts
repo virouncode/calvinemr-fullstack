@@ -1,4 +1,4 @@
-export const getExtension = (path: string) => {
+export const getExtension = (path: string | undefined) => {
   if (!path) return "";
   const baseName = path.split(/[\\/]/).pop() as string, // extracts file name from full path
     // (supports separators `\\` and `/`)

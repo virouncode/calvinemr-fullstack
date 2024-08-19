@@ -123,7 +123,8 @@ const CredentialsFormPatient = () => {
           return;
         }
       } catch (err) {
-        setErrMsg(`Error: unable to change credentials: ${err.message}`);
+        if (err instanceof Error)
+          setErrMsg(`Error: unable to change credentials: ${err.message}`);
         return;
       }
     }
@@ -162,7 +163,8 @@ const CredentialsFormPatient = () => {
       setSuccessMsg("Credentials changed succesfully");
       setTimeout(() => navigate("/"), 2000);
     } catch (err) {
-      setErrMsg(`Error: unable to change credentials: ${err.message}`);
+      if (err instanceof Error)
+        setErrMsg(`Error: unable to change credentials: ${err.message}`);
       return;
     }
   };

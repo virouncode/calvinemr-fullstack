@@ -15,8 +15,8 @@ import InputImgFile from "../../UI/Inputs/InputImgFile";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenderSelect from "../../UI/Lists/GenderSelect";
 import OccupationsSelect from "../../UI/Lists/OccupationsSelect";
-import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import SiteSelect from "../../UI/Lists/SiteSelect";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 type StaffAccountEditProps = {
   infos: StaffType;
@@ -84,9 +84,10 @@ const StaffAccountEdit = ({
         setFormDatas({ ...formDatas, sign: fileToUpload });
         setIsLoadingFile(false);
       } catch (err) {
-        toast.error(`Error: unable to load file: ${err.message}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(`Error: unable to load file: ${err.message}`, {
+            containerId: "A",
+          });
       }
     };
   };
@@ -128,7 +129,7 @@ const StaffAccountEdit = ({
       try {
         await staffSchema.validate(datasToPut);
       } catch (err) {
-        setErrMsg(err.message);
+        if (err instanceof Error) setErrMsg(err.message);
         setProgress(false);
         return;
       }
@@ -150,7 +151,8 @@ const StaffAccountEdit = ({
       toast.success("Infos changed successfully", { containerId: "A" });
       setProgress(false);
     } catch (err) {
-      setErrMsg(`Error: unable to save infos: ${err.message}`);
+      if (err instanceof Error)
+        setErrMsg(`Error: unable to save infos: ${err.message}`);
       setProgress(false);
     }
   };

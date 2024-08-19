@@ -9,10 +9,7 @@ import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 type ReferringOHIPSearchProps = {
-  handleClickRefOHIP: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: StaffType | DoctorType
-  ) => void;
+  handleClickRefOHIP: (item: StaffType | DoctorType) => void;
   doctorsIdToRemove?: number[];
 };
 
@@ -94,7 +91,7 @@ const ReferringOHIPSearch = ({
                 <li
                   className="refohip-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickRefOHIP(e, item)}
+                  onClick={() => handleClickRefOHIP(item)}
                   ref={lastItemRef}
                 >
                   <span className="refohip-results__code">
@@ -110,7 +107,7 @@ const ReferringOHIPSearch = ({
                 <li
                   className="refohip-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickRefOHIP(e, item)}
+                  onClick={() => handleClickRefOHIP(item)}
                 >
                   <span className="refohip-results__code">
                     {item.ohip_billing_nbr}
@@ -161,7 +158,7 @@ const ReferringOHIPSearch = ({
             <li
               className="refohip-results__item"
               key={item.id}
-              onClick={(e) => handleClickRefOHIP(e, item)}
+              onClick={() => handleClickRefOHIP(item)}
             >
               <span className="refohip-results__code">
                 {item.ohip_billing_nbr}

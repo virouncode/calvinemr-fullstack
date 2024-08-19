@@ -20,7 +20,7 @@ const GuestsSearch = ({
   handleAddPatientGuest,
   staff_guests_ids,
   patientsIdsToExclude,
-}) => {
+}: GuestsSearchProps) => {
   const [search, setSearch] = useState({
     name: "",
     email: "",
@@ -39,7 +39,7 @@ const GuestsSearch = ({
     isFetching,
   } = usePatients(search);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const name = e.target.name;
     setSearch({ ...search, [name]: value });

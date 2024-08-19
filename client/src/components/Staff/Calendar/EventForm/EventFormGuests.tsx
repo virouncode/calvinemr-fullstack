@@ -80,7 +80,9 @@ const EventFormGuests = ({
         <div className="event-form__item event-form__item--guestsearch">
           <GuestsSearch
             hostId={hostId}
-            staff_guests_ids={formDatas.staff_guests_ids}
+            staff_guests_ids={
+              formDatas.staff_guests_ids as { staff_infos: StaffType }[]
+            }
             handleAddPatientGuest={handleAddPatientGuest}
             handleAddStaffGuest={handleAddStaffGuest}
             patientsIdsToExclude={patientsIdsToExclude}

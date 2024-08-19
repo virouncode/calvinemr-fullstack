@@ -583,12 +583,7 @@ const ExportChartPreview = ({
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax
-            setNewVisible={setFaxVisible}
-            initialAttachment={fileToFax}
-            // assignedStaffId={demographicsInfos.assigned_staff_id}
-            // title="Fax chart to"
-          />
+          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
         </FakeWindow>
       )}
       {newMessageExternalVisible && (

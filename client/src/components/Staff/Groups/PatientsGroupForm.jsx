@@ -77,7 +77,7 @@ const PatientsGroupForm = ({ setAddGroupVisible, global }) => {
     try {
       await groupSchema.validate(datasToPost);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       setProgress(false);
       return;
     }

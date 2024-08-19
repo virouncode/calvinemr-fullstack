@@ -60,9 +60,10 @@ const EmailForm = ({
       });
       setRequestSent(true);
     } catch (err) {
-      toast.error(`Unable to send the request: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Unable to send the request: ${err.message}`, {
+          containerId: "A",
+        });
     }
     setProgress(false);
   };

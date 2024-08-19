@@ -34,9 +34,10 @@ const SlotSelect = () => {
       });
       toast.success("Saved preference", { containerId: "A" });
     } catch (err) {
-      toast.error(`Error: unable to save preference: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to save preference: ${err.message}`, {
+          containerId: "A",
+        });
     }
   };
   return (

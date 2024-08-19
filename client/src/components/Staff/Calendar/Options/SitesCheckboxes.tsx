@@ -37,7 +37,7 @@ const SitesCheckboxes = ({
       setSitesIds(sitesIds.filter((id) => id !== siteId));
     }
   };
-  const isSiteIdChecked = (siteId) => {
+  const isSiteIdChecked = (siteId: number) => {
     return sitesIds.includes(siteId);
   };
   const isAllSitesIdsChecked = () => {

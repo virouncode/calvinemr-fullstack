@@ -234,3 +234,12 @@ export type SocketMessageType<TData> = {
     userId?: number;
   };
 };
+
+export type DayType =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";

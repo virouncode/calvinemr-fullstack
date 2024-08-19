@@ -78,9 +78,10 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         setFormDatas({ ...formDatas, sign: fileToUpload });
         setIsLoadingFile(false);
       } catch (err) {
-        toast.error(`Error unable to load file: ${err.message}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(`Error unable to load file: ${err.message}`, {
+            containerId: "A",
+          });
         setIsLoadingFile(false);
       }
     };
@@ -126,7 +127,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       try {
         await staffSchema.validate(datasToPost);
       } catch (err) {
-        setErrMsg(err.message);
+        if (err instanceof Error) setErrMsg(err.message);
         setProgress(false);
         return;
       }
@@ -143,7 +144,8 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           return;
         }
       } catch (err) {
-        setErrMsg(`Unable to post new staff member: ${err.message}`);
+        if (err instanceof Error)
+          setErrMsg(`Unable to post new staff member: ${err.message}`);
         setProgress(false);
         return;
       }
@@ -294,7 +296,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       setAddVisible(false);
       setProgress(false);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       setProgress(false);
     }
   };

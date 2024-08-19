@@ -18,7 +18,7 @@ type MigrationPatientsListProps = {
     patient: DemographicsType
   ) => void;
   handleCheckAllPatients: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isAllPatientsChecked: () => boolean;
+  allPatientsChecked: boolean;
   progress: boolean;
   search: SearchPatientType;
 };
@@ -27,7 +27,7 @@ const MigrationPatientsList = ({
   isPatientChecked,
   handleCheckPatient,
   handleCheckAllPatients,
-  isAllPatientsChecked,
+  allPatientsChecked,
   progress,
   search,
 }: MigrationPatientsListProps) => {
@@ -60,7 +60,7 @@ const MigrationPatientsList = ({
           id="all-patients"
           name="all-patients"
           onChange={handleCheckAllPatients}
-          checked={isAllPatientsChecked()}
+          checked={allPatientsChecked}
           disabled={progress}
           label="All"
         />

@@ -2,9 +2,7 @@ import * as yup from "yup";
 
 export const pregnancySchema = yup.object({
   description: yup.string().required("Description field is required"),
-  date_of_event: yup
-    .number("Invalid Date of event")
-    .required("Date of event field is required"),
+  date_of_event: yup.number().required("Date of event field is required"),
   premises: yup.string(),
   term_nbr_of_weeks: yup
     .number()

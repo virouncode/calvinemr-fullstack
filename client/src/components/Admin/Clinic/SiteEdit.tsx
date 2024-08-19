@@ -63,9 +63,10 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
         setFormDatas({ ...formDatas, logo: fileToUpload });
         setIsLoadingFile(false);
       } catch (err) {
-        toast.error(`Error unable to load file: ${err.message}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(`Error unable to load file: ${err.message}`, {
+            containerId: "A",
+          });
         setIsLoadingFile(false);
       }
     };
@@ -128,7 +129,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
     try {
       await siteSchema.validate(siteToPut);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       return;
     }
     //Submission

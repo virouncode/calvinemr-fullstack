@@ -21,7 +21,5 @@ export const enrolmentSchema = yup.object({
     OHIPPhysicianId: yup.string(),
   }),
   EnrollmentStatus: yup.string().required("Enrolment status field is required"),
-  EnrollmentDate: yup
-    .number("Invalid enrolment date")
-    .required("Enrolment date field is required"),
+  EnrollmentDate: yup.number().required("Enrolment date field is required"),
 });

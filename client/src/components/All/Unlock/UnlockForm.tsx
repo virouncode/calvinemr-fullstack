@@ -128,7 +128,7 @@ const UnlockForm = ({
         throw new Error("Invalid PIN");
       }
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
     }
   }, [autolockTime, pin, setLockedScreen, socket, user]);
 

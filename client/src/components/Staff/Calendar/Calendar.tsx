@@ -533,9 +533,10 @@ const Calendar = () => {
           timelineSiteId
         );
       } catch (err) {
-        toast.error(`Error: unable to get available rooms: ${err.message}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(`Error: unable to get available rooms: ${err.message}`, {
+            containerId: "A",
+          });
         return;
       }
       if (
@@ -643,9 +644,10 @@ const Calendar = () => {
         timelineVisible ? timelineSiteId : user.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
 
@@ -792,9 +794,10 @@ const Calendar = () => {
         timelineVisible ? timelineSiteId : user.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get available rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get available rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     if (
@@ -911,9 +914,10 @@ const Calendar = () => {
         timelineVisible ? timelineSiteId : user.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     //Create a new appointment B
@@ -921,12 +925,14 @@ const Calendar = () => {
       host_id: event.extendedProps.host,
       start: event.allDay ? startAllDay : startDate,
       end: event.allDay ? endAllDay : endDate,
-      patients_guests_ids: event.extendedProps.patientsGuestsIds.map(
-        ({ patient_infos }) => patient_infos.patient_id
-      ),
-      staff_guests_ids: event.extendedProps.staffGuestsIds.map(
-        ({ staff_infos }) => staff_infos.id
-      ),
+      patients_guests_ids: (
+        event.extendedProps.patientsGuestsIds as {
+          patient_infos: DemographicsType;
+        }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id),
+      staff_guests_ids: (
+        event.extendedProps.staffGuestsIds as { staff_infos: StaffType }[]
+      ).map(({ staff_infos }) => staff_infos.id),
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
@@ -1079,9 +1085,10 @@ const Calendar = () => {
         timelineVisible ? timelineSiteId : user.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     const appointmentToPut: AppointmentType = await xanoGet(
@@ -1190,9 +1197,10 @@ const Calendar = () => {
         timelineVisible ? timelineSiteId : user.site_id
       );
     } catch (err) {
-      toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
-        containerId: "A",
-      });
+      if (err instanceof Error)
+        toast.error(`Error: unable to get availabale rooms: ${err.message}`, {
+          containerId: "A",
+        });
       return;
     }
     //Create a new recurring event B
@@ -1200,12 +1208,14 @@ const Calendar = () => {
       host_id: event.extendedProps.host,
       start: event.allDay ? startAllDay : startDate,
       end: event.allDay ? endAllDay : endDate,
-      patients_guests_ids: event.extendedProps.patientsGuestsIds.map(
-        ({ patient_infos }) => patient_infos.patient_id
-      ),
-      staff_guests_ids: event.extendedProps.staffGuestsIds.map(
-        ({ staff_infos }) => staff_infos.id
-      ),
+      patients_guests_ids: (
+        event.extendedProps.patientsGuestsIds as {
+          patient_infos: DemographicsType;
+        }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id),
+      staff_guests_ids: (
+        event.extendedProps.staffGuestsIds as { staff_infos: StaffType }[]
+      ).map(({ staff_infos }) => staff_infos.id),
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,

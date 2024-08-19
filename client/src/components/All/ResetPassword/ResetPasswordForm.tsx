@@ -101,7 +101,8 @@ const ResetPasswordForm = ({
       setResetOk(true);
       setTimeout(() => navigate("/"), 3000);
     } catch (err) {
-      setErrMsg(`Unable to reset password: ${err.message}`);
+      if (err instanceof Error)
+        setErrMsg(`Unable to reset password: ${err.message}`);
     }
   };
   const handleConfirmPasswordChange = (

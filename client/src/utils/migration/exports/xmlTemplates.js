@@ -1,9 +1,9 @@
 import xmlFormat from "xml-formatter";
-import { toPatientName } from "../../../utils/names/toPatientName";
 import {
   timestampToDateISOTZ,
   timestampToDateTimeSecondsISOTZ,
 } from "../../dates/formatDates";
+import { toPatientName } from "../../names/toPatientName";
 import { escapeXml } from "../../xml/escapeXml";
 
 export const toXmlDemographics = (jsObj, patientInfos = null) => {

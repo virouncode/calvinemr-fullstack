@@ -1,4 +1,5 @@
 import React from "react";
+import { DayType } from "../../../types/app";
 
 const hoursOptions = Array.from({ length: 12 }, (_, i) => {
   const value = (i + 1).toString().padStart(2, "0");
@@ -21,14 +22,14 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => {
 type TimePickerAvailabilityProps = {
   handleChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
-    day: string,
-    type: string
+    day: DayType,
+    name: "hours" | "min" | "ampm"
   ) => void;
   timeValueHour: string;
   timeValueMin: string;
   timeValueAMPM: string;
   readOnly?: boolean;
-  day: string;
+  day: DayType;
 };
 const TimePickerAvailability = ({
   handleChange,

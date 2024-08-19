@@ -9,10 +9,7 @@ import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 type PatientChartHealthSearchProps = {
-  handleClickPatient: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    item: DemographicsType
-  ) => void;
+  handleClickPatient: (item: DemographicsType) => void;
   patientsIdToRemove?: number[];
 };
 
@@ -37,7 +34,7 @@ const PatientChartHealthSearch = ({
     isFetching
   );
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
@@ -85,7 +82,7 @@ const PatientChartHealthSearch = ({
                 <li
                   className="hcn-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickPatient(e, item)}
+                  onClick={() => handleClickPatient(item)}
                   ref={lastItemRef}
                 >
                   <span className="hcn-results__code">{item.ChartNumber}</span>{" "}
@@ -100,7 +97,7 @@ const PatientChartHealthSearch = ({
                 <li
                   className="hcn-results__item"
                   key={item.id}
-                  onClick={(e) => handleClickPatient(e, item)}
+                  onClick={() => handleClickPatient(item)}
                 >
                   <span className="hcn-results__code">{item.ChartNumber}</span>{" "}
                   <span className="hcn-results__code">

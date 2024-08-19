@@ -41,7 +41,7 @@ const TempPwdForm = ({
       setTempToken(response.tempToken);
       setValidTempPwd(true);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
     }
   };
 

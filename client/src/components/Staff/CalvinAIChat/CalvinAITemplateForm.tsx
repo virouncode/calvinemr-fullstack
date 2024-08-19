@@ -1,0 +1,87 @@
+import React, { useState } from "react";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { useCalvinAITemplatePost } from "../../../hooks/reactquery/mutations/calvinaiTemplatesMutations";
+import { CalvinAITemplateType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
+import { nowTZTimestamp } from "../../../utils/dates/formatDates";
+import { firstLetterOfFirstWordUpper } from "../../../utils/strings/firstLetterUpper";
+import CancelButton from "../../UI/Buttons/CancelButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
+import Input from "../../UI/Inputs/Input";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+
+type CalvinAITemplateFormProps = {
+  setNewTemplateVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CalvinAITemplateForm = ({
+  setNewTemplateVisible,
+}: CalvinAITemplateFormProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const [newTemplate, setNewTemplate] = useState<Partial<CalvinAITemplateType>>(
+    { name: "", prompt: "" }
+  );
+  const [errMsg, setErrMsg] = useState("");
+  const templatePost = useCalvinAITemplatePost();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setErrMsg("");
+    const value = e.target.value;
+    const name = e.target.name;
+    setNewTemplate({ ...newTemplate, [name]: value });
+  };
+
+  const handleCancel = () => {
+    setErrMsg("");
+    setNewTemplateVisible(false);
+  };
+
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (!newTemplate.name) {
+      setErrMsg("Please enter a name for your template");
+      return;
+    }
+    const templateToPost = {
+      ...newTemplate,
+      name: firstLetterOfFirstWordUpper(newTemplate.name),
+    };
+    templateToPost.date_created = nowTZTimestamp();
+    templateToPost.author_id = user.id;
+    templatePost.mutate(templateToPost);
+    setNewTemplateVisible(false);
+  };
+  return (
+    <div className="new-template">
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
+      <div className="new-template-name">
+        <Input
+          value={newTemplate.name ?? ""}
+          onChange={handleChange}
+          name="name"
+          id="template-ai-name"
+          label="Template name:"
+          placeholder="New template name"
+          autoFocus={true}
+        />
+      </div>
+      <div className="new-template-body">
+        <textarea
+          name="prompt"
+          value={newTemplate.prompt}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="new-template-btns">
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
+      </div>
+    </div>
+  );
+};
+
+export default CalvinAITemplateForm;

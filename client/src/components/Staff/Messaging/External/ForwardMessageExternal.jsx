@@ -174,9 +174,10 @@ const ForwardMessageExternal = ({
           ]); //meta, mime, name, path, size, type
           setIsLoadingFile(false);
         } catch (err) {
-          toast.error(`Error: unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
+          if (err instanceof Error)
+            toast.error(`Error: unable to load file: ${err.message}`, {
+              containerId: "A",
+            });
           setIsLoadingFile(false);
         }
       };

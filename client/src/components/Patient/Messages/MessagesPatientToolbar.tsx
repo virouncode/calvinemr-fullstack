@@ -41,7 +41,7 @@ const MessagesPatientToolBar = ({
   const { socket } = useSocketContext();
   const messagePut = useMessageExternalPut();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
   const handleClickNew = () => {

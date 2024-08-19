@@ -7,7 +7,7 @@ import PaperclipIcon from "../Icons/PaperclipIcon";
 
 type AttachFilesButtonProps = {
   onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
-  attachments: (MessageAttachmentType | ClinicalNoteAttachmentType)[];
+  attachments: Partial<MessageAttachmentType | ClinicalNoteAttachmentType>[];
 };
 
 const AttachFilesButton = ({
@@ -19,7 +19,7 @@ const AttachFilesButton = ({
       <label>Attach files</label>
       <PaperclipIcon onClick={onClick} ml={5} />
       {attachments.map((attachment) => (
-        <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
+        <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
           {attachment.alias},
         </span>
       ))}

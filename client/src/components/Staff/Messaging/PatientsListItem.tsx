@@ -11,7 +11,7 @@ type PatientsListItemProps = {
   isPatientChecked: (id: number) => boolean;
   patientName: string;
   progress: boolean;
-  lastItemRef?: React.LegacyRef<HTMLLIElement>;
+  lastItemRef?: (node: Element | null) => void;
 };
 
 const PatientsListItem = ({
@@ -20,7 +20,7 @@ const PatientsListItem = ({
   isPatientChecked,
   patientName,
   progress,
-  lastItemRef = null,
+  lastItemRef,
 }: PatientsListItemProps) => {
   return (
     <li className="patients__list-item" ref={lastItemRef}>

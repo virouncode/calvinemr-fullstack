@@ -8,7 +8,13 @@ type PhoneIconProps = {
   color: string;
   clickable?: boolean;
 };
-const PhoneIcon = ({ onClick, ml = 0, mr = 0, color, clickable = true }) => {
+const PhoneIcon = ({
+  onClick,
+  ml = 0,
+  mr = 0,
+  color,
+  clickable = true,
+}: PhoneIconProps) => {
   return (
     <FontAwesomeIcon
       icon={faPhone}
