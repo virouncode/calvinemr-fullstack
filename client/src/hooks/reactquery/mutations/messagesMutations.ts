@@ -3,7 +3,12 @@ import { toast } from "react-toastify";
 import xanoDelete from "../../../api/xanoCRUD/xanoDelete";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
-import { MessageExternalType, MessageType, TodoType } from "../../../types/api";
+import {
+  DemographicsType,
+  MessageExternalType,
+  MessageType,
+  TodoType,
+} from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
 import useUserContext from "../../context/useUserContext";
 
@@ -79,7 +84,7 @@ export const useMessagePut = (staffId: number, section: string) => {
 export const useTodoDelete = (staffId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (todoToDeleteId) =>
+    mutationFn: (todoToDeleteId: number) =>
       xanoDelete(`/todos/${todoToDeleteId}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["messages", staffId] });
@@ -109,9 +114,9 @@ export const useMessageExternalPost = () => {
           key: ["messagesExternal", "staff", user?.id],
         });
         if (data.to_patients_ids) {
-          for (const patientId of data.to_patients_ids.map(
-            ({ to_patient_infos }) => to_patient_infos.id
-          )) {
+          for (const patientId of (
+            data.to_patients_ids as { to_patient_infos: DemographicsType }[]
+          ).map(({ to_patient_infos }) => to_patient_infos.patient_id)) {
             socket?.emit("message", {
               key: ["messagesExternal", "patient", patientId],
             });
@@ -161,9 +166,9 @@ export const useMessageExternalPut = () => {
           key: ["messagesExternal", "staff", user?.id],
         });
         if (data.to_patients_ids) {
-          for (const patientId of data.to_patients_ids.map(
-            ({ to_patient_infos }) => to_patient_infos.id
-          )) {
+          for (const patientId of (
+            data.to_patients_ids as { to_patient_infos: DemographicsType }[]
+          ).map(({ to_patient_infos }) => to_patient_infos.patient_id)) {
             socket?.emit("message", {
               key: ["messagesExternal", "patient", patientId],
             });

@@ -14,9 +14,9 @@ import ReportFormMultiplePatients from "../../Record/Topics/Reports/ReportFormMu
 
 type MessageExternalAttachmentCardProps = {
   attachment: MessageAttachmentType;
-  deletable: boolean;
-  cardWidth: string;
-  addable: boolean;
+  deletable?: boolean;
+  cardWidth?: string;
+  addable?: boolean;
   patientsNames: string[];
   message: MessageExternalType;
   handleRemoveAttachment?: (attachmentName: string) => void;
@@ -186,7 +186,7 @@ const MessageExternalAttachmentCard = ({
             />
           ) : (
             <iframe
-              title={attachment.aias}
+              title={attachment.alias}
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
                 attachment.file.path
               }`}
@@ -233,12 +233,16 @@ const MessageExternalAttachmentCard = ({
           {errMsgPost && <span>{errMsgPost}</span>}
 
           <ReportFormMultiplePatients
-            demographicsInfos={message.to_patients_ids.map(
-              ({ to_patient_infos }) => to_patient_infos
-            )}
-            patientsIds={message.to_patients_ids.map(
-              ({ to_patient_infos }) => to_patient_infos.id
-            )}
+            demographicsInfos={(
+              message.to_patients_ids as {
+                to_patient_infos: DemographicsType;
+              }[]
+            ).map(({ to_patient_infos }) => to_patient_infos)}
+            patientsIds={(
+              message.to_patients_ids as {
+                to_patient_infos: DemographicsType;
+              }[]
+            ).map(({ to_patient_infos }) => to_patient_infos.patient_id)}
             setAddVisible={setAddVisible}
             attachment={attachment}
             errMsgPost={errMsgPost}

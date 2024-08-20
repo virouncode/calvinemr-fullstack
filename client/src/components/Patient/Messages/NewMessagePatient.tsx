@@ -20,7 +20,7 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
-import ContactsForPatient from "./ContactsForPatient";
+import PatientStaffContacts from "./PatientStaffContacts";
 
 type NewMessagePatientProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -122,49 +122,48 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
       // getting a hold of the file reference
       const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
       const file = e.target.files?.[0];
-      if (file) {
-        if (file.size > 25000000) {
-          toast.error(
-            "The file is over 25Mb, please choose another one or send a link",
-            { containerId: "A" }
-          );
-          return;
-        }
-        setIsLoadingFile(true);
-        // setting up the reader`
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        // here we tell the reader what to do when it's done reading...
-        reader.onload = async (e) => {
-          const content = e.target?.result; // this is the content!
-          try {
-            const response: AttachmentType = await xanoPost(
-              "/upload/attachment",
-              "patient",
-              { content }
-            );
-            if (!response.type) response.type = "document";
-            setAttachments([
-              ...attachments,
-              {
-                file: response,
-                alias: file?.name,
-                date_created: nowTZTimestamp(),
-                created_by_id: user.id,
-                created_by_user_type: "patient",
-                id: uniqueId("messages_patient_attachment_"),
-              },
-            ]); //meta, mime, name, path, size, type
-            setIsLoadingFile(false);
-          } catch (err) {
-            if (err instanceof Error)
-              toast.error(`Error: unable to load file: ${err.message}`, {
-                containerId: "A",
-              });
-            setIsLoadingFile(false);
-          }
-        };
+      if (!file) return;
+      if (file.size > 25000000) {
+        toast.error(
+          "The file is over 25Mb, please choose another one or send a link",
+          { containerId: "A" }
+        );
+        return;
       }
+      setIsLoadingFile(true);
+      // setting up the reader`
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      // here we tell the reader what to do when it's done reading...
+      reader.onload = async (e) => {
+        const content = e.target?.result; // this is the content!
+        try {
+          const response: AttachmentType = await xanoPost(
+            "/upload/attachment",
+            "patient",
+            { content }
+          );
+          if (!response.type) response.type = "document";
+          setAttachments([
+            ...attachments,
+            {
+              file: response,
+              alias: file?.name,
+              date_created: nowTZTimestamp(),
+              created_by_id: user.id,
+              created_by_user_type: "patient",
+              id: uniqueId("messages_patient_attachment_"),
+            },
+          ]); //meta, mime, name, path, size, type
+          setIsLoadingFile(false);
+        } catch (err) {
+          if (err instanceof Error)
+            toast.error(`Error: unable to load file: ${err.message}`, {
+              containerId: "A",
+            });
+          setIsLoadingFile(false);
+        }
+      };
     };
     input.click();
   };
@@ -172,7 +171,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   return (
     <div className="new-message new-message--patient">
       <div className="new-message__contacts new-message__contacts--patient">
-        <ContactsForPatient
+        <PatientStaffContacts
           isContactChecked={isContactChecked}
           handleCheckContact={handleCheckContact}
         />

@@ -60,7 +60,7 @@ const MessagePatientThumbnail = ({
         ).map(({ previous_message }) => previous_message.id),
         to_patients_ids: (
           message.to_patients_ids as { to_patient_infos: DemographicsType }[]
-        ).map(({ to_patient_infos }) => to_patient_infos.id),
+        ).map(({ to_patient_infos }) => to_patient_infos.patient_id),
       };
       messagePut.mutate(messageToPut);
       if (user?.unreadNbr !== 0) {
@@ -123,7 +123,7 @@ const MessagePatientThumbnail = ({
         ).map(({ previous_message }) => previous_message.id),
         to_patients_ids: (
           message.to_patients_ids as { to_patient_infos: DemographicsType }[]
-        ).map(({ to_patient_infos }) => to_patient_infos.id),
+        ).map(({ to_patient_infos }) => to_patient_infos.patient_id),
       };
       messagePut.mutate(messageToPut, {
         onSuccess: () => {
@@ -162,7 +162,7 @@ const MessagePatientThumbnail = ({
     <div
       className={
         (message.to_patients_ids as { to_patient_infos: DemographicsType }[])
-          .map(({ to_patient_infos }) => to_patient_infos.id)
+          .map(({ to_patient_infos }) => to_patient_infos.patient_id)
           .includes(user.id) &&
         !(message.read_by_patients_ids ?? []).includes(user.id)
           ? "message-thumbnail message-thumbnail--unread"

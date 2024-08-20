@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type CrossArrowIconProps = {
-  onPointerDown: () => void;
+  onPointerDown: (e: React.PointerEvent<SVGSVGElement>) => void;
   ml?: number;
   mr?: number;
   clickable?: boolean;

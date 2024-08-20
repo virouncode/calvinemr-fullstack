@@ -5,10 +5,12 @@ import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
+  AttachmentType,
   DemographicsType,
   MessageAttachmentType,
   ReportType,
 } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -26,7 +28,7 @@ type ReportFormProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   attachment: MessageAttachmentType;
-  reportPost: UseMutationResult<ReportType, Error, ReportType, void>;
+  reportPost: UseMutationResult<ReportType, Error, Partial<ReportType>, void>;
 };
 
 const ReportForm = ({
@@ -40,9 +42,9 @@ const ReportForm = ({
   reportPost,
 }: ReportFormProps) => {
   //HOOKS
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [formDatas, setFormDatas] = useState<ReportType>({
+  const [formDatas, setFormDatas] = useState<Partial<ReportType>>({
     patient_id: patientId,
     Format: "Binary",
     assigned_staff_id: demographicsInfos.assigned_staff_id,
@@ -55,7 +57,9 @@ const ReportForm = ({
 
   //HANDLERS
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     setErrMsgPost("");
     let value: string | number = e.target.value;
@@ -72,7 +76,7 @@ const ReportForm = ({
         Content: { TextContent: "", Media: "" },
         File: null,
         FileExtensionAndVersion: "",
-        [name]: value,
+        Format: value,
       });
       return;
     }
@@ -196,7 +200,7 @@ const ReportForm = ({
     e.preventDefault();
     setErrMsgPost("");
 
-    const reportToPost: ReportType = {
+    const reportToPost: Partial<ReportType> = {
       ...formDatas,
       date_created: nowTZTimestamp(),
       created_by_id: user?.id,
@@ -212,7 +216,7 @@ const ReportForm = ({
     try {
       await reportSchema.validate(formDatas);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
 
@@ -248,9 +252,13 @@ const ReportForm = ({
     reader.onload = async (e) => {
       const content = e.target?.result;
       try {
-        const fileToUpload = await xanoPost("/upload/attachment", "staff", {
-          content,
-        });
+        const fileToUpload: AttachmentType = await xanoPost(
+          "/upload/attachment",
+          "staff",
+          {
+            content,
+          }
+        );
         setIsLoadingFile(false);
         setFormDatas({
           ...formDatas,
@@ -260,9 +268,10 @@ const ReportForm = ({
         });
       } catch (err) {
         setIsLoadingFile(false);
-        toast.error(`Error unable to load document: ${err.message}`, {
-          containerId: "A",
-        });
+        if (err instanceof Error)
+          toast.error(`Error unable to load document: ${err.message}`, {
+            containerId: "A",
+          });
       }
     };
   };

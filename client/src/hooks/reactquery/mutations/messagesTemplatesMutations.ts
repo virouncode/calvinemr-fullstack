@@ -69,7 +69,7 @@ export const useMessagesTemplateDelete = () => {
 export const useMessagesExternalTemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: MessageExternalTemplateType) =>
+    mutationFn: (templateToPost: Partial<MessageExternalTemplateType>) =>
       xanoPost("/messages_external_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesExternalTemplates"] });
@@ -125,7 +125,7 @@ export const useMessagesExternalTemplateDelete = () => {
 export const useTodosTemplatePost = () => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (templateToPost: TodoTemplateType) =>
+    mutationFn: (templateToPost: Partial<TodoTemplateType>) =>
       xanoPost("/todos_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["todosTemplates"] });

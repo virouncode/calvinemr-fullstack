@@ -81,7 +81,7 @@ const MessagesPatientToolBar = ({
           ],
           to_patients_ids: (
             message.to_patients_ids as { to_patient_infos: DemographicsType }[]
-          ).map(({ to_patient_infos }) => to_patient_infos.id),
+          ).map(({ to_patient_infos }) => to_patient_infos.patient_id),
         };
         messagePut.mutate(messageToPut, {
           onSuccess: () => {
@@ -140,7 +140,7 @@ const MessagesPatientToolBar = ({
         ),
         to_patients_ids: (
           message.to_patients_ids as { to_patient_infos: DemographicsType }[]
-        ).map(({ to_patient_infos }) => to_patient_infos.id),
+        ).map(({ to_patient_infos }) => to_patient_infos.patient_id),
       };
       messagePut.mutate(messageToPut, {
         onSuccess: () => {

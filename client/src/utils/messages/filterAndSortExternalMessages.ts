@@ -19,7 +19,7 @@ export const getInboxMessagesExternal = (
     messagesToUserNonDeleted = messages.filter(
       (message) =>
         (message.to_patients_ids as { to_patient_infos: DemographicsType }[])
-          .map(({ to_patient_infos }) => to_patient_infos.id)
+          .map(({ to_patient_infos }) => to_patient_infos.patient_id)
           .includes(userId) &&
         !(message.deleted_by_patients_ids as number[]).includes(userId)
     );

@@ -4,8 +4,8 @@ import { useReportPost } from "../../../../hooks/reactquery/mutations/reportsMut
 import {
   DemographicsType,
   MessageAttachmentType,
-  MessageExternalType,
   MessageType,
+  TodoType,
 } from "../../../../types/api";
 import Button from "../../../UI/Buttons/Button";
 import XmarkIcon from "../../../UI/Icons/XmarkIcon";
@@ -22,7 +22,7 @@ type MessageAttachmentCardProps = {
   hasRelatedPatient?: boolean;
   patientId?: number;
   patientName?: string;
-  message?: MessageType | MessageExternalType;
+  message?: MessageType | TodoType;
 };
 
 const MessageAttachmentCard = ({
@@ -214,16 +214,9 @@ const MessageAttachmentCard = ({
           {errMsgPost && <span>{errMsgPost}</span>}
           <ReportForm
             demographicsInfos={
-              message?.type === "Internal"
-                ? ((message as MessageType).patient_infos as DemographicsType)
-                : ((message as MessageExternalType)
-                    .from_patient_infos as DemographicsType)
+              (message as MessageType).patient_infos as DemographicsType
             }
-            patientId={
-              message?.type === "Internal"
-                ? (message as MessageType).related_patient_id
-                : (message as MessageExternalType).from_patient_id
-            }
+            patientId={(message as MessageType).related_patient_id}
             setAddVisible={setAddVisible}
             attachment={attachment}
             errMsgPost={errMsgPost}

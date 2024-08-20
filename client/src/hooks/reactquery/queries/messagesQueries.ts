@@ -4,6 +4,7 @@ import {
   MessageExternalType,
   MessageType,
   PaginatedDatasType,
+  TodoType,
 } from "../../../types/api";
 
 export const useStaffMessages = (
@@ -56,13 +57,16 @@ export const useStaffExternalMessages = (
   });
 };
 
-const fetchPreviousMessages = async (message: MessageType, section: string) => {
+const fetchPreviousMessages = async (
+  message: MessageType | TodoType,
+  section: string
+) => {
   if (!message || section === "To-dos") return [];
   const previousInternal: MessageType[] = await xanoGet(
     "/messages_selected",
     "staff",
     {
-      messages_ids: message.previous_messages
+      messages_ids: (message as MessageType).previous_messages
         .filter(({ message_type }) => message_type === "Internal")
         .map(({ id }) => id),
     }
@@ -71,7 +75,7 @@ const fetchPreviousMessages = async (message: MessageType, section: string) => {
     "/messages_external_selected",
     "staff",
     {
-      messages_ids: message.previous_messages
+      messages_ids: (message as MessageType).previous_messages
         .filter(({ message_type }) => message_type === "External")
         .map(({ id }) => id),
     }
@@ -81,7 +85,10 @@ const fetchPreviousMessages = async (message: MessageType, section: string) => {
   );
 };
 
-export const usePreviousMessages = (message: MessageType, section: string) => {
+export const usePreviousMessages = (
+  message: MessageType | TodoType,
+  section: string
+) => {
   return useQuery({
     queryKey: ["previousMessages"],
     queryFn: (): Promise<(MessageExternalType | MessageType)[]> =>

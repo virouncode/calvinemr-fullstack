@@ -37,7 +37,7 @@ export const getUnreadMessagesExternalNbr = (messages, userType, userId) => {
   } else {
     messagesForUser = messages.filter((message) =>
       message.to_patients_ids
-        .map(({ to_patient_infos }) => to_patient_infos.id)
+        .map(({ to_patient_infos }) => to_patient_infos.patient_id)
         .includes(userId)
     );
     if (messagesForUser.length) {

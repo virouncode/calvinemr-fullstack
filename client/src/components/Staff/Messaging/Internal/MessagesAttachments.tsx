@@ -1,8 +1,8 @@
 import React from "react";
 import {
   MessageAttachmentType,
-  MessageExternalType,
   MessageType,
+  TodoType,
 } from "../../../../types/api";
 import MessageAttachmentCard from "./MessageAttachmentCard";
 
@@ -14,7 +14,7 @@ type MessageAttachmentsProps = {
   cardWidth?: string;
   handleRemoveAttachment?: (attachmentName: string) => void;
   patientName?: string;
-  message?: MessageType | MessageExternalType;
+  message?: MessageType | TodoType;
   hasRelatedPatient?: boolean;
 };
 

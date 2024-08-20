@@ -749,7 +749,7 @@ export type GroupType = {
   id: number;
   date_created: number;
   staff_id: number;
-  patients: number[];
+  patients: number[] | { patient_infos: DemographicsType }[];
   name: string;
   description: string;
   color: string;
@@ -1447,13 +1447,15 @@ export type TodoType = {
   body: string;
   to_staff_id: number;
   related_patient_id: number;
-  attachments_ids: number[];
+  attachments_ids: number[] | { attachment: MessageAttachmentType }[];
   date_created: number;
   done: boolean;
-  due_date: number;
+  due_date: number | null;
   high_importance: boolean;
   read: boolean;
   from_staff_id: number;
+  //add-ons
+  patient_infos?: DemographicsType;
 };
 
 export type PaginatedTodosType = {

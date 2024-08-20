@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useParams } from "react-router-dom";
-import PatientsGlobalGroups from "../../components/Staff/Groups/PatientsGlobalGroups";
+import PatientsClinicGroups from "../../components/Staff/Groups/PatientsClinicGroups";
 import PatientsGroups from "../../components/Staff/Groups/PatientsGroups";
 import PatientsGroupsToggle from "../../components/Staff/Groups/PatientsGroupsToggle";
 import useTitle from "../../hooks/useTitle";
@@ -13,8 +13,8 @@ const StaffPatientsGroupsPage = () => {
     return type === groupType ? true : false;
   };
   const handleTypeChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    setGroupType(name);
+    const value = e.target.value;
+    setGroupType(value);
   };
   useTitle("Patients Groups");
   return (
@@ -32,7 +32,7 @@ const StaffPatientsGroupsPage = () => {
         {groupType === "My groups" ? (
           <PatientsGroups />
         ) : (
-          <PatientsGlobalGroups />
+          <PatientsClinicGroups />
         )}
       </section>
     </>

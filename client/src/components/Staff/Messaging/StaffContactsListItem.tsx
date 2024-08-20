@@ -16,12 +16,12 @@ const StaffContactsListItem = ({
   handleCheckContact,
   isContactChecked,
   categoryName,
-}) => {
+}: StaffContactsListItemProps) => {
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="contacts-list__item">
       <Checkbox
-        id={info.id}
+        id={info.id.toString()}
         name={categoryName}
         onChange={handleCheckContact}
         checked={isContactChecked(info.id)}

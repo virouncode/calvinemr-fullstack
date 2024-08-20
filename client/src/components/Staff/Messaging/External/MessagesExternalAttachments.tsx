@@ -33,7 +33,6 @@ const MessagesExternalAttachments = ({
             cardWidth={cardWidth}
             addable={addable}
             patientsNames={patientsNames}
-            patientsIds={patientsIds}
             message={message}
           />
         ))}
