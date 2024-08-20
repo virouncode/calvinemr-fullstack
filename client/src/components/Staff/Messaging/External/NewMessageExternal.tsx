@@ -157,7 +157,7 @@ const NewMessageExternal = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

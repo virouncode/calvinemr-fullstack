@@ -10,7 +10,7 @@ import Button from "../../../UI/Buttons/Button";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ClinicalNotes from "../ClinicalNotes/ClinicalNotes";
 import ExportChart from "../ExportChart/ExportChart";
-import ClosedPractician from "./ClosedPractician";
+import ClosedPracticianAccount from "./ClosedPracticianAccount";
 import PatientMenuLeft from "./PatientMenuLeft";
 import PatientMenuRight from "./PatientMenuRight";
 
@@ -99,7 +99,7 @@ const PatientRecord = ({
     staffInfos.find(({ id }) => id === demographicsInfos.assigned_staff_id)
       .account_status === "Closed"
   ) {
-    return <ClosedPractician demographicsInfos={demographicsInfos} />;
+    return <ClosedPracticianAccount demographicsInfos={demographicsInfos} />;
   }
 
   return (

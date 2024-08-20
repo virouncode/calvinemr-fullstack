@@ -11,7 +11,7 @@ export const copyToClipboard = async (
 };
 
 export const copyClinicalNoteToClipboard = async (
-  bodyRef: React.MutableRefObject<HTMLTextAreaElement | null>
+  bodyRef: React.MutableRefObject<HTMLDivElement | null>
 ) => {
   if (bodyRef.current)
     await navigator.clipboard.writeText(bodyRef.current.innerText);

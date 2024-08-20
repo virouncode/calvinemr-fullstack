@@ -11,7 +11,7 @@ import {
   StaffType,
 } from "./api";
 
-export type Topic =
+export type TopicType =
   | "PAST HEALTH"
   | "FAMILY HISTORY"
   | "RELATIONSHIPS"
@@ -20,6 +20,7 @@ export type Topic =
   | "MEDICATIONS & TREATMENTS"
   | "PAST PRESCRIPTIONS"
   | "PHARMACIES"
+  | "FAMILY DOCTORS & SPECIALISTS"
   | "E-FORMS"
   | "REMINDERS"
   | "LETTERS/REFERRALS"
@@ -243,3 +244,16 @@ export type DayType =
   | "friday"
   | "saturday"
   | "sunday";
+
+export type PromptTextType = {
+  intro: string;
+  body: string;
+  attachments: string;
+  reports: string;
+  question: string;
+};
+
+export type AIMessageType = {
+  role: "user" | "assistant";
+  content: string;
+};

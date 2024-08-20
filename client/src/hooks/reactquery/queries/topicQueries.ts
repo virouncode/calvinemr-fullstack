@@ -26,10 +26,10 @@ import {
   ReportType,
   RiskFactorType,
 } from "../../../types/api";
-import { Topic } from "../../../types/app";
+import { TopicType } from "../../../types/app";
 import { getTopicUrl } from "../../../utils/topics/getTopicUrl";
 
-type TopicDataType<T extends Topic> = T extends "PAST HEALTH"
+type TopicDataType<T extends TopicType> = T extends "PAST HEALTH"
   ? PastHealthType
   : T extends "FAMILY HISTORY"
   ? FamilyHistoryType
@@ -77,7 +77,7 @@ type TopicDataType<T extends Topic> = T extends "PAST HEALTH"
   ? MessageExternalType
   : null;
 
-export const useTopic = <T extends Topic>(topic: T, patientId: number) => {
+export const useTopic = <T extends TopicType>(topic: T, patientId: number) => {
   return useInfiniteQuery({
     queryKey: topic === "PHARMACIES" ? [topic] : [topic, patientId],
     queryFn: ({ pageParam }): Promise<PaginatedDatasType<TopicDataType<T>>> => {

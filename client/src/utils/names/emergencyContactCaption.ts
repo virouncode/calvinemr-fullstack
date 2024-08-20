@@ -1,8 +1,9 @@
 import { EmergencyContactType } from "../../types/api";
 
 export const emergencyContactCaption = (
-  emergencyContact: EmergencyContactType
+  emergencyContact: EmergencyContactType | undefined
 ) => {
+  if (!emergencyContact) return "";
   const firstName = emergencyContact?.Name?.FirstName
     ? `${emergencyContact?.Name?.FirstName}`
     : "";

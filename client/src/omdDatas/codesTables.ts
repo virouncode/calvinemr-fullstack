@@ -747,5 +747,6 @@ export const diabetesMotivationalCounsellingCT: CodeTableType[] = [
 ];
 
 export const toCodeTableName = (codeTable: CodeTableType[], code: string) => {
+  if (!code) return "";
   return codeTable.find((item) => item.code === code)?.name || "";
 };

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
-import { ClinicalNoteType, PaginatedClinicalNotesType } from "../types/api";
+import { ClinicalNoteType, PaginatedDatasType } from "../types/api";
 
 const useRetrieveEditClinicalNote = (
   patientId: number,
@@ -13,11 +13,13 @@ const useRetrieveEditClinicalNote = (
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedClinicalNotesType, unknown>,
+      InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>,
       Error
     >
   >,
-  clinicalNotes: PaginatedClinicalNotesType
+  clinicalNotes:
+    | InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>
+    | undefined
 ) => {
   const [editClinicalNoteInMemory, setEditClinicalNoteInMemory] =
     useState<ClinicalNoteType | null>(null);

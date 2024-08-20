@@ -2,10 +2,10 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 type PhoneIconProps = {
-  onClick: () => void;
+  onClick?: () => void;
   ml?: number;
   mr?: number;
-  color: string;
+  color?: string;
   clickable?: boolean;
 };
 const PhoneIcon = ({

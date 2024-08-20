@@ -307,8 +307,10 @@ export type ClinicalNoteType = {
     DateTimeNoteReviewed: number;
   }[];
   version_nbr: number;
-  attachments_ids: number[];
+  attachments_ids: number[] | { attachment: ClinicalNoteAttachmentType }[];
   date_updated: number;
+  //Add-on
+  versions?: ClinicalNoteLogType[];
 };
 
 export type PagesPropertiesType = {
@@ -327,7 +329,7 @@ export type PaginatedClinicalNotesType = {
 };
 
 export type ClinicalNoteAttachmentType = {
-  id: number;
+  id: number | string;
   file: AttachmentType;
   alias: string;
   date_created: number;
@@ -448,6 +450,17 @@ export type EmergencyContactType = {
   }[];
 };
 
+export type EnrolmentHistoryType = {
+  EnrollmentStatus: string;
+  EnrollmentDate: number;
+  EnrollmentTerminationDate: number;
+  TerminationReason: string;
+  EnrolledToPhysician: {
+    Name: { FirstName: string; LastName: string };
+    OHIPPhysicianId: string;
+  };
+};
+
 export type DemographicsType = {
   id: number;
   patient_id: number;
@@ -501,16 +514,7 @@ export type DemographicsType = {
   Contact: EmergencyContactType[];
   NoteAboutPatient: string;
   Enrolment: {
-    EnrolmentHistory: {
-      EnrollmentStatus: string;
-      EnrollmentDate: number;
-      EnrollmentTerminationDate: number;
-      TerminationReason: string;
-      EnrolledToPhysician: {
-        Name: { FirstName: string; LastName: string };
-        OHIPPhysicianId: string;
-      };
-    }[];
+    EnrolmentHistory: EnrolmentHistoryType[];
   };
   PrimaryPhysician: {
     Name: { FirstName: string; LastName: string };
@@ -529,6 +533,9 @@ export type DemographicsType = {
   PreferredPharmacy: number;
   ai_consent: boolean;
   ai_consent_read: boolean;
+  //Add-ons
+  preferred_pharmacy?: PharmacyType;
+  patient_care_elements?: CareElementType;
 };
 
 export type DemographicsFormType = {
@@ -985,7 +992,7 @@ export type PaginatedMessagesType = {
 
 export type MessageAttachmentType = {
   id: number | string;
-  file: AttachmentType;
+  file: AttachmentType | null;
   alias: string;
   date_created: number;
   created_by_user_type: "staff" | "patient";
@@ -1196,6 +1203,14 @@ export type PrescriptionType = {
   attachment_id: number;
   unique_id: string;
   date_created: number;
+  //Add-on
+  attachment: {
+    id: integer;
+    alias: text;
+    date_created: timestamp;
+    created_by_id: integer;
+    file: AttachmentType;
+  };
 };
 
 export type PaginatedPrescriptionType = {
@@ -1342,7 +1357,7 @@ export type RiskFactorType = {
   ExposureDetails: string;
   AgeOfOnset: string;
   StartDate: number;
-  EndDate: string;
+  EndDate: number;
   LifeStage: string;
   Notes: string;
 };

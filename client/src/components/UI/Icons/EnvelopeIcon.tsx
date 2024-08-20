@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type EnvelopeIconProps = {
-  onClick: () => void;
+  onClick?: () => void;
   ml?: number;
   mr?: number;
 };
