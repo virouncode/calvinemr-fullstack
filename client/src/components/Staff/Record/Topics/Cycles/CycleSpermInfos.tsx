@@ -1,8 +1,22 @@
+import React from "react";
+import { CycleType } from "../../../../../types/api";
 import Input from "../../../../UI/Inputs/Input";
 import Radio from "../../../../UI/Radio/Radio";
 
-const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
-  const handleChangeSperm = (e) => {
+type CycleSpermInfosProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  errMsg: string;
+};
+
+const CycleSpermInfos = ({
+  formDatas,
+  setFormDatas,
+  setErrMsg,
+  errMsg,
+}: CycleSpermInfosProps) => {
+  const handleChangeSperm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
     if (name === "partner_sperm") {
@@ -11,7 +25,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
       setFormDatas({ ...formDatas, partner_sperm: false });
     }
   };
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
     const value = e.target.value;
@@ -30,18 +44,20 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
         >
           <div className="cycles-form__sperm-infos-radio-item">
             <Radio
-              checked={formDatas.partner_sperm}
+              checked={formDatas.partner_sperm as boolean}
               onChange={handleChangeSperm}
-              name="partner_sperm"
+              value="partner_sperm"
+              name="sperm-type"
               id="partner_sperm"
               label="Partner sperm"
             />
           </div>
           <div className="cycles-form__sperm-infos-radio-item">
             <Radio
-              checked={!formDatas.partner_sperm}
+              checked={!formDatas.partner_sperm as boolean}
               onChange={handleChangeSperm}
-              name="donor_sperm"
+              value="donor_sperm"
+              name="sperm-type"
               id="donor_sperm"
               label="Donor sperm"
             />
@@ -50,7 +66,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
             <Input
               name="donor_sperm_nbr"
               placeholder="Donor sperm number..."
-              value={formDatas.donor_sperm_nbr}
+              value={formDatas.donor_sperm_nbr ?? ""}
               onChange={handleChange}
             />
           )}
@@ -63,7 +79,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
               label="Concentration"
               id="prewash_concentration"
               name="prewash_concentration"
-              value={formDatas.prewash_concentration}
+              value={formDatas.prewash_concentration ?? ""}
               onChange={handleChange}
             />
           </div>
@@ -72,7 +88,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
               label="Motility"
               id="prewash_motility"
               name="prewash_motility"
-              value={formDatas.prewash_motility}
+              value={formDatas.prewash_motility ?? ""}
               onChange={handleChange}
             />
           </div>
@@ -82,7 +98,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
               label="Motility"
               id="postwash_motility"
               name="postwash_motility"
-              value={formDatas.postwash_motility}
+              value={formDatas.postwash_motility ?? ""}
               onChange={handleChange}
             />
           </div>
@@ -91,7 +107,7 @@ const CycleSpermInfos = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
               label="Total Motile Sperm"
               id="postwah_total_motile_sperm"
               name="postwah_total_motile_sperm"
-              value={formDatas.postwah_total_motile_sperm}
+              value={formDatas.postwash_total_motile_sperm ?? ""}
               onChange={handleChange}
             />
           </div>

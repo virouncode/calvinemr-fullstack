@@ -15,7 +15,7 @@ const UserTypeRadioGroup = ({
       <div className="email-form-row-radio-item">
         <Radio
           id="staff"
-          name="type"
+          name="user-type"
           value="staff"
           checked={type === "staff"}
           onChange={handleTypeChange}
@@ -25,7 +25,7 @@ const UserTypeRadioGroup = ({
       <div className="email-form-row-radio-item">
         <Radio
           id="patient"
-          name="type"
+          name="user-type"
           value="patient"
           checked={type === "patient"}
           onChange={handleTypeChange}
@@ -35,7 +35,7 @@ const UserTypeRadioGroup = ({
       <div className="email-form-row-radio-item">
         <Radio
           id="admin"
-          name="type"
+          name="user-type"
           value="admin"
           checked={type === "admin"}
           onChange={handleTypeChange}

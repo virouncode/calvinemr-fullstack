@@ -16,7 +16,7 @@ const InvitationTemplateRadioItem = ({
     <div className="invitation__radio-item">
       <Radio
         id={templateName}
-        name={templateName}
+        name="initation-template"
         value={templateName}
         checked={isTemplateSelected(templateName)}
         onChange={handleTemplateChange}

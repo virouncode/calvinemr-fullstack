@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
+import { RiskFactorType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -15,6 +18,20 @@ import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
+type RiskFormProps = {
+  editCounter: React.MutableRefObject<number>;
+  setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  patientId: number;
+  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
+  errMsgPost: string;
+  topicPost: UseMutationResult<
+    RiskFactorType,
+    Error,
+    Partial<RiskFactorType>,
+    void
+  >;
+};
+
 const RiskForm = ({
   editCounter,
   setAddVisible,
@@ -22,25 +39,27 @@ const RiskForm = ({
   setErrMsgPost,
   errMsgPost,
   topicPost,
-}) => {
+}: RiskFormProps) => {
   //HOOKS
-  const { user } = useUserContext();
-  const [formDatas, setFormDatas] = useState({
+  const { user } = useUserContext() as { user: UserStaffType };
+  const [formDatas, setFormDatas] = useState<Partial<RiskFactorType>>({
     patient_id: patientId,
     RiskFactor: "",
     ExposureDetails: "",
     StartDate: null,
-    EndDate: "",
-    AgeOfOnset: null,
+    EndDate: null,
+    AgeOfOnset: "",
     LifeStage: "N",
     Notes: "",
   });
   const [progress, setProgress] = useState(false);
 
   //HANDLERS
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setErrMsgPost("");
-    let value = e.target.value;
+    let value: string | number | null = e.target.value;
     const name = e.target.name;
     if (name === "StartDate" || name === "EndDate") {
       value = value === "" ? null : dateISOToTimestampTZ(value);
@@ -48,14 +67,18 @@ const RiskForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     //Formatting
     const topicToPost = {
       ...formDatas,
-      RiskFactor: firstLetterOfFirstWordUpper(formDatas.RiskFactor),
-      ExposureDetails: firstLetterOfFirstWordUpper(formDatas.ExposureDetails),
-      Notes: firstLetterOfFirstWordUpper(formDatas.Notes),
+      RiskFactor: firstLetterOfFirstWordUpper(formDatas.RiskFactor ?? ""),
+      ExposureDetails: firstLetterOfFirstWordUpper(
+        formDatas.ExposureDetails ?? ""
+      ),
+      Notes: firstLetterOfFirstWordUpper(formDatas.Notes ?? ""),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -63,7 +86,7 @@ const RiskForm = ({
     try {
       await riskSchema.validate(topicToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Submission
@@ -79,7 +102,7 @@ const RiskForm = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     editCounter.current -= 1;
     setErrMsgPost("");
@@ -99,14 +122,14 @@ const RiskForm = ({
       </td>
       <td>
         <Input
-          value={formDatas.RiskFactor}
+          value={formDatas.RiskFactor ?? ""}
           onChange={handleChange}
           name="RiskFactor"
         />
       </td>
       <td>
         <Input
-          value={formDatas.ExposureDetails}
+          value={formDatas.ExposureDetails ?? ""}
           onChange={handleChange}
           name="ExposureDetails"
         />
@@ -129,7 +152,7 @@ const RiskForm = ({
       </td>
       <td>
         <Input
-          value={formDatas.AgeOfOnset}
+          value={formDatas.AgeOfOnset ?? ""}
           onChange={handleChange}
           name="AgeOfOnset"
         />
@@ -137,14 +160,18 @@ const RiskForm = ({
       <td>
         <GenericList
           list={lifeStageCT}
-          value={formDatas.LifeStage}
+          value={formDatas.LifeStage ?? ""}
           name="LifeStage"
           handleChange={handleChange}
           placeHolder="Choose a lifestage..."
         />
       </td>
       <td>
-        <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
+        <Input
+          value={formDatas.Notes ?? ""}
+          onChange={handleChange}
+          name="Notes"
+        />
       </td>
       <FormSignCell />
     </tr>

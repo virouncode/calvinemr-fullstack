@@ -13,7 +13,7 @@ const Migration = () => {
   const handleMigrationTypeChanged = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target.name === "Import") {
+    if (e.target.value === "Import") {
       alert("Available soon...");
       return;
     }

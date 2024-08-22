@@ -31,8 +31,8 @@ import AppointmentsDropdown from "../Topics/Appointments/AppointmentsDropDown";
 import AppointmentsPopUp from "../Topics/Appointments/AppointmentsPopUp";
 import CareElementsDropDown from "../Topics/CareElements/CareElementsDropDown";
 import CareElementsPopUp from "../Topics/CareElements/CareElementsPopUp";
-import CyclesContent from "../Topics/Cycles/CyclesContent";
-import CyclesPU from "../Topics/Cycles/CyclesPU";
+import CycleDropDown from "../Topics/Cycles/CyclesDropDown";
+import CyclesPopUp from "../Topics/Cycles/CyclesPopUp";
 import EformsContent from "../Topics/Eforms/EformsContent";
 import EformsPU from "../Topics/Eforms/EformsPU";
 import FamilyHistoryContent from "../Topics/FamilyHistory/FamilyHistoryContent";
@@ -61,9 +61,9 @@ import RelationshipsContent from "../Topics/Relationships/RelationshipsContent";
 import RelationshipsPU from "../Topics/Relationships/RelationshipsPU";
 import RemindersContent from "../Topics/Reminders/RemindersContent";
 import RemindersPU from "../Topics/Reminders/RemindersPU";
-import RiskContent from "../Topics/Risks/RiskContent";
-import RiskPU from "../Topics/Risks/RiskPU";
-import TodosContent from "../Topics/Todos/TodosContent";
+import RisksDropDown from "../Topics/Risks/RisksDropDown";
+import RisksPopUp from "../Topics/Risks/RisksPopUp";
+import TodosDropDown from "../Topics/Todos/TodosDropDown";
 import PatientTopicHeader from "./PatientTopicHeader";
 
 type PatientTopicProps = {
@@ -336,7 +336,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* RISK FACTORS */}
         {topic === "RISK FACTORS" && (
-          <RiskContent
+          <RisksDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -352,7 +352,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <RiskPU
+            <RisksPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -726,7 +726,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* CYCLES */}
         {topic === "CYCLES" && (
-          <CyclesContent
+          <CycleDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -742,7 +742,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <CyclesPU
+            <CyclesPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -920,7 +920,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* TO-DOS ABOUT PATIENT */}
         {topic === "TO-DOS ABOUT PATIENT" && (
-          <TodosContent
+          <TodosDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}

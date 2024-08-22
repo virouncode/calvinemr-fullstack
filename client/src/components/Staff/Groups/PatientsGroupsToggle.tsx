@@ -15,7 +15,7 @@ const PatientsGroupsToggle = ({
       <div className="patients-groups-toggle__radio">
         <Radio
           id="my-groups"
-          name="My groups"
+          name="patients-group-type"
           value="My groups"
           checked={isTypeChecked("My groups")}
           onChange={handleTypeChanged}
@@ -25,7 +25,7 @@ const PatientsGroupsToggle = ({
       <div className="patients-groups-toggle__radio">
         <Radio
           id="clinic-groups"
-          name="Clinic groups"
+          name="patients-group-type"
           value="Clinic groups"
           checked={isTypeChecked("Clinic groups")}
           onChange={handleTypeChanged}

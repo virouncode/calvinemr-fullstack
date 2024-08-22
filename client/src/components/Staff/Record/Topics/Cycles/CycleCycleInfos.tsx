@@ -1,3 +1,5 @@
+import React from "react";
+import { CycleType } from "../../../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -10,28 +12,45 @@ import EtiologyList from "../../../../UI/Lists/EtiologyList";
 import ThirdPartyList from "../../../../UI/Lists/ThirdPartyList";
 import CycleStatusSelect from "./CycleStatusSelect";
 
-const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
-  const handleChange = (e) => {
+type CycleCycleInfosProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  errMsg: string;
+};
+
+const CycleCycleInfos = ({
+  formDatas,
+  setFormDatas,
+  errMsg,
+  setErrMsg,
+}: CycleCycleInfosProps) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setErrMsg("");
     const name = e.target.name;
-    let value = e.target.value;
+    let value: string | number | null = e.target.value;
     if (name === "lmp")
       value = value === "" ? null : dateISOToTimestampTZ(value);
     setFormDatas({ ...formDatas, [name]: value });
   };
-  const handleEtiologyChange = (value) => {
+
+  const handleEtiologyChange = (value: string) => {
     setErrMsg("");
     setFormDatas({ ...formDatas, etiology: value });
   };
-  const handleCycleTypeChange = (value) => {
+  const handleCycleTypeChange = (value: string) => {
     setErrMsg("");
     setFormDatas({ ...formDatas, cycle_type: value });
   };
-  const handleThirdPartyChange = (value) => {
+  const handleThirdPartyChange = (value: string) => {
     setErrMsg("");
     setFormDatas({ ...formDatas, third_party: value });
   };
-  const handleChangeCheckbox = (e) => {
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const checked = e.target.checked;
     const name = e.target.name;
@@ -61,7 +80,7 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               style={{ marginRight: "28px" }}
             >
               <Input
-                value={formDatas.cycle_nbr}
+                value={formDatas.cycle_nbr ?? ""}
                 onChange={handleChange}
                 name="cycle_nbr"
                 id="cycle_nbr"
@@ -71,15 +90,15 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
             </div>
             <div className="cycles-form__cycle-infos-item">
               <CycleStatusSelect
-                value={formDatas.status}
-                handleChange={handleChange}
+                value={formDatas.status ?? ""}
+                onChange={handleChange}
                 label="Status"
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
               <Input
                 label="Cycle length"
-                value={formDatas.cycle_length}
+                value={formDatas.cycle_length ?? ""}
                 onChange={handleChange}
                 id="cycle_length"
                 name="cycle_length"
@@ -88,7 +107,7 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
             <div className="cycles-form__cycle-infos-item">
               <Input
                 label="Menstruation length"
-                value={formDatas.menstruation_length}
+                value={formDatas.menstruation_length ?? ""}
                 onChange={handleChange}
                 id="menstruation_length"
                 name="menstruation_length"
@@ -97,14 +116,14 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
             <div className="cycles-form__cycle-infos-item">
               <label htmlFor="etiology">Etiology</label>
               <EtiologyList
-                value={formDatas.etiology}
+                value={formDatas.etiology ?? ""}
                 handleChange={handleEtiologyChange}
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
               <Input
                 label="AMH (pmol/L)"
-                value={formDatas.amh}
+                value={formDatas.amh ?? ""}
                 name="amh"
                 id="amh"
                 onChange={handleChange}
@@ -125,9 +144,9 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               <Checkbox
                 label="OHIP funded"
                 labelSide="left"
-                checked={formDatas.ohip_funded}
+                checked={formDatas.ohip_funded as boolean}
                 name="ohip_funded"
-                onChange={handleChangeCheckbox}
+                onChange={handleCheck}
                 mr={0}
               />
             </div>
@@ -135,22 +154,22 @@ const CycleCycleInfos = ({ formDatas, setFormDatas, errMsg, setErrMsg }) => {
               <Checkbox
                 label="Cancelled"
                 labelSide="left"
-                checked={formDatas.cancelled}
+                checked={formDatas.cancelled as boolean}
                 name="cancelled"
-                onChange={handleChangeCheckbox}
+                onChange={handleCheck}
                 mr={0}
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
               <CycleTypeList
-                value={formDatas.cycle_type}
+                value={formDatas.cycle_type ?? ""}
                 handleChange={handleCycleTypeChange}
                 label="Cycle type"
               />
             </div>
             <div className="cycles-form__cycle-infos-item">
               <ThirdPartyList
-                value={formDatas.third_party}
+                value={formDatas.third_party ?? ""}
                 handleChange={handleThirdPartyChange}
                 label="3rd party"
               />

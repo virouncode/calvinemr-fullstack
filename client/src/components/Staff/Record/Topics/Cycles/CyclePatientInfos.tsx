@@ -1,14 +1,23 @@
-
+import React from "react";
+import { DemographicsType } from "../../../../../types/api";
 import {
-    getAgeTZ,
-    timestampToDateISOTZ,
+  getAgeTZ,
+  timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import {
-    toPatientFirstName,
-    toPatientLastName,
+  toPatientFirstName,
+  toPatientLastName,
 } from "../../../../../utils/names/toPatientName";
 
-const CyclePatientInfos = ({ demographicsInfos, errMsg }) => {
+type CyclePatientInfosProps = {
+  demographicsInfos: DemographicsType;
+  errMsg: string;
+};
+
+const CyclePatientInfos = ({
+  demographicsInfos,
+  errMsg,
+}: CyclePatientInfosProps) => {
   return (
     <fieldset
       className="cycles-form__patient-infos"

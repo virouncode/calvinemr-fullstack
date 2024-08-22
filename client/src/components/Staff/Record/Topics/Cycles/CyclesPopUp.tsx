@@ -1,5 +1,16 @@
-import { useRef, useState } from "react";
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  UseMutationResult,
+} from "@tanstack/react-query";
+import React, { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
+import {
+  CycleType,
+  DemographicsType,
+  XanoPaginatedType,
+} from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -12,7 +23,28 @@ import CycleDetails from "./CycleDetails";
 import CycleForm from "./CycleForm";
 import CycleItem from "./CycleItem";
 
-const CyclesPU = ({
+type CyclesPopUpProps = {
+  topicDatas: InfiniteData<XanoPaginatedType<CycleType>, unknown> | undefined;
+  topicPost: UseMutationResult<CycleType, Error, Partial<CycleType>, void>;
+  topicPut: UseMutationResult<CycleType, Error, CycleType, void>;
+  isPending: boolean;
+  error: Error | null;
+  patientId: number;
+  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isFetchingNextPage: boolean;
+  fetchNextPage: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<XanoPaginatedType<CycleType>, unknown>,
+      Error
+    >
+  >;
+  isFetching: boolean;
+  demographicsInfos: DemographicsType;
+};
+
+const CyclesPopUp = ({
   topicDatas,
   topicPost,
   topicPut,
@@ -24,22 +56,21 @@ const CyclesPU = ({
   fetchNextPage,
   isFetching,
   demographicsInfos,
-}) => {
-  //HOOKS
+}: CyclesPopUpProps) => {
+  //Hooks
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
-  const [cycleToShow, setCycleToShow] = useState({});
+  const [cycleToShow, setCycleToShow] = useState<CycleType | undefined>();
   const [show, setShow] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
 
-  //INTERSECTION OBSERVER
-  const { rootRef, lastItemRef } = useIntersection(
+  //Intersection observer
+  const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
 
-  //HANDLERS
   const handleClose = async () => {
     if (
       editCounter.current === 0 ||
@@ -75,13 +106,13 @@ const CyclesPU = ({
     );
   }
 
-  const datas = topicDatas.pages.flatMap((page) => page.items);
+  const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
     <>
       <h1 className="cycles__title">Cycle monitoring</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="cycles__table-container" ref={rootRef}>
+      <div className="cycles__table-container" ref={divRef}>
         <table className="cycles__table">
           <thead>
             <tr>
@@ -101,11 +132,8 @@ const CyclesPU = ({
                     <CycleItem
                       item={item}
                       key={item.id}
-                      editCounter={editCounter}
-                      setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
                       lastItemRef={lastItemRef}
-                      topicPut={topicPut}
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
                     />
@@ -113,18 +141,15 @@ const CyclesPU = ({
                     <CycleItem
                       item={item}
                       key={item.id}
-                      editCounter={editCounter}
-                      setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      topicPut={topicPut}
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
                     />
                   )
                 )
               : !isFetchingNextPage &&
-                !addVisible && <EmptyRow colSpan="7" text="No cycles" />}
-            {isFetchingNextPage && <LoadingRow colSpan="7" />}
+                !addVisible && <EmptyRow colSpan={7} text="No cycles" />}
+            {isFetchingNextPage && <LoadingRow colSpan={7} />}
           </tbody>
         </table>
       </div>
@@ -147,15 +172,13 @@ const CyclesPU = ({
             setAddVisible={setAddVisible}
             patientId={patientId}
             demographicsInfos={demographicsInfos}
-            setErrMsgPost={setErrMsgPost}
-            errMsgPost={errMsgPost}
             topicPost={topicPost}
           />
         </FakeWindow>
       )}
-      {show && (
+      {show && cycleToShow && (
         <FakeWindow
-          title={`IVF CYCLE# ${cycleToShow.cycle_nbr} DETAILS`}
+          title={`IVF CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
           width={1400}
           height={800}
           x={(window.innerWidth - 1400) / 2}
@@ -167,7 +190,6 @@ const CyclesPU = ({
           <CycleDetails
             setShow={setShow}
             cycleToShow={cycleToShow}
-            patientId={patientId}
             demographicsInfos={demographicsInfos}
             topicPut={topicPut}
           />
@@ -177,4 +199,4 @@ const CyclesPU = ({
   );
 };
 
-export default CyclesPU;
+export default CyclesPopUp;

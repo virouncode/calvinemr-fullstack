@@ -1,3 +1,5 @@
+import React from "react";
+import { CycleNoteType, CycleType } from "../../../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -5,23 +7,37 @@ import {
 import Button from "../../../../UI/Buttons/Button";
 import InputDate from "../../../../UI/Inputs/InputDate";
 
-const CycleNoteForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
+type CycleNoteFormProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  item: CycleNoteType;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CycleNoteForm = ({
+  formDatas,
+  setFormDatas,
+  item,
+  setErrMsg,
+}: CycleNoteFormProps) => {
   const handleRemove = () => {
     setErrMsg("");
     setFormDatas({
       ...formDatas,
-      notes: formDatas.notes.filter((note) => note.temp_id !== item.temp_id),
+      notes: formDatas.notes?.filter((note) => note.temp_id !== item.temp_id),
     });
   };
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setErrMsg("");
     const name = e.target.name;
-    let value = e.target.value;
+    let value: string | number | null = e.target.value;
     if (name === "date")
       value = value === "" ? null : dateISOToTimestampTZ(value);
     setFormDatas({
       ...formDatas,
-      notes: formDatas.notes.map((note) => {
+      notes: formDatas.notes?.map((note) => {
         return note.temp_id === item.temp_id
           ? { ...note, [name]: value }
           : note;

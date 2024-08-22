@@ -35,6 +35,7 @@ const ContactFaxForm = ({
               checked={contactType === "doctors"}
               onChange={handleChange}
               label="Doctors directory"
+              name="fax-contact-type"
             />
           </div>
           <div className="contact-form-radios__item">
@@ -44,6 +45,7 @@ const ContactFaxForm = ({
               checked={contactType === "pharmacies"}
               onChange={handleChange}
               label="Pharmacies directory"
+              name="fax-contact-type"
             />
           </div>
           <div className="contact-form-radios__item">
@@ -53,6 +55,7 @@ const ContactFaxForm = ({
               checked={contactType === "others"}
               onChange={handleChange}
               label="Others directory"
+              name="fax-contact-type"
             />
           </div>
         </div>

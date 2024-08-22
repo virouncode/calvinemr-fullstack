@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { CycleType, DemographicsType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { cycleSchema } from "../../../../../validation/cycles/cycleValidation";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
@@ -15,16 +18,23 @@ import CyclePatientInfos from "./CyclePatientInfos";
 import CycleSpermInfos from "./CycleSpermInfos";
 import CycleTestsInfos from "./CycleTestsInfos";
 
+type CycleDetailsProps = {
+  cycleToShow: CycleType;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  demographicsInfos: DemographicsType;
+  topicPut: UseMutationResult<CycleType, Error, CycleType, void>;
+};
+
 const CycleDetails = ({
   cycleToShow,
   setShow,
   demographicsInfos,
   topicPut,
-}) => {
-  const { user } = useUserContext();
+}: CycleDetailsProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [itemInfos, setItemInfos] = useState(null);
+  const [itemInfos, setItemInfos] = useState<Partial<CycleType>>({});
   useEffect(() => {
     setItemInfos({
       ...cycleToShow,
@@ -32,21 +42,23 @@ const CycleDetails = ({
     });
   }, [cycleToShow]);
 
-  const handleSave = async (e) => {
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     try {
       await cycleSchema.validate(itemInfos);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       return;
     }
-    const cycleToPut = {
-      ...itemInfos,
+    const cycleToPut: CycleType = {
+      ...(itemInfos as CycleType),
       updates: [
-        ...itemInfos.updates,
+        ...(itemInfos?.updates ?? []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
-      cycle_nbr: `${demographicsInfos.ChartNumber}-${itemInfos.cycle_nbr}`,
+      cycle_nbr: `${demographicsInfos.ChartNumber}-${itemInfos?.cycle_nbr}`,
     };
 
     setProgress(true);
@@ -58,7 +70,9 @@ const CycleDetails = ({
       onError: () => setProgress(false),
     });
   };
-  const handleClose = async (e) => {
+  const handleClose = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (
       await confirmAlert({
@@ -69,7 +83,7 @@ const CycleDetails = ({
       setShow(false);
     }
   };
-  const handlePrint = (e) => {
+  const handlePrint = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
   };
   return (

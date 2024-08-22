@@ -1,16 +1,31 @@
 import _ from "lodash";
+import React from "react";
+import { CycleEventType, CycleType } from "../../../../../types/api";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleEventForm from "./CycleEventForm";
-const CycleEvents = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
-  const handleAdd = (e) => {
+
+type CycleEventsProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  errMsg: string;
+};
+
+const CycleEvents = ({
+  formDatas,
+  setFormDatas,
+  setErrMsg,
+  errMsg,
+}: CycleEventsProps) => {
+  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setErrMsg("");
     setFormDatas({
       ...formDatas,
       events: [
-        ...formDatas.events,
+        ...(formDatas.events as CycleEventType[]),
         {
           temp_id: _.uniqueId(),
           date: nowTZTimestamp(),
@@ -64,10 +79,10 @@ const CycleEvents = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
             </tr>
           </thead>
           <tbody>
-            {formDatas.events.length > 0 ? (
-              formDatas.events.map((item, index) => (
+            {(formDatas.events as CycleEventType[]).length > 0 ? (
+              formDatas.events?.map((item, index) => (
                 <CycleEventForm
-                  key={item.temp_id + index}
+                  key={(item.temp_id as string) + index}
                   item={item}
                   formDatas={formDatas}
                   setFormDatas={setFormDatas}
@@ -75,7 +90,7 @@ const CycleEvents = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
                 />
               ))
             ) : (
-              <EmptyRow colSpan="13" text="No events" />
+              <EmptyRow colSpan={13} text="No events" />
             )}
           </tbody>
         </table>

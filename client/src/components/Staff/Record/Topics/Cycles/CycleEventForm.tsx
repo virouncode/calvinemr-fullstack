@@ -1,3 +1,9 @@
+import React from "react";
+import {
+  CycleEventType,
+  CycleMedNumberType,
+  CycleType,
+} from "../../../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -8,8 +14,22 @@ import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import IvfMedsList from "../../../../UI/Lists/IvfMedsList";
 
-const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
-  const handleRemove = async (e) => {
+type CycleEventFormProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  item: CycleEventType;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CycleEventForm = ({
+  formDatas,
+  setFormDatas,
+  item,
+  setErrMsg,
+}: CycleEventFormProps) => {
+  const handleRemove = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setErrMsg("");
     if (
@@ -19,51 +39,62 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
     ) {
       setFormDatas({
         ...formDatas,
-        events: formDatas.events.filter(
+        events: (formDatas.events as CycleEventType[]).filter(
           (event) => event.temp_id !== item.temp_id
         ),
       });
     }
   };
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setErrMsg("");
     const name = e.target.name;
-    let value = e.target.value;
+    let value: string | number | null = e.target.value;
     if (name === "date")
       value = value === "" ? null : dateISOToTimestampTZ(value);
     setFormDatas({
       ...formDatas,
-      events: formDatas.events.map((event) => {
+      events: formDatas.events?.map((event) => {
         return event.temp_id === item.temp_id
           ? { ...event, [name]: value }
           : event;
       }),
     });
   };
-  const handleChangeMedName = (value, medNbr) => {
+  const handleChangeMedName = (value: string, medNbr: number) => {
     setErrMsg("");
     setFormDatas({
       ...formDatas,
-      events: formDatas.events.map((event) => {
+      events: formDatas.events?.map((event) => {
         return event.temp_id === item.temp_id
           ? {
               ...event,
-              [`med_${medNbr}`]: { ...event[`med_${medNbr}`], name: value },
+              [`med_${medNbr}`]: {
+                ...event[`med_${medNbr}` as CycleMedNumberType],
+                name: value,
+              },
             }
           : event;
       }),
     });
   };
-  const handleChangeMedNotes = (e, medNbr) => {
+  const handleChangeMedNotes = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    medNbr: number
+  ) => {
     setErrMsg("");
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      events: formDatas.events.map((event) => {
+      events: formDatas.events?.map((event) => {
         return event.temp_id === item.temp_id
           ? {
               ...event,
-              [`med_${medNbr}`]: { ...event[`med_${medNbr}`], notes: value },
+              [`med_${medNbr}`]: {
+                ...event[`med_${medNbr}` as CycleMedNumberType],
+                notes: value,
+              },
             }
           : event;
       }),
@@ -131,11 +162,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_1.name}
           handleChange={handleChangeMedName}
-          med_number="1"
+          med_number={1}
         />
         <Input
           value={item.med_1.notes}
-          onChange={(e) => handleChangeMedNotes(e, "1")}
+          onChange={(e) => handleChangeMedNotes(e, 1)}
           mt={5}
         />
       </td>
@@ -143,11 +174,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_2.name}
           handleChange={handleChangeMedName}
-          med_number="2"
+          med_number={2}
         />
         <Input
           value={item.med_2.notes}
-          onChange={(e) => handleChangeMedNotes(e, "2")}
+          onChange={(e) => handleChangeMedNotes(e, 2)}
           mt={5}
         />
       </td>
@@ -155,11 +186,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_3.name}
           handleChange={handleChangeMedName}
-          med_number="3"
+          med_number={3}
         />
         <Input
           value={item.med_3.notes}
-          onChange={(e) => handleChangeMedNotes(e, "3")}
+          onChange={(e) => handleChangeMedNotes(e, 3)}
           mt={5}
         />
       </td>
@@ -167,11 +198,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_4.name}
           handleChange={handleChangeMedName}
-          med_number="4"
+          med_number={4}
         />
         <Input
           value={item.med_4.notes}
-          onChange={(e) => handleChangeMedNotes(e, "4")}
+          onChange={(e) => handleChangeMedNotes(e, 4)}
           mt={5}
         />
       </td>
@@ -179,11 +210,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_5.name}
           handleChange={handleChangeMedName}
-          med_number="5"
+          med_number={5}
         />
         <Input
           value={item.med_5.notes}
-          onChange={(e) => handleChangeMedNotes(e, "5")}
+          onChange={(e) => handleChangeMedNotes(e, 5)}
           mt={5}
         />
       </td>
@@ -191,11 +222,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_6.name}
           handleChange={handleChangeMedName}
-          med_number="6"
+          med_number={6}
         />
         <Input
           value={item.med_6.notes}
-          onChange={(e) => handleChangeMedNotes(e, "6")}
+          onChange={(e) => handleChangeMedNotes(e, 6)}
           mt={5}
         />
       </td>
@@ -203,11 +234,11 @@ const CycleEventForm = ({ formDatas, setFormDatas, item, setErrMsg }) => {
         <IvfMedsList
           value={item.med_7.name}
           handleChange={handleChangeMedName}
-          med_number="7"
+          med_number={7}
         />
         <Input
           value={item.med_7.notes}
-          onChange={(e) => handleChangeMedNotes(e, "7")}
+          onChange={(e) => handleChangeMedNotes(e, 7)}
           mt={5}
         />
       </td>

@@ -1,16 +1,30 @@
 import _ from "lodash";
+import React from "react";
+import { CycleType } from "../../../../../types/api";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleNoteForm from "./CycleNoteForm";
-const CycleNotes = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
-  const handleAdd = (e) => {
+
+type CycleNotesProps = {
+  formDatas: Partial<CycleType>;
+  setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
+  setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  errMsg: string;
+};
+const CycleNotes = ({
+  formDatas,
+  setFormDatas,
+  setErrMsg,
+  errMsg,
+}: CycleNotesProps) => {
+  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setErrMsg("");
     e.preventDefault();
     setFormDatas({
       ...formDatas,
       notes: [
-        ...formDatas.notes,
+        ...(formDatas.notes ?? []),
         {
           temp_id: _.uniqueId(),
           text: "",
@@ -38,10 +52,10 @@ const CycleNotes = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
             </tr>
           </thead>
           <tbody>
-            {formDatas.notes.length > 0 ? (
-              formDatas.notes.map((item, index) => (
+            {(formDatas.notes?.length ?? 0) > 0 ? (
+              formDatas.notes?.map((item, index) => (
                 <CycleNoteForm
-                  key={item.temp_id + index}
+                  key={(item.temp_id as string) + index}
                   item={item}
                   formDatas={formDatas}
                   setFormDatas={setFormDatas}
@@ -49,7 +63,7 @@ const CycleNotes = ({ formDatas, setFormDatas, setErrMsg, errMsg }) => {
                 />
               ))
             ) : (
-              <EmptyRow colSpan="3" text="No notes" />
+              <EmptyRow colSpan={3} text="No notes" />
             )}
           </tbody>
         </table>

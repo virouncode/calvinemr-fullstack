@@ -19,7 +19,7 @@ const MessagingToggle = ({
       <div className="messages-toggle__radio">
         <Radio
           id="internal"
-          name="Internal"
+          name="message-type"
           value="Internal"
           checked={isTypeChecked("Internal")}
           onChange={handleMsgTypeChange}
@@ -34,7 +34,7 @@ const MessagingToggle = ({
       <div className="messages-toggle__radio">
         <Radio
           id="external"
-          name="External"
+          name="message-type"
           value="External"
           checked={isTypeChecked("External")}
           onChange={handleMsgTypeChange}

@@ -15,7 +15,7 @@ const MigrationToggle = ({
       <div className="migration-toggle__radio">
         <Radio
           value="Export"
-          name="Export"
+          name="migration-type"
           checked={isTypeChecked("Export")}
           onChange={handleMigrationTypeChanged}
           id="export"
@@ -25,7 +25,7 @@ const MigrationToggle = ({
       <div className="messages-toggle__radio">
         <Radio
           value="Import"
-          name="Import"
+          name="migration-type"
           checked={isTypeChecked("Import")}
           onChange={handleMigrationTypeChanged}
           id="import"

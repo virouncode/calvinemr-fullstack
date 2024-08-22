@@ -269,15 +269,15 @@ const Invitation = ({
     setInvitationVisible(false);
   };
   const handleTemplateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTemplateSelected(e.target.name);
+    setTemplateSelected(e.target.value);
     setIntro(
       user.settings.invitation_templates.find(
-        ({ name }) => name === e.target.name
+        ({ name }) => name === e.target.value
       )?.intro ?? ""
     );
     setMessage(
       user.settings.invitation_templates.find(
-        ({ name }) => name === e.target.name
+        ({ name }) => name === e.target.value
       )?.message ?? ""
     );
   };

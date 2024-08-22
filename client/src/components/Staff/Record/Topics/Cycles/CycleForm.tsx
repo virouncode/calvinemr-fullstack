@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { CycleType, DemographicsType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import { initialCycle } from "../../../../../utils/initialDatas/initialDatas";
 import { cycleSchema } from "../../../../../validation/cycles/cycleValidation";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
@@ -14,61 +18,39 @@ import CyclePatientInfos from "./CyclePatientInfos";
 import CycleSpermInfos from "./CycleSpermInfos";
 import CycleTestsInfos from "./CycleTestsInfos";
 
+type CycleFormProps = {
+  setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  patientId: number;
+  demographicsInfos: DemographicsType;
+  topicPost: UseMutationResult<CycleType, Error, Partial<CycleType>, void>;
+};
+
 const CycleForm = ({
   setAddVisible,
   patientId,
   demographicsInfos,
   topicPost,
-}) => {
-  const { user } = useUserContext();
+}: CycleFormProps) => {
+  //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState({
-    cycle_length: "",
-    menstruation_length: "",
-    etiology: "",
-    amh: "",
-    partner_sperm: true,
-    donor_sperm_nbr: "",
-    lmp: null,
-    ohip_funded: false,
-    cancelled: false,
-    cycle_type: "",
-    third_party: "",
-    prewash_concentration: "",
-    prewash_motility: "",
-    postwash_motility: "",
-    postwash_total_motile_sperm: "",
-    test_blood_type_female: "",
-    test_blood_type_male: "",
-    test_hiv_female: "",
-    test_hiv_male: "",
-    test_hep_b_female: "",
-    test_hep_b_male: "",
-    test_hep_c_female: "",
-    test_hep_c_male: "",
-    test_syphilis_female: "",
-    test_syphilis_male: "",
-    test_cmv_female: "",
-    test_sonohysterogram_female: "",
-    test_endo_bx_female: "",
-    patient_id: patientId,
-    cycle_nbr: "",
-    events: [],
-    notes: [],
-    cycle_notes: "",
-    status: "Active",
-  });
-  const handleSubmit = async (e) => {
+  const [formDatas, setFormDatas] = useState<Partial<CycleType>>(
+    initialCycle(patientId)
+  );
+
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setErrMsg("");
     try {
       await cycleSchema.validate(formDatas);
     } catch (err) {
-      setErrMsg(err.message);
+      if (err instanceof Error) setErrMsg(err.message);
       return;
     }
-    const cycleToPost = {
+    const cycleToPost: Partial<CycleType> = {
       ...formDatas,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
@@ -84,7 +66,10 @@ const CycleForm = ({
       onError: () => setProgress(false),
     });
   };
-  const handleClose = async (e) => {
+
+  const handleClose = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (
       await confirmAlert({

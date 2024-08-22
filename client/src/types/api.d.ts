@@ -421,7 +421,7 @@ export type CycleType = {
   amh: string;
   partner_sperm: boolean;
   donor_sperm_nbr: string;
-  lmp: number;
+  lmp: number | null;
   ohip_funded: boolean;
   cancelled: boolean;
   cycle_type: string;
@@ -441,31 +441,46 @@ export type CycleType = {
   test_syphilis_female: string;
   test_syphilis_male: string;
   test_cmv_female: string;
+  test_cmv_male: string;
   test_sonohysterogram_female: string;
   test_endo_bx_female: string;
   patient_id: number;
   cycle_nbr: string;
-  events: {
-    date: number;
-    day_of_cycle: string;
-    endometrial_thickness: string;
-    left_follicles: string;
-    right_follicles: string;
-    med_1: { name: string; notes: string };
-    med_2: { name: string; notes: string };
-    med_3: { name: string; notes: string };
-    med_4: { name: string; notes: string };
-    med_5: { name: string; notes: string };
-    med_6: { name: string; notes: string };
-    med_7: { name: string; notes: string };
-    e2: string;
-    lh: string;
-    p4: string;
-  }[];
-  notes: { text: string; date: number }[];
+  events: CycleEventType[];
+  notes: CycleNoteType[];
   cycle_notes: string;
   status: string;
 };
+
+export type CycleNoteType = { temp_id?: string; text: string; date: number };
+
+export type CycleEventType = {
+  temp_id?: string;
+  date: number | null;
+  day_of_cycle: string;
+  endometrial_thickness: string;
+  left_follicles: string;
+  right_follicles: string;
+  med_1: { name: string; notes: string };
+  med_2: { name: string; notes: string };
+  med_3: { name: string; notes: string };
+  med_4: { name: string; notes: string };
+  med_5: { name: string; notes: string };
+  med_6: { name: string; notes: string };
+  med_7: { name: string; notes: string };
+  e2: string;
+  lh: string;
+  p4: string;
+};
+
+export type CycleMedNumberType =
+  | "med_1"
+  | "med_2"
+  | "med_3"
+  | "med_4"
+  | "med_5"
+  | "med_6"
+  | "med_7";
 
 export type EmergencyContactType = {
   ContactPurpose: { PurposeAsEnum: string; PurposeAsPlainText: string };

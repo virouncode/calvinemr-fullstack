@@ -13,8 +13,8 @@ const StaffMessagesPage = () => {
     return type === msgsType ? true : false;
   };
   const handleMsgTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    setMsgsType(name);
+    const value = e.target.value;
+    setMsgsType(value);
   };
   useTitle("Messages");
   return (

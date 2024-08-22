@@ -1,12 +1,25 @@
-
+import { InfiniteData } from "@tanstack/react-query";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { TodoType, XanoPaginatedType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
-const TodosContent = ({ topicDatas, isPending, error }) => {
-  const { user } = useUserContext();
+type TodosDropDownProps = {
+  topicDatas: InfiniteData<XanoPaginatedType<TodoType>, unknown> | undefined;
+  isPending: boolean;
+  error: Error | null;
+};
+
+const TodosDropDown = ({
+  topicDatas,
+  isPending,
+  error,
+}: TodosDropDownProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
   if (isPending)
     return (
       <div className="topic-content">
@@ -19,7 +32,7 @@ const TodosContent = ({ topicDatas, isPending, error }) => {
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
-  const datas = topicDatas.pages
+  const datas = topicDatas?.pages
     .flatMap((page) => page.items)
     .filter((message) => message.to_staff_id === user.id);
 
@@ -31,7 +44,7 @@ const TodosContent = ({ topicDatas, isPending, error }) => {
             <li
               className="topic-content__item"
               key={message.id}
-              style={{ textDecoration: message.done && "line-through" }}
+              style={{ textDecoration: message.done ? "line-through" : "none" }}
             >
               <div className="topic-content__overview">
                 <NavLink
@@ -60,4 +73,4 @@ const TodosContent = ({ topicDatas, isPending, error }) => {
   );
 };
 
-export default TodosContent;
+export default TodosDropDown;

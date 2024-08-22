@@ -1,6 +1,16 @@
+import React from "react";
+import { CycleType } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import SignCell from "../../../../UI/Tables/SignCell";
+
+type CycleItemProps = {
+  item: CycleType;
+  errMsgPost: string;
+  lastItemRef?: (node: Element | null) => void;
+  setCycleToShow: React.Dispatch<React.SetStateAction<CycleType | undefined>>;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const CycleItem = ({
   item,
@@ -8,7 +18,7 @@ const CycleItem = ({
   lastItemRef,
   setCycleToShow,
   setShow,
-}) => {
+}: CycleItemProps) => {
   const handleClickShow = () => {
     setCycleToShow(item);
     setShow(true);

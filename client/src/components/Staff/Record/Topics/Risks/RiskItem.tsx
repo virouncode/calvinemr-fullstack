@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
+import { RiskFactorType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -18,19 +21,29 @@ import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import SignCell from "../../../../UI/Tables/SignCell";
 
+type RiskItemProps = {
+  item: RiskFactorType;
+  editCounter: React.MutableRefObject<number>;
+  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
+  errMsgPost: string;
+  lastItemRef?: (node: Element | null) => void;
+  topicPut: UseMutationResult<RiskFactorType, Error, RiskFactorType, void>;
+  topicDelete: UseMutationResult<void, Error, number, void>;
+};
+
 const RiskItem = ({
   item,
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef = null,
+  lastItemRef,
   topicPut,
   topicDelete,
-}) => {
+}: RiskItemProps) => {
   //HOOKS
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState(null);
+  const [itemInfos, setItemInfos] = useState<RiskFactorType | undefined>();
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -38,26 +51,32 @@ const RiskItem = ({
   }, [item]);
 
   //HANDLERS
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setErrMsgPost("");
     const name = e.target.name;
-    let value = e.target.value;
+    let value: string | number | null = e.target.value;
     if (name === "StartDate" || name === "EndDate") {
-      value = value === "" ? null : dateISOToTimestampTZ(value);
+      value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...itemInfos, [name]: value });
+    setItemInfos({ ...(itemInfos as RiskFactorType), [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     //Formatting
-    const topicToPut = {
-      ...itemInfos,
-      RiskFactor: firstLetterOfFirstWordUpper(itemInfos.RiskFactor),
-      ExposureDetails: firstLetterOfFirstWordUpper(itemInfos.ExposureDetails),
-      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
+    const topicToPut: RiskFactorType = {
+      ...(itemInfos as RiskFactorType),
+      RiskFactor: firstLetterOfFirstWordUpper(itemInfos?.RiskFactor ?? ""),
+      ExposureDetails: firstLetterOfFirstWordUpper(
+        itemInfos?.ExposureDetails ?? ""
+      ),
+      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
       updates: [
-        ...itemInfos.updates,
+        ...(itemInfos?.updates ?? []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };
@@ -65,7 +84,7 @@ const RiskItem = ({
     try {
       await riskSchema.validate(topicToPut);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Submission
@@ -82,7 +101,7 @@ const RiskItem = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     editCounter.current -= 1;
     setErrMsgPost("");
@@ -119,7 +138,7 @@ const RiskItem = ({
     itemInfos && (
       <tr
         className="risk__item"
-        style={{ border: errMsgPost && editVisible && "solid 1.5px red" }}
+        style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
         ref={lastItemRef}
       >
         <td>

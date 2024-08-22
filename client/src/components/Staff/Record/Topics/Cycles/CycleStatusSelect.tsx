@@ -1,4 +1,16 @@
-const CycleStatusSelect = ({ value, onChange, label }) => {
+import React from "react";
+
+type CycleStatusSelectProps = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  label?: string;
+};
+
+const CycleStatusSelect = ({
+  value,
+  onChange,
+  label,
+}: CycleStatusSelectProps) => {
   return (
     <>
       {label && <label htmlFor="status">{label}</label>}

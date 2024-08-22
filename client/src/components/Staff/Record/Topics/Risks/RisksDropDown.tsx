@@ -1,9 +1,22 @@
-
-import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
+import { InfiniteData } from "@tanstack/react-query";
+import React from "react";
+import { RiskFactorType, XanoPaginatedType } from "../../../../../types/api";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
-const CyclesContent = ({ topicDatas, isPending, error }) => {
+type RisksDropDownProps = {
+  topicDatas:
+    | InfiniteData<XanoPaginatedType<RiskFactorType>, unknown>
+    | undefined;
+  isPending: boolean;
+  error: Error | null;
+};
+
+const RisksDropDown = ({
+  topicDatas,
+  isPending,
+  error,
+}: RisksDropDownProps) => {
   if (isPending)
     return (
       <div className="topic-content">
@@ -16,25 +29,24 @@ const CyclesContent = ({ topicDatas, isPending, error }) => {
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
-  const datas = topicDatas.pages.flatMap((page) => page.items);
+  const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
     <div className="topic-content">
-      {datas && datas.length >= 1 ? (
+      {datas && datas.length > 0 ? (
         <ul>
           {datas.slice(0, 4).map((item) => (
             <li key={item.id} className="topic-content__item">
-              - Cycle number {item.cycle_nbr} ({item.cycle_type}, LMP:{" "}
-              {timestampToDateISOTZ(item.lmp)})
+              - {item.RiskFactor}
             </li>
           ))}
           <li>...</li>
         </ul>
       ) : (
-        "No cycles"
+        "No risk factors"
       )}
     </div>
   );
 };
 
-export default CyclesContent;
+export default RisksDropDown;

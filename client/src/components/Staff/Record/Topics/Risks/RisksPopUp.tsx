@@ -1,5 +1,12 @@
-import { useRef, useState } from "react";
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  UseMutationResult,
+} from "@tanstack/react-query";
+import React, { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
+import { RiskFactorType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -10,7 +17,33 @@ import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import RiskForm from "./RiskForm";
 import RiskItem from "./RiskItem";
 
-const RiskPU = ({
+type RisksPopUpProps = {
+  topicDatas: InfiniteData<XanoPaginatedType<RiskFactorType>> | undefined;
+  topicPost: UseMutationResult<
+    RiskFactorType,
+    Error,
+    Partial<RiskFactorType>,
+    void
+  >;
+  topicPut: UseMutationResult<RiskFactorType, Error, RiskFactorType, void>;
+  topicDelete: UseMutationResult<void, Error, number, void>;
+  isPending: boolean;
+  error: Error | null;
+  patientId: number;
+  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isFetchingNextPage: boolean;
+  fetchNextPage: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<XanoPaginatedType<RiskFactorType>, unknown>,
+      Error
+    >
+  >;
+  isFetching: boolean;
+};
+
+const RisksPopUp = ({
   topicDatas,
   topicPost,
   topicPut,
@@ -22,14 +55,14 @@ const RiskPU = ({
   isFetchingNextPage,
   isFetching,
   fetchNextPage,
-}) => {
+}: RisksPopUpProps) => {
   //HOOKS
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
 
   //INTERSECTION OBSERVER
-  const { rootRef, lastItemRef } = useIntersection(
+  const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -72,14 +105,14 @@ const RiskPU = ({
     );
   }
 
-  const datas = topicDatas.pages.flatMap((page) => page.items);
+  const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
     <>
       <h1 className="risk__title">Patient risk factors & prevention</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
-        <div className="risk__table-container" ref={rootRef}>
+        <div className="risk__table-container" ref={divRef}>
           <table className="risk__table">
             <thead>
               <tr>
@@ -133,9 +166,9 @@ const RiskPU = ({
                   )
                 : !isFetchingNextPage &&
                   !addVisible && (
-                    <EmptyRow colSpan="10" text="No risk factors" />
+                    <EmptyRow colSpan={10} text="No risk factors" />
                   )}
-              {isFetchingNextPage && <LoadingRow colSpan="10" />}
+              {isFetchingNextPage && <LoadingRow colSpan={10} />}
             </tbody>
           </table>
         </div>
@@ -148,4 +181,4 @@ const RiskPU = ({
   );
 };
 
-export default RiskPU;
+export default RisksPopUp;
