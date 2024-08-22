@@ -3,16 +3,14 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
   MessageExternalTemplateType,
   MessageTemplateType,
-  PaginatedDatasType,
   TodoTemplateType,
+  XanoPaginatedType,
 } from "../../../types/api";
 
 export const useMessagesTemplates = (search: string) => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<MessageTemplateType>>({
     queryKey: ["messagesTemplates", search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<MessageTemplateType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet("/messages_templates", "staff", {
         search,
         page: pageParam,
@@ -22,12 +20,10 @@ export const useMessagesTemplates = (search: string) => {
   });
 };
 
-export const useMessagesExternalTemplates = (search) => {
-  return useInfiniteQuery({
+export const useMessagesExternalTemplates = (search: string) => {
+  return useInfiniteQuery<XanoPaginatedType<MessageExternalTemplateType>>({
     queryKey: ["messagesExternalTemplates", search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<MessageExternalTemplateType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet("/messages_external_templates", "staff", {
         search,
         page: pageParam,
@@ -37,10 +33,10 @@ export const useMessagesExternalTemplates = (search) => {
   });
 };
 
-export const useTodosTemplates = (search) => {
-  return useInfiniteQuery({
+export const useTodosTemplates = (search: string) => {
+  return useInfiniteQuery<XanoPaginatedType<TodoTemplateType>>({
     queryKey: ["todosTemplates", search],
-    queryFn: ({ pageParam }): Promise<PaginatedDatasType<TodoTemplateType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet("/todos_templates", "staff", {
         search,
         page: pageParam,

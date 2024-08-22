@@ -66,7 +66,7 @@ import CalendarOptions from "./Options/CalendarOptions";
 
 //MY COMPONENT
 const Calendar = () => {
-  //================================= HOOKS ========================================//
+  //================================= Hooks ========================================//
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [initialDate, setInitialDate] = useState(nowTZTimestamp()); //the date when toggling between timeline and calendar
@@ -117,9 +117,8 @@ const Calendar = () => {
     useState(false);
   //navigation
   const navigate = useNavigate();
-
+  //================================= Queries ========================================//
   const { data: sites } = useSites();
-  //CRUD appointments
   const appointments = useAppointments(
     hostsIds,
     rangeStart,
@@ -523,7 +522,7 @@ const Calendar = () => {
     };
 
     if (timelineVisible) {
-      let availableRooms: string[];
+      let availableRooms;
       try {
         availableRooms = await getAvailableRooms(
           0,
@@ -542,8 +541,8 @@ const Calendar = () => {
       if (
         info.resource?.id &&
         (info.resource?.id === "z" ||
-          availableRooms.includes(info.resource?.id) ||
-          (!availableRooms.includes(info.resource?.id) &&
+          availableRooms?.includes(info.resource?.id) ||
+          (!availableRooms?.includes(info.resource?.id) &&
             (await confirmAlert({
               content: `${toRoomTitle(
                 sites,
@@ -634,7 +633,7 @@ const Calendar = () => {
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
-    let availableRooms: string[] = [];
+    let availableRooms;
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -784,7 +783,7 @@ const Calendar = () => {
       zone: "America/Toronto",
     }).toMillis();
     //same as a drop
-    let availableRooms: string[] = [];
+    let availableRooms;
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -802,8 +801,8 @@ const Calendar = () => {
     }
     if (
       event.extendedProps.roomId === "z" ||
-      availableRooms.includes(event.extendedProps.roomId) ||
-      (!availableRooms.includes(event.extendedProps.roomId) &&
+      availableRooms?.includes(event.extendedProps.roomId) ||
+      (!availableRooms?.includes(event.extendedProps.roomId) &&
         (await confirmAlert({
           content: `${toRoomTitle(
             sites,
@@ -904,7 +903,7 @@ const Calendar = () => {
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
-    let availableRooms: string[] = [];
+    let availableRooms;
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -992,8 +991,8 @@ const Calendar = () => {
     if (!timelineVisible) {
       if (
         event.extendedProps.roomId === "z" ||
-        availableRooms.includes(event.extendedProps.roomId) ||
-        (!availableRooms.includes(event.extendedProps.roomId) &&
+        availableRooms?.includes(event.extendedProps.roomId) ||
+        (!availableRooms?.includes(event.extendedProps.roomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,
@@ -1024,8 +1023,8 @@ const Calendar = () => {
           : event.extendedProps.roomId;
       if (
         newRoomId === "z" ||
-        availableRooms.includes(newRoomId) ||
-        (!availableRooms.includes(newRoomId) &&
+        availableRooms?.includes(newRoomId) ||
+        (!availableRooms?.includes(newRoomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,
@@ -1075,7 +1074,7 @@ const Calendar = () => {
       .set({ hour: 0, minute: 0, second: 0 })
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
-    let availableRooms: string[] = [];
+    let availableRooms;
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -1112,8 +1111,8 @@ const Calendar = () => {
     if (!timelineVisible) {
       if (
         event.extendedProps.roomId === "z" ||
-        availableRooms.includes(event.extendedProps.roomId) ||
-        (!availableRooms.includes(event.extendedProps.roomId) &&
+        availableRooms?.includes(event.extendedProps.roomId) ||
+        (!availableRooms?.includes(event.extendedProps.roomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,
@@ -1140,8 +1139,8 @@ const Calendar = () => {
           : event.extendedProps.roomId;
       if (
         newRoomId === "z" ||
-        availableRooms.includes(newRoomId) ||
-        (!availableRooms.includes(newRoomId) &&
+        availableRooms?.includes(newRoomId) ||
+        (!availableRooms?.includes(newRoomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,
@@ -1187,7 +1186,7 @@ const Calendar = () => {
       .set({ hour: 0, minute: 0, second: 0 })
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
-    let availableRooms: string[] = [];
+    let availableRooms;
     try {
       availableRooms = await getAvailableRooms(
         parseInt(event.id),
@@ -1258,8 +1257,8 @@ const Calendar = () => {
     if (!timelineVisible) {
       if (
         event.extendedProps.roomId === "z" ||
-        availableRooms.includes(event.extendedProps.roomId) ||
-        (!availableRooms.includes(event.extendedProps.roomId) &&
+        availableRooms?.includes(event.extendedProps.roomId) ||
+        (!availableRooms?.includes(event.extendedProps.roomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,
@@ -1292,8 +1291,8 @@ const Calendar = () => {
           : event.extendedProps.roomId;
       if (
         newRoomId === "z" ||
-        availableRooms.includes(newRoomId) ||
-        (!availableRooms.includes(newRoomId) &&
+        availableRooms?.includes(newRoomId) ||
+        (!availableRooms?.includes(newRoomId) &&
           (await confirmAlert({
             content: `${toRoomTitle(
               sites,

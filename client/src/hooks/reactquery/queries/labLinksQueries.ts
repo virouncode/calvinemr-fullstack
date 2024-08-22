@@ -4,21 +4,19 @@ import {
   LabLinkCredentialsType,
   LabLinkPersonalType,
   LabLinkType,
-  PaginatedDatasType,
+  XanoPaginatedType,
 } from "../../../types/api";
 
 export const useLabLinks = () => {
-  return useQuery({
+  return useQuery<LabLinkType[]>({
     queryKey: ["labLinks"],
-    queryFn: (): Promise<LabLinkType[]> => xanoGet("/lablinks", "staff"),
+    queryFn: () => xanoGet("/lablinks", "staff"),
   });
 };
 export const useLabLinksPersonal = (staffId: number, search: string) => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<LabLinkPersonalType>>({
     queryKey: ["labLinksPersonal", staffId, search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<LabLinkPersonalType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet("/lablinks_personal_of_staff", "staff", {
         staff_id: staffId,
         search,
@@ -30,9 +28,9 @@ export const useLabLinksPersonal = (staffId: number, search: string) => {
 };
 
 export const useLabLinksCredentials = (staffId: number) => {
-  return useQuery({
+  return useQuery<LabLinkCredentialsType[]>({
     queryKey: ["labLinksCredentials", staffId],
-    queryFn: (): Promise<LabLinkCredentialsType[]> =>
+    queryFn: () =>
       xanoGet("/lablinks_credentials_of_staff", "staff", { staff_id: staffId }),
   });
 };

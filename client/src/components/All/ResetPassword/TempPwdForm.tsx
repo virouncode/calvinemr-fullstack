@@ -20,8 +20,9 @@ const TempPwdForm = ({
   setErrMsg,
   setTempToken,
 }: TempPwdFormProps) => {
-  const [tempPwd, setTempPwd] = useState("");
+  //Hooks
   const navigate = useNavigate();
+  const [tempPwd, setTempPwd] = useState("");
 
   const handleCancel = () => {
     navigate("/");

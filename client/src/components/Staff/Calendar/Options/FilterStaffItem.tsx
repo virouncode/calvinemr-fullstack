@@ -19,6 +19,7 @@ const FilterStaffItem = ({
   categoryName,
   color,
 }: FilterStaffItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="filter-checkbox">

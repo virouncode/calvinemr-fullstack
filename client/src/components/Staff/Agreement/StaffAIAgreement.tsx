@@ -19,6 +19,7 @@ const StaffAIAgreement = ({
   setStart,
   setChatVisible,
 }: StaffAIAgreementProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const [agreed, setAgreed] = useState(false);

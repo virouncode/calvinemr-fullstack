@@ -12,10 +12,13 @@ import FormCredentials from "../../UI/Forms/FormCredentials";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const CredentialsFormAdmin = () => {
+  //Hooks
   const navigate = useNavigate();
   const { auth } = useAuthContext();
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [credentials, setCredentials] = useState<CredentialsFormType>({
     email: auth?.email ?? "",
     password: "",
@@ -30,8 +33,6 @@ const CredentialsFormAdmin = () => {
       special: false,
       size: false,
     });
-  const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
@@ -39,9 +40,11 @@ const CredentialsFormAdmin = () => {
     const value = e.target.value;
     setCredentials({ ...credentials, [name]: value });
   };
+
   const handleCancel = () => {
     navigate("/admin/my-account");
   };
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;

@@ -10,6 +10,7 @@ type OthersFaxNumbersProps = {
 };
 
 const OthersFaxNumbers = ({ handleClickOther }: OthersFaxNumbersProps) => {
+  //Queries
   const {
     data,
     isPending,
@@ -18,6 +19,7 @@ const OthersFaxNumbers = ({ handleClickOther }: OthersFaxNumbersProps) => {
     fetchNextPage,
     isFetching,
   } = useFaxDirectory();
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

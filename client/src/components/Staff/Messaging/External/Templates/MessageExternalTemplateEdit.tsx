@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useMessagesExternalTemplatePut } from "../../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { MessageExternalTemplateType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Input from "../../../../UI/Inputs/Input";
-import { UserStaffType } from "../../../../../types/app";
 
 type MessageExternalTemplateEditProps = {
   setEditTemplateVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,11 +18,13 @@ const MessageExternalTemplateEdit = ({
   setEditTemplateVisible,
   template,
 }: MessageExternalTemplateEditProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [name, setName] = useState(template.name);
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
   const [progress, setProgress] = useState(false);
+  //Queries
   const messageExternalTemplatePut = useMessagesExternalTemplatePut();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

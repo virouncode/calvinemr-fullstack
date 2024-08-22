@@ -18,6 +18,7 @@ const StaffHeader = ({
   setLockedScreen,
   setNotepadVisible,
 }: StaffHeaderProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
 
   const handleLock = () => {

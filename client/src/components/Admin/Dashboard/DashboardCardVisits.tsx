@@ -15,17 +15,17 @@ import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DashboardDateFilter from "./DashboardDateFilter";
 
 const DashboardCardVisits = () => {
+  //Hooks
   const [rangeStartVisits, setRangeStartVisits] = useState(
     getStartOfTheMonthTZ()
   );
   const [rangeEndVisits, setRangeEndVisits] = useState(getEndOfTheMonthTZ());
-
+  //Queries
   const {
     data: visits,
     isPending: isPendingVisits,
     error: errorVisits,
   } = useDashboardVisits(rangeStartVisits, rangeEndVisits);
-
   const {
     data: sites,
     isPending: isPendingSites,
@@ -34,11 +34,11 @@ const DashboardCardVisits = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartVisits(dateISOToTimestampTZ(value));
+    setRangeStartVisits(dateISOToTimestampTZ(value) ?? -5364662400000);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndVisits(dateISOToTimestampTZ(value));
+    setRangeEndVisits(dateISOToTimestampTZ(value) ?? 32503680000000);
   };
 
   if (isPendingSites || isPendingVisits)

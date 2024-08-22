@@ -24,6 +24,7 @@ const MessageExternalDetailToolbar = ({
   handleAddToClinicalNotes,
   handleDeleteMsg,
 }: MessageExternalDetailToolbarProps) => {
+  //Hooks
   const navigate = useNavigate();
   return (
     <div className="message-detail__toolbar">

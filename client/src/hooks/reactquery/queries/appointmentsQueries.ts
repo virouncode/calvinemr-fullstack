@@ -3,10 +3,9 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { AppointmentType, SiteType } from "../../../types/api";
 
 export const useAppointment = (appointmentId: number) => {
-  return useQuery({
+  return useQuery<AppointmentType>({
     queryKey: ["appointment", appointmentId],
-    queryFn: (): Promise<AppointmentType> =>
-      xanoGet(`/appointments/${appointmentId}`, "staff"),
+    queryFn: () => xanoGet(`/appointments/${appointmentId}`, "staff"),
   });
 };
 
@@ -19,7 +18,7 @@ export const useAppointments = (
   sitesIds: number[],
   sites?: SiteType[]
 ) => {
-  return useQuery({
+  return useQuery<AppointmentType[]>({
     queryKey: [
       "appointments",
       hostsIds,
@@ -29,7 +28,7 @@ export const useAppointments = (
       timelineSiteId,
       sitesIds,
     ],
-    queryFn: (): Promise<AppointmentType[]> =>
+    queryFn: () =>
       xanoGet("/appointments_of_staff_and_sites", "staff", {
         hosts_ids: hostsIds,
         range_start: rangeStart,
@@ -41,9 +40,9 @@ export const useAppointments = (
 };
 
 export const usePatientAppointments = (patientId: number) => {
-  return useQuery({
+  return useQuery<AppointmentType[]>({
     queryKey: ["patientAppointments", patientId],
-    queryFn: (): Promise<AppointmentType[]> =>
+    queryFn: () =>
       xanoGet("/appointments_of_patient", "patient", { patient_id: patientId }),
   });
 };
@@ -53,9 +52,9 @@ export const useStaffAppointments = (
   rangeStart: number,
   rangeEnd: number
 ) => {
-  return useQuery({
+  return useQuery<AppointmentType[]>({
     queryKey: ["staffAppointments", staffId, rangeStart, rangeEnd],
-    queryFn: (): Promise<AppointmentType[]> =>
+    queryFn: () =>
       xanoGet("/appointments_of_staff", "patient", {
         host_id: staffId,
         range_start: rangeStart,

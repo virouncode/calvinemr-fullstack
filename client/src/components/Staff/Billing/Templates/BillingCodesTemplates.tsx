@@ -19,9 +19,12 @@ type BillingCodesTemplatesProps = {
 const BillingCodesTemplates = ({
   handleSelectTemplate,
 }: BillingCodesTemplatesProps) => {
+  //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [search, setSearch] = useState("");
+  const billingCodesTemplatesStartRef = useRef<HTMLDivElement | null>(null);
+  //Queries
   const {
     data,
     isPending,
@@ -30,14 +33,12 @@ const BillingCodesTemplates = ({
     fetchNextPage,
     isFetching,
   } = useBillingCodesTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
-
-  const billingCodesTemplatesStartRef = useRef<HTMLDivElement | null>(null);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

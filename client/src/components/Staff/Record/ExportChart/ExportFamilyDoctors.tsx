@@ -14,6 +14,7 @@ type ExportFamilyDoctorsProps = {
 };
 
 const ExportFamilyDoctors = ({ patientId }: ExportFamilyDoctorsProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const CARD_STYLE = {
     width: "95%",
@@ -32,7 +33,7 @@ const ExportFamilyDoctors = ({ patientId }: ExportFamilyDoctorsProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
-  //PATIENT DOCTORS
+  //Queries
   const {
     data: patientDoctors,
     isPending,

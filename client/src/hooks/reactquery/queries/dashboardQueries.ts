@@ -9,9 +9,9 @@ import {
 import { getLimitTimestampForAge } from "../../../utils/dates/formatDates";
 
 export const useDashboardVisits = (rangeStart: number, rangeEnd: number) => {
-  return useQuery({
+  return useQuery<AppointmentType[]>({
     queryKey: ["dashboardVisits", rangeStart, rangeEnd],
-    queryFn: (): Promise<AppointmentType[]> =>
+    queryFn: () =>
       xanoGet(`/dashboard/visits_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -20,9 +20,9 @@ export const useDashboardVisits = (rangeStart: number, rangeEnd: number) => {
 };
 
 export const useDashboardBillings = (rangeStart: number, rangeEnd: number) => {
-  return useQuery({
+  return useQuery<BillingType[]>({
     queryKey: ["dashboardBillings", rangeStart, rangeEnd],
-    queryFn: (): Promise<BillingType[]> =>
+    queryFn: () =>
       xanoGet(`/dashboard/billings_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -34,9 +34,9 @@ export const useDashboardMedications = (
   rangeStart: number,
   rangeEnd: number
 ) => {
-  return useQuery({
+  return useQuery<MedType[]>({
     queryKey: ["dashboardMedications", rangeStart, rangeEnd],
-    queryFn: (): Promise<MedType[]> =>
+    queryFn: () =>
       xanoGet(`/dashboard/medications_in_range`, "admin", {
         range_start: rangeStart,
         range_end: rangeEnd,
@@ -47,7 +47,7 @@ export const useDashboardMedications = (
 type TotalsForSitePerGenderType = { M: number; F: number; O: number };
 
 const fetchPatientsPerGender = async (sites: SiteType[]) => {
-  const genders = ["M", "F", "O"];
+  const genders: ("M" | "F" | "O")[] = ["M", "F", "O"];
   let totals: TotalsForSitePerGenderType[] = [];
   for (const site of sites) {
     const totalsForSite: TotalsForSitePerGenderType = {
@@ -56,7 +56,7 @@ const fetchPatientsPerGender = async (sites: SiteType[]) => {
       O: 0,
     };
     for (let i = 0; i < genders.length; i++) {
-      const response = await xanoGet(
+      const response: number = await xanoGet(
         "/dashboard/patients_gender_site",
         "admin",
         { site_id: site.id, gender: genders[i] }
@@ -179,7 +179,7 @@ const fetchPatientsPerAge = async (sites: SiteType[]) => {
 };
 
 export const useDashboardPatientsPerAge = (sites?: SiteType[]) => {
-  return useQuery<TotalsForSitePerAgeType[]>({
+  return useQuery({
     queryKey: ["dashboardPatientsPerAge"],
     queryFn: () => fetchPatientsPerAge(sites as SiteType[]),
     enabled: !!sites,

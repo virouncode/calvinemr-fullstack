@@ -19,7 +19,9 @@ const CalvinAIChatMessage = ({
   message,
   isLoading,
 }: CalvinAIChatMessageProps) => {
+  //Hooks
   const textRef = useRef<HTMLParagraphElement | null>(null);
+
   const handleCopyToClipboard = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {

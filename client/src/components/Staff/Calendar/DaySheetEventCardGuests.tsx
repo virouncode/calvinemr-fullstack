@@ -10,6 +10,7 @@ type DaySheetEventCardGuestsProps = {
 };
 
 const DaySheetEventCardGuests = ({ event }: DaySheetEventCardGuestsProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div>

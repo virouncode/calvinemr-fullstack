@@ -14,6 +14,7 @@ const ContactFaxForm = ({
   initialFaxNumber,
   setAddFaxNumberVisible,
 }: ContactFaxFormProps) => {
+  //Hooks
   const [errMsgPost, setErrMsgPost] = useState("");
   const [contactType, setContactType] = useState("doctors");
 

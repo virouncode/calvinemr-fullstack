@@ -16,12 +16,14 @@ type SiteFormProps = {
 };
 
 const SiteForm = ({ setAddVisible }: SiteFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [formDatas, setFormDatas] = useState(initialSite);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  //Queries
   const sitePost = useSitesPost();
 
   const handleCancel = () => {

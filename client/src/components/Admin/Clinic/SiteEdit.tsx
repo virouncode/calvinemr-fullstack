@@ -17,12 +17,14 @@ type SiteEditProps = {
 };
 
 const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [formDatas, setFormDatas] = useState(site);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  //Queries
   const sitePut = useSitesPut();
 
   const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {

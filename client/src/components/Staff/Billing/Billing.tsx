@@ -17,6 +17,7 @@ import BillingForm from "./BillingForm";
 import BillingTable from "./BillingTable";
 
 const Billing = () => {
+  //Hooks
   const { pid } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const [addVisible, setAddVisible] = useState(pid ? true : false);
@@ -24,6 +25,9 @@ const Billing = () => {
   const [rangeStart, setRangeStart] = useState(getStartOfTheMonthTZ()); //start of the month
   const [rangeEnd, setRangeEnd] = useState(getEndOfTheMonthTZ()); //end of the month
   const [all, setAll] = useState(false);
+  const initialRangeStart = useRef(rangeStart);
+  const initialRangeEnd = useRef(rangeEnd);
+  //Queries
   const {
     data,
     isPending,
@@ -32,15 +36,11 @@ const Billing = () => {
     fetchNextPage,
     isFetching,
   } = useBillings(rangeStart, rangeEnd);
-
   const {
     data: sites,
     isPending: isPendingSites,
     error: errorSites,
   } = useSites();
-
-  const initialRangeStart = useRef(rangeStart);
-  const initialRangeEnd = useRef(rangeEnd);
 
   const handleAdd = () => {
     setAddVisible(true);

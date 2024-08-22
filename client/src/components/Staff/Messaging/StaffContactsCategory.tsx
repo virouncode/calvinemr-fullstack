@@ -24,7 +24,9 @@ const StaffContactsCategory = ({
   handleCheckCategory,
   initiallyUnfolded,
 }: StaffContactsCategoryProps) => {
+  //Hooks
   const [listVisible, setListVisible] = useState(initiallyUnfolded);
+
   const handleClick = () => {
     setListVisible((v) => !v);
   };

@@ -22,12 +22,14 @@ const AdminLayout = ({
   toastExpiredID,
   tokenLimitVerifierID,
 }: AdminLayoutProps) => {
+  //Hooks
   const { title } = useTitleContext();
-  const onConfirm = () => setCreditsVisible(false);
   const [creditsVisible, setCreditsVisible] = useState(false);
   const [lockedScreen, setLockedScreen] = useState(false);
   useAutoLockScreen(setLockedScreen);
   useLocalStorageLock(setLockedScreen);
+
+  const onConfirm = () => setCreditsVisible(false);
 
   return (
     <div className="wrapper">

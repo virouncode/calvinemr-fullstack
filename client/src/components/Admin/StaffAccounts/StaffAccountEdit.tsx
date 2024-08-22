@@ -31,7 +31,7 @@ const StaffAccountEdit = ({
   setEditVisible,
   sites,
 }: StaffAccountEditProps) => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [formDatas, setFormDatas] = useState<StaffType>(infos);

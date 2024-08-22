@@ -12,6 +12,7 @@ type PharmaciesFaxNumbersProps = {
 const PharmaciesFaxNumbers = ({
   handleClickPharmacy,
 }: PharmaciesFaxNumbersProps) => {
+  //Queries
   const {
     data,
     isPending,
@@ -20,7 +21,7 @@ const PharmaciesFaxNumbers = ({
     fetchNextPage,
     isFetching,
   } = useTopic("PHARMACIES", 0);
-
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

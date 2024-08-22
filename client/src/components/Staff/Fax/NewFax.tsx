@@ -44,6 +44,7 @@ const NewFax = ({
   initialRecipient,
   reply = false,
 }: NewFaxProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const { clinic } = useClinicContext() as { clinic: ClinicType };
@@ -58,6 +59,7 @@ const NewFax = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const { data: sites, isPending, error } = useSites();
   const faxPost = useFaxPost();
 

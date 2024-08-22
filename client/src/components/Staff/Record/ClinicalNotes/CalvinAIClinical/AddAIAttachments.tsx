@@ -42,6 +42,7 @@ const AddAIAttachments = ({
   promptText,
   setPromptText,
 }: AddAIAttachmentsProps) => {
+  //Hooks
   const [attachmentsAddedIds, setAttachmentsAddedIds] = useState<number[]>([]);
 
   return (

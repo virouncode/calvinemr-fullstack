@@ -40,6 +40,7 @@ const AddAIReportItem = ({
   lastItemRef,
 }: AddAIReportItemProps) => {
   const isChecked = (id: number) => reportsAddedIds.includes(id);
+
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);

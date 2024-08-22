@@ -45,7 +45,7 @@ import ForwardTodo from "./ForwardTodo";
 import Message from "./Message";
 import MessageDetailToolbar from "./MessageDetailToolbar";
 import MessagesAttachments from "./MessagesAttachments";
-import MessagesPrintPU from "./MessagesPrintPU";
+import MessagesPrint from "./MessagesPrint";
 import NewTodo from "./NewTodo";
 import ReplyMessage from "./ReplyMessage";
 
@@ -64,10 +64,11 @@ const MessageDetail = ({
   printVisible,
   setPrintVisible,
 }: MessageDetailProps) => {
+  //Hooks
+  const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { messageId } = useParams();
   const { staffInfos } = useStaffInfosContext();
-  const navigate = useNavigate();
   const [replyVisible, setReplyVisible] = useState(false);
   const [forwardVisible, setForwardVisible] = useState(false);
   const [forwardTodoVisible, setForwardTodoVisible] = useState(false);
@@ -75,18 +76,19 @@ const MessageDetail = ({
   const [newTodoVisible, setNewTodoVisible] = useState(false);
   const [allPersons, setAllPersons] = useState(false);
   const [posting, setPosting] = useState(false);
+  const messageContentRef = useRef<HTMLDivElement | null>(null);
+  const attachments = (
+    message.attachments_ids as { attachment: MessageAttachmentType }[]
+  ).map(({ attachment }) => attachment);
+  //Queries
   const {
     data: previousMsgs,
     isPending,
     error,
   } = usePreviousMessages(message, section);
-  const messageContentRef = useRef<HTMLDivElement | null>(null);
   const messagePut = useMessagePut(user.id, section);
   const todoDelete = useTodoDelete(user.id);
   const clinicalNotePost = useClinicalNotePost();
-  const attachments = (
-    message.attachments_ids as { attachment: MessageAttachmentType }[]
-  ).map(({ attachment }) => attachment);
 
   useEffect(() => {
     //to hide parameters
@@ -315,7 +317,7 @@ const MessageDetail = ({
             }}
             onUnload={() => setPrintVisible(false)}
           >
-            <MessagesPrintPU
+            <MessagesPrint
               message={message}
               previousMsgs={previousMsgs}
               attachments={attachments}

@@ -17,11 +17,13 @@ type CalvinAITemplateFormProps = {
 const CalvinAITemplateForm = ({
   setNewTemplateVisible,
 }: CalvinAITemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplate, setNewTemplate] = useState<Partial<CalvinAITemplateType>>(
     { name: "", prompt: "" }
   );
   const [errMsg, setErrMsg] = useState("");
+  //Queries
   const templatePost = useCalvinAITemplatePost();
 
   const handleChange = (

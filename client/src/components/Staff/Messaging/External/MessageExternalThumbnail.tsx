@@ -36,9 +36,11 @@ const MessageExternalThumbnail = ({
   section,
   lastItemRef,
 }: MessageExternalThumbnailProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
+  //Queries
   const messagePut = useMessageExternalPut();
 
   const handleMsgClick = async () => {

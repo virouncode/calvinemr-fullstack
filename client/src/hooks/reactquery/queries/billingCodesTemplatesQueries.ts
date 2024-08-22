@@ -3,7 +3,7 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
   AdminType,
   BillingCodeTemplateType,
-  PaginatedDatasType,
+  XanoPaginatedType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import useUserContext from "../../context/useUserContext";
@@ -11,11 +11,9 @@ import useUserContext from "../../context/useUserContext";
 export const useBillingCodesTemplates = (search: string) => {
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const userType = user.access_level;
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<BillingCodeTemplateType>>({
     queryKey: ["billingCodesTemplates", search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<BillingCodeTemplateType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet("/billing_codes_templates", userType, {
         page: pageParam,
         search,

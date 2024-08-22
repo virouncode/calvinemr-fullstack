@@ -1,9 +1,10 @@
 import React from "react";
 import TrashIcon from "../../UI/Icons/TrashIcon";
 import Input from "../../UI/Inputs/Input";
+import { RoomType } from "../../../types/api";
 
 type RoomItemProps = {
-  room: { id: string; title: string };
+  room: RoomType;
   handleDeleteRoom: (id: string) => void;
   handleChangeRoomTitle: (
     e: React.ChangeEvent<HTMLInputElement>,

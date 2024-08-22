@@ -12,6 +12,7 @@ type ClinicalNoteCardVersionProps = {
 };
 
 const ClinicalNoteCardVersion = ({ version }: ClinicalNoteCardVersionProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="clinical-notes__card">

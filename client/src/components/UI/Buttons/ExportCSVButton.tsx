@@ -2,7 +2,8 @@ import React from "react";
 import { CSVLink } from "react-csv";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { BillingType } from "../../../types/api";
+import { AdminType, BillingType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import { toExportCSVName } from "../../../utils/files/toExportCSVName";
 
@@ -24,7 +25,7 @@ const ExportCSVButton = ({
   all,
   headers,
 }: ExportCSVButtonProps) => {
-  const { user } = useUserContext();
+  const { user } = useUserContext() as { user: AdminType | UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (
     <button>

@@ -20,6 +20,7 @@ type MessageTemplateFormProps = {
 const MessageTemplateForm = ({
   setNewTemplateVisible,
 }: MessageTemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [name, setName] = useState("");
@@ -27,6 +28,7 @@ const MessageTemplateForm = ({
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [progress, setProgress] = useState(false);
+  //Queries
   const messageTemplatePost = useMessagesTemplatePost();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

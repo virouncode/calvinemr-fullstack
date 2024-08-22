@@ -55,7 +55,8 @@ const ClinicalNoteForm = ({
   newClinicalNoteInMemory,
   setNewClinicalNoteInMemory,
 }: ClinicalNoteFormProps) => {
-  //hooks
+  //Hooks
+  const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState<Partial<ClinicalNoteType>>(
@@ -79,16 +80,13 @@ const ClinicalNoteForm = ({
   const [errMsg, setErrMsg] = useState("");
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-
-  const navigate = useNavigate();
-
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const inputTextBeforeSpeech = useRef(
     newClinicalNoteInMemory
       ? newClinicalNoteInMemory.MyClinicalNotesContent
       : ""
   );
-
+  //Queries
   const clinicalNotePost = useClinicalNotePost();
 
   useEffect(() => {

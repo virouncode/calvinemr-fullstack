@@ -1,9 +1,11 @@
+import NewWindow from "react-new-window";
+
 export const copyToClipboard = async (
-  newWindow: Window,
+  newWindow: NewWindow,
   element: HTMLElement
 ) => {
-  newWindow.window.focus();
-  await newWindow.window.navigator.clipboard.write([
+  newWindow.window?.focus();
+  await newWindow.window?.navigator.clipboard.write([
     new ClipboardItem({
       "text/html": new Blob([element.outerHTML], { type: "text/html" }),
     }),

@@ -11,7 +11,9 @@ import NextAppointments from "./NextAppointments";
 import PastAppointments from "./PastAppointments";
 
 const PatientAppointments = () => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
+  //Queries
   const {
     data: patientAppointments,
     error,

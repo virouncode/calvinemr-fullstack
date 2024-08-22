@@ -55,7 +55,7 @@ const Invitation = ({
   siteId,
   allDay,
 }: InvitationProps) => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { clinic } = useClinicContext();
   const [message, setMessage] = useState(

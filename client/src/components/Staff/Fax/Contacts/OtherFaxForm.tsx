@@ -23,6 +23,7 @@ const OtherFaxForm = ({
   setErrMsgPost,
   setAddFaxNumberVisible,
 }: OtherFaxFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [formDatas, setFormDatas] = useState({
     name: "",
@@ -30,6 +31,7 @@ const OtherFaxForm = ({
     fax: initialFaxNumber,
   });
   const [progress, setProgress] = useState(false);
+  //Queries
   const faxDirectoryPost = useFaxDirectoryPost();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,8 +10,8 @@ import {
 } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
-import MessagesExternalPrintPU from "../../Staff/Messaging/External/MessagesExternalPrintPU";
-import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import MessagesExternalAttachments from "../../Staff/Messaging/External/MessagesExternalAttachments";
+import MessagesExternalPrint from "../../Staff/Messaging/External/MessagesExternalPrint";
 import Button from "../../UI/Buttons/Button";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import MessagePatientDetailToolbar from "./MessagePatientDetailToolbar";
@@ -32,6 +32,7 @@ const MessagePatientDetail = ({
   printVisible,
   setPrintVisible,
 }: MessagePatientDetailProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const [replyVisible, setReplyVisible] = useState(false);
   const previousMsgs: MessageExternalType[] = message
@@ -49,6 +50,7 @@ const MessagePatientDetail = ({
         ({ attachment }) => attachment
       )
     : [];
+  //Queries
   const messagePut = useMessageExternalPut();
 
   const handleClickBack = () => {
@@ -120,7 +122,7 @@ const MessagePatientDetail = ({
                 index={index + 1}
               />
             ))}
-          <MessagesAttachments
+          <MessagesExternalAttachments
             attachments={attachments}
             deletable={false}
             cardWidth="15%"
@@ -144,7 +146,7 @@ const MessagePatientDetail = ({
             }}
             onUnload={() => setPrintVisible(false)}
           >
-            <MessagesExternalPrintPU
+            <MessagesExternalPrint
               message={message}
               previousMsgs={previousMsgs}
               attachments={attachments}

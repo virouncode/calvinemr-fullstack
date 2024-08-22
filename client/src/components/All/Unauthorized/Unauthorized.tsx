@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Unauthorized = () => {
+  //Hooks
   const location = useLocation();
   const navigate = useNavigate();
   return (

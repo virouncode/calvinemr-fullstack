@@ -60,6 +60,7 @@ const BillingTableItem = ({
   lastItemRef,
   sites,
 }: BillingTableItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [itemInfos, setItemInfos] = useState({
@@ -91,6 +92,7 @@ const BillingTableItem = ({
   const [refOHIPSearchVisible, setRefOHIPSearchVisible] = useState(false);
   const [progress, setProgress] = useState(false);
   const userType = user.access_level;
+  //Queries
   const billingPost = useBillingPost();
   const billingPut = useBillingPut();
   const billingDelete = useBillingDelete();
@@ -98,7 +100,7 @@ const BillingTableItem = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const name = e.target.name;
-    let value: string | number = e.target.value;
+    let value: string | number | null = e.target.value;
     if (name === "date") value = dateISOToTimestampTZ(value);
     setItemInfos({ ...itemInfos, [name]: value });
   };

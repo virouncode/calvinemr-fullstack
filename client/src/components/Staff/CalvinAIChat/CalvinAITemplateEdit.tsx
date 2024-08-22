@@ -17,6 +17,7 @@ const CalvinAITemplateEdit = ({
   setEditTemplateVisible,
   templateToEdit,
 }: CalvinAITemplateEditProps) => {
+  //Hooks
   const [editedTemplate, setEditedTemplate] = useState<
     CalvinAITemplateType | undefined
   >(templateToEdit);

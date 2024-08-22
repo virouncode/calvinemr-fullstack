@@ -65,12 +65,8 @@ const ClinicalNoteCard = ({
   addVisible,
   setNewButtonDisabled,
 }: ClinicalNoteCardProps) => {
-  //hooks
-
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
-  const bodyRef = useRef<HTMLDivElement | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const editClinicalNoteRef = useRef<HTMLDivElement | null>(null);
   const [editVisible, setEditVisible] = useState(false);
   const [tempFormDatas, setTempFormDatas] = useState<ClinicalNoteType | null>(
     null
@@ -85,8 +81,11 @@ const ClinicalNoteCard = ({
   const [isRewriting, setIsRewriting] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [inputText, setInputText] = useState("");
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const editClinicalNoteRef = useRef<HTMLDivElement | null>(null);
   const inputTextBeforeSpeech = useRef<string>("");
-
+  //Queries
   const clinicalNoteLogPost = useClinicalNoteLogPost(patientId);
   const clinicalNotePut = useClinicalNotePut(patientId);
 

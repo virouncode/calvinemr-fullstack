@@ -7,7 +7,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../api/xanoCRUD/xanoPut";
 import useUserContext from "../../../../hooks/context/useUserContext";
-import { ClinicalNoteType, PaginatedDatasType } from "../../../../types/api";
+import { ClinicalNoteType, XanoPaginatedType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import Button from "../../../UI/Buttons/Button";
 import Input from "../../../UI/Inputs/Input";
@@ -42,7 +42,7 @@ type ClinicalNotesToolBarProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>,
+      InfiniteData<XanoPaginatedType<ClinicalNoteType>, unknown>,
       Error
     >
   >;
@@ -78,7 +78,7 @@ const ClinicalNotesToolBar = ({
   setNotesVisible,
   clinicalNotes,
 }: ClinicalNotesToolBarProps) => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
 
   //Events

@@ -7,8 +7,10 @@ import { SettingsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 
 const SlotSelect = () => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     try {

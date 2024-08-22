@@ -16,6 +16,7 @@ const NextAppointmentItem = ({
   isAppointmentSelected,
   handleCheck,
 }: NextAppointmentItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <li key={appointment.id} className="appointments-patient__item">

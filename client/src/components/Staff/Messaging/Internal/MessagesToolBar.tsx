@@ -46,8 +46,10 @@ const MessagesToolBar = ({
   newTodoVisible,
   setNewTodoVisible,
 }: MessagesToolBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+  //Queries
   const messagePut = useMessagePut(user.id, section);
   const todoDelete = useTodoDelete(user.id);
 

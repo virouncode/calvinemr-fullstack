@@ -13,6 +13,7 @@ import StaffAccountSearch from "./StaffAccountSearch";
 import StaffAccountsTable from "./StaffAccountsTable";
 
 const StaffAccounts = () => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
@@ -28,6 +29,7 @@ const StaffAccounts = () => {
     ohip_billing_nbr: "",
     site_id: -1, //All
   });
+  //Queries
   const {
     data: sites,
     isPending: isPendingSites,
@@ -54,7 +56,6 @@ const StaffAccounts = () => {
         </div>
         <StaffAccountsTable
           search={search}
-          staffInfos={staffInfos}
           setEditVisible={setEditVisible}
           setSelectedStaffId={setSelectedStaffId}
         />

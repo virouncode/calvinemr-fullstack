@@ -32,8 +32,10 @@ const FaxThumbnail = ({
   faxesSelectedIds,
   section,
 }: FaxThumbnailProps) => {
+  //Hooks
   const [addFaxNumberVisible, setAddFaxNumberVisible] = useState(false);
   const [contactName, setContactName] = useState("");
+  //Queries
   const faxDelete = useFaxDelete();
 
   useEffect(() => {

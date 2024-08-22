@@ -1,4 +1,6 @@
 import React from "react";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import {
   lifeStageCT,
   reactionTypeCT,
@@ -8,10 +10,10 @@ import { AllergyType } from "../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
 
 type ExportAllergiesProps = {
-  topicDatas: AllergyType[];
+  patientId: number;
 };
 
-const ExportAllergies = ({ topicDatas }: ExportAllergiesProps) => {
+const ExportAllergies = ({ patientId }: ExportAllergiesProps) => {
   const CARD_STYLE = {
     width: "95%",
     margin: "20px auto",
@@ -29,6 +31,18 @@ const ExportAllergies = ({ topicDatas }: ExportAllergiesProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "ALLERGIES & ADVERSE REACTIONS",
+    patientId
+  );
+
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
   return (
     <div style={CARD_STYLE}>
       <p style={TITLE_STYLE}>ALLERGIES & ADVERSE REACTIONS</p>

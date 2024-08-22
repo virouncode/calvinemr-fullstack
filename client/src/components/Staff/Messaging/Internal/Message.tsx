@@ -11,6 +11,7 @@ type MessageProps = {
 };
 
 const Message = ({ message, index, section }: MessageProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="message" style={{ marginLeft: `${index * 20}px` }}>

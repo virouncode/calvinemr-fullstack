@@ -25,6 +25,7 @@ const Patients = ({
   allPatientsChecked = false,
   handleCheckAllPatients,
 }: PatientsProps) => {
+  //Hooks
   const [search, setSearch] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

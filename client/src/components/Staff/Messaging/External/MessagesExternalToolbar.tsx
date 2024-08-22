@@ -37,8 +37,10 @@ const MessagesExternalToolBar = ({
   selectAllVisible,
   setSelectAllVisible,
 }: MessagesExternalToolBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+  //Queries
   const messagePut = useMessageExternalPut();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

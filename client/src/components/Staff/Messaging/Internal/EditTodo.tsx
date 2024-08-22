@@ -36,11 +36,11 @@ type EditTodoProps = {
 };
 
 const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const todoAttachments = (
     todo.attachments_ids as { attachment: MessageAttachmentType }[]
   ).map(({ attachment }) => attachment);
-
   const [attachments, setAttachments] =
     useState<MessageAttachmentType[]>(todoAttachments);
   const [attachmentsToRemoveIds, setAttachmentsToRemoveIds] = useState<
@@ -61,6 +61,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePut = useMessagePut(user.id, "To-dos");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -116,13 +117,13 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
-    if (todoAttachments.find(({ file }) => file.name === fileName)) {
+    if (todoAttachments.find(({ file }) => file?.name === fileName)) {
       setAttachmentsToRemoveIds([
         ...attachmentsToRemoveIds,
-        todoAttachments.find(({ file }) => file.name === fileName)
+        todoAttachments.find(({ file }) => file?.name === fileName)
           ?.id as number,
       ]);
     }

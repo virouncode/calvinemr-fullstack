@@ -28,6 +28,7 @@ const PatientsGroupForm = ({
   setAddGroupVisible,
   global,
 }: PatientsGroupFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [groupInfos, setGroupInfos] = useState<Partial<GroupType>>({
     name: "",
@@ -41,7 +42,7 @@ const PatientsGroupForm = ({
   const [addPatientsVisible, setAddPatientsVisible] = useState(false);
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-
+  //Queries
   const patientsGroupPost = usePatientsGroupPost(user.id);
 
   const handleChange = (

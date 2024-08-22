@@ -10,7 +10,7 @@ import MessagesPatientLeftBar from "./MessagesPatientLeftBar";
 import MessagesPatientToolBar from "./MessagesPatientToolbar";
 
 const MessagesPatient = () => {
-  //HOOKS
+  //Hoks
   const { user } = useUserContext() as { user: UserPatientType };
   const [search, setSearch] = useState("");
   const [section, setSection] = useState("Received messages");
@@ -19,6 +19,7 @@ const MessagesPatient = () => {
   const [currentMsgId, setCurrentMsgId] = useState(0);
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAllVisible, setSelectAllVisible] = useState(true);
+  //Queries
   const {
     data: messages,
     isPending,

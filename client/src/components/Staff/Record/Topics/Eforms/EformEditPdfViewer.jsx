@@ -28,7 +28,7 @@ const EformEditPdfViewer = ({
   eform,
 }) => {
   const { user } = useUserContext();
-  const careElementPut = useTopicPut("E-FORMS", patientId);
+  const eformPut = useTopicPut("E-FORMS", patientId);
   useEffect(() => {
     const viewSDKClient = new ViewSDKClient(
       patientId,
@@ -43,7 +43,7 @@ const EformEditPdfViewer = ({
             false
           )}`
         : fileName,
-      careElementPut,
+      eformPut,
       setEditVisible
     );
     viewSDKClient.ready().then(() => {
@@ -64,7 +64,7 @@ const EformEditPdfViewer = ({
       viewSDKClient.registerSaveHandler();
     });
   }, [
-    careElementPut,
+    eformPut,
     eform,
     fileName,
     patientFirstName,

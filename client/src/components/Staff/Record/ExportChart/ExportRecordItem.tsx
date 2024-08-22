@@ -1,12 +1,13 @@
 import React from "react";
+import { TopicExportType } from "../../../../types/api";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
 
 type ExportRecordItemProps = {
-  recordName: string;
-  isRecordSelected: (recordName: string) => boolean;
+  recordName: TopicExportType;
+  isRecordSelected: (recordName: TopicExportType) => boolean;
   handleCheckRecord: (
     e: React.ChangeEvent<HTMLInputElement>,
-    recordName: string
+    recordName: TopicExportType
   ) => void;
 };
 

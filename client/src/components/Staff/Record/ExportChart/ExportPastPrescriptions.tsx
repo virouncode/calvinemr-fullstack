@@ -1,27 +1,40 @@
 import React, { useEffect } from "react";
-import { AttachmentType, PrescriptionType } from "../../../../types/api";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
+import { AttachmentType } from "../../../../types/api";
 import DocumentEmbed from "./DocumentEmbed";
 
 type ExportPastPrescriptionsProps = {
-  topicDatas: PrescriptionType[];
+  patientId: number;
   prescriptionsFilesRef: React.MutableRefObject<AttachmentType[]>;
-  hasNextPage: boolean;
 };
 
 const ExportPastPrescriptions = ({
-  topicDatas,
+  patientId,
   prescriptionsFilesRef,
-  hasNextPage,
 }: ExportPastPrescriptionsProps) => {
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "PAST PRESCRIPTIONS",
+    patientId
+  );
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
   useEffect(() => {
-    if (hasNextPage) return;
-    for (const item of topicDatas) {
+    if (hasNextPage || !data) return;
+    for (const item of data.pages.flatMap((page) => page.items)) {
       !prescriptionsFilesRef.current
         .map((file) => file.name)
         .includes(item.attachment.file.name) &&
         prescriptionsFilesRef.current.push(item.attachment.file);
     }
-  }, [topicDatas, hasNextPage, prescriptionsFilesRef]);
+  }, [data, hasNextPage, prescriptionsFilesRef]);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
+
   return (
     <div className="export__card">
       <p className="export__title" style={{ backgroundColor: "#E3AFCD" }}>

@@ -16,9 +16,10 @@ type TodosTemplatesProps = {
 };
 
 const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
+  //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
-
+  //Queries
   const {
     data,
     isPending,
@@ -27,7 +28,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
     fetchNextPage,
     isFetching,
   } = useTodosTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

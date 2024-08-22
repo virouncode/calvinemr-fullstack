@@ -18,16 +18,17 @@ const SubheaderWelcome = ({
   toastExpiredID,
   tokenLimitVerifierID,
 }: SubheaderWelcomeProps) => {
-  const [helloMessage, setHelloMessage] = useState("");
+  //Hooks
+  const navigate = useNavigate();
   const { user, setUser } = useUserContext();
   const { setClinic } = useClinicContext();
   const { setAuth } = useAuthContext();
   const { staffInfos, setStaffInfos } = useStaffInfosContext();
   const { adminsInfos, setAdminsInfos } = useAdminsInfosContext();
-  const navigate = useNavigate();
+  const [welcomeMessage, setWelcomeMessage] = useState("");
 
   useEffect(() => {
-    const displayHello = () => {
+    const displayWelcome = () => {
       const now = nowTZ();
       const hour = now.hour;
       let message = "";
@@ -40,10 +41,10 @@ const SubheaderWelcome = ({
       } else {
         message = "Good Night";
       }
-      setHelloMessage(message);
+      setWelcomeMessage(message);
     };
-    displayHello();
-    const intervalHello = setInterval(displayHello, 1800000);
+    displayWelcome();
+    const intervalHello = setInterval(displayWelcome, 1800000);
     return () => {
       clearInterval(intervalHello);
     };
@@ -73,7 +74,7 @@ const SubheaderWelcome = ({
   return (
     <div className="subheader-section__right">
       <span style={{ marginRight: "5px" }}>
-        {helloMessage} {toWelcomeName(user, staffInfos, adminsInfos)}
+        {welcomeMessage} {toWelcomeName(user, staffInfos, adminsInfos)}
       </span>
       <strong
         style={{ textDecoration: "underline", cursor: "pointer" }}

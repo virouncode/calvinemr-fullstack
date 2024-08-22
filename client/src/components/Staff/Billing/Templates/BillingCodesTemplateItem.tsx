@@ -32,10 +32,11 @@ const BillingCodesTemplateItem = ({
   setErrMsgPost,
   lastItemRef,
 }: BillingCodesTemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
-  const userType = user.access_level;
   const [editVisible, setEditVisible] = useState(false);
   const [formDatas, setFormDatas] = useState(template);
+  //Queries
   const billingCodeTemplatePost = useBillingCodeTemplatePost();
   const billingCodeTemplatePut = useBillingCodeTemplatePut();
   const billingCodeTemplateDelete = useBillingCodeTemplateDelete();
@@ -72,9 +73,13 @@ const BillingCodesTemplateItem = ({
     }
     for (let billing_code of formDatas.billing_codes) {
       billing_code = removeLastLetter(billing_code.toUpperCase());
-      const response = await xanoGet("/ohip_fee_schedule_for_code", userType, {
-        billing_code,
-      });
+      const response = await xanoGet(
+        "/ohip_fee_schedule_for_code",
+        user.access_level,
+        {
+          billing_code,
+        }
+      );
       if (!response) {
         setErrMsgPost(`Billing code ${billing_code} doesn't exist`);
         return;

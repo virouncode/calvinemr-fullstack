@@ -20,12 +20,18 @@ export const useReportPost = () => {
         queryKey: ["reportsSent", reportToPost.patient_id],
       });
       await queryClient.cancelQueries({
+        queryKey: ["reports", reportToPost.patient_id],
+      });
+      await queryClient.cancelQueries({
         queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
       });
     },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
       socket?.emit("message", { key: ["reportsSent", data.patient_id] });
+      socket?.emit("message", {
+        key: ["reports", data.patient_id],
+      });
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
@@ -54,6 +60,9 @@ export const useReportInboxPost = () => {
         queryKey: ["reportsSent", reportToPost.patient_id],
       });
       await queryClient.cancelQueries({
+        queryKey: ["reports", reportToPost.patient_id],
+      });
+      await queryClient.cancelQueries({
         queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
       });
     },
@@ -63,6 +72,9 @@ export const useReportInboxPost = () => {
       });
       socket?.emit("message", {
         key: ["reportsSent", data.patient_id],
+      });
+      socket?.emit("message", {
+        key: ["reports", data.patient_id],
       });
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
@@ -82,6 +94,7 @@ export const useReportPut = (patientId: number) => {
         queryKey: ["reportsReceived", patientId],
       });
       await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
+      await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
       await queryClient.cancelQueries({
         queryKey: ["reportsInbox", reportToPut.assigned_staff_id],
       });
@@ -89,6 +102,7 @@ export const useReportPut = (patientId: number) => {
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", patientId] });
       socket?.emit("message", { key: ["reportsSent", patientId] });
+      socket?.emit("message", { key: ["reports", patientId] });
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
@@ -123,10 +137,14 @@ export const useReportInboxPut = (staffId: number) => {
       await queryClient.cancelQueries({
         queryKey: ["reportsSent", reportToPut.patient_id],
       });
+      await queryClient.cancelQueries({
+        queryKey: ["reports", reportToPut.patient_id],
+      });
     },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
       socket?.emit("message", { key: ["reportsSent", data.patient_id] });
+      socket?.emit("message", { key: ["reports", data.patient_id] });
       socket?.emit("message", { key: ["reportsInbox", staffId] });
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
@@ -154,10 +172,13 @@ export const useReportDelete = (patientId: number) => {
         queryKey: ["reportsReceived", patientId],
       });
       await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
+      await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
+      await queryClient.cancelQueries({ queryKey: ["reportsInbox"] });
     },
     onSuccess: () => {
       socket?.emit("message", { key: ["reportsReceived", patientId] });
       socket?.emit("message", { key: ["reportsSent", patientId] });
+      socket?.emit("message", { key: ["reports", patientId] });
       socket?.emit("message", { key: ["reportsInbox"] });
       toast.success(`Report deleted succesfully`, {
         containerId: "A",

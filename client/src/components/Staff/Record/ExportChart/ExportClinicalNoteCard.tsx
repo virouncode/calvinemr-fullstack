@@ -14,6 +14,7 @@ type ExportClinicalNoteCardProps = {
 const ExportClinicalNoteCard = ({
   clinicalNote,
 }: ExportClinicalNoteCardProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="clinical-notes__card clinical-notes__card--print">

@@ -17,7 +17,9 @@ const InvitationInfos = ({
   sites,
   siteSelectedId,
 }: InvitationInfosProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+
   return (
     <div className="invitation__row">
       {templateSelected === "Video appointment" ? (

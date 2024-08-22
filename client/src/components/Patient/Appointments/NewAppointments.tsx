@@ -25,6 +25,7 @@ import AppointmentsSlots from "./AppointmentsSlots";
 import WeekPicker from "./WeekPicker";
 
 const NewAppointments = () => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -38,6 +39,7 @@ const NewAppointments = () => {
     useState<AppointmentProposalType | null>(null);
   const [requestSent, setRequestSent] = useState(false);
 
+  //Queries
   const {
     data: staffAppointmentsInRange,
     isPending,
@@ -47,14 +49,11 @@ const NewAppointments = () => {
     rangeStart,
     rangeEnd
   );
-
   const {
     data: availability,
     isPending: isPendingAvailability,
     error: errorAvailability,
   } = useAssignedPracticianAvailability(user.demographics.assigned_staff_id);
-
-  //Take recurring events into account
 
   const handleClickNext = async () => {
     setRangeStart((rs) =>

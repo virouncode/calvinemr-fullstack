@@ -24,6 +24,7 @@ const CalendarLeftBar = ({
   hostsIds,
   setHostsIds,
 }: CalendarLeftBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (

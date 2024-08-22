@@ -27,6 +27,7 @@ const PharmacyFaxForm = ({
   setErrMsgPost,
   setAddFaxNumberVisible,
 }: PharmacyFaxFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [formDatas, setFormDatas] = useState({
@@ -41,6 +42,7 @@ const PharmacyFaxForm = ({
     email: "",
   });
   const [progress, setProgress] = useState(false);
+  //Queries
   const topicPost = useTopicPost("PHARMACIES", 0);
 
   const handleChange = (

@@ -88,6 +88,7 @@ const ClinicalNoteCardHeader = ({
   isRewriting,
   setIsRewriting,
 }: ClinicalNoteCardHeaderProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const { user } = useUserContext() as { user: UserStaffType };
 

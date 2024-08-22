@@ -4,7 +4,7 @@ type InputDateToggleProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  id: string;
+  id?: string;
   label?: string;
   width?: number;
   disabled?: boolean;

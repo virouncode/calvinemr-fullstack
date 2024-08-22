@@ -12,6 +12,7 @@ type PastAppointmentItemProps = {
 };
 
 const PastAppointmentItem = ({ appointment }: PastAppointmentItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="appointments-patient__item">

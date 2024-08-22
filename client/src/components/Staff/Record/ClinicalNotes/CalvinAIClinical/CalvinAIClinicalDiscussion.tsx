@@ -30,6 +30,7 @@ const CalvinAIClinicalDiscussion = ({
   setAIRewritedText,
   setAIVisible,
 }: CalvinAIClinicalDiscussionProps) => {
+  //Hooks
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);

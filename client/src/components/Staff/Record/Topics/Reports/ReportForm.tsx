@@ -49,7 +49,7 @@ const ReportForm = ({
     Format: "Binary",
     assigned_staff_id: demographicsInfos.assigned_staff_id,
     File: attachment ? attachment.file : null,
-    FileExtensionAndVersion: getExtension(attachment.file.path) ?? "",
+    FileExtensionAndVersion: getExtension(attachment.file?.path) ?? "",
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [sentOrReceived, setSentOrReceived] = useState("Received");
@@ -62,7 +62,7 @@ const ReportForm = ({
     >
   ) => {
     setErrMsgPost("");
-    let value: string | number = e.target.value;
+    let value: string | number | null = e.target.value;
     const name = e.target.name;
     if (
       name === "EventDateTime" ||

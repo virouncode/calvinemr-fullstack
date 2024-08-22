@@ -17,9 +17,11 @@ const ClinicalNotesTemplateEdit = ({
   setEditTemplateVisible,
   templateToEdit,
 }: ClinicalNotesTemplateEditProps) => {
+  //Hooks
   const [editedTemplate, setEditedTemplate] =
     useState<ClinicalNoteTemplateType>(templateToEdit);
   const [errMsg, setErrMsg] = useState("");
+  //Queries
   const templatePut = useClinicalNotesTemplatesPut();
 
   const handleChange = (

@@ -4,7 +4,7 @@ type InputTextToggleProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
   name: string;
-  id: string;
+  id?: string;
   editVisible: boolean;
   label?: string;
   placeholder?: string;

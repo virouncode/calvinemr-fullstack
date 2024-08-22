@@ -16,11 +16,13 @@ type MessageExternalTemplateFormProps = {
 const MessageExternalTemplateForm = ({
   setNewTemplateVisible,
 }: MessageExternalTemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [progress, setProgress] = useState(false);
+  //Queries
   const messageTemplatePost = useMessagesExternalTemplatePost();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

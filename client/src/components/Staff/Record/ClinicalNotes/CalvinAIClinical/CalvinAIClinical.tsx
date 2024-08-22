@@ -26,6 +26,7 @@ const CalvinAIClinical = ({
   setAIRewritedText,
   setAIVisible,
 }: CalvinAIClinicalProps) => {
+  //Hooks
   // const [start, setStart] = useState(true);
   const [chatVisible, setChatVisible] = useState(false);
   const [promptText, setPromptText] = useState<PromptTextType>({
@@ -54,14 +55,6 @@ What is the degree of emergency in a scale on 1 to 10 writing "x out of 10 (10 b
     
 Write all you answers in clear bullet points for more clarity.`,
   });
-  const [introMsg, setIntroMsg] = useState(
-    `Hello I'm a doctor. My patient is a ${getAgeTZ(
-      demographicsInfos.DateOfBirth
-    )} year-old ${toCodeTableName(
-      genderCT,
-      demographicsInfos.Gender
-    )} with the following symptoms:`
-  );
   const [messages, setMessages] = useState<AIMessageType[]>([
     {
       role: "user",

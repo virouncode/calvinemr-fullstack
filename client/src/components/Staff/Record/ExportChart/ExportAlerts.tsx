@@ -1,12 +1,14 @@
 import React from "react";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import { AlertType } from "../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
 
 type ExportAlertsProps = {
-  topicDatas: AlertType[];
+  patientId: number;
 };
 
-const ExportAlerts = ({ topicDatas }: ExportAlertsProps) => {
+const ExportAlerts = ({ patientId }: ExportAlertsProps) => {
   const CARD_STYLE = {
     width: "95%",
     margin: "20px auto",
@@ -24,6 +26,17 @@ const ExportAlerts = ({ topicDatas }: ExportAlertsProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "ALERTS & SPECIAL NEEDS",
+    patientId
+  );
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
   return (
     <div style={CARD_STYLE}>
       <p style={TITLE_STYLE}>ALERTS & SPECIAL NEEDS</p>

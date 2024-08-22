@@ -25,7 +25,9 @@ const AppointmentSlotItem = ({
     if (checked) setAppointmentSelected(appointment);
     else setAppointmentSelected(null);
   };
+
   const isAppointmentSelected = (id: number) => appointmentSelected?.id === id;
+
   return (
     <div key={appointment.id} className="new-appointments__content-item">
       <Checkbox

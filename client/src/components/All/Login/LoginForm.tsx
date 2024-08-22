@@ -27,6 +27,7 @@ const LOGIN_URL = "/auth/login";
 const USERINFO_URL = "/auth/me";
 
 const LoginForm = () => {
+  //Hooks
   const { setAuth } = useAuthContext();
   const { setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -34,7 +35,6 @@ const LoginForm = () => {
   const { setStaffInfos } = useStaffInfosContext();
   const navigate = useNavigate();
   const location = useLocation();
-  //where we wanted to go as a staff member (because radio button is on "Staff") or staff/calendar by default
   const [err, setErr] = useState("");
   const [formDatas, setFormDatas] = useState({
     email: "",

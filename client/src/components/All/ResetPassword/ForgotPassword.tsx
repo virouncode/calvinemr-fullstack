@@ -5,6 +5,7 @@ import ResetPasswordForm from "./ResetPasswordForm";
 import TempPwdForm from "./TempPwdForm";
 
 const ForgotPassword = () => {
+  //Hooks
   const [emailInput, setEmailInput] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");

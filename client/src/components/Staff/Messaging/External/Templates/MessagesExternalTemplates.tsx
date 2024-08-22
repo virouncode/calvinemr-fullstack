@@ -18,8 +18,10 @@ type MessagesExternalTemplatesProps = {
 const MessagesExternalTemplates = ({
   handleSelectTemplate,
 }: MessagesExternalTemplatesProps) => {
+  //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  //Queries
   const {
     data,
     isPending,
@@ -28,7 +30,7 @@ const MessagesExternalTemplates = ({
     fetchNextPage,
     isFetching,
   } = useMessagesExternalTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

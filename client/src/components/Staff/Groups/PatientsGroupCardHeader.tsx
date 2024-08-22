@@ -1,12 +1,12 @@
 import React from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { DemographicsType, GroupType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
 import PaperPlaneIcon from "../../UI/Icons/PaperPlaneIcon";
 import PenIcon from "../../UI/Icons/PenIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
-import { UserStaffType } from "../../../types/app";
 
 type PatientsGroupCardHeaderProps = {
   group: GroupType;
@@ -34,7 +34,9 @@ const PatientsGroupCardHeader = ({
   setInitialRecipients,
   setNewMessageExternalVisible,
 }: PatientsGroupCardHeaderProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+
   const handleSend = () => {
     setInitialRecipients(
       (group.patients as { patient_infos: DemographicsType }[]).map(

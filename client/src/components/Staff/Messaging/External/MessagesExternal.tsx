@@ -10,7 +10,7 @@ import MessagesExternalBox from "./MessagesExternalBox";
 import MessagesExternalToolBar from "./MessagesExternalToolbar";
 
 const MessagesExternal = () => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { messageId, sectionName } = useParams();
   const [search, setSearch] = useState("");
@@ -22,7 +22,7 @@ const MessagesExternal = () => {
   );
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAllVisible, setSelectAllVisible] = useState(true);
-
+  //Queries
   const {
     data: messages,
     isPending,

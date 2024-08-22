@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import { useReports } from "../../../../../hooks/reactquery/queries/reportsQueries";
 import {
   ClinicalNoteAttachmentType,
   DemographicsType,
@@ -31,6 +31,7 @@ const CalvinAIClinicalPrompt = ({
   promptText,
   setPromptText,
 }: CalvinAIClinicalPromptProps) => {
+  //Hooks
   const [isLoadingAttachmentText, setIsLoadingAttachmentText] = useState(false);
   const [isLoadingReportText, setIsLoadingReportText] = useState(false);
   const [attachmentsTextsToAdd, setAttachmentsTextsToAdd] = useState<
@@ -39,6 +40,7 @@ const CalvinAIClinicalPrompt = ({
   const [reportsTextToAdd, setReportsTextsToAdd] = useState<
     { id: number; content: string; date_created: number }[]
   >([]);
+  //Queries
   const {
     data: reports,
     isPending,
@@ -46,7 +48,7 @@ const CalvinAIClinicalPrompt = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useTopic("REPORTS", demographicsInfos.patient_id);
+  } = useReports(demographicsInfos.patient_id);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;

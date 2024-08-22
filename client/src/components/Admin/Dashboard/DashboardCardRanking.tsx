@@ -1,8 +1,8 @@
 import React from "react";
 import { SiteType } from "../../../types/api";
 import { TopKFrequentType } from "../../../types/app";
-import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import SiteSelect from "../../UI/Lists/SiteSelect";
+import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 
 type DashboardCardRankingProps = {
   title: string;

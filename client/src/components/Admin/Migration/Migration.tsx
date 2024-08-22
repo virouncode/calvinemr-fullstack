@@ -4,6 +4,7 @@ import MigrationImport from "./MigrationImport";
 import MigrationToggle from "./MigrationToggle";
 
 const Migration = () => {
+  //Hooks
   const [type, setType] = useState<"Import" | "Export">("Export");
 
   const isTypeChecked = (option: "Import" | "Export") =>

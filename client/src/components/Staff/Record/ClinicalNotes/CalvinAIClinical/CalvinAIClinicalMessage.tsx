@@ -23,6 +23,7 @@ const CalvinAIClinicalMessage = ({
   setAIRewritedText,
   setAIVisible,
 }: CalvinAIClinicalMessageProps) => {
+  //Hooks
   const textRef = useRef<HTMLParagraphElement | null>(null);
 
   const handleCopyToClipboard = async (

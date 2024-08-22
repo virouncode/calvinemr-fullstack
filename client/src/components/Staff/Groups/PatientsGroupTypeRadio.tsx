@@ -3,7 +3,7 @@ import { GroupType } from "../../../types/api";
 import Radio from "../../UI/Radio/Radio";
 
 type PatientsGroupTypeRadioProps = {
-  groupInfos: GroupType;
+  groupInfos: Partial<GroupType>;
   handleChangeType: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -28,7 +28,7 @@ const PatientsGroupTypeRadio = ({
           id="global"
           name="global"
           value="global"
-          checked={groupInfos.global}
+          checked={groupInfos.global as boolean}
           onChange={handleChangeType}
           label="Clinic Group"
         />

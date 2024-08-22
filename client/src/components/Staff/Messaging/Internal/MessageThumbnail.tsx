@@ -50,13 +50,15 @@ const MessageThumbnail = ({
   section,
   lastItemRef,
 }: MessageThumbnailProps) => {
+  //Hooks
+  const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [editTodoVisible, setEditTodoVisible] = useState(false);
+  //Queries
   const messagePut = useMessagePut(user.id, section);
   const todoDelete = useTodoDelete(user.id);
-  const navigate = useNavigate();
 
   const handleMsgClick = async () => {
     if (

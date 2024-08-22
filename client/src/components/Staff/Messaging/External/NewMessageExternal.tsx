@@ -47,6 +47,7 @@ const NewMessageExternal = ({
   initialRecipients = [],
   initialAttachments = [],
 }: NewMessageExternalProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
@@ -61,6 +62,7 @@ const NewMessageExternal = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessageExternalPost();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

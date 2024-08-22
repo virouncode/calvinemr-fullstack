@@ -46,7 +46,7 @@ const ReportFormMultiplePatients = ({
     Format: "Binary",
     File: attachment ? attachment.file : null,
     FileExtensionAndVersion: attachment
-      ? getExtension(attachment.file.path)
+      ? getExtension(attachment.file?.path)
       : "",
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
@@ -60,7 +60,7 @@ const ReportFormMultiplePatients = ({
     >
   ) => {
     setErrMsgPost("");
-    let value: string | number = e.target.value;
+    let value: string | number | null = e.target.value;
     const name = e.target.name;
 
     if (

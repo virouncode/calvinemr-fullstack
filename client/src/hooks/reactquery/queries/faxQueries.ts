@@ -9,35 +9,34 @@ const fetchFaxesInbox = async (
   all: boolean,
   start: string,
   end: string
-): Promise<FaxInboxType[]> => {
+) => {
   const response = await axios.post(`/api/srfax/inbox`, {
     viewedStatus,
     all,
     start,
     end,
   });
-  return response.data;
+  const faxesInbox: FaxInboxType[] = response.data;
+  return faxesInbox;
 };
 
-const fetchFaxesOutbox = async (
-  all: boolean,
-  start: string,
-  end: string
-): Promise<FaxOutboxType[]> => {
+const fetchFaxesOutbox = async (all: boolean, start: string, end: string) => {
   const response = await axios.post(`/api/srfax/outbox`, {
     all,
     start,
     end,
   });
-  return response.data;
+  const faxesOutbox: FaxOutboxType[] = response.data;
+  return faxesOutbox;
 };
 
-const fetchFax = async (id: string, direction: string): Promise<string> => {
+const fetchFax = async (id: string, direction: string) => {
   const response = await axios.post(`/api/srfax/faxFile`, {
     id,
     direction,
   });
-  return response.data;
+  const faxURL: string = response.data;
+  return faxURL;
 };
 
 export const useFaxesInbox = (

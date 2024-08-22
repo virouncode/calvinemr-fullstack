@@ -19,10 +19,12 @@ type ClinicalNotesTemplatesProps = {
 const ClinicalNotesTemplates = ({
   handleSelectTemplate,
 }: ClinicalNotesTemplatesProps) => {
+  //Hooks
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number>();
   const [search, setSearch] = useState("");
+  //Queries
   const {
     data: templates,
     isPending,
@@ -31,7 +33,7 @@ const ClinicalNotesTemplates = ({
     fetchNextPage,
     isFetching,
   } = useClinicalNotesTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

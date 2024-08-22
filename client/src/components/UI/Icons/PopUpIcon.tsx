@@ -3,12 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type PopUpIconProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   ml?: number;
   mr?: number;
   clickable?: boolean;
 };
-const PopUpIcon = ({ onClick, ml = 0, mr = 0, clickable = true }) => {
+const PopUpIcon = ({
+  onClick,
+  ml = 0,
+  mr = 0,
+  clickable = true,
+}: PopUpIconProps) => {
   return (
     <FontAwesomeIcon
       icon={faArrowUpRightFromSquare}

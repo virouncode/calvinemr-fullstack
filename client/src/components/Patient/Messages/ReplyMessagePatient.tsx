@@ -34,6 +34,7 @@ const ReplyMessagePatient = ({
   previousMsgs,
   setCurrentMsgId,
 }: ReplyMessagePatientProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -41,6 +42,7 @@ const ReplyMessagePatient = ({
   const [attachments, setAttachments] = useState<MessageAttachmentType[]>([]);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
+  //Queries
   const messagePost = useMessageExternalPost();
 
   const handleCancel = () => {
@@ -163,7 +165,7 @@ const ReplyMessagePatient = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };
@@ -188,7 +190,7 @@ const ReplyMessagePatient = ({
         <strong>Attach files</strong>
         <PaperclipIcon onClick={handleAttach} />
         {attachments.map((attachment) => (
-          <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
+          <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
             {attachment.alias},
           </span>
         ))}

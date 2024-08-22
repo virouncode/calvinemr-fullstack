@@ -7,36 +7,37 @@ import { getStaffPerCategory } from "../../../utils/dashboard/getStaffPerCategor
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
+const categoriesData = [
+  "Doctors",
+  "Medical students",
+  "Nurses",
+  "Nursing students",
+  "Secretaries",
+  "Ultra sound techs",
+  "Lab techs",
+  "Nutritionists",
+  "Physiotherapists",
+  "Psychologists",
+  "Others",
+];
+const colorsPalette = [
+  "#0CB2AF",
+  "#2E96FF",
+  "#B800D8",
+  "#60009B",
+  "#2731C8",
+  "#ffe119",
+  "#e6194b",
+  "#3cb44b",
+  "#f58231",
+  "#911eb4",
+  "#42d4f4",
+];
 
 const DashboardCardStaff = () => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
-  const categoriesData = [
-    "Doctors",
-    "Medical students",
-    "Nurses",
-    "Nursing students",
-    "Secretaries",
-    "Ultra sound techs",
-    "Lab techs",
-    "Nutritionists",
-    "Physiotherapists",
-    "Psychologists",
-    "Others",
-  ];
-  const colorsPalette = [
-    "#0CB2AF",
-    "#2E96FF",
-    "#B800D8",
-    "#60009B",
-    "#2731C8",
-    "#ffe119",
-    "#e6194b",
-    "#3cb44b",
-    "#f58231",
-    "#911eb4",
-    "#42d4f4",
-  ];
-
+  //Queries
   const { data: sites, isPending, error } = useSites();
 
   if (isPending)

@@ -43,6 +43,7 @@ const ForwardMessageExternal = ({
   patientName = "",
   section,
 }: ForwardMessageExternalProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -54,6 +55,7 @@ const ForwardMessageExternal = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessagePost(user.id, section);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -220,7 +222,7 @@ const ForwardMessageExternal = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

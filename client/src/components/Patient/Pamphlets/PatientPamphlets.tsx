@@ -18,7 +18,7 @@ const PatientPamphlets = () => {
     isFetching,
   } = usePamphlets(search);
 
-  //INTERSECTION OBSERVER
+  //Hooks
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

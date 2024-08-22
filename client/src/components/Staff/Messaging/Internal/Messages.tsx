@@ -10,7 +10,7 @@ import MessagesBox from "./MessagesBox";
 import MessagesToolBar from "./MessagesToolBar";
 
 const Messages = () => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { messageId, sectionName } = useParams();
   const [search, setSearch] = useState("");
@@ -23,7 +23,7 @@ const Messages = () => {
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAllVisible, setSelectAllVisible] = useState(true);
   const [newTodoVisible, setNewTodoVisible] = useState(false);
-
+  //Queries
   const {
     data: messages,
     isPending,

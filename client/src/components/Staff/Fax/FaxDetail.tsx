@@ -37,6 +37,7 @@ const FaxDetail = ({
   currentCallerId,
   section,
 }: FaxDetailProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [forwardVisible, setForwardVisible] = useState(false);
   const [addToReportsVisible, setAddToReportsVisible] = useState(false);
@@ -46,13 +47,12 @@ const FaxDetail = ({
   >(undefined);
   const [progress, setProgress] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
-
+  //Queries
   const {
     data: fax,
     isPending,
     error,
   } = useFax(currentFaxId, section === "Received faxes" ? "IN" : "OUT");
-
   const faxDelete = useFaxDelete();
 
   const handleClickBack = () => {

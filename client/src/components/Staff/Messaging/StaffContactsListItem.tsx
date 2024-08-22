@@ -17,6 +17,7 @@ const StaffContactsListItem = ({
   isContactChecked,
   categoryName,
 }: StaffContactsListItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <li className="contacts-list__item">

@@ -15,9 +15,11 @@ import DashboardCardRanking from "./DashboardCardRanking";
 import DashboardDateFilter from "./DashboardDateFilter";
 
 const DashboardCardMeds = () => {
+  //Hooks
   const [siteSelectedIdMeds, setSiteSelectedIdMeds] = useState(0);
   const [rangeStartMeds, setRangeStartMeds] = useState(getStartOfTheMonthTZ());
   const [rangeEndMeds, setRangeEndMeds] = useState(getEndOfTheMonthTZ());
+  //Queries
   const {
     data: sites,
     isPending: isPendingSites,
@@ -32,11 +34,11 @@ const DashboardCardMeds = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartMeds(dateISOToTimestampTZ(value));
+    setRangeStartMeds(dateISOToTimestampTZ(value) ?? -5364662400000);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndMeds(dateISOToTimestampTZ(value));
+    setRangeEndMeds(dateISOToTimestampTZ(value) ?? 32503680000000);
   };
   const handleSiteChangeMeds = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSiteSelectedIdMeds(parseInt(e.target.value));

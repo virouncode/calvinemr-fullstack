@@ -11,6 +11,7 @@ type MessageExternalProps = {
 };
 
 const MessageExternal = ({ message, index }: MessageExternalProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="message" style={{ marginLeft: `${index * 20}px` }}>

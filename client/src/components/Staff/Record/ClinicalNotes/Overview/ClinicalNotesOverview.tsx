@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { ClinicalNoteType, PaginatedDatasType } from "../../../../../types/api";
+import { ClinicalNoteType, XanoPaginatedType } from "../../../../../types/api";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import ClinicalNoteOverviewCard from "./ClinicalNoteOverviewCard";
 
@@ -16,7 +16,7 @@ type ClinicalNotesOverviewProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>,
+      InfiniteData<XanoPaginatedType<ClinicalNoteType>, unknown>,
       Error
     >
   >;
@@ -29,7 +29,7 @@ const ClinicalNotesOverview = ({
   fetchNextPage,
   isFetching,
 }: ClinicalNotesOverviewProps) => {
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

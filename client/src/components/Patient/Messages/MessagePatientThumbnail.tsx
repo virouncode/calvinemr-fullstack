@@ -36,9 +36,11 @@ const MessagePatientThumbnail = ({
   section,
   lastItemRef = null,
 }: MessagePatientThumbnailProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { staffInfos } = useStaffInfosContext();
   const { socket } = useSocketContext();
+  //Queries
   const messagePut = useMessageExternalPut();
 
   const handleMsgClick = async () => {

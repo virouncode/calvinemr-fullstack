@@ -27,9 +27,11 @@ const FaxTemplateItem = ({
   handleSelectTemplate,
   lastItemRef,
 }: FaxTemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  //Queries
   const faxTemplatePost = useFaxTemplatePost();
   const faxTemplateDelete = useFaxTemplateDelete();
 

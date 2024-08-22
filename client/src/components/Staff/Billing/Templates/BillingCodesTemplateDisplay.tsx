@@ -28,8 +28,10 @@ const BillingCodesTemplateDisplay = ({
   handleDelete,
   handleDuplicate,
 }: BillingCodesTemplateDisplayProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
+
   return (
     <li className="billing-codes__templates-list-item" ref={lastItemRef}>
       <span onClick={(e) => handleSelectTemplate(e, template.billing_codes)}>

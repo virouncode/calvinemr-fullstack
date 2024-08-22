@@ -27,9 +27,10 @@ const CalvinAITemplateItem = ({
   handleEdit,
   lastItemRef,
 }: CalvinAITemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-
+  //Queries
   const templateDelete = useCalvinAITemplateDelete();
   const templatePost = useCalvinAITemplatePost();
 

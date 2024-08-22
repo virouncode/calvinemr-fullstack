@@ -17,9 +17,11 @@ const PatientAIAgreement = ({
   demographicsInfos,
   setPopUpVisible,
 }: PatientAIAgreementProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const [agreed, setAgreed] = useState(true);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAgreed(value === "Yes" ? true : false);

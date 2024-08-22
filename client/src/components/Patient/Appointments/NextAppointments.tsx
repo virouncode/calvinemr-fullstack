@@ -20,10 +20,12 @@ type NextAppointmentsProps = {
 };
 
 const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { staffInfos } = useStaffInfosContext();
   const [appointmentSelectedId, setAppointmentSelectedId] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
+  //Queries
   const messagePost = useMessageExternalPost();
 
   const isAppointmentSelected = (id: number) => appointmentSelectedId === id;

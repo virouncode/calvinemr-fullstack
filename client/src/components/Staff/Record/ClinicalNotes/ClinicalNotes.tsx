@@ -38,6 +38,7 @@ const ClinicalNotes = ({
   loadingPatient,
   errPatient,
 }: ClinicalNotesProps) => {
+  //Hooks
   const [checkedNotesIds, setCheckedNotesIds] = useState<number[]>([]);
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
@@ -50,14 +51,12 @@ const ClinicalNotes = ({
   );
   const [search, setSearch] = useState("");
   const [goToEnd, setGoToEnd] = useState(false);
-  const [goToTop, setGoToTop] = useState(false);
   const [newMessageVisible, setNewMessageVisible] = useState(false);
-
   const triangleRef = useRef<SVGSVGElement | null>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
-
+  //Queries
   const {
     data: clinicalNotes,
     isPending,
@@ -73,18 +72,18 @@ const ClinicalNotes = ({
   const { editClinicalNoteInMemory, setEditClinicalNoteInMemory } =
     useRetrieveEditClinicalNote(patientId, fetchNextPage, clinicalNotes);
 
-  useEffect(() => {
-    if (addVisible && formRef.current) {
-      formRef.current.scrollIntoView();
-    }
-  }, [addVisible, formRef]);
-
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef: contentRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
+
+  useEffect(() => {
+    if (addVisible && formRef.current) {
+      formRef.current.scrollIntoView();
+    }
+  }, [addVisible, formRef]);
 
   useEffect(() => {
     if (goToEnd && endRef.current && !isFetchingNextPage) {
@@ -138,10 +137,7 @@ const ClinicalNotes = ({
         newButtonDisabled={newButtonDisabled}
         topRef={topRef}
         endRef={endRef}
-        goToTop={goToTop}
-        goToEnd={goToEnd}
         setGoToEnd={setGoToEnd}
-        setGoToTop={setGoToTop}
         isPending={isPending}
         fetchNextPage={fetchNextPage}
         setNewMessageVisible={setNewMessageVisible}

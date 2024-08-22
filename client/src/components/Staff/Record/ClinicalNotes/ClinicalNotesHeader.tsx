@@ -7,7 +7,7 @@ import React from "react";
 import {
   ClinicalNoteType,
   DemographicsType,
-  PaginatedDatasType,
+  XanoPaginatedType,
 } from "../../../../types/api";
 import ClinicalNotesTitle from "./ClinicalNotesTitle";
 import ClinicalNotesToolBar from "./ClinicalNotesToolBar";
@@ -39,16 +39,13 @@ type ClinicalNotesHeaderProps = {
   newButtonDisabled: boolean;
   topRef: React.MutableRefObject<HTMLDivElement | null>;
   endRef: React.MutableRefObject<HTMLDivElement | null>;
-  goToEnd: boolean;
-  goToTop: boolean;
   setGoToEnd: React.Dispatch<React.SetStateAction<boolean>>;
-  setGoToTop: React.Dispatch<React.SetStateAction<boolean>>;
   isPending: boolean;
   fetchNextPage: (
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>,
+      InfiniteData<XanoPaginatedType<ClinicalNoteType>, unknown>,
       Error
     >
   >;
@@ -83,10 +80,7 @@ const ClinicalNotesHeader = ({
   newButtonDisabled,
   topRef,
   endRef,
-  goToEnd,
-  goToTop,
   setGoToEnd,
-  setGoToTop,
   isPending,
   fetchNextPage,
   setNewMessageVisible,

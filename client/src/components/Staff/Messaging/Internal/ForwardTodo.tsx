@@ -45,6 +45,7 @@ const ForwardTodo = ({
   setCurrentMsgId,
   section,
 }: ForwardTodoProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -55,6 +56,7 @@ const ForwardTodo = ({
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [dueDate, setDueDate] = useState(timestampToDateISOTZ(todo.due_date));
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessagePost(user.id, section);
   const todoDelete = useTodoDelete(user.id);
 

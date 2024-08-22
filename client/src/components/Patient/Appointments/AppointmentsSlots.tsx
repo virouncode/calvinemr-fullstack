@@ -30,12 +30,13 @@ const AppointmentsSlots = ({
   setAppointmentSelected,
   appointmentSelected,
 }: AppointmentsSlotsProps) => {
-  const [appointmentsOptions, setAppointmentsOptions] = useState<
+  //Hooks
+  const [appointmentsProposals, setAppointmentsProposals] = useState<
     AppointmentProposalType[]
   >([]);
 
   useEffect(() => {
-    setAppointmentsOptions(
+    setAppointmentsProposals(
       getAvailableAppointments(
         availability,
         appointmentsInRange,
@@ -48,9 +49,9 @@ const AppointmentsSlots = ({
     availability &&
     appointmentsInRange && (
       <div className="new-appointments__content">
-        {appointmentsOptions ? (
-          appointmentsOptions.length ? (
-            appointmentsOptions.map((appointment) => (
+        {appointmentsProposals ? (
+          appointmentsProposals.length ? (
+            appointmentsProposals.map((appointment) => (
               <AppointmentSlotItem
                 key={appointment.id}
                 appointment={appointment}

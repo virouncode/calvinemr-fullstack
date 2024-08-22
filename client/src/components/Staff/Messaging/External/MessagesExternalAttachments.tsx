@@ -9,8 +9,7 @@ type MessagesExternalAttachmentsProps = {
   deletable?: boolean;
   cardWidth?: string;
   addable?: boolean;
-  patientsIds: number[];
-  patientsNames: string[];
+  patientsNames?: string[];
   message: MessageExternalType;
 };
 const MessagesExternalAttachments = ({
@@ -18,8 +17,7 @@ const MessagesExternalAttachments = ({
   deletable,
   cardWidth,
   addable,
-  patientsIds,
-  patientsNames,
+  patientsNames = [],
   message,
 }: MessagesExternalAttachmentsProps) => {
   return (

@@ -23,7 +23,7 @@ const EventFormGuests = ({
   const patientsIdsToExclude = (
     formDatas.patients_guests_ids as { patient_infos: DemographicsType }[]
   ).map(({ patient_infos }) => patient_infos.patient_id);
-  // //========================== EVENTS HANDLERS =======================//
+  //========================== EVENTS HANDLERS =======================//
 
   const handleAddStaffGuest = (staff: StaffType) => {
     setFormDatas({

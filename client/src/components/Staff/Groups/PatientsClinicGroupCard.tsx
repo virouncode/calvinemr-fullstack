@@ -37,11 +37,13 @@ const PatientsClinicGroupCard = ({
   setNewMessageExternalVisible,
   setInitialRecipients,
 }: PatientsClinicGroupCardProps) => {
+  //Hooks
   const { gid } = useParams();
+  const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(
     gid && parseInt(gid) === group.id ? true : false
   );
-  const { user } = useUserContext() as { user: UserStaffType };
+  //Queries
   const groupDelete = usePatientsGroupDelete(user.id);
   const groupPost = usePatientsGroupPost(user.id);
 

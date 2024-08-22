@@ -12,8 +12,8 @@ import PatientsClinicGroupCard from "./PatientsClinicGroupCard";
 import PatientsGroupForm from "./PatientsGroupForm";
 
 const PatientsGroups = () => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const { data: groups, isPending, error } = usePatientsGroups(user.id);
   const [addGroupVisible, setAddGroupVisible] = useState(false);
   const [newMessageExternalVisible, setNewMessageExternalVisible] =
     useState(false);
@@ -25,6 +25,8 @@ const PatientsGroups = () => {
       phone: string;
     }[]
   >([]);
+  //Queries
+  const { data: groups, isPending, error } = usePatientsGroups(user.id);
 
   const handleAdd = () => {
     setAddGroupVisible(true);

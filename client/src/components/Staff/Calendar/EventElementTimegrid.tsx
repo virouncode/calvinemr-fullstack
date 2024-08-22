@@ -38,6 +38,7 @@ const EventElementTimegrid = ({
   patientsGuestsIds,
   staffGuestsIds,
 }: EventElementTimegridProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (

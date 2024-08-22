@@ -39,7 +39,9 @@ const ClinicalNotesTitle = ({
   errPatient,
   setNewMessageVisible,
 }: ClinicalNotesTitleProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
+  //Queries
   const {
     data: patientAppointments,
     isPending,
@@ -48,7 +50,6 @@ const ClinicalNotesTitle = ({
     fetchNextPage,
     hasNextPage,
   } = useTopic("APPOINTMENTS", demographicsInfos.patient_id);
-
   useFetchAllPages(fetchNextPage, hasNextPage);
 
   const handleTitleClick = () => {

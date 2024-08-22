@@ -10,6 +10,7 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 const DashboardCardPatients = () => {
+  //Queries
   const {
     data: sites,
     isPending: isPendingSites,
@@ -48,38 +49,6 @@ const DashboardCardPatients = () => {
         />
       </div>
     );
-
-  const chartSetting = {
-    xAxis: [
-      {
-        data: [...sites.map(({ name }) => name), "Total"],
-        scaleType: "band",
-      },
-    ],
-    yAxis: [
-      {
-        label: "people",
-      },
-    ],
-    width: 500,
-    height: 350,
-    slotProps: {
-      legend: {
-        direction: "row",
-        position: {
-          vertical: "top",
-          horizontal: "center",
-        },
-        labelStyle: {
-          fontSize: 12,
-        },
-        itemMarkWidth: 10,
-        itemMarkHeight: 10,
-        markGap: 5,
-        itemGap: 10,
-      },
-    },
-  };
 
   return (
     <div className="dashboard-card">

@@ -3,8 +3,8 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
   MessageExternalType,
   MessageType,
-  PaginatedDatasType,
   TodoType,
+  XanoPaginatedType,
 } from "../../../types/api";
 
 export const useStaffMessages = (
@@ -12,9 +12,9 @@ export const useStaffMessages = (
   section: string,
   search: string
 ) => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<MessageType>>({
     queryKey: ["messages", staffId, section, search],
-    queryFn: ({ pageParam }): Promise<PaginatedDatasType<MessageType>> => {
+    queryFn: ({ pageParam }) => {
       if (section === "To-dos") {
         return xanoGet(`/todos_of_staff`, "staff", {
           staff_id: staffId,
@@ -40,11 +40,9 @@ export const useStaffExternalMessages = (
   section: string,
   search: string
 ) => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<MessageExternalType>>({
     queryKey: ["messagesExternal", "staff", staffId, section, search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<MessageExternalType>> => {
+    queryFn: ({ pageParam }) => {
       return xanoGet(`/messages_external_of_staff`, "staff", {
         staff_id: staffId,
         page: pageParam,
@@ -101,11 +99,9 @@ export const usePatientExternalMessages = (
   section: string,
   search: string
 ) => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<MessageExternalType>>({
     queryKey: ["messagesExternal", "patient", patientId, section, search],
-    queryFn: ({
-      pageParam,
-    }): Promise<PaginatedDatasType<MessageExternalType>> =>
+    queryFn: ({ pageParam }) =>
       xanoGet(`/messages_external_of_patient`, "patient", {
         patient_id: patientId,
         page: pageParam,

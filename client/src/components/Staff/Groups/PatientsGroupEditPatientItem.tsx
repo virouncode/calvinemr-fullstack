@@ -18,6 +18,7 @@ const PatientsGroupEditPatientItem = ({
   handleRemovePatient,
   order,
 }: PatientsGroupEditPatientItemProps) => {
+  //Hooks
   const controls = useDragControls();
   return (
     patient && (

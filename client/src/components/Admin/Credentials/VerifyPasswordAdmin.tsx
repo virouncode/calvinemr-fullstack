@@ -4,15 +4,16 @@ import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import FormVerifyPassword from "../../UI/Forms/FormVerifyPassword";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+const LOGIN_URL = "/auth/login";
 
 type VerifyPasswordAdminProps = {
   setVerified: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const VerifyPasswordAdmin = ({ setVerified }: VerifyPasswordAdminProps) => {
-  const LOGIN_URL = "/auth/login";
-  const { auth } = useAuthContext();
+  //Hooks
   const navigate = useNavigate();
+  const { auth } = useAuthContext();
   const [password, setPassword] = useState("");
   const [pin, setPin] = useState("");
   const [errMsg, setErrMsg] = useState("");

@@ -17,7 +17,9 @@ const MessagesPatientLeftBar = ({
   setMsgsSelectedIds,
   setSelectAllVisible,
 }: MessagesPatientLeftBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
+
   const handleClickSection = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {

@@ -17,6 +17,7 @@ const FilterCheckboxes = ({
   setHostsIds,
   remainingStaff,
 }: FilterCheckboxesProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const activeStaff: StaffType[] = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
@@ -25,6 +26,7 @@ const FilterCheckboxes = ({
   const categoriesInfos = splitStaffInfos(staffInfos);
 
   const isChecked = (id: number) => hostsIds.includes(id);
+
   const isCategoryChecked = (category: string) => categories.includes(category);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {

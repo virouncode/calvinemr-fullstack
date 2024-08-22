@@ -17,7 +17,6 @@ const RoomsRadio = ({
   isRoomOccupied,
   label = "Room",
 }: RoomsRadioProps) => {
-  //Rooms vector with all Rooms
   const isRoomSelected = (roomId: string) => roomSelectedId === roomId;
   return (
     <>

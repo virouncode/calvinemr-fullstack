@@ -8,8 +8,8 @@ import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosCont
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
-  PaginatedDatasType,
   StaffType,
+  XanoPaginatedType,
 } from "../../../../../types/api";
 import LoadingLi from "../../../../UI/Lists/LoadingLi";
 import GuestPatientResultItem from "./GuestPatientResultItem";
@@ -17,7 +17,7 @@ import GuestStaffResultItem from "./GuestStaffResultItem";
 
 type GuestsSearchResultsProps = {
   patients:
-    | InfiniteData<PaginatedDatasType<DemographicsType>, unknown>
+    | InfiniteData<XanoPaginatedType<DemographicsType>, unknown>
     | undefined;
   hostId: number;
   staff_guests_ids: { staff_infos: StaffType }[];
@@ -28,7 +28,7 @@ type GuestsSearchResultsProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<DemographicsType>, unknown>,
+      InfiniteData<XanoPaginatedType<DemographicsType>, unknown>,
       Error
     >
   >;
@@ -56,7 +56,9 @@ const GuestsSearchResults = ({
   search,
   patientsIdsToExclude,
 }: GuestsSearchResultsProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

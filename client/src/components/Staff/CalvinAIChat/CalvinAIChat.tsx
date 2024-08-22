@@ -10,6 +10,7 @@ import CalvinAIChatTemplates from "./ClavinAIChatTemplates";
 type AIMessage = { role: string; content: string };
 
 const CalvinAIChat = () => {
+  //Hooks
   const [messages, setMessages] = useState<AIMessage[]>([]);
   const msgEndRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);

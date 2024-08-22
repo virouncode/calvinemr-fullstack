@@ -2,6 +2,33 @@ import React, { useRef } from "react";
 import { RoomType, SiteType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
+const roomIds = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+];
 
 type RoomsFormProps = {
   formDatas: SiteType;
@@ -10,33 +37,7 @@ type RoomsFormProps = {
 };
 
 const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
-  const roomIds = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-  ];
+  //Hooks
   const roomIdCounter = useRef("a");
 
   const handleAddRoom = () => {

@@ -10,6 +10,7 @@ import {
   AttachmentType,
   DemographicsType,
   MessageAttachmentType,
+  TopicExportType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
@@ -27,7 +28,7 @@ import ExportFamilyDoctors from "./ExportFamilyDoctors";
 import ExportTopic from "./ExportTopic";
 
 type ExportChartPreviewProps = {
-  recordsSelected: string[];
+  recordsSelected: TopicExportType[];
   patientId: number;
   demographicsInfos: DemographicsType;
   setPreviewVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,14 +40,8 @@ const ExportChartPreview = ({
   demographicsInfos,
   setPreviewVisible,
 }: ExportChartPreviewProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const textContentRef = useRef<HTMLDivElement | null>(null);
-  const pdfContentRef = useRef<HTMLDivElement | null>(null);
-  const reportsFilesRef = useRef<AttachmentType[]>([]);
-  const reportsTextRef = useRef<HTMLDivElement | null>(null);
-  const prescriptionsFilesRef = useRef<AttachmentType[]>([]);
-  const eformsFilesRef = useRef<AttachmentType[]>([]);
-  const lettersFilesRef = useRef<AttachmentType[]>([]);
   const [progress, setProgress] = useState(false);
   const [chart, setChart] = useState("");
   const [fileToFax, setFileToFax] = useState<{
@@ -62,6 +57,13 @@ const ExportChartPreview = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState<
     MessageAttachmentType[]
   >([]);
+  const textContentRef = useRef<HTMLDivElement | null>(null);
+  const pdfContentRef = useRef<HTMLDivElement | null>(null);
+  const reportsFilesRef = useRef<AttachmentType[]>([]);
+  const reportsTextRef = useRef<HTMLDivElement | null>(null);
+  const prescriptionsFilesRef = useRef<AttachmentType[]>([]);
+  const eformsFilesRef = useRef<AttachmentType[]>([]);
+  const lettersFilesRef = useRef<AttachmentType[]>([]);
 
   const handleGeneratePDF = async () => {
     if (!textContentRef.current) return;

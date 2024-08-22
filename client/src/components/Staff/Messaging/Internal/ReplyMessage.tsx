@@ -46,6 +46,7 @@ const ReplyMessage = ({
   setCurrentMsgId,
   section,
 }: ReplyMessageProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -56,6 +57,7 @@ const ReplyMessage = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessagePost(user.id, section);
 
   const handleSelectTemplate = (template: MessageTemplateType) => {
@@ -212,7 +214,7 @@ const ReplyMessage = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };
@@ -248,7 +250,7 @@ const ReplyMessage = ({
         <strong>Attach files</strong>
         <PaperclipIcon onClick={handleAttach} />
         {attachments.map((attachment) => (
-          <span key={attachment.file.name} style={{ marginLeft: "5px" }}>
+          <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
             {attachment.alias},
           </span>
         ))}

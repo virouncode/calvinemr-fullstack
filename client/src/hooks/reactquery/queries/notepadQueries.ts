@@ -3,9 +3,9 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { NotepadType } from "../../../types/api";
 
 export const useNotepad = (staffId: number) => {
-  return useQuery({
+  return useQuery<NotepadType>({
     queryKey: ["notepads", staffId],
-    queryFn: (): Promise<NotepadType> => {
+    queryFn: () => {
       return xanoGet("/notepads_for_staff", "staff", { staff_id: staffId });
     },
   });

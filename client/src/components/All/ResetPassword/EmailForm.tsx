@@ -27,6 +27,7 @@ const EmailForm = ({
   setEmailInput,
   emailInput,
 }: EmailFormProps) => {
+  //Hooks
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 

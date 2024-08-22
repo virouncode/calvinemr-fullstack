@@ -47,6 +47,7 @@ const NewTodo = ({
   initialAttachments = [],
   initialBody = "",
 }: NewTodoProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -62,6 +63,7 @@ const NewTodo = ({
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessagePost(user.id, "To-dos");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -117,7 +119,7 @@ const NewTodo = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

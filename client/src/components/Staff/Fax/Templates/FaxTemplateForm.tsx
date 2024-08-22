@@ -14,11 +14,13 @@ type FaxTemplateFormProps = {
 };
 
 const FaxTemplateForm = ({ setNewTemplateVisible }: FaxTemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [progress, setProgress] = useState(false);
+  //Queries
   const faxTemplatePost = useFaxTemplatePost();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

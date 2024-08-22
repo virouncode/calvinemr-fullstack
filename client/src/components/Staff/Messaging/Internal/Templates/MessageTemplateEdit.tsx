@@ -22,6 +22,7 @@ const MessageTemplateEdit = ({
   template,
   setEditTemplateVisible,
 }: MessageTemplateEditProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [name, setName] = useState(template.name);
@@ -31,6 +32,7 @@ const MessageTemplateEdit = ({
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
   const [progress, setProgress] = useState(false);
+  //Queries
   const messageTemplatePut = useMessagesTemplatePut();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

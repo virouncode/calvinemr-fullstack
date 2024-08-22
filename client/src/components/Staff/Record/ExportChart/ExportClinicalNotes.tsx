@@ -9,6 +9,7 @@ type ExportClinicalNotesProps = {
 };
 
 const ExportClinicalNotes = ({ patientId }: ExportClinicalNotesProps) => {
+  //Queries
   const { data, isPending, error, fetchNextPage, isFetching, hasNextPage } =
     useClinicalNotes(patientId, "", "desc");
 

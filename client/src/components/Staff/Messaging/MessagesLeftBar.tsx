@@ -19,6 +19,7 @@ const MessagesLeftBar = ({
   setMsgsSelectedIds,
   setSelectAllVisible,
 }: MessagesLeftBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
 
   const handleClickSection = (

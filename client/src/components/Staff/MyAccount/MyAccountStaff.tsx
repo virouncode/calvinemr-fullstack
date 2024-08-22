@@ -6,7 +6,7 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
-import { SiteType, StaffType } from "../../../types/api";
+import { StaffType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { myAccountStaffSchema } from "../../../validation/accounts/myAccountStaffValidation";
 import Button from "../../UI/Buttons/Button";
@@ -17,9 +17,11 @@ import InputTelToggle from "../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 const MyAccountStaff = () => {
-  //HOOKS
+  //Hooks
+  const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const { socket } = useSocketContext();
@@ -28,15 +30,14 @@ const MyAccountStaff = () => {
   const [tempFormDatas, setTempFormDatas] = useState<StaffType | null>(null);
   const [errMsg, setErrMsg] = useState("");
   const [progress, setProgress] = useState(false);
-  const navigate = useNavigate();
-  const { data: sites } = useSites();
+  //Queries
+  const { data: sites, isPending, error } = useSites();
 
   useEffect(() => {
     setFormDatas(staffInfos.find(({ id }) => id === user.id) as StaffType);
     setTempFormDatas(staffInfos.find(({ id }) => id === user.id) as StaffType);
   }, [staffInfos, user.id]);
 
-  //HANDLERS
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
@@ -114,6 +115,19 @@ const MyAccountStaff = () => {
     setEditVisible(false);
   };
 
+  if (isPending)
+    return (
+      <div className="myaccount-section__container">
+        <LoadingParagraph />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="myaccount-section__container">
+        <ErrorParagraph errorMsg={error.message} />
+      </div>
+    );
+
   return (
     <div
       className="myaccount-section__container"
@@ -144,7 +158,7 @@ const MyAccountStaff = () => {
               {editVisible ? (
                 <SiteSelect
                   handleSiteChange={handleSiteChange}
-                  sites={sites as SiteType[]}
+                  sites={sites}
                   value={tempFormDatas.site_id}
                   label="Site*:"
                 />

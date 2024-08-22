@@ -1,13 +1,15 @@
 import React from "react";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import { lifeStageCT, toCodeTableName } from "../../../../omdDatas/codesTables";
 import { RiskFactorType } from "../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
 
 type ExportRisksProps = {
-  topicDatas: RiskFactorType[];
+  patientId: number;
 };
 
-const ExportRisks = ({ topicDatas }: ExportRisksProps) => {
+const ExportRisks = ({ patientId }: ExportRisksProps) => {
   const CARD_STYLE = {
     width: "95%",
     margin: "20px auto",
@@ -25,6 +27,19 @@ const ExportRisks = ({ topicDatas }: ExportRisksProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "RISK FACTORS",
+    patientId
+  );
+
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
+
   return (
     <div style={CARD_STYLE}>
       <p style={TITLE_STYLE}>RISK FACTORS</p>

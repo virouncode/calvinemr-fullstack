@@ -26,12 +26,8 @@ export type AlertType = {
   };
   AlertDescription: string;
   Notes: string;
-  DateActive: number;
-  EndDate: number;
-};
-export type PaginatedAlertsType = {
-  pageParams: number[];
-  pages: ({ items: AlertType[] } & PagesPropertiesType)[];
+  DateActive: number | null;
+  EndDate: number | null;
 };
 
 export type AllergyType = {
@@ -47,17 +43,12 @@ export type AllergyType = {
   PropertyOfOffendingAgent: string;
   Code: { CodeType: string; CodeValue: string };
   ReactionType: string;
-  StartDate: number;
+  StartDate: number | null;
   LifeStage: string;
   Severity: string;
   Reaction: string;
   RecordedDate: number;
   Notes: string;
-};
-
-export type PaginatedAllergiesType = {
-  pageParams: number[];
-  pages: ({ items: AllergyType[] } & PagesPropertiesType)[];
 };
 
 export type AppointmentType = {
@@ -89,11 +80,6 @@ export type AppointmentType = {
   //add-ons
   site_infos?: SiteType;
   host_infos?: StaffType;
-};
-
-export type PaginatedAppointmentsType = {
-  pageParams: number[];
-  pages: ({ items: AppointmentType[] } & PagesPropertiesType)[];
 };
 
 export type RruleType = {
@@ -160,11 +146,6 @@ export type BillingCodeTemplateType = {
   billing_codes: string[];
 };
 
-export type PaginatedBillingCodesTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: BillingCodeTemplateType[] } & PagesPropertiesType)[];
-};
-
 export type BillingType = {
   id: number;
   date: number;
@@ -211,21 +192,12 @@ export type BillingFormType = {
   site_id: number;
 };
 
-export type PaginatedBillingsType = {
-  pageParams: number[];
-  pages: ({ items: BillingType[] } & PagesPropertiesType)[];
-};
-
 export type CalvinAITemplateType = {
   id: number;
   author_id: number;
   name: string;
   date_created: number;
   prompt: string;
-};
-export type PaginatedCalvinAITemplatesType = {
-  items: CalvinAITemplateType[];
-  nextPage: number | null;
 };
 
 export type CareElementType = {
@@ -236,17 +208,17 @@ export type CareElementType = {
   updates: { updated_by_id: number; date_updated: number }[];
   SmokingStatus: { Status: string; Date: number }[];
   SmokingPacks: { PerDay: string; Date: number }[];
-  Weight: { Weight: string; WeightUnit: string; Date: number }[];
-  Height: { Height: string; HeightUnit: string; Date: number }[];
+  Weight: { Weight: string; WeightUnit: "kg"; Date: number }[];
+  Height: { Height: string; HeightUnit: "cm"; Date: number }[];
   WaistCircumference: {
     WaistCircumference: string;
-    WaistCircumferenceUnit: string;
+    WaistCircumferenceUnit: "cm";
     Date: number;
   }[];
   BloodPressure: {
     SystolicBP: string;
     DiastolicBP: string;
-    BPUnit: string;
+    BPUnit: "mmHg";
     Date: number;
   }[];
   DiabetesComplicationsScreening: { ExamCode: string; Date: number }[];
@@ -268,14 +240,88 @@ export type CareElementType = {
     EducationalTrainingPerformed: string;
     Date: number;
   }[];
-  HypoglycemicEpisodes: { NumOfReportedEpisodes: number; Date: number }[];
+  HypoglycemicEpisodes: {
+    NumOfReportedEpisodes: number;
+    Date: number;
+  }[];
   SelfMonitoringBloodGlucose: { SelfMonitoring: string; Date: number }[];
   bodyMassIndex: { BMI: string; Date: number }[];
   bodySurfaceArea: { BSA: string; Date: number }[];
 };
-export type PaginatedCareElementsType = {
-  pageParams: number[];
-  pages: ({ items: CareElementType[] } & PagesPropertiesType)[];
+
+export type CareElementLastDatasType = {
+  SmokingStatus: { Status: string; Date: number | null };
+  SmokingPacks: { PerDay: string; Date: number | null };
+  Weight: {
+    Weight: string;
+    WeightUnit: "kg";
+    Date: number | null;
+  };
+  Height: {
+    Height: string;
+    HeightUnit: "cm";
+    Date: number | null;
+  };
+  WaistCircumference: {
+    WaistCircumference: string;
+    WaistCircumferenceUnit: "cm";
+    Date: number | null;
+  };
+  BloodPressure: {
+    SystolicBP: string;
+    DiastolicBP: string;
+    BPUnit: "mmHg";
+    Date: number | null;
+  };
+  bodyMassIndex: { BMI: string; Date: number | null };
+  bodySurfaceArea: { BSA: string; Date: number | null };
+};
+
+export type CareElementFormType = {
+  patient_id: number;
+  SmokingStatus: { Status: string; Date: number };
+  SmokingPacks: { PerDay: string; Date: number };
+  Weight: { Weight: string; WeightUnit: "kg"; Date: number };
+  WeightLbs: { Weight: string; WeightUnit: "lbs"; Date: number };
+  Height: { Height: string; HeightUnit: "cm"; Date: number };
+  HeightFeet: { Height: string; HeightUnit: "feet"; Date: number };
+  WaistCircumference: {
+    WaistCircumference: string;
+    WaistCircumferenceUnit: "cm";
+    Date: number;
+  };
+  BloodPressure: {
+    SystolicBP: string;
+    DiastolicBP: string;
+    BPUnit: "mmHg";
+    Date: number;
+  };
+  DiabetesComplicationsScreening: { ExamCode: string; Date: number }[];
+  DiabetesMotivationalCounselling: {
+    CounsellingPerformed: string;
+    Date: number;
+  };
+  DiabetesSelfManagementCollaborative: {
+    CodeValue: string;
+    DocumentedGoals: string;
+    Date: number;
+  };
+  DiabetesSelfManagementChallenges: {
+    CodeValue: string;
+    ChallengesIdentified: string;
+    Date: number;
+  };
+  DiabetesEducationalSelfManagement: {
+    EducationalTrainingPerformed: string;
+    Date: number;
+  };
+  HypoglycemicEpisodes: {
+    NumOfReportedEpisodes: number;
+    Date: number;
+  };
+  SelfMonitoringBloodGlucose: { SelfMonitoring: string; Date: number };
+  bodyMassIndex: { BMI: string; Date: number };
+  bodySurfaceArea: { BSA: string; Date: number };
 };
 
 export type ClinicType = {
@@ -295,7 +341,7 @@ export type ClinicalNoteType = {
   NoteType: string;
   subject: string;
   MyClinicalNotesContent: string;
-  EventDateTime: number;
+  EventDateTime: number | null;
   ParticipatingProviders: {
     Name: { FirstName: string; LastName: string };
     OHIPPhysicianId: string;
@@ -313,7 +359,7 @@ export type ClinicalNoteType = {
   versions?: ClinicalNoteLogType[];
 };
 
-export type PagesPropertiesType = {
+export type XanoPaginatedType<T> = {
   curPage: number;
   itemsReceived: number;
   itemsTotal: number;
@@ -321,11 +367,7 @@ export type PagesPropertiesType = {
   offset: number;
   pageTotal: number;
   prevPage: number | null;
-};
-
-export type PaginatedClinicalNotesType = {
-  pageParams: number[];
-  pages: ({ items: ClinicalNoteType[] } & PagesPropertiesType)[];
+  items: T[];
 };
 
 export type ClinicalNoteAttachmentType = {
@@ -344,7 +386,7 @@ export type ClinicalNoteLogType = {
   NoteType: string;
   subject: string;
   MyClinicalNotesContent: string;
-  EventDateTime: number;
+  EventDateTime: number | null;
   ParticipatingProviders: {
     Name: { FirstName: string; LastName: string };
     OHIPPhysicianId: string;
@@ -366,11 +408,6 @@ export type ClinicalNoteTemplateType = {
   author_id: number;
   body: string;
   date_created: number;
-};
-
-export type PaginatedClinicalNoteTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: ClinicalNoteTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type CycleType = {
@@ -428,11 +465,6 @@ export type CycleType = {
   notes: { text: string; date: number }[];
   cycle_notes: string;
   status: string;
-};
-
-export type PaginatedCyclesType = {
-  pageParams: number[];
-  pages: ({ items: CycleType[] } & PagesPropertiesType)[];
 };
 
 export type EmergencyContactType = {
@@ -526,7 +558,7 @@ export type DemographicsType = {
     PersonStatusAsEnum: string;
     PersonStatusAsPlainText: string;
   };
-  PersonStatusDate: number;
+  PersonStatusDate: number | null;
   SIN: string;
   ReferredPhysician: { FirstName: string; LastName: string };
   FamilyPhysician: { FirstName: string; LastName: string };
@@ -586,27 +618,11 @@ export type DemographicsFormType = {
   avatar: AttachmentType | null;
 };
 
-export type PaginatedDatasType<T> = {
-  items: T[];
-  curPage: number;
-  itemsReceived: number;
-  itemsTotal: number;
-  nextPage: number | null;
-  offset: number;
-  pageTotal: number;
-  prevPage: number | null;
-};
-
 export type DiagnosisType = {
   id: number;
   code: number;
   diagnosis: string;
   category: string;
-};
-
-export type PaginatedDiagnosisType = {
-  pageParams: number[];
-  pages: ({ items: DiagnosisType[] } & PagesPropertiesType)[];
 };
 
 export type DoctorType = {
@@ -655,11 +671,6 @@ export type DoctorType = {
   licence_nbr: string;
 };
 
-export type PaginatedDoctorsType = {
-  pageParams: number[];
-  pages: ({ items: DoctorType[] } & PagesPropertiesType)[];
-};
-
 export type EdocType = {
   id: number;
   date_created: number;
@@ -667,11 +678,6 @@ export type EdocType = {
   file: AttachmentType;
   notes: string;
   name: string;
-};
-
-export type PaginatedEdocsType = {
-  pageParams: number[];
-  pages: ({ items: EdocType[] } & PagesPropertiesType)[];
 };
 
 export type EformType = {
@@ -682,11 +688,6 @@ export type EformType = {
   updates: { updated_by_id: number; date_updated: number }[];
   file: AttachmentType;
   patient_id: number;
-};
-
-export type PaginatedEformsType = {
-  pageParams: number[];
-  pages: ({ items: EformType[] } & PagesPropertiesType)[];
 };
 
 export type EformBlankType = {
@@ -705,7 +706,7 @@ export type FamilyHistoryType = {
   ResidualInfo: {
     DataElement: { Name: string; DataType: string; Content: string }[];
   };
-  StartDate: number;
+  StartDate: number | null;
   AgeAtOnset: string;
   LifeStage: string;
   ProblemDiagnosisProcedureDescription: string;
@@ -719,11 +720,6 @@ export type FamilyHistoryType = {
   Notes: string;
 };
 
-export type PaginatedFamilyHistoriesType = {
-  pageParams: number[];
-  pages: ({ items: FamilyHistoryType[] } & PagesPropertiesType)[];
-};
-
 export type FaxContactType = {
   id: number;
   name: string;
@@ -731,11 +727,6 @@ export type FaxContactType = {
   fax_number: string;
   date_created: number;
   created_by_id: number;
-};
-
-export type PaginatedFaxContactsType = {
-  pageParams: number[];
-  pages: ({ items: FaxContactType[] } & PagesPropertiesType)[];
 };
 
 export type FaxTemplateType = {
@@ -747,11 +738,6 @@ export type FaxTemplateType = {
   body: string;
 };
 
-export type PaginatedFaxTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: FaxTemplateType[] } & PagesPropertiesType)[];
-};
-
 export type GroupType = {
   id: number;
   date_created: number;
@@ -761,11 +747,6 @@ export type GroupType = {
   description: string;
   color: string;
   global: boolean;
-};
-
-export type PaginatedGroupsType = {
-  pageParams: number[];
-  pages: ({ items: GroupType[] } & PagesPropertiesType)[];
 };
 
 export type ImmunizationType = {
@@ -798,11 +779,6 @@ export type ImmunizationType = {
   recommended: boolean;
 };
 
-export type PaginatedImmunizationsType = {
-  pageParams: number[];
-  pages: ({ items: ImmunizationType[] } & PagesPropertiesType)[];
-};
-
 export type LabLinkType = {
   id: number;
   date_created: number;
@@ -831,11 +807,6 @@ export type LabLinkPersonalType = {
   pwd: string;
 };
 
-export type PaginatedLabLinksPersonalType = {
-  pageParams: number[];
-  pages: ({ items: LabLinkPersonalType[] } & PagesPropertiesType)[];
-};
-
 export type LetterType = {
   id: number;
   date_created: number;
@@ -845,11 +816,6 @@ export type LetterType = {
   name: string;
   description: string;
   updates: { date_updated: number; updated_by_id: number }[];
-};
-
-export type PaginatedLettersType = {
-  pageParams: number[];
-  pages: ({ items: LetterType[] } & PagesPropertiesType)[];
 };
 
 export type LetterTemplateType = {
@@ -864,11 +830,6 @@ export type LetterTemplateType = {
   recipient_infos: string;
 };
 
-export type PaginatedLetterTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: LetterTemplateType[] } & PagesPropertiesType)[];
-};
-
 export type LinkType = {
   id: number;
   staff_id: number;
@@ -877,11 +838,6 @@ export type LinkType = {
   date_created: number;
   created_by_id: number;
   updates: { updated_by_id: number; date_updated: number }[];
-};
-
-export type PaginatedLinksType = {
-  pageParams: number[];
-  pages: ({ items: LinkType[] } & PagesPropertiesType)[];
 };
 
 export type MedType = {
@@ -893,8 +849,8 @@ export type MedType = {
   ResidualInfo: {
     DataElement: { Name: string; DataType: string; Content: string }[];
   };
-  PrescriptionWrittenDate: number;
-  StartDate: number;
+  PrescriptionWrittenDate: number | null;
+  StartDate: number | null;
   DrugIdentificationNumber: string;
   DrugName: string;
   Strength: { Amount: string; UnitOfMeasure: string };
@@ -932,11 +888,6 @@ export type MedType = {
   site_id: number;
 };
 
-export type PaginatedMedsType = {
-  pageParams: number[];
-  pages: ({ items: MedType[] } & PagesPropertiesType)[];
-};
-
 export type MedTemplateType = {
   id: number;
   author_id: number;
@@ -962,11 +913,6 @@ export type MedTemplateType = {
   refill_duration: { Y: number; M: number; W: number; D: number };
 };
 
-export type PaginatedMedsTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: MedTemplateType[] } & PagesPropertiesType)[];
-};
-
 export type MessageType = {
   id: number;
   from_id: number;
@@ -983,11 +929,6 @@ export type MessageType = {
   high_importance: boolean;
   //add-on
   patient_infos?: DemographicsType;
-};
-
-export type PaginatedMessagesType = {
-  pageParams: number[];
-  pages: ({ items: MessageType[] } & PagesPropertiesType)[];
 };
 
 export type MessageAttachmentType = {
@@ -1020,11 +961,6 @@ export type MessageExternalType = {
   from_patient_infos?: DemographicsType;
 };
 
-export type PaginatedMessagesExternalType = {
-  pageParams: number[];
-  pages: ({ items: MessageExternalType[] } & PagesPropertiesType)[];
-};
-
 export type MessageExternalTemplateType = {
   id: number;
   name: string;
@@ -1032,11 +968,6 @@ export type MessageExternalTemplateType = {
   author_id: number;
   subject: string;
   body: string;
-};
-
-export type PaginatedMessageExternalTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: MessageExternalTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type MessageTemplateType = {
@@ -1047,11 +978,6 @@ export type MessageTemplateType = {
   subject: string;
   body: string;
   date_created: number;
-};
-
-export type PaginatedMessageTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: MessageTemplateType[] } & PagesPropertiesType)[];
 };
 
 export type NotepadType = {
@@ -1082,11 +1008,6 @@ export type PamphletType = {
   name: string;
 };
 
-export type PaginatedPamphletsType = {
-  pageParams: number[];
-  pages: ({ items: PamphletType[] } & PagesPropertiesType)[];
-};
-
 export type PastHealthType = {
   id: number;
   patient_id: number;
@@ -1102,17 +1023,12 @@ export type PastHealthType = {
     StandardCode: string;
     StandardCodeDescription: string;
   };
-  OnsetOrEventDate: number;
+  OnsetOrEventDate: number | null;
   LifeStage: string;
-  ResolvedDate: number;
-  ProcedureDate: number;
+  ResolvedDate: number | null;
+  ProcedureDate: number | null;
   Notes: string;
   ProblemStatus: string;
-};
-
-export type PaginatedPastHealthsType = {
-  pageParams: number[];
-  pages: ({ items: PastHealthType[] } & PagesPropertiesType)[];
 };
 
 export type PatientType = {
@@ -1136,11 +1052,6 @@ export type PersonalHistoryType = {
   ResidualInfo: {
     DataElement: { Name: string; DataType: string; Content: string }[];
   };
-};
-
-export type PaginatedPersonalHistoryType = {
-  pageParams: number[];
-  pages: ({ items: PersonalHistoryType[] } & PagesPropertiesType)[];
 };
 
 export type PharmacyType = {
@@ -1173,11 +1084,6 @@ export type PharmacyType = {
   EmailAddress: string;
 };
 
-export type PaginatedPharmaciesType = {
-  pageParams: number[];
-  pages: ({ items: PharmacyType[] } & PagesPropertiesType)[];
-};
-
 export type PregnancyType = {
   id: number;
   patient_id: number;
@@ -1190,11 +1096,6 @@ export type PregnancyType = {
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
   notes: string;
-};
-
-export type PaginatedPregnanciesType = {
-  pageParams: number[];
-  pages: ({ items: PregnancyType[] } & PagesPropertiesType)[];
 };
 
 export type PrescriptionType = {
@@ -1211,11 +1112,6 @@ export type PrescriptionType = {
     created_by_id: integer;
     file: AttachmentType;
   };
-};
-
-export type PaginatedPrescriptionType = {
-  pageParams: number[];
-  pages: ({ items: PrescriptionType[] } & PagesPropertiesType)[];
 };
 
 export type ProblemListType = {
@@ -1235,15 +1131,10 @@ export type ProblemListType = {
   };
   ProblemDescription: string;
   ProblemStatus: string;
-  OnsetDate: number;
+  OnsetDate: number | null;
   LifeStage: string;
-  ResolutionDate: number;
+  ResolutionDate: number | null;
   Notes: string;
-};
-
-export type PaginatedProblemListsType = {
-  pageParams: number[];
-  pages: ({ items: ProblemListType[] } & PagesPropertiesType)[];
 };
 
 export type RelationshipType = {
@@ -1256,11 +1147,6 @@ export type RelationshipType = {
   updates: { updated_by_id: number; date_updated: number }[];
 };
 
-export type PaginatedRelationshipsType = {
-  pageParams: number[];
-  pages: ({ items: RelationshipType[] } & PagesPropertiesType)[];
-};
-
 export type ReminderType = {
   id: number;
   patient_id: number;
@@ -1268,11 +1154,6 @@ export type ReminderType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
-};
-
-export type PaginatedRemindersType = {
-  pageParams: number[];
-  pages: ({ items: ReminderType[] } & PagesPropertiesType)[];
 };
 
 export type ReportType = {
@@ -1313,7 +1194,7 @@ export type ReportType = {
   MessageUniqueID: string;
   Notes: string;
   RecipientName: { FirstName: string; LastName: string };
-  DateTimeSent: number;
+  DateTimeSent: number | null;
   acknowledged: boolean;
   assigned_staff_id: number;
   File: AttachmentType | null;
@@ -1339,11 +1220,6 @@ export type ReportFormType = {
   Notes: "";
 };
 
-export type PaginatedReportsType = {
-  pageParams: number[];
-  pages: ({ items: ReportType[] } & PagesPropertiesType)[];
-};
-
 export type RiskFactorType = {
   id: number;
   patient_id: number;
@@ -1356,15 +1232,10 @@ export type RiskFactorType = {
   RiskFactor: string;
   ExposureDetails: string;
   AgeOfOnset: string;
-  StartDate: number;
-  EndDate: number;
+  StartDate: number | null;
+  EndDate: number | null;
   LifeStage: string;
   Notes: string;
-};
-
-export type PaginatedRiskFactorsType = {
-  pageParams: number[];
-  pages: ({ items: RiskFactorType[] } & PagesPropertiesType)[];
 };
 
 export type InvitationTemplateType = {
@@ -1473,11 +1344,6 @@ export type TodoType = {
   patient_infos?: DemographicsType;
 };
 
-export type PaginatedTodosType = {
-  pageParams: number[];
-  pages: ({ items: TodoType[] } & PagesPropertiesType)[];
-};
-
 export type TodoTemplateType = {
   id: number;
   name: string;
@@ -1486,12 +1352,6 @@ export type TodoTemplateType = {
   author_id: number;
   date_created: number;
 };
-
-export type PaginatedTodoTemplatesType = {
-  pageParams: number[];
-  pages: ({ items: TodoTemplateType[] } & PagesPropertiesType)[];
-};
-
 //WEATHER API Types
 export type WeatherType = {
   location: {
@@ -1591,3 +1451,97 @@ export type FaxesToDeleteType = {
   faxFileNames: string[];
   direction: "IN" | "OUT";
 };
+
+//We don't put DEMOGRAPHICS, DOCTORS, AGE CALCULATOR, REPORTS, LABELS because they are apart from the rest
+export type TopicPaginatedDataMap = {
+  ["PAST HEALTH"]: XanoPaginatedType<PastHealthType>;
+  ["FAMILY HISTORY"]: XanoPaginatedType<FamilyHistoryType>;
+  ["RELATIONSHIPS"]: XanoPaginatedType<RelationshipType>;
+  ["ALERTS & SPECIAL NEEDS"]: XanoPaginatedType<AlertType>;
+  ["RISK FACTORS"]: XanoPaginatedType<RiskFactorType>;
+  ["MEDICATIONS & TREATMENTS"]: XanoPaginatedType<MedType>;
+  ["PAST PRESCRIPTIONS"]: XanoPaginatedType<PrescriptionType>;
+  ["PHARMACIES"]: XanoPaginatedType<PharmacyType>;
+  ["E-FORMS"]: XanoPaginatedType<EformType>;
+  ["REMINDERS"]: XanoPaginatedType<ReminderType>;
+  ["LETTERS/REFERRALS"]: XanoPaginatedType<LetterType>;
+  ["GROUPS"]: XanoPaginatedType<GroupType>;
+  ["PERSONAL HISTORY"]: XanoPaginatedType<PersonalHistoryType>;
+  ["CARE ELEMENTS"]: XanoPaginatedType<CareElementType>;
+  ["PROBLEM LIST"]: XanoPaginatedType<ProblemListType>;
+  ["PREGNANCIES"]: XanoPaginatedType<PregnancyType>;
+  ["CYCLES"]: XanoPaginatedType<CycleType>;
+  ["ALLERGIES & ADVERSE REACTIONS"]: XanoPaginatedType<AllergyType>;
+  ["IMMUNIZATIONS"]: XanoPaginatedType<ImmunizationType>;
+  ["APPOINTMENTS"]: XanoPaginatedType<AppointmentType>;
+  ["MESSAGES ABOUT PATIENT"]: XanoPaginatedType<MessageType>;
+  ["MESSAGES WITH PATIENT"]: XanoPaginatedType<MessageExternalType>;
+  ["TO-DOS ABOUT PATIENT"]: XanoPaginatedType<TodoType>;
+};
+
+export type TopicDataMap = {
+  ["PAST HEALTH"]: PastHealthType;
+  ["FAMILY HISTORY"]: FamilyHistoryType;
+  ["RELATIONSHIPS"]: RelationshipType;
+  ["ALERTS & SPECIAL NEEDS"]: AlertType;
+  ["RISK FACTORS"]: RiskFactorType;
+  ["MEDICATIONS & TREATMENTS"]: MedType;
+  ["PAST PRESCRIPTIONS"]: PrescriptionType;
+  ["PHARMACIES"]: PharmacyType;
+  ["E-FORMS"]: EformType;
+  ["REMINDERS"]: ReminderType;
+  ["LETTERS/REFERRALS"]: LetterType;
+  ["GROUPS"]: GroupType;
+  ["PERSONAL HISTORY"]: PersonalHistoryType;
+  ["CARE ELEMENTS"]: CareElementType;
+  ["PROBLEM LIST"]: ProblemListType;
+  ["PREGNANCIES"]: PregnancyType;
+  ["CYCLES"]: CycleType;
+  ["ALLERGIES & ADVERSE REACTIONS"]: AllergyType;
+  ["IMMUNIZATIONS"]: ImmunizationType;
+  ["APPOINTMENTS"]: AppointmentType;
+  ["MESSAGES ABOUT PATIENT"]: MessageType;
+  ["MESSAGES WITH PATIENT"]: MessageExternalType;
+  ["TO-DOS ABOUT PATIENT"]: TodoType;
+};
+
+export type TopicType = keyof TopicDataMap;
+export type TopicPaginatedType = keyof TopicPaginatedDataMap;
+export type UpdateType = {
+  date_updated: number;
+  updated_by_id: number;
+};
+
+export type TopicExportType =
+  | "DEMOGRAPHICS"
+  | "CLINICAL NOTES"
+  | "PAST HEALTH"
+  | "FAMILY HISTORY"
+  | "ALERTS & SPECIAL NEEDS"
+  | "RISK FACTORS"
+  | "MEDICATIONS & TREATMENTS"
+  | "FAMILY DOCTORS & SPECIALISTS"
+  | "PHARMACIES"
+  | "PERSONAL HISTORY"
+  | "CARE ELEMENTS"
+  | "PROBLEM LIST"
+  | "PREGNANCIES"
+  | "CYCLES"
+  | "ALLERGIES & ADVERSE REACTIONS"
+  | "IMMUNIZATIONS"
+  | "PAST PRESCRIPTIONS"
+  | "REPORTS"
+  | "E-FORMS"
+  | "LETTERS/REFERRALS";
+
+export type CareElementHistoryTopicType =
+  | "SMOKING STATUS"
+  | "SMOKING PACKS PER DAY"
+  | "WEIGHT"
+  | "WEIGHT LBS"
+  | "HEIGHT"
+  | "HEIGHT FEET"
+  | "WAIST CIRCUMFERENCE"
+  | "BLOOD PRESSURE"
+  | "BODY MASS INDEX"
+  | "BODY SURFACE AREA";

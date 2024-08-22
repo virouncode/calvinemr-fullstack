@@ -5,9 +5,9 @@ import useUserContext from "../../context/useUserContext";
 
 export const useSites = () => {
   const { user } = useUserContext();
-  return useQuery({
+  return useQuery<SiteType[]>({
     queryKey: ["sites"],
-    queryFn: (): Promise<SiteType[]> => {
+    queryFn: () => {
       if (user?.access_level === "staff") return xanoGet("/sites", "staff");
       else return xanoGet("/sites", "admin");
     },

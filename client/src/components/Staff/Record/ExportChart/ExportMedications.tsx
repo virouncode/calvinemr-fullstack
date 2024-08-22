@@ -1,12 +1,14 @@
 import React from "react";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import { MedType } from "../../../../types/api";
 import { isMedicationActive } from "../../../../utils/medications/isMedicationActive";
 
 type ExportMedicationsProps = {
-  topicDatas: MedType[];
+  patientId: number;
 };
 
-const ExportMedications = ({ topicDatas }: ExportMedicationsProps) => {
+const ExportMedications = ({ patientId }: ExportMedicationsProps) => {
   const CARD_STYLE = {
     width: "95%",
     margin: "20px auto",
@@ -24,6 +26,19 @@ const ExportMedications = ({ topicDatas }: ExportMedicationsProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "MEDICATIONS & TREATMENTS",
+    patientId
+  );
+
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
+
   const activeMeds = topicDatas.filter((item) =>
     isMedicationActive(item.StartDate, item.duration)
   );

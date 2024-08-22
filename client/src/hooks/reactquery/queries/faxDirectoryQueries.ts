@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { FaxContactType, PaginatedDatasType } from "../../../types/api";
+import { FaxContactType, XanoPaginatedType } from "../../../types/api";
 
 export const useFaxDirectory = () => {
-  return useInfiniteQuery({
+  return useInfiniteQuery<XanoPaginatedType<FaxContactType>>({
     queryKey: ["fax directory"],
-    queryFn: ({ pageParam }): Promise<PaginatedDatasType<FaxContactType>> => {
+    queryFn: ({ pageParam }) => {
       return xanoGet("/fax_directory", "staff", {
         page: pageParam,
       });

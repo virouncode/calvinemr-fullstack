@@ -1,24 +1,30 @@
 import React, { useEffect } from "react";
-import { AttachmentType, ReportType } from "../../../../types/api";
+import { useReports } from "../../../../hooks/reactquery/queries/reportsQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
+import { AttachmentType } from "../../../../types/api";
 import DocumentEmbed from "./DocumentEmbed";
 import ExportReportTextItem from "./ExportReportTextItem";
 
 type ExportReportsProps = {
-  topicDatas: ReportType[];
   reportsFilesRef: React.MutableRefObject<AttachmentType[]>;
   reportsTextRef: React.MutableRefObject<HTMLDivElement | null>;
-  hasNextPage: boolean;
+  patientId: number;
 };
 
 const ExportReports = ({
-  topicDatas,
   reportsFilesRef,
   reportsTextRef,
-  hasNextPage,
+  patientId,
 }: ExportReportsProps) => {
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } =
+    useReports(patientId);
+
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
   useEffect(() => {
-    if (hasNextPage) return;
-    for (const item of topicDatas) {
+    if (hasNextPage || !data) return;
+    for (const item of data.pages.flatMap((page) => page.items)) {
       if (item.File) {
         item.Format === "Binary" &&
           !reportsFilesRef.current
@@ -27,7 +33,12 @@ const ExportReports = ({
           reportsFilesRef.current.push(item.File);
       }
     }
-  }, [topicDatas, hasNextPage, reportsFilesRef]);
+  }, [data, hasNextPage, reportsFilesRef]);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
   const reportsText = topicDatas.filter((item) => item.Format === "Text");
   const reportsBinary = topicDatas.filter((item) => item.Format === "Binary");
 

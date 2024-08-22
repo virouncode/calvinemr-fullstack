@@ -17,7 +17,9 @@ const PatientStaffContactsCategory = ({
   isContactChecked,
   handleCheckContact,
 }: PatientStaffContactsCategoryProps) => {
+  //Hooks
   const [listVisible, setListVisible] = useState(false);
+
   const handleClick = () => {
     setListVisible((v) => !v);
   };

@@ -29,6 +29,8 @@ const UnlockForm = ({
   toastExpiredID,
   tokenLimitVerifierID,
 }: UnlockFormProps) => {
+  //Hooks
+  const navigate = useNavigate();
   const { user, setUser } = useUserContext();
   const { socket } = useSocketContext();
   const { setAuth } = useAuthContext();
@@ -41,9 +43,8 @@ const UnlockForm = ({
       ? (user as AdminType)?.autolock_time_min
       : (user as UserStaffType)?.settings.autolock_time_min
   );
-  const navigate = useNavigate();
-
   const [pin, setPin] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     setPin(e.target.value);

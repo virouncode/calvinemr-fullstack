@@ -12,6 +12,7 @@ type PatientSearchResultProps = {
 };
 
 const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
+  //Queries
   const {
     data: patients,
     isPending,
@@ -20,7 +21,7 @@ const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
     fetchNextPage,
     isFetching,
   } = usePatients(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

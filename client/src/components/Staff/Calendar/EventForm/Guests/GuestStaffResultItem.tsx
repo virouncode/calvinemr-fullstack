@@ -13,6 +13,7 @@ const GuestStaffResultItem = ({
   staff,
   handleAddStaffGuest,
 }: GuestStaffResultItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <li>

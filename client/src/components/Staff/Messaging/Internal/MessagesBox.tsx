@@ -7,8 +7,8 @@ import React from "react";
 import useIntersection from "../../../../hooks/useIntersection";
 import {
   MessageType,
-  PaginatedDatasType,
   TodoType,
+  XanoPaginatedType,
 } from "../../../../types/api";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -34,7 +34,7 @@ type MessagesBoxProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<MessageType | TodoType>, unknown>,
+      InfiniteData<XanoPaginatedType<MessageType | TodoType>, unknown>,
       Error
     >
   >;
@@ -63,7 +63,7 @@ const MessagesBox = ({
   setPrintVisible,
   search,
 }: MessagesBoxProps) => {
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

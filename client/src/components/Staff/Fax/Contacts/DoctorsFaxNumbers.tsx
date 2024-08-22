@@ -10,6 +10,7 @@ type DoctorsFaxNumbersProps = {
 };
 
 const DoctorsFaxNumbers = ({ handleClickDoctor }: DoctorsFaxNumbersProps) => {
+  //Queries
   const {
     data,
     isPending,
@@ -18,7 +19,7 @@ const DoctorsFaxNumbers = ({ handleClickDoctor }: DoctorsFaxNumbersProps) => {
     fetchNextPage,
     isFetching,
   } = useDoctors();
-
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

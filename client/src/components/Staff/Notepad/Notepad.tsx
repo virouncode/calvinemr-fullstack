@@ -16,10 +16,12 @@ type NotepadProps = {
 };
 
 const Notepad = ({ setNotepadVisible }: NotepadProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [notes, setNotes] = useState("");
-  const { data, isPending, error } = useNotepad(user.id);
   const [progress, setProgress] = useState(false);
+  //Queries
+  const { data, isPending, error } = useNotepad(user.id);
   const notepadPut = useNotepadPut(user.id);
 
   useEffect(() => {

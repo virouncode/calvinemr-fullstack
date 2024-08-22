@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { toast } from "react-toastify";
 import xanoGet from "../../api/xanoCRUD/xanoGet";
 import {
   AppointmentType,
@@ -21,16 +22,26 @@ export const getAvailableRooms = async (
   siteId: number,
   abortController?: AbortController
 ) => {
-  const appointmentsInRange: AppointmentType[] = await xanoGet(
-    "/appointments_in_range_and_sites",
-    "staff",
-    {
-      range_start: rangeStart,
-      range_end: rangeEnd,
-      sites_ids: [siteId],
-    },
-    abortController
-  );
+  let appointmentsInRange: AppointmentType[] = [];
+  try {
+    appointmentsInRange = await xanoGet(
+      "/appointments_in_range_and_sites",
+      "staff",
+      {
+        range_start: rangeStart,
+        range_end: rangeEnd,
+        sites_ids: [siteId],
+      },
+      abortController
+    );
+  } catch (err) {
+    if (err instanceof Error)
+      toast.error(`Error: unable to get available rooms ${err.message}`, {
+        containerId: "A",
+      });
+    return;
+  }
+
   const otherNonRecAppointments: AppointmentType[] = appointmentsInRange
     .filter(({ id }) => id !== currentAppointmentId)
     .filter(({ recurrence }) => recurrence === "Once");

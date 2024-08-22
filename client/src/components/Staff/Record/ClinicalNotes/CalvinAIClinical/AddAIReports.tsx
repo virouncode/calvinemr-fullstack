@@ -7,8 +7,8 @@ import React, { useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
-  PaginatedDatasType,
   ReportType,
+  XanoPaginatedType,
 } from "../../../../../types/api";
 import { PromptTextType } from "../../../../../types/app";
 import EmptyLi from "../../../../UI/Lists/EmptyLi";
@@ -19,7 +19,7 @@ import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall
 import AddAIReportItem from "./AddAIReportItem";
 
 type AddAIReportsProps = {
-  reports: InfiniteData<PaginatedDatasType<ReportType>, unknown> | undefined;
+  reports: InfiniteData<XanoPaginatedType<ReportType>, unknown> | undefined;
   isPending: boolean;
   error: Error | null;
   isFetchingNextPage: boolean;
@@ -27,7 +27,7 @@ type AddAIReportsProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<ReportType>, unknown>,
+      InfiniteData<XanoPaginatedType<ReportType>, unknown>,
       Error
     >
   >;
@@ -62,8 +62,9 @@ const AddAIReports = ({
   promptText,
   setPromptText,
 }: AddAIReportsProps) => {
+  //Hooks
   const [reportsAddedIds, setReportsAddedIds] = useState<number[]>([]);
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

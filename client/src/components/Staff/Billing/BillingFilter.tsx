@@ -31,7 +31,7 @@ const BillingFilter = ({
   initialRangeStart,
   initialRangeEnd,
 }: BillingFilterProps) => {
-  const headers = [
+  const csvHeaders = [
     {
       label: "ProviderNumber",
       key: "provider_ohip_billing_nbr.ohip_billing_nbr",
@@ -96,8 +96,8 @@ const BillingFilter = ({
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setAll(true);
-      setRangeStart(dateISOToTimestampTZ("1800-01-01"));
-      setRangeEnd(dateISOToTimestampTZ("3000-01-01"));
+      setRangeStart(-5364662400000); // 1900-01-01
+      setRangeEnd(32503680000000); // 3000-01-01
     } else {
       setAll(false);
       setRangeStart(initialRangeStart.current);
@@ -109,12 +109,12 @@ const BillingFilter = ({
     const value = e.target.value;
     const name = e.target.name;
     if (name === "date_start") {
-      initialRangeStart.current = dateISOToTimestampTZ(value);
-      setRangeStart(dateISOToTimestampTZ(value));
+      initialRangeStart.current = dateISOToTimestampTZ(value) ?? -5364662400000;
+      setRangeStart(dateISOToTimestampTZ(value) ?? -5364662400000);
     }
     if (name === "date_end") {
-      initialRangeEnd.current = dateISOToTimestampTZ(value);
-      setRangeEnd(dateISOToTimestampTZ(value));
+      initialRangeEnd.current = dateISOToTimestampTZ(value) ?? 32503680000000;
+      setRangeEnd(dateISOToTimestampTZ(value) ?? 32503680000000);
     }
   };
 
@@ -160,7 +160,7 @@ const BillingFilter = ({
             rangeStart={rangeStart}
             rangeEnd={rangeEnd}
             all={all}
-            headers={headers}
+            headers={csvHeaders}
           />
         </div>
       </div>

@@ -24,11 +24,20 @@ type PatientsClinicGroupsProps = {
 };
 
 const PatientsClinicGroups = () => {
-  const { data: groups, isPending, error } = useGlobalPatientsGroups();
+  //Hooks
   const [addGroupVisible, setAddGroupVisible] = useState(false);
   const [newMessageExternalVisible, setNewMessageExternalVisible] =
     useState(false);
-  const [initialRecipients, setInitialRecipients] = useState([]);
+  const [initialRecipients, setInitialRecipients] = useState<
+    {
+      id: number;
+      name: string;
+      email: string;
+      phone: string;
+    }[]
+  >([]);
+  //Queries
+  const { data: groups, isPending, error } = useGlobalPatientsGroups();
 
   const handleAdd = () => {
     setAddGroupVisible(true);

@@ -9,7 +9,9 @@ type PatientsGroupItemProps = {
 };
 
 const PatientsGroupItem = ({ patient, index }: PatientsGroupItemProps) => {
+  //Hooks
   const navigate = useNavigate();
+
   const handleClickPatient = () => {
     navigate(`/staff/patient-record/${patient?.patient_infos.patient_id}`);
   };

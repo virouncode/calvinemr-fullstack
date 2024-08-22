@@ -28,6 +28,7 @@ const PatientsList = ({
   allPatientsChecked,
   handleCheckAllPatients,
 }: PatientsListProps) => {
+  //Queries
   const {
     data,
     isPending,
@@ -36,8 +37,7 @@ const PatientsList = ({
     fetchNextPage,
     isFetching,
   } = usePatientsSimpleSearch(search);
-
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

@@ -15,6 +15,7 @@ import FormCredentials from "../../UI/Forms/FormCredentials";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const CredentialsFormPatient = () => {
+  //Hooks
   const navigate = useNavigate();
   const { auth } = useAuthContext();
   const { user } = useUserContext() as { user: UserPatientType };

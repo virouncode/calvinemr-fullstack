@@ -31,9 +31,11 @@ const MessageExternalAttachmentCard = ({
   message,
   handleRemoveAttachment,
 }: MessageExternalAttachmentCardProps) => {
+  //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  //Queries
   const reportPost = useReportPost();
 
   const handleImgClick = () => {
@@ -48,25 +50,25 @@ const MessageExternalAttachmentCard = ({
     <>
       <div className="message-attachment__card" style={{ width: cardWidth }}>
         <div className="message-attachment__thumbnail">
-          {attachment.file.mime.includes("image") ? (
+          {attachment.file?.mime.includes("image") ? (
             <img
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                attachment.file.path
+                attachment.file?.path
               }`}
               alt="attachment thumbnail"
               width="100%"
               onClick={handleImgClick}
             />
-          ) : attachment.file.mime.includes("video") ? (
+          ) : attachment.file?.mime.includes("video") ? (
             <video onClick={handleImgClick} width="100%">
               <source
                 src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                  attachment.file.path
+                  attachment.file?.path
                 }`}
-                type={attachment.file.mime}
+                type={attachment.file?.mime}
               />
             </video>
-          ) : attachment.file.mime.includes("officedocument") ? (
+          ) : attachment.file?.mime.includes("officedocument") ? (
             <div>
               <div
                 style={{ color: "blue", fontSize: "0.8rem" }}
@@ -78,7 +80,7 @@ const MessageExternalAttachmentCard = ({
                 title="office document"
                 src={`https://docs.google.com/gview?url=${
                   import.meta.env.VITE_XANO_BASE_URL
-                }${attachment.file.path}&embedded=true&widget=false`}
+                }${attachment.file?.path}&embedded=true&widget=false`}
                 onClick={handleImgClick}
                 width="150%"
                 frameBorder="0"
@@ -90,7 +92,7 @@ const MessageExternalAttachmentCard = ({
                 id="thumbnail-doc"
                 title={attachment.alias}
                 src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                  attachment.file.path
+                  attachment.file?.path
                 }`}
                 width="100%"
               />
@@ -124,7 +126,7 @@ const MessageExternalAttachmentCard = ({
               <XmarkIcon
                 onClick={() =>
                   (handleRemoveAttachment as (attachmentName: string) => void)(
-                    attachment.file.name
+                    attachment.file?.name ?? ""
                   )
                 }
               />
@@ -156,30 +158,30 @@ const MessageExternalAttachmentCard = ({
           }}
           onUnload={() => setPopUpVisible(false)}
         >
-          {attachment.file.mime.includes("image") ? (
+          {attachment.file?.mime.includes("image") ? (
             <img
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                attachment.file.path
+                attachment.file?.path
               }`}
               alt=""
               width="100%"
               height="100%"
             />
-          ) : attachment.file.mime.includes("video") ? (
+          ) : attachment.file?.mime.includes("video") ? (
             <video width="100%" height="100%" controls>
               <source
                 src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                  attachment.file.path
+                  attachment.file?.path
                 }`}
-                type={attachment.file.mime}
+                type={attachment.file?.mime}
               />
             </video>
-          ) : attachment.file.mime.includes("officedocument") ? (
+          ) : attachment.file?.mime.includes("officedocument") ? (
             <iframe
               title="office document"
               src={`https://docs.google.com/gview?url=${
                 import.meta.env.VITE_XANO_BASE_URL
-              }${attachment.file.path}&embedded=true&widget=false`}
+              }${attachment.file?.path}&embedded=true&widget=false`}
               width="100%"
               height="100%"
               frameBorder="0"
@@ -188,7 +190,7 @@ const MessageExternalAttachmentCard = ({
             <iframe
               title={attachment.alias}
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
-                attachment.file.path
+                attachment.file?.path
               }`}
               width="100%"
               height="100%"

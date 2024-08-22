@@ -36,7 +36,7 @@ import ForwardMessageExternal from "./ForwardMessageExternal";
 import MessageExternal from "./MessageExternal";
 import MessageExternalDetailToolbar from "./MessageExternalDetailToolbar";
 import MessagesExternalAttachments from "./MessagesExternalAttachments";
-import MessagesExternalPrintPU from "./MessagesExternalPrintPU";
+import MessagesExternalPrint from "./MessagesExternalPrint";
 import ReplyMessageExternal from "./ReplyMessageExternal";
 
 type MessageExternalDetailProps = {
@@ -54,16 +54,19 @@ const MessageExternalDetail = ({
   printVisible,
   setPrintVisible,
 }: MessageExternalDetailProps) => {
+  //Hooks
+  const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { messageId } = useParams();
-  const navigate = useNavigate();
   const { staffInfos } = useStaffInfosContext();
   const [replyVisible, setReplyVisible] = useState(false);
   const [forwardVisible, setForwardVisible] = useState(false);
   const [newTodoVisible, setNewTodoVisible] = useState(false);
-  const [allPersons, setAllPersons] = useState(false);
-  const messageContentRef = useRef<HTMLDivElement | null>(null);
   const [posting, setPosting] = useState(false);
+  const messageContentRef = useRef<HTMLDivElement | null>(null);
+  //Queries
+  const messagePut = useMessageExternalPut();
+  const clinicalNotePost = useClinicalNotePost();
 
   useEffect(() => {
     //to hide parameters
@@ -83,8 +86,6 @@ const MessageExternalDetail = ({
   const attachments = (
     message?.attachments_ids as { attachment: MessageAttachmentType }[]
   ).map(({ attachment }) => attachment);
-  const messagePut = useMessageExternalPut();
-  const clinicalNotePost = useClinicalNotePost();
 
   const handleClickBack = () => {
     setCurrentMsgId(0);
@@ -136,7 +137,6 @@ const MessageExternalDetail = ({
 
   const handleClickReply = () => {
     setReplyVisible(true);
-    setAllPersons(false);
   };
 
   const handleAddToClinicalNotes = async () => {
@@ -298,15 +298,6 @@ const MessageExternalDetail = ({
             deletable={false}
             cardWidth="15%"
             addable={true}
-            patientsIds={
-              message.from_patient_id
-                ? [message.from_patient_id]
-                : (
-                    message.to_patients_ids as {
-                      to_patient_infos: DemographicsType;
-                    }[]
-                  ).map(({ to_patient_infos }) => to_patient_infos.patient_id)
-            }
             patientsNames={
               message.from_patient_id
                 ? [toPatientName(message.from_patient_infos)]
@@ -337,7 +328,7 @@ const MessageExternalDetail = ({
             }}
             onUnload={() => setPrintVisible(false)}
           >
-            <MessagesExternalPrintPU
+            <MessagesExternalPrint
               message={message}
               previousMsgs={previousMsgs}
               attachments={attachments}

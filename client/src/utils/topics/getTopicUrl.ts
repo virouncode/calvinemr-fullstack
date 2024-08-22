@@ -1,4 +1,6 @@
-export const getTopicUrl = (topic: string) => {
+import { TopicType } from "../../types/api";
+
+export const getTopicUrl = (topic: TopicType) => {
   switch (topic) {
     case "PAST HEALTH":
       return "/past_health_of_patient";
@@ -36,8 +38,6 @@ export const getTopicUrl = (topic: string) => {
       return "/cycles_of_patient";
     case "ALLERGIES & ADVERSE REACTIONS":
       return "/allergies_of_patient";
-    case "REPORTS":
-      return "/reports_of_patient";
     case "IMMUNIZATIONS":
       return "/immunizations_of_patient";
     case "APPOINTMENTS":
@@ -53,7 +53,7 @@ export const getTopicUrl = (topic: string) => {
   }
 };
 
-export const getTopicUrlMutation = (topic: string) => {
+export const getTopicUrlMutation = (topic: TopicType) => {
   switch (topic) {
     case "PAST HEALTH":
       return "/past_health";
@@ -91,8 +91,6 @@ export const getTopicUrlMutation = (topic: string) => {
       return "/cycles";
     case "ALLERGIES & ADVERSE REACTIONS":
       return "/allergies";
-    case "REPORTS":
-      return "/reports";
     case "IMMUNIZATIONS":
       return "/immunizations";
     case "APPOINTMENTS":

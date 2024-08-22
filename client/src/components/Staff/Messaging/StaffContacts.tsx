@@ -15,6 +15,7 @@ const StaffContacts = ({
   recipientsIds,
   setRecipientsIds,
 }: StaffContactsProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const activeStaff = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"

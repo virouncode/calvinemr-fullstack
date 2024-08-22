@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Missing = () => {
+  //Hooks
   const navigate = useNavigate();
   return (
     <div className="missing-container">

@@ -26,6 +26,7 @@ type SignupStaffFormProps = {
 };
 
 const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [errMsg, setErrMsg] = useState("");

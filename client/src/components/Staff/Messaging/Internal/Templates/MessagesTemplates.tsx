@@ -18,9 +18,10 @@ type MessagesTemplatesProps = {
 const MessagesTemplates = ({
   handleSelectTemplate,
 }: MessagesTemplatesProps) => {
+  //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
-
+  //Queries
   const {
     data,
     isPending,
@@ -29,7 +30,7 @@ const MessagesTemplates = ({
     fetchNextPage,
     isFetching,
   } = useMessagesTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

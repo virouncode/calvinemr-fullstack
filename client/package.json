@@ -34,6 +34,7 @@
     "@tanstack/react-query-devtools": "^5.51.11",
     "@types/dom-speech-recognition": "^0.0.4",
     "@types/lodash": "^4.17.7",
+    "@types/react-csv": "^1.1.10",
     "@types/react-flatpickr": "^3.8.11",
     "@types/react-speech-recognition": "^3.9.5",
     "@types/react-toastify": "^4.1.0",

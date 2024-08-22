@@ -11,32 +11,9 @@ import {
   StaffType,
 } from "./api";
 
-export type TopicType =
-  | "PAST HEALTH"
-  | "FAMILY HISTORY"
-  | "RELATIONSHIPS"
-  | "ALERTS & SPECIAL NEEDS"
-  | "RISK FACTORS"
-  | "MEDICATIONS & TREATMENTS"
-  | "PAST PRESCRIPTIONS"
-  | "PHARMACIES"
-  | "FAMILY DOCTORS & SPECIALISTS"
-  | "E-FORMS"
-  | "REMINDERS"
-  | "LETTERS/REFERRALS"
-  | "GROUPS"
-  | "PERSONAL HISTORY"
-  | "CARE ELEMENTS"
-  | "PROBLEM LIST"
-  | "PREGNANCIES"
-  | "CYCLES"
-  | "ALLERGIES & ADVERSE REACTIONS"
-  | "REPORTS"
-  | "IMMUNIZATIONS"
-  | "APPOINTMENTS"
-  | "MESSAGES ABOUT PATIENT"
-  | "MESSAGES WITH PATIENT"
-  | "TO-DOS ABOUT PATIENT";
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
 
 export type CodeTableType = {
   code: string;

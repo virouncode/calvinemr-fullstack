@@ -27,9 +27,11 @@ const MessageTemplateItem = ({
   handleSelectTemplate,
   lastItemRef,
 }: MessageTemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  //Queries
   const messageTemplatePost = useMessagesTemplatePost();
   const messageTemplateDelete = useMessagesTemplateDelete();
 

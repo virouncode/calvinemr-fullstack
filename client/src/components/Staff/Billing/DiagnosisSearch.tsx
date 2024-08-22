@@ -10,7 +10,9 @@ type DiagnosisSearchProps = {
 };
 
 const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
+  //Hooks
   const [search, setSearch] = useState("");
+  //Queries
   const {
     data,
     isPending,
@@ -19,7 +21,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
     fetchNextPage,
     isFetching,
   } = useDiagnosis(search);
-
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

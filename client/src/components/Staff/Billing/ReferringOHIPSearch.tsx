@@ -17,7 +17,13 @@ const ReferringOHIPSearch = ({
   handleClickRefOHIP,
   doctorsIdToRemove = [],
 }: ReferringOHIPSearchProps) => {
+  //Hooks
+  const { staffInfos } = useStaffInfosContext();
   const [search, setSearch] = useState("");
+  const clinicDoctors = staffInfos
+    .filter(({ account_status }) => account_status !== "Closed")
+    .filter(({ title }) => title === "Doctor");
+  //Queries
   const {
     data: doctors,
     isPending,
@@ -26,15 +32,12 @@ const ReferringOHIPSearch = ({
     fetchNextPage,
     isFetching,
   } = useDoctorsSearch(search);
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
-  const { staffInfos } = useStaffInfosContext();
-  const clinicDoctors = staffInfos
-    .filter(({ account_status }) => account_status !== "Closed")
-    .filter(({ title }) => title === "Doctor");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

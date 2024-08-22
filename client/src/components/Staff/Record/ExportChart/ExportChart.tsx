@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DemographicsType } from "../../../../types/api";
+import { DemographicsType, TopicExportType } from "../../../../types/api";
 import Button from "../../../UI/Buttons/Button";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
@@ -18,15 +18,14 @@ const ExportChart = ({
   patientId,
   demographicsInfos,
 }: ExportChartProps) => {
-  const [recordsSelected, setRecordsSelected] = useState<string[]>([
+  //Hooks
+  const [recordsSelected, setRecordsSelected] = useState<TopicExportType[]>([
     "DEMOGRAPHICS",
   ]);
   const [allRecordsSelected, setAllRecordsSelected] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const isRecordSelected = (recordName: string) => {
-    return recordsSelected.includes(recordName);
-  };
-  const recordsNames =
+
+  const recordsNames: TopicExportType[] =
     demographicsInfos.Gender === "M"
       ? [
           "DEMOGRAPHICS",
@@ -71,6 +70,10 @@ const ExportChart = ({
           "LETTERS/REFERRALS",
         ];
 
+  const isRecordSelected = (recordName: TopicExportType) => {
+    return recordsSelected.includes(recordName);
+  };
+
   const handleCancel = () => {
     setExportVisible(false);
   };
@@ -87,7 +90,7 @@ const ExportChart = ({
 
   const handleCheckRecord = (
     e: React.ChangeEvent<HTMLInputElement>,
-    recordName: string
+    recordName: TopicExportType
   ) => {
     const checked = e.target.checked;
     if (checked) {

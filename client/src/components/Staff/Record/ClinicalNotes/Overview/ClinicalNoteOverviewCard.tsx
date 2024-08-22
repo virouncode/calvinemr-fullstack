@@ -13,6 +13,7 @@ const ClinicalNoteOverviewCard = ({
   clinicalNote,
   lastItemRef,
 }: ClinicalNoteOverviewCardProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="clinical-notes__overview-card" ref={lastItemRef}>

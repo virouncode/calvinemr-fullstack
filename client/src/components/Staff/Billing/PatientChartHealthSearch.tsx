@@ -17,8 +17,9 @@ const PatientChartHealthSearch = ({
   handleClickPatient,
   patientsIdToRemove = [],
 }: PatientChartHealthSearchProps) => {
+  //Hooks
   const [search, setSearch] = useState("");
-
+  //Queries
   const {
     data: patients,
     isPending,
@@ -27,7 +28,7 @@ const PatientChartHealthSearch = ({
     fetchNextPage,
     isFetching,
   } = usePatientsSimpleSearch(search);
-
+  //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

@@ -41,6 +41,7 @@ const ReplyMessageExternal = ({
   previousMsgs,
   setCurrentMsgId,
 }: ReplyMessageExternalProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
@@ -51,6 +52,7 @@ const ReplyMessageExternal = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessageExternalPost();
 
   const handleSelectTemplate = (template: MessageExternalTemplateType) => {
@@ -257,7 +259,7 @@ Powered by Calvin EMR`,
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

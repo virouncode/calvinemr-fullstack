@@ -70,7 +70,7 @@ const ReportsInboxForm = ({
     >
   ) => {
     setErrMsgPost("");
-    let value: string | number = e.target.value;
+    let value: string | number | null = e.target.value;
     const name = e.target.name;
     if (name === "Format") {
       setFormDatas({
@@ -124,7 +124,7 @@ const ReportsInboxForm = ({
     try {
       await reportSchema.validate(formDatas);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
 
@@ -147,7 +147,7 @@ const ReportsInboxForm = ({
     });
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setAddVisible(false);
   };

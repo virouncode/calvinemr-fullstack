@@ -13,9 +13,11 @@ type StaffAIChatAgreementProps = {
 };
 
 const StaffAIChatAgreement = ({ setStart }: StaffAIChatAgreementProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const [agreed, setAgreed] = useState(false);
+
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) setAgreed(true);
     else setAgreed(false);

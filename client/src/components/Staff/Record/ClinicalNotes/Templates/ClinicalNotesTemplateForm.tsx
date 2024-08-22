@@ -17,11 +17,13 @@ type ClinicalNotesTemplateFormProps = {
 const ClinicalNotesTemplateForm = ({
   setNewTemplateVisible,
 }: ClinicalNotesTemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplate, setNewTemplate] = useState<
     Partial<ClinicalNoteTemplateType>
   >({ name: "", body: "" });
   const [errMsg, setErrMsg] = useState("");
+  //Queries
   const templatePost = useClinicalNotesTemplatesPost();
 
   const handleChange = (

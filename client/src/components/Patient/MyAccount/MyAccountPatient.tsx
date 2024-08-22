@@ -20,7 +20,7 @@ import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndNam
 import Button from "../../UI/Buttons/Button";
 
 const MyAccountPatient = () => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { staffInfos } = useStaffInfosContext();
   const navigate = useNavigate();

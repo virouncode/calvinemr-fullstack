@@ -50,6 +50,7 @@ const BillingForm = ({
   errMsgPost,
   sites,
 }: BillingFormProps) => {
+  //Hooks
   const navigate = useNavigate();
   const { pid, pName, hcn, date } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
@@ -78,6 +79,7 @@ const BillingForm = ({
   const [billingCodesTemplatesVisible, setBillingCodesTemplatesVisible] =
     useState(false);
   const userType = user.access_level;
+  //Queries
   const billingPost = useBillingPost();
 
   useEffect(() => {
@@ -186,7 +188,7 @@ const BillingForm = ({
       setProgress(true);
       for (const billing_code of billingCodesArray) {
         const billingToPost: Partial<BillingType> = {
-          date: dateISOToTimestampTZ(formDatas.date),
+          date: dateISOToTimestampTZ(formDatas.date) as number,
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
           created_by_user_type: user.access_level,

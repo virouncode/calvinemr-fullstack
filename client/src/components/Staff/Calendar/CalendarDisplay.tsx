@@ -21,13 +21,13 @@ import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import Button from "../../UI/Buttons/Button";
+import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalendarView from "./CalendarView";
 import DaySheet from "./DaySheet";
 import EventForm from "./EventForm/EventForm";
 import TimelineView from "./TimelineView";
 import ToggleView from "./ToggleView";
-import SiteSelect from "../../UI/Lists/SiteSelect";
 
 type CalendarDisplayProps = {
   timelineVisible: boolean;
@@ -102,6 +102,7 @@ const CalendarDisplay = ({
   setSitesIds,
   isFirstEvent,
 }: CalendarDisplayProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (

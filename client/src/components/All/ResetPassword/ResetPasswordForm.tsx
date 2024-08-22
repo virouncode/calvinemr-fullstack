@@ -21,16 +21,20 @@ const ResetPasswordForm = ({
   type,
   tempToken,
 }: ResetPasswordFormProps) => {
+  //Hooks
+  const navigate = useNavigate();
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [pin, setPin] = useState("");
-  const [passwordValidity, setPasswordValidity] = useState({
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    special: false,
-    size: false,
-  });
+  const [passwordValidity, setPasswordValidity] =
+    useState<PasswordValidityType>({
+      uppercase: false,
+      lowercase: false,
+      number: false,
+      special: false,
+      size: false,
+    });
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
@@ -69,7 +73,7 @@ const ResetPasswordForm = ({
     setPasswordValidity(newValidity);
     setPwd(value);
   };
-  const navigate = useNavigate();
+
   const handleSubmitPwd = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (pwd !== confirmPwd) {

@@ -12,6 +12,7 @@ const MessagingToggle = ({
   isTypeChecked,
   handleMsgTypeChange,
 }: MessagingToggleProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   return (
     <div className="messages-toggle">

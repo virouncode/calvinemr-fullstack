@@ -27,6 +27,7 @@ type NewMessagePatientProps = {
 };
 
 const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -36,6 +37,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   const [body, setBody] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
+  //Queries
   const messagePost = useMessageExternalPost();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -65,7 +67,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

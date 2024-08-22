@@ -25,6 +25,7 @@ const ClinicalNoteCardHeaderFolded = ({
   handleCheck,
   selectAll,
 }: ClinicalNoteCardHeaderFoldedProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div

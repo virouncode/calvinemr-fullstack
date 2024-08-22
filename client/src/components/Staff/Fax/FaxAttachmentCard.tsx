@@ -16,7 +16,9 @@ const FaxAttachmentCard = ({
   deletable,
   cardWidth = "20%",
 }: FaxAttachmentCardProps) => {
+  //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
+
   const handleImgClick = () => {
     setPopUpVisible(true);
   };

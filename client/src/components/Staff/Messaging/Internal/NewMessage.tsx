@@ -42,6 +42,7 @@ const NewMessage = ({
   initialAttachments = [],
   initialBody = "",
 }: NewMessageProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -56,6 +57,7 @@ const NewMessage = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  //Queries
   const messagePost = useMessagePost(user.id, "Received messages");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -109,7 +111,7 @@ const NewMessage = ({
   const handleRemoveAttachment = (fileName: string) => {
     let updatedAttachments = [...attachments];
     updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file.name !== fileName
+      (attachment) => attachment.file?.name !== fileName
     );
     setAttachments(updatedAttachments);
   };

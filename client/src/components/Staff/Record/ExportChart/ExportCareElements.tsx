@@ -1,16 +1,17 @@
 import React from "react";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import {
   toCodeTableName,
   ynIndicatorsimpleCT,
 } from "../../../../omdDatas/codesTables";
-import { CareElementType } from "../../../../types/api";
 import { cmToFeet, kgToLbs } from "../../../../utils/measurements/measurements";
 
 type ExportCareElementsProps = {
-  topicDatas: CareElementType[];
+  patientId: number;
 };
 
-const ExportCareElements = ({ topicDatas }: ExportCareElementsProps) => {
+const ExportCareElements = ({ patientId }: ExportCareElementsProps) => {
   const CARD_STYLE = {
     width: "95%",
     margin: "20px auto",
@@ -28,6 +29,19 @@ const ExportCareElements = ({ topicDatas }: ExportCareElementsProps) => {
   const CONTENT_STYLE = {
     padding: "10px",
   };
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "CARE ELEMENTS",
+    patientId
+  );
+
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
+
   const lastDatas =
     topicDatas && topicDatas.length > 0
       ? {

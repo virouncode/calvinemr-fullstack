@@ -9,7 +9,7 @@ import { genderCT, toCodeTableName } from "../../../../../omdDatas/codesTables";
 import {
   ClinicalNoteType,
   DemographicsType,
-  PaginatedDatasType,
+  XanoPaginatedType,
 } from "../../../../../types/api";
 import {
   getAgeTZ,
@@ -34,7 +34,7 @@ type ClinicalNotesPrintProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<ClinicalNoteType>, unknown>,
+      InfiniteData<XanoPaginatedType<ClinicalNoteType>, unknown>,
       Error
     >
   >;
@@ -53,7 +53,9 @@ const ClinicalNotesPrint = ({
   isFetchingNextPage,
   hasNextPage,
 }: ClinicalNotesPrintProps) => {
+  //Queries
   useFetchAllPages(fetchNextPage, hasNextPage, selectAll);
+
   const handlePrint = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.nativeEvent.view?.print();
   };

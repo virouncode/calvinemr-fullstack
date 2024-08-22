@@ -19,12 +19,14 @@ type CalvinAIChatTemplatesProps = {
 const CalvinAIChatTemplates = ({
   handleSelectTemplate,
 }: CalvinAIChatTemplatesProps) => {
+  //Hooks
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number | undefined>(
     undefined
   );
   const [search, setSearch] = useState("");
+  //Queries
   const {
     data: templates,
     isPending,
@@ -33,7 +35,7 @@ const CalvinAIChatTemplates = ({
     fetchNextPage,
     isFetching,
   } = useCalvinAITemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

@@ -37,8 +37,10 @@ const MessagesPatientToolBar = ({
   selectAllVisible,
   setSelectAllVisible,
 }: MessagesPatientToolBarProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
+  //Queries
   const messagePut = useMessageExternalPut();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

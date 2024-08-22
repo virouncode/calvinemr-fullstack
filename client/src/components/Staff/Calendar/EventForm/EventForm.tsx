@@ -80,7 +80,7 @@ const EventForm = ({
   setSitesIds,
   isFirstEvent,
 }: EventFormProps) => {
-  //=========================== HOOKS =================================//
+  //=========================== Hooks =================================//
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState(
@@ -93,17 +93,6 @@ const EventForm = ({
     currentEvent.current?.end as number | Date
   );
   const [statusAdvice, setStatusAdvice] = useState(false);
-
-  const appointmentPost = useAppointmentPost();
-  const appointmentPut = useAppointmentPut();
-
-  const { data: availableRooms, isPending } = useAvailableRooms(
-    formDatas.id,
-    formDatas.start,
-    formDatas.end,
-    sites,
-    formDatas.site_id
-  );
   const [invitationVisible, setInvitationVisible] = useState(false);
   const [progress, setProgress] = useState(false);
   const [confirmDlgRecChangeVisible, setConfirmDlgRecChangeVisible] =
@@ -118,9 +107,17 @@ const EventForm = ({
   const refHoursEnd = useRef<HTMLSelectElement | null>(null);
   const refMinutesEnd = useRef<HTMLSelectElement | null>(null);
   const refAMPMEnd = useRef<HTMLSelectElement | null>(null);
-
+  const { data: availableRooms, isPending } = useAvailableRooms(
+    formDatas.id,
+    formDatas.start,
+    formDatas.end,
+    sites,
+    formDatas.site_id
+  );
+  //=========================== Queries =================================//
+  const appointmentPost = useAppointmentPost();
+  const appointmentPut = useAppointmentPut();
   //============================ HANDLERS ==========================//
-
   const handlePurposeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const value = e.target.value;
@@ -259,12 +256,12 @@ const EventForm = ({
     setErrMsgPost("");
     const name = e.target.name;
     const value = e.target.value;
-    if (!value) return;
-    const dateStr = refDateStart.current?.value ?? "";
-    const hoursStr = refHoursStart.current?.value ?? "";
-    const minutesStr = refMinutesStart.current?.value ?? "";
+    if (!value) return; //to avoid Clearing the input
+    const dateStr = refDateStart.current?.value as string;
+    const hoursStr = refHoursStart.current?.value as string;
+    const minutesStr = refMinutesStart.current?.value as string;
     const ampmStr = (refAMPMStart.current?.value as "AM" | "PM") ?? "AM";
-    let timestampStart: number;
+    let timestampStart: number = 0;
     switch (name) {
       case "date":
         timestampStart = tzComponentsToTimestamp(
@@ -272,7 +269,7 @@ const EventForm = ({
           hoursStr,
           minutesStr,
           ampmStr
-        );
+        ) as number;
         break;
       case "hours":
         timestampStart = tzComponentsToTimestamp(
@@ -280,7 +277,7 @@ const EventForm = ({
           value,
           minutesStr,
           ampmStr
-        );
+        ) as number;
         break;
       case "minutes":
         timestampStart = tzComponentsToTimestamp(
@@ -288,7 +285,7 @@ const EventForm = ({
           hoursStr,
           value,
           ampmStr
-        );
+        ) as number;
         break;
       case "ampm":
         timestampStart = tzComponentsToTimestamp(
@@ -296,26 +293,25 @@ const EventForm = ({
           hoursStr,
           minutesStr,
           value as "AM" | "PM"
-        );
+        ) as number;
         break;
       default:
-        timestampStart = 0;
         break;
     }
 
     const rangeEnd =
       timestampStart > formDatas.end ? timestampStart : formDatas.end;
 
-    let hypotheticAvailableRooms: string[] = [];
+    let hypotheticAvailableRooms;
 
     try {
-      hypotheticAvailableRooms = (await getAvailableRooms(
+      hypotheticAvailableRooms = await getAvailableRooms(
         parseInt(currentEvent.current?.id as string),
         timestampStart,
         rangeEnd,
         sites,
         formDatas.site_id
-      )) as string[];
+      );
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to get available rooms: ${err.message}`, {
@@ -325,8 +321,8 @@ const EventForm = ({
     }
     if (
       formDatas.room_id === "z" ||
-      hypotheticAvailableRooms.includes(formDatas.room_id) ||
-      (!hypotheticAvailableRooms.includes(formDatas.room_id) &&
+      hypotheticAvailableRooms?.includes(formDatas.room_id) ||
+      (!hypotheticAvailableRooms?.includes(formDatas.room_id) &&
         (await confirmAlert({
           content: `${toRoomTitle(
             sites,
@@ -362,10 +358,10 @@ const EventForm = ({
     const name = e.target.name;
     const value = e.target.value;
     if (!value) return;
-    const dateStr = refDateEnd.current?.value ?? "";
-    const hoursStr = refHoursEnd.current?.value ?? "";
-    const minutesStr = refMinutesEnd.current?.value ?? "";
-    const ampmStr = (refAMPMEnd.current?.value as "AM" | "PM") ?? "AM";
+    const dateStr = refDateEnd.current?.value as string;
+    const hoursStr = refHoursEnd.current?.value as string;
+    const minutesStr = refMinutesEnd.current?.value as string;
+    const ampmStr = refAMPMEnd.current?.value as "AM" | "PM";
     let timestampEnd: number = 0;
     switch (name) {
       case "date":
@@ -374,7 +370,7 @@ const EventForm = ({
           hoursStr,
           minutesStr,
           ampmStr
-        );
+        ) as number;
         break;
       case "hours":
         timestampEnd = tzComponentsToTimestamp(
@@ -382,7 +378,7 @@ const EventForm = ({
           value,
           minutesStr,
           ampmStr
-        );
+        ) as number;
         break;
       case "minutes":
         timestampEnd = tzComponentsToTimestamp(
@@ -390,7 +386,7 @@ const EventForm = ({
           hoursStr,
           value,
           ampmStr
-        );
+        ) as number;
         break;
       case "ampm":
         timestampEnd = tzComponentsToTimestamp(
@@ -398,13 +394,13 @@ const EventForm = ({
           hoursStr,
           minutesStr,
           value as "AM" | "PM"
-        );
+        ) as number;
         break;
       default:
         break;
     }
 
-    let hypotheticAvailableRooms: string[] = [];
+    let hypotheticAvailableRooms;
     try {
       hypotheticAvailableRooms = await getAvailableRooms(
         parseInt(currentEvent.current?.id as string),
@@ -421,8 +417,8 @@ const EventForm = ({
     }
     if (
       formDatas.room_id === "z" ||
-      hypotheticAvailableRooms.includes(formDatas.room_id) ||
-      (!hypotheticAvailableRooms.includes(formDatas.room_id) &&
+      hypotheticAvailableRooms?.includes(formDatas.room_id) ||
+      (!hypotheticAvailableRooms?.includes(formDatas.room_id) &&
         (await confirmAlert({
           content: `${toRoomTitle(
             sites,
@@ -530,8 +526,8 @@ const EventForm = ({
     }
     if (
       formDatas.room_id === "z" ||
-      hypotheticAvailableRooms.includes(formDatas.room_id) ||
-      (!hypotheticAvailableRooms.includes(formDatas.room_id) &&
+      hypotheticAvailableRooms?.includes(formDatas.room_id) ||
+      (!hypotheticAvailableRooms?.includes(formDatas.room_id) &&
         (await confirmAlert({
           content: `${toRoomTitle(
             sites,

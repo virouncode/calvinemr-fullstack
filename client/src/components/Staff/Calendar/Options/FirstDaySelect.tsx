@@ -7,6 +7,7 @@ import { SettingsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 
 const FirstDaySelect = () => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
 

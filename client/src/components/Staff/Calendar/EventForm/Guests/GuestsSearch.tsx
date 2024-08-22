@@ -21,6 +21,7 @@ const GuestsSearch = ({
   staff_guests_ids,
   patientsIdsToExclude,
 }: GuestsSearchProps) => {
+  //Hooks
   const [search, setSearch] = useState({
     name: "",
     email: "",
@@ -29,7 +30,7 @@ const GuestsSearch = ({
     chart: "",
     health: "",
   });
-
+  //Queries
   const {
     data: patients,
     isPending,

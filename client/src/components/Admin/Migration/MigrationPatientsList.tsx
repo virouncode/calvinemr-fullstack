@@ -31,6 +31,7 @@ const MigrationPatientsList = ({
   progress,
   search,
 }: MigrationPatientsListProps) => {
+  //Queries
   const {
     data,
     isPending,
@@ -39,7 +40,7 @@ const MigrationPatientsList = ({
     fetchNextPage,
     isFetching,
   } = usePatients(search);
-
+  //Hooks
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

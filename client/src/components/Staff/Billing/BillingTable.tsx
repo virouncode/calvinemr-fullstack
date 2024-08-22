@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import useIntersection from "../../../hooks/useIntersection";
-import { BillingType, PaginatedDatasType, SiteType } from "../../../types/api";
+import { BillingType, SiteType, XanoPaginatedType } from "../../../types/api";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import BillingTableItem from "./BillingTableItem";
@@ -19,7 +19,7 @@ type BillingTableProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<BillingType>, unknown>,
+      InfiniteData<XanoPaginatedType<BillingType>, unknown>,
       Error
     >
   >;
@@ -38,7 +38,7 @@ const BillingTable = ({
   sites,
   addVisible,
 }: BillingTableProps) => {
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

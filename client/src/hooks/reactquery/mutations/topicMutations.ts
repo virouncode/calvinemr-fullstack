@@ -3,21 +3,21 @@ import { toast } from "react-toastify";
 import xanoDelete from "../../../api/xanoCRUD/xanoDelete";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
+import { TopicDataMap, TopicType } from "../../../types/api";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { getTopicUrlMutation } from "../../../utils/topics/getTopicUrl";
 import useSocketContext from "../../context/useSocketContext";
 
-// POST Mutation Hook
-export const useTopicPost = <TData extends object>(
-  topic: string,
+export const useTopicPost = <T extends TopicType>(
+  topic: T,
   patientId: number
 ) => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
-  return useMutation({
-    mutationFn: (topicToPost: Partial<TData>) =>
+  return useMutation<TopicDataMap[T], Error, Partial<TopicDataMap[T]>, void>({
+    mutationFn: (topicToPost: Partial<TopicDataMap[T]>) =>
       xanoPost(topicUrlMutation, "staff", topicToPost),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [topic, patientId] });
@@ -57,16 +57,16 @@ export const useTopicPost = <TData extends object>(
 };
 
 // PUT Mutation Hook
-export const useTopicPut = <TData extends { id: number }>(
-  topic: string,
+export const useTopicPut = <T extends TopicType>(
+  topic: T,
   patientId: number
 ) => {
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
-  return useMutation({
-    mutationFn: (topicToPut: TData) =>
+  return useMutation<TopicDataMap[T], Error, TopicDataMap[T], void>({
+    mutationFn: (topicToPut: TopicDataMap[T]) =>
       xanoPut(`${topicUrlMutation}/${topicToPut.id}`, "staff", topicToPut),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [topic, patientId] });
@@ -103,12 +103,15 @@ export const useTopicPut = <TData extends { id: number }>(
 };
 
 // DELETE Mutation Hook
-export const useTopicDelete = (topic: string, patientId: number) => {
+export const useTopicDelete = <T extends TopicType>(
+  topic: T,
+  patientId: number
+) => {
   const queryClient = useQueryClient();
   const { socket } = useSocketContext();
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
-  return useMutation({
+  return useMutation<void, Error, number, void>({
     mutationFn: (templateIdToDelete: number) =>
       xanoDelete(`${topicUrlMutation}/${templateIdToDelete}`, "staff"),
     onMutate: async () => {

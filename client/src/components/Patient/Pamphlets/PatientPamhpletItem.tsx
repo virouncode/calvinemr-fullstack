@@ -14,6 +14,7 @@ const PatientPamphletItem = ({
   item,
   lastItemRef,
 }: PatientPamphletItemType) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
 
   return (

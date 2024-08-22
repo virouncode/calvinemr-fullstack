@@ -21,11 +21,13 @@ type AvailabilityEditorProps = {
 const AvailabilityEditor = ({
   setEditAvailability,
 }: AvailabilityEditorProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
   const [availability, setAvailability] =
     useState<AvailabilityType>(initialAvailability);
-
+  const [errMsg, setErrMsg] = useState("");
+  //Queries
   const {
     data: availabilityQuery,
     isPending,
@@ -39,8 +41,6 @@ const AvailabilityEditor = ({
       setAvailability(availabilityQuery);
     }
   }, [availabilityQuery]);
-
-  const [errMsg, setErrMsg] = useState("");
 
   const days: DayType[] = [
     "monday",
@@ -75,6 +75,7 @@ const AvailabilityEditor = ({
       onError: () => setProgress(false),
     });
   };
+
   const handleStartMorningChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
     day: DayType,

@@ -48,8 +48,8 @@ const AddAIAttachmentItem = ({
   promptText,
   setPromptText,
 }: AddAIAttachmentItemProps) => {
-  //HANDLERS
   const isChecked = (id: number) => attachmentsAddedIds.includes(id);
+
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);

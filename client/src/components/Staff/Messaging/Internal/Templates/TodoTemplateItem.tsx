@@ -27,9 +27,11 @@ const TodoTemplateItem = ({
   handleSelectTemplate,
   lastItemRef,
 }: TodoTemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  //Queries
   const todoTemplatePost = useTodosTemplatePost();
   const todoTemplateDelete = useTodosTemplateDelete();
 

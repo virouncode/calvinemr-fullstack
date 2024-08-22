@@ -27,9 +27,10 @@ const ClinicalNotesTemplatesItem = ({
   handleEdit,
   lastItemRef,
 }: ClinicalNotesTemplatesItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-
+  //Queries
   const templateDelete = useClinicalNotesTemplatesDelete();
   const templatePost = useClinicalNotesTemplatesPost();
 

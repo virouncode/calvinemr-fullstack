@@ -13,6 +13,7 @@ const GuestListStaffItem = ({
   staff,
   handleRemoveStaffGuest,
 }: GuestListStaffItemProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <span>

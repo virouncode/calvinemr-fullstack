@@ -27,9 +27,11 @@ const MessageExternalTemplateItem = ({
   handleSelectTemplate,
   lastItemRef,
 }: MessageExternalTemplateItemProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  //Queries
   const messageTemplatePost = useMessagesExternalTemplatePost();
   const messageTemplateDelete = useMessagesExternalTemplateDelete();
 

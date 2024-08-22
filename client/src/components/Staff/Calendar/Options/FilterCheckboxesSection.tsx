@@ -24,6 +24,7 @@ const FilterCheckboxesSection = ({
   categoryName,
   remainingStaff,
 }: FilterCheckboxesSectionProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
 
   return (

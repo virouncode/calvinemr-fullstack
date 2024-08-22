@@ -17,6 +17,7 @@ import DashboardCardRanking from "./DashboardCardRanking";
 import DashboardDateFilter from "./DashboardDateFilter";
 
 const DashboardCardBillings = () => {
+  //Hooks
   const [rangeStartBillings, setRangeStartBillings] = useState(
     getStartOfTheMonthTZ()
   );
@@ -26,7 +27,7 @@ const DashboardCardBillings = () => {
   const [siteSelectedIdDiagnoses, setSiteSelectedIdDiagnoses] = useState(0);
   const [siteSelectedIdBillingCodes, setSiteSelectedIdBillingCodes] =
     useState(0);
-
+  //Queries
   const {
     data: sites,
     isPending: isPendingSites,
@@ -71,11 +72,11 @@ const DashboardCardBillings = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartBillings(dateISOToTimestampTZ(value));
+    setRangeStartBillings(dateISOToTimestampTZ(value) ?? -5364662400000);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndBillings(dateISOToTimestampTZ(value));
+    setRangeEndBillings(dateISOToTimestampTZ(value) ?? 32503680000000);
   };
   const handleSiteChangeDiagnoses = (
     e: React.ChangeEvent<HTMLSelectElement>

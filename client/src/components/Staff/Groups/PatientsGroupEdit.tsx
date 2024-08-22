@@ -26,6 +26,7 @@ const PatientsGroupEdit = ({
   group,
   setEditVisible,
 }: PatientsGroupEditProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [groupInfos, setGroupInfos] = useState(group);
   const [order, setOrder] = useState(
@@ -36,6 +37,7 @@ const PatientsGroupEdit = ({
   const [addPatientsVisible, setAddPatientsVisible] = useState(false);
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  //Queries
   const groupPut = usePatientsGroupPut(user.id);
 
   const handleChange = (

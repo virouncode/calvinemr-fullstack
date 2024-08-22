@@ -19,7 +19,7 @@ const fetchAvailableRooms = async (
       siteId
     );
   } catch (err) {
-    if (err.name !== "CanceledError")
+    if (err instanceof Error)
       toast.error(`Error: unable to get available rooms ${err.message}`, {
         containerId: "A",
       });

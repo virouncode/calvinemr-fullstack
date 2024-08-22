@@ -21,12 +21,14 @@ type CalvinAITemplatesProps = {
 const CalvinAITemplates = ({
   handleSelectTemplate,
 }: CalvinAITemplatesProps) => {
+  //Hooks
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<
     number | undefined
   >();
   const [search, setSearch] = useState("");
+  //Queries
   const {
     data: templates,
     isPending,
@@ -35,7 +37,7 @@ const CalvinAITemplates = ({
     fetchNextPage,
     isFetching,
   } = useCalvinAITemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

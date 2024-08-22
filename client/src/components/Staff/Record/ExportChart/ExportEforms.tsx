@@ -1,26 +1,36 @@
 import React, { useEffect } from "react";
-import { AttachmentType, EformType } from "../../../../types/api";
+import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
+import { AttachmentType } from "../../../../types/api";
 import DocumentEmbed from "./DocumentEmbed";
 
 type ExportEformsProps = {
-  topicDatas: EformType[];
   eformsFilesRef: React.MutableRefObject<AttachmentType[]>;
-  hasNextPage: boolean;
+  patientId: number;
 };
 
-const ExportEforms = ({
-  topicDatas,
-  eformsFilesRef,
-  hasNextPage,
-}: ExportEformsProps) => {
+const ExportEforms = ({ eformsFilesRef, patientId }: ExportEformsProps) => {
+  //Queries
+  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
+    "E-FORMS",
+    patientId
+  );
+  useFetchAllPages(fetchNextPage, hasNextPage);
+
   useEffect(() => {
-    if (hasNextPage) return;
-    for (const eform of topicDatas) {
+    if (hasNextPage || !data) return;
+    for (const eform of data.pages.flatMap((page) => page.items)) {
       !eformsFilesRef.current
         .map((file) => file.name)
         .includes(eform.file.name) && eformsFilesRef.current.push(eform.file);
     }
-  }, [topicDatas, hasNextPage, eformsFilesRef]);
+  }, [data, hasNextPage, eformsFilesRef]);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const topicDatas = data.pages.flatMap((page) => page.items);
+
   return (
     <div className="export__card">
       <p className="export__title" style={{ backgroundColor: "#29CBD6" }}>

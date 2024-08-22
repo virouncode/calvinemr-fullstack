@@ -16,7 +16,9 @@ const FaxLeftBar = ({
   setFaxesSelectedIds,
   setSelectAllVisible,
 }: FaxLeftBarProps) => {
+  //Hooks
   const { socket } = useSocketContext();
+
   const handleClickSection = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {

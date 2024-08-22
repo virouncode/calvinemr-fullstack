@@ -5,7 +5,9 @@ import CreditsDialog from "../../UI/Confirm/CreditsDialog";
 import LoginHeader from "../Headers/LoginHeader";
 
 const LoginLayout = () => {
+  //Hooks
   const [creditsVisible, setCreditsVisible] = useState(false);
+
   const onConfirm = () => setCreditsVisible(false);
   return (
     <div className="wrapper-login">

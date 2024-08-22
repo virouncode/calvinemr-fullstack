@@ -24,13 +24,15 @@ const StaffLayout = ({
   toastExpiredID,
   tokenLimitVerifierID,
 }: StaffLayoutProps) => {
+  //Hooks
   const { title } = useTitleContext();
-  const onConfirm = () => setCreditsVisible(false);
   const [creditsVisible, setCreditsVisible] = useState(false);
   const [lockedScreen, setLockedScreen] = useState(false);
   const [notepadVisible, setNotepadVisible] = useState(false);
   useAutoLockScreen(setLockedScreen);
   useLocalStorageLock(setLockedScreen);
+
+  const onConfirm = () => setCreditsVisible(false);
 
   return (
     <div className="wrapper">

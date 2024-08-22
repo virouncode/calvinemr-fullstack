@@ -25,6 +25,7 @@ const EventFormButtons = ({
   handleInvitation,
   progress,
 }: EventFormButtonsProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   return (
     <div className="event-form__btns">

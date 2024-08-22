@@ -21,11 +21,12 @@ const BillingCodesTemplateForm = ({
   setErrMsgPost,
   setNewTemplateVisible,
 }: BillingCodesTemplateFormProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
-  const userType = user.access_level;
   const [formDatas, setFormDatas] = useState<
     Partial<BillingCodeTemplateType> | undefined
   >();
+  //Queries
   const billingCodeTemplatePost = useBillingCodeTemplatePost();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,9 +47,13 @@ const BillingCodesTemplateForm = ({
     }
     for (let billing_code of formDatas?.billing_codes ?? []) {
       billing_code = removeLastLetter(billing_code.toUpperCase());
-      const response = await xanoGet("/ohip_fee_schedule_for_code", userType, {
-        billing_code,
-      });
+      const response = await xanoGet(
+        "/ohip_fee_schedule_for_code",
+        user.access_level,
+        {
+          billing_code,
+        }
+      );
       if (!response) {
         setErrMsgPost(`Billing code ${billing_code} doesn't exist`);
         return;

@@ -16,6 +16,7 @@ type FaxesTemplatesProps = {
 };
 
 const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
+  //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
   const {
@@ -26,7 +27,7 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
     fetchNextPage,
     isFetching,
   } = useFaxesTemplates(search);
-
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

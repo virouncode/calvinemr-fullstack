@@ -1,26 +1,9 @@
 import React from "react";
-import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
-import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
 import {
-  AlertType,
-  AllergyType,
   AttachmentType,
-  CareElementType,
   DemographicsType,
-  EformType,
-  FamilyHistoryType,
-  ImmunizationType,
-  LetterType,
-  MedType,
-  PastHealthType,
-  PersonalHistoryType,
-  PregnancyType,
-  PrescriptionType,
-  ProblemListType,
-  ReportType,
-  RiskFactorType,
+  TopicExportType,
 } from "../../../../types/api";
-import { TopicType } from "../../../../types/app";
 import ExportAlerts from "./ExportAlerts";
 import ExportAllergies from "./ExportAllergies";
 import ExportCareElements from "./ExportCareElements";
@@ -40,14 +23,14 @@ import ExportReports from "./ExportReports";
 import ExportRisks from "./ExportRisks";
 
 type ExportTopicProps = {
-  topic: TopicType;
+  topic: TopicExportType;
   patientId: number;
   demographicsInfos: DemographicsType;
-  lettersFilesRef: React.MutableRefObject<AttachmentType[]>;
-  reportsFilesRef: React.MutableRefObject<AttachmentType[]>;
-  eformsFilesRef: React.MutableRefObject<AttachmentType[]>;
-  prescriptionsFilesRef: React.MutableRefObject<AttachmentType[]>;
-  reportsTextRef: React.MutableRefObject<HTMLDivElement | null>;
+  lettersFilesRef?: React.MutableRefObject<AttachmentType[]>;
+  reportsFilesRef?: React.MutableRefObject<AttachmentType[]>;
+  eformsFilesRef?: React.MutableRefObject<AttachmentType[]>;
+  prescriptionsFilesRef?: React.MutableRefObject<AttachmentType[]>;
+  reportsTextRef?: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 const ExportTopic = ({
@@ -60,81 +43,75 @@ const ExportTopic = ({
   prescriptionsFilesRef,
   reportsTextRef,
 }: ExportTopicProps) => {
-  const { data, isPending, error, fetchNextPage, hasNextPage } = useTopic(
-    topic,
-    patientId
-  );
-
-  useFetchAllPages(fetchNextPage, hasNextPage);
-
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  const topicDatas = data.pages.flatMap((page) => page.items);
-
-  if (topic === "PAST HEALTH")
-    return <ExportPastHealth topicDatas={topicDatas as PastHealthType[]} />;
-  if (topic === "FAMILY HISTORY")
-    return <ExportFamHistory topicDatas={topicDatas as FamilyHistoryType[]} />;
-  if (topic === "ALERTS & SPECIAL NEEDS")
-    return <ExportAlerts topicDatas={topicDatas as AlertType[]} />;
-  if (topic === "RISK FACTORS")
-    return <ExportRisks topicDatas={topicDatas as RiskFactorType[]} />;
-  if (topic === "MEDICATIONS & TREATMENTS")
-    return <ExportMedications topicDatas={topicDatas as MedType[]} />;
-  if (topic === "PAST PRESCRIPTIONS")
-    return (
-      <ExportPastPrescriptions
-        topicDatas={topicDatas as PrescriptionType[]}
-        prescriptionsFilesRef={prescriptionsFilesRef}
-        hasNextPage={hasNextPage}
-      />
-    );
-  if (topic === "FAMILY DOCTORS & SPECIALISTS")
-    return <ExportFamilyDoctors patientId={patientId} />;
-  if (topic === "PHARMACIES")
-    return <ExportPreferredPharmacy demographicsInfos={demographicsInfos} />;
-  if (topic === "E-FORMS")
-    return (
-      <ExportEforms
-        topicDatas={topicDatas as EformType[]}
-        eformsFilesRef={eformsFilesRef}
-        hasNextPage={hasNextPage}
-      />
-    );
-  if (topic === "LETTERS/REFERRALS")
-    return (
-      <ExportLetters
-        topicDatas={topicDatas as LetterType[]}
-        lettersFilesRef={lettersFilesRef}
-        hasNextPage={hasNextPage}
-      />
-    );
-  if (topic === "PERSONAL HISTORY")
-    return (
-      <ExportPersonalHistory topicDatas={topicDatas as PersonalHistoryType[]} />
-    );
-  if (topic === "CARE ELEMENTS")
-    return <ExportCareElements topicDatas={topicDatas as CareElementType[]} />;
-  if (topic === "PROBLEM LIST")
-    return <ExportProblemlist topicDatas={topicDatas as ProblemListType[]} />;
-  if (topic === "PREGNANCIES")
-    return <ExportPregnancies topicDatas={topicDatas as PregnancyType[]} />;
-  if (topic === "ALLERGIES & ADVERSE REACTIONS")
-    return <ExportAllergies topicDatas={topicDatas as AllergyType[]} />;
-  if (topic === "REPORTS")
-    return (
-      <ExportReports
-        topicDatas={topicDatas as ReportType[]}
-        reportsFilesRef={reportsFilesRef}
-        hasNextPage={hasNextPage}
-        reportsTextRef={reportsTextRef}
-      />
-    );
-  if (topic === "IMMUNIZATIONS")
-    return (
-      <ExportImmunizations topicDatas={topicDatas as ImmunizationType[]} />
-    );
-  return <div></div>;
+  switch (topic) {
+    case "PAST HEALTH":
+      return <ExportPastHealth patientId={patientId} />;
+    case "FAMILY HISTORY":
+      return <ExportFamHistory patientId={patientId} />;
+    case "ALERTS & SPECIAL NEEDS":
+      return <ExportAlerts patientId={patientId} />;
+    case "RISK FACTORS":
+      return <ExportRisks patientId={patientId} />;
+    case "MEDICATIONS & TREATMENTS":
+      return <ExportMedications patientId={patientId} />;
+    case "PAST PRESCRIPTIONS":
+      return (
+        <ExportPastPrescriptions
+          patientId={patientId}
+          prescriptionsFilesRef={
+            prescriptionsFilesRef as React.MutableRefObject<AttachmentType[]>
+          }
+        />
+      );
+    case "FAMILY DOCTORS & SPECIALISTS":
+      return <ExportFamilyDoctors patientId={patientId} />;
+    case "PHARMACIES":
+      return <ExportPreferredPharmacy demographicsInfos={demographicsInfos} />;
+    case "E-FORMS":
+      return (
+        <ExportEforms
+          eformsFilesRef={
+            eformsFilesRef as React.MutableRefObject<AttachmentType[]>
+          }
+          patientId={patientId}
+        />
+      );
+    case "LETTERS/REFERRALS":
+      return (
+        <ExportLetters
+          lettersFilesRef={
+            lettersFilesRef as React.MutableRefObject<AttachmentType[]>
+          }
+          patientId={patientId}
+        />
+      );
+    case "PERSONAL HISTORY":
+      return <ExportPersonalHistory patientId={patientId} />;
+    case "CARE ELEMENTS":
+      return <ExportCareElements patientId={patientId} />;
+    case "PROBLEM LIST":
+      return <ExportProblemlist patientId={patientId} />;
+    case "PREGNANCIES":
+      return <ExportPregnancies patientId={patientId} />;
+    case "ALLERGIES & ADVERSE REACTIONS":
+      return <ExportAllergies patientId={patientId} />;
+    case "REPORTS":
+      return (
+        <ExportReports
+          patientId={patientId}
+          reportsFilesRef={
+            reportsFilesRef as React.MutableRefObject<AttachmentType[]>
+          }
+          reportsTextRef={
+            reportsTextRef as React.MutableRefObject<HTMLDivElement | null>
+          }
+        />
+      );
+    case "IMMUNIZATIONS":
+      return <ExportImmunizations patientId={patientId} />;
+    default:
+      return <div>Unknown topic</div>;
+  }
 };
 
 export default ExportTopic;

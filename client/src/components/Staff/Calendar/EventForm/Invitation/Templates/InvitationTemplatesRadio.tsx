@@ -15,7 +15,6 @@ const InvitationTemplatesRadio = ({
   templates,
   label = true,
 }: InvitationTemplatesRadioProps) => {
-  //Rooms vector with all Rooms
   const isTemplateSelected = (templateName: string) => {
     return templateSelected === templateName;
   };

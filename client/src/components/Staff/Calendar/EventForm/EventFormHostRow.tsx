@@ -25,6 +25,7 @@ const EventFormHostRow = ({
   handleRecurrenceChange,
   handleUntilChange,
 }: EventFormHostRowProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (

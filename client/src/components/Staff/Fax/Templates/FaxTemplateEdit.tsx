@@ -18,11 +18,13 @@ const FaxTemplateEdit = ({
   setEditTemplateVisible,
   template,
 }: FaxTemplateEditProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [name, setName] = useState(template.name);
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
   const [progress, setProgress] = useState(false);
+  //Queries
   const faxTemplatePut = useFaxTemplatePut();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

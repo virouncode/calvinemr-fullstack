@@ -3,6 +3,7 @@ import useClinicContext from "../../../hooks/context/useClinicContext";
 import { nowHumanTZ } from "../../../utils/dates/formatDates";
 
 const SubheaderClinic = () => {
+  //Hooks
   const { clinic } = useClinicContext();
   const [clock, setClock] = useState("");
 

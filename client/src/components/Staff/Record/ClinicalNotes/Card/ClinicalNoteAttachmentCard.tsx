@@ -4,7 +4,7 @@ import { ClinicalNoteAttachmentType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import XmarkIcon from "../../../../UI/Icons/XmarkIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import AddToReportsForm from "../AddToReportsForm";
+import AddAttachmentToReportsForm from "../AddAttachmentToReportsForm";
 
 type ClinicalNoteAttachmentCardProps = {
   patientId: number;
@@ -23,11 +23,13 @@ const ClinicalNoteAttachmentCard = ({
   addable = true,
   date,
 }: ClinicalNoteAttachmentCardProps) => {
+  //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
+  const [addToReports, setAddToReports] = useState(false);
+
   const handleImgClick = () => {
     setPopUpVisible(true);
   };
-  const [addToReports, setAddToReports] = useState(false);
 
   const handleAddToReports = () => {
     setAddToReports(true);
@@ -200,7 +202,7 @@ const ClinicalNoteAttachmentCard = ({
           color="#94bae8"
           setPopUpVisible={setAddToReports}
         >
-          <AddToReportsForm
+          <AddAttachmentToReportsForm
             attachment={attachment}
             patientId={patientId}
             date={date}

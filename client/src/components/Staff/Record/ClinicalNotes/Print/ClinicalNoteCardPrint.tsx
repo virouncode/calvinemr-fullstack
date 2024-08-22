@@ -18,6 +18,7 @@ type ClinicalNoteCardPrintProps = {
 const ClinicalNoteCardPrint = ({
   clinicalNote,
 }: ClinicalNoteCardPrintProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
 
   return (

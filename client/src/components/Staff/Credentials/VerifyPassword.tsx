@@ -4,18 +4,19 @@ import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import FormVerifyPassword from "../../UI/Forms/FormVerifyPassword";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+const LOGIN_URL = "/auth/login";
 
 type VerifyPasswordProps = {
   setVerified: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const VerifyPassword = ({ setVerified }: VerifyPasswordProps) => {
-  const LOGIN_URL = "/auth/login";
+  //Hooks
+  const navigate = useNavigate();
   const { auth } = useAuthContext();
   const [password, setPassword] = useState("");
   const [pin, setPin] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const navigate = useNavigate();
 
   const handleCancel = () => {
     navigate("/staff/my-account");

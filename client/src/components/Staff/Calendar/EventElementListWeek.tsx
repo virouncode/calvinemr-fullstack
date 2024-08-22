@@ -38,6 +38,7 @@ const EventElementListWeek = ({
   patientsGuestsIds,
   staffGuestsIds,
 }: EventElementListWeekProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (

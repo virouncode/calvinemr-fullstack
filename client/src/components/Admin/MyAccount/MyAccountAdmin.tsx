@@ -15,7 +15,7 @@ import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 const MyAccountAdmin = () => {
-  //HOOKS
+  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
@@ -25,7 +25,6 @@ const MyAccountAdmin = () => {
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 
-  //HANDLERS
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;

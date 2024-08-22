@@ -1,7 +1,7 @@
 import { isDateExceededTZ } from "../dates/formatDates";
 
 export const isMedicationActive = (
-  startDate: number,
+  startDate: number | null,
   duration: {
     Y: number;
     M: number;
@@ -9,6 +9,7 @@ export const isMedicationActive = (
     D: number;
   }
 ) => {
-  if (!startDate || !duration) return false;
+  if (!startDate || (!duration.Y && !duration.M && !duration.W && !duration.D))
+    return false;
   return !isDateExceededTZ(startDate, duration);
 };

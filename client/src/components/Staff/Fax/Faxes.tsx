@@ -14,6 +14,7 @@ import FaxLeftBar from "./FaxLeftBar";
 import FaxToolBar from "./FaxToolBar";
 
 const Faxes = () => {
+  //Hooks
   const [newVisible, setNewVisible] = useState(false);
   const [faxesSelectedIds, setFaxesSelectedIds] = useState<string[]>([]);
   const [currentFaxId, setCurrentFaxId] = useState("");
@@ -28,14 +29,13 @@ const Faxes = () => {
     timestampToDateISOTZ(getEndOfTheMonthTZ()).split("-").join("")
   ); //start of the month
   const [all, setAll] = useState(false);
-
   const initialRangeStart = useRef(
     timestampToDateISOTZ(getStartOfTheMonthTZ()).split("-").join("")
   );
   const initialRangeEnd = useRef(
     timestampToDateISOTZ(getEndOfTheMonthTZ()).split("-").join("")
   );
-
+  //Queries
   const {
     data: faxesInbox,
     isPending: isPendingInbox,
@@ -46,8 +46,6 @@ const Faxes = () => {
     isPending: isPendingOutbox,
     error: errorOutbox,
   } = useFaxesOutbox(all, rangeStart, rangeEnd);
-
-  useTitle("Fax");
 
   return (
     <div className="fax-container">

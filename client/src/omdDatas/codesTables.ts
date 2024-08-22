@@ -746,7 +746,7 @@ export const diabetesMotivationalCounsellingCT: CodeTableType[] = [
   { code: "Other", name: "Others" },
 ];
 
-export const toCodeTableName = (codeTable: CodeTableType[], code: string) => {
+export const toCodeTableName = (codeTable: CodeTableType[], code?: string) => {
   if (!code) return "";
   return codeTable.find((item) => item.code === code)?.name || "";
 };

@@ -6,6 +6,7 @@ type FaxProps = {
 };
 
 const Fax = ({ faxURL }: FaxProps) => {
+  //Hooks
   const { socket } = useSocketContext();
   const dataUrl = "data:application/pdf;base64," + faxURL;
   useEffect(() => {

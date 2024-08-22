@@ -19,9 +19,10 @@ const PatientLayout = ({
   toastExpiredID,
   tokenLimitVerifierID,
 }: PatientLayoutProps) => {
+  //Hooks
   const { title } = useTitleContext();
-
   const [creditsVisible, setCreditsVisible] = useState(false);
+
   const onConfirm = () => setCreditsVisible(false);
   return (
     <div className="wrapper">

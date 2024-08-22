@@ -8,6 +8,7 @@ type PatientHeaderProps = {
 };
 
 const PatientHeader = ({ setCreditsVisible }: PatientHeaderProps) => {
+  //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   return (
     <header className="header header--patient">

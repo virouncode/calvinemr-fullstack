@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import useIntersection from "../../../../hooks/useIntersection";
-import { MessageExternalType, PaginatedDatasType } from "../../../../types/api";
+import { MessageExternalType, XanoPaginatedType } from "../../../../types/api";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternalDetail from "./MessageExternalDetail";
@@ -27,7 +27,7 @@ type MessagesExternalBoxProps = {
     options?: FetchNextPageOptions
   ) => Promise<
     InfiniteQueryObserverResult<
-      InfiniteData<PaginatedDatasType<MessageExternalType>, unknown>,
+      InfiniteData<XanoPaginatedType<MessageExternalType>, unknown>,
       Error
     >
   >;
@@ -54,7 +54,7 @@ const MessagesExternalBox = ({
   setPrintVisible,
   search,
 }: MessagesExternalBoxProps) => {
-  //INTERSECTION OBSERVER
+  //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,

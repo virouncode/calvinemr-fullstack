@@ -22,6 +22,7 @@ type ExportDemographicsProps = {
 };
 
 const ExportDemographics = ({ demographicsInfos }: ExportDemographicsProps) => {
+  //Hooks
   const { staffInfos } = useStaffInfosContext();
   const emergencyContact = demographicsInfos.Contact?.find(
     (contact) => contact.ContactPurpose.PurposeAsEnum === "EC"

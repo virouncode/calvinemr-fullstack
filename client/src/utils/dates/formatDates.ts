@@ -287,7 +287,7 @@ export const dateISOToTimestampTZ = (
   dateISO: string | undefined | null,
   timezone = "America/Toronto"
 ) => {
-  if (!dateISO) return 0;
+  if (!dateISO) return null;
   return DateTime.fromISO(dateISO, { zone: timezone }).toMillis();
 };
 
@@ -303,7 +303,7 @@ export const tzComponentsToTimestamp = (
   timezone = "America/Toronto",
   locale = "en-CA"
 ) => {
-  if (!dateStr) return 0;
+  if (!dateStr) return null;
   const [yearStr, monthStr, dayStr] = dateStr.split("-");
   let hour = hoursStr ? parseInt(hoursStr, 10) : 0;
   hour = AMPMto24(hour, ampm);
@@ -347,7 +347,7 @@ export const getTodayEndTZ = () => {
 
 //OTHER FUNCTIONS
 export const getAgeTZ = (dateOfBirthMs: number | undefined | null) => {
-  if (!dateOfBirthMs) return 0;
+  if (!dateOfBirthMs) return "";
   const dateOfBirth = DateTime.fromMillis(dateOfBirthMs, {
     zone: "America/Toronto",
   });

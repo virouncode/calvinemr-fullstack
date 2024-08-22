@@ -27,7 +27,9 @@ const MessageDetailToolbar = ({
   handleEdit,
   handleDeleteMsg,
 }: MessageDetailToolbarProps) => {
+  //Hooks
   const navigate = useNavigate();
+
   const handleClickPatient = () => {
     navigate(`/staff/patient-record/${message.related_patient_id}`);
   };
