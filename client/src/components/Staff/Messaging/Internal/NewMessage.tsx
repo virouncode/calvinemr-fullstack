@@ -32,7 +32,7 @@ import MessagesTemplates from "./Templates/MessagesTemplates";
 type NewMessageProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
   initialPatient?: { id: number; name: string };
-  initialAttachments?: MessageAttachmentType[];
+  initialAttachments?: Partial<MessageAttachmentType>[] | undefined;
   initialBody?: string;
 };
 
@@ -47,7 +47,7 @@ const NewMessage = ({
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] =
-    useState<MessageAttachmentType[]>(initialAttachments);
+    useState<Partial<MessageAttachmentType>[]>(initialAttachments);
   const [recipientsIds, setRecipientsIds] = useState<number[]>([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState(initialBody || "");

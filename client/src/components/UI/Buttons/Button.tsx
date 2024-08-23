@@ -1,9 +1,14 @@
 import React from "react";
+import { AttachmentType } from "../../../types/api";
 type ButtonProps = {
   label: string;
-  onClick: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void | Promise<void>;
+  onClick:
+    | ((
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => void | Promise<void>)
+    | ((
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => Promise<AttachmentType | undefined>);
 
   disabled?: boolean;
   className?: string;

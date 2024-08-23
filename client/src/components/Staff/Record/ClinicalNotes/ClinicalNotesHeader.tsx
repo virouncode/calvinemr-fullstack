@@ -33,7 +33,7 @@ type ClinicalNotesHeaderProps = {
   order: "asc" | "desc";
   setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
   loadingPatient: boolean;
-  errPatient: string;
+  errPatient: Error | null;
   overviewVisible: boolean;
   setOverviewVisible: React.Dispatch<React.SetStateAction<boolean>>;
   newButtonDisabled: boolean;

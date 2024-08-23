@@ -44,13 +44,9 @@ const ExportChartPreview = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
   const [chart, setChart] = useState("");
-  const [fileToFax, setFileToFax] = useState<{
-    alias: string;
-    file: AttachmentType | null;
-  }>({
-    alias: "",
-    file: null,
-  });
+  const [fileToFax, setFileToFax] = useState<
+    Partial<MessageAttachmentType> | undefined
+  >();
   const [faxVisible, setFaxVisible] = useState(false);
   const [newMessageExternalVisible, setNewMessageExternalVisible] =
     useState(false);

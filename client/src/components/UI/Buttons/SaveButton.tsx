@@ -1,10 +1,13 @@
 import React from "react";
+import { AttachmentType } from "../../../types/api";
 
 type SaveButtonProps = {
   label?: string;
-  onClick: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => Promise<void>;
+  onClick:
+    | ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>)
+    | ((
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => Promise<AttachmentType | undefined>);
   disabled?: boolean;
 };
 const SaveButton = ({

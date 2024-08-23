@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import socketIOClient from "socket.io-client";
-import useSocketContext from "./context/useSocketContext";
+import useSocketContext from "../../context/useSocketContext";
 
 const useSocketConfig = () => {
   const { setSocket } = useSocketContext();

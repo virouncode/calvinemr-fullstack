@@ -7,6 +7,16 @@ const DurationPickerLong = ({
   durationDays,
   handleDurationPickerChange,
   label,
+}: {
+  durationYears: number;
+  durationMonths: number;
+  durationWeeks: number;
+  durationDays: number;
+  handleDurationPickerChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "Y" | "M" | "W" | "D"
+  ) => void;
+  label?: string;
 }) => {
   return (
     <>

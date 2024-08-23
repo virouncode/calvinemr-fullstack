@@ -19,7 +19,7 @@ import PatientMenuRight from "./PatientMenuRight";
 type PatientRecordProps = {
   demographicsInfos: DemographicsType;
   loadingPatient: boolean;
-  errPatient: string;
+  errPatient: Error | null;
   patientId: number;
 };
 

@@ -25,7 +25,7 @@ type ClinicalNotesTitleProps = {
   contentRef: React.MutableRefObject<HTMLDivElement | null>;
   triangleRef: React.MutableRefObject<SVGSVGElement | null>;
   loadingPatient: boolean;
-  errPatient: string;
+  errPatient: Error | null;
   setNewMessageVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -93,7 +93,7 @@ const ClinicalNotesTitle = ({
           triangleRef={triangleRef}
         />
       </div>
-      {errPatient && <div>{errPatient}</div>}
+      {errPatient && <ErrorParagraph errorMsg={errPatient.message} />}
       {loadingPatient && <LoadingParagraph />}
       {!loadingPatient && !errPatient && demographicsInfos && (
         <span>

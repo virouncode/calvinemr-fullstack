@@ -1,16 +1,18 @@
-export const getImmunizationLogo = (type: "IM" | "IM/SC" | "SC" | "ORL") => {
+import { RecImmunizationRouteType } from "./recommendedImmunizations";
+
+export const getImmunizationLogo = (type: RecImmunizationRouteType) => {
   let logo = "";
   switch (type) {
-    case "IM":
+    case "Intramuscular":
       logo = "\u25C6";
       break;
-    case "IM/SC":
+    case "Intramuscular/Subcutaneous":
       logo = `\u25C6/\u25A0`;
       break;
-    case "SC":
+    case "Subcutaneous":
       logo = "\u25A0";
       break;
-    case "ORL":
+    case "Oral":
       logo = "\u25B2";
       break;
     default:

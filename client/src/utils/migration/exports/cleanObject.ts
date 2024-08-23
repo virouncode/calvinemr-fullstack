@@ -1,4 +1,4 @@
-import { timestampToDateISOTZ } from "./formatDates";
+import { timestampToDateISOTZ } from "../../dates/formatDates";
 
 export const cleanObject = (objet: any) => {
   for (const cle in objet) {

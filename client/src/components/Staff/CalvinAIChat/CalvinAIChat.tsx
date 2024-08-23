@@ -29,13 +29,9 @@ const CalvinAIChat = () => {
   }, [autoScroll, lastResponse]);
 
   useEffect(() => {
-    let currentContent: HTMLDivElement;
-    if (contentRef.current) {
-      currentContent = contentRef.current;
-      currentContent.addEventListener("mousewheel", handleMouseWheel, {
-        passive: true,
-      });
-    }
+    const currentContent = contentRef.current;
+    if (currentContent)
+      currentContent.addEventListener("mousewheel", handleMouseWheel);
     return () => {
       if (currentContent)
         currentContent.removeEventListener("mousewheel", handleMouseWheel);

@@ -5,8 +5,8 @@ import {
 } from "../../../../hooks/reactquery/queries/reportsQueries";
 import { DemographicsType } from "../../../../types/api";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
-import ReportsContent from "../Topics/Reports/ReportsContent";
-import ReportsPU from "../Topics/Reports/ReportsPU";
+import ReportsDropDown from "../Topics/Reports/ReportsDropDown";
+import ReportsPopUp from "../Topics/Reports/ReportsPopUp";
 import PatientTopicHeader from "./PatientTopicHeader";
 
 type PatientTopicReportsProps = {
@@ -89,7 +89,7 @@ const PatientTopicReports = ({
         }
         ref={containerRef}
       >
-        <ReportsContent
+        <ReportsDropDown
           reportsReceived={reportsReceived}
           isPendingReportsReceived={isPendingReportsReceived}
           errorReportsReceived={errorReportsReceived}
@@ -107,7 +107,7 @@ const PatientTopicReports = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <ReportsPU
+            <ReportsPopUp
               reportsReceived={reportsReceived}
               isPendingReportsReceived={isPendingReportsReceived}
               errorReportsReceived={errorReportsReceived}

@@ -25,7 +25,7 @@ type ClinicalNotesProps = {
   setContentsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   patientId: number;
   loadingPatient: boolean;
-  errPatient: string;
+  errPatient: Error | null;
 };
 
 const ClinicalNotes = ({

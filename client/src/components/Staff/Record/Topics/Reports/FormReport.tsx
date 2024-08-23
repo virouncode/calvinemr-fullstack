@@ -20,7 +20,7 @@ type FormReportProps = {
   isLoadingFile: boolean;
   progress: boolean;
   sentOrReceived: string;
-  attachment: MessageAttachmentType;
+  initialAttachment?: Partial<MessageAttachmentType>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleCancel: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -43,7 +43,7 @@ const FormReport = ({
   isLoadingFile,
   progress,
   sentOrReceived,
-  attachment,
+  initialAttachment,
   handleSubmit,
   handleCancel,
   handleUpload,
@@ -107,7 +107,7 @@ const FormReport = ({
           <span>{formDatas.FileExtensionAndVersion || ""}</span>
         </div>
         {formDatas.Format === "Binary" ? (
-          !attachment && (
+          !initialAttachment && ( //If there is an initial attachment don't show the input
             <div className="reports__row">
               <label>Content</label>
               <input

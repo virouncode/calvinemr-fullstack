@@ -1,0 +1,236 @@
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import useUserContext from "../../../../../hooks/context/useUserContext";
+import { lifeStageCT } from "../../../../../omdDatas/codesTables";
+import { FamilyHistoryType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
+import {
+  dateISOToTimestampTZ,
+  nowTZTimestamp,
+  timestampToDateISOTZ,
+} from "../../../../../utils/dates/formatDates";
+import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
+import { famHistorySchema } from "../../../../../validation/record/famHistoryValidation";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
+import EditButton from "../../../../UI/Buttons/EditButton";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
+import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
+import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
+import SignCell from "../../../../UI/Tables/SignCell";
+import RelativesList from "./RelativesList";
+
+type FamilyHistoryItemProps = {
+  item: FamilyHistoryType;
+  editCounter: React.MutableRefObject<number>;
+  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
+  errMsgPost: string;
+  lastItemRef?: (node: Element | null) => void;
+  topicPut: UseMutationResult<
+    FamilyHistoryType,
+    Error,
+    FamilyHistoryType,
+    void
+  >;
+  topicDelete: UseMutationResult<void, Error, number, void>;
+};
+
+const FamilyHistoryItem = ({
+  item,
+  editCounter,
+  setErrMsgPost,
+  errMsgPost,
+  lastItemRef,
+  topicPut,
+  topicDelete,
+}: FamilyHistoryItemProps) => {
+  //HOOKS
+  const { user } = useUserContext() as { user: UserStaffType };
+  const [editVisible, setEditVisible] = useState(false);
+  const [itemInfos, setItemInfos] = useState<FamilyHistoryType | undefined>();
+  const [progress, setProgress] = useState(false);
+  useEffect(() => {
+    setItemInfos(item);
+  }, [item]);
+
+  //HANDLERS
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setErrMsgPost("");
+    const name = e.target.name;
+    let value: string | number | null = e.target.value;
+    if (name === "StartDate") {
+      value = dateISOToTimestampTZ(value);
+    }
+    setItemInfos({ ...(itemInfos as FamilyHistoryType), [name]: value });
+  };
+
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    //Formatting
+    const topicToPut: FamilyHistoryType = {
+      ...(itemInfos as FamilyHistoryType),
+      ProblemDiagnosisProcedureDescription: firstLetterOfFirstWordUpper(
+        itemInfos?.ProblemDiagnosisProcedureDescription ?? ""
+      ),
+      Treatment: firstLetterOfFirstWordUpper(itemInfos?.Treatment ?? ""),
+      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      updates: [
+        ...(itemInfos?.updates ?? []),
+        { updated_by_id: user.id, date_updated: nowTZTimestamp() },
+      ],
+    };
+
+    //Validation
+    try {
+      await famHistorySchema.validate(topicToPut);
+    } catch (err) {
+      if (err instanceof Error) setErrMsgPost(err.message);
+      return;
+    }
+    //Submission
+    setProgress(true);
+    topicPut.mutate(topicToPut, {
+      onSuccess: () => {
+        editCounter.current -= 1;
+        setEditVisible(false);
+        setProgress(false);
+      },
+      onError: () => {
+        setProgress(false);
+      },
+    });
+  };
+
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    editCounter.current -= 1;
+    setErrMsgPost("");
+    setItemInfos(item);
+    setEditVisible(false);
+  };
+
+  const handleMemberChange = (value: string) => {
+    setItemInfos({ ...(itemInfos as FamilyHistoryType), Relationship: value });
+  };
+
+  const handleEditClick = () => {
+    editCounter.current += 1;
+    setErrMsgPost("");
+    setEditVisible((v) => !v);
+  };
+
+  const handleDeleteClick = async () => {
+    setErrMsgPost("");
+    if (
+      await confirmAlert({
+        content: "Do you really want to delete this item ?",
+      })
+    ) {
+      setProgress(true);
+      topicDelete.mutate(item.id, {
+        onSuccess: () => {
+          setProgress(false);
+        },
+        onError: () => {
+          setProgress(false);
+        },
+      });
+    }
+  };
+
+  return (
+    itemInfos && (
+      <tr
+        className="famhistory__item"
+        style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
+        ref={lastItemRef}
+      >
+        <td>
+          <div className="famhistory__item-btn-container">
+            {!editVisible ? (
+              <>
+                <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
+              </>
+            ) : (
+              <>
+                <SaveButton onClick={handleSubmit} disabled={progress} />
+                <CancelButton onClick={handleCancel} disabled={progress} />
+              </>
+            )}
+          </div>
+        </td>
+        <td>
+          <InputTextToggle
+            value={itemInfos.ProblemDiagnosisProcedureDescription}
+            onChange={handleChange}
+            name="ProblemDiagnosisProcedureDescription"
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          {editVisible ? (
+            <RelativesList
+              handleChange={handleMemberChange}
+              value={itemInfos.Relationship}
+            />
+          ) : (
+            <p>{itemInfos.Relationship}</p>
+          )}
+        </td>
+        <td>
+          <InputDateToggle
+            value={timestampToDateISOTZ(itemInfos.StartDate)}
+            onChange={handleChange}
+            name="StartDate"
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          <InputTextToggle
+            value={itemInfos.AgeAtOnset}
+            onChange={handleChange}
+            name="AgeAtOnset"
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          <GenericListToggle
+            list={lifeStageCT}
+            value={itemInfos.LifeStage}
+            name="LifeStage"
+            handleChange={handleChange}
+            placeHolder="Choose a lifestage..."
+            noneOption={false}
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          <InputTextToggle
+            value={itemInfos.Treatment}
+            onChange={handleChange}
+            name="Treatment"
+            editVisible={editVisible}
+          />
+        </td>
+        <td>
+          <InputTextToggle
+            value={itemInfos.Notes}
+            onChange={handleChange}
+            name="Notes"
+            editVisible={editVisible}
+          />
+        </td>
+        <SignCell item={item} />
+      </tr>
+    )
+  );
+};
+
+export default FamilyHistoryItem;

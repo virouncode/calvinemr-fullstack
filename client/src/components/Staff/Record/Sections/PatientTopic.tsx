@@ -35,32 +35,32 @@ import CycleDropDown from "../Topics/Cycles/CyclesDropDown";
 import CyclesPopUp from "../Topics/Cycles/CyclesPopUp";
 import EformsContent from "../Topics/Eforms/EformsContent";
 import EformsPU from "../Topics/Eforms/EformsPU";
-import FamilyHistoryContent from "../Topics/FamilyHistory/FamilyHistoryContent";
-import FamilyHistoryPU from "../Topics/FamilyHistory/FamilyHistoryPU";
+import FamilyHistoryDropDown from "../Topics/FamilyHistory/FamilyHistoryDropDown";
+import FamilyHistoryPopUp from "../Topics/FamilyHistory/FamilyHistoryPopUp";
 import ImmunizationsContent from "../Topics/Immunizations/ImmunizationsContent";
-import ImmunizationsPU from "../Topics/Immunizations/ImmunizationsPU";
-import LettersContent from "../Topics/Letters/LettersContent";
-import LettersPU from "../Topics/Letters/LettersPU";
-import MedicationsContent from "../Topics/Medications/MedicationsContent";
-import MedicationsPU from "../Topics/Medications/MedicationsPU";
-import MessagesContent from "../Topics/MessagesAboutPatient/MessagesContent";
-import MessagesExternalContent from "../Topics/MessagesWithPatient/MessagesExternalContent";
-import PastHealthContent from "../Topics/PastHealth/PastHealthContent";
-import PastHealthPU from "../Topics/PastHealth/PastHealthPU";
-import PersonalHistoryContent from "../Topics/PersonalHistory/PersonalHistoryContent";
-import PersonalHistoryPU from "../Topics/PersonalHistory/PersonalHistoryPU";
-import PharmaciesContent from "../Topics/Pharmacies/PharmaciesContent";
-import PharmaciesPU from "../Topics/Pharmacies/PharmaciesPU";
-import PregnanciesContent from "../Topics/Pregnancies/PregnanciesContent";
-import PregnanciesPU from "../Topics/Pregnancies/PregnanciesPU";
-import PrescriptionsContent from "../Topics/Prescriptions/PrescriptionsContent";
-import PrescriptionsPU from "../Topics/Prescriptions/PrescriptionsPU";
-import ProblemListContent from "../Topics/ProblemList/ProblemListContent";
-import ProblemListPU from "../Topics/ProblemList/ProblemListPU";
-import RelationshipsContent from "../Topics/Relationships/RelationshipsContent";
-import RelationshipsPU from "../Topics/Relationships/RelationshipsPU";
-import RemindersContent from "../Topics/Reminders/RemindersContent";
-import RemindersPU from "../Topics/Reminders/RemindersPU";
+import ImmunizationsPopUp from "../Topics/Immunizations/ImmunizationsPopUp";
+import LettersDropDown from "../Topics/Letters/LettersDropDown";
+import LettersPopUp from "../Topics/Letters/LettersPopUp";
+import MedicationsDropDown from "../Topics/Medications/MedicationsDropDown";
+import MedicationsPopUp from "../Topics/Medications/MedicationsPopUp";
+import MessagesDropDown from "../Topics/MessagesAboutPatient/MessagesDropDown";
+import MessagesExternalDropDown from "../Topics/MessagesWithPatient/MessagesExternalDropDown";
+import PastHealthDropDown from "../Topics/PastHealth/PastHealthDropDown";
+import PastHealthPopUp from "../Topics/PastHealth/PastHealthPopUp";
+import PersonalHistoryDropDown from "../Topics/PersonalHistory/PersonalHistoryDropDown";
+import PersonalHistoryPopUp from "../Topics/PersonalHistory/PersonalHistoryPopUp";
+import PharmaciesDropDown from "../Topics/Pharmacies/PharmaciesDropDown";
+import PharmaciesPopUp from "../Topics/Pharmacies/PharmaciesPopUs";
+import PregnanciesDropDown from "../Topics/Pregnancies/PregnanciesDropDown";
+import PregnanciesPopUp from "../Topics/Pregnancies/PregnanciesPopUp";
+import PrescriptionsDropDown from "../Topics/Prescriptions/PrescriptionsDropDown";
+import PrescriptionsPopUp from "../Topics/Prescriptions/PrescriptionsPopUp";
+import ProblemListDropDown from "../Topics/ProblemList/ProblemListDropDown";
+import ProblemListPopUp from "../Topics/ProblemList/ProblemListPopUp";
+import RelationshipsDropDown from "../Topics/Relationships/RelationshipsDropDown";
+import RelationshipsPopUp from "../Topics/Relationships/RelationshipsPopUp";
+import RemindersDropDown from "../Topics/Reminders/RemindersDropDown";
+import RemindersPopUp from "../Topics/Reminders/RemindersPopUp";
 import RisksDropDown from "../Topics/Risks/RisksDropDown";
 import RisksPopUp from "../Topics/Risks/RisksPopUp";
 import TodosDropDown from "../Topics/Todos/TodosDropDown";
@@ -169,7 +169,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PAST HEALTH */}
         {topic === "PAST HEALTH" && (
-          <PastHealthContent
+          <PastHealthDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -185,7 +185,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <PastHealthPU
+            <PastHealthPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -203,7 +203,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* FAMILY HISTORY */}
         {topic === "FAMILY HISTORY" && (
-          <FamilyHistoryContent
+          <FamilyHistoryDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -219,7 +219,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <FamilyHistoryPU
+            <FamilyHistoryPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -237,7 +237,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* RELATIONSHIPS */}
         {topic === "RELATIONSHIPS" && (
-          <RelationshipsContent
+          <RelationshipsDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -253,7 +253,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <RelationshipsPU
+            <RelationshipsPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -370,7 +370,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* MEDICATIONS & TREATMENTS */}
         {topic === "MEDICATIONS & TREATMENTS" && (
-          <MedicationsContent
+          <MedicationsDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -386,7 +386,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <MedicationsPU
+            <MedicationsPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicDelete={topicDelete}
@@ -404,7 +404,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PAST PRESCRIPTIONS */}
         {topic === "PAST PRESCRIPTIONS" && (
-          <PrescriptionsContent
+          <PrescriptionsDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -420,7 +420,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <PrescriptionsPU
+            <PrescriptionsPopUp
               topicDatas={topicDatas}
               isPending={isPending}
               error={error}
@@ -436,7 +436,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PHARMACIES */}
         {topic === "PHARMACIES" && (
-          <PharmaciesContent
+          <PharmaciesDropDown
             patientId={patientId}
             demographicsInfos={demographicsInfos}
             loadingPatient={loadingPatient}
@@ -453,7 +453,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <PharmaciesPU
+            <PharmaciesPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -507,7 +507,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* REMINDERS */}
         {topic === "REMINDERS" && (
-          <RemindersContent
+          <RemindersDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -523,7 +523,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <RemindersPU
+            <RemindersPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -540,7 +540,7 @@ const PatientTopic = ({
         )}
         {/* LETTERS/REFERRALS */}
         {topic === "LETTERS/REFERRALS" && (
-          <LettersContent
+          <LettersDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -556,7 +556,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <LettersPU
+            <LettersPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -575,7 +575,7 @@ const PatientTopic = ({
         )}
         {/* PERSONAL HISTORY */}
         {topic === "PERSONAL HISTORY" && (
-          <PersonalHistoryContent
+          <PersonalHistoryDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -591,7 +591,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <PersonalHistoryPU
+            <PersonalHistoryPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -658,7 +658,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PROBLEM LIST */}
         {topic === "PROBLEM LIST" && (
-          <ProblemListContent
+          <ProblemListDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -674,7 +674,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <ProblemListPU
+            <ProblemListPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -692,7 +692,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PREGNANCIES */}
         {topic === "PREGNANCIES" && (
-          <PregnanciesContent
+          <PregnanciesDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -708,7 +708,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <PregnanciesPU
+            <PregnanciesPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -804,7 +804,7 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <ImmunizationsPU
+            <ImmunizationsPopUp
               topicDatas={topicDatas}
               topicPost={topicPost}
               topicPut={topicPut}
@@ -816,6 +816,9 @@ const PatientTopic = ({
               patientDob={patientDob}
               loadingPatient={loadingPatient}
               errPatient={errPatient}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetching={isFetching}
             />
           </FakeWindow>
         )}
@@ -857,7 +860,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* MESSAGES ABOUT PATIENT */}
         {topic === "MESSAGES ABOUT PATIENT" && (
-          <MessagesContent
+          <MessagesDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}
@@ -885,7 +888,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* MESSAGES WITH PATIENT */}
         {topic === "MESSAGES WITH PATIENT" && (
-          <MessagesExternalContent
+          <MessagesExternalDropDown
             topicDatas={topicDatas}
             isPending={isPending}
             error={error}

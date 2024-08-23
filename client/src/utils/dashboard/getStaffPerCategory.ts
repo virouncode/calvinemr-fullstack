@@ -1,25 +1,26 @@
 import { SiteType, StaffType } from "../../types/api";
 import { TotalStaffBySiteType } from "../../types/app";
 import { categoryToTitle } from "../names/categoryToTitle";
+const categories = [
+  "Doctors",
+  "Medical students",
+  "Nurses",
+  "Nursing students",
+  "Secretaries",
+  "Ultra sound techs",
+  "Lab techs",
+  "Nutritionists",
+  "Physiotherapists",
+  "Psychologists",
+  "Others",
+] as const;
 
 export const getStaffPerCategory = (
   staffInfos: StaffType[],
   sites: SiteType[]
 ) => {
   if (!sites.length) return [];
-  const categories = [
-    "Doctors",
-    "Medical students",
-    "Nurses",
-    "Nursing students",
-    "Secretaries",
-    "Ultra sound techs",
-    "Lab techs",
-    "Nutritionists",
-    "Physiotherapists",
-    "Psychologists",
-    "Others",
-  ];
+
   let totalsBySite: TotalStaffBySiteType[] = [];
   for (const site of sites) {
     const staffInfosForSite = staffInfos.filter(

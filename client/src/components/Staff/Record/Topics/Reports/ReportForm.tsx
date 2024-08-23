@@ -24,10 +24,10 @@ type ReportFormProps = {
   demographicsInfos: DemographicsType;
   patientId: number;
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  editCounter?: { current: number };
+  editCounter?: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  attachment: MessageAttachmentType;
+  initialAttachment?: Partial<MessageAttachmentType>;
   reportPost: UseMutationResult<ReportType, Error, Partial<ReportType>, void>;
 };
 
@@ -38,7 +38,7 @@ const ReportForm = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  attachment,
+  initialAttachment,
   reportPost,
 }: ReportFormProps) => {
   //HOOKS
@@ -48,8 +48,8 @@ const ReportForm = ({
     patient_id: patientId,
     Format: "Binary",
     assigned_staff_id: demographicsInfos.assigned_staff_id,
-    File: attachment ? attachment.file : null,
-    FileExtensionAndVersion: getExtension(attachment.file?.path) ?? "",
+    File: initialAttachment?.file ?? null,
+    FileExtensionAndVersion: getExtension(initialAttachment?.file?.path) ?? "",
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [sentOrReceived, setSentOrReceived] = useState("Received");
@@ -283,7 +283,7 @@ const ReportForm = ({
       isLoadingFile={isLoadingFile}
       progress={progress}
       sentOrReceived={sentOrReceived}
-      attachment={attachment}
+      initialAttachment={initialAttachment}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
       handleUpload={handleUpload}

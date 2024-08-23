@@ -3,8 +3,8 @@ import { useDoctors } from "../../../../hooks/reactquery/queries/doctorsQueries"
 import { usePatientDoctors } from "../../../../hooks/reactquery/queries/patientDoctorsQueries";
 import { DemographicsType } from "../../../../types/api";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
-import FamilyDoctorsContent from "../Topics/FamilyDoctors/FamilyDoctorsContent";
-import FamilyDoctorsPU from "../Topics/FamilyDoctors/FamilyDoctorsPU";
+import FamilyDoctorsDropDown from "../Topics/FamilyDoctors/FamilyDoctorsDropDown";
+import FamilyDoctorsPopUp from "../Topics/FamilyDoctors/FamilyDoctorsPopUp";
 import PatientTopicHeader from "./PatientTopicHeader";
 
 type PatientTopicDoctorsProps = {
@@ -87,7 +87,7 @@ const PatientTopicDoctors = ({
         }
         ref={containerRef}
       >
-        <FamilyDoctorsContent
+        <FamilyDoctorsDropDown
           patientDoctors={patientDoctors}
           isPending={isPendingPatientDoctors}
           error={errorPatientDoctors}
@@ -103,7 +103,7 @@ const PatientTopicDoctors = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <FamilyDoctorsPU
+            <FamilyDoctorsPopUp
               patientDoctors={patientDoctors}
               isPendingPatientDoctors={isPendingPatientDoctors}
               errorPatientDoctors={errorPatientDoctors}

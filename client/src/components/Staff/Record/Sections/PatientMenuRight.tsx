@@ -11,7 +11,7 @@ type PatientMenuRightProps = {
   patientId: number;
   contentsVisible: boolean;
   loadingPatient: boolean;
-  errPatient: string;
+  errPatient: Error | null;
 };
 
 const PatientMenuRight = ({

@@ -686,6 +686,23 @@ export type DoctorType = {
   licence_nbr: string;
 };
 
+export type DoctorFormType = {
+  firstName: string;
+  lastName: string;
+  line1: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  zipCode: string;
+  phone: string;
+  fax: string;
+  email: string;
+  speciality: string;
+  licence_nbr: string;
+  ohip_billing_nbr: string;
+  patients: number[];
+};
+
 export type EdocType = {
   id: number;
   date_created: number;
@@ -785,7 +802,7 @@ export type ImmunizationType = {
     value: string;
     Description: string;
   };
-  Date: number;
+  Date: number | null;
   RefusedFlag: { ynIndicatorsimple: string };
   Instructions: string;
   Notes: string;
@@ -793,6 +810,25 @@ export type ImmunizationType = {
   doseNumber: number;
   recommended: boolean;
 };
+
+export type RecImmunizationTypeListType =
+  | "DTaP-IPV-Hib"
+  | "Pneu-C-7"
+  | "ROT"
+  | "Men-C"
+  | "MMR"
+  | "Var"
+  | "MMR-Var"
+  | "TdapIPV"
+  | "HB"
+  | "Men-C"
+  | "HPV"
+  | "Tdap"
+  | "Td"
+  | "Zos"
+  | "Pneu-P-23"
+  | "Tdap_pregnancy"
+  | "Inf";
 
 export type LabLinkType = {
   id: number;
@@ -833,6 +869,15 @@ export type LetterType = {
   updates: { date_updated: number; updated_by_id: number }[];
 };
 
+export type LetterAttachmentType = {
+  file: AttachmentType | null;
+  alias: string;
+  date_created: number;
+  created_by_id: user.id;
+  id: string;
+  type: "attachment" | "report";
+};
+
 export type LetterTemplateType = {
   id: number;
   date_created: number;
@@ -857,6 +902,7 @@ export type LinkType = {
 
 export type MedType = {
   id: number;
+  temp_id?: string;
   patient_id: number;
   date_created: number;
   created_by_id: number;
@@ -879,15 +925,15 @@ export type MedType = {
   RefillDuration: string;
   Quantity: string;
   RefillQuantity: string;
-  LongTermMedication: { ynIndicatorsimple: string; boolean: boolean };
-  PastMedication: { ynIndicatorsimple: string; boolean: boolean };
+  LongTermMedication: { ynIndicatorsimple: string; boolean?: boolean };
+  PastMedication: { ynIndicatorsimple: string; boolean?: boolean };
   PrescribedBy: {
     Name: { FirstName: string; LastName: string };
     OHIPPhysicianId: string;
   };
   Notes: string;
   PrescriptionInstructions: string;
-  PatientCompliance: { ynIndicatorsimple: string; boolean: boolean };
+  PatientCompliance: { ynIndicatorsimple: string; boolean?: boolean };
   TreatmentType: string;
   PrescriptionStatus: string;
   NonAuthoritativeIndicator: string;
@@ -1069,6 +1115,17 @@ export type PersonalHistoryType = {
   };
 };
 
+export type PersonalHistoryFormType = {
+  occupations: string;
+  income: string;
+  religion: string;
+  sexual_orientation: string;
+  special_diet: string;
+  smoking: string;
+  alcohol: string;
+  recreational_drugs: string;
+};
+
 export type PharmacyType = {
   id: number;
   created_by_id: number;
@@ -1097,6 +1154,18 @@ export type PharmacyType = {
     extension?: string;
   };
   EmailAddress: string;
+};
+
+export type PharmacyFormType = {
+  name: string;
+  line1: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  zipCode: string;
+  phone: string;
+  fax: string;
+  email: string;
 };
 
 export type PregnancyType = {
@@ -1160,6 +1229,8 @@ export type RelationshipType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
+  //Add-on
+  relation_infos?: DemographicsType;
 };
 
 export type ReminderType = {
@@ -1195,7 +1266,7 @@ export type ReportType = {
   ReportReviewed: {
     Name: { FirstName: string; LastName: string };
     ReviewingOHIPPhysicianId: string;
-    DateTimeReportReviewed: number;
+    DateTimeReportReviewed: number | null;
   }[];
   SendingFacilityId: string;
   SendingFacilityReport: string;

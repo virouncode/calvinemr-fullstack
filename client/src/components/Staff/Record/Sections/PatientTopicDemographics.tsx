@@ -10,7 +10,7 @@ type PatientTopicDemographicsProps = {
   loadingPatient: boolean;
   patientId: number;
   patientName: string;
-  errPatient: string;
+  errPatient: Error | null;
   textColor: string;
   backgroundColor: string;
   side: "right" | "left";

@@ -26,7 +26,7 @@ type ReportFormMultiplePatientsProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  attachment: MessageAttachmentType;
+  initialAttachment: Partial<MessageAttachmentType>;
   reportPost: UseMutationResult<ReportType, Error, Partial<ReportType>, void>;
 };
 
@@ -36,7 +36,7 @@ const ReportFormMultiplePatients = ({
   setAddVisible,
   setErrMsgPost,
   errMsgPost,
-  attachment,
+  initialAttachment,
   reportPost,
 }: ReportFormMultiplePatientsProps) => {
   //HOOKS
@@ -44,9 +44,9 @@ const ReportFormMultiplePatients = ({
   const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState<Partial<ReportType>>({
     Format: "Binary",
-    File: attachment ? attachment.file : null,
-    FileExtensionAndVersion: attachment
-      ? getExtension(attachment.file?.path)
+    File: initialAttachment ? initialAttachment.file : null,
+    FileExtensionAndVersion: initialAttachment
+      ? getExtension(initialAttachment.file?.path)
       : "",
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
@@ -287,7 +287,7 @@ const ReportFormMultiplePatients = ({
       isLoadingFile={isLoadingFile}
       progress={progress}
       sentOrReceived={sentOrReceived}
-      attachment={attachment}
+      initialAttachment={initialAttachment}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
       handleUpload={handleUpload}

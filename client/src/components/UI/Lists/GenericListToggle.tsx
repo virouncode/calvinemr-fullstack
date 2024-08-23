@@ -6,7 +6,7 @@ type GenericListToggleProps = {
   value: string;
   name: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  placeHolder: string;
+  placeHolder?: string;
   noneOption?: boolean;
   id?: string;
   label?: string;

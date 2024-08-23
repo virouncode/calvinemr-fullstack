@@ -15,7 +15,7 @@ import ReportsInboxForm from "../../ReportsInbox/ReportsInboxForm";
 
 type MessageAttachmentCardProps = {
   handleRemoveAttachment?: (attachmentName: string) => void;
-  attachment: MessageAttachmentType;
+  attachment: Partial<MessageAttachmentType>;
   deletable?: boolean;
   cardWidth?: string;
   addable?: boolean;
@@ -220,7 +220,7 @@ const MessageAttachmentCard = ({
             }
             patientId={(message as MessageType).related_patient_id}
             setAddVisible={setAddVisible}
-            attachment={attachment}
+            initialAttachment={attachment}
             errMsgPost={errMsgPost}
             setErrMsgPost={setErrMsgPost}
             reportPost={reportPost}

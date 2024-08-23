@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { MedType } from "../types/api";
 
 const usePrescriptionMultipage = (
-  bodyRef: React.MutableRefObject<HTMLTextAreaElement | null>,
+  bodyRef: React.MutableRefObject<HTMLDivElement | null>,
   freeText: string,
-  addedMeds: MedType[],
+  addedMeds: Partial<MedType>[],
   setMainBody: React.Dispatch<React.SetStateAction<string>>,
   setAdditionalBodies: React.Dispatch<React.SetStateAction<string[]>>,
   setPages: React.Dispatch<React.SetStateAction<number[]>>

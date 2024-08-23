@@ -8,7 +8,7 @@ import MessageAttachmentCard from "./MessageAttachmentCard";
 
 //used in Messages and PatientMessages
 type MessageAttachmentsProps = {
-  attachments: MessageAttachmentType[];
+  attachments: Partial<MessageAttachmentType>[];
   deletable?: boolean;
   addable?: boolean;
   cardWidth?: string;

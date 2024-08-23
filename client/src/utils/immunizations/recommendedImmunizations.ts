@@ -1,3 +1,5 @@
+import { RecImmunizationTypeListType } from "../../types/api";
+
 export const allImmunizationsAges = [
   "2 Months",
   "4 Months",
@@ -11,9 +13,25 @@ export const allImmunizationsAges = [
   "24 Years",
   ">=34 Years",
   "65 Years",
-];
+] as const;
 
-export const recommendedImmunizationsList = [
+export type RecImmunizationAgeType = (typeof allImmunizationsAges)[number];
+
+export type RecImmunizationDoseType = "single" | "double" | "multiple";
+
+export type RecImmunizationRouteType =
+  | "Intramuscular"
+  | "Oral"
+  | "Subcutaneous"
+  | "Intramuscular/Subcutaneous";
+
+export const recommendedImmunizationsList: {
+  id: number;
+  type: RecImmunizationTypeListType;
+  dose: RecImmunizationDoseType;
+  route: RecImmunizationRouteType;
+  ages: RecImmunizationAgeType[];
+}[] = [
   {
     id: 1,
     type: "DTaP-IPV-Hib",

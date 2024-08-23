@@ -39,7 +39,7 @@ type NewMessageExternalProps = {
     email: string;
     phone: string;
   }[];
-  initialAttachments?: MessageAttachmentType[];
+  initialAttachments?: Partial<MessageAttachmentType>[];
 };
 
 const NewMessageExternal = ({
@@ -51,8 +51,7 @@ const NewMessageExternal = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
-  const [attachments, setAttachments] =
-    useState<MessageAttachmentType[]>(initialAttachments);
+  const [attachments, setAttachments] = useState(initialAttachments);
   const [recipients, setRecipients] = useState(initialRecipients);
   const [allPatientsChecked, setAllPatientsChecked] = useState(false);
   const [subject, setSubject] = useState("");

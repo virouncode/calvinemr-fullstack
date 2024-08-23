@@ -63,7 +63,6 @@ const AlertsPopUp = ({
     isFetching
   );
 
-  //HANDLERS
   const handleClose = async () => {
     if (
       editCounter.current === 0 ||
