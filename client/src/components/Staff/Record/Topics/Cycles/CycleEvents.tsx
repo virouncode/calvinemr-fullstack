@@ -79,7 +79,7 @@ const CycleEvents = ({
             </tr>
           </thead>
           <tbody>
-            {(formDatas.events as CycleEventType[]).length > 0 ? (
+            {(formDatas.events ?? []).length > 0 ? (
               formDatas.events?.map((item, index) => (
                 <CycleEventForm
                   key={(item.temp_id as string) + index}

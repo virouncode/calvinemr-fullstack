@@ -31,7 +31,7 @@ const ClinicInfos = () => {
   const [editVisible, setEditVisible] = useState(false);
   const [editClinicVisible, setEditClinicVisible] = useState(false);
   const [selectedSiteId, setSelectedSiteId] = useState(0);
-  const [formDatas, setFormDatas] = useState<ClinicType>(clinic as ClinicType);
+  const [formDatas, setFormDatas] = useState(clinic as ClinicType);
   const [errMsgPost, setErrMsgPost] = useState("");
   //Queries
   const { data: sites, isPending, error } = useSites();
