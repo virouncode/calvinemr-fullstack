@@ -19,7 +19,10 @@ export const getAppointmentsInRange = (
     if (appointment.recurrence === "Once") {
       appointmentsInRange.push(appointment);
     } else {
-      if (dateISOToTimestampTZ(appointment.rrule?.dtstart || "") < rangeEnd) {
+      if (
+        dateISOToTimestampTZ(appointment.rrule?.dtstart || "") ??
+        0 < rangeEnd
+      ) {
         let start = appointment.start;
         let end = appointment.end;
         while (start <= rangeEnd) {
@@ -27,7 +30,7 @@ export const getAppointmentsInRange = (
             if (
               !appointment.rrule?.until ||
               (appointment.rrule?.until &&
-                start <= dateISOToTimestampTZ(appointment.rrule.until))
+                start <= (dateISOToTimestampTZ(appointment.rrule.until) ?? 0))
             )
               appointmentsInRange.push({
                 ...appointment,
@@ -35,9 +38,9 @@ export const getAppointmentsInRange = (
                 end,
                 AppointmentDate: timestampToDateISOTZ(start),
                 AppointmentTime: timestampToTimeISOTZ(start),
-                rrule: null,
+                rrule: { freq: "", interval: 0, dtstart: "", until: "" },
                 recurrence: "Once",
-                exrule: null,
+                exrule: [],
               });
           }
           const nextOccurence = toNextOccurence(

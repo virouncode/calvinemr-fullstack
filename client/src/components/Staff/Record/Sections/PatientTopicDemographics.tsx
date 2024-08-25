@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { DemographicsType } from "../../../../types/api";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
-import DemographicsContent from "../Topics/Demographics/DemographicsContent";
-import DemographicsPU from "../Topics/Demographics/DemographicsPU";
+import DemographicsDropDown from "../Topics/Demographics/DemographicsDropDown";
+import DemographicsPopUp from "../Topics/Demographics/DemographicsPopUp";
 import PatientTopicHeader from "./PatientTopicHeader";
 
 type PatientTopicDemographicsProps = {
@@ -71,7 +71,7 @@ const PatientTopicDemographics = ({
         }
         ref={containerRef}
       >
-        <DemographicsContent
+        <DemographicsDropDown
           demographicsInfos={demographicsInfos}
           loadingPatient={loadingPatient}
           errPatient={errPatient}
@@ -87,7 +87,7 @@ const PatientTopicDemographics = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <DemographicsPU
+            <DemographicsPopUp
               demographicsInfos={demographicsInfos}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}

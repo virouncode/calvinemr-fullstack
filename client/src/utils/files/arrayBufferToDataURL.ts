@@ -15,3 +15,12 @@ function binaryStringToBase64(binary: string) {
 function base64ToDataURL(base64: string, mimeType: string) {
   return `data:${mimeType};base64,${base64}`;
 }
+
+export const arrayBufferToDataURL = (
+  buffer: Iterable<number>,
+  mimeType: string
+) => {
+  const binary = arrayBufferToBinaryString(buffer);
+  const base64 = binaryStringToBase64(binary);
+  return base64ToDataURL(base64, mimeType);
+};

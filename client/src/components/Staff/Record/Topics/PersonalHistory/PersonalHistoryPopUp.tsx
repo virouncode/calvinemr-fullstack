@@ -133,7 +133,7 @@ const PersonalHistoryPopUp = ({
     try {
       await personalHistorySchema.validate(formDatasForValidation);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     const datas = topicDatas?.pages.flatMap((page) => page.items);

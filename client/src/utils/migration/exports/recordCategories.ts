@@ -1,3 +1,4 @@
+import { XMLExportFunctionType } from "../../../types/api";
 import {
   toXmlAlerts,
   toXmlAllergies,
@@ -17,7 +18,13 @@ import {
   toXmlRiskFactors,
 } from "./xmlTemplates";
 
-export const recordCategories = [
+export const recordCategories: {
+  id: number;
+  name: string;
+  label: string;
+  url: string;
+  template: XMLExportFunctionType;
+}[] = [
   {
     id: 1,
     name: "Demographics",

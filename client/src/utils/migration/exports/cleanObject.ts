@@ -1,5 +1,6 @@
 import { timestampToDateISOTZ } from "../../dates/formatDates";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const cleanObject = (objet: any) => {
   for (const cle in objet) {
     if (Object.prototype.hasOwnProperty.call(objet, cle)) {

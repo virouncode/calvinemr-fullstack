@@ -136,7 +136,7 @@ const ImmunizationItem = ({
     try {
       await immunizationSchema.validate(topicToPut);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Submission

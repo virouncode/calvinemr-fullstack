@@ -15,7 +15,7 @@ export const useLabLinksCredentialsPost = (staffId: number) => {
   return useMutation({
     mutationFn: (credentialsToPost: Partial<LabLinkCredentialsType>) =>
       xanoPost("/lablinks_credentials", "staff", credentialsToPost),
-    onMutate: async (credentialsToPost: LabLinkCredentialsType) => {
+    onMutate: async (credentialsToPost: Partial<LabLinkCredentialsType>) => {
       await queryClient.cancelQueries({
         queryKey: ["labLinksCredentials", staffId],
       });
@@ -91,7 +91,7 @@ export const useLabLinksCredentialsPut = (staffId: number) => {
 export const useLabLinksPersonalPost = (staffId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
-    mutationFn: (labLinkPersonalToPost: LabLinkPersonalType) =>
+    mutationFn: (labLinkPersonalToPost: Partial<LabLinkPersonalType>) =>
       xanoPost("/lablinks_personal", "staff", labLinkPersonalToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["labLinksPersonal", staffId] });

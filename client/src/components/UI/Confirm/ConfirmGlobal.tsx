@@ -3,15 +3,25 @@ import ConfirmDialog from "./ConfirmDialog";
 
 //We define a global variable confirmAction with a current property that is a function that returns a Promise
 const confirmAction = {
-  current: ({ title, content, yes, no }) => Promise.resolve(true),
+  current: ({
+    title,
+    content,
+    yes,
+    no,
+  }: {
+    title: string;
+    content: string;
+    yes: string;
+    no: string;
+  }) => Promise.resolve(true),
 };
 
 //When calling confirm alert we call confirmAction.current with the parameters of confirmAlert
 export const confirmAlert = ({
-  title,
+  title = "",
   content,
-  yes,
-  no,
+  yes = "Yes",
+  no = "Cancel",
 }: {
   title?: string;
   content: string;

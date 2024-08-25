@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { onMessageUnreadTodo } from "../../socketHandlers/onMessageUnreadTodo";
-import { UserStaffType } from "../../types/app";
+import { SocketMessageType, UserStaffType } from "../../types/app";
 import useSocketContext from "../context/useSocketContext";
 import useUserContext from "../context/useUserContext";
 
@@ -9,7 +9,7 @@ const useUnreadTodoSocket = () => {
   const { user, setUser } = useUserContext();
   useEffect(() => {
     if (!socket || user?.access_level !== "staff") return;
-    const onMessage = (message) => {
+    const onMessage = (message: SocketMessageType<null>) => {
       onMessageUnreadTodo(
         message,
         user as UserStaffType,

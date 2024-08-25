@@ -178,6 +178,7 @@ const RecImmunizationItemDouble = ({
               immunizationInfos={immunizationInfos}
               type={type}
               age={age}
+              route={route}
             />
           </>
         )}

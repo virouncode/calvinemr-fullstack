@@ -10,31 +10,40 @@ import {
   timestampToDateMonthsLaterISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { getImmunizationLogo } from "../../../../../utils/immunizations/getImmunizationLogo";
-import { RecImmunizationAgeType } from "../../../../../utils/immunizations/recommendedImmunizations";
+import {
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
+} from "../../../../../utils/immunizations/recommendedImmunizations";
 
 type RecImmunizationSecondDoseLabelProps = {
   immunizationInfos: ImmunizationType[];
   type: RecImmunizationTypeListType;
   age: RecImmunizationAgeType;
+  route: RecImmunizationRouteType;
 };
 
-const RecImmunizationSecondDoseLabel = ({ immunizationInfos, type, age }) => {
+const RecImmunizationSecondDoseLabel = ({
+  immunizationInfos,
+  type,
+  age,
+  route,
+}: RecImmunizationSecondDoseLabelProps) => {
   return immunizationInfos.length === 2 &&
     immunizationInfos.find(({ doseNumber }) => doseNumber === 2)?.Date ? (
     <label
       style={{
         color:
           immunizationInfos.find(({ doseNumber }) => doseNumber === 2)
-            .RefusedFlag.ynIndicatorsimple === "Y"
+            ?.RefusedFlag.ynIndicatorsimple === "Y"
             ? "red"
             : "forestgreen",
       }}
       htmlFor="second-dose-checkbox"
     >
       {timestampToDateISOTZ(
-        immunizationInfos.find(({ doseNumber }) => doseNumber === 2).Date
+        immunizationInfos.find(({ doseNumber }) => doseNumber === 2)?.Date
       )}{" "}
-      {getImmunizationLogo(type)}
+      {getImmunizationLogo(route)}
     </label>
   ) : (
     <label htmlFor="second-dose-checkbox">
@@ -47,7 +56,7 @@ const RecImmunizationSecondDoseLabel = ({ immunizationInfos, type, age }) => {
                 color:
                   timestampMonthsLaterTZ(
                     immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                      ?.Date,
+                      ?.Date ?? 0,
                     7
                   ) < nowTZTimestamp()
                     ? "orange"
@@ -77,7 +86,7 @@ const RecImmunizationSecondDoseLabel = ({ immunizationInfos, type, age }) => {
                 color:
                   timestampMonthsLaterTZ(
                     immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-                      ?.Date,
+                      ?.Date ?? 0,
                     7
                   ) < nowTZTimestamp()
                     ? "orange"
@@ -100,7 +109,7 @@ const RecImmunizationSecondDoseLabel = ({ immunizationInfos, type, age }) => {
             `2 to 6 months after`
           ))}
       </span>{" "}
-      {getImmunizationLogo(type)}
+      {getImmunizationLogo(route)}
     </label>
   );
 };

@@ -27,34 +27,34 @@ export const getVisitsPerAge = (
         visit.patients_guests_ids as { patient_infos: DemographicsType }[]
       ).filter(
         ({ patient_infos }) =>
-          patient_infos?.DateOfBirth > getLimitTimestampForAge(18)
+          patient_infos?.DateOfBirth ?? 0 > getLimitTimestampForAge(18)
       ).length;
       nbrOf1835 += (
         visit.patients_guests_ids as { patient_infos: DemographicsType }[]
       ).filter(
         ({ patient_infos }) =>
-          patient_infos?.DateOfBirth <= getLimitTimestampForAge(18) &&
-          patient_infos?.DateOfBirth >= getLimitTimestampForAge(35)
+          (patient_infos?.DateOfBirth ?? 0) <= getLimitTimestampForAge(18) &&
+          (patient_infos?.DateOfBirth ?? 0) >= getLimitTimestampForAge(35)
       ).length;
       nbrOf3650 += (
         visit.patients_guests_ids as { patient_infos: DemographicsType }[]
       ).filter(
         ({ patient_infos }) =>
-          patient_infos?.DateOfBirth <= getLimitTimestampForAge(36) &&
-          patient_infos?.DateOfBirth >= getLimitTimestampForAge(50)
+          (patient_infos?.DateOfBirth ?? 0) <= getLimitTimestampForAge(36) &&
+          (patient_infos?.DateOfBirth ?? 0) >= getLimitTimestampForAge(50)
       ).length;
       nbrOf5170 += (
         visit.patients_guests_ids as { patient_infos: DemographicsType }[]
       ).filter(
         ({ patient_infos }) =>
-          patient_infos?.DateOfBirth <= getLimitTimestampForAge(51) &&
-          patient_infos?.DateOfBirth >= getLimitTimestampForAge(70)
+          (patient_infos?.DateOfBirth ?? 0) <= getLimitTimestampForAge(51) &&
+          (patient_infos?.DateOfBirth ?? 0) >= getLimitTimestampForAge(70)
       ).length;
       nbrOfOver70 += (
         visit.patients_guests_ids as { patient_infos: DemographicsType }[]
       ).filter(
         ({ patient_infos }) =>
-          patient_infos?.DateOfBirth < getLimitTimestampForAge(70)
+          patient_infos?.DateOfBirth ?? 0 < getLimitTimestampForAge(70)
       ).length;
     }
     totalsBySite = [

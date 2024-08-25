@@ -1,8 +1,7 @@
-import { TodoType } from "../types/api";
 import { SocketMessageType, UserStaffType } from "../types/app";
 
 export const onMessageUnreadTodo = (
-  message: SocketMessageType<TodoType>,
+  message: SocketMessageType<null>,
   user: UserStaffType,
   setUser: React.Dispatch<React.SetStateAction<UserStaffType>>,
   userAccessLevel: string,

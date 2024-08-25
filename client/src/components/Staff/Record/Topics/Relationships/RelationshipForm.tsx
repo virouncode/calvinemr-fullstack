@@ -69,7 +69,7 @@ const RelationshipForm = ({
     try {
       await relationshipSchema.validate(topicToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Submission
@@ -103,7 +103,7 @@ const RelationshipForm = ({
     }
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     editCounter.current -= 1;
     setErrMsgPost("");
@@ -124,7 +124,7 @@ const RelationshipForm = ({
       <td>
         <div className="relationships-form__relationship">
           <RelationshipList
-            value={formDatas.relationship}
+            value={formDatas.relationship ?? ""}
             handleChange={handleRelationshipChange}
           />
           <span>of</span>

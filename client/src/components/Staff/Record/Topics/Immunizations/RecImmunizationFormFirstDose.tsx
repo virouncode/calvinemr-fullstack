@@ -87,7 +87,7 @@ const RecImmunizationFormFirstDose = ({
     try {
       await immunizationSchema.validate(topicToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Submission
@@ -102,8 +102,12 @@ const RecImmunizationFormFirstDose = ({
       },
     });
   };
-  const handleChange = (e) => {
-    let value = e.target.value;
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    let value: string | number | null = e.target.value;
     const name = e.target.name;
     if (name === "RefusedFlag") {
       setFormDatas({
@@ -113,7 +117,7 @@ const RecImmunizationFormFirstDose = ({
       return;
     }
     if (name === "Date") {
-      value = value === "" ? null : dateISOToTimestampTZ(value);
+      value = dateISOToTimestampTZ(value);
     }
     setFormDatas({
       ...formDatas,
@@ -121,13 +125,13 @@ const RecImmunizationFormFirstDose = ({
     });
   };
 
-  const handleRouteChange = (value) => {
+  const handleRouteChange = (value: string) => {
     setFormDatas({
       ...formDatas,
       Route: value,
     });
   };
-  const handleSiteChange = (value) => {
+  const handleSiteChange = (value: string) => {
     setFormDatas({
       ...formDatas,
       Site: value,

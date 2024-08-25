@@ -215,7 +215,7 @@ const MessageExternalAttachmentCard = ({
             demographicsInfos={message.from_patient_infos as DemographicsType}
             patientId={message.from_patient_id}
             setAddVisible={setAddVisible}
-            attachment={attachment}
+            initialAttachment={attachment}
             errMsgPost={errMsgPost}
             setErrMsgPost={setErrMsgPost}
             reportPost={reportPost}
@@ -246,7 +246,7 @@ const MessageExternalAttachmentCard = ({
               }[]
             ).map(({ to_patient_infos }) => to_patient_infos.patient_id)}
             setAddVisible={setAddVisible}
-            attachment={attachment}
+            initialAttachment={attachment}
             errMsgPost={errMsgPost}
             setErrMsgPost={setErrMsgPost}
             reportPost={reportPost}

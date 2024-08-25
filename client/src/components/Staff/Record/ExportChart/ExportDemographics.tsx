@@ -198,7 +198,7 @@ const ExportDemographics = ({ demographicsInfos }: ExportDemographicsProps) => {
                 <label>Enrolment: </label>
                 {enrolmentCaption(
                   demographicsInfos.Enrolment?.EnrolmentHistory?.sort(
-                    (a, b) => a.EnrollmentDate - b.EnrollmentDate
+                    (a, b) => (a.EnrollmentDate ?? 0) - (b.EnrollmentDate ?? 0)
                   ).slice(-1)[0]
                 )}
               </p>

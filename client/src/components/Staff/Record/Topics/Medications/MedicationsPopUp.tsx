@@ -33,7 +33,6 @@ import RxPopUp from "./Prescription/Form/RxPopUp";
 type MedicationsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<MedType>> | undefined;
   topicPost: UseMutationResult<MedType, Error, Partial<MedType>, void>;
-  topicPut: UseMutationResult<MedType, Error, MedType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
   isPending: boolean;
   error: Error | null;

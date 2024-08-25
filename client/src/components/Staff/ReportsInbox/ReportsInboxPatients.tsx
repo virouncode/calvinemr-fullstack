@@ -17,7 +17,7 @@ const ReportsInboxPatients = ({
 }: ReportsInboxPatientsProps) => {
   const [search, setSearch] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
   };

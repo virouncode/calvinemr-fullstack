@@ -20,14 +20,14 @@ export const getNextPatientAppointments = (
       nextPatientAppointments.push(appointment);
     } else if (appointment.recurrence !== "Once") {
       if (
-        dateISOToTimestampTZ(appointment.rrule?.dtstart as string) >=
+        (dateISOToTimestampTZ(appointment.rrule?.dtstart as string) ?? 0) >=
         nowTZTimestamp()
       ) {
         nextPatientAppointments.push({
           ...appointment,
-          rrule: null,
+          rrule: { freq: "", interval: 0, dtstart: "", until: "" },
           recurrence: "Once",
-          exrule: null,
+          exrule: [],
         });
       } else {
         let start = appointment.start;
@@ -42,7 +42,7 @@ export const getNextPatientAppointments = (
         }
         if (
           (appointment.rrule?.until &&
-            start < dateISOToTimestampTZ(appointment.rrule.until)) ||
+            start < (dateISOToTimestampTZ(appointment.rrule.until) ?? 0)) ||
           !appointment.rrule?.until
         )
           nextPatientAppointments.push({
@@ -51,9 +51,9 @@ export const getNextPatientAppointments = (
             end,
             AppointmentDate: timestampToDateISOTZ(start),
             AppointmentTime: timestampToTimeISOTZ(start),
-            rrule: null,
+            rrule: { freq: "", interval: 0, dtstart: "", until: "" },
             recurrence: "Once",
-            exrule: null,
+            exrule: [],
           });
       }
     }

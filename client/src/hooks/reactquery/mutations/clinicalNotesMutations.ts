@@ -24,7 +24,7 @@ export const useClinicalNotePost = () => {
   });
 };
 
-export const useClinicalNoteLogPost = (patientId) => {
+export const useClinicalNoteLogPost = (patientId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
     mutationFn: (clinicalNoteLogToPost: Partial<ClinicalNoteLogType>) =>
@@ -37,7 +37,7 @@ export const useClinicalNoteLogPost = (patientId) => {
   });
 };
 
-export const useClinicalNotePut = (patientId) => {
+export const useClinicalNotePut = (patientId: number) => {
   const { socket } = useSocketContext();
   return useMutation({
     mutationFn: (clinicalNoteToPut: ClinicalNoteType) =>

@@ -85,7 +85,7 @@ const PatientMenuRight = ({
       <PatientTopicAgeCalculator
         textColor="#FEFEFE"
         backgroundColor="#931621"
-        patientDob={demographicsInfos.DateOfBirth}
+        patientDob={demographicsInfos.DateOfBirth as number}
         patientName={toPatientName(demographicsInfos)}
         side="right"
       />
@@ -112,7 +112,7 @@ const PatientMenuRight = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
-        patientDob={demographicsInfos.DateOfBirth}
+        patientDob={demographicsInfos.DateOfBirth as number}
         side="right"
         loadingPatient={loadingPatient}
         errPatient={errPatient}

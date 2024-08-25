@@ -25,17 +25,9 @@ import PrescriptionItem from "./PrescriptionItem";
 
 type PrescriptionsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<PrescriptionType>> | undefined;
-  topicPost: UseMutationResult<
-    PrescriptionType,
-    Error,
-    Partial<PrescriptionType>,
-    void
-  >;
-  topicPut: UseMutationResult<PrescriptionType, Error, PrescriptionType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
   isPending: boolean;
   error: Error | null;
-  patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isFetchingNextPage: boolean;
   fetchNextPage: (
@@ -58,7 +50,6 @@ const PrescriptionsPopUp = ({
   isFetchingNextPage,
   fetchNextPage,
   isFetching,
-  topicDelete,
   demographicsInfos,
 }: PrescriptionsPopUpProps) => {
   //Intersection observer

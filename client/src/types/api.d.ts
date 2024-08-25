@@ -37,7 +37,7 @@ export type AllergyType = {
   created_by_id: number;
   updates: { updated_by_id: number; date_updated: number }[];
   ResidualInfo: {
-    DataElement: { Name: string; DatatType: string; Content: string }[];
+    DataElement: { Name: string; DataType: string; Content: string }[];
   };
   OffendingAgentDescription: string;
   PropertyOfOffendingAgent: string;
@@ -499,8 +499,8 @@ export type EmergencyContactType = {
 
 export type EnrolmentHistoryType = {
   EnrollmentStatus: string;
-  EnrollmentDate: number;
-  EnrollmentTerminationDate: number;
+  EnrollmentDate: number | null;
+  EnrollmentTerminationDate: number | null;
   TerminationReason: string;
   EnrolledToPhysician: {
     Name: { FirstName: string; LastName: string };
@@ -514,7 +514,7 @@ export type DemographicsType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
-  avatar: AttachmentType;
+  avatar: AttachmentType | null;
   assigned_staff_id: number;
   Names: {
     NamePrefix: string;
@@ -530,11 +530,11 @@ export type DemographicsType = {
     }[];
     LastNameSuffix: string;
   };
-  DateOfBirth: number;
+  DateOfBirth: number | null;
   HealthCard: {
     Number: string;
     Version: string;
-    ExpiryDate: number;
+    ExpiryDate: number | null;
     ProvinceCode: string;
   };
   ChartNumber: string;
@@ -594,7 +594,7 @@ export type DemographicsFormType = {
   nickName: string;
   chart: string;
   dob: string;
-  age: number;
+  age: number | "";
   healthNbr: string;
   healthVersion: string;
   healthExpiry: string;
@@ -707,7 +707,7 @@ export type EdocType = {
   id: number;
   date_created: number;
   created_by_id: number;
-  file: AttachmentType;
+  file: AttachmentType | null;
   notes: string;
   name: string;
 };
@@ -1284,6 +1284,8 @@ export type ReportType = {
   acknowledged: boolean;
   assigned_staff_id: number;
   File: AttachmentType | null;
+  //Add-on
+  patient_infos?: DemographicsType;
 };
 
 export type ReportFormType = {
@@ -1596,6 +1598,7 @@ export type TopicPaginatedType = keyof TopicPaginatedDataMap;
 export type UpdateType = {
   date_updated: number;
   updated_by_id: number;
+  updated_by_user_type?: string;
 };
 
 export type TopicExportType =
@@ -1631,3 +1634,21 @@ export type CareElementHistoryTopicType =
   | "BLOOD PRESSURE"
   | "BODY MASS INDEX"
   | "BODY SURFACE AREA";
+
+export type XMLExportFunctionType =
+  | ((jsObj: AlertType) => string)
+  | ((jsObj: AllergyType) => string)
+  | ((jsObj: AppointmentType) => string)
+  | ((jsObj: CareElementType) => string)
+  | ((jsObj: ClinicalNoteType) => string)
+  | ((jsObj: DemographicsType) => string)
+  | ((jsObj: FamilyHistoryType) => string)
+  | ((jsObj: ImmunizationType) => string)
+  | ((jsObj: MedType) => string)
+  | ((jsObj: PastHealthType) => string)
+  | ((jsObj: PersonalHistoryType) => string)
+  | ((jsObj: PregnancyType) => string)
+  | ((jsObj: ProblemListType) => string)
+  | ((jsObj: RelationshipType, patientInfos: DemographicsType) => string)
+  | ((jsObj: ReportType) => string)
+  | ((jsObj: RiskFactor) => string);

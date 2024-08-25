@@ -13,7 +13,7 @@ const useReactQuerySocket = () => {
       try {
         queryClient.invalidateQueries({ queryKey });
       } catch (err) {
-        toast.error(`Error:${err.message}`);
+        if (err instanceof Error) toast.error(`Error:${err.message}`);
         return;
       }
     };

@@ -67,7 +67,7 @@ export const getAvailableRooms = async (
     if (
       start < rangeEnd &&
       ((otherRecAppointment.rrule?.until &&
-        start < dateISOToTimestampTZ(otherRecAppointment.rrule.until)) ||
+        start < (dateISOToTimestampTZ(otherRecAppointment.rrule.until) ?? 0)) ||
         !otherRecAppointment.rrule?.until)
     ) {
       otherRecAppointmentsInRange.push({

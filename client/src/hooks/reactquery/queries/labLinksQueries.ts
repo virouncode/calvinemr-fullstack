@@ -14,7 +14,7 @@ export const useLabLinks = () => {
   });
 };
 export const useLabLinksPersonal = (staffId: number, search: string) => {
-  return useInfiniteQuery<XanoPaginatedType<LabLinkPersonalType>>({
+  return useInfiniteQuery<XanoPaginatedType<LabLinkPersonalType>, Error>({
     queryKey: ["labLinksPersonal", staffId, search],
     queryFn: ({ pageParam }) =>
       xanoGet("/lablinks_personal_of_staff", "staff", {

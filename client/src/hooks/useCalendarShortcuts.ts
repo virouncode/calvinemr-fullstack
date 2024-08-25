@@ -1,7 +1,7 @@
 import { EventInput } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
 import { DateTime } from "luxon";
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"; // Keep React import for other hooks and types
 import { toast } from "react-toastify";
 import xanoDelete from "../api/xanoCRUD/xanoDelete";
 import xanoGet from "../api/xanoCRUD/xanoGet";
@@ -25,17 +25,19 @@ const useCalendarShortcuts = (
 ) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+
   useEffect(() => {
-    const handleKeyboardShortcut = async (e) => {
+    const handleKeyboardShortcut = async (e: WindowEventMap["keydown"]) => {
       if (editAvailability || formVisible) return;
-      if (e.keyCode === 37 && e.shiftKey) {
-        //arrow left
+
+      if (e.key === "ArrowLeft" && e.shiftKey) {
+        // Shift + Left Arrow
         fcRef.current && fcRef.current.getApi().prev();
-      } else if (e.keyCode === 39 && e.shiftKey) {
-        //arrow right
+      } else if (e.key === "ArrowRight" && e.shiftKey) {
+        // Shift + Right Arrow
         fcRef.current && fcRef.current.getApi().next();
-      } else if (e.keyCode === 84 && e.shiftKey) {
-        //T
+      } else if (e.key === "T" && e.shiftKey) {
+        // Shift + T
         fcRef.current && fcRef.current.getApi().today();
       } else if (
         currentEvent.current &&
@@ -43,7 +45,7 @@ const useCalendarShortcuts = (
           user.title === "Secretary") &&
         (e.key === "Backspace" || e.key === "Delete")
       ) {
-        //backspace
+        // Backspace or Delete key
         if (currentEvent.current.extendedProps?.recurrence !== "Once") {
           const appointment: AppointmentType = await xanoGet(
             `/appointments/${parseInt(currentEvent.current.id as string)}`,
@@ -87,12 +89,17 @@ const useCalendarShortcuts = (
             currentEvent.current = null;
             lastCurrentId.current = "";
           } catch (err) {
-            toast.error(`Error: unable to delete appointment: ${err.message}`, {
-              containerId: "A",
-            });
+            if (err instanceof Error)
+              toast.error(
+                `Error: unable to delete appointment: ${err.message}`,
+                {
+                  containerId: "A",
+                }
+              );
           }
         }
-      } else if (e.keyCode === 40 && e.shiftKey) {
+      } else if (e.key === "ArrowDown" && e.shiftKey) {
+        // Shift + Down Arrow
         const eventsList = document.getElementsByClassName("fc-event");
         eventCounter.current += 1;
         (
@@ -103,7 +110,8 @@ const useCalendarShortcuts = (
           block: "center",
           inline: "nearest",
         });
-      } else if (e.keyCode === 38 && e.shiftKey) {
+      } else if (e.key === "ArrowUp" && e.shiftKey) {
+        // Shift + Up Arrow
         const eventsList = document.getElementsByClassName("fc-event");
         eventCounter.current - 1 < 0
           ? (eventCounter.current = eventsList.length - 1)

@@ -66,11 +66,12 @@ export const toNextOccurence = (
   if (exrule?.length) {
     for (const rule of exrule.sort(
       (a, b) =>
-        dateISOToTimestampTZ(a.dtstart) - dateISOToTimestampTZ(b.dtstart)
+        (dateISOToTimestampTZ(a.dtstart) ?? 0) -
+        (dateISOToTimestampTZ(b.dtstart) ?? 0)
     )) {
       if (
-        nextOccurenceStart >= dateISOToTimestampTZ(rule.dtstart) &&
-        nextOccurenceEnd <= dateISOToTimestampTZ(rule.until)
+        nextOccurenceStart >= (dateISOToTimestampTZ(rule.dtstart) ?? 0) &&
+        nextOccurenceEnd <= (dateISOToTimestampTZ(rule.until) ?? 0)
       ) {
         nextOccurenceStart = toNextOccurence(
           nextOccurenceStart,
@@ -153,11 +154,12 @@ export const toLastOccurence = (
   if (exrule?.length) {
     for (const rule of exrule.sort(
       (a, b) =>
-        dateISOToTimestampTZ(b.dtstart) - dateISOToTimestampTZ(a.dtstart)
+        (dateISOToTimestampTZ(b.dtstart) ?? 0) -
+        (dateISOToTimestampTZ(a.dtstart) ?? 0)
     )) {
       if (
-        lastOccurenceStart >= dateISOToTimestampTZ(rule.dtstart) &&
-        lastOccurenceEnd <= dateISOToTimestampTZ(rule.until)
+        lastOccurenceStart >= (dateISOToTimestampTZ(rule.dtstart) ?? 0) &&
+        lastOccurenceEnd <= (dateISOToTimestampTZ(rule.until) ?? 0)
       ) {
         lastOccurenceStart = toLastOccurence(
           lastOccurenceStart,

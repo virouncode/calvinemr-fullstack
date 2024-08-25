@@ -86,7 +86,7 @@ const RelationshipItem = ({
     try {
       await relationshipSchema.validate(topicToPut);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
 
@@ -129,7 +129,7 @@ const RelationshipItem = ({
     }
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     editCounter.current -= 1;
     setErrMsgPost("");

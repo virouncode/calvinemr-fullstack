@@ -99,7 +99,7 @@ const useAutoLogout = (
   }, [startTimer, stopTimer, timeMin]);
 
   const handleStorageEvent = useCallback(
-    (e) => {
+    (e: StorageEvent) => {
       if (e.key === "lastAction") {
         resetTimer();
       }

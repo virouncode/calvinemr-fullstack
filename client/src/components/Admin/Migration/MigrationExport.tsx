@@ -121,7 +121,7 @@ const MigrationExport = () => {
       for (const patient of checkedPatients) {
         const patientFirstName = toPatientFirstName(patient);
         const patientLastName = toPatientLastName(patient);
-        const patientDob = DateTime.fromMillis(patient.DateOfBirth, {
+        const patientDob = DateTime.fromMillis(patient.DateOfBirth ?? 0, {
           zone: "America/Toronto",
         }).toFormat("ddLLyyyy");
         const doctorFirstName = staffIdToFirstName(

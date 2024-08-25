@@ -1,6 +1,11 @@
 import { timestampToDateISOTZ } from "../dates/formatDates";
 
-export const createChartNbr = (dob: number, gender: string, id: number) => {
+export const createChartNbr = (
+  dob: number | null,
+  gender: string,
+  id: number
+) => {
+  if (!dob) return "";
   const dobString = timestampToDateISOTZ(dob).split("-").join("").substring(2);
   const genderCode = gender === "Female" ? "0" : gender === "Male" ? "1" : "2";
   let idString = id.toString();

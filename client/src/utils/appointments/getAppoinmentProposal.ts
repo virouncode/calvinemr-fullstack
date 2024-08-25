@@ -1,12 +1,12 @@
 import { DateTime } from "luxon";
 import { AppointmentType, AvailabilityType } from "../../types/api";
-import { AppointmentProposalType } from "../../types/app";
+import { AppointmentProposalType, DayType } from "../../types/app";
 import { AMPMto24 } from "../dates/formatDates";
 
 export const getAppointmentProposal = (
   availability: AvailabilityType,
   appointmentsInRange: AppointmentType[] | null,
-  day: string,
+  day: DayType,
   delta: number,
   defaulDurationMs: number,
   practicianSelectedId: number,
@@ -17,8 +17,8 @@ export const getAppointmentProposal = (
   const availabilityMorning: {
     hours: string;
     min: string;
-    ampm: string;
-  } = availability.schedule_morning[day];
+    ampm: "AM" | "PM";
+  }[] = availability.schedule_morning[day];
   let startMorningMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })
@@ -49,8 +49,8 @@ export const getAppointmentProposal = (
   const availabilityAfternoon: {
     hours: string;
     min: string;
-    ampm: string;
-  } = availability.schedule_afternoon[day];
+    ampm: "AM" | "PM";
+  }[] = availability.schedule_afternoon[day];
   let startAfternoonMs = DateTime.fromMillis(rangeStart, {
     zone: "America/Toronto",
   })

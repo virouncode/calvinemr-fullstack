@@ -92,7 +92,7 @@ const ImmunizationForm = ({
     try {
       await immunizationSchema.validate(topicToPost);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
 

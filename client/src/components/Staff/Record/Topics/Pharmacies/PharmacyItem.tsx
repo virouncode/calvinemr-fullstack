@@ -112,7 +112,7 @@ const PharmacyItem = ({
     try {
       await pharmacySchema.validate(itemInfos);
     } catch (err) {
-      setErrMsgPost(err.message);
+      if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
     //Formatting

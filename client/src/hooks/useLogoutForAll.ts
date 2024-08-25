@@ -16,7 +16,7 @@ const useLogoutForAll = () => {
   const { setClinic } = useClinicContext();
   const navigate = useNavigate();
   const handleStorageEvent = useCallback(
-    (e) => {
+    (e: StorageEvent) => {
       if (e.key !== "message") return;
       const message = e.newValue;
       if (!message) return;

@@ -1,5 +1,5 @@
 import { AppointmentType, AvailabilityType } from "../../types/api";
-import { AppointmentProposalType } from "../../types/app";
+import { AppointmentProposalType, DayType } from "../../types/app";
 import { nowTZ } from "../dates/formatDates";
 import { getAppointmentProposal } from "./getAppoinmentProposal";
 
@@ -32,7 +32,7 @@ export const getAvailableAppointments = (
 
   while (counter < 7) {
     //On boucle sur une semaine
-    while (availability.unavailability[days[newDay]] === true) {
+    while (availability.unavailability[days[newDay] as DayType] === true) {
       //on incrémente newDay jusqu'à ce que le practicien soit dispo
       newDay = (newDay + 1) % 7;
       counter++;
@@ -44,7 +44,7 @@ export const getAvailableAppointments = (
       getAppointmentProposal(
         availability,
         appointmentsInRange,
-        days[newDay],
+        days[newDay] as DayType,
         deltaNewDay,
         defaulDurationMs,
         practicianSelectedId,

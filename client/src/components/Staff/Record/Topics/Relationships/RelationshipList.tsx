@@ -8,7 +8,11 @@ type RelationshipListProps = {
   itemId?: number;
 };
 
-const RelationshipList = ({ value, handleChange, itemId = 0 }) => {
+const RelationshipList = ({
+  value,
+  handleChange,
+  itemId = 0,
+}: RelationshipListProps) => {
   return (
     <Combobox
       placeholder="Choose or type a relationship"

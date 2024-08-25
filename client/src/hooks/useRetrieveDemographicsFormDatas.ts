@@ -1,27 +1,44 @@
 import { useEffect, useState } from "react";
-import { DemographicsFormType, DemographicsType } from "../types/api";
+import {
+  DemographicsFormType,
+  DemographicsType,
+  EmergencyContactType,
+  EnrolmentHistoryType,
+} from "../types/api";
 import { getAgeTZ, timestampToDateISOTZ } from "../utils/dates/formatDates";
 import { isObjectEmpty } from "../utils/js/isObjectEmpty";
 
 const useRetrieveDemographicsFormDatas = (
   demographicsInfos: DemographicsType
 ) => {
-  const [formDatas, setFormDatas] = useState<DemographicsFormType | null>(null);
+  const [formDatas, setFormDatas] = useState<
+    DemographicsFormType | undefined
+  >();
   const residencialAddress = demographicsInfos.Address?.find(
     ({ _addressType }) => _addressType === "R"
   )?.Structured;
-  const emergencyContact = demographicsInfos.Contact?.find(
-    (contact) => contact.ContactPurpose?.PurposeAsEnum === "EC"
-  );
-  const lastEnrolment = isObjectEmpty(
+  const emergencyContact: EmergencyContactType | undefined =
+    demographicsInfos.Contact?.find(
+      (contact) => contact.ContactPurpose?.PurposeAsEnum === "EC"
+    );
+  const lastEnrolment: EnrolmentHistoryType = isObjectEmpty(
     demographicsInfos.Enrolment?.EnrolmentHistory?.sort(
-      (a, b) => a.EnrollmentDate - b.EnrollmentDate
+      (a, b) => (a.EnrollmentDate as number) - (b.EnrollmentDate as number)
     ).slice(-1)[0]
   )
-    ? {}
-    : demographicsInfos.Enrolment?.EnrolmentHistory?.sort(
-        (a, b) => a.EnrollmentDate - b.EnrollmentDate
-      ).slice(-1)[0];
+    ? {
+        EnrollmentStatus: "",
+        EnrollmentDate: null,
+        EnrollmentTerminationDate: null,
+        TerminationReason: "",
+        EnrolledToPhysician: {
+          Name: { FirstName: "", LastName: "" },
+          OHIPPhysicianId: "",
+        },
+      }
+    : (demographicsInfos.Enrolment?.EnrolmentHistory?.sort(
+        (a, b) => (a.EnrollmentDate as number) - (b.EnrollmentDate as number)
+      ).slice(-1)[0] as EnrolmentHistoryType);
 
   useEffect(() => {
     setFormDatas({

@@ -117,7 +117,6 @@ const PatientTopicDoctors = ({
               errorDoctors={errorDoctors}
               isFetchingNextPageDoctors={isFetchingNextPageDoctors}
               fetchNextPageDoctors={fetchNextPageDoctors}
-              isFetchingDoctors={isFetchingDoctors}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               demographicsInfos={demographicsInfos}
