@@ -12,7 +12,7 @@ type LabelsDropDownProps = {
 const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
   const [labelVisible, setLabelVisible] = useState(false);
   const [choosenLabel, setChoosenLabel] = useState("");
-  const windowRef = useRef<NewWindow | null>(null);
+  const windowRef = useRef<Window | null>(null);
 
   const handleClickPatientLabel = () => {
     setChoosenLabel("patient");
@@ -25,6 +25,10 @@ const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
   const handleClickClinicLabel = () => {
     setChoosenLabel("clinic");
     setLabelVisible((v) => !v);
+  };
+
+  const handleOpen = (window: Window | null) => {
+    windowRef.current = window;
   };
 
   return (
@@ -44,7 +48,7 @@ const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
       </div>
       {labelVisible && (
         <NewWindow
-          ref={windowRef}
+          onOpen={handleOpen}
           title={`Print ${choosenLabel} label`}
           features={{
             toolbar: "no",

@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import NewWindow from "react-new-window";
 import { toast } from "react-toastify";
 import useClinicContext from "../../../../../hooks/context/useClinicContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
@@ -15,7 +14,7 @@ import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 
 type PatientLabelProps = {
   demographicsInfos: DemographicsType;
-  windowRef: React.MutableRefObject<NewWindow | null>;
+  windowRef: React.MutableRefObject<Window | null>;
 };
 
 const PatientLabel = ({ demographicsInfos, windowRef }: PatientLabelProps) => {

@@ -20,6 +20,7 @@ const PatientTopicHeaderNoPopUp = ({
         triangleRef={triangleRef}
       />
       {topic}
+      <div style={{ width: "10px" }}></div>
     </>
   );
 };
