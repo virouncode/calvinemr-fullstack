@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-<<<<<<< HEAD:client/src/components/Staff/Record/Topics/Labels/MdLabel.tsx
-import NewWindow from "react-new-window";
-=======
->>>>>>> aa4bc09 (wow):client/src/components/Staff/Record/Topics/Labels/MdLabel.jsx
 import { toast } from "react-toastify";
 import useClinicContext from "../../../../../hooks/context/useClinicContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
@@ -17,16 +13,9 @@ import SiteSelect from "../../../../UI/Lists/SiteSelect";
 import EmptyParagraph from "../../../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
-<<<<<<< HEAD:client/src/components/Staff/Record/Topics/Labels/MdLabel.tsx
-=======
 
 type MdLabelProps = {
-  windowRef: React.MutableRefObject<Window | null>,
-};
->>>>>>> aa4bc09 (wow):client/src/components/Staff/Record/Topics/Labels/MdLabel.jsx
-
-type MdLabelProps = {
-  windowRef: React.MutableRefObject<NewWindow | null>;
+  windowRef: React.MutableRefObject<Window | null>;
 };
 
 const MdLabel = ({ windowRef }: MdLabelProps) => {
