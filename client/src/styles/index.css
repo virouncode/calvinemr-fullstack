@@ -1514,14 +1514,34 @@ select:focus {
   align-items: center;
   background: rgb(243, 243, 243);
   display: grid;
-  grid-template-columns: 20% 13% 33% 33%;
+  grid-template-columns: 33% 33% 33%;
   justify-content: space-between;
   align-items: center;
   height: 45px;
 }
+.subheader-section__left {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
 .subheader-section__clinic {
   font-weight: normal;
   font-size: 0.8rem;
+  margin-right: 5px;
+}
+.subheader-section__weather {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.subheader-section__weather-logo {
+  width: 25px;
+  height: 25px;
+}
+.subheader-section__weather-logo img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .subheader-section__title {
   font-size: 1.2rem;
@@ -1529,20 +1549,11 @@ select:focus {
   font-weight: bold;
   text-align: center;
 }
-.subheader-section__message {
+.subheader-section__right {
   font-size: 0.8rem;
   font-style: italic;
   text-align: end;
   padding: 0;
-}
-.subheader-section__weather {
-  width: 25px;
-  height: 25px;
-}
-.subheader-section__weather img {
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .calendar-section__toggle-view {
@@ -5143,9 +5154,9 @@ select:focus {
 }
 .messages-print__subject, .messages-print__patient {
   border-bottom: solid 0.3px #cecdcd;
-  height: 30px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   background-color: #93b5e9;
+  padding: 10px;
 }
 .messages-print__btn {
   display: flex;
@@ -6003,6 +6014,9 @@ select:focus {
 }
 .credentials-form-row-submit input[type=submit] {
   width: 100px;
+}
+.credentials-form-row-submit button {
+  margin-right: 5px;
 }
 .credentials-success {
   padding: 10px 20px;
@@ -6872,6 +6886,7 @@ select:focus {
 .calvinai-discussion__stop-btn button {
   font-size: 0.8rem;
   padding: 5px 10px;
+  margin-right: 5px;
 }
 .calvinai-discussion__send-btn {
   background-color: #93b5e9;
@@ -7056,6 +7071,7 @@ select:focus {
 .calvinai-chat__stop-btn button {
   font-size: 0.8rem;
   padding: 5px 10px;
+  margin-right: 5px;
 }
 .calvinai-chat__send-btn {
   background-color: #93b5e9;
@@ -8478,7 +8494,8 @@ select:focus {
   width: 90%;
   margin: 20px auto;
 }
-.dashboard-card__filter label, .dashboard-card__filter input {
+.dashboard-card__filter label,
+.dashboard-card__filter input {
   margin-right: 10px;
 }
 .dashboard-card__chart {
@@ -8524,6 +8541,9 @@ select:focus {
 }
 .dashboard-card__ranking-item-nbr {
   font-weight: bold;
+  margin-right: 10px;
+}
+.dashboard-card__ranking label {
   margin-right: 10px;
 }
 
@@ -9933,7 +9953,7 @@ select:focus {
   border-radius: 6px 4px 0 0;
 }
 .fax-toolbar__title {
-  width: 13%;
+  width: 11.5%;
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -10822,8 +10842,8 @@ select:focus {
 
 .loading-paragraph {
   padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 90%;
+  font-size: 0.8rem;
+  width: 100%;
   margin: 10px auto;
   text-align: center;
   font-weight: bold;
