@@ -106,7 +106,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
     }
     //Formatting
     const siteToPut: SiteType = {
-      ...(formDatas as SiteType),
+      ...formDatas,
       name: firstLetterUpper(formDatas?.name ?? ""),
       address: firstLetterUpper(formDatas?.address ?? ""),
       city: firstLetterUpper(formDatas?.city ?? ""),
@@ -121,7 +121,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
         ...(formDatas?.updates || []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
-      email: (formDatas as SiteType).email.toLowerCase(),
+      email: formDatas.email.toLowerCase(),
     };
     //Validation
     if (formDatas?.rooms?.length === 0) {

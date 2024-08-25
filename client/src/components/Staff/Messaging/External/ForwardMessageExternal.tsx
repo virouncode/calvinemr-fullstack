@@ -159,10 +159,8 @@ const ForwardMessageExternal = ({
     }
   };
 
-  const handleAttach = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const input = e.nativeEvent.view?.document.createElement(
-      "input"
-    ) as HTMLInputElement;
+  const handleAttach = () => {
+    const input = document.createElement("input");
     input.type = "file";
     input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
@@ -170,51 +168,51 @@ const ForwardMessageExternal = ({
       // getting a hold of the file reference
       const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
       const file = e.target.files?.[0];
-      if (file) {
-        if (file.size > 25000000) {
-          toast.error(
-            "The file is over 25Mb, please choose another one or send a link",
-            { containerId: "A" }
-          );
-          return;
-        }
-        setIsLoadingFile(true);
-        // setting up the reader`
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        // here we tell the reader what to do when it's done reading...
-        reader.onload = async (e) => {
-          const content = e.target?.result; // this is the content!
-          try {
-            const response: AttachmentType = await xanoPost(
-              "/upload/attachment",
-              "staff",
-              {
-                content,
-              }
-            );
-            if (!response.type) response.type = "document";
-            setAttachments([
-              ...attachments,
-              {
-                file: response,
-                alias: file.name,
-                date_created: nowTZTimestamp(),
-                created_by_id: user.id,
-                created_by_user_type: "staff",
-                id: uniqueId("messages_external_attachment_"),
-              },
-            ]); //meta, mime, name, path, size, type
-            setIsLoadingFile(false);
-          } catch (err) {
-            if (err instanceof Error)
-              toast.error(`Error: unable to load file: ${err.message}`, {
-                containerId: "A",
-              });
-            setIsLoadingFile(false);
-          }
-        };
+      if (!file) return;
+
+      if (file.size > 25000000) {
+        toast.error(
+          "The file is over 25Mb, please choose another one or send a link",
+          { containerId: "A" }
+        );
+        return;
       }
+      setIsLoadingFile(true);
+      // setting up the reader`
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      // here we tell the reader what to do when it's done reading...
+      reader.onload = async (e) => {
+        const content = e.target?.result; // this is the content!
+        try {
+          const response: AttachmentType = await xanoPost(
+            "/upload/attachment",
+            "staff",
+            {
+              content,
+            }
+          );
+          if (!response.type) response.type = "document";
+          setAttachments([
+            ...attachments,
+            {
+              file: response,
+              alias: file.name,
+              date_created: nowTZTimestamp(),
+              created_by_id: user.id,
+              created_by_user_type: "staff",
+              id: uniqueId("messages_external_attachment_"),
+            },
+          ]); //meta, mime, name, path, size, type
+          setIsLoadingFile(false);
+        } catch (err) {
+          if (err instanceof Error)
+            toast.error(`Error: unable to load file: ${err.message}`, {
+              containerId: "A",
+            });
+          setIsLoadingFile(false);
+        }
+      };
     };
     input.click();
   };

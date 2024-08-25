@@ -152,10 +152,8 @@ const ReplyMessage = ({
     setImportant(value);
   };
 
-  const handleAttach = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const input = e.nativeEvent.view?.document.createElement(
-      "input"
-    ) as HTMLInputElement;
+  const handleAttach = () => {
+    const input = document.createElement("input") as HTMLInputElement;
     input.type = "file";
     input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";

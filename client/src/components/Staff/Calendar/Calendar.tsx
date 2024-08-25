@@ -590,16 +590,6 @@ const Calendar = () => {
     //XANO
     //Recurring events
     if (event.extendedProps.recurrence !== "Once") {
-      // if (timelineVisible) {
-      //   const newRoomId = info.newResource
-      //     ? info.newResource.id
-      //     : event.extendedProps.roomId;
-      //   if (newRoomId !== "z") {
-      //     alert("You can't occupy a room with a recurring event !");
-      //     info.revert();
-      //     return;
-      //   }
-      // } commented because i want to be able to occupy a room with a recurring event
       currentInfo.current = info;
       const appointment = await xanoGet(
         `/appointments/${parseInt(event.id)}`,
@@ -958,10 +948,30 @@ const Calendar = () => {
       recurrence: "Once",
     };
     //Update original appointment A excluding appointment B
-    const appointmentToPut = await xanoGet(
+    const appointmentToPut: AppointmentType = await xanoGet(
       `/appointments/${event.id}`,
       "staff"
     );
+    if (isFirstEvent) {
+      const newStart = toNextOccurence(
+        appointmentToPut.start,
+        appointmentToPut.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      )[0];
+      const newEnd = toNextOccurence(
+        appointmentToPut.start,
+        appointmentToPut.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      )[1];
+      appointmentToPut.start = newStart;
+      appointmentToPut.end = newEnd;
+      appointmentToPut.rrule.dtstart =
+        timestampToDateTimeSecondsISOTZ(newStart);
+      appointmentToPut.AppointmentTime = timestampToTimeISOTZ(newStart);
+      appointmentToPut.AppointmentDate = timestampToDateISOTZ(newStart);
+    }
     appointmentToPut.exrule = appointmentToPut.exrule.length
       ? [
           ...appointmentToPut.exrule,

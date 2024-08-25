@@ -71,6 +71,8 @@ export const exportPatientEMR = async (
     ).map(({ File }) => File) as AttachmentType[];
   }
 
+  console.log(reportsFiles);
+
   await axios.post(`/api/writeXML`, {
     xmlFinal,
     patientFirstName,
@@ -115,8 +117,6 @@ export const exportEMRCategory = async (
 
   for (const jsObj of jsArrayToExport) {
     if (categoryName === "Demographics") {
-      jsObj.UniqueVendorIdSequence = jsObj.patient_id;
-      delete jsObj.patient_id;
       jsObj.PreferredPharmacy = jsObj.preferred_pharmacy;
       delete jsObj.preferred_pharmacy;
     }

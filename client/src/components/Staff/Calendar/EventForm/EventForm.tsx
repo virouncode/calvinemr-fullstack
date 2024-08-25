@@ -21,6 +21,7 @@ import {
 } from "../../../../types/api";
 import { RemainingStaffType, UserStaffType } from "../../../../types/app";
 import { getAvailableRooms } from "../../../../utils/appointments/getAvailableRooms";
+import { toNextOccurence } from "../../../../utils/appointments/occurences";
 import { parseToAppointment } from "../../../../utils/appointments/parseToAppointment";
 import { statuses } from "../../../../utils/appointments/statuses";
 import {
@@ -86,11 +87,11 @@ const EventForm = ({
   const [formDatas, setFormDatas] = useState(
     parseToAppointment(currentEvent.current as EventInput)
   );
-  const [previousStart, setPreviousStart] = useState<number | Date>(
-    currentEvent.current?.start as number | Date
+  const [previousStart, setPreviousStart] = useState<number>(
+    currentEvent.current?.start as number
   );
-  const [previousEnd, setPreviousEnd] = useState<number | Date>(
-    currentEvent.current?.end as number | Date
+  const [previousEnd, setPreviousEnd] = useState<number>(
+    currentEvent.current?.end as number
   );
   const [statusAdvice, setStatusAdvice] = useState(false);
   const [invitationVisible, setInvitationVisible] = useState(false);
@@ -455,34 +456,10 @@ const EventForm = ({
     } else {
       setFormDatas({
         ...formDatas,
-        start:
-          typeof previousStart === "number"
-            ? previousStart
-            : DateTime.fromJSDate(previousStart as Date, {
-                zone: "America/Toronto",
-              }).toMillis(),
-        end:
-          typeof previousEnd === "number"
-            ? previousEnd
-            : DateTime.fromJSDate(previousEnd as Date, {
-                zone: "America/Toronto",
-              }).toMillis(),
+        start: previousStart,
+        end: previousEnd,
         all_day: false,
-        Duration:
-          typeof previousStart === "number"
-            ? Math.floor(
-                (((previousEnd as number) - previousStart) as number) /
-                  (1000 * 60)
-              )
-            : Math.floor(
-                (DateTime.fromJSDate(previousEnd as Date, {
-                  zone: "America/Toronto",
-                }).toMillis() -
-                  DateTime.fromJSDate(previousStart as Date, {
-                    zone: "America/Toronto",
-                  }).toMillis()) /
-                  (1000 * 60)
-              ),
+        Duration: Math.floor((previousEnd - previousStart) / (1000 * 60)),
       });
     }
   };
@@ -723,6 +700,26 @@ const EventForm = ({
       `/appointments/${formDatas.id}`,
       "staff"
     );
+    if (isFirstEvent) {
+      const newStart = toNextOccurence(
+        appointmentToPut.start,
+        appointmentToPut.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      )[0];
+      const newEnd = toNextOccurence(
+        appointmentToPut.start,
+        appointmentToPut.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      )[1];
+      appointmentToPut.start = newStart;
+      appointmentToPut.end = newEnd;
+      appointmentToPut.rrule.dtstart =
+        timestampToDateTimeSecondsISOTZ(newStart);
+      appointmentToPut.AppointmentTime = timestampToTimeISOTZ(newStart);
+      appointmentToPut.AppointmentDate = timestampToDateISOTZ(newStart);
+    }
     appointmentToPut.exrule = appointmentToPut.exrule.length
       ? [
           ...appointmentToPut.exrule,

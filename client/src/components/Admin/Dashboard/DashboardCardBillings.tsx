@@ -72,11 +72,13 @@ const DashboardCardBillings = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartBillings(dateISOToTimestampTZ(value) ?? -5364662400000);
+    if (!value) return;
+    setRangeStartBillings(dateISOToTimestampTZ(value) as number);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndBillings(dateISOToTimestampTZ(value) ?? 32503680000000);
+    if (!value) return;
+    setRangeEndBillings(dateISOToTimestampTZ(value) as number);
   };
   const handleSiteChangeDiagnoses = (
     e: React.ChangeEvent<HTMLSelectElement>

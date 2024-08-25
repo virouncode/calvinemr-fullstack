@@ -43,7 +43,7 @@ const ConfirmDialogRecurringChange = ({
             </div>
             <h2 style={{ fontSize: "1rem" }}>{"Confirmation"}</h2>
           </div>
-          <p style={{ fontSize: "0.85rem", padding: "10px", margin: "0" }}>
+          <div style={{ fontSize: "0.85rem", padding: "10px", margin: "0" }}>
             <p style={{ fontWeight: "bold", textAlign: "center" }}>
               You're changing a repeating event
             </p>
@@ -56,8 +56,8 @@ const ConfirmDialogRecurringChange = ({
               {statusAdvice &&
                 "Since you changed the event status we recommend to change only this event since this status may not be relevant for all events."}
             </span>
-          </p>
-          <p className="confirm-dialog-btn-container confirm-dialog-btn-container--recurring">
+          </div>
+          <div className="confirm-dialog-btn-container confirm-dialog-btn-container--recurring">
             <Button onClick={handleChangeThisEvent} label="Only this event" />
             <Button
               onClick={
@@ -68,7 +68,7 @@ const ConfirmDialogRecurringChange = ({
               label={isFirstEvent ? "All events" : "All future events"}
             />
             <CancelButton onClick={handleCancel} />
-          </p>
+          </div>
         </div>
       </div>
     </>

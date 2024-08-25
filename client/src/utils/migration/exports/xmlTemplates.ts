@@ -120,6 +120,7 @@ export const toXmlDemographics = (jsObj: DemographicsType) => {
   )}</ChartNumber>`;
 
   const xmlGender = `<Gender>${escapeXml(jsObj.Gender ?? "")}</Gender>`;
+  console.log(jsObj);
 
   const xmlUniqueVendorId = `<UniqueVendorIdSequence>${escapeXml(
     jsObj.patient_id.toString()

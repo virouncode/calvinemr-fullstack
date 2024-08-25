@@ -6,7 +6,7 @@ import {
 import PaperclipIcon from "../Icons/PaperclipIcon";
 
 type AttachFilesButtonProps = {
-  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
+  onClick: () => void;
   attachments: Partial<MessageAttachmentType | ClinicalNoteAttachmentType>[];
 };
 

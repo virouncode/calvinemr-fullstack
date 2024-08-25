@@ -1,4 +1,5 @@
-var fs = require("fs").promises;
+var fs = require("fs");
+var fsPromises = require("fs").promises;
 var path = require("path");
 var os = require("os");
 var { DateTime } = require("luxon");
@@ -35,9 +36,9 @@ const postWriteXML = async (req, res) => {
     const reportsFilesPath = path.join(folderPath, reportsFilesFolderName);
 
     //Create folders
-    await fs.mkdir(exportFolderPath, { recursive: true });
-    await fs.mkdir(folderPath, { recursive: true });
-    await fs.mkdir(reportsFilesPath, { recursive: true });
+    await fsPromises.mkdir(exportFolderPath, { recursive: true });
+    await fsPromises.mkdir(folderPath, { recursive: true });
+    await fsPromises.mkdir(reportsFilesPath, { recursive: true });
 
     //Create ReadMe text
     const currentDateTime = DateTime.local({ zone: "America/Toronto" });
@@ -57,9 +58,9 @@ const postWriteXML = async (req, res) => {
     const readMePath = path.join(folderPath, "README.md");
 
     //Write files asynchronously
-    await fs.writeFile(filePath, xmlFinal);
+    await fsPromises.writeFile(filePath, xmlFinal);
     console.log("XML file saved successfully in Downloads folder.");
-    await fs.writeFile(readMePath, readMeContent);
+    await fsPromises.writeFile(readMePath, readMeContent);
     console.log("README file saved successfully in Downloads folder.");
 
     // Download report files concurrently

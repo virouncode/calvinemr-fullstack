@@ -25,7 +25,7 @@ const SiteItem = ({ site, handleEditClick }: SiteItemProps) => {
           <div className="site-item__btn-container">
             <EditButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                handleEditClick(e, site.id as number)
+                handleEditClick(e, site.id)
               }
             />
           </div>

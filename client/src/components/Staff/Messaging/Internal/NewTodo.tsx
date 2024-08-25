@@ -171,10 +171,8 @@ const NewTodo = ({
     }
   };
 
-  const handleAttach = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const input = e.nativeEvent.view?.document.createElement(
-      "input"
-    ) as HTMLInputElement;
+  const handleAttach = () => {
+    const input = document.createElement("input");
     createElement("input");
     input.type = "file";
     input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";

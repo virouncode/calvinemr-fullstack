@@ -34,11 +34,13 @@ const DashboardCardMeds = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartMeds(dateISOToTimestampTZ(value) ?? -5364662400000);
+    if (!value) return;
+    setRangeStartMeds(dateISOToTimestampTZ(value) as number);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndMeds(dateISOToTimestampTZ(value) ?? 32503680000000);
+    if (!value) return;
+    setRangeEndMeds(dateISOToTimestampTZ(value) as number);
   };
   const handleSiteChangeMeds = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSiteSelectedIdMeds(parseInt(e.target.value));

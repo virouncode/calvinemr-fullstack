@@ -34,11 +34,13 @@ const DashboardCardVisits = () => {
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeStartVisits(dateISOToTimestampTZ(value) ?? -5364662400000);
+    if (!value) return;
+    setRangeStartVisits(dateISOToTimestampTZ(value) as number);
   };
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setRangeEndVisits(dateISOToTimestampTZ(value) ?? 32503680000000);
+    if (!value) return;
+    setRangeEndVisits(dateISOToTimestampTZ(value) as number);
   };
 
   if (isPendingSites || isPendingVisits)
