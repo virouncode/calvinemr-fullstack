@@ -65,6 +65,9 @@ importers:
       twilio:
         specifier: ^5.2.2
         version: 5.2.2
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
       useragent:
         specifier: ^2.3.0
         version: 2.3.0
@@ -96,9 +99,6 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.5.0)(typescript@5.5.4)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
 
 packages:
 
