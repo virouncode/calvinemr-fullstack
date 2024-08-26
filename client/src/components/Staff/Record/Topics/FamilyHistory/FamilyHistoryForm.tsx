@@ -68,10 +68,7 @@ const FamilyHistoryForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPost: Partial<FamilyHistoryType> = {
       ...formDatas,
@@ -109,8 +106,7 @@ const FamilyHistoryForm = ({
     setFormDatas({ ...formDatas, Relationship: value });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

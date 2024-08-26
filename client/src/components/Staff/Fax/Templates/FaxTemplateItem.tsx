@@ -35,8 +35,7 @@ const FaxTemplateItem = ({
   const faxTemplatePost = useFaxTemplatePost();
   const faxTemplateDelete = useFaxTemplateDelete();
 
-  const handleEditClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleEditClick = () => {
     setEditTemplateVisible(true);
   };
 

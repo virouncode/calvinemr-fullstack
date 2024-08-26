@@ -270,10 +270,7 @@ const DemographicsPopUp = ({
     setEditVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     // Validation
     try {
       await demographicsSchema.validate(formDatas);

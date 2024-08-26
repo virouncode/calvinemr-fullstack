@@ -14,7 +14,12 @@ const PrintButton = ({
   className,
 }: PrintButtonProps) => {
   return (
-    <button onClick={onClick} disabled={disabled} className={className}>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+    >
       {label}
     </button>
   );

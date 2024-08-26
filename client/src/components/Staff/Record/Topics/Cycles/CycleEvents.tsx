@@ -19,8 +19,7 @@ const CycleEvents = ({
   setErrMsg,
   errMsg,
 }: CycleEventsProps) => {
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAdd = () => {
     setErrMsg("");
     setFormDatas({
       ...formDatas,

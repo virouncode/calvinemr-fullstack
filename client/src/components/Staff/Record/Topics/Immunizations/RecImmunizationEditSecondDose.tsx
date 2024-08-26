@@ -66,7 +66,7 @@ const RecImmunizationEditSecondDose = ({
     setErrMsgPost("");
     e.preventDefault();
     //Formatting
-    const topicToPut = {
+    const topicToPut: ImmunizationType = {
       ...formDatas,
       ImmunizationName: firstLetterUpper(formDatas.ImmunizationName),
       Manufacturer: firstLetterUpper(formDatas.Manufacturer),

@@ -151,8 +151,7 @@ const EnrolmentEdit = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setEditVisible(false);
   };
 

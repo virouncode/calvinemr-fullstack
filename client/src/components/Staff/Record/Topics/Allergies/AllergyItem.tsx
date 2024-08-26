@@ -68,10 +68,7 @@ const AllergyItem = ({
     setItemInfos({ ...(itemInfos as AllergyType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: AllergyType = {
       ...(itemInfos as AllergyType),
@@ -106,8 +103,7 @@ const AllergyItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

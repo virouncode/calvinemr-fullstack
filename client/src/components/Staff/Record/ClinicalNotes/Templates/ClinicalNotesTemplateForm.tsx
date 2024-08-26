@@ -40,10 +40,7 @@ const ClinicalNotesTemplateForm = ({
     setNewTemplateVisible(false);
   };
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (!newTemplate.name) {
       setErrMsg("Please enter a name for your template");
       return;

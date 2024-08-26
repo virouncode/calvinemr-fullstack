@@ -58,10 +58,7 @@ const AlertItem = ({
     setItemInfos({ ...(itemInfos as AlertType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: AlertType = {
       ...(itemInfos as AlertType),
@@ -96,8 +93,7 @@ const AlertItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

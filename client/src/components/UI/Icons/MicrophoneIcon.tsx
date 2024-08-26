@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type MicrophoneIconProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   ml?: number;
   mr?: number;
   top?: number;

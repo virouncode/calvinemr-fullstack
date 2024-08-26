@@ -63,10 +63,7 @@ const RiskItem = ({
     setItemInfos({ ...(itemInfos as RiskFactorType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: RiskFactorType = {
       ...(itemInfos as RiskFactorType),
@@ -101,8 +98,7 @@ const RiskItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

@@ -56,8 +56,7 @@ const RxPopUp = ({
     setPresVisible(false);
   };
 
-  const handleAsk = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAsk = () => {
     setCalvinAIVisible(true);
   };
 
@@ -65,11 +64,8 @@ const RxPopUp = ({
     setSiteSelectedId(parseInt(e.target.value));
   };
 
-  const handlePreview = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    handleAsk(e);
+  const handlePreview = () => {
+    handleAsk();
     setPrescriptionStamp(
       timestampToDateTimeSecondsISOTZ(nowTZTimestamp(), false, false)
     );

@@ -164,8 +164,7 @@ const NewEnrolmentForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setNewEnrolmentVisible(false);
   };
 

@@ -453,10 +453,7 @@ const ExportChartPreview = ({
       toast.error("An error occured while generating the PDF");
     }
   };
-  const handleFax = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleFax = async () => {
     setProgress(true);
     let pdfFile;
     if (!chart) {
@@ -481,10 +478,7 @@ const ExportChartPreview = ({
     setProgress(false);
   };
 
-  const handlePrint = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handlePrint = async () => {
     setProgress(true);
     let pdfFile;
     if (!chart) {
@@ -504,10 +498,7 @@ const ExportChartPreview = ({
     setProgress(false);
   };
 
-  const handleSend = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSend = async () => {
     setProgress(true);
     let pdfFile: AttachmentType;
     if (!chart) {
@@ -534,8 +525,7 @@ const ExportChartPreview = ({
     setProgress(false);
   };
 
-  const handleClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleClose = () => {
     setPreviewVisible(false);
   };
 

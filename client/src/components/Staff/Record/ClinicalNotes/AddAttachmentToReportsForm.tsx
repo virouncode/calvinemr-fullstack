@@ -160,8 +160,7 @@ const AddAttachmentToReportsForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setAddToReports(false);
   };
 

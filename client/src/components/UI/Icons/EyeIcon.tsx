@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 type EyeIconProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   ml?: number;
   mr?: number;
   slash?: boolean;

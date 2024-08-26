@@ -94,7 +94,7 @@ const ReportsInboxFormSecretary = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrMsg("");
-    const reportToPost = {
+    const reportToPost: Partial<ReportType> = {
       ...formDatas,
       acknowledged: false,
       date_created: nowTZTimestamp(),

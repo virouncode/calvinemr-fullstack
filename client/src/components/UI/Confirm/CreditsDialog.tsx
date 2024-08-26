@@ -42,7 +42,7 @@ const CreditsDialog = ({ onConfirm, isPopUp, props }: CreditsDialogProps) => {
               <img src={logo} alt="calvin-EMR-logo" />
             </div>
             <h2 style={{ fontSize: "1rem" }}>
-              {props.title ?? "Confirmation"}
+              {props.title || "Confirmation"}
             </h2>
           </div>
           <div

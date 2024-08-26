@@ -1,10 +1,10 @@
 import React from "react";
 type InputEmailToggleProps = {
   value: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   id: string;
   editVisible: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   placeholder?: string;
 };

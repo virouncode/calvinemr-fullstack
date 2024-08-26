@@ -64,8 +64,7 @@ const MedsTemplatesList = ({
     isFetchingTemplates
   );
 
-  const handleNew = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleNew = () => {
     setNewVisible(true);
   };
 

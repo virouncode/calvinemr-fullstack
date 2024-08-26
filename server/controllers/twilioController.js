@@ -1,5 +1,5 @@
 require("dotenv").config();
-var twilio = require("twilio")(
+const twilio = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );

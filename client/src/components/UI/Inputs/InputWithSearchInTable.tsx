@@ -3,8 +3,8 @@ import MagnifyingGlassIcon from "../Icons/MagnifyingGlassIcon";
 type InputWithSearchInTableProps = {
   name: string;
   value: string;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
   readOnly?: boolean;
   logo?: boolean;
 };
@@ -14,7 +14,6 @@ const InputWithSearchInTable = ({
   value,
   onChange,
   onClick,
-
   readOnly,
   logo = true,
 }: InputWithSearchInTableProps) => {

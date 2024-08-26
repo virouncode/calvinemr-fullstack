@@ -55,11 +55,8 @@ const AlertForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     //Formatting
-    e.preventDefault();
     const topicToPost: Partial<AlertType> = {
       ...formDatas,
       AlertDescription: firstLetterOfFirstWordUpper(
@@ -90,8 +87,7 @@ const AlertForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

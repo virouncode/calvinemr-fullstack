@@ -40,10 +40,7 @@ const OtherFaxForm = ({
     const value = e.target.value;
     setFormDatas({ ...formDatas, [name]: value });
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Validation
     try {
       await otherSchema.validate(formDatas);

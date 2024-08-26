@@ -72,10 +72,7 @@ const PharmacyFaxForm = ({
     });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Validation
     try {
       await pharmacySchema.validate(formDatas);

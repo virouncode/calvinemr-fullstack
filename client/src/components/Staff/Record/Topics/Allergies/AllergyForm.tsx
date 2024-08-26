@@ -68,19 +68,15 @@ const AllergyForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<AllergyType> = {
       ...formDatas,
       OffendingAgentDescription: firstLetterOfFirstWordUpper(
         formDatas.OffendingAgentDescription ?? ""

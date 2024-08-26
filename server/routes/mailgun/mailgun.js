@@ -1,6 +1,6 @@
-var express = require("express");
-var mailgunRouter = express.Router();
-var mailgunController = require("../../controllers/mailgunController");
+const express = require("express");
+const mailgunRouter = express.Router();
+const mailgunController = require("../../controllers/mailgunController");
 
 mailgunRouter.route("/").post(mailgunController.postEmail);
 

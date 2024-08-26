@@ -23,6 +23,7 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 import InvitationInfos from "./InvitationInfos";
 import InvitationIntro from "./InvitationIntro";
 import InvitationMessage from "./InvitationMessage";
@@ -75,10 +76,7 @@ const Invitation = ({
   const [progress, setProgress] = useState(false);
 
   //HANDLERS
-  const handleSend = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSend = async () => {
     if (
       templateSelected !== "Video appointment" &&
       templateSelected !== "Phone appointment" &&
@@ -225,11 +223,8 @@ const Invitation = ({
     }
     setInvitationVisible(false);
   };
-  const handleSendAndSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    handleSend(e);
+  const handleSendAndSave = async () => {
+    await handleSend();
     const newTemplates = [...user.settings.invitation_templates];
     if (newTemplates.find(({ name }) => name === templateSelected)) {
       (
@@ -264,8 +259,7 @@ const Invitation = ({
   const handleIntroChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setIntro(e.target.value);
   };
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setInvitationVisible(false);
   };
   const handleTemplateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -315,6 +309,7 @@ const Invitation = ({
         )}
         <SaveButton onClick={handleSend} label="Send" disabled={progress} />
         <CancelButton onClick={handleCancel} />
+        {progress && <CircularProgressSmall />}
       </div>
     </form>
   );

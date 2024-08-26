@@ -77,10 +77,7 @@ const DoctorFaxForm = ({
     });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Validation
     try {
       await doctorSchema.validate(formDatas);

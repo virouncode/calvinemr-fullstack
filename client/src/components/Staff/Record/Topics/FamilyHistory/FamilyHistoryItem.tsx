@@ -68,10 +68,7 @@ const FamilyHistoryItem = ({
     setItemInfos({ ...(itemInfos as FamilyHistoryType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: FamilyHistoryType = {
       ...(itemInfos as FamilyHistoryType),
@@ -107,8 +104,7 @@ const FamilyHistoryItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

@@ -67,17 +67,13 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
   //Queries
   const medTemplatePost = useMedsTemplatePost();
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setNewVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const templateToPost = {
+    const templateToPost: Partial<MedTemplateType> = {
       ...formDatas,
       author_id: user.id,
       date_created: nowTZTimestamp(),

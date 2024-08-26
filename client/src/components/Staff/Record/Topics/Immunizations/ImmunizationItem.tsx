@@ -86,8 +86,7 @@ const ImmunizationItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);
@@ -117,11 +116,8 @@ const ImmunizationItem = ({
       });
     }
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     //Formatting
     const topicToPut: ImmunizationType = {
       ...(itemInfos as ImmunizationType),

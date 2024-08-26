@@ -78,10 +78,7 @@ const PharmacyForm = ({
     });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Validation
     try {
       await pharmacySchema.validate(formDatas);
@@ -91,7 +88,7 @@ const PharmacyForm = ({
     }
 
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<PharmacyType> = {
       Name: firstLetterUpper(formDatas.name),
       Address: {
         Structured: {
@@ -134,8 +131,7 @@ const PharmacyForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

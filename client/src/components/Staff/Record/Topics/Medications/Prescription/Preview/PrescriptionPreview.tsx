@@ -98,10 +98,7 @@ const PrescriptionPreview = ({
     setPages
   );
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (prescription) {
       alert("This prescription has already been saved.");
       return;
@@ -270,37 +267,28 @@ const PrescriptionPreview = ({
     }
   };
 
-  const handlePrint = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handlePrint = async () => {
     if (prescription) {
       printJS(`${import.meta.env.VITE_XANO_BASE_URL}${prescription.path}`);
       return;
     }
-    const fileToPrint = await handleSave(e);
+    const fileToPrint = await handleSave();
     printJS(`${import.meta.env.VITE_XANO_BASE_URL}${fileToPrint?.path}`);
   };
 
-  const handleFax = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleFax = async () => {
     if (prescription) {
       setFaxVisible(true);
     } else {
-      await handleSave(e);
+      await handleSave();
       setFaxVisible(true);
     }
   };
 
-  const handleSend = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSend = async () => {
     setAttachmentToSend([
       {
-        file: (prescription || (await handleSave(e))) as AttachmentType,
+        file: (prescription || (await handleSave())) ?? null,
         alias: `Prescription_${prescriptionStamp}.pdf`,
         date_created: nowTZTimestamp(),
         created_by_id: user.id,

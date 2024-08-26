@@ -39,10 +39,7 @@ const CycleForm = ({
     initialCycle(patientId)
   );
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setErrMsg("");
     try {
       await cycleSchema.validate(formDatas);
@@ -67,10 +64,7 @@ const CycleForm = ({
     });
   };
 
-  const handleClose = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleClose = async () => {
     if (
       await confirmAlert({
         content:

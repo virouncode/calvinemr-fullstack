@@ -4,42 +4,51 @@ import { AttachmentType } from "../../../types/api";
 type ReportViewerProps = {
   file: AttachmentType;
 };
+
 const ReportViewer = ({ file }: ReportViewerProps) => {
-  return file && file.mime?.includes("image") ? (
-    <img
-      src={`${import.meta.env.VITE_XANO_BASE_URL}${file.path}`}
-      alt=""
-      width="100%"
-    />
-  ) : file && file.mime?.includes("video") ? (
-    <video controls>
-      <source
-        src={`${import.meta.env.VITE_XANO_BASE_URL}${file.path}`}
-        type={file.mime}
-      />
-    </video>
-  ) : file && file.mime?.includes("officedocument") ? (
-    <div>
+  if (!file) return null;
+
+  const baseUrl = import.meta.env.VITE_XANO_BASE_URL;
+  const fileUrl = `${baseUrl}${file.path}`;
+
+  const renderContent = () => {
+    if (file.mime?.includes("image")) {
+      return <img src={fileUrl} alt="Image preview" width="100%" />;
+    }
+
+    if (file.mime?.includes("video")) {
+      return (
+        <video controls width="100%">
+          <source src={fileUrl} type={file.mime} />
+        </video>
+      );
+    }
+
+    if (file.mime?.includes("officedocument")) {
+      return (
+        <iframe
+          title="Office document viewer"
+          src={`https://docs.google.com/gview?url=${fileUrl}&embedded=true&widget=false`}
+          width="100%"
+          height="700px"
+          style={{ border: "none" }}
+        />
+      );
+    }
+
+    // Default case for other file types
+    return (
       <iframe
-        title="report-view"
-        src={`https://docs.google.com/gview?url=${
-          import.meta.env.VITE_XANO_BASE_URL
-        }${file.path}&embedded=true&widget=false`}
+        title="File viewer"
+        src={fileUrl}
         width="100%"
         height="700px"
-      />
-    </div>
-  ) : (
-    file && (
-      <iframe
-        title="report-view"
-        src={`${import.meta.env.VITE_XANO_BASE_URL}${file.path}`}
-        width="100%"
         style={{ border: "none" }}
-        height="700px"
       />
-    )
-  );
+    );
+  };
+
+  return <>{renderContent()}</>;
 };
 
 export default ReportViewer;

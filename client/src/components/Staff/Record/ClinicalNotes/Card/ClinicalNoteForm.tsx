@@ -117,12 +117,9 @@ const ClinicalNoteForm = ({
       setAddVisible(false);
     }
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     handleStopSpeech();
     setErrMsg("");
-    e.preventDefault();
     const attach_ids: number[] = await xanoPost(
       "/clinical_notes_attachments",
       "staff",
@@ -160,11 +157,8 @@ const ClinicalNoteForm = ({
     });
   };
 
-  const handleSaveSignBillClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSaveSignBillClick = async () => {
     handleStopSpeech();
-    e.preventDefault();
     const attach_ids: number[] = await xanoPost(
       "/clinical_notes_attachments",
       "staff",

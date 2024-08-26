@@ -40,7 +40,7 @@ const EdocForm = ({
     e.preventDefault();
     setErrMsgPost("");
     //Formatting
-    const datasToPost = {
+    const datasToPost: Partial<EdocType> = {
       ...formDatas,
       date_created: nowTZTimestamp(),
     };

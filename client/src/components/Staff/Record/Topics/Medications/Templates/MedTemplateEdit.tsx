@@ -34,17 +34,13 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
   //Queries
   const medTemplatePut = useMedsTemplatePut();
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setEditVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const templateToPut = {
+    const templateToPut: MedTemplateType = {
       ...formDatas,
       DrugName: formDatas.DrugName.toUpperCase(),
     };

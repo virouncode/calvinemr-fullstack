@@ -493,21 +493,17 @@ const AppointmentForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleCancel = () => {
     setErrMsgPost("");
-    e.preventDefault();
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<AppointmentType> = {
       ...formDatas,
       AppointmentPurpose: firstLetterOfFirstWordUpper(
         formDatas.AppointmentPurpose

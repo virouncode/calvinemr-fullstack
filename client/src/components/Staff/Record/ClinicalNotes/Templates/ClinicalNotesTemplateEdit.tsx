@@ -36,10 +36,7 @@ const ClinicalNotesTemplateEdit = ({
     setEditTemplateVisible(false);
   };
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (!editedTemplate.name) {
       setErrMsg("Please enter a name for your template");
       return;

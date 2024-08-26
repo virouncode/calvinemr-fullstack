@@ -19,6 +19,7 @@ const WeekPicker = ({
   return (
     <div className="new-appointments__content-weekpicker">
       <button
+        type="button"
         onClick={handleClickPrevious}
         disabled={
           rangeStart === nowTZ().plus({ days: 1 }).startOf("day").toMillis()
@@ -27,7 +28,7 @@ const WeekPicker = ({
         <ArrowLeftIcon clickable={false} />
       </button>
       <label>Change week</label>
-      <button onClick={handleClickNext}>
+      <button type="button" onClick={handleClickNext}>
         <ArrowRightIcon clickable={false} />
       </button>
     </div>

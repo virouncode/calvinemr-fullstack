@@ -1,5 +1,5 @@
 const xml2js = require("xml2js");
-var stripPrefix = require("xml2js").processors.stripPrefix;
+const stripPrefix = require("xml2js").processors.stripPrefix;
 
 const postXmlToJs = (req, res) => {
   const { xmlContent } = req.body;

@@ -25,8 +25,7 @@ const PrescriptionOptionsPreview = ({
   progress,
   prescription,
 }: PrescriptionOptionsPreviewProps) => {
-  const handleBack = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleBack = () => {
     setPreviewVisible(false);
   };
   return (

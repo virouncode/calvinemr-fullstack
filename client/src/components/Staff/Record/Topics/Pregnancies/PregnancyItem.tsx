@@ -68,10 +68,7 @@ const PregnancyItem = ({
     setItemInfos({ ...(itemInfos as PregnancyType), description: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: PregnancyType = {
       ...(itemInfos as PregnancyType),
@@ -101,8 +98,7 @@ const PregnancyItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

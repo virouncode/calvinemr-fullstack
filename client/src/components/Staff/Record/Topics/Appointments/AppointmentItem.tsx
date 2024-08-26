@@ -492,19 +492,15 @@ const AppointmentItem = ({
     }
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);
     setEditVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     if (
       item.recurrence === "Once" ||
       (item.recurrence !== "Once" &&
@@ -514,7 +510,7 @@ const AppointmentItem = ({
         })))
     ) {
       //Formatting
-      const topicToPut = {
+      const topicToPut: AppointmentType = {
         ...itemInfos,
         AppointmentPurpose: firstLetterUpper(itemInfos.AppointmentPurpose),
         AppointmentTime: timestampToTimeISOTZ(itemInfos.start),

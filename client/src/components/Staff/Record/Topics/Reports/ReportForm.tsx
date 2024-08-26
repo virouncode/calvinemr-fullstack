@@ -167,8 +167,7 @@ const ReportForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setErrMsgPost("");
     setAddVisible(false);
   };

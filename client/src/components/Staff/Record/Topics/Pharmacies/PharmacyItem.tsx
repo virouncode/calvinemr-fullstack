@@ -104,10 +104,7 @@ const PharmacyItem = ({
     });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Validation
     try {
       await pharmacySchema.validate(itemInfos);
@@ -195,8 +192,7 @@ const PharmacyItem = ({
     setEditVisible((v) => !v);
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setEditVisible(false);

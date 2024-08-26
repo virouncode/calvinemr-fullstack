@@ -153,10 +153,7 @@ const SignupPatientForm = () => {
       }
     };
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setErrMsg("");
     try {
       await patientSchema.validate(formDatas);

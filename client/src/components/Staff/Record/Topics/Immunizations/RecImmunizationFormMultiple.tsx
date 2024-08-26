@@ -72,7 +72,7 @@ const RecImmunizationFormMultiple = ({
     setErrMsgPost("");
     e.preventDefault();
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<ImmunizationType> = {
       ...formDatas,
       ImmunizationName: firstLetterUpper(formDatas.ImmunizationName ?? ""),
       Manufacturer: firstLetterUpper(formDatas.Manufacturer ?? ""),

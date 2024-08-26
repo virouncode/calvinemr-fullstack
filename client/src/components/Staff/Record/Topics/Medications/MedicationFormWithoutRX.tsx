@@ -148,11 +148,8 @@ const MedicationFormWithoutRX = ({
     setSearch(value);
   };
 
-  const handleSubmitAndSaveTemplate = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    const medicationToPost = {
+  const handleSubmitAndSaveTemplate = async () => {
+    const medicationToPost: Partial<MedType> = {
       ...formDatas,
       patient_id: patientId,
       date_created: nowTZTimestamp(),
@@ -176,11 +173,11 @@ const MedicationFormWithoutRX = ({
     });
 
     //templates
-    const templateToPost = {
+    const templateToPost: Partial<MedTemplateType> = {
       ...formDatas,
       author_id: user.id,
       date_created: nowTZTimestamp(),
-      DrugName: formDatas.DrugName?.toUpperCase(),
+      DrugName: formDatas.DrugName?.toUpperCase() ?? "",
     };
     //Submission
     setProgressTemplates(true);

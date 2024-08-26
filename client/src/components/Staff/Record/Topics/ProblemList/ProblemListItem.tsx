@@ -63,10 +63,7 @@ const ProblemListItem = ({
     setItemInfos({ ...(itemInfos as ProblemListType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
     const topicToPut: ProblemListType = {
       ...(itemInfos as ProblemListType),
@@ -106,8 +103,7 @@ const ProblemListItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

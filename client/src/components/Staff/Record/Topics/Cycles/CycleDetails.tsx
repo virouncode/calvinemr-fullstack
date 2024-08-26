@@ -42,10 +42,7 @@ const CycleDetails = ({
     });
   }, [cycleToShow]);
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     try {
       await cycleSchema.validate(itemInfos);
     } catch (err) {
@@ -70,10 +67,7 @@ const CycleDetails = ({
       onError: () => setProgress(false),
     });
   };
-  const handleClose = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleClose = async () => {
     if (
       await confirmAlert({
         content:
@@ -83,9 +77,7 @@ const CycleDetails = ({
       setShow(false);
     }
   };
-  const handlePrint = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-  };
+  const handlePrint = () => {};
   return (
     itemInfos && (
       <form className="cycles-form">

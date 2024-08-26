@@ -37,7 +37,7 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
     if (!editedLink.url.includes("http") || !editedLink.url.includes("https")) {
       urlFormatted = ["https://", editedLink.url].join("");
     }
-    const linkToPut = {
+    const linkToPut: LinkType = {
       ...editedLink,
       url: urlFormatted,
       updates: [

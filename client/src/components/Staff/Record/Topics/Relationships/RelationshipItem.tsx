@@ -70,10 +70,7 @@ const RelationshipItem = ({
     setItemInfos({ ...(itemInfos as RelationshipType), relationship: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const topicToPut: RelationshipType = {
       ...(itemInfos as RelationshipType),
       relation_id: patientSelected?.patient_id ?? 0,
@@ -129,8 +126,7 @@ const RelationshipItem = ({
     }
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

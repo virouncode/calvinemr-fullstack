@@ -74,7 +74,7 @@ const ResetPasswordForm = ({
     setPwd(value);
   };
 
-  const handleSubmitPwd = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (pwd !== confirmPwd) {
       setErrMsg("Passwords do not match");
@@ -121,7 +121,7 @@ const ResetPasswordForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmitPwd} className="reset-password-form">
+    <form onSubmit={handleSubmit} className="reset-password-form">
       <div className="reset-password-form-row">
         <InputPassword
           value={pwd}

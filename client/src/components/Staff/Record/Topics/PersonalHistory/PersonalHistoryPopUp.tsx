@@ -107,8 +107,7 @@ const PersonalHistoryPopUp = ({
     }
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setErrMsgPost("");
     const datas = topicDatas?.pages.flatMap((page) => page.items);
     setFormDatas({
@@ -124,10 +123,7 @@ const PersonalHistoryPopUp = ({
     setEditVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const formDatasForValidation = { ...formDatas };
     //Validation
     try {

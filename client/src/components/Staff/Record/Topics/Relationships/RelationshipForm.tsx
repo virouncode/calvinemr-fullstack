@@ -54,10 +54,7 @@ const RelationshipForm = ({
     setFormDatas({ ...formDatas, relationship: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const topicToPost: Partial<RelationshipType> = {
       patient_id: patientId,
       relationship: formDatas?.relationship,
@@ -103,8 +100,7 @@ const RelationshipForm = ({
     }
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

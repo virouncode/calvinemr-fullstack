@@ -13,10 +13,7 @@ type LetterOptionsPreviewProps = {
   handleFax: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => Promise<void>;
-  handleSend: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    type: "Internal" | "External"
-  ) => Promise<void>;
+  handleSend: (type: "Internal" | "External") => Promise<void>;
   progress: boolean;
   setPreviewVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingFile: boolean;
@@ -66,13 +63,13 @@ const LetterOptionsPreview = ({
       </div>
       <div className="letter__options-actions">
         <Button
-          onClick={(e) => handleSend(e, "Internal")}
+          onClick={() => handleSend("Internal")}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
           label={letter ? "Send (Internal)" : "Save & Send (Internal)"}
         />
         <Button
-          onClick={(e) => handleSend(e, "External")}
+          onClick={() => handleSend("External")}
           disabled={progress || isLoadingFile}
           className={letter ? "" : "save-btn"}
           label={letter ? "Send (External)" : "Save & Send (External)"}

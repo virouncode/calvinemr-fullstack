@@ -1,11 +1,11 @@
 import React from "react";
 
 type CheckboxProps = {
+  checked: boolean;
   id?: string;
   name?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
-  checked: boolean;
   disabled?: boolean;
   label?: string;
   labelSide?: "left" | "right";

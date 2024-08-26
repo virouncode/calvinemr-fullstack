@@ -40,7 +40,7 @@ const EmailForm = ({
     navigate("/");
   };
 
-  const handleSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //verifier l'email
     try {
@@ -75,7 +75,7 @@ const EmailForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmitEmail}>
+    <form onSubmit={handleSubmit}>
       <div className="email-form-row-radio">
         <UserTypeRadioGroup type={type} handleTypeChange={handleTypeChange} />
       </div>

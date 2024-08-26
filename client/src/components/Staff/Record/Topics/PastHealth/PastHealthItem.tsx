@@ -67,11 +67,8 @@ const PastHealthItem = ({
     setItemInfos({ ...(itemInfos as PastHealthType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     //Formatting
     const topicToPut: PastHealthType = {
       ...(itemInfos as PastHealthType),
@@ -108,8 +105,7 @@ const PastHealthItem = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);

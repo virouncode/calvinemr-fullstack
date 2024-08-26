@@ -1,11 +1,11 @@
 import React from "react";
 type InputTextToggleProps = {
   value: string;
+  name: string;
+  editVisible: boolean;
+  id?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
-  name: string;
-  id?: string;
-  editVisible: boolean;
   label?: string;
   placeholder?: string;
 };

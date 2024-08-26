@@ -6,7 +6,7 @@ type InputWithSearchProps = {
   name: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   label?: string;
   readOnly?: boolean;
   logo?: boolean;

@@ -4,7 +4,7 @@ import MagnifyingGlassIcon from "../../UI/Icons/MagnifyingGlassIcon";
 type BillingCodesTextareaProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
 };
 
 const BillingCodesTextarea = ({

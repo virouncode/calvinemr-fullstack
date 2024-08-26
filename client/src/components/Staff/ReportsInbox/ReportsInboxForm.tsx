@@ -147,8 +147,7 @@ const ReportsInboxForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setAddVisible(false);
   };
 

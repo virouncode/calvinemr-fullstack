@@ -75,11 +75,8 @@ const ImmunizationForm = ({
     setFormDatas({ ...formDatas, ImmunizationType: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     //Formatting
     const topicToPost: Partial<ImmunizationType> = {
       ...formDatas,
@@ -125,8 +122,7 @@ const ImmunizationForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

@@ -18,9 +18,8 @@ const CycleNotes = ({
   setErrMsg,
   errMsg,
 }: CycleNotesProps) => {
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleAdd = () => {
     setErrMsg("");
-    e.preventDefault();
     setFormDatas({
       ...formDatas,
       notes: [

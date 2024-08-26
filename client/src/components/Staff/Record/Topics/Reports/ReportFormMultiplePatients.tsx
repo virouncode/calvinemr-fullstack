@@ -166,8 +166,7 @@ const ReportFormMultiplePatients = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setErrMsgPost("");
     setAddVisible(false);
   };
@@ -200,7 +199,7 @@ const ReportFormMultiplePatients = ({
     setProgress(true);
     try {
       for (const patientId of patientsIds) {
-        const reportToPost = {
+        const reportToPost: Partial<ReportType> = {
           ...formDatas,
           patient_id: patientId,
           assigned_staff_id: demographicsInfos.find(

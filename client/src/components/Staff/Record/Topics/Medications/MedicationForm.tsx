@@ -161,10 +161,7 @@ const MedicationForm = ({
     setSearch(value);
   };
 
-  const handleSubmitAndSaveTemplate = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmitAndSaveTemplate = async () => {
     //Formatting
     const datasToAdd = {
       ...formDatas,

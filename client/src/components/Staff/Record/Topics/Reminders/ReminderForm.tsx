@@ -49,19 +49,15 @@ const ReminderForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<ReminderType> = {
       ...formDatas,
       reminder: firstLetterOfFirstWordUpper(formDatas.reminder ?? ""),
       date_created: nowTZTimestamp(),

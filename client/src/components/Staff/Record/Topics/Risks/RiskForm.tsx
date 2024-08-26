@@ -67,12 +67,9 @@ const RiskForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //Formatting
-    const topicToPost = {
+    const topicToPost: Partial<RiskFactorType> = {
       ...formDatas,
       RiskFactor: firstLetterOfFirstWordUpper(formDatas.RiskFactor ?? ""),
       ExposureDetails: firstLetterOfFirstWordUpper(
@@ -102,8 +99,7 @@ const RiskForm = ({
     });
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setAddVisible(false);

@@ -101,11 +101,7 @@ const FamilyDoctorListItem = ({
     });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     //Validation
     try {
       await doctorSchema.validate(itemInfos);
@@ -199,8 +195,7 @@ const FamilyDoctorListItem = ({
     doctorPut.mutate(doctorToPut);
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleCancel = () => {
     editCounter.current -= 1;
     setErrMsgPost("");
     setEditVisible(false);

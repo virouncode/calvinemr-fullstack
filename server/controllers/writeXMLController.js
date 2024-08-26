@@ -1,9 +1,9 @@
-var fs = require("fs");
-var fsPromises = require("fs").promises;
-var path = require("path");
-var os = require("os");
-var { DateTime } = require("luxon");
-var axios = require("axios");
+const fs = require("fs");
+const fsPromises = require("fs").promises;
+const path = require("path");
+const os = require("os");
+const { DateTime } = require("luxon");
+const axios = require("axios");
 const { log } = require("console");
 
 const postWriteXML = async (req, res) => {

@@ -521,19 +521,13 @@ const EventForm = ({
     }
   };
 
-  const handleInvitation = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleInvitation = () => {
     setErrMsgPost("");
-    e.preventDefault();
     setInvitationVisible(true);
   };
 
-  const handleCancel = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleCancel = () => {
     setErrMsgPost("");
-    e.preventDefault();
     setFormVisible(false);
     setCalendarSelectable(true);
   };
@@ -635,16 +629,10 @@ const EventForm = ({
     });
   };
 
-  const handleCancelRecurringChange = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleCancelRecurringChange = () => {
     setConfirmDlgRecChangeVisible(false);
   };
-  const handleChangeThisEvent = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleChangeThisEvent = async () => {
     //post a new event B
     const startAllDay = DateTime.fromMillis(formDatas.start, {
       zone: "America/Toronto",
@@ -764,10 +752,7 @@ const EventForm = ({
     setConfirmDlgRecChangeVisible(false);
     setFormVisible(false);
   };
-  const handleChangeAllEvents = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleChangeAllEvents = async () => {
     setProgress(true);
     const startAllDay = DateTime.fromMillis(formDatas.start, {
       zone: "America/Toronto",
@@ -832,9 +817,7 @@ const EventForm = ({
     });
   };
 
-  const handleChangeAllFutureEvents = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleChangeAllFutureEvents = async () => {
     //post a new event B
     const startAllDay = DateTime.fromMillis(formDatas.start, {
       zone: "America/Toronto",

@@ -52,15 +52,11 @@ const PersonalHistoryForm = ({
     const name = e.target.name;
     setFormDatas({ ...formDatas, [name]: value });
   };
-  const handleClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleClose = () => {
     setPopUpVisible(false);
   };
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = async () => {
     setErrMsgPost("");
-    e.preventDefault();
     //Validation
     if (!Object.values(formDatas).some((v) => v) || !formDatas) {
       setErrMsgPost("Please fill at least one field");

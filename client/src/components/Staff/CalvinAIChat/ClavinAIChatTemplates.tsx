@@ -49,8 +49,7 @@ const CalvinAIChatTemplates = ({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-  const handleAddNew = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAddNew = () => {
     setNewTemplateVisible((v) => !v);
   };
 

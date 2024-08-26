@@ -27,10 +27,7 @@ const CycleEventForm = ({
   item,
   setErrMsg,
 }: CycleEventFormProps) => {
-  const handleRemove = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleRemove = async () => {
     setErrMsg("");
     if (
       await confirmAlert({

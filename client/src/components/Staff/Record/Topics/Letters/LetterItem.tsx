@@ -65,10 +65,7 @@ const LetterItem = ({
     setItemInfos({ ...(itemInfos as LetterType), [name]: value });
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const topicToPut: LetterType = {
       ...(itemInfos as LetterType),
       updates: [

@@ -100,10 +100,7 @@ const LetterPreview = ({
 
   const letterPost = useTopicPost("LETTERS/REFERRALS", patientId);
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (letter) {
       alert("Letter already saved");
       return;
@@ -255,35 +252,25 @@ const LetterPreview = ({
     return fileToUpload;
   };
 
-  const handlePrint = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handlePrint = async () => {
     if (letter) {
       printJS(`${import.meta.env.VITE_XANO_BASE_URL}${letter.path}`);
       return;
     }
-    const fileToUpload = await handleSave(e);
+    const fileToUpload = await handleSave();
     printJS(`${import.meta.env.VITE_XANO_BASE_URL}${fileToUpload?.path}`);
   };
 
-  const handleFax = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const handleFax = async () => {
     if (letter) {
       setFaxVisible(true);
     } else {
-      await handleSave(e);
+      await handleSave();
       setFaxVisible(true);
     }
   };
 
-  const handleSend = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    type: "Internal" | "External"
-  ) => {
-    e.preventDefault();
+  const handleSend = async (type: "Internal" | "External") => {
     setProgress(true);
     const mainPage = printRef.current;
     const mainCanvas = await html2canvas(mainPage as HTMLElement, {
