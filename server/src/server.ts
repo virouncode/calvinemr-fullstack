@@ -39,7 +39,7 @@ app
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   )
-  .use(express.static(join(__dirname, "../client/dist")))
+  .use(express.static(join(__dirname, "../../client/dist")))
   .use("/api/xano", xanoRouter)
   .use("/api/twilio", twilioRouter)
   .use("/api/writeXML", writeXMLRouter)
@@ -64,7 +64,7 @@ const io = new Server(httpServer, {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "../client/dist/index.html"));
+  res.sendFile(join(__dirname, "../../client/dist/index.html"));
 });
 
 // SOCKET CONNECTION/DECONNECTION EVENT LISTENERS
