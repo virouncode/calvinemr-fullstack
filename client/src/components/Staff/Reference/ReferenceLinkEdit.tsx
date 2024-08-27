@@ -82,7 +82,6 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
         />
       </div>
       <div className="reference-links__form-row">
-        <label htmlFor="url">URL</label>
         <Input
           label="URL"
           value={editedLink.url}

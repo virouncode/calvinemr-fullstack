@@ -63,7 +63,6 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
         />
       </div>
       <div className="messages__templates-search">
-        <label htmlFor="template-search">Search</label>
         <Input
           id="template-search"
           value={search}
@@ -71,6 +70,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
           placeholder="Template name, author name,..."
           width={300}
           autoFocus={true}
+          label="Search"
         />
       </div>
       <div className="messages__templates-list" ref={divRef}>

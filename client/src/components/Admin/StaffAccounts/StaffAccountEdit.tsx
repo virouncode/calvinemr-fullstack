@@ -258,7 +258,6 @@ const StaffAccountEdit = ({
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="licence">Licence#: </label>
               <Input
                 value={formDatas.licence_nbr}
                 onChange={handleChange}
@@ -268,7 +267,6 @@ const StaffAccountEdit = ({
               />
             </div>
             <div className="staff-account__row">
-              <label htmlFor="ohip">OHIP#: </label>
               <Input
                 value={formDatas.ohip_billing_nbr}
                 onChange={handleChange}

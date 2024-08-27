@@ -74,7 +74,6 @@ const CycleSpermInfos = ({
         <div className="cycles-form__sperm-infos-row">
           <div className="cycles-form__sperm-infos-row-subtitle">Pre wash</div>
           <div className="cycles-form__sperm-infos-item">
-            <label htmlFor="prewash_concentration">Concentration</label>
             <Input
               label="Concentration"
               id="prewash_concentration"

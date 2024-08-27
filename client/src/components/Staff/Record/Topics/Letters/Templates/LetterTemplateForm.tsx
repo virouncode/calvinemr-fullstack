@@ -176,7 +176,6 @@ const LetterTemplateForm = ({
           />
         </div>
         <div className="letters__template-form-subject">
-          <label htmlFor="letter-template-subject">Subject:</label>
           <Input
             label="Subject:"
             value={subject}

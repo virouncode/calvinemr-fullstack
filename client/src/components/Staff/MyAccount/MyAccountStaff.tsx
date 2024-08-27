@@ -154,7 +154,6 @@ const MyAccountStaff = () => {
               <p>{tempFormDatas.last_name}</p>
             </div>
             <div className="myaccount-section__row">
-              <label>Site*: </label>
               {editVisible ? (
                 <SiteSelect
                   handleSiteChange={handleSiteChange}

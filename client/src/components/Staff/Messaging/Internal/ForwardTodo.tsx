@@ -202,7 +202,6 @@ const ForwardTodo = ({
               checked={important}
               label="High importance"
             />
-            <label htmlFor="importance">High importance</label>
           </div>
 
           <div>
