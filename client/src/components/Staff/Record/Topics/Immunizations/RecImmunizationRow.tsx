@@ -1,7 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React from "react";
 import {
-  allImmunizationsAges,
   ImmunizationType,
   RecImmunizationAgeType,
   RecImmunizationTypeListType,
@@ -9,6 +8,21 @@ import {
 import { recommendedImmunizationsList } from "../../../../../utils/immunizations/recommendedImmunizations";
 import RecImmunizationCell from "./RecImmunizationCell";
 import RecImmunizationEmptyCell from "./RecImmunizationEmptyCell";
+
+const allImmunizationsAges = [
+  "2 Months",
+  "4 Months",
+  "6 Months",
+  "1 Year",
+  "15 Months",
+  "18 Months",
+  "4 Years",
+  "Grade 7",
+  "14 Years",
+  "24 Years",
+  ">=34 Years",
+  "65 Years",
+] as const;
 
 type RecImmunizationRowProps = {
   type: RecImmunizationTypeListType;

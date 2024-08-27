@@ -799,7 +799,7 @@ export type ImmunizationType = {
   doseNumber: number;
   recommended: boolean;
 };
-export const allImmunizationsAges = [
+const allImmunizationsAges = [
   "2 Months",
   "4 Months",
   "6 Months",
