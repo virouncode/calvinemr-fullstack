@@ -18,8 +18,10 @@ const CycleSpermInfos = ({
 }: CycleSpermInfosProps) => {
   const handleChangeSperm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
-    const name = e.target.name;
-    if (name === "partner_sperm") {
+    const value = e.target.value;
+    console.log(value);
+
+    if (value === "partner_sperm") {
       setFormDatas({ ...formDatas, partner_sperm: true, donor_sperm_nbr: "" });
     } else {
       setFormDatas({ ...formDatas, partner_sperm: false });
@@ -104,8 +106,8 @@ const CycleSpermInfos = ({
           <div className="cycles-form__sperm-infos-item">
             <Input
               label="Total Motile Sperm"
-              id="postwah_total_motile_sperm"
-              name="postwah_total_motile_sperm"
+              id="postwash_total_motile_sperm"
+              name="postwash_total_motile_sperm"
               value={formDatas.postwash_total_motile_sperm ?? ""}
               onChange={handleChange}
             />

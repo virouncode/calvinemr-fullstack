@@ -1,5 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import NewWindow from "react-new-window";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { CycleType, DemographicsType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -15,6 +16,7 @@ import CycleCycleInfos from "./CycleCycleInfos";
 import CycleEvents from "./CycleEvents";
 import CycleNotes from "./CycleNotes";
 import CyclePatientInfos from "./CyclePatientInfos";
+import CyclePrint from "./CyclePrint";
 import CycleSpermInfos from "./CycleSpermInfos";
 import CycleTestsInfos from "./CycleTestsInfos";
 
@@ -35,6 +37,7 @@ const CycleDetails = ({
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [itemInfos, setItemInfos] = useState<Partial<CycleType>>({});
+  const [printVisible, setPrintVisible] = useState(false);
   useEffect(() => {
     setItemInfos({
       ...cycleToShow,
@@ -77,52 +80,75 @@ const CycleDetails = ({
       setShow(false);
     }
   };
-  const handlePrint = () => {};
+  const handlePrint = () => {
+    setPrintVisible(true);
+  };
   return (
     itemInfos && (
-      <form className="cycles-form">
-        {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-        <CyclePatientInfos
-          demographicsInfos={demographicsInfos}
-          errMsg={errMsg}
-        />
-        <CycleSpermInfos
-          formDatas={itemInfos}
-          setFormDatas={setItemInfos}
-          errMsg={errMsg}
-          setErrMsg={setErrMsg}
-        />
-        <CycleCycleInfos
-          formDatas={itemInfos}
-          setFormDatas={setItemInfos}
-          errMsg={errMsg}
-          setErrMsg={setErrMsg}
-        />
-        <CycleTestsInfos
-          formDatas={itemInfos}
-          setFormDatas={setItemInfos}
-          errMsg={errMsg}
-          setErrMsg={setErrMsg}
-        />
-        <CycleEvents
-          formDatas={itemInfos}
-          setFormDatas={setItemInfos}
-          errMsg={errMsg}
-          setErrMsg={setErrMsg}
-        />
-        <CycleNotes
-          formDatas={itemInfos}
-          setFormDatas={setItemInfos}
-          errMsg={errMsg}
-          setErrMsg={setErrMsg}
-        />
-        <div className="cycles-form__btn-container">
-          <SaveButton onClick={handleSave} disabled={progress} />
-          <PrintButton onClick={handlePrint} disabled={progress} />
-          <CloseButton onClick={handleClose} disabled={progress} />
-          {progress && <CircularProgressSmall />}
-        </div>
-      </form>
+      <>
+        <form className="cycles-form">
+          {errMsg && <ErrorParagraph errorMsg={errMsg} />}
+          <CyclePatientInfos
+            demographicsInfos={demographicsInfos}
+            errMsg={errMsg}
+          />
+          <CycleSpermInfos
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <CycleCycleInfos
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <CycleTestsInfos
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <CycleEvents
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <CycleNotes
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <div className="cycles-form__btn-container">
+            <SaveButton onClick={handleSave} disabled={progress} />
+            <PrintButton onClick={handlePrint} disabled={progress} />
+            <CloseButton onClick={handleClose} disabled={progress} />
+            {progress && <CircularProgressSmall />}
+          </div>
+        </form>
+        {printVisible && (
+          <NewWindow
+            title={`ART Cycle: ${cycleToShow.cycle_nbr}`}
+            features={{
+              toolbar: "no",
+              scrollbars: "no",
+              menubar: "no",
+              status: "no",
+              directories: "no",
+              width: 793.7,
+              height: 1122.5,
+              left: 320,
+              top: 200,
+            }}
+            onUnload={() => setPrintVisible(false)}
+          >
+            <CyclePrint cycle={cycleToShow} patientInfos={demographicsInfos} />
+          </NewWindow>
+        )}
+      </>
     )
   );
 };

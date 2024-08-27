@@ -178,7 +178,7 @@ const CyclesPopUp = ({
       )}
       {show && cycleToShow && (
         <FakeWindow
-          title={`IVF CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
+          title={`ART CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
           width={1400}
           height={800}
           x={(window.innerWidth - 1400) / 2}

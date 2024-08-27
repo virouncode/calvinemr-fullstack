@@ -103,7 +103,7 @@ button {
   color: #3d375a;
   border: none;
   outline: none;
-  border-radius: 40px;
+  border-radius: 50px;
   padding: 5px 10px;
   font-family: Lato, sans-serif, sans-serif;
   font-size: 0.8rem;
@@ -11231,6 +11231,145 @@ select:focus {
   margin-right: 5px;
 }
 
+.cycle-print {
+  width: 90%;
+  margin: 20px auto;
+  font-family: Lato, sans-serif;
+}
+.cycle-print__btns {
+  display: flex;
+  justify-content: center;
+}
+.cycle-print__card {
+  margin-top: 10px;
+}
+.cycle-print__row {
+  display: flex;
+  margin-bottom: 10px;
+}
+.cycle-print__patient {
+  width: 40%;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+  margin-right: 10px;
+}
+.cycle-print__patient-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.cycle-print__patient-content {
+  padding: 10px 30px;
+}
+.cycle-print__patient-item {
+  font-size: 0.85rem;
+  display: flex;
+}
+.cycle-print__patient-item label {
+  width: 100px;
+  font-weight: bold;
+}
+.cycle-print__sperm {
+  width: 40%;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+}
+.cycle-print__sperm-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.cycle-print__sperm-content {
+  padding: 10px 30px;
+}
+.cycle-print__sperm-item {
+  font-size: 0.85rem;
+  display: flex;
+}
+.cycle-print__sperm-item label {
+  width: 200px;
+  font-weight: bold;
+}
+.cycle-print__cycle {
+  margin-bottom: 10px;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+}
+.cycle-print__cycle-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.cycle-print__cycle-content {
+  padding: 10px 30px;
+}
+.cycle-print__cycle-item {
+  font-size: 0.85rem;
+  display: flex;
+}
+.cycle-print__cycle-item label {
+  width: 25%;
+  font-weight: bold;
+}
+.cycle-print__cycle-item span {
+  white-space: pre-wrap;
+  word-break: break-word;
+  width: 75%;
+}
+.cycle-print__tests {
+  width: 40%;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+  margin-right: 10px;
+}
+.cycle-print__tests-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.cycle-print__tests-content {
+  padding: 10px 30px;
+}
+.cycle-print__tests-item {
+  font-size: 0.85rem;
+  display: flex;
+}
+.cycle-print__tests-item label {
+  width: 150px;
+  font-weight: bold;
+}
+.cycle-print__events, .cycle-print__notes {
+  margin-bottom: 10px;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+}
+.cycle-print__events-title, .cycle-print__notes-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.cycle-print__events-content, .cycle-print__notes-content {
+  padding: 10px 30px;
+}
+.cycle-print__events-item, .cycle-print__notes-item {
+  font-size: 0.85rem;
+  display: flex;
+}
+.cycle-print__events-item label, .cycle-print__notes-item label {
+  width: 25%;
+  font-weight: bold;
+}
+.cycle-print__events-item span, .cycle-print__notes-item span {
+  white-space: pre-wrap;
+  word-break: break-word;
+  width: 75%;
+}
+
+@media print {
+  .cycle-print button {
+    display: none !important;
+  }
+}
 .closed-container {
   display: flex;
   align-items: center;

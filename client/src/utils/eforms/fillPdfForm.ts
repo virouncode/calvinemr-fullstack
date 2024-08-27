@@ -164,9 +164,10 @@ export const fillPdfForm = async (
     { fieldName: "patient_sin", value: demographicsInfos.SIN },
     {
       fieldName: "patient_height_cm",
-      value: demographicsInfos.patient_care_elements?.Height?.sort(
-        (a, b) => b.Date - a.Date
-      )?.[0]?.Height,
+      value:
+        demographicsInfos.patient_care_elements?.Height?.sort(
+          (a, b) => b.Date - a.Date
+        )?.[0]?.Height ?? "",
     },
     {
       fieldName: "patient_height_feet",
@@ -178,9 +179,10 @@ export const fillPdfForm = async (
     },
     {
       fieldName: "patient_weight_kg",
-      value: demographicsInfos.patient_care_elements?.Weight?.sort(
-        (a, b) => b.Date - a.Date
-      )?.[0]?.Weight,
+      value:
+        demographicsInfos.patient_care_elements?.Weight?.sort(
+          (a, b) => b.Date - a.Date
+        )?.[0]?.Weight ?? "",
     },
     {
       fieldName: "patient_weight_lbs",

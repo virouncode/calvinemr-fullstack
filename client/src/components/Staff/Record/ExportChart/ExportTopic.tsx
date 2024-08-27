@@ -7,6 +7,7 @@ import {
 import ExportAlerts from "./ExportAlerts";
 import ExportAllergies from "./ExportAllergies";
 import ExportCareElements from "./ExportCareElements";
+import ExportCycles from "./ExportCycles";
 import ExportEforms from "./ExportEforms";
 import ExportFamHistory from "./ExportFamHistory";
 import ExportFamilyDoctors from "./ExportFamilyDoctors";
@@ -93,6 +94,10 @@ const ExportTopic = ({
       return <ExportProblemlist patientId={patientId} />;
     case "PREGNANCIES":
       return <ExportPregnancies patientId={patientId} />;
+    case "CYCLES":
+      return (
+        <ExportCycles patientId={patientId} patientInfos={demographicsInfos} />
+      );
     case "ALLERGIES & ADVERSE REACTIONS":
       return <ExportAllergies patientId={patientId} />;
     case "REPORTS":
