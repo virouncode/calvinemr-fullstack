@@ -10,10 +10,7 @@ const Missing = () => {
       <NavLink to="/" className="missing-container-link">
         Return to the login page
       </NavLink>
-      <div
-        style={{ textDecoration: "underline", cursor: "pointer" }}
-        onClick={() => navigate(-1)}
-      >
+      <div className="missing-container-link" onClick={() => navigate(-1)}>
         Go back
       </div>
     </div>

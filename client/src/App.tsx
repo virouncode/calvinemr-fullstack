@@ -27,6 +27,7 @@ import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
 import AdminMigrationPage from "./pages/Admin/AdminMigrationPage";
 import AdminMyAccountPage from "./pages/Admin/AdminMyAccountPage";
 import AdminStaffAccountsPage from "./pages/Admin/AdminStaffAccountsPage";
+import ClosedPage from "./pages/All/ClosedPage";
 import LoginPage from "./pages/All/LoginPage";
 import MissingPage from "./pages/All/MissingPage";
 import ResetPage from "./pages/All/ResetPage";
@@ -83,6 +84,7 @@ const App = () => {
           <Route index element={<LoginPage />} />
           <Route path="unauthorized" element={<UnauthorizedPage />} />
           <Route path="suspended" element={<SuspendedPage />} />
+          <Route path="closed" element={<ClosedPage />} />
           <Route path="reset-password" element={<ResetPage />} />
           {/* catch all */}
           <Route path="*" element={<MissingPage />} />

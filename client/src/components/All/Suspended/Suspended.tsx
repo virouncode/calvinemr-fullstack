@@ -13,12 +13,6 @@ const Suspended = () => {
       <NavLink to="/" className="suspended-container-link">
         Return to the login page
       </NavLink>
-      <div
-        style={{ textDecoration: "underline", cursor: "pointer" }}
-        onClick={() => navigate(-1)}
-      >
-        Go back
-      </div>
     </div>
   );
 };

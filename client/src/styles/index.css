@@ -7940,9 +7940,17 @@ select:focus {
 .missing-container-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+.missing-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 .missing-container-link {
+  font-size: 0.9rem;
   text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .unauthorized-container {
@@ -7958,9 +7966,17 @@ select:focus {
 .unauthorized-container-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+.unauthorized-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 .unauthorized-container-link {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .appointments-patient {
@@ -8446,8 +8462,14 @@ select:focus {
 .suspended-container-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+.suspended-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 .suspended-container-link {
+  font-size: 0.9rem;
   text-decoration: underline;
 }
 
@@ -11232,16 +11254,20 @@ select:focus {
 }
 
 .cycle-print {
-  width: 90%;
   margin: 20px auto;
   font-family: Lato, sans-serif;
 }
 .cycle-print__btns {
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 }
 .cycle-print__card {
-  margin-top: 10px;
+  width: 22cm;
+  height: 28cm;
+  padding: 20px;
+  border-bottom: solid 1px #cecdcd;
+  margin-bottom: 70px;
 }
 .cycle-print__row {
   display: flex;
@@ -11338,28 +11364,87 @@ select:focus {
   width: 150px;
   font-weight: bold;
 }
-.cycle-print__events, .cycle-print__notes {
+.cycle-print__events {
+  position: absolute;
+  left: 100%;
+  transform-origin: top left;
+  transform: rotate(90deg) translateX(20px);
+  margin-bottom: 10px;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 5px;
+  height: 714px;
+}
+.cycle-print__events-container {
+  position: relative;
+}
+.cycle-print__events-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.cycle-print__events-table-container {
+  height: 600px;
+  overflow: hidden;
+  width: 25cm;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+}
+.cycle-print__events-table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  min-width: 100%;
+}
+.cycle-print__events-table thead {
+  position: sticky;
+  top: 0;
+  background: #93b5e9;
+  border-radius: 6px;
+  -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+}
+.cycle-print__events-table th {
+  width: 90px;
+  padding: 10px;
+  cursor: pointer;
+}
+.cycle-print__events-table th:nth-child(1) {
+  width: 120px;
+}
+.cycle-print__events-table th:nth-child(7), .cycle-print__events-table th:nth-child(8), .cycle-print__events-table th:nth-child(9) {
+  width: 200px;
+}
+.cycle-print__events-item {
+  border-bottom: solid 1px #cecdcd;
+}
+.cycle-print__events-item td {
+  text-align: center;
+  padding: 10px;
+  word-break: break-word;
+}
+.cycle-print__notes {
   margin-bottom: 10px;
   border: solid 1px #cecdcd;
   border-radius: 6px;
   padding: 5px;
 }
-.cycle-print__events-title, .cycle-print__notes-title {
+.cycle-print__notes-title {
   font-size: 0.9rem;
   font-weight: bold;
 }
-.cycle-print__events-content, .cycle-print__notes-content {
+.cycle-print__notes-content {
   padding: 10px 30px;
 }
-.cycle-print__events-item, .cycle-print__notes-item {
+.cycle-print__notes-item {
   font-size: 0.85rem;
   display: flex;
 }
-.cycle-print__events-item label, .cycle-print__notes-item label {
+.cycle-print__notes-item label {
   width: 25%;
   font-weight: bold;
 }
-.cycle-print__events-item span, .cycle-print__notes-item span {
+.cycle-print__notes-item span {
   white-space: pre-wrap;
   word-break: break-word;
   width: 75%;
@@ -11368,6 +11453,9 @@ select:focus {
 @media print {
   .cycle-print button {
     display: none !important;
+  }
+  .cycle-print__card {
+    border: none;
   }
 }
 .closed-container {
@@ -11383,8 +11471,14 @@ select:focus {
 .closed-container-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+.closed-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 .closed-container-link {
+  font-size: 0.9rem;
   text-decoration: underline;
 }
 
@@ -11401,8 +11495,14 @@ select:focus {
 .closed-container-title {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+.closed-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 .closed-container-link {
+  font-size: 0.9rem;
   text-decoration: underline;
 }
 

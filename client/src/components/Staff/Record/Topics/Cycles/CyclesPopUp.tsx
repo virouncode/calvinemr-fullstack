@@ -5,6 +5,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import NewWindow from "react-new-window";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   CycleType,
@@ -22,6 +23,7 @@ import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import CycleDetails from "./CycleDetails";
 import CycleForm from "./CycleForm";
 import CycleItem from "./CycleItem";
+import CyclePrint from "./CyclePrint";
 
 type CyclesPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<CycleType>, unknown> | undefined;
@@ -63,6 +65,7 @@ const CyclesPopUp = ({
   const [cycleToShow, setCycleToShow] = useState<CycleType | undefined>();
   const [show, setShow] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  const [printVisible, setPrintVisible] = useState(false);
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
@@ -136,6 +139,7 @@ const CyclesPopUp = ({
                       lastItemRef={lastItemRef}
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
+                      setPrintVisible={setPrintVisible}
                     />
                   ) : (
                     <CycleItem
@@ -144,6 +148,7 @@ const CyclesPopUp = ({
                       errMsgPost={errMsgPost}
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
+                      setPrintVisible={setPrintVisible}
                     />
                   )
                 )
@@ -194,6 +199,25 @@ const CyclesPopUp = ({
             topicPut={topicPut}
           />
         </FakeWindow>
+      )}
+      {printVisible && cycleToShow && (
+        <NewWindow
+          title={`ART Cycle: ${cycleToShow?.cycle_nbr}`}
+          features={{
+            toolbar: "no",
+            scrollbars: "no",
+            menubar: "no",
+            status: "no",
+            directories: "no",
+            width: 832,
+            height: 1060,
+            left: 320,
+            top: 200,
+          }}
+          onUnload={() => setPrintVisible(false)}
+        >
+          <CyclePrint cycle={cycleToShow} patientInfos={demographicsInfos} />
+        </NewWindow>
       )}
     </>
   );

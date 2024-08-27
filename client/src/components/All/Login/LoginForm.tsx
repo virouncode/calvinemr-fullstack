@@ -169,6 +169,9 @@ const LoginForm = () => {
       setAdminsInfos(adminsInfos);
       localStorage.setItem("adminsInfos", JSON.stringify(adminsInfos));
 
+      //=============== WARN IF SITE CLOSED =================//
+      localStorage.setItem("alreadyWarnedSiteClosed", "false");
+
       setLoadingStaff(false);
       navigate(
         (location.state?.from?.pathname.includes("staff") &&

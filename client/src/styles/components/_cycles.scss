@@ -201,15 +201,19 @@
 }
 
 .cycle-print {
-  width: 90%;
   margin: 20px auto;
   font-family: $font1;
   &__btns {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
   }
   &__card {
-    margin-top: 10px;
+    width: 22cm;
+    height: 28cm;
+    padding: 20px;
+    border-bottom: solid 1px $grey;
+    margin-bottom: 70px;
   }
   &__row {
     display: flex;
@@ -306,7 +310,66 @@
       }
     }
   }
-  &__events,
+  &__events {
+    &-container {
+      position: relative;
+    }
+    position: absolute;
+    left: 100%;
+    transform-origin: top left;
+    transform: rotate(90deg) translateX(20px);
+    margin-bottom: 10px;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    padding: 5px;
+    height: 714px;
+    &-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    &-table-container {
+      height: 600px;
+      overflow: hidden;
+      width: 25cm;
+      border-radius: 6px;
+      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    }
+    &-table {
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      min-width: 100%;
+      thead {
+        position: sticky;
+        top: 0;
+        background: $blue;
+        border-radius: 6px;
+        print-color-adjust: exact;
+      }
+      th {
+        width: 90px;
+        padding: 10px;
+        cursor: pointer;
+        &:nth-child(1) {
+          width: 120px;
+        }
+        &:nth-child(7),
+        &:nth-child(8),
+        &:nth-child(9) {
+          width: 200px;
+        }
+      }
+    }
+    &-item {
+      border-bottom: solid 1px $grey;
+      td {
+        text-align: center;
+        padding: 10px;
+        word-break: break-word;
+      }
+    }
+  }
   &__notes {
     margin-bottom: 10px;
     border: solid 1px $grey;
@@ -339,6 +402,9 @@
   .cycle-print {
     button {
       display: none !important;
+    }
+    &__card {
+      border: none;
     }
   }
 }

@@ -1,9 +1,8 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Closed = () => {
   //Hooks
-  const navigate = useNavigate();
   return (
     <div className="closed-container">
       <h2 className="closed-container-title">
@@ -13,12 +12,6 @@ const Closed = () => {
       <NavLink to="/" className="closed-container-link">
         Return to the login page
       </NavLink>
-      <div
-        style={{ textDecoration: "underline", cursor: "pointer" }}
-        onClick={() => navigate(-1)}
-      >
-        Go back
-      </div>
     </div>
   );
 };

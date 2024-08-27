@@ -10,8 +10,14 @@
   &-title {
     font-size: 1.2rem;
     font-weight: bold;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
   }
   &-link {
+    font-size: 0.9rem;
     text-decoration: underline;
   }
 }

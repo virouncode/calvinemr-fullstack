@@ -15,10 +15,7 @@ const Unauthorized = () => {
       <NavLink className="unauthorized-container-link" to="/">
         Return to login page
       </NavLink>
-      <div
-        style={{ textDecoration: "underline", cursor: "pointer" }}
-        onClick={() => navigate(-1)}
-      >
+      <div className="unauthorized-container-link" onClick={() => navigate(-1)}>
         Go back
       </div>
     </div>

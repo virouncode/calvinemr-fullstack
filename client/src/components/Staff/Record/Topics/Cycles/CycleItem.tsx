@@ -2,6 +2,7 @@ import React from "react";
 import { CycleType } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
+import PrintButton from "../../../../UI/Buttons/PrintButton";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 type CycleItemProps = {
@@ -10,6 +11,7 @@ type CycleItemProps = {
   lastItemRef?: (node: Element | null) => void;
   setCycleToShow: React.Dispatch<React.SetStateAction<CycleType | undefined>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setPrintVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CycleItem = ({
@@ -18,10 +20,15 @@ const CycleItem = ({
   lastItemRef,
   setCycleToShow,
   setShow,
+  setPrintVisible,
 }: CycleItemProps) => {
   const handleClickShow = () => {
     setCycleToShow(item);
     setShow(true);
+  };
+  const handleClickPrint = () => {
+    setCycleToShow(item);
+    setPrintVisible((v) => !v);
   };
   return (
     <tr
@@ -35,6 +42,7 @@ const CycleItem = ({
       <td>
         <div className="cycles-item__btn-container">
           <Button onClick={handleClickShow} label="Show" />
+          <PrintButton onClick={handleClickPrint} />
         </div>
       </td>
       <td>{item.status}</td>

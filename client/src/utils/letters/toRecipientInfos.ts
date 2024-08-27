@@ -34,7 +34,8 @@ export const toRecipientInfos = (
     const fullName = "Dr. " + recipient.full_name;
     const site = sites.find(({ id }) => id === recipient.site_id);
     const fullAddress = `${site?.address}, ${site?.city}\n${
-      site?.province_state
+      provinceStateTerritoryCT.find(({ code }) => code === site?.province_state)
+        ?.name
     }, ${site?.postal_code || site?.zip_code}`;
     return (
       fullName + "\n" + clinic?.name + ", " + site?.name + "\n" + fullAddress

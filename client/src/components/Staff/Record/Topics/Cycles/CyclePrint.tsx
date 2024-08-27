@@ -2,8 +2,8 @@ import React from "react";
 import { CycleType, DemographicsType } from "../../../../../types/api";
 import PrintButton from "../../../../UI/Buttons/PrintButton";
 import CyclePrintCycle from "./CyclePrintCycle";
-import CyclePrintEvent from "./CyclePrintEvent";
-import CyclePrintNote from "./CyclePrintNote";
+import CyclePrintEvents from "./CyclePrintEvents";
+import CyclePrintNotes from "./CyclePrintNotes";
 import CyclePrintPatient from "./CyclePrintPatient";
 import CyclePrintSperm from "./CyclePrintSperm";
 import CyclePrintTests from "./CyclePrintTests";
@@ -48,17 +48,18 @@ const CyclePrint = ({
           <CyclePrintTests cycle={cycle} gender="Female" />
           <CyclePrintTests cycle={cycle} gender="Male" />
         </div>
-        <div className="cycle-print__events">
-          <div className="cycle-print__events-title">Events</div>
-          {cycle.events.map((event, index) => (
-            <CyclePrintEvent key={`cycle-event-${index}`} event={event} />
-          ))}
-        </div>
-        <div className="cycle-print__notes">
-          <div className="cycle-print__notes-title">Notes</div>
-          {cycle.notes.map((note, index) => (
-            <CyclePrintNote key={`cycle-note-${index}`} note={note} />
-          ))}
+        <CyclePrintNotes notes={cycle.notes} />
+      </div>
+      <div
+        className="cycle-print__card"
+        style={{
+          border: toPrint ? "" : "solid 1px #cecdcd",
+          borderRadius: toPrint ? "" : "6px",
+          padding: toPrint ? "" : "10px",
+        }}
+      >
+        <div className="cycle-print__events-container">
+          <CyclePrintEvents events={cycle.events} />
         </div>
       </div>
     </div>
