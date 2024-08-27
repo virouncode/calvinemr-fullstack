@@ -13,7 +13,7 @@ import {
   unlock,
 } from "../../controllers/xanoController";
 
-var xanoRouter = express.Router();
+const xanoRouter = express.Router();
 
 xanoRouter
   .route("/")

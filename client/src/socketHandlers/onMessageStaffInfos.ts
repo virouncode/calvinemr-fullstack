@@ -7,7 +7,6 @@ export const onMessageStaffInfos = (
   setStaffInfos: React.Dispatch<React.SetStateAction<StaffType[]>>
 ) => {
   if (message.route !== "STAFF INFOS") return;
-  console.log("message", message);
   switch (message.action) {
     case "create":
       setStaffInfos([message.content.data, ...staffInfos]);

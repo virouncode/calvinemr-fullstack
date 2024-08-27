@@ -2,13 +2,11 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
   ImmunizationType,
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
-import {
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
 import DotsButton from "../../../../UI/Buttons/DotsButton";
 import PlusButton from "../../../../UI/Buttons/PlusButton";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";

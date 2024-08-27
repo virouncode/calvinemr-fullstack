@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   ImmunizationType,
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -10,10 +12,6 @@ import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
 } from "../../../../../utils/dates/formatDates";
-import {
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
 import FormRecImmunization from "./FormRecImmunization";

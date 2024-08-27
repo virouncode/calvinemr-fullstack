@@ -2,12 +2,10 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
   ImmunizationType,
-  RecImmunizationTypeListType,
-} from "../../../../../types/api";
-import {
   RecImmunizationAgeType,
   RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
+  RecImmunizationTypeListType,
+} from "../../../../../types/api";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import RecImmunizationEditFirstDose from "./RecImmunizationEditFirstDose";

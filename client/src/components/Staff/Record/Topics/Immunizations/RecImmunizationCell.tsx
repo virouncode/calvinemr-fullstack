@@ -2,13 +2,11 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React from "react";
 import {
   ImmunizationType,
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import { getImmunizationInterval } from "../../../../../utils/immunizations/getImmunizationInterval";
-import {
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
 import RecImmunizationItemDouble from "./RecImmunizationItemDouble";
 import RecImmunizationItemMultiple from "./RecImmunizationItemMultiple";
 import RecImmunizationItemSingle from "./RecImmunizationItemSingle";

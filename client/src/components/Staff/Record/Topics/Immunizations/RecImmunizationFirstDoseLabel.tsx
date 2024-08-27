@@ -1,6 +1,8 @@
 import React from "react";
 import {
   ImmunizationType,
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import {
@@ -10,10 +12,6 @@ import {
   timestampYearsLaterTZ,
 } from "../../../../../utils/dates/formatDates";
 import { getImmunizationLogo } from "../../../../../utils/immunizations/getImmunizationLogo";
-import {
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
 
 type RecImmunizationFirstDoseLabelProps = {
   immunizationInfos: ImmunizationType[];

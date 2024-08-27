@@ -1,4 +1,4 @@
-import { RecImmunizationRouteType } from "./recommendedImmunizations";
+import { RecImmunizationRouteType } from "../../types/api";
 
 export const getImmunizationLogo = (type: RecImmunizationRouteType) => {
   let logo = "";

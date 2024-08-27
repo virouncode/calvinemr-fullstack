@@ -359,17 +359,6 @@ export type ClinicalNoteType = {
   versions?: ClinicalNoteLogType[];
 };
 
-export type XanoPaginatedType<T> = {
-  curPage: number;
-  itemsReceived: number;
-  itemsTotal: number;
-  nextPage: number | null;
-  offset: number;
-  pageTotal: number;
-  prevPage: number | null;
-  items: T[];
-};
-
 export type ClinicalNoteAttachmentType = {
   id: number | string;
   file: AttachmentType;
@@ -810,6 +799,30 @@ export type ImmunizationType = {
   doseNumber: number;
   recommended: boolean;
 };
+export const allImmunizationsAges = [
+  "2 Months",
+  "4 Months",
+  "6 Months",
+  "1 Year",
+  "15 Months",
+  "18 Months",
+  "4 Years",
+  "Grade 7",
+  "14 Years",
+  "24 Years",
+  ">=34 Years",
+  "65 Years",
+] as const;
+
+export type RecImmunizationAgeType = (typeof allImmunizationsAges)[number];
+
+export type RecImmunizationDoseType = "single" | "double" | "multiple";
+
+export type RecImmunizationRouteType =
+  | "Intramuscular"
+  | "Oral"
+  | "Subcutaneous"
+  | "Intramuscular/Subcutaneous";
 
 export type RecImmunizationTypeListType =
   | "DTaP-IPV-Hib"
@@ -1538,6 +1551,17 @@ export type FaxToDeleteType = {
 export type FaxesToDeleteType = {
   faxFileNames: string[];
   direction: "IN" | "OUT";
+};
+
+export type XanoPaginatedType<T> = {
+  curPage: number;
+  itemsReceived: number;
+  itemsTotal: number;
+  nextPage: number | null;
+  offset: number;
+  pageTotal: number;
+  prevPage: number | null;
+  items: T[];
 };
 
 //We don't put DEMOGRAPHICS, DOCTORS, AGE CALCULATOR, REPORTS, LABELS because they are apart from the rest

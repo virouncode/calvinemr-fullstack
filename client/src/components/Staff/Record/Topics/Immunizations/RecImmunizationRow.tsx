@@ -1,14 +1,12 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React from "react";
 import {
+  allImmunizationsAges,
   ImmunizationType,
+  RecImmunizationAgeType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
-import {
-  allImmunizationsAges,
-  RecImmunizationAgeType,
-  recommendedImmunizationsList,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
+import { recommendedImmunizationsList } from "../../../../../utils/immunizations/recommendedImmunizations";
 import RecImmunizationCell from "./RecImmunizationCell";
 import RecImmunizationEmptyCell from "./RecImmunizationEmptyCell";
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import xmlFormat from "xml-formatter";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import {
@@ -70,9 +71,6 @@ export const exportPatientEMR = async (
       reports.filter(({ Format }) => Format === "Binary") as ReportType[]
     ).map(({ File }) => File) as AttachmentType[];
   }
-
-  console.log(reportsFiles);
-
   await axios.post(`/api/writeXML`, {
     xmlFinal,
     patientFirstName,
@@ -103,14 +101,16 @@ export const exportEMRCategory = async (
         patients: checkedPatients,
       });
     } catch (err) {
-      if (err instanceof Error) console.log(err.message);
+      if (err instanceof Error)
+        toast.error("err.message", { containerId: "A" });
     }
   } else {
     //All patients
     try {
       jsArrayToExport = await xanoGet(categoryURL, "admin");
     } catch (err) {
-      if (err instanceof Error) console.log(err.message);
+      if (err instanceof Error)
+        toast.error("err.message", { containerId: "A" });
     }
   }
   let xmlContent = "";

@@ -1,29 +1,9 @@
-import { RecImmunizationTypeListType } from "../../types/api";
-
-export const allImmunizationsAges = [
-  "2 Months",
-  "4 Months",
-  "6 Months",
-  "1 Year",
-  "15 Months",
-  "18 Months",
-  "4 Years",
-  "Grade 7",
-  "14 Years",
-  "24 Years",
-  ">=34 Years",
-  "65 Years",
-] as const;
-
-export type RecImmunizationAgeType = (typeof allImmunizationsAges)[number];
-
-export type RecImmunizationDoseType = "single" | "double" | "multiple";
-
-export type RecImmunizationRouteType =
-  | "Intramuscular"
-  | "Oral"
-  | "Subcutaneous"
-  | "Intramuscular/Subcutaneous";
+import {
+  RecImmunizationAgeType,
+  RecImmunizationDoseType,
+  RecImmunizationRouteType,
+  RecImmunizationTypeListType,
+} from "../../types/api";
 
 export const recommendedImmunizationsList: {
   id: number;

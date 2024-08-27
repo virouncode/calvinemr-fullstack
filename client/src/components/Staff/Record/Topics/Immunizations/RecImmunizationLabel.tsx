@@ -1,14 +1,14 @@
 import React from "react";
-import { ImmunizationType } from "../../../../../types/api";
+import {
+  ImmunizationType,
+  RecImmunizationAgeType,
+  RecImmunizationRouteType,
+} from "../../../../../types/api";
 import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { getImmunizationLogo } from "../../../../../utils/immunizations/getImmunizationLogo";
-import {
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
-} from "../../../../../utils/immunizations/recommendedImmunizations";
 
 type RecImmunizationLabelProps = {
   immunizationInfos: ImmunizationType;
