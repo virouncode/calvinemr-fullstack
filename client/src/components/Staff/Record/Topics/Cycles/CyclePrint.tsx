@@ -37,6 +37,7 @@ const CyclePrint = ({
           border: toPrint ? "" : "solid 1px #cecdcd",
           borderRadius: toPrint ? "" : "6px",
           padding: toPrint ? "" : "10px",
+          width: toPrint ? "22cm" : "100%",
         }}
       >
         <div className="cycle-print__row">
@@ -56,6 +57,7 @@ const CyclePrint = ({
           border: toPrint ? "" : "solid 1px #cecdcd",
           borderRadius: toPrint ? "" : "6px",
           padding: toPrint ? "" : "10px",
+          width: toPrint ? "22cm" : "100%",
         }}
       >
         <div className="cycle-print__events-container">
