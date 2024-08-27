@@ -104,7 +104,7 @@ class ViewSDKClient {
       /* Pass your registered client id */
       clientId:
         import.meta.env.MODE === "development"
-          ? "a8a8e10b397b4d48b4d8d33e7681f7a6"
+          ? import.meta.env.VITE_PDF_EMBED_API_CLIENT_ID_DEV
           : import.meta.env.VITE_PDF_EMBED_API_CLIENT_ID,
     };
     if (divId) {
