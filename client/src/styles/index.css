@@ -4648,6 +4648,11 @@ select:focus {
   justify-content: space-between;
   margin-bottom: 10px;
 }
+.myaccount-section__row--admin {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .myaccount-section__row--admin label {
   font-size: 0.85rem;
   font-weight: bold;
