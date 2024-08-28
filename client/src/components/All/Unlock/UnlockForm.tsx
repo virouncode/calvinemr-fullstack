@@ -41,7 +41,7 @@ const UnlockForm = ({
   const [autolockTime, setAutoLockTime] = useState(
     user?.access_level === "admin"
       ? (user as AdminType)?.autolock_time_min
-      : (user as UserStaffType)?.settings.autolock_time_min
+      : (user as UserStaffType)?.settings?.autolock_time_min
   );
   const [pin, setPin] = useState("");
 
@@ -99,7 +99,7 @@ const UnlockForm = ({
           });
         } else if (
           user?.access_level === "staff" &&
-          autolockTime !== (user as UserStaffType)?.settings.autolock_time_min
+          autolockTime !== (user as UserStaffType)?.settings?.autolock_time_min
         ) {
           const settingsToPut: SettingsType = {
             ...(user as UserStaffType)?.settings,
