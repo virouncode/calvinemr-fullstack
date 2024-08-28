@@ -7,6 +7,7 @@ import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQuerie
 import {
   DemographicsType,
   DoctorType,
+  LetterTemplateType,
   StaffType,
 } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
@@ -17,7 +18,6 @@ import SaveButton from "../../../../../UI/Buttons/SaveButton";
 import DoctorAbsoluteIcon from "../../../../../UI/Icons/DoctorAbsoluteIcon";
 import UserPlusAbsoluteIcon from "../../../../../UI/Icons/UserPlusAbsoluteIcon";
 import Input from "../../../../../UI/Inputs/Input";
-import SiteSelect from "../../../../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -39,7 +39,6 @@ const LetterTemplateForm = ({
   const [description, setDescription] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  const [siteSelectedId, setSiteSelectedId] = useState(user.site_id);
   const [refOHIPSearchVisible, setRefOHIPSearchVisible] = useState(false);
   const [patientSearchVisible, setPatientSearchVisible] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -88,15 +87,13 @@ const LetterTemplateForm = ({
     }
     setProgress(true);
     //create the message template
-    const letterTemplateToPost = {
+    const letterTemplateToPost: Partial<LetterTemplateType> = {
       name,
       description,
       author_id: user.id,
       subject,
       body,
-      recipient_infos: recipientInfos,
       date_created: nowTZTimestamp(),
-      site_id: siteSelectedId,
     };
     letterTemplatePost.mutate(letterTemplateToPost, {
       onSuccess: () => {
@@ -110,9 +107,6 @@ const LetterTemplateForm = ({
   };
   const handleCancel = () => {
     setNewTemplateVisible(false);
-  };
-  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSiteSelectedId(parseInt(e.target.value));
   };
 
   if (isPendingSites)
@@ -145,14 +139,6 @@ const LetterTemplateForm = ({
           value={description}
           onChange={handleDescriptionChange}
           id="letter-template-description"
-        />
-      </div>
-      <div className="letters__template-form-site">
-        <SiteSelect
-          handleSiteChange={handleSiteChange}
-          sites={sites}
-          value={siteSelectedId}
-          label="Site:"
         />
       </div>
       <div className="letters__template-form-subheader">

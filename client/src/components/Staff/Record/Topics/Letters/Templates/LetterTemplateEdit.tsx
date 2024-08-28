@@ -18,7 +18,6 @@ import SaveButton from "../../../../../UI/Buttons/SaveButton";
 import DoctorAbsoluteIcon from "../../../../../UI/Icons/DoctorAbsoluteIcon";
 import UserPlusAbsoluteIcon from "../../../../../UI/Icons/UserPlusAbsoluteIcon";
 import Input from "../../../../../UI/Inputs/Input";
-import SiteSelect from "../../../../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -43,7 +42,6 @@ const LetterTemplateEdit = ({
   const [description, setDescription] = useState(template.description);
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
-  const [siteSelectedId, setSiteSelectedId] = useState(template.site_id);
   const [refOHIPSearchVisible, setRefOHIPSearchVisible] = useState(false);
   const [patientSearchVisible, setPatientSearchVisible] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -91,7 +89,7 @@ const LetterTemplateEdit = ({
     }
     setProgress(true);
     //create the message template
-    const letterTemplateToPut = {
+    const letterTemplateToPut: LetterTemplateType = {
       id: template.id,
       name,
       description,
@@ -100,7 +98,6 @@ const LetterTemplateEdit = ({
       body,
       recipient_infos: recipientInfos,
       date_created: nowTZTimestamp(),
-      site_id: siteSelectedId,
     };
     letterTemplatePut.mutate(letterTemplateToPut, {
       onSuccess: () => {
@@ -114,9 +111,6 @@ const LetterTemplateEdit = ({
   };
   const handleCancel = () => {
     setEditTemplateVisible(false);
-  };
-  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSiteSelectedId(parseInt(e.target.value));
   };
 
   if (isPendingSites)
@@ -149,14 +143,6 @@ const LetterTemplateEdit = ({
           value={description}
           onChange={handleDescriptionChange}
           id="letter-template-description"
-        />
-      </div>
-      <div className="letters__template-form-site">
-        <SiteSelect
-          handleSiteChange={handleSiteChange}
-          sites={sites}
-          value={siteSelectedId}
-          label="Site:"
         />
       </div>
       <div className="letters__template-form-subheader">

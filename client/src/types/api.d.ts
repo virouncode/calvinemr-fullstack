@@ -899,7 +899,6 @@ export type LetterTemplateType = {
   name: string;
   description: string;
   subject: string;
-  site_id: number;
   recipient_infos: string;
 };
 

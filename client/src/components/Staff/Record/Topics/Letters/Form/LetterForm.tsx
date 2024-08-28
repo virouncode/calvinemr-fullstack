@@ -73,7 +73,6 @@ const LetterForm = ({
     if (template.recipient_infos) {
       setRecipientInfos(template.recipient_infos);
     }
-    setSiteSelectedId(template.site_id);
     setBody((b) => {
       if (b) return b + `\n\n${template.body}`;
       else return `${template.body}`;
