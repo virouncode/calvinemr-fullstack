@@ -107,11 +107,11 @@ const MyAccountAdmin = () => {
       {formDatas && (
         <div className="myaccount-section__form">
           <div style={{ margin: "0 auto" }}>
-            <div className="myaccount-section__row myaccount-section__row--admin">
+            <div className="myaccount-section__row--admin">
               <label>Email*: </label>
               <p>{formDatas.email}</p>
             </div>
-            <div className="myaccount-section__row myaccount-section__row--admin">
+            <div className="myaccount-section__row--admin">
               <InputTextToggle
                 value={formDatas.first_name}
                 onChange={handleChange}
@@ -121,7 +121,7 @@ const MyAccountAdmin = () => {
                 label="First Name*: "
               />
             </div>
-            <div className="myaccount-section__row myaccount-section__row--admin">
+            <div className="myaccount-section__row--admin">
               <InputTextToggle
                 value={formDatas.last_name}
                 onChange={handleChange}
