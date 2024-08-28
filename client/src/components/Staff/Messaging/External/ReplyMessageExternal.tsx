@@ -16,6 +16,7 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -72,6 +73,11 @@ const ReplyMessageExternal = ({
   };
   const handleSend = async () => {
     setProgress(true);
+    const patientPhone = formatToE164Canadian(
+      message.from_patient_infos?.PhoneNumber.find(
+        (phone) => phone._phoneNumberType === "C"
+      )?.phoneNumber ?? ""
+    );
     let attach_ids: number[] = [];
     if (attachments.length > 0) {
       const response: number[] = await xanoPost(
@@ -162,7 +168,7 @@ Powered by CalvinEMR`,
         },
         data: {
           from: clinic?.name ?? "",
-          to: "+33683267962", //to be changed to patient cell_phone
+          to: patientPhone, //to be changed to patient cell_phone
           body: `
 Hello ${toPatientName(message.from_patient_infos)},
           

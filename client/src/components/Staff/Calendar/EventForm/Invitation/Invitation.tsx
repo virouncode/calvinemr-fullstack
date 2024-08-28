@@ -21,6 +21,7 @@ import {
 } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import { formatToE164Canadian } from "../../../../../utils/phone/formatToE164Canadian";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
@@ -113,6 +114,10 @@ const Invitation = ({
 
     for (const patientInfos of patientsGuestsInfos) {
       const patientName = toPatientName(patientInfos);
+      const patientPhone = formatToE164Canadian(
+        patientInfos.PhoneNumber.find((phone) => phone._phoneNumberType === "C")
+          ?.phoneNumber ?? ""
+      );
       try {
         await axios.post(`/api/mailgun`, {
           to: patientInfos.Email, //to be changed to patientInfos.Email
@@ -154,7 +159,7 @@ const Invitation = ({
             "Content-Type": "application/json",
           },
           data: {
-            to: "+33683267962", //to be changed to patient cell_phone
+            to: patientPhone,
             body: toSMSInvitationText(
               site,
               user.settings.invitation_templates.find(

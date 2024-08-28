@@ -39,10 +39,7 @@ export const postTwilio = async (
   } catch (err) {
     const errorMessage = handleError(err);
     console.error(errorMessage);
-
-    // Check if err has a status code, if not fallback to 500
     const statusCode = (err as { status?: number }).status || 500;
-
     res.status(statusCode).json({ success: false, message: errorMessage });
   }
 };

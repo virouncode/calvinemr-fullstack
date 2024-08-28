@@ -4648,6 +4648,9 @@ select:focus {
   justify-content: space-between;
   margin-bottom: 10px;
 }
+.myaccount-section__row--admin label {
+  min-width: 90px;
+}
 .myaccount-section__row p {
   overflow: hidden;
   white-space: nowrap;
@@ -7667,6 +7670,7 @@ select:focus {
 }
 
 .hcn-results {
+  padding: 10px;
   padding: 0 20px;
   height: 480px;
   border: solid 0.5px #cecdcd;
@@ -8056,6 +8060,7 @@ select:focus {
   overflow-y: scroll;
   height: 210px;
   position: relative;
+  padding: 10px;
 }
 .refohip-results__item {
   cursor: pointer;
@@ -8070,7 +8075,6 @@ select:focus {
   position: sticky;
   top: 0;
   background-color: #fefefe;
-  padding: 5px 20px;
 }
 .refohip-results__code {
   font-weight: bold;

@@ -48,6 +48,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    &--admin {
+      label {
+        min-width: 90px;
+      }
+    }
     p {
       overflow: hidden;
       white-space: nowrap;

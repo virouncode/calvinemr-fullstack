@@ -18,6 +18,7 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -202,6 +203,7 @@ const NewMessageExternal = ({
           userId: recipient.id,
         },
       });
+      const recipientPhone = formatToE164Canadian(recipient.phone ?? "");
       //EMAIL ALERT
       try {
         await axios.post(`/api/mailgun`, {
@@ -236,7 +238,7 @@ Powered by CalvinEMR`,
           },
           data: {
             from: clinic?.name ?? "",
-            to: "+33683267962", //to be changed to patient cell_phone
+            to: recipientPhone,
             body: `
 Hello ${recipient.name},
           
