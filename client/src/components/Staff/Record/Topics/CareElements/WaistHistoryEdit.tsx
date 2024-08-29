@@ -49,6 +49,7 @@ const WaistHistoryEdit = ({
   const handleClose = () => {
     setEditVisible(false);
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const id = parseInt(e.target.id);

@@ -1,5 +1,4 @@
 import { InfiniteData } from "@tanstack/react-query";
-import { uniqueId } from "lodash";
 import React from "react";
 import {
   toCodeTableName,
@@ -43,8 +42,6 @@ const CareElementsDropDown = ({
       </div>
     );
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
-  console.log("datas", datas);
-
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
   const lastDatas = datas
@@ -122,7 +119,7 @@ const CareElementsDropDown = ({
           </p>
           {lastAdditionalDatas.length > 0 &&
             lastAdditionalDatas.map((additionalData) => (
-              <p key={uniqueId()}>
+              <p key={additionalData.Name}>
                 <label>
                   {additionalData.Name} ({additionalData.Unit}):{" "}
                 </label>

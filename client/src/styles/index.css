@@ -3369,6 +3369,30 @@ select:focus {
 .care-elements__edit-btns button {
   margin-right: 5px;
 }
+.care-elements__add-topic-form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.care-elements__add-topic-form-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.care-elements__add-topic-form-row label {
+  width: 100px;
+  font-weight: bold;
+}
+.care-elements__add-topic-form-btns {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.care-elements__add-topic-form-btns button {
+  margin-right: 5px;
+}
 
 .reminders__title {
   font-size: 1.2rem;

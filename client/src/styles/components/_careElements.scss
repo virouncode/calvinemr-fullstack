@@ -156,4 +156,28 @@
       }
     }
   }
+  &__add-topic-form {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-row {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+      label {
+        width: 100px;
+        font-weight: bold;
+      }
+    }
+    &-btns {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      button {
+        margin-right: 5px;
+      }
+    }
+  }
 }

@@ -419,12 +419,7 @@ const PatientTopic = ({
                 >
               }
               topicPut={
-                topicPost as UseMutationResult<
-                  AlertType,
-                  Error,
-                  AlertType,
-                  void
-                >
+                topicPut as UseMutationResult<AlertType, Error, AlertType, void>
               }
               topicDelete={topicDelete}
               isPending={isPending}
@@ -959,7 +954,7 @@ const PatientTopic = ({
                 >
               }
               topicPut={
-                topicPost as UseMutationResult<
+                topicPut as UseMutationResult<
                   CareElementType,
                   Error,
                   CareElementType,

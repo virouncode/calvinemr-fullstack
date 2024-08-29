@@ -122,7 +122,7 @@ const ForwardTodo = ({
       toast.success("Forwarded successfully", { containerId: "A" });
     } catch (err) {
       if (err instanceof Error)
-        toast.error(`Error: unable to forward message: ${err.message}`, {
+        toast.error(`Error: unable to forward to-do: ${err.message}`, {
           containerId: "A",
         });
     } finally {

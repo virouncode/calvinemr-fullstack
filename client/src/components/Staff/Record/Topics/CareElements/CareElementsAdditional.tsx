@@ -68,9 +68,9 @@ const CareElementsAdditional = ({
       {editVisible && (
         <FakeWindow
           title={`EDIT ${lastAdditionalData.Name.toUpperCase()} HISTORY`}
-          width={550}
+          width={350}
           height={550}
-          x={(window.innerWidth - 550) / 2}
+          x={(window.innerWidth - 350) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#577399"
           setPopUpVisible={setEditVisible}

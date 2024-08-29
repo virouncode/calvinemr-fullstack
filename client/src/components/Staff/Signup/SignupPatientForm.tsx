@@ -377,7 +377,6 @@ const SignupPatientForm = () => {
       await xanoDeleteBatch(successfulRequests, "staff");
       return;
     } finally {
-      console.log("successfulRequests", successfulRequests);
       setProgress(false);
     }
   };

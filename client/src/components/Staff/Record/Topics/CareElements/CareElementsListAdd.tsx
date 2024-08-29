@@ -1,5 +1,4 @@
-import { uniqueId } from "lodash";
-import React from "react";
+import React, { useState } from "react";
 import { ynIndicatorsimpleCT } from "../../../../../omdDatas/codesTables";
 import {
   CareElementAdditionalFormType,
@@ -17,17 +16,20 @@ import {
   kgToLbs,
   lbsToKg,
 } from "../../../../../utils/measurements/measurements";
+import Button from "../../../../UI/Buttons/Button";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
+import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import NewCareElementTopicForm from "./NewCareElementTopicForm";
 
 type CareElementsListAddProps = {
   addFormDatas: Partial<CareElementFormType>;
-  addAdditionalDatas: CareElementAdditionalFormType;
+  addFormAdditionalDatas: CareElementAdditionalFormType;
   setAddFormDatas: React.Dispatch<
     React.SetStateAction<Partial<CareElementFormType>>
   >;
-  setAddAdditionalDatas: React.Dispatch<
+  setAddFormAdditionalDatas: React.Dispatch<
     React.SetStateAction<CareElementAdditionalFormType>
   >;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
@@ -37,22 +39,28 @@ type CareElementsListAddProps = {
 
 const CareElementsListAdd = ({
   addFormDatas,
-  addAdditionalDatas,
+  addFormAdditionalDatas,
   setAddFormDatas,
-  setAddAdditionalDatas,
+  setAddFormAdditionalDatas,
   setErrMsgPost,
   addDate,
   setAddDate,
 }: CareElementsListAddProps) => {
+  const [addTopic, setAddTopic] = useState(false);
+  const handleAddTopic = () => {
+    setAddTopic(true);
+  };
   const handleAdditionalChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const value = e.target.value;
     const name = e.target.name;
     setErrMsgPost("");
-    setAddAdditionalDatas(
-      addAdditionalDatas.map((item) =>
-        item.Name === name ? { ...item, Value: value, Date: addDate } : item
+    setAddFormAdditionalDatas((prev) =>
+      prev.map((item) =>
+        item.Name === name
+          ? { ...item, Data: { Value: value, Date: addDate } }
+          : item
       )
     );
   };
@@ -297,10 +305,13 @@ const CareElementsListAdd = ({
     if (!value) return;
     setErrMsgPost("");
     setAddDate(dateISOToTimestampTZ(value) as number);
-    setAddAdditionalDatas(
-      addAdditionalDatas.map((item) => ({
+    setAddFormAdditionalDatas(
+      addFormAdditionalDatas.map((item) => ({
         ...item,
-        Date: dateISOToTimestampTZ(value) as number,
+        Data: {
+          ...item.Data,
+          Date: dateISOToTimestampTZ(value) as number,
+        },
       }))
     );
     setAddFormDatas({
@@ -386,6 +397,9 @@ const CareElementsListAdd = ({
   };
   return (
     <>
+      <div className="care-elements__row">
+        <Button onClick={handleAddTopic} label="Add topic" />
+      </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Date:</label>
         <div className="care-elements__row-value care-elements__row-value--add">
@@ -515,8 +529,8 @@ const CareElementsListAdd = ({
           />
         </div>
       </div>
-      {addAdditionalDatas.map((addAdditionalData) => (
-        <div className="care-elements__row" key={uniqueId()}>
+      {addFormAdditionalDatas.map((addAdditionalData) => (
+        <div className="care-elements__row" key={addAdditionalData.Name}>
           <label className="care-elements__row-label">
             {addAdditionalData.Name} ({addAdditionalData.Unit}):
           </label>
@@ -529,6 +543,23 @@ const CareElementsListAdd = ({
           </div>
         </div>
       ))}
+      {addTopic && (
+        <FakeWindow
+          title={`ADD A NEW CARE ELEMENT TOPIC`}
+          width={400}
+          height={170}
+          x={(window.innerWidth - 400) / 2}
+          y={(window.innerHeight - 170) / 2}
+          color="#93b5e9"
+          setPopUpVisible={setAddTopic}
+        >
+          <NewCareElementTopicForm
+            setAddFormAdditionalDatas={setAddFormAdditionalDatas}
+            setAddTopic={setAddTopic}
+            addDate={addDate}
+          />
+        </FakeWindow>
+      )}
     </>
   );
 };

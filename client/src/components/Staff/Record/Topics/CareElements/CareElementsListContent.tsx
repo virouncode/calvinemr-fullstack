@@ -1,5 +1,4 @@
 import { UseMutationResult } from "@tanstack/react-query";
-import { uniqueId } from "lodash";
 import React from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
@@ -120,7 +119,7 @@ const CareElementsListContent = ({
       />
       {lastAdditionalDatas.map((lastAdditionalData) => (
         <CareElementsAdditional
-          key={uniqueId()}
+          key={lastAdditionalData.Name}
           datas={datas}
           lastAdditionalData={lastAdditionalData}
           careElementPut={careElementPut}

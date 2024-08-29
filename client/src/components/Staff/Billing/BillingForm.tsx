@@ -51,8 +51,6 @@ const BillingForm = ({
   sites,
 }: BillingFormProps) => {
   //Hooks
-  console.log("render");
-
   const navigate = useNavigate();
   const { pid, pName, hcn, date } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };

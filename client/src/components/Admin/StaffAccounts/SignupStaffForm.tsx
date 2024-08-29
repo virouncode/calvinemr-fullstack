@@ -310,7 +310,6 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         default_duration_hours: 1,
         default_duration_min: 0,
       });
-      console.log("ok availability");
       successfulRequests.push({
         endpoint: "/availability",
         id: availabilityResponse.id,
@@ -324,7 +323,6 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           notes: "",
         }
       );
-      console.log("ok notepad");
       successfulRequests.push({
         endpoint: "/notepads",
         id: notepadResponse.id,

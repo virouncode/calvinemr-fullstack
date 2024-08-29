@@ -277,8 +277,6 @@ const PrescriptionPreview = ({
           },
         });
         setPrescription(fileToUpload);
-        console.log("successfulRequests", successfulRequests);
-
         return fileToUpload;
       } catch (err) {
         if (err instanceof Error)

@@ -19,7 +19,6 @@ const CycleSpermInfos = ({
   const handleChangeSperm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const value = e.target.value;
-    console.log(value);
 
     if (value === "partner_sperm") {
       setFormDatas({ ...formDatas, partner_sperm: true, donor_sperm_nbr: "" });

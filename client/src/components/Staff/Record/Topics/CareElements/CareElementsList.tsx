@@ -22,6 +22,7 @@ import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import CareElementAdditionalHistory from "./CareElementAdditionalHistory";
 import CareElementHistory from "./CareElementHistory";
 import CareElementsListAdd from "./CareElementsListAdd";
 import CareElementsListContent from "./CareElementsListContent";
@@ -56,13 +57,14 @@ const CareElementsList = ({
   const [historyDatas, setHistoryDatas] = useState<unknown[]>([]);
   const [historyUnit, setHistoryUnit] = useState("");
   const [historyVisible, setHistoryVisible] = useState(false);
-
-  const handleAdd = () => {
-    setAddVisible(true);
-  };
-  const handleClose = () => {
-    setPopUpVisible(false);
-  };
+  const [additionalHistoryTopic, setAdditionalHistoryTopic] =
+    useState<string>("");
+  const [additionalHistoryDatas, setAdditionalHistoryDatas] = useState<
+    { Value: string; Date: number }[]
+  >([]);
+  const [additionalHistoryUnit, setAdditionalHistoryUnit] = useState("");
+  const [additionalHistoryVisible, setAdditionalHistoryVisible] =
+    useState(false);
   const [addFormDatas, setAddFormDatas] = useState<
     Partial<CareElementFormType>
   >({
@@ -87,7 +89,7 @@ const CareElementsList = ({
     bodySurfaceArea: { BSA: "", Date: nowTZTimestamp() },
   });
   const [addDate, setAddDate] = useState(nowTZTimestamp());
-  const [addAdditionalDatas, setAddAdditionalDatas] =
+  const [addFormAdditionalDatas, setAddFormAdditionalDatas] =
     useState<CareElementAdditionalFormType>(
       additionalDatas.map((additionalData) => ({
         Name: additionalData.Name,
@@ -156,17 +158,34 @@ const CareElementsList = ({
         bodySurfaceArea: { BSA: "", Date: null },
       };
 
-  const lastAdditionalDatas = additionalDatas.map((additionalData) => ({
-    ...additionalData,
-    Data: additionalData.Data.sort((a, b) => b.Date - a.Date)[0],
-  })) ?? [
-    {
-      Name: "",
-      Data: { Value: "", Date: nowTZTimestamp() },
-    },
-  ];
+  const lastAdditionalDatas =
+    additionalDatas.map((additionalData) => ({
+      ...additionalData,
+      Data: additionalData.Data.sort((a, b) => b.Date - a.Date)[0],
+    })) ?? [];
 
-  const handleClickAdditionalHistory = (rowName: string) => {};
+  const handleAdd = () => {
+    setAddVisible(true);
+  };
+  const handleClose = () => {
+    setPopUpVisible(false);
+  };
+
+  const handleClickAdditionalHistory = (rowName: string) => {
+    setAdditionalHistoryTopic(rowName);
+    let additionalHistoryDatasToPass: { Value: string; Date: number }[] = [];
+    let additionalHistoryUnitToPass = "";
+    const foundData = additionalDatas.find(({ Name }) => Name === rowName);
+    if (foundData) {
+      additionalHistoryDatasToPass = foundData.Data.sort(
+        (a, b) => b.Date - a.Date
+      );
+      additionalHistoryUnitToPass = foundData.Unit;
+    }
+    setAdditionalHistoryDatas(additionalHistoryDatasToPass);
+    setAdditionalHistoryUnit(additionalHistoryUnitToPass);
+    setAdditionalHistoryVisible(true);
+  };
 
   const handleClickHistory = (rowName: CareElementHistoryTopicType) => {
     setHistoryTopic(rowName);
@@ -237,8 +256,8 @@ const CareElementsList = ({
         break;
     }
     setHistoryDatas(historyDatasToPass);
-    setHistoryVisible(true);
     setHistoryUnit(historyUnitToPass);
+    setHistoryVisible(true);
   };
 
   const handleSubmit = async () => {
@@ -354,6 +373,44 @@ const CareElementsList = ({
             },
           ]
         : [...datas.bodySurfaceArea],
+      Additional: addFormAdditionalDatas
+        .map((addAdditionalData) => {
+          const foundData = additionalDatas.find(
+            ({ Name }) => Name === addAdditionalData.Name
+          );
+          if (foundData) {
+            if (addAdditionalData.Data.Value) {
+              return {
+                //Ok
+                ...foundData,
+                Data: [
+                  ...foundData.Data,
+                  {
+                    Value: addAdditionalData.Data.Value,
+                    Date: addAdditionalData.Data.Date,
+                  },
+                ],
+              };
+            } else {
+              //Ok
+              return foundData;
+            }
+          } else if (addAdditionalData.Data.Value) {
+            return {
+              Name: addAdditionalData.Name,
+              Unit: addAdditionalData.Unit,
+              Data: [
+                {
+                  Value: addAdditionalData.Data.Value,
+                  Date: addAdditionalData.Data.Date,
+                },
+              ],
+            };
+          }
+          return null;
+        })
+        .filter((item): item is CareElementAdditionalType => item !== null),
+
       updates: [
         ...datas.updates,
         { date_updated: nowTZTimestamp(), updated_by_id: user.id },
@@ -363,7 +420,6 @@ const CareElementsList = ({
     setProgress(true);
     careElementPut.mutate(careElementToPut, {
       onSuccess: () => {
-        setAddVisible(false);
         setAddFormDatas({
           SmokingStatus: { Status: "", Date: nowTZTimestamp() },
           SmokingPacks: { PerDay: "", Date: nowTZTimestamp() },
@@ -389,16 +445,30 @@ const CareElementsList = ({
           bodyMassIndex: { BMI: "", Date: nowTZTimestamp() },
           bodySurfaceArea: { BSA: "", Date: nowTZTimestamp() },
         });
+        setAddFormAdditionalDatas(
+          addFormAdditionalDatas.map((additionalData) => ({
+            Name: additionalData.Name,
+            Unit: additionalData.Unit,
+            Data: { Value: "", Date: nowTZTimestamp() },
+          }))
+        );
+        setAddVisible(false);
       },
       onSettled: () => {
         setProgress(false);
       },
     });
-    setAddVisible(false);
   };
 
   const handleCancel = () => {
     setAddVisible(false);
+    setAddFormAdditionalDatas(
+      additionalDatas.map((additionalData) => ({
+        Name: additionalData.Name,
+        Unit: additionalData.Unit,
+        Data: { Value: "", Date: nowTZTimestamp() },
+      }))
+    );
     setErrMsgPost("");
   };
 
@@ -432,9 +502,9 @@ const CareElementsList = ({
           {addVisible && (
             <CareElementsListAdd
               addFormDatas={addFormDatas}
-              addAdditionalDatas={addAdditionalDatas}
+              addFormAdditionalDatas={addFormAdditionalDatas}
               setAddFormDatas={setAddFormDatas}
-              setAddAdditionalDatas={setAddAdditionalDatas}
+              setAddFormAdditionalDatas={setAddFormAdditionalDatas}
               setErrMsgPost={setErrMsgPost}
               addDate={addDate}
               setAddDate={setAddDate}
@@ -466,6 +536,23 @@ const CareElementsList = ({
             historyTopic={historyTopic}
             historyDatas={historyDatas}
             historyUnit={historyUnit}
+          />
+        </FakeWindow>
+      )}
+      {additionalHistoryVisible && (
+        <FakeWindow
+          title={`${historyTopic} HISTORY of ${patientName}`}
+          width={800}
+          height={600}
+          x={(window.innerWidth - 800) / 2}
+          y={(window.innerHeight - 600) / 2}
+          color="#577399"
+          setPopUpVisible={setAdditionalHistoryVisible}
+        >
+          <CareElementAdditionalHistory
+            historyTopic={additionalHistoryTopic}
+            historyDatas={additionalHistoryDatas}
+            historyUnit={additionalHistoryUnit}
           />
         </FakeWindow>
       )}

@@ -9,7 +9,6 @@ export const handleResponse = (response: any, res: Response) => {
   }
 };
 export const handleError = (err: AxiosError, res: Response) => {
-  console.error(err);
   console.log(err.response);
   if (err.response) {
     // If the error has a response (from the server)
