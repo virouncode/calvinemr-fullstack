@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
@@ -165,11 +166,12 @@ const SignupPatientForm = () => {
     }
     //Is the mail already taken ?
     setProgress(true);
+    const successfulRequests: { endpoint: string; id: number }[] = [];
     try {
-      const response = await xanoGet(`/patient_with_email`, "staff", {
+      const existingPatient = await xanoGet(`/patient_with_email`, "staff", {
         email: formDatas.email?.toLowerCase(),
       });
-      if (response) {
+      if (existingPatient) {
         setErrMsg("There is already an account with this email");
         setProgress(false);
         return;
@@ -201,15 +203,19 @@ const SignupPatientForm = () => {
     };
     let patientId: number;
     try {
-      const response: PatientType = (
+      const patientResponse: PatientType = (
         await axios.post(`/api/xano/new_patient`, patientToPost)
       ).data;
+      successfulRequests.push({
+        endpoint: "/patients",
+        id: patientResponse.id,
+      });
       socket?.emit("message", {
         route: "PATIENTS",
         action: "create",
-        content: { data: response },
+        content: { data: patientResponse },
       });
-      patientId = response.id;
+      patientId = patientResponse.id;
       const demographicsToPost: Partial<DemographicsType> = {
         ChartNumber: createChartNbr(
           dateISOToTimestampTZ(formDatas.dob),
@@ -310,6 +316,14 @@ const SignupPatientForm = () => {
         created_by_id: user.id,
       };
       patientPost.mutate(demographicsToPost);
+      const demographicsResponse: DemographicsType = (
+        await axios.post(`/api/xano/demographics`, demographicsToPost)
+      ).data;
+      successfulRequests.push({
+        endpoint: "/demographics",
+        id: demographicsResponse.id,
+      });
+
       //Put patient in patients [] of assignedMd
       const response3: StaffType = await xanoGet(
         `/staff/${formDatas.assignedMd}`,
@@ -361,6 +375,7 @@ const SignupPatientForm = () => {
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to post new patient:${err.message}`);
+      await xanoDeleteBatch(successfulRequests, "staff");
       return;
     } finally {
       setProgress(false);
