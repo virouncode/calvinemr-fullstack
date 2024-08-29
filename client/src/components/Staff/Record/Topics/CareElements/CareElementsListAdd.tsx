@@ -550,7 +550,7 @@ const CareElementsListAdd = ({
           height={170}
           x={(window.innerWidth - 400) / 2}
           y={(window.innerHeight - 170) / 2}
-          color="#93b5e9"
+          color="#577399"
           setPopUpVisible={setAddTopic}
         >
           <NewCareElementTopicForm
