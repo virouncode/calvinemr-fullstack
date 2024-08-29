@@ -136,9 +136,8 @@ const ForwardMessage = ({
     messagePost.mutate(messageToPost, {
       onSuccess: () => {
         setForwardVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

@@ -118,7 +118,6 @@ const ReportInboxItem = ({
       ]);
     } else {
       setInitialBody(`Dear colleague, please find below this patient report for your review:
-      
       ${item.Content?.TextContent}`);
     }
   };

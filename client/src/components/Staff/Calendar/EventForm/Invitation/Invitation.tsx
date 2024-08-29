@@ -255,6 +255,7 @@ const Invitation = ({
         toast.error(`Error: unable to save templates: ${err.message}`, {
           containerId: "A",
         });
+    } finally {
       setProgress(false);
     }
   };

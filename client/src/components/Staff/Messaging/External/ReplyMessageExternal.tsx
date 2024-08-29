@@ -119,9 +119,8 @@ const ReplyMessageExternal = ({
       onSuccess: () => {
         setReplyVisible(false);
         setCurrentMsgId(0);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

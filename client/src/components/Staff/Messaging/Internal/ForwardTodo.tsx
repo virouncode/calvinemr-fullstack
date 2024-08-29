@@ -4,7 +4,7 @@ import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
-  useMessagePost,
+  useMessagesPostBatch,
   useTodoDelete,
 } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
@@ -57,7 +57,7 @@ const ForwardTodo = ({
   const [dueDate, setDueDate] = useState(timestampToDateISOTZ(todo.due_date));
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
-  const messagePost = useMessagePost(user.id, section);
+  const todosPost = useMessagesPostBatch(user.id, section);
   const todoDelete = useTodoDelete(user.id);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -98,6 +98,7 @@ const ForwardTodo = ({
     }
     try {
       setProgress(true);
+      const todosToPost: Partial<TodoType>[] = [];
       for (const recipientId of recipientsIds) {
         const todoToPost: Partial<TodoType> = {
           from_staff_id: user.id,
@@ -114,25 +115,17 @@ const ForwardTodo = ({
           read: recipientId === user.id,
           high_importance: todo.high_importance,
         };
-        messagePost.mutate(todoToPost);
-        if (recipientId !== user.id) {
-          socket?.emit("message", {
-            route: "UNREAD TO-DO",
-            action: "update",
-            content: {
-              userId: recipientId,
-            },
-          });
-        }
+        todosToPost.push(todoToPost);
       }
+      todosPost.mutate(todosToPost);
       setForwardTodoVisible(false);
       toast.success("Forwarded successfully", { containerId: "A" });
-      setProgress(false);
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to forward message: ${err.message}`, {
           containerId: "A",
         });
+    } finally {
       setProgress(false);
     }
     if (

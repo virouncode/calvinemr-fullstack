@@ -449,10 +449,7 @@ const LetterPreview = ({
         created_by_id: user.id,
       };
       letterPost.mutate(letterToPost, {
-        onSuccess: () => {
-          setProgress(false);
-        },
-        onError: () => {
+        onSettled: () => {
           setProgress(false);
         },
       });
