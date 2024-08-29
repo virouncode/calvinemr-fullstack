@@ -230,7 +230,6 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           clinical_notes_order: "desc",
         }
       );
-      console.log("ok settings");
       successfulRequests.push({
         endpoint: "/settings",
         id: settingsResponse.id,

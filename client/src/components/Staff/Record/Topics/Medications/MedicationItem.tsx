@@ -61,7 +61,7 @@ const MedicationItem = ({
         >
           <td>
             <div className="medications__item-btn-container">
-              <Button onClick={handleDetailClick} label="See details" />
+              <Button onClick={handleDetailClick} label="Show" />
               {user.title === "Doctor" && (
                 <DeleteButton onClick={handleDeleteClick} />
               )}

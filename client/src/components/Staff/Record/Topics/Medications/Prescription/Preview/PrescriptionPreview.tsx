@@ -4,6 +4,7 @@ import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { xanoDeleteBatch } from "../../../../../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../../../hooks/context/useUserContext";
@@ -133,9 +134,12 @@ const PrescriptionPreview = ({
             "It appears that you haven't utilized the forms on the right to add medications but instead entered free text. Please be aware that the prescription will be generated without recording any medications in the patient's electronic medical record. Continue ?",
         })))
     ) {
+      const successfulRequests: { endpoint: string; id: number }[] = [];
       try {
         setProgress(true);
         const mainPage = printRef.current;
+        console.log("mainPage", mainPage);
+
         const mainCanvas = await html2canvas(mainPage as HTMLElement, {
           useCORS: true,
           scale: 2,
@@ -238,7 +242,14 @@ const PrescriptionPreview = ({
           unique_id: uniqueId,
           date_created: nowTZTimestamp(),
         };
-        prescriptionPost.mutate(prescriptionToPost);
+        prescriptionPost.mutate(prescriptionToPost, {
+          onSuccess: (data) => {
+            successfulRequests.push({
+              endpoint: "/prescriptions",
+              id: data.id,
+            });
+          },
+        });
 
         //Post clinical note
         const clinicalNoteToPost: Partial<ClinicalNoteType> = {
@@ -260,14 +271,24 @@ const PrescriptionPreview = ({
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
         };
-        clinicalNotePost.mutate(clinicalNoteToPost);
+        clinicalNotePost.mutate(clinicalNoteToPost, {
+          onSuccess: (data) => {
+            successfulRequests.push({
+              endpoint: "/clinical_notes",
+              id: data.id,
+            });
+          },
+        });
         setPrescription(fileToUpload);
+        console.log("successfulRequests", successfulRequests);
+
         return fileToUpload;
       } catch (err) {
         if (err instanceof Error)
           toast.error(`Unable to save the prescription: ${err.message}`, {
             containerId: "A",
           });
+        await xanoDeleteBatch(successfulRequests, "staff");
       } finally {
         setProgress(false);
       }

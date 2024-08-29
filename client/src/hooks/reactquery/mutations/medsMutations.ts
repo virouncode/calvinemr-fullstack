@@ -12,9 +12,7 @@ export const useMedsPostBatch = (patientId: number) => {
     mutationFn: (medsToPost: Partial<MedType>[]) =>
       xanoPostBatch("/medications", "staff", medsToPost),
     onSuccess: (datas: MedType[]) => {
-      for (const data of datas) {
-        socket?.emit("message", { key: ["MEDICATIONS & TREATMENTS", data.id] });
-      }
+      socket?.emit("message", { key: ["MEDICATIONS & TREATMENTS", patientId] });
       socket?.emit("message", { key: ["dashboardMedications"] });
       toast.success("Medication(s) post succesfully", {
         containerId: "A",
