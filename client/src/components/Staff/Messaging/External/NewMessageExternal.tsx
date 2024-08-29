@@ -187,82 +187,80 @@ const NewMessageExternal = ({
       high_importance: important,
     };
     messagePost.mutate(messageToPost, {
-      onSuccess: () => {
-        setProgress(false);
+      onSuccess: async () => {
         setNewVisible(false);
+        for (const recipient of recipients) {
+          socket?.emit("message", {
+            route: "UNREAD EXTERNAL",
+            action: "update",
+            content: {
+              userId: recipient.id,
+            },
+          });
+          const recipientPhone = formatToE164Canadian(recipient.phone ?? "");
+          //EMAIL ALERT
+          try {
+            await axios.post(`/api/mailgun`, {
+              to: recipient.email, //to be changed to patient email
+              subject: `${clinic?.name ?? ""} - New message - DO NO REPLY`,
+              text: `
+    Hello ${recipient.name},
+    
+    You have a new message, please login to your patient portal.
+    
+    Please do not reply to this email, as this address is automated and not monitored. 
+    
+    Best wishes, 
+    Powered by CalvinEMR`,
+            });
+          } catch (err) {
+            if (err instanceof Error)
+              toast.error(
+                `Error: unable to send email alert to ${recipient.name}: ${err.message}`,
+                {
+                  containerId: "A",
+                }
+              );
+          }
+          //SMS ALERT
+          try {
+            await axios({
+              url: `/api/twilio`,
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              data: {
+                from: clinic?.name ?? "",
+                to: recipientPhone,
+                body: `
+    Hello ${recipient.name},
+              
+    You have a new message, please login to your patient portal.
+    
+    Please do not reply to this sms, as this number is automated and not monitored. 
+              
+    Best wishes,
+    Powered by Calvin EMR`,
+              },
+            });
+            setProgress(false);
+          } catch (err) {
+            if (err instanceof Error)
+              toast.error(
+                `Error: unable to send SMS alert to ${recipient.name}: ${err.message}`,
+                {
+                  containerId: "A",
+                }
+              );
+            setProgress(false);
+          }
+        }
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
-    for (const recipient of recipients) {
-      socket?.emit("message", {
-        route: "UNREAD EXTERNAL",
-        action: "update",
-        content: {
-          userId: recipient.id,
-        },
-      });
-      const recipientPhone = formatToE164Canadian(recipient.phone ?? "");
-      //EMAIL ALERT
-      try {
-        await axios.post(`/api/mailgun`, {
-          to: recipient.email, //to be changed to patient email
-          subject: `${clinic?.name ?? ""} - New message - DO NO REPLY`,
-          text: `
-Hello ${recipient.name},
-
-You have a new message, please login to your patient portal.
-
-Please do not reply to this email, as this address is automated and not monitored. 
-
-Best wishes, 
-Powered by CalvinEMR`,
-        });
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(
-            `Error: unable to send email alert to ${recipient.name}: ${err.message}`,
-            {
-              containerId: "A",
-            }
-          );
-      }
-      //SMS ALERT
-      try {
-        await axios({
-          url: `/api/twilio`,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            from: clinic?.name ?? "",
-            to: recipientPhone,
-            body: `
-Hello ${recipient.name},
-          
-You have a new message, please login to your patient portal.
-
-Please do not reply to this sms, as this number is automated and not monitored. 
-          
-Best wishes,
-Powered by Calvin EMR`,
-          },
-        });
-        setProgress(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(
-            `Error: unable to send SMS alert to ${recipient.name}: ${err.message}`,
-            {
-              containerId: "A",
-            }
-          );
-        setProgress(false);
-      }
-    }
-    setProgress(false);
   };
 
   const handleAttach = () => {

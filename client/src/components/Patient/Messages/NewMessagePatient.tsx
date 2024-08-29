@@ -97,18 +97,17 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
     };
     messagePost.mutate(messageToPost, {
       onSuccess: () => {
-        setProgress(false);
         setNewVisible(false);
+        socket?.emit("message", {
+          route: "UNREAD EXTERNAL",
+          action: "update",
+          content: {
+            userId: messageToPost.to_staff_id,
+          },
+        });
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
-      },
-    });
-    socket?.emit("message", {
-      route: "UNREAD EXTERNAL",
-      action: "update",
-      content: {
-        userId: messageToPost.to_staff_id,
       },
     });
   };

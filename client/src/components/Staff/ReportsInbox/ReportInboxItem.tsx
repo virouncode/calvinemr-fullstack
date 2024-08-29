@@ -195,12 +195,10 @@ const ReportInboxItem = ({
     const datasToPut: ReportType = { ...itemInfos };
     reportPut.mutate(datasToPut, {
       onSuccess: () => {
-        setProgress(false);
         setEditVisible(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
-        setEditVisible(false);
       },
     });
   };

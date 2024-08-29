@@ -130,10 +130,9 @@ const NewFax = ({
     }
     faxPost.mutate(faxToPost, {
       onSuccess: () => {
-        setProgress(false);
         setNewVisible(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

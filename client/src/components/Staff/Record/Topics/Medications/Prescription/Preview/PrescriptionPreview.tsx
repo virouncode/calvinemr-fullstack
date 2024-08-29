@@ -138,8 +138,6 @@ const PrescriptionPreview = ({
       try {
         setProgress(true);
         const mainPage = printRef.current;
-        console.log("mainPage", mainPage);
-
         const mainCanvas = await html2canvas(mainPage as HTMLElement, {
           useCORS: true,
           scale: 2,
@@ -180,7 +178,6 @@ const PrescriptionPreview = ({
             content: pdfURI,
           }
         );
-
         //Post the meds
         const medsToPost: Partial<MedType>[] = [];
         if (addedMeds.length !== 0) {

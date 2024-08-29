@@ -315,15 +315,14 @@ const SignupPatientForm = () => {
         date_created: nowTZTimestamp(),
         created_by_id: user.id,
       };
-      patientPost.mutate(demographicsToPost);
-      const demographicsResponse: DemographicsType = (
-        await axios.post(`/api/xano/demographics`, demographicsToPost)
-      ).data;
-      successfulRequests.push({
-        endpoint: "/demographics",
-        id: demographicsResponse.id,
+      patientPost.mutate(demographicsToPost, {
+        onSuccess: (data) => {
+          successfulRequests.push({
+            endpoint: "/demographics",
+            id: data.id,
+          });
+        },
       });
-
       //Put patient in patients [] of assignedMd
       const response3: StaffType = await xanoGet(
         `/staff/${formDatas.assignedMd}`,

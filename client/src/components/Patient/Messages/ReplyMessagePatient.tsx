@@ -85,17 +85,16 @@ const ReplyMessagePatient = ({
       onSuccess: () => {
         setReplyVisible(false);
         setCurrentMsgId(0);
-        setProgress(false);
+        socket?.emit("message", {
+          route: "UNREAD EXTERNAL",
+          action: "update",
+          content: {
+            userId: messageToPost.to_staff_id,
+          },
+        });
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
-      },
-    });
-    socket?.emit("message", {
-      route: "UNREAD EXTERNAL",
-      action: "update",
-      content: {
-        userId: messageToPost.to_staff_id,
       },
     });
   };

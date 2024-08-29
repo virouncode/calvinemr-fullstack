@@ -181,7 +181,6 @@ const Invitation = ({
         toast.success(`SMS invitation sent successfully to ${patientName}`, {
           containerId: "A",
         });
-        setProgress(false);
       } catch (err) {
         if (err instanceof Error)
           toast.error(
@@ -190,6 +189,7 @@ const Invitation = ({
               containerId: "A",
             }
           );
+      } finally {
         setProgress(false);
       }
     }

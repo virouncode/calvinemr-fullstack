@@ -140,23 +140,22 @@ const ForwardMessageExternal = ({
     messagePost.mutate(messageToPost, {
       onSuccess: () => {
         setForwardVisible(false);
-        setProgress(false);
+        for (const to_staff_id of recipientsIds) {
+          if (to_staff_id !== user.id) {
+            socket?.emit("message", {
+              route: "UNREAD",
+              action: "update",
+              content: {
+                userId: to_staff_id,
+              },
+            });
+          }
+        }
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
-    for (const to_staff_id of recipientsIds) {
-      if (to_staff_id !== user.id) {
-        socket?.emit("message", {
-          route: "UNREAD",
-          action: "update",
-          content: {
-            userId: to_staff_id,
-          },
-        });
-      }
-    }
   };
 
   const handleAttach = () => {

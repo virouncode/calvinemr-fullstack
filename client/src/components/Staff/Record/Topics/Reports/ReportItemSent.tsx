@@ -112,9 +112,8 @@ const ReportItemSent = ({
     reportPut.mutate(reportToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
