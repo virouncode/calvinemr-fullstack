@@ -66,9 +66,8 @@ const FaxTemplateEdit = ({
     faxTemplatePut.mutate(faxTemplateToPut, {
       onSuccess: () => {
         setEditTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

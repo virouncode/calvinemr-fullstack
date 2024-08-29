@@ -75,9 +75,8 @@ const MessageTemplateEdit = ({
     messageTemplatePut.mutate(messageTemplateToPut, {
       onSuccess: () => {
         setEditTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

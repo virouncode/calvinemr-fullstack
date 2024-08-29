@@ -3,7 +3,7 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 
 type StaffListProps = {
-  value: string;
+  value: number;
   name: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
@@ -12,6 +12,9 @@ const StaffList = ({ value, name, handleChange }: StaffListProps) => {
   const { staffInfos } = useStaffInfosContext();
   return (
     <select value={value} name={name} onChange={handleChange}>
+      <option value="0" disabled>
+        Select practitioner...
+      </option>
       {staffInfos
         .filter(({ account_status }) => account_status !== "Closed")
         .filter(({ title }) => title !== "Secretary")

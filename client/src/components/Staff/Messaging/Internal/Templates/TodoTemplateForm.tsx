@@ -62,9 +62,8 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
     todoTemplatePost.mutate(todoTemplateToPost, {
       onSuccess: () => {
         setNewTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

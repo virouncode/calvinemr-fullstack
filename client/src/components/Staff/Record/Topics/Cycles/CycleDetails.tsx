@@ -61,9 +61,8 @@ const CycleDetails = ({
     topicPut.mutate(cycleToPut, {
       onSuccess: () => {
         setShow(false);
-        setProgress(false);
       },
-      onError: () => setProgress(false),
+      onSettled: () => setProgress(false),
     });
   };
   const handleClose = async () => {

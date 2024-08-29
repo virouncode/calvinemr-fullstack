@@ -86,11 +86,11 @@ const MyAccountAdmin = () => {
       });
 
       setEditVisible(false);
-      setProgress(false);
       setTimeout(() => setSuccessMsg(""), 2000);
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Error: unable to save infos: ${err.message}`);
+    } finally {
       setProgress(false);
     }
   };

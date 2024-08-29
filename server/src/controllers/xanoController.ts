@@ -310,9 +310,7 @@ Powered by Calvin EMR`,
     await axios.post(mailgunUrl, emailToPost);
     handleResponse(response, res);
   } catch (err) {
-    console.log("EROR");
-
-    // handleError(err as AxiosError, res);
+    handleError(err as AxiosError, res);
   }
 };
 

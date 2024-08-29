@@ -1,6 +1,5 @@
 import { Reorder } from "framer-motion";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroupPost } from "../../../hooks/reactquery/mutations/patientsGroupsMutations";
 import { DemographicsType, GroupType } from "../../../types/api";
@@ -100,15 +99,8 @@ const PatientsGroupForm = ({
     patientsGroupPost.mutate(datasToPost, {
       onSuccess: () => {
         setAddGroupVisible(false);
-        toast.success("Patients group saved successfully", {
-          containerId: "A",
-        });
-        setProgress(false);
       },
-      onError: (err) => {
-        toast.error(`Unable to save patients group: ${err.message}`, {
-          containerId: "A",
-        });
+      onSettled: () => {
         setProgress(false);
       },
     });

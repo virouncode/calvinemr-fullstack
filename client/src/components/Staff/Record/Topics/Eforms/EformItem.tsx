@@ -62,10 +62,9 @@ const EformItem = ({
     setProgress(true);
     topicPut.mutate(eformToPut, {
       onSuccess: () => {
-        setProgress(false);
         setRenameVisible(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

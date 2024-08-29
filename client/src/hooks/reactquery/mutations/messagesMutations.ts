@@ -44,12 +44,83 @@ export const useMessagePost = (staffId: number, section: string) => {
           });
         }
       }
-      toast.success("Message post succesfully", { containerId: "A" });
+      toast.success("Message/To-do post succesfully", { containerId: "A" });
     },
     onError: (error) => {
-      toast.error(`Error: unable to post message: ${error.message}`, {
+      toast.error(`Error: unable to post message/to-do: ${error.message}`, {
         containerId: "A",
       });
+    },
+  });
+};
+
+export const useMessagesPostBatch = (staffId: number, section: string) => {
+  const { socket } = useSocketContext();
+  let successfulRequests: { endpoint: "/messages" | "/todos"; id: number }[] =
+    [];
+  return useMutation({
+    mutationFn: (
+      messagesToPost: Partial<MessageType>[] | Partial<TodoType>
+    ) => {
+      if (section === "To-dos") {
+        return xanoPostBatch(
+          "/todos",
+          "staff",
+          messagesToPost as Partial<TodoType>[]
+        );
+      } else {
+        return xanoPostBatch(
+          "/messages",
+          "staff",
+          messagesToPost as Partial<MessageType>[]
+        );
+      }
+    },
+    onSuccess: (datas: MessageType[] | TodoType[]) => {
+      socket?.emit("message", { key: ["messages", staffId] });
+      for (const data of datas) {
+        if (section === "To-dos") {
+          socket?.emit("message", {
+            key: ["messages", (data as TodoType).to_staff_id],
+          });
+          if ((data as TodoType).to_staff_id !== staffId) {
+            socket?.emit("message", {
+              route: "UNREAD TO-DO",
+              action: "update",
+              content: {
+                userId: (data as TodoType).to_staff_id,
+              },
+            });
+          }
+        } else {
+          for (const staff_id of (data as MessageType).to_staff_ids) {
+            socket?.emit("message", { key: ["messages", staff_id] });
+          }
+        }
+      }
+      toast.success("Message(s)/Todo(s) post succesfully", {
+        containerId: "A",
+      });
+      if (section === "To-dos") {
+        successfulRequests = datas.map((item) => ({
+          endpoint: "/todos",
+          id: item.id,
+        }));
+      } else {
+        successfulRequests = datas.map((item) => ({
+          endpoint: "/messages",
+          id: item.id,
+        }));
+      }
+    },
+    onError: (error) => {
+      toast.error(
+        `Error: unable to post message(s)/todo(s): ${error.message}`,
+        {
+          containerId: "A",
+        }
+      );
+      xanoDeleteBatch(successfulRequests, "staff");
     },
   });
 };
@@ -197,10 +268,10 @@ export const useMessagesExternalPostBatch = () => {
       }));
     },
     onError: (error) => {
-      xanoDeleteBatch(successfulRequests, userType as string);
       toast.error(`Error: unable to post message(s): ${error.message}`, {
         containerId: "A",
       });
+      xanoDeleteBatch(successfulRequests, userType as string);
     },
   });
 };

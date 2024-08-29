@@ -1,9 +1,9 @@
-import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { useReportsPostBatch } from "../../../../../hooks/reactquery/mutations/reportsMutations";
 import {
   AttachmentType,
   DemographicsType,
@@ -27,7 +27,6 @@ type ReportFormMultiplePatientsProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   initialAttachment: Partial<MessageAttachmentType>;
-  reportPost: UseMutationResult<ReportType, Error, Partial<ReportType>, void>;
 };
 
 const ReportFormMultiplePatients = ({
@@ -37,7 +36,6 @@ const ReportFormMultiplePatients = ({
   setErrMsgPost,
   errMsgPost,
   initialAttachment,
-  reportPost,
 }: ReportFormMultiplePatientsProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
@@ -52,6 +50,8 @@ const ReportFormMultiplePatients = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [sentOrReceived, setSentOrReceived] = useState("Received");
   const [progress, setProgress] = useState(false);
+
+  const reportsPost = useReportsPostBatch();
 
   //HANDLERS
   const handleChange = (
@@ -197,45 +197,50 @@ const ReportFormMultiplePatients = ({
       return;
     }
     setProgress(true);
-    try {
-      for (const patientId of patientsIds) {
-        const reportToPost: Partial<ReportType> = {
-          ...formDatas,
-          patient_id: patientId,
-          assigned_staff_id: demographicsInfos.find(
-            ({ patient_id }) => patient_id === patientId
-          )?.assigned_staff_id,
-          SourceAuthorPhysician: {
-            AuthorFreeText:
-              sentOrReceived === "Sent"
-                ? patientIdToAssignedStaffTitleAndName(
-                    demographicsInfos.find(
-                      ({ patient_id }) => patient_id === patientId
-                    ),
-                    staffInfos,
-                    patientId
-                  )
-                : "",
-          },
-          date_created: nowTZTimestamp(),
-          created_by_id: user.id,
-        };
-        //Formatting
-        if (reportToPost.ReportReviewed?.[0].Name?.FirstName) {
-          reportToPost.acknowledged = true;
-        }
-        if (sentOrReceived === "Sent") {
-          reportToPost.acknowledged = true;
-        }
-        //Submission
-        reportPost.mutate(reportToPost);
+    const reportsToPost: Partial<ReportType>[] = [];
+
+    for (const patientId of patientsIds) {
+      const reportToPost: Partial<ReportType> = {
+        ...formDatas,
+        patient_id: patientId,
+        assigned_staff_id: demographicsInfos.find(
+          ({ patient_id }) => patient_id === patientId
+        )?.assigned_staff_id,
+        SourceAuthorPhysician: {
+          AuthorFreeText:
+            sentOrReceived === "Sent"
+              ? patientIdToAssignedStaffTitleAndName(
+                  demographicsInfos.find(
+                    ({ patient_id }) => patient_id === patientId
+                  ),
+                  staffInfos,
+                  patientId
+                )
+              : "",
+        },
+        date_created: nowTZTimestamp(),
+        created_by_id: user.id,
+      };
+
+      //Formatting
+      if (reportToPost.ReportReviewed?.[0].Name?.FirstName) {
+        reportToPost.acknowledged = true;
       }
-      setProgress(false);
-      setAddVisible(false);
-    } catch (err) {
-      if (err instanceof Error) setErrMsgPost(err.message);
-      setProgress(false);
+      if (sentOrReceived === "Sent") {
+        reportToPost.acknowledged = true;
+      }
+      //Submission
+      reportsToPost.push(reportToPost);
     }
+    reportsPost.mutate(reportsToPost, {
+      onSuccess: () => {
+        setProgress(false);
+        setAddVisible(false);
+      },
+      onSettled: () => {
+        setProgress(false);
+      },
+    });
   };
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

@@ -249,7 +249,6 @@ const MessageExternalAttachmentCard = ({
             initialAttachment={attachment}
             errMsgPost={errMsgPost}
             setErrMsgPost={setErrMsgPost}
-            reportPost={reportPost}
           />
         </FakeWindow>
       )}

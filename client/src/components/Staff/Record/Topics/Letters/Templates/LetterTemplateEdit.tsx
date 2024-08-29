@@ -102,9 +102,8 @@ const LetterTemplateEdit = ({
     letterTemplatePut.mutate(letterTemplateToPut, {
       onSuccess: () => {
         setEditTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

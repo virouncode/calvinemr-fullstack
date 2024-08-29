@@ -98,13 +98,13 @@ const MyAccountStaff = () => {
         },
       });
       setEditVisible(false);
-      setProgress(false);
       toast.success(`Infos changed successfully`, { containerId: "A" });
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to save infos: ${err.message}`, {
           containerId: "A",
         });
+    } finally {
       setProgress(false);
     }
   };

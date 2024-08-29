@@ -98,9 +98,8 @@ const LetterTemplateForm = ({
     letterTemplatePost.mutate(letterTemplateToPost, {
       onSuccess: () => {
         setNewTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

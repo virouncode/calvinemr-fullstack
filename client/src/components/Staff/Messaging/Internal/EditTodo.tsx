@@ -165,9 +165,8 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
     messagePut.mutate(messageToPut, {
       onSuccess: () => {
         setEditTodoVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

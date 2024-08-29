@@ -51,9 +51,9 @@ const ClinicalNotesTemplateForm = ({
     };
     templateToPost.date_created = nowTZTimestamp();
     templateToPost.author_id = user.id;
-
-    templatePost.mutate(templateToPost);
-    setNewTemplateVisible(false);
+    templatePost.mutate(templateToPost, {
+      onSuccess: () => setNewTemplateVisible(false),
+    });
   };
   return (
     <div className="new-template">

@@ -49,9 +49,8 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
     linkPut.mutate(linkToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

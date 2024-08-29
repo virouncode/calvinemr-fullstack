@@ -24,7 +24,6 @@ export const useTopicPost = <T extends TopicType>(
     },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
-
       if (topic === "APPOINTMENTS") {
         socket?.emit("message", { key: ["appointments"] });
         socket?.emit("message", { key: ["appointment"] });

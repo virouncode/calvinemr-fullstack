@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { ReportType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
@@ -46,39 +46,38 @@ export const useReportPost = () => {
     },
   });
 };
-export const useReportInboxPost = () => {
+
+export const useReportsPostBatch = () => {
+  let successfulRequests: { endpoint: "/reports"; id: number }[] = [];
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (reportToPost: Partial<ReportType>) =>
-      xanoPost("/reports", "staff", reportToPost),
-    onMutate: async (reportToPost) => {
-      await queryClient.cancelQueries({
-        queryKey: ["reportsReceived", reportToPost.patient_id],
+    mutationFn: (reportsToPost: Partial<ReportType>[]) =>
+      xanoPostBatch("/reports", "staff", reportsToPost),
+    onSuccess: (datas: ReportType[]) => {
+      for (const data of datas) {
+        socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
+        socket?.emit("message", { key: ["reportsSent", data.patient_id] });
+        socket?.emit("message", {
+          key: ["reports", data.patient_id],
+        });
+        socket?.emit("message", {
+          key: ["reportsInbox", data.assigned_staff_id],
+        });
+      }
+      toast.success(`Report(s) post succesfully`, {
+        containerId: "A",
       });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsSent", reportToPost.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reports", reportToPost.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
-      });
+      successfulRequests = datas.map((item) => ({
+        endpoint: "/reports",
+        id: item.id,
+      }));
     },
-    onSuccess: (data: ReportType) => {
-      socket?.emit("message", {
-        key: ["reportsReceived", data.patient_id],
+    onError: (error) => {
+      toast.error(`Error: unable to post report(s): ${error.message}`, {
+        containerId: "A",
       });
-      socket?.emit("message", {
-        key: ["reportsSent", data.patient_id],
-      });
-      socket?.emit("message", {
-        key: ["reports", data.patient_id],
-      });
-      socket?.emit("message", {
-        key: ["reportsInbox", data.assigned_staff_id],
-      });
+      xanoDeleteBatch(successfulRequests, "staff");
     },
   });
 };

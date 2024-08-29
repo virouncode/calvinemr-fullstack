@@ -59,9 +59,8 @@ const PamphletForm = ({
     pamphletPost.mutate(datasToPost, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

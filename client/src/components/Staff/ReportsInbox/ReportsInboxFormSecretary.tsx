@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useReportInboxPost } from "../../../hooks/reactquery/mutations/reportsMutations";
+import { useReportPost } from "../../../hooks/reactquery/mutations/reportsMutations";
 import { reportClassCT, reportFormatCT } from "../../../omdDatas/codesTables";
 import { DemographicsType, ReportType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
@@ -40,7 +40,7 @@ const ReportsInboxFormSecretary = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [progress, setProgress] = useState(false);
-  const reportPost = useReportInboxPost();
+  const reportPost = useReportPost();
 
   //HANDLERS
   const handleChange = (
@@ -119,17 +119,7 @@ const ReportsInboxFormSecretary = ({
 
     setProgress(true);
     reportPost.mutate(reportToPost, {
-      onSuccess: () => {
-        toast.success(
-          "Report posted successfully to patient's assigned practitioner",
-          { containerId: "A" }
-        );
-        setProgress(false);
-      },
-      onError: (error) => {
-        toast.error(`Error unable to post report: ${error.message}`, {
-          containerId: "A",
-        });
+      onSettled: () => {
         setProgress(false);
       },
     });

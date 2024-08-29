@@ -29,8 +29,9 @@ export const patientSchema = yup.object({
     excludeEmptyString: true,
   }),
   assignedMd: yup
-    .string()
-    .required("Assigned clinic practitioner field is required"),
+    .number()
+    .required("Assigned clinic practitioner field is required")
+    .notOneOf([0], "Assigned clinic practitioner field is required"),
   gender: yup.string().required("Gender field is required"),
   cellphone: yup
     .string()

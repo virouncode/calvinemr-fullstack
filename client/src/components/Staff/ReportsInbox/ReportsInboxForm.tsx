@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useReportInboxPost } from "../../../hooks/reactquery/mutations/reportsMutations";
+import { useReportPost } from "../../../hooks/reactquery/mutations/reportsMutations";
 import { reportClassCT } from "../../../omdDatas/codesTables";
 import {
   DemographicsType,
@@ -61,7 +60,7 @@ const ReportsInboxForm = ({
     Notes: "",
   });
   const [progress, setProgress] = useState(false);
-  const reportPost = useReportInboxPost();
+  const reportPost = useReportPost();
 
   //HANDLERS
   const handleChange = (
@@ -131,17 +130,9 @@ const ReportsInboxForm = ({
     setProgress(true);
     reportPost.mutate(reportToPost, {
       onSuccess: () => {
-        toast.success(
-          "Report posted successfully to patient's assigned practitioner",
-          { containerId: "A" }
-        );
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: (error) => {
-        toast.error(`Error unable to post report: ${error.message}`, {
-          containerId: "A",
-        });
+      onSettled: (error) => {
         setProgress(false);
       },
     });

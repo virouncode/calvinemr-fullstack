@@ -21,6 +21,8 @@ import {
   AttachmentType,
   DemographicsFormType,
   DemographicsType,
+  PatientType,
+  StaffType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import {
@@ -180,27 +182,34 @@ const SignupPatientForm = () => {
     }
 
     //Formatting
-    const patientToPost = {
+    const patientToPost: Partial<PatientType> & {
+      clinic_name: string;
+      first_name: string;
+      middle_name: string;
+      last_name: string;
+    } = {
       email: formDatas.email?.toLowerCase(),
       access_level: "patient",
       account_status: "Active",
       created_by_id: user.id,
       date_created: nowTZTimestamp(),
       //for the email sent to the new patient
-      clinic_name: clinic?.name,
-      first_name: formDatas.firstName,
-      middle_name: formDatas.middleName,
-      last_name: formDatas.lastName,
+      clinic_name: clinic?.name ?? "",
+      first_name: formDatas.firstName ?? "",
+      middle_name: formDatas.middleName ?? "",
+      last_name: formDatas.lastName ?? "",
     };
-    let patientId;
+    let patientId: number;
     try {
-      const response = await axios.post(`/api/xano/new_patient`, patientToPost);
+      const response: PatientType = (
+        await axios.post(`/api/xano/new_patient`, patientToPost)
+      ).data;
       socket?.emit("message", {
         route: "PATIENTS",
         action: "create",
-        content: { data: response.data },
+        content: { data: response },
       });
-      patientId = response.data.id;
+      patientId = response.id;
       const demographicsToPost: Partial<DemographicsType> = {
         ChartNumber: createChartNbr(
           dateISOToTimestampTZ(formDatas.dob),
@@ -302,7 +311,7 @@ const SignupPatientForm = () => {
       };
       patientPost.mutate(demographicsToPost);
       //Put patient in patients [] of assignedMd
-      const response3 = await xanoGet(
+      const response3: StaffType = await xanoGet(
         `/staff/${formDatas.assignedMd}`,
         "staff"
       );
@@ -346,15 +355,15 @@ const SignupPatientForm = () => {
         avatar: null,
       });
       setSuccessMsg("Patient added successfully");
-      setProgress(false);
       setTimeout(() => {
         setSuccessMsg("");
       }, 3000);
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to post new patient:${err.message}`);
-      setProgress(false);
       return;
+    } finally {
+      setProgress(false);
     }
   };
 
@@ -493,7 +502,7 @@ const SignupPatientForm = () => {
           <div className="signup-patient__row">
             <label>Assigned practitioner*: </label>
             <StaffList
-              value={formDatas.assignedMd?.toString() ?? "0"}
+              value={formDatas.assignedMd ?? 0}
               name="assignedMd"
               handleChange={handleChange}
             />

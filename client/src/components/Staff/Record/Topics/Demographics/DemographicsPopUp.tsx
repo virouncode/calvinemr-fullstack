@@ -795,7 +795,7 @@ const DemographicsPopUp = ({
                 <label>Assigned Clinic Physician: </label>
                 {editVisible ? (
                   <StaffList
-                    value={formDatas?.assignedMd.toString() ?? ""}
+                    value={formDatas?.assignedMd ?? 0}
                     name="assignedMd"
                     handleChange={handleChange}
                   />

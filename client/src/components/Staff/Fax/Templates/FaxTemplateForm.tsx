@@ -59,9 +59,8 @@ const FaxTemplateForm = ({ setNewTemplateVisible }: FaxTemplateFormProps) => {
     faxTemplatePost.mutate(faxTemplateToPost, {
       onSuccess: () => {
         setNewTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

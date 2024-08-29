@@ -59,9 +59,8 @@ const EdocForm = ({
     edocPost.mutate(datasToPost, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

@@ -62,7 +62,7 @@ const ClosedPracticianAccount = ({
           record:`}
         </label>
         <StaffList
-          value={assignedStaffId.toString()}
+          value={assignedStaffId}
           handleChange={handleChange}
           name="assignedMd"
         />

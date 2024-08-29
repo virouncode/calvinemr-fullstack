@@ -92,9 +92,8 @@ const PatientsGroupEdit = ({
     groupPut.mutate(groupToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

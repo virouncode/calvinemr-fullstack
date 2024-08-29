@@ -61,9 +61,8 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
     linkPost.mutate(linkToPost, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

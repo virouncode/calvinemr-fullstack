@@ -5,7 +5,7 @@ import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
-import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesMutations";
+import { useMessagesPostBatch } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
   AttachmentType,
   DemographicsType,
@@ -64,7 +64,7 @@ const NewTodo = ({
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
-  const messagePost = useMessagePost(user.id, "To-dos");
+  const messagesPost = useMessagesPostBatch(user.id, "To-dos");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBody(e.target.value);
@@ -133,6 +133,7 @@ const NewTodo = ({
           attachments_array: attachments,
         });
       }
+      const messagesToPost: Partial<TodoType>[] = [];
       for (const recipientId of recipientsIds) {
         //create the message
         const messageToPost: Partial<TodoType> = {
@@ -148,25 +149,17 @@ const NewTodo = ({
           due_date: dueDate ? dateISOToTimestampTZ(dueDate) : null,
           read: recipientId === user.id,
         };
-        messagePost.mutate(messageToPost);
-        if (recipientId !== user.id) {
-          socket?.emit("message", {
-            route: "UNREAD TO-DO",
-            action: "update",
-            content: {
-              userId: recipientId,
-            },
-          });
-        }
+        messagesToPost.push(messageToPost);
       }
-      toast.success("To-do saved successfully", { containerId: "A" });
-      setNewTodoVisible(false);
-      setProgress(false);
+      messagesPost.mutate(messagesToPost, {
+        onSuccess: () => setNewTodoVisible(false),
+      });
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to save to-do: ${err.message}`, {
           containerId: "A",
         });
+    } finally {
       setProgress(false);
     }
   };

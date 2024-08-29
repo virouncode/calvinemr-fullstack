@@ -52,7 +52,7 @@ const Notepad = ({ setNotepadVisible }: NotepadProps) => {
         setNotepadVisible(false);
         setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

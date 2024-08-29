@@ -3,10 +3,12 @@ import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { xanoPost } from "../../../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../../../../hooks/reactquery/mutations/clinicalNotesMutations";
+import { useMedsPostBatch } from "../../../../../../../hooks/reactquery/mutations/medsMutations";
 import { useTopicPost } from "../../../../../../../hooks/reactquery/mutations/topicMutations";
 import usePrescriptionMultipage from "../../../../../../../hooks/usePrescriptionMultipage";
 import {
@@ -88,6 +90,7 @@ const PrescriptionPreview = ({
   //Queries
   const clinicalNotePost = useClinicalNotePost();
   const prescriptionPost = useTopicPost("PAST PRESCRIPTIONS", patientId);
+  const medsPost = useMedsPostBatch(patientId);
 
   usePrescriptionMultipage(
     bodyRef,
@@ -121,6 +124,7 @@ const PrescriptionPreview = ({
       );
       return;
     }
+
     if (
       addedMeds.length !== 0 ||
       (addedMeds.length === 0 &&
@@ -129,141 +133,144 @@ const PrescriptionPreview = ({
             "It appears that you haven't utilized the forms on the right to add medications but instead entered free text. Please be aware that the prescription will be generated without recording any medications in the patient's electronic medical record. Continue ?",
         })))
     ) {
-      setProgress(true);
-      const mainPage = printRef.current;
-      const mainCanvas = await html2canvas(mainPage as HTMLElement, {
-        useCORS: true,
-        scale: 2,
-      });
-      const mainDataURL = mainCanvas.toDataURL("image/jpeg");
-      const pdfDoc = await PDFDocument.create();
-      const pdfPage1 = pdfDoc.addPage(PageSizes.Letter);
-      const image1 = await pdfDoc.embedJpg(mainDataURL);
-      pdfPage1.drawImage(image1, {
-        x: 0,
-        y: 0,
-        width: pdfPage1.getWidth(),
-        height: pdfPage1.getHeight(),
-      });
-
-      for (const printAdditionalRef of printAdditionalRefs.current) {
-        const page = printAdditionalRef;
-        const canvas = await html2canvas(page, {
+      try {
+        setProgress(true);
+        const mainPage = printRef.current;
+        const mainCanvas = await html2canvas(mainPage as HTMLElement, {
           useCORS: true,
           scale: 2,
         });
-        const dataURL = canvas.toDataURL("image/jpeg");
-        const pdfPage = pdfDoc.addPage(PageSizes.Letter);
-        const image = await pdfDoc.embedJpg(dataURL);
-        pdfPage.drawImage(image, {
+        const mainDataURL = mainCanvas.toDataURL("image/jpeg");
+        const pdfDoc = await PDFDocument.create();
+        const pdfPage1 = pdfDoc.addPage(PageSizes.Letter);
+        const image1 = await pdfDoc.embedJpg(mainDataURL);
+        pdfPage1.drawImage(image1, {
           x: 0,
           y: 0,
-          width: pdfPage.getWidth(),
-          height: pdfPage.getHeight(),
+          width: pdfPage1.getWidth(),
+          height: pdfPage1.getHeight(),
         });
-      }
 
-      const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fileToUpload: AttachmentType = await xanoPost(
-        "/upload/attachment",
-        "staff",
-        {
-          content: pdfURI,
+        for (const printAdditionalRef of printAdditionalRefs.current) {
+          const page = printAdditionalRef;
+          const canvas = await html2canvas(page, {
+            useCORS: true,
+            scale: 2,
+          });
+          const dataURL = canvas.toDataURL("image/jpeg");
+          const pdfPage = pdfDoc.addPage(PageSizes.Letter);
+          const image = await pdfDoc.embedJpg(dataURL);
+          pdfPage.drawImage(image, {
+            x: 0,
+            y: 0,
+            width: pdfPage.getWidth(),
+            height: pdfPage.getHeight(),
+          });
         }
-      );
 
-      //Post the meds
-      if (addedMeds.length !== 0) {
-        for (const med of addedMeds) {
-          const medToPost: Partial<MedType> = {
-            ...med,
-            patient_id: patientId,
-            PrescriptionWrittenDate: nowTZTimestamp(),
-            StartDate: nowTZTimestamp(),
-            PrescribedBy: {
+        const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
+        const fileToUpload: AttachmentType = await xanoPost(
+          "/upload/attachment",
+          "staff",
+          {
+            content: pdfURI,
+          }
+        );
+
+        //Post the meds
+        const medsToPost: Partial<MedType>[] = [];
+        if (addedMeds.length !== 0) {
+          for (const med of addedMeds) {
+            const medToPost: Partial<MedType> = {
+              ...med,
+              patient_id: patientId,
+              PrescriptionWrittenDate: nowTZTimestamp(),
+              StartDate: nowTZTimestamp(),
+              PrescribedBy: {
+                Name: {
+                  FirstName: staffIdToFirstName(staffInfos, user.id),
+                  LastName: staffIdToLastName(staffInfos, user.id),
+                },
+                OHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
+              },
+              PrescriptionIdentifier: uniqueId,
+              site_id: siteSelectedId,
+            };
+
+            const propertiesToDelete: (keyof MedType)[] = [
+              "id",
+              "temp_id",
+              "date_created",
+              "created_by_id",
+              "updates",
+            ];
+
+            for (const prop of propertiesToDelete) {
+              if (prop in medToPost) {
+                delete medToPost[prop];
+              }
+            }
+            medToPost.date_created = nowTZTimestamp();
+            medToPost.created_by_id = user.id;
+            medsToPost.push(medToPost);
+          }
+          medsPost.mutate(medsToPost);
+        }
+        //Post prescription
+        const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
+          {
+            file: fileToUpload,
+            alias: `Prescription_${prescriptionStamp}.pdf`,
+            date_created: nowTZTimestamp(),
+            created_by_id: user.id,
+          },
+        ];
+        const attach_ids: number[] = await xanoPost(
+          "/clinical_notes_attachments",
+          "staff",
+          {
+            attachments_array: datasAttachment,
+          }
+        );
+        const prescriptionToPost: Partial<PrescriptionType> = {
+          patient_id: patientId,
+          attachment_id: attach_ids[0],
+          unique_id: uniqueId,
+          date_created: nowTZTimestamp(),
+        };
+        prescriptionPost.mutate(prescriptionToPost);
+
+        //Post clinical note
+        const clinicalNoteToPost: Partial<ClinicalNoteType> = {
+          patient_id: demographicsInfos.patient_id,
+          subject: `Prescription_${prescriptionStamp}`,
+          MyClinicalNotesContent: "See attachment",
+          ParticipatingProviders: [
+            {
               Name: {
                 FirstName: staffIdToFirstName(staffInfos, user.id),
                 LastName: staffIdToLastName(staffInfos, user.id),
               },
               OHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
+              DateTimeNoteCreated: nowTZTimestamp(),
             },
-            PrescriptionIdentifier: uniqueId,
-            site_id: siteSelectedId,
-          };
-
-          const propertiesToDelete: (keyof MedType)[] = [
-            "id",
-            "temp_id",
-            "date_created",
-            "created_by_id",
-            "updates",
-          ];
-
-          for (const prop of propertiesToDelete) {
-            if (prop in medToPost) {
-              delete medToPost[prop];
-            }
-          }
-
-          medToPost.date_created = nowTZTimestamp();
-          medToPost.created_by_id = user.id;
-          topicPost.mutate(medToPost);
-        }
-      }
-      //Post prescription
-      const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
-        {
-          file: fileToUpload,
-          alias: `Prescription_${prescriptionStamp}.pdf`,
+          ],
+          version_nbr: 1,
+          attachments_ids: attach_ids,
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
-        },
-      ];
-      const attach_ids: number[] = await xanoPost(
-        "/clinical_notes_attachments",
-        "staff",
-        {
-          attachments_array: datasAttachment,
-        }
-      );
-      const prescriptionToPost: Partial<PrescriptionType> = {
-        patient_id: patientId,
-        attachment_id: attach_ids[0],
-        unique_id: uniqueId,
-        date_created: nowTZTimestamp(),
-      };
-      prescriptionPost.mutate(prescriptionToPost);
-
-      //Post clinical note
-      const clinicalNoteToPost: Partial<ClinicalNoteType> = {
-        patient_id: demographicsInfos.patient_id,
-        subject: `Prescription_${prescriptionStamp}`,
-        MyClinicalNotesContent: "See attachment",
-        ParticipatingProviders: [
-          {
-            Name: {
-              FirstName: staffIdToFirstName(staffInfos, user.id),
-              LastName: staffIdToLastName(staffInfos, user.id),
-            },
-            OHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
-            DateTimeNoteCreated: nowTZTimestamp(),
-          },
-        ],
-        version_nbr: 1,
-        attachments_ids: attach_ids,
-        date_created: nowTZTimestamp(),
-        created_by_id: user.id,
-      };
-      clinicalNotePost.mutate(clinicalNoteToPost, {
-        onSuccess: () => {
-          setProgress(false);
-        },
-        onError: () => {
-          setProgress(false);
-        },
-      });
-      setPrescription(fileToUpload);
-      return fileToUpload;
+        };
+        clinicalNotePost.mutate(clinicalNoteToPost);
+        setPrescription(fileToUpload);
+        return fileToUpload;
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Unable to save the prescription: ${err.message}`, {
+            containerId: "A",
+          });
+      } finally {
+        setProgress(false);
+      }
     }
   };
 
@@ -273,6 +280,7 @@ const PrescriptionPreview = ({
       return;
     }
     const fileToPrint = await handleSave();
+    if (!fileToPrint) return;
     printJS(`${import.meta.env.VITE_XANO_BASE_URL}${fileToPrint?.path}`);
   };
 

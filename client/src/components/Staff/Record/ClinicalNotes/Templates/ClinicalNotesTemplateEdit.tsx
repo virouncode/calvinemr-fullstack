@@ -47,8 +47,9 @@ const ClinicalNotesTemplateEdit = ({
       name: firstLetterOfFirstWordUpper(editedTemplate.name),
     };
     templateToPut.date_created = nowTZTimestamp();
-    templatePut.mutate(templateToPut);
-    setEditTemplateVisible(false);
+    templatePut.mutate(templateToPut, {
+      onSuccess: () => setEditTemplateVisible(false),
+    });
   };
   return (
     <div className="edit-template">

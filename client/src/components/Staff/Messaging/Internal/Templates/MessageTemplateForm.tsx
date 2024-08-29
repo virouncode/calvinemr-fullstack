@@ -71,9 +71,8 @@ const MessageTemplateForm = ({
     messageTemplatePost.mutate(messageTemplateToPost, {
       onSuccess: () => {
         setNewTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

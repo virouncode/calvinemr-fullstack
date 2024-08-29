@@ -67,9 +67,8 @@ const MessageExternalTemplateEdit = ({
     messageExternalTemplatePut.mutate(messageTemplateToPut, {
       onSuccess: () => {
         setEditTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
