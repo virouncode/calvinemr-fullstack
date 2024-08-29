@@ -67,9 +67,8 @@ const TodoTemplateEdit = ({
     todoTemplatePut.mutate(todoTemplateToPut, {
       onSuccess: () => {
         setEditTemplateVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
