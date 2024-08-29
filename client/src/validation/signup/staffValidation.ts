@@ -56,6 +56,8 @@ export const staffSchema = yup.object({
     message: "Invalid OHIP#, must be 6 digits",
     excludeEmptyString: true,
   }),
-  // site_id: yup.number().required("Site field is required"),
-  // .notOneOf([0], "Site field is required"),
+  site_id: yup
+    .number()
+    .required("Site field is required")
+    .notOneOf([0], "Site field is required"),
 });
