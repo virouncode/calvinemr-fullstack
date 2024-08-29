@@ -1,10 +1,15 @@
 import { InfiniteData } from "@tanstack/react-query";
+import { uniqueId } from "lodash";
 import React from "react";
 import {
   toCodeTableName,
   ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
-import { CareElementType, XanoPaginatedType } from "../../../../../types/api";
+import {
+  CareElementAdditionalType,
+  CareElementType,
+  XanoPaginatedType,
+} from "../../../../../types/api";
 import {
   cmToFeet,
   kgToLbs,
@@ -38,6 +43,10 @@ const CareElementsDropDown = ({
       </div>
     );
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
+  console.log("datas", datas);
+
+  const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
+
   const lastDatas = datas
     ? {
         SmokingStatus: datas.SmokingStatus?.sort((a, b) => b.Date - a.Date)[0],
@@ -54,6 +63,11 @@ const CareElementsDropDown = ({
         )[0],
       }
     : null;
+
+  const lastAdditionalDatas = additionalDatas.map((additionalData) => ({
+    ...additionalData,
+    Data: additionalData.Data.sort((a, b) => b.Date - a.Date)[0],
+  }));
 
   return (
     <div className="topic-content">
@@ -99,13 +113,22 @@ const CareElementsDropDown = ({
             {lastDatas.WaistCircumference?.WaistCircumference}
           </p>
           <p>
-            <label>Systolic(mmHg): </label>
+            <label>Systolic (mmHg): </label>
             {lastDatas.BloodPressure?.SystolicBP}
           </p>
           <p>
-            <label>Diastolic(mmHg): </label>
+            <label>Diastolic (mmHg): </label>
             {lastDatas.BloodPressure?.DiastolicBP}
           </p>
+          {lastAdditionalDatas.length > 0 &&
+            lastAdditionalDatas.map((additionalData) => (
+              <p key={uniqueId()}>
+                <label>
+                  {additionalData.Name} ({additionalData.Unit}):{" "}
+                </label>
+                {additionalData.Data?.Value}
+              </p>
+            ))}
         </>
       ) : (
         "No care elements"

@@ -11384,6 +11384,7 @@ select:focus {
   border: solid 1px #cecdcd;
   border-radius: 6px;
   padding: 5px;
+  z-index: -1;
 }
 .cycle-print__events-container {
   position: relative;

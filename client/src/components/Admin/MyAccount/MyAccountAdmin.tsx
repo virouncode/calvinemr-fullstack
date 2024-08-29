@@ -101,7 +101,7 @@ const MyAccountAdmin = () => {
   };
 
   return (
-    <div className="myaccount-section__container" style={{ width: "25%" }}>
+    <div className="myaccount-section__container" style={{ width: "30%" }}>
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}{" "}
       {successMsg && <p className="myaccount-section__success">{successMsg}</p>}
       {formDatas && (

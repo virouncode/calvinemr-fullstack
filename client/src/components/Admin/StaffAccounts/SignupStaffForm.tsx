@@ -349,7 +349,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
             <SiteSelect
               handleSiteChange={handleSiteChange}
               sites={sites}
-              value={formDatas?.site_id ?? 1}
+              value={formDatas?.site_id ?? 0}
               label="Site*: "
             />
           </div>

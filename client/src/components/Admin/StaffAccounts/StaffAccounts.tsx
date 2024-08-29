@@ -37,6 +37,10 @@ const StaffAccounts = () => {
   } = useSites();
 
   const handleAddNew = () => {
+    if (!sites || sites.length === 0) {
+      alert("Please add a site in Clinic Infos section first");
+      return;
+    }
     setAddVisible((v) => !v);
   };
 

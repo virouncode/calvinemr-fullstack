@@ -1,6 +1,10 @@
 import { InfiniteData, UseMutationResult } from "@tanstack/react-query";
 import React from "react";
-import { CareElementType, XanoPaginatedType } from "../../../../../types/api";
+import {
+  CareElementAdditionalType,
+  CareElementType,
+  XanoPaginatedType,
+} from "../../../../../types/api";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import CareElementsForm from "./CareElementsForm";
@@ -51,6 +55,8 @@ const CareElementsPopUp = ({
 
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
 
+  const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
+
   if (!datas) {
     return (
       <CareElementsForm
@@ -65,6 +71,7 @@ const CareElementsPopUp = ({
         careElementPut={topicPut}
         setPopUpVisible={setPopUpVisible}
         datas={datas}
+        additionalDatas={additionalDatas}
         patientName={patientName}
       />
     );

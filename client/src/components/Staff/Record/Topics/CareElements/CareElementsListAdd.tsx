@@ -1,6 +1,10 @@
+import { uniqueId } from "lodash";
 import React from "react";
 import { ynIndicatorsimpleCT } from "../../../../../omdDatas/codesTables";
-import { CareElementFormType } from "../../../../../types/api";
+import {
+  CareElementAdditionalFormType,
+  CareElementFormType,
+} from "../../../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -19,8 +23,12 @@ import GenericList from "../../../../UI/Lists/GenericList";
 
 type CareElementsListAddProps = {
   addFormDatas: Partial<CareElementFormType>;
+  addAdditionalDatas: CareElementAdditionalFormType;
   setAddFormDatas: React.Dispatch<
     React.SetStateAction<Partial<CareElementFormType>>
+  >;
+  setAddAdditionalDatas: React.Dispatch<
+    React.SetStateAction<CareElementAdditionalFormType>
   >;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   addDate: number;
@@ -29,11 +37,25 @@ type CareElementsListAddProps = {
 
 const CareElementsListAdd = ({
   addFormDatas,
+  addAdditionalDatas,
   setAddFormDatas,
+  setAddAdditionalDatas,
   setErrMsgPost,
   addDate,
   setAddDate,
 }: CareElementsListAddProps) => {
+  const handleAdditionalChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setErrMsgPost("");
+    setAddAdditionalDatas(
+      addAdditionalDatas.map((item) =>
+        item.Name === name ? { ...item, Value: value, Date: addDate } : item
+      )
+    );
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -275,6 +297,92 @@ const CareElementsListAdd = ({
     if (!value) return;
     setErrMsgPost("");
     setAddDate(dateISOToTimestampTZ(value) as number);
+    setAddAdditionalDatas(
+      addAdditionalDatas.map((item) => ({
+        ...item,
+        Date: dateISOToTimestampTZ(value) as number,
+      }))
+    );
+    setAddFormDatas({
+      ...addFormDatas,
+      SmokingStatus: {
+        ...(addFormDatas.SmokingStatus as {
+          Status: string;
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      SmokingPacks: {
+        ...(addFormDatas.SmokingPacks as {
+          PerDay: string;
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      Weight: {
+        ...(addFormDatas.Weight as {
+          Weight: string;
+          WeightUnit: "kg";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      WeightLbs: {
+        ...(addFormDatas.WeightLbs as {
+          Weight: string;
+          WeightUnit: "lbs";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      Height: {
+        ...(addFormDatas.Height as {
+          Height: string;
+          HeightUnit: "cm";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      HeightFeet: {
+        ...(addFormDatas.HeightFeet as {
+          Height: string;
+          HeightUnit: "feet";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      bodyMassIndex: {
+        ...(addFormDatas.bodyMassIndex as {
+          BMI: string;
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      bodySurfaceArea: {
+        ...(addFormDatas.bodySurfaceArea as {
+          BSA: string;
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      WaistCircumference: {
+        ...(addFormDatas.WaistCircumference as {
+          WaistCircumference: string;
+          WaistCircumferenceUnit: "cm";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+      BloodPressure: {
+        ...(addFormDatas.BloodPressure as {
+          SystolicBP: string;
+          DiastolicBP: string;
+          BPUnit: "mmHg";
+          Date: number;
+        }),
+        Date: dateISOToTimestampTZ(value) as number,
+      },
+    });
   };
   return (
     <>
@@ -407,6 +515,20 @@ const CareElementsListAdd = ({
           />
         </div>
       </div>
+      {addAdditionalDatas.map((addAdditionalData) => (
+        <div className="care-elements__row" key={uniqueId()}>
+          <label className="care-elements__row-label">
+            {addAdditionalData.Name} ({addAdditionalData.Unit}):
+          </label>
+          <div className="care-elements__row-value care-elements__row-value--add">
+            <Input
+              name={addAdditionalData.Name}
+              onChange={handleAdditionalChange}
+              value={addAdditionalData.Data?.Value ?? ""}
+            />
+          </div>
+        </div>
+      ))}
     </>
   );
 };

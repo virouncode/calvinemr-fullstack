@@ -1,4 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import { uniqueId } from "lodash";
 import React from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
@@ -9,6 +10,7 @@ import {
 import { timestampToDateTimeSecondsStrTZ } from "../../../../../utils/dates/formatDates";
 import { getLastUpdate, isUpdated } from "../../../../../utils/dates/updates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
+import CareElementsAdditional from "./CareElementsAdditional";
 import CareElementsBMI from "./CareElementsBMI";
 import CareElementsBSA from "./CareElementsBSA";
 import CareElementsDiastolic from "./CareElementsDiastolic";
@@ -30,14 +32,25 @@ type CareElementsListContentProps = {
   >;
   datas: CareElementType;
   handleClickHistory: (rowName: CareElementHistoryTopicType) => void;
+  handleClickAdditionalHistory: (rowName: string) => void;
   lastDatas: CareElementLastDatasType;
+  lastAdditionalDatas: {
+    Data: {
+      Value: string;
+      Date: number;
+    };
+    Name: string;
+    Unit: string;
+  }[];
 };
 
 const CareElementsListContent = ({
   careElementPut,
   datas,
   lastDatas,
+  lastAdditionalDatas,
   handleClickHistory,
+  handleClickAdditionalHistory,
 }: CareElementsListContentProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
@@ -105,6 +118,15 @@ const CareElementsListContent = ({
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
+      {lastAdditionalDatas.map((lastAdditionalData) => (
+        <CareElementsAdditional
+          key={uniqueId()}
+          datas={datas}
+          lastAdditionalData={lastAdditionalData}
+          careElementPut={careElementPut}
+          handleClickAdditionalHistory={handleClickAdditionalHistory}
+        />
+      ))}
       <p className="care-elements__sign">
         {datas && isUpdated(datas) ? (
           <em>

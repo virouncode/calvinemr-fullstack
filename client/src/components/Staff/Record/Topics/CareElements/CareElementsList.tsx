@@ -2,6 +2,8 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
+  CareElementAdditionalFormType,
+  CareElementAdditionalType,
   CareElementFormType,
   CareElementHistoryTopicType,
   CareElementLastDatasType,
@@ -34,6 +36,7 @@ type CareElementsListProps = {
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   datas: CareElementType;
   patientName: string;
+  additionalDatas: CareElementAdditionalType[];
 };
 
 const CareElementsList = ({
@@ -41,6 +44,7 @@ const CareElementsList = ({
   setPopUpVisible,
   datas,
   patientName,
+  additionalDatas,
 }: CareElementsListProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -83,6 +87,14 @@ const CareElementsList = ({
     bodySurfaceArea: { BSA: "", Date: nowTZTimestamp() },
   });
   const [addDate, setAddDate] = useState(nowTZTimestamp());
+  const [addAdditionalDatas, setAddAdditionalDatas] =
+    useState<CareElementAdditionalFormType>(
+      additionalDatas.map((additionalData) => ({
+        Name: additionalData.Name,
+        Unit: additionalData.Unit,
+        Data: { Value: "", Date: nowTZTimestamp() },
+      }))
+    );
 
   const lastDatas: CareElementLastDatasType = datas
     ? {
@@ -143,6 +155,18 @@ const CareElementsList = ({
         bodyMassIndex: { BMI: "", Date: null },
         bodySurfaceArea: { BSA: "", Date: null },
       };
+
+  const lastAdditionalDatas = additionalDatas.map((additionalData) => ({
+    ...additionalData,
+    Data: additionalData.Data.sort((a, b) => b.Date - a.Date)[0],
+  })) ?? [
+    {
+      Name: "",
+      Data: { Value: "", Date: nowTZTimestamp() },
+    },
+  ];
+
+  const handleClickAdditionalHistory = (rowName: string) => {};
 
   const handleClickHistory = (rowName: CareElementHistoryTopicType) => {
     setHistoryTopic(rowName);
@@ -409,7 +433,9 @@ const CareElementsList = ({
           {addVisible && (
             <CareElementsListAdd
               addFormDatas={addFormDatas}
+              addAdditionalDatas={addAdditionalDatas}
               setAddFormDatas={setAddFormDatas}
+              setAddAdditionalDatas={setAddAdditionalDatas}
               setErrMsgPost={setErrMsgPost}
               addDate={addDate}
               setAddDate={setAddDate}
@@ -420,7 +446,9 @@ const CareElementsList = ({
               careElementPut={careElementPut}
               datas={datas}
               lastDatas={lastDatas}
+              lastAdditionalDatas={lastAdditionalDatas}
               handleClickHistory={handleClickHistory}
+              handleClickAdditionalHistory={handleClickAdditionalHistory}
             />
           )}
         </div>

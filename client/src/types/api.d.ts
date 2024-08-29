@@ -247,7 +247,20 @@ export type CareElementType = {
   SelfMonitoringBloodGlucose: { SelfMonitoring: string; Date: number }[];
   bodyMassIndex: { BMI: string; Date: number }[];
   bodySurfaceArea: { BSA: string; Date: number }[];
+  Additional: CareElementAdditionalType[];
 };
+
+export type CareElementAdditionalType = {
+  Unit: string;
+  Name: string;
+  Data: { Value: string; Date: number }[];
+};
+
+export type CareElementAdditionalFormType = {
+  Unit: string;
+  Name: string;
+  Data: { Value: string; Date: number };
+}[];
 
 export type CareElementLastDatasType = {
   SmokingStatus: { Status: string; Date: number | null };
