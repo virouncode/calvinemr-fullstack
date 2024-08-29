@@ -1,7 +1,7 @@
 import uniqueId from "lodash/uniqueId";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useFax } from "../../../hooks/reactquery/queries/faxQueries";

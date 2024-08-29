@@ -2,7 +2,7 @@ import { uniqueId } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../../hooks/reactquery/mutations/clinicalNotesMutations";

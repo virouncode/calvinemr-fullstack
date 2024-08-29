@@ -1,7 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {

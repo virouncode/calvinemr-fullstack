@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import xanoDelete from "../../../api/xanoCRUD/xanoDelete";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { ClinicalNoteTemplateType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";

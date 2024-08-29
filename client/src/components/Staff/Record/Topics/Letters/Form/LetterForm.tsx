@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQueries";
 import {

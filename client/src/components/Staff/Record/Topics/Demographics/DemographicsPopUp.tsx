@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { usePatientPut } from "../../../../../hooks/reactquery/mutations/patientsMutations";

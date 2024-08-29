@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPost } from "../../../hooks/reactquery/mutations/sitesMutations";
 import { AdminType, AttachmentType, SiteType } from "../../../types/api";

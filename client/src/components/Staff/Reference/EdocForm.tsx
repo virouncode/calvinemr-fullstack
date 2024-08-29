@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useEdocPost } from "../../../hooks/reactquery/mutations/edocsMutations";
 import { AttachmentType, EdocType } from "../../../types/api";

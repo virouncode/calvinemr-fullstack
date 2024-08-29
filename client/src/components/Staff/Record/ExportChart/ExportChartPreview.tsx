@@ -4,7 +4,7 @@ import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
   AttachmentType,

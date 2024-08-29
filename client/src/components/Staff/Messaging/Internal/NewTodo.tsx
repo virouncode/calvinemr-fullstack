@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash";
 import React, { createElement, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";

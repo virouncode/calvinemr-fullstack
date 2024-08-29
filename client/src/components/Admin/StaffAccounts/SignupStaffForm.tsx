@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -106,7 +106,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         (formDatas?.middle_name ? formDatas.middle_name + " " : "") +
         formDatas?.last_name;
 
-      const datasToPost: Partial<StaffType> = {
+      const staffToPost: Partial<StaffType> = {
         ...formDatas,
         created_by_id: user?.id,
         date_created: nowTZTimestamp(),
@@ -116,25 +116,25 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       };
 
       //Formatting
-      datasToPost.email = datasToPost.email?.toLowerCase() ?? "";
-      datasToPost.first_name = firstLetterUpper(datasToPost.first_name ?? "");
-      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name ?? "");
-      datasToPost.last_name = firstLetterUpper(datasToPost.last_name ?? "");
-      datasToPost.full_name = firstLetterUpper(full_name);
-      datasToPost.speciality = firstLetterUpper(datasToPost.speciality ?? "");
-      datasToPost.subspeciality = firstLetterUpper(
-        datasToPost.subspeciality ?? ""
+      staffToPost.email = staffToPost.email?.toLowerCase() ?? "";
+      staffToPost.first_name = firstLetterUpper(staffToPost.first_name ?? "");
+      staffToPost.middle_name = firstLetterUpper(staffToPost.middle_name ?? "");
+      staffToPost.last_name = firstLetterUpper(staffToPost.last_name ?? "");
+      staffToPost.full_name = firstLetterUpper(full_name);
+      staffToPost.speciality = firstLetterUpper(staffToPost.speciality ?? "");
+      staffToPost.subspeciality = firstLetterUpper(
+        staffToPost.subspeciality ?? ""
       );
       if (
-        datasToPost.video_link?.trim() &&
-        (!datasToPost.video_link.includes("http") ||
-          !datasToPost.video_link.includes("https"))
+        staffToPost.video_link?.trim() &&
+        (!staffToPost.video_link.includes("http") ||
+          !staffToPost.video_link.includes("https"))
       ) {
-        datasToPost.video_link = ["https://", datasToPost.video_link].join("");
+        staffToPost.video_link = ["https://", staffToPost.video_link].join("");
       }
       //Validation
       try {
-        await staffSchema.validate(datasToPost);
+        await staffSchema.validate(staffToPost);
       } catch (err) {
         if (err instanceof Error) setErrMsg(err.message);
         setProgress(false);
@@ -142,7 +142,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       }
       try {
         const existingStaff = await xanoGet("/staff_with_email", "admin", {
-          email: datasToPost.email,
+          email: staffToPost.email,
         });
 
         if (existingStaff) {
@@ -159,11 +159,9 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         return;
       }
       //Submission
-      const staffResponse: StaffType = await xanoPost(
-        `/new_staff`,
-        "admin",
-        datasToPost
-      );
+      const staffResponse: StaffType = (
+        await axios.post(`/api/xano/new_staff`, staffToPost)
+      ).data;
       successfulRequests.push({ endpoint: "/staff", id: staffResponse.id });
       socket?.emit("message", {
         route: "STAFF INFOS",
@@ -228,6 +226,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           clinical_notes_order: "desc",
         }
       );
+      console.log("ok settings");
       successfulRequests.push({
         endpoint: "/settings",
         id: settingsResponse.id,
@@ -308,6 +307,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         default_duration_hours: 1,
         default_duration_min: 0,
       });
+      console.log("ok availability");
       successfulRequests.push({
         endpoint: "/availability",
         id: availabilityResponse.id,
@@ -321,6 +321,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
           notes: "",
         }
       );
+      console.log("ok notepad");
       successfulRequests.push({
         endpoint: "/notepads",
         id: notepadResponse.id,

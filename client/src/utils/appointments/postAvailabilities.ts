@@ -1,4 +1,4 @@
-import xanoPost from "../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../api/xanoCRUD/xanoPost";
 import { nowTZTimestamp } from "../dates/formatDates";
 
 export const postAvailabilities = async (staff_ids: number[]) => {

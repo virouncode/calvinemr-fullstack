@@ -11,7 +11,7 @@ written permission of Adobe.
 
 import { UseMutationResult } from "@tanstack/react-query";
 import { uniqueId } from "lodash";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import { EformType } from "../../../../../types/api";
 import { arrayBufferToDataURL } from "../../../../../utils/files/arrayBufferToDataURL";
 declare global {

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useReportInboxPost } from "../../../hooks/reactquery/mutations/reportsMutations";

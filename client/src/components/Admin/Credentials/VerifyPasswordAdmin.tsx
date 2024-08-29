@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import FormVerifyPassword from "../../UI/Forms/FormVerifyPassword";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";

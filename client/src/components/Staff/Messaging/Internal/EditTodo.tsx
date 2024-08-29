@@ -1,8 +1,8 @@
 import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import xanoDelete from "../../../../api/xanoCRUD/xanoDelete";
-import xanoPost from "../../../../api/xanoCRUD/xanoPost";
+import { xanoDelete } from "../../../../api/xanoCRUD/xanoDelete";
+import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagePut } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {

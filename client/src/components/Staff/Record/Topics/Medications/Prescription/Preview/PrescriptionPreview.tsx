@@ -3,7 +3,7 @@ import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
-import xanoPost from "../../../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../../../../hooks/reactquery/mutations/clinicalNotesMutations";

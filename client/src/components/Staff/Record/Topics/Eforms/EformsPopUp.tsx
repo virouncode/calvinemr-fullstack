@@ -9,7 +9,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React from "react";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {

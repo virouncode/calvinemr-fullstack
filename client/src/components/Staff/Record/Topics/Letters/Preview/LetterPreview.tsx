@@ -2,7 +2,7 @@ import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
-import xanoPost from "../../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useTopicPost } from "../../../../../../hooks/reactquery/mutations/topicMutations";
 import useLetterMultipage from "../../../../../../hooks/useLetterMultipage";

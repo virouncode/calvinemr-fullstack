@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
-const xanoDelete = async (
+export const xanoDelete = async (
   URL: string,
   userType: string,
   abortController?: AbortController
@@ -21,8 +21,6 @@ const xanoDelete = async (
   return response.data;
 };
 
-export default xanoDelete;
-
 export const xanoDeleteBatch = async (
   successfulRequests: {
     endpoint: string;
@@ -30,6 +28,8 @@ export const xanoDeleteBatch = async (
   }[],
   userType: string
 ) => {
+  console.log("delete batch successfulRequests", successfulRequests);
+
   const responses = [];
   for (const { endpoint, id } of successfulRequests) {
     const config: AxiosXanoConfigType = {

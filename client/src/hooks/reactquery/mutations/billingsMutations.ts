@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import xanoDelete, { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
-import xanoPost, { xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
+import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { BillingType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";

@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosXanoConfigType } from "../../types/app";
 axios.defaults.withCredentials = true;
 
-const xanoPost = async (
+export const xanoPost = async (
   URL: string,
   userType: string,
   data: Record<string, unknown>,
@@ -22,8 +22,6 @@ const xanoPost = async (
   const response = await axios(config);
   return response.data;
 };
-
-export default xanoPost;
 
 export const xanoPostBatch = async (
   URL: string,

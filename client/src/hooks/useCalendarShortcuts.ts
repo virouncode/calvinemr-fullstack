@@ -3,7 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import { DateTime } from "luxon";
 import React, { useEffect } from "react"; // Keep React import for other hooks and types
 import { toast } from "react-toastify";
-import xanoDelete from "../api/xanoCRUD/xanoDelete";
+import { xanoDelete } from "../api/xanoCRUD/xanoDelete";
 import xanoGet from "../api/xanoCRUD/xanoGet";
 import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
 import { AppointmentType } from "../types/api";

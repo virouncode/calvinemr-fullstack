@@ -77,55 +77,6 @@ export const postXano = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// Handle FDF file response for eForm
-export const postEform = async (req: Request, res: Response): Promise<void> => {
-  const fdfContent = `
-    %FDF-1.2
-1 0 obj
-
-   <</FDF
-
-      <</Status (Submit was Successful)>>
-
-   >>
-
-endobj
-
-trailer << /Root 1 0 R >>
-
-%%EOF`;
-
-  try {
-    const authToken = req.cookies.token;
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    };
-    res
-      .setHeader(
-        "Access-Control-Allow-Origin",
-        "https://acrobatservices.adobe.com"
-      )
-      .setHeader("Content-Type", "application/vnd.fdf")
-      .setHeader("Content-disposition", "inline")
-      .status(200)
-      .send(fdfContent);
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(err.message);
-    }
-    res
-      .setHeader(
-        "Access-Control-Allow-Origin",
-        "https://acrobatservices.adobe.com"
-      )
-      .setHeader("Content-Type", "application/vnd.fdf")
-      .setHeader("Content-disposition", "inline")
-      .status(500)
-      .send(fdfContent);
-  }
-};
-
 // PUT request handler for Xano API
 export const putXano = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -233,6 +184,8 @@ export const resetXano = async (req: Request, res: Response): Promise<void> => {
 
 // POST request handler to create new staff
 export const newStaff = async (req: Request, res: Response): Promise<void> => {
+  console.log("newStaff");
+
   try {
     const datasToPost = req.body;
     const clinicName = datasToPost.clinic_name;
@@ -359,7 +312,9 @@ Powered by Calvin EMR`,
     await axios.post(mailgunUrl, emailToPost);
     handleResponse(response, res);
   } catch (err) {
-    handleError(err as AxiosError, res);
+    console.log("EROR");
+
+    // handleError(err as AxiosError, res);
   }
 };
 

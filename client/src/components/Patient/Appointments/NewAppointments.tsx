@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";

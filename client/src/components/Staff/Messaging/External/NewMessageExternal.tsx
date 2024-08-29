@@ -3,7 +3,7 @@ import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
-import xanoPost from "../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useClinicContext from "../../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../hooks/context/useUserContext";

@@ -1,7 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
 import React, { useState } from "react";
-import xanoPost from "../../../../../api/xanoCRUD/xanoPost";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { reportClassCT } from "../../../../../omdDatas/codesTables";
 import { MessageAttachmentType, ReportType } from "../../../../../types/api";
