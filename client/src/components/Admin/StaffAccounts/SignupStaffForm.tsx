@@ -1,11 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { rollbackChanges } from "../../../api/rollbackChanges";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { AdminType, SiteType, StaffType } from "../../../types/api";
+import {
+  AdminType,
+  NotepadType,
+  SettingsType,
+  SiteType,
+  StaffType,
+} from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
@@ -90,6 +97,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   const handleSubmit = async () => {
     setErrMsg("");
     setProgress(true);
+    const successfulRequests: { endpoint: string; id: number }[] = [];
     //Validation
     try {
       const full_name =
@@ -133,11 +141,11 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         return;
       }
       try {
-        const response = await xanoGet("/staff_with_email", "admin", {
+        const existingStaff = await xanoGet("/staff_with_email", "admin", {
           email: datasToPost.email,
         });
 
-        if (response) {
+        if (existingStaff) {
           setErrMsg(
             "There is already an account with this email, please choose another one"
           );
@@ -151,69 +159,82 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         return;
       }
       //Submission
-      const response = await axios.post(`/api/xano/new_staff`, datasToPost);
+      const staffResponse: StaffType = await xanoPost(
+        `/new_staff`,
+        "admin",
+        datasToPost
+      );
+      successfulRequests.push({ endpoint: "/staff", id: staffResponse.id });
       socket?.emit("message", {
         route: "STAFF INFOS",
         action: "create",
-        content: { data: response.data },
+        content: { data: staffResponse },
       });
-      await xanoPost("/settings", "admin", {
-        staff_id: response.data.id,
-        slot_duration: "00:15",
-        first_day: 1,
-        autolock_time_min: 30,
-        authorized_messages_patients_ids: [],
-        invitation_templates: [
-          {
-            name: "In person appointment",
-            intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
-            message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
-          },
-          {
-            name: "Video appointment",
-            intro: `This email/text message is to remind you about your upcoming VIDEO appointment.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is online. DO NOT COME TO THE CLINIC.\n\nPlease login 5 minutes before your appointment by clicking the following link:\n[video_call_link]\n\n`,
-            message: `You will be directed to the virtual waiting room. The physician will let you in the meeting once available.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
-          },
-          {
-            name: "Phone appointment",
-            intro: `This email/text message is to remind you about your upcoming PHONE appointment.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is a phone call. DO NOT COME TO THE CLINIC.\n\n`,
-            message: `Please make sure your phone is on and not on mute. The call will come from the clinic, or a No Caller ID number.\nIf you do not answer the phone, the appointment could be cancelled and rescheduled.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
-          },
-          {
-            name: "Surgery/Procedure",
-            intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your Surgery/Procedure.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
-            message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
-          },
-          {
-            name: "Meeting",
-            intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
-            message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
-          },
-          {
-            name: "Diagnostic Imaging",
-            intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your Diagnostic Imaging procedure (ultrasound, X-ray, etc…)\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
-            message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
-          },
-          {
-            name: "Blood test / Urine test",
-            intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your blood and/or urine test.\n`,
-            infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
-            message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
-          },
-          { name: "[Blank]", intro: "", infos: "", message: "" },
-        ],
-        date_created: nowTZTimestamp(),
-        clinical_notes_order: "desc",
+      const settingsResponse: SettingsType = await xanoPost(
+        "/settings",
+        "admin",
+        {
+          staff_id: staffResponse.id,
+          slot_duration: "00:15",
+          first_day: 1,
+          autolock_time_min: 30,
+          authorized_messages_patients_ids: [],
+          invitation_templates: [
+            {
+              name: "In person appointment",
+              intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
+              message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
+            },
+            {
+              name: "Video appointment",
+              intro: `This email/text message is to remind you about your upcoming VIDEO appointment.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is online. DO NOT COME TO THE CLINIC.\n\nPlease login 5 minutes before your appointment by clicking the following link:\n[video_call_link]\n\n`,
+              message: `You will be directed to the virtual waiting room. The physician will let you in the meeting once available.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
+            },
+            {
+              name: "Phone appointment",
+              intro: `This email/text message is to remind you about your upcoming PHONE appointment.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is a phone call. DO NOT COME TO THE CLINIC.\n\n`,
+              message: `Please make sure your phone is on and not on mute. The call will come from the clinic, or a No Caller ID number.\nIf you do not answer the phone, the appointment could be cancelled and rescheduled.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
+            },
+            {
+              name: "Surgery/Procedure",
+              intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your Surgery/Procedure.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
+              message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
+            },
+            {
+              name: "Meeting",
+              intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
+              message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
+            },
+            {
+              name: "Diagnostic Imaging",
+              intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your Diagnostic Imaging procedure (ultrasound, X-ray, etc…)\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
+              message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
+            },
+            {
+              name: "Blood test / Urine test",
+              intro: `This email/text message is to remind you about your upcoming IN-PERSON appointment for your blood and/or urine test.\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
+              message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
+            },
+            { name: "[Blank]", intro: "", infos: "", message: "" },
+          ],
+          date_created: nowTZTimestamp(),
+          clinical_notes_order: "desc",
+        }
+      );
+      successfulRequests.push({
+        endpoint: "/settings",
+        id: settingsResponse.id,
       });
 
-      await xanoPost("/availability", "admin", {
-        staff_id: response.data.id,
+      const availabilityResponse = await xanoPost("/availability", "admin", {
+        staff_id: staffResponse.id,
         date_created: nowTZTimestamp(),
         schedule_morning: {
           monday: [
@@ -287,17 +308,31 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         default_duration_hours: 1,
         default_duration_min: 0,
       });
-      await xanoPost("/notepads", "admin", {
-        staff_id: response.data.id,
-        date_created: nowTZTimestamp(),
-        notes: "",
+      successfulRequests.push({
+        endpoint: "/availability",
+        id: availabilityResponse.id,
       });
-
+      const notepadResponse: NotepadType = await xanoPost(
+        "/notepads",
+        "admin",
+        {
+          staff_id: staffResponse.id,
+          date_created: nowTZTimestamp(),
+          notes: "",
+        }
+      );
+      successfulRequests.push({
+        endpoint: "/notepads",
+        id: notepadResponse.id,
+      });
       toast.success("Staff member added successfully", { containerId: "A" });
       setAddVisible(false);
       setProgress(false);
     } catch (err) {
-      if (err instanceof Error) setErrMsg(err.message);
+      if (err instanceof Error)
+        setErrMsg(`Unable to add staff member : ${err.message}`);
+      await rollbackChanges(successfulRequests);
+    } finally {
       setProgress(false);
     }
   };
