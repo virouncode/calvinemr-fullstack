@@ -456,10 +456,9 @@ const DemographicsPopUp = ({
     setProgress(true);
     patientPut.mutate(patientToPut, {
       onSuccess: () => {
-        setProgress(false);
         setEditVisible(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

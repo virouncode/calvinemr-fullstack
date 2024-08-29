@@ -364,7 +364,6 @@ const CareElementsList = ({
     careElementPut.mutate(careElementToPut, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
         setAddFormDatas({
           SmokingStatus: { Status: "", Date: nowTZTimestamp() },
           SmokingPacks: { PerDay: "", Date: nowTZTimestamp() },
@@ -391,7 +390,7 @@ const CareElementsList = ({
           bodySurfaceArea: { BSA: "", Date: nowTZTimestamp() },
         });
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

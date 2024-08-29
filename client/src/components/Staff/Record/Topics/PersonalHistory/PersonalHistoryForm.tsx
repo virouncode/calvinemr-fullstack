@@ -125,10 +125,7 @@ const PersonalHistoryForm = ({
     //Submission
     setProgress(true);
     topicPost.mutate(topicToPost, {
-      onSuccess: () => {
-        setProgress(false);
-      },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

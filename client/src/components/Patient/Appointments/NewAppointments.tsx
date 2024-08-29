@@ -2,13 +2,13 @@ import _ from "lodash";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import { useMessagesExternalPostBatch } from "../../../hooks/reactquery/mutations/messagesMutations";
 import { useStaffAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useAssignedPracticianAvailability } from "../../../hooks/reactquery/queries/availabilityQueries";
+import { MessageExternalType } from "../../../types/api";
 import { AppointmentProposalType, UserPatientType } from "../../../types/app";
 import { getAppointmentsInRange } from "../../../utils/appointments/getAppointmentsInRange";
 import {
@@ -55,6 +55,7 @@ const NewAppointments = () => {
     isPending: isPendingAvailability,
     error: errorAvailability,
   } = useAssignedPracticianAvailability(user.demographics.assigned_staff_id);
+  const messagesExternalPost = useMessagesExternalPostBatch();
 
   const handleClickNext = async () => {
     setRangeStart((rs) =>
@@ -100,11 +101,11 @@ const NewAppointments = () => {
       const secretariesIds = staffInfos
         .filter(({ title }) => title === "Secretary")
         .map(({ id }) => id);
-      const successfulRequests: { endpoint: string; id: number }[] = [];
       //create the message
+      const messagesToPost: Partial<MessageExternalType>[] = [];
       try {
         for (const secretaryId of secretariesIds) {
-          const message = {
+          const messageToPost = {
             from_patient_id: user.id,
             to_staff_id: secretaryId,
             subject: "Appointment request",
@@ -132,26 +133,9 @@ Cellphone: ${
             date_created: nowTZTimestamp(),
             type: "External",
           };
-          const response = await xanoPost(
-            "/messages_external",
-            "patient",
-            message
-          );
-          successfulRequests.push({
-            endpoint: "/messages_external",
-            id: response.id,
-          });
-          socket?.emit("message", {
-            route: "MESSAGES INBOX EXTERNAL",
-            action: "create",
-            content: { data: response },
-          });
-          socket?.emit("message", {
-            route: "MESSAGES WITH PATIENT",
-            action: "create",
-            content: { data: response },
-          });
+          messagesToPost.push(messageToPost);
         }
+        messagesExternalPost.mutate(messagesToPost);
         toast.success(`Appointment request sent successfully`, {
           containerId: "A",
         });
@@ -165,7 +149,6 @@ Cellphone: ${
               containerId: "A",
             }
           );
-        await xanoDeleteBatch(successfulRequests, "patient");
       }
     }
   };

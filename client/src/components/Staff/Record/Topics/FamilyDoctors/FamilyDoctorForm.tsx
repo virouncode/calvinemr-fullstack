@@ -124,9 +124,8 @@ const FamilyDoctorForm = ({
       onSuccess: () => {
         editCounter.current -= 1;
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => setProgress(false),
+      onSettled: () => setProgress(false),
     });
   };
 

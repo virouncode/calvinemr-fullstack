@@ -329,7 +329,7 @@ export const useAppointmentPut = () => {
         containerId: "A",
       });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       toast.error(`Error: unable to save appointment: ${error.message}`, {
         containerId: "A",
       });

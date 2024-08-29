@@ -359,10 +359,9 @@ const CareElementsForm = ({
     setProgress(true);
     careElementPost.mutate(careElementToPost, {
       onSuccess: () => {
-        setProgress(false);
         setPopUpVisible(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

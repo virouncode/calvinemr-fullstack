@@ -124,9 +124,8 @@ const DoctorFaxForm = ({
     doctorPost.mutate(doctorToPost, {
       onSuccess: () => {
         setAddFaxNumberVisible(false);
-        setProgress(false);
       },
-      onError: () => setProgress(false),
+      onSettled: () => setProgress(false),
     });
   };
 

@@ -4,10 +4,12 @@ import { toast } from "react-toastify";
 import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
   AdminType,
+  ClinicType,
   NotepadType,
   SettingsType,
   SiteType,
@@ -36,6 +38,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
+  const { clinic } = useClinicContext() as { clinic: ClinicType };
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [formDatas, setFormDatas] = useState<Partial<StaffType> | undefined>();
@@ -106,35 +109,36 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         (formDatas?.middle_name ? formDatas.middle_name + " " : "") +
         formDatas?.last_name;
 
-      const staffToPost: Partial<StaffType> = {
+      const datasToPost: Partial<StaffType> & { clinic_name: string } = {
         ...formDatas,
         created_by_id: user?.id,
         date_created: nowTZTimestamp(),
         access_level: "staff",
         account_status: "Active",
         ai_consent: true,
+        clinic_name: clinic.name,
       };
 
       //Formatting
-      staffToPost.email = staffToPost.email?.toLowerCase() ?? "";
-      staffToPost.first_name = firstLetterUpper(staffToPost.first_name ?? "");
-      staffToPost.middle_name = firstLetterUpper(staffToPost.middle_name ?? "");
-      staffToPost.last_name = firstLetterUpper(staffToPost.last_name ?? "");
-      staffToPost.full_name = firstLetterUpper(full_name);
-      staffToPost.speciality = firstLetterUpper(staffToPost.speciality ?? "");
-      staffToPost.subspeciality = firstLetterUpper(
-        staffToPost.subspeciality ?? ""
+      datasToPost.email = datasToPost.email?.toLowerCase() ?? "";
+      datasToPost.first_name = firstLetterUpper(datasToPost.first_name ?? "");
+      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name ?? "");
+      datasToPost.last_name = firstLetterUpper(datasToPost.last_name ?? "");
+      datasToPost.full_name = firstLetterUpper(full_name);
+      datasToPost.speciality = firstLetterUpper(datasToPost.speciality ?? "");
+      datasToPost.subspeciality = firstLetterUpper(
+        datasToPost.subspeciality ?? ""
       );
       if (
-        staffToPost.video_link?.trim() &&
-        (!staffToPost.video_link.includes("http") ||
-          !staffToPost.video_link.includes("https"))
+        datasToPost.video_link?.trim() &&
+        (!datasToPost.video_link.includes("http") ||
+          !datasToPost.video_link.includes("https"))
       ) {
-        staffToPost.video_link = ["https://", staffToPost.video_link].join("");
+        datasToPost.video_link = ["https://", datasToPost.video_link].join("");
       }
       //Validation
       try {
-        await staffSchema.validate(staffToPost);
+        await staffSchema.validate(datasToPost);
       } catch (err) {
         if (err instanceof Error) setErrMsg(err.message);
         setProgress(false);
@@ -142,7 +146,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       }
       try {
         const existingStaff = await xanoGet("/staff_with_email", "admin", {
-          email: staffToPost.email,
+          email: datasToPost.email,
         });
 
         if (existingStaff) {
@@ -160,7 +164,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       }
       //Submission
       const staffResponse: StaffType = (
-        await axios.post(`/api/xano/new_staff`, staffToPost)
+        await axios.post(`/api/xano/new_staff`, datasToPost)
       ).data;
       successfulRequests.push({ endpoint: "/staff", id: staffResponse.id });
       socket?.emit("message", {

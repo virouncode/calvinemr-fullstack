@@ -116,9 +116,8 @@ const PharmacyFaxForm = ({
     topicPost.mutate(topicToPost, {
       onSuccess: () => {
         setAddFaxNumberVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

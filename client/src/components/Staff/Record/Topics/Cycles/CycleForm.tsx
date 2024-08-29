@@ -58,9 +58,8 @@ const CycleForm = ({
     topicPost.mutate(cycleToPost, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => setProgress(false),
+      onSettled: () => setProgress(false),
     });
   };
 

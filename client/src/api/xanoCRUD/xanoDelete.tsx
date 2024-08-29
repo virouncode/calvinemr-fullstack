@@ -28,8 +28,6 @@ export const xanoDeleteBatch = async (
   }[],
   userType: string
 ) => {
-  console.log("delete batch successfulRequests", successfulRequests);
-
   const responses = [];
   for (const { endpoint, id } of successfulRequests) {
     const config: AxiosXanoConfigType = {

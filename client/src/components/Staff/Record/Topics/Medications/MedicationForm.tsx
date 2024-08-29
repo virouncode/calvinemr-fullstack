@@ -219,10 +219,7 @@ const MedicationForm = ({
     //Submission
     setProgressTemplates(true);
     medTemplatePost.mutate(templateToPost, {
-      onSuccess: () => {
-        setProgressTemplates(false);
-      },
-      onError: () => {
+      onSettled: () => {
         setProgressTemplates(false);
       },
     });

@@ -82,7 +82,7 @@ const BillingForm = ({
     useState(false);
   const userType = user.access_level;
   //Queries
-  const billingPost = useBillingsPostsBatch();
+  const billingsPost = useBillingsPostsBatch();
 
   useEffect(() => {
     //to hide parameters
@@ -213,7 +213,7 @@ const BillingForm = ({
         };
         billingsToPost.push(billingToPost);
       }
-      billingPost.mutate(billingsToPost);
+      billingsPost.mutate(billingsToPost);
       setAddVisible(false);
     } catch (err) {
       if (err instanceof Error)

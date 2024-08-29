@@ -35,15 +35,14 @@ export const useBillingsPostsBatch = () => {
   return useMutation({
     mutationFn: (billingsToPost: Partial<BillingType>[]) =>
       xanoPostBatch("/billings", userType as string, billingsToPost),
-    onSuccess: (data) => {
+    onSuccess: (datas) => {
       socket?.emit("message", { key: ["billings"] });
       socket?.emit("message", { key: ["dashboardBillings"] });
       toast.success("Billing(s) post succesfully", { containerId: "A" });
-      successfulRequests = data.map((d) => ({
+      successfulRequests = datas.map((item) => ({
         endpoint: "/billings",
-        id: d.id,
+        id: item.id,
       }));
-      console.log("successfulRequests", successfulRequests);
     },
     onError: (error) => {
       xanoDeleteBatch(successfulRequests, userType as string);

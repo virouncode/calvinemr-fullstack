@@ -69,10 +69,9 @@ const AvailabilityEditor = ({
     setProgress(true);
     availabilityPut.mutate(scheduleToPut, {
       onSuccess: () => {
-        setProgress(false);
         setEditAvailability(false);
       },
-      onError: () => setProgress(false),
+      onSettled: () => setProgress(false),
     });
   };
 

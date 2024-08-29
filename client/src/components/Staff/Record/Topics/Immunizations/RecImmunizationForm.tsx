@@ -91,9 +91,8 @@ const RecImmunizationForm = ({
     topicPost.mutate(topicToPost, {
       onSuccess: () => {
         setFormVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

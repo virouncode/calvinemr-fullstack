@@ -56,9 +56,8 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
     medTemplatePut.mutate(templateToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

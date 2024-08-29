@@ -73,9 +73,8 @@ const ReminderItem = ({
       onSuccess: () => {
         editCounter.current -= 1;
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

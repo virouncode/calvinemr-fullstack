@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import {
   DemographicsType,
@@ -53,56 +53,6 @@ export const useMessagePost = (staffId: number, section: string) => {
     },
   });
 };
-
-// export const useMessagePostBatch = (staffId: number, section: string) => {
-//   const { socket } = useSocketContext();
-//   let successfulRequests: { endpoint: "/messages" | "/todos"; id: number }[] =
-//     [];
-//   return useMutation({
-//     mutationFn: (
-//       messagesToPost: Partial<MessageType>[] | Partial<TodoType>[]
-//     ) => {
-//       if (section === "To-dos") {
-//         return xanoPostBatch("/todos", "staff", messagesToPost);
-//       } else {
-//         return xanoPostBatch("/messages", "staff", messagesToPost);
-//       }
-//     },
-//     onSuccess: (data: MessageType | TodoType) => {
-//       socket?.emit("message", { key: ["messages", staffId] });
-//       if (section === "To-dos") {
-//         socket?.emit("message", {
-//           key: ["messages", (data as TodoType).to_staff_id],
-//         });
-//         successfulRequests = data.map((d) => ({
-//           endpoint: "/messages",
-//           id: d.id,
-//         }));
-//       } else {
-//         for (const staff_id of (data as MessageType).to_staff_ids) {
-//           socket?.emit("message", { key: ["messages", staff_id] });
-//         }
-//       }
-//       if (data.related_patient_id) {
-//         if (section === "To-dos") {
-//           socket?.emit("message", {
-//             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
-//           });
-//         } else {
-//           socket?.emit("message", {
-//             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
-//           });
-//         }
-//       }
-//       toast.success("Message post succesfully", { containerId: "A" });
-//     },
-//     onError: (error) => {
-//       toast.error(`Error: unable to post message: ${error.message}`, {
-//         containerId: "A",
-//       });
-//     },
-//   });
-// };
 
 export const useMessagePut = (staffId: number, section: string) => {
   const { socket } = useSocketContext();
@@ -192,6 +142,63 @@ export const useMessageExternalPost = () => {
     },
     onError: (error) => {
       toast.error(`Error: unable to post message: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useMessagesExternalPostBatch = () => {
+  const { user } = useUserContext();
+  const userType = user?.access_level as string;
+  const { socket } = useSocketContext();
+  let successfulRequests: { endpoint: "/messages_external"; id: number }[] = [];
+  return useMutation({
+    mutationFn: (messagesToPost: Partial<MessageExternalType>[]) =>
+      xanoPostBatch("/messages_external", userType, messagesToPost),
+    onSuccess: (datas: MessageExternalType[]) => {
+      if (userType === "staff") {
+        socket?.emit("message", {
+          key: ["messagesExternal", "staff", user?.id],
+        });
+        for (const data of datas) {
+          if (data.to_patients_ids) {
+            for (const patientId of (
+              data.to_patients_ids as { to_patient_infos: DemographicsType }[]
+            ).map(({ to_patient_infos }) => to_patient_infos.patient_id)) {
+              socket?.emit("message", {
+                key: ["messagesExternal", "patient", patientId],
+              });
+              socket?.emit("message", {
+                key: ["MESSAGES WITH PATIENT", patientId],
+              });
+            }
+          }
+        }
+      } else {
+        socket?.emit("message", {
+          key: ["messagesExternal", "patient", user?.id],
+        });
+        for (const data of datas) {
+          if (data.to_staff_id) {
+            socket?.emit("message", {
+              key: ["messagesExternal", "staff", data.to_staff_id],
+            });
+            socket?.emit("message", {
+              key: ["MESSAGES WITH PATIENT", user?.id],
+            });
+          }
+        }
+      }
+      toast.success("Message(s) post succesfully", { containerId: "A" });
+      successfulRequests = datas.map((item) => ({
+        endpoint: "/messages_external",
+        id: item.id,
+      }));
+    },
+    onError: (error) => {
+      xanoDeleteBatch(successfulRequests, userType as string);
+      toast.error(`Error: unable to post message(s): ${error.message}`, {
         containerId: "A",
       });
     },

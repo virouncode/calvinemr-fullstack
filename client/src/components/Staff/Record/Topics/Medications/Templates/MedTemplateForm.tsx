@@ -91,9 +91,8 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
     medTemplatePost.mutate(templateToPost, {
       onSuccess: () => {
         setNewVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

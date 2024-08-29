@@ -619,10 +619,8 @@ const EventForm = ({
         if (!sitesIds.includes(data.site_id)) {
           setSitesIds([...sitesIds, data.site_id]);
         }
-        setCalendarSelectable(true);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setCalendarSelectable(true);
         setProgress(false);
       },

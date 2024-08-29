@@ -63,9 +63,8 @@ const OtherFaxForm = ({
     faxDirectoryPost.mutate(otherToPost, {
       onSuccess: () => {
         setAddFaxNumberVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

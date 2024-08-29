@@ -97,9 +97,8 @@ const PastHealthForm = ({
       onSuccess: () => {
         editCounter.current -= 1;
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

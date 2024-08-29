@@ -241,9 +241,8 @@ const BillingTableItem = ({
     billingPut.mutate(billingToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

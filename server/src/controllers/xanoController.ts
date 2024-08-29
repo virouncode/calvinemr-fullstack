@@ -184,8 +184,6 @@ export const resetXano = async (req: Request, res: Response): Promise<void> => {
 
 // POST request handler to create new staff
 export const newStaff = async (req: Request, res: Response): Promise<void> => {
-  console.log("newStaff");
-
   try {
     const datasToPost = req.body;
     const clinicName = datasToPost.clinic_name;

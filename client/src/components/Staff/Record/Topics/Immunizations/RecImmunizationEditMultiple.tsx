@@ -87,9 +87,8 @@ const RecImmunizationEditMultiple = ({
     topicPut.mutate(topicToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });
