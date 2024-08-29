@@ -2,6 +2,7 @@ import _ from "lodash";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
@@ -99,7 +100,7 @@ const NewAppointments = () => {
       const secretariesIds = staffInfos
         .filter(({ title }) => title === "Secretary")
         .map(({ id }) => id);
-
+      const successfulRequests: { endpoint: string; id: number }[] = [];
       //create the message
       try {
         for (const secretaryId of secretariesIds) {
@@ -136,6 +137,10 @@ Cellphone: ${
             "patient",
             message
           );
+          successfulRequests.push({
+            endpoint: "/messages_external",
+            id: response.id,
+          });
           socket?.emit("message", {
             route: "MESSAGES INBOX EXTERNAL",
             action: "create",
@@ -160,6 +165,7 @@ Cellphone: ${
               containerId: "A",
             }
           );
+        await xanoDeleteBatch(successfulRequests, "patient");
       }
     }
   };

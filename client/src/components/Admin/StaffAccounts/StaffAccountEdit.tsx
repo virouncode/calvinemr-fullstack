@@ -185,7 +185,7 @@ const StaffAccountEdit = ({
                 onChange={handleChange}
                 name="middle_name"
                 id="middle_name"
-                label="Midle Name*: "
+                label="Middle Name: "
               />
             </div>
             <div className="staff-account__row">

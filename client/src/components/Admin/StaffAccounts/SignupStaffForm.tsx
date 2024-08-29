@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { rollbackChanges } from "../../../api/rollbackChanges";
+import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPost from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -327,11 +327,10 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       });
       toast.success("Staff member added successfully", { containerId: "A" });
       setAddVisible(false);
-      setProgress(false);
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to add staff member : ${err.message}`);
-      await rollbackChanges(successfulRequests);
+      await xanoDeleteBatch(successfulRequests, "admin");
     } finally {
       setProgress(false);
     }
@@ -368,7 +367,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
               onChange={handleChange}
               name="middle_name"
               id="middle_name"
-              label="Midle Name*: "
+              label="Middle Name: "
             />
           </div>
           <div className="signup-staff__row">

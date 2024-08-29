@@ -65,8 +65,9 @@ const EmailForm = ({
         toast.error(`Unable to send the request: ${err.message}`, {
           containerId: "A",
         });
+    } finally {
+      setProgress(false);
     }
-    setProgress(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

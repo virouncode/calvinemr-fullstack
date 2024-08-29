@@ -23,6 +23,9 @@ const SiteSelect = ({
       )}
       <select value={value} onChange={handleSiteChange} id="site-select">
         {all && <option value="-1">All</option>}
+        <option value="0" disabled>
+          Select a site
+        </option>
         {sites &&
           sites.map((site) => (
             <option

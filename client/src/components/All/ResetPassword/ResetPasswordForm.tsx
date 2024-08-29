@@ -98,7 +98,6 @@ const ResetPasswordForm = ({
         confirm_password: confirmPwd,
         pin,
       });
-
       setSuccesMsg(
         "Your password and pin have been reset successfully, you will be redirected to the login page"
       );

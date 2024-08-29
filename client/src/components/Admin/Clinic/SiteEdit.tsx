@@ -139,9 +139,8 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
     sitePut.mutate(siteToPut, {
       onSuccess: () => {
         setEditVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

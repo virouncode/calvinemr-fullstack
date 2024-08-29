@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useBillingPost } from "../../../hooks/reactquery/mutations/billingsMutations";
+import { useBillingsPostsBatch } from "../../../hooks/reactquery/mutations/billingsMutations";
 import {
   AdminType,
   BillingFormType,
@@ -51,6 +51,8 @@ const BillingForm = ({
   sites,
 }: BillingFormProps) => {
   //Hooks
+  console.log("render");
+
   const navigate = useNavigate();
   const { pid, pName, hcn, date } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
@@ -80,7 +82,7 @@ const BillingForm = ({
     useState(false);
   const userType = user.access_level;
   //Queries
-  const billingPost = useBillingPost();
+  const billingPost = useBillingsPostsBatch();
 
   useEffect(() => {
     //to hide parameters
@@ -186,6 +188,7 @@ const BillingForm = ({
     //Submission
     try {
       setProgress(true);
+      const billingsToPost: Partial<BillingType>[] = [];
       for (const billing_code of billingCodesArray) {
         const billingToPost: Partial<BillingType> = {
           date: dateISOToTimestampTZ(formDatas.date) as number,
@@ -208,19 +211,20 @@ const BillingForm = ({
           site_id: formDatas.site_id,
           billing_code_suffix: getLastLetter(billing_code).toUpperCase(),
         };
-        billingPost.mutate(billingToPost);
+        billingsToPost.push(billingToPost);
       }
+      billingPost.mutate(billingsToPost);
       setAddVisible(false);
-      toast.success(`Billing(s) saved successfully`, { containerId: "A" });
-      setProgress(false);
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Can't save billing(s): ${err.message}`, {
           containerId: "A",
         });
+    } finally {
       setProgress(false);
     }
   };
+
   return (
     <form
       className="billing-form"

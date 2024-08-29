@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import xanoDelete from "../../../api/xanoCRUD/xanoDelete";
-import xanoPost from "../../../api/xanoCRUD/xanoPost";
+import xanoDelete, { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import xanoPost, { xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { BillingType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
@@ -20,6 +20,33 @@ export const useBillingPost = () => {
       toast.success("Billing post succesfully", { containerId: "A" });
     },
     onError: (error) => {
+      toast.error(`Error: unable to post billing: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useBillingsPostsBatch = () => {
+  let successfulRequests: { endpoint: "/billings"; id: number }[] = [];
+  const { user } = useUserContext();
+  const userType = user?.access_level;
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (billingsToPost: Partial<BillingType>[]) =>
+      xanoPostBatch("/billings", userType as string, billingsToPost),
+    onSuccess: (data) => {
+      socket?.emit("message", { key: ["billings"] });
+      socket?.emit("message", { key: ["dashboardBillings"] });
+      toast.success("Billing(s) post succesfully", { containerId: "A" });
+      successfulRequests = data.map((d) => ({
+        endpoint: "/billings",
+        id: d.id,
+      }));
+      console.log("successfulRequests", successfulRequests);
+    },
+    onError: (error) => {
+      xanoDeleteBatch(successfulRequests, userType as string);
       toast.error(`Error: unable to post billing: ${error.message}`, {
         containerId: "A",
       });

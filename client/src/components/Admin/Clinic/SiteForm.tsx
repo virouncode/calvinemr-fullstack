@@ -132,9 +132,8 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
     sitePost.mutate(siteToPost, {
       onSuccess: () => {
         setAddVisible(false);
-        setProgress(false);
       },
-      onError: () => {
+      onSettled: () => {
         setProgress(false);
       },
     });

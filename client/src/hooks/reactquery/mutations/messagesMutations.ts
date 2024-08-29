@@ -54,6 +54,56 @@ export const useMessagePost = (staffId: number, section: string) => {
   });
 };
 
+// export const useMessagePostBatch = (staffId: number, section: string) => {
+//   const { socket } = useSocketContext();
+//   let successfulRequests: { endpoint: "/messages" | "/todos"; id: number }[] =
+//     [];
+//   return useMutation({
+//     mutationFn: (
+//       messagesToPost: Partial<MessageType>[] | Partial<TodoType>[]
+//     ) => {
+//       if (section === "To-dos") {
+//         return xanoPostBatch("/todos", "staff", messagesToPost);
+//       } else {
+//         return xanoPostBatch("/messages", "staff", messagesToPost);
+//       }
+//     },
+//     onSuccess: (data: MessageType | TodoType) => {
+//       socket?.emit("message", { key: ["messages", staffId] });
+//       if (section === "To-dos") {
+//         socket?.emit("message", {
+//           key: ["messages", (data as TodoType).to_staff_id],
+//         });
+//         successfulRequests = data.map((d) => ({
+//           endpoint: "/messages",
+//           id: d.id,
+//         }));
+//       } else {
+//         for (const staff_id of (data as MessageType).to_staff_ids) {
+//           socket?.emit("message", { key: ["messages", staff_id] });
+//         }
+//       }
+//       if (data.related_patient_id) {
+//         if (section === "To-dos") {
+//           socket?.emit("message", {
+//             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
+//           });
+//         } else {
+//           socket?.emit("message", {
+//             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
+//           });
+//         }
+//       }
+//       toast.success("Message post succesfully", { containerId: "A" });
+//     },
+//     onError: (error) => {
+//       toast.error(`Error: unable to post message: ${error.message}`, {
+//         containerId: "A",
+//       });
+//     },
+//   });
+// };
+
 export const useMessagePut = (staffId: number, section: string) => {
   const { socket } = useSocketContext();
   return useMutation({
