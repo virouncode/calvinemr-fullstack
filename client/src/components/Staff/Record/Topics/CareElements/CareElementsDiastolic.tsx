@@ -9,7 +9,7 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import BPHistoryEdit from "./BPHistoryEdit";
+import BPHistoryEdit from "./History/BPHistoryEdit";
 
 type CareElementsDiastolicProps = {
   datas: CareElementType;

@@ -10,7 +10,7 @@ import { kgToLbs } from "../../../../../utils/measurements/measurements";
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import WeightLbsHistoryEdit from "./WeightLbsHistoryEdit";
+import WeightLbsHistoryEdit from "./History/WeightLbsHistoryEdit";
 
 type CareElementsWeightLbsProps = {
   datas: CareElementType;

@@ -1,6 +1,6 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import React from "react";
-import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
+import { firstLetterOfFirstWordUpper } from "../../../../../../utils/strings/firstLetterUpper";
 
 type CareElementAdditionalHistoryProps = {
   historyTopic: string;

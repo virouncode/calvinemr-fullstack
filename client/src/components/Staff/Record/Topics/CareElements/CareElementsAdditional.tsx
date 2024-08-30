@@ -5,7 +5,7 @@ import { CareElementType } from "../../../../../types/api";
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import CareElementAdditionalHistoryEdit from "./CareElementAdditionalHistoryEdit";
+import CareElementAdditionalHistoryEdit from "./History/CareElementAdditionalHistoryEdit";
 
 type CareElementsAdditionalProps = {
   datas: CareElementType;

@@ -9,7 +9,7 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import WeightHistoryEdit from "./WeightHistoryEdit";
+import WeightHistoryEdit from "./History/WeightHistoryEdit";
 
 type CareElementsWeightProps = {
   datas: CareElementType;

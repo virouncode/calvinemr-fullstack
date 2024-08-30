@@ -13,7 +13,7 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import SmokingHistoryEdit from "./SmokingHistoryEdit";
+import SmokingHistoryEdit from "./History/SmokingHistoryEdit";
 
 type CareElementsSmokingProps = {
   datas: CareElementType;

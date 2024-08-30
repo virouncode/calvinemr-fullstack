@@ -1,9 +1,9 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import React from "react";
-import { CareElementHistoryTopicType } from "../../../../../types/api";
-import { toDatasToPlot } from "../../../../../utils/charts/toDatasToPlot";
-import { toYDataKey } from "../../../../../utils/charts/toYDataKey";
-import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
+import { CareElementHistoryTopicType } from "../../../../../../types/api";
+import { toDatasToPlot } from "../../../../../../utils/charts/toDatasToPlot";
+import { toYDataKey } from "../../../../../../utils/charts/toYDataKey";
+import { firstLetterOfFirstWordUpper } from "../../../../../../utils/strings/firstLetterUpper";
 
 type CareElementHistoryProps = {
   historyTopic: CareElementHistoryTopicType;

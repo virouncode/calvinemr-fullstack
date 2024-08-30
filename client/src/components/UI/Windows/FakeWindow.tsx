@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import XmarkRectangleIcon from "../Icons/XmarkRectangleIcon";
+
 type FakeWindowProps = {
   children: React.ReactNode;
   title: string;
@@ -33,8 +34,17 @@ const FakeWindow = ({
   const [windowPosition, setWindowPosition] = useState({ x, y });
   const [windowSize, setWindowSize] = useState({ width, height });
 
+  // Utility function to get mouse or touch coordinates
+  const getCoordinates = (e: MouseEvent | TouchEvent) => {
+    if (e instanceof TouchEvent) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else {
+      return { x: e.clientX, y: e.clientY };
+    }
+  };
+
   useEffect(() => {
-    //Faire passer l'element devant
+    // Make the element the frontmost one
     const elements = document.querySelectorAll(".window");
     let maxZIndex = 0;
     elements.forEach((el) => {
@@ -62,73 +72,72 @@ const FakeWindow = ({
     };
   }, [setPopUpVisible]);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //Faire passer l'element devant
-    const elements = document.querySelectorAll(".window");
-    let maxZIndex = 0;
-    elements.forEach((el) => {
-      const zIndex = parseInt(
-        window.getComputedStyle(el).getPropertyValue("z-index")
-      );
-      if (!isNaN(zIndex) && zIndex > maxZIndex) {
-        maxZIndex = zIndex;
-      }
-    });
-    if (windowRef.current)
-      windowRef.current.style.zIndex = (maxZIndex + 1).toString();
+  const handleDragStart = (
+    e:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.TouchEvent<HTMLDivElement>
+  ) => {
+    const nativeEvent = e.nativeEvent as MouseEvent | TouchEvent;
+    const { x: startX, y: startY } = getCoordinates(nativeEvent);
+    const offsetX = startX - windowPosition.x;
+    const offsetY = startY - windowPosition.y;
 
     isDragging.current = true;
-    // Calculate the initial mouse position relative to the window
-    const offsetX = e.clientX - windowPosition.x;
-    const offsetY = e.clientY - windowPosition.y;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
       if (isDragging.current) {
-        document.body.style.userSelect = "none";
+        const { x, y } = getCoordinates(e);
         setWindowPosition({
-          x: e.clientX - offsetX,
+          x: x - offsetX,
           y:
-            e.clientY - offsetY <= 0
+            y - offsetY <= 0
               ? 0
-              : e.clientY - offsetY >= window.innerHeight - 40
+              : y - offsetY >= window.innerHeight - 40
               ? window.innerHeight - 40
-              : e.clientY - offsetY,
+              : y - offsetY,
         });
       }
     };
 
     const handleMouseUp = () => {
       isDragging.current = false;
-      document.body.style.userSelect = "auto";
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleMouseMove);
+      window.removeEventListener("touchend", handleMouseUp);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleMouseMove);
+    window.addEventListener("touchend", handleMouseUp);
   };
 
-  // Functions to handle resizing
-  const handleResizeMouseDown = () => {
+  const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     isResizing.current = true;
-    const handleResizeMouseMove = (e: MouseEvent) => {
+
+    const handleResizeMove = (e: MouseEvent | TouchEvent) => {
       if (isResizing.current) {
-        // Update window size based on mouse movement
+        const { x, y } = getCoordinates(e);
         setWindowSize({
-          width: e.clientX - windowPosition.x,
-          height: e.clientY - windowPosition.y,
+          width: x - windowPosition.x,
+          height: y - windowPosition.y,
         });
       }
     };
 
-    const handleResizeMouseUp = () => {
+    const handleResizeEnd = () => {
       isResizing.current = false;
-      window.removeEventListener("mousemove", handleResizeMouseMove);
-      window.removeEventListener("mouseup", handleResizeMouseUp);
+      window.removeEventListener("mousemove", handleResizeMove);
+      window.removeEventListener("mouseup", handleResizeEnd);
+      window.removeEventListener("touchmove", handleResizeMove);
+      window.removeEventListener("touchend", handleResizeEnd);
     };
 
-    window.addEventListener("mousemove", handleResizeMouseMove);
-    window.addEventListener("mouseup", handleResizeMouseUp);
+    window.addEventListener("mousemove", handleResizeMove);
+    window.addEventListener("mouseup", handleResizeEnd);
+    window.addEventListener("touchmove", handleResizeMove);
+    window.addEventListener("touchend", handleResizeEnd);
   };
 
   return (
@@ -145,7 +154,8 @@ const FakeWindow = ({
     >
       <div
         className="window-title"
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleDragStart}
+        onTouchStart={handleDragStart} // Handle drag start on touch devices
         style={{
           background: color,
           width: windowSize.width,
@@ -176,10 +186,10 @@ const FakeWindow = ({
       </div>
       <div
         className="resize-handle"
-        onMouseDown={handleResizeMouseDown}
+        onMouseDown={handleResizeStart}
+        onTouchStart={handleResizeStart} // Handle resizing on touch devices
         style={{ background: color }}
       ></div>
-
       <div className="window-content">{children}</div>
     </div>
   );

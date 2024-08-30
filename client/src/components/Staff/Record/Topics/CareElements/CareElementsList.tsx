@@ -22,10 +22,10 @@ import CloseButton from "../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import CareElementAdditionalHistory from "./CareElementAdditionalHistory";
-import CareElementHistory from "./CareElementHistory";
 import CareElementsListAdd from "./CareElementsListAdd";
 import CareElementsListContent from "./CareElementsListContent";
+import CareElementAdditionalHistory from "./History/CareElementAdditionalHistory";
+import CareElementHistory from "./History/CareElementHistory";
 
 type CareElementsListProps = {
   careElementPut: UseMutationResult<

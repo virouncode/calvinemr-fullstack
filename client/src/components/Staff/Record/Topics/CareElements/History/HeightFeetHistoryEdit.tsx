@@ -1,21 +1,25 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
-import useUserContext from "../../../../../hooks/context/useUserContext";
-import { CareElementType } from "../../../../../types/api";
-import { UserStaffType } from "../../../../../types/app";
+import useUserContext from "../../../../../../hooks/context/useUserContext";
+import { CareElementType } from "../../../../../../types/api";
+import { UserStaffType } from "../../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import { bodyMassIndex } from "../../../../../utils/measurements/measurements";
-import CloseButton from "../../../../UI/Buttons/CloseButton";
-import SaveButton from "../../../../UI/Buttons/SaveButton";
-import Input from "../../../../UI/Inputs/Input";
-import InputDate from "../../../../UI/Inputs/InputDate";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+} from "../../../../../../utils/dates/formatDates";
+import {
+  bodyMassIndex,
+  cmToFeet,
+  feetToCm,
+} from "../../../../../../utils/measurements/measurements";
+import CloseButton from "../../../../../UI/Buttons/CloseButton";
+import SaveButton from "../../../../../UI/Buttons/SaveButton";
+import Input from "../../../../../UI/Inputs/Input";
+import InputDate from "../../../../../UI/Inputs/InputDate";
+import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 
-type HeightHistoryEditProps = {
+type HeightFeetHistoryEditProps = {
   datas: CareElementType;
   careElementPut: UseMutationResult<
     CareElementType,
@@ -26,11 +30,11 @@ type HeightHistoryEditProps = {
   setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const HeightHistoryEdit = ({
+const HeightFeetHistoryEdit = ({
   datas,
   careElementPut,
   setEditVisible,
-}: HeightHistoryEditProps) => {
+}: HeightFeetHistoryEditProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [formDatasHeight, setFormDatasHeight] = useState<
@@ -42,7 +46,7 @@ const HeightHistoryEdit = ({
     }[]
   >(
     datas?.Height.map((item, index) => {
-      return { ...item, id: index };
+      return { ...item, id: index, Height: cmToFeet(item.Height) };
     })
   );
   const [formDatasBodyMassIndex, setFormDatasBodyMassIndex] = useState<
@@ -72,6 +76,7 @@ const HeightHistoryEdit = ({
   const handleClose = () => {
     setEditVisible(false);
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const id = parseInt(e.target.id);
@@ -93,7 +98,7 @@ const HeightHistoryEdit = ({
                   Date: number;
                 }
               ).Date
-          )?.sort((a, b) => b.Date - a.Date)[0].Weight ?? "";
+          ).sort((a, b) => b.Date - a.Date)[0].Weight ?? "";
         setFormDatasHeight(
           formDatasHeight.map((item) => {
             return item.id === id ? { ...item, Height: value } : item;
@@ -102,21 +107,21 @@ const HeightHistoryEdit = ({
         setFormDatasBodyMassIndex(
           formDatasBodyMassIndex.map((item) => {
             return item.id === id
-              ? { ...item, BMI: bodyMassIndex(value, lastWeight) }
+              ? { ...item, BMI: bodyMassIndex(feetToCm(value), lastWeight) }
               : item;
           })
         );
         setFormDatasBodySurfaceArea(
           formDatasBodySurfaceArea.map((item) => {
             return item.id === id
-              ? { ...item, BSA: bodyMassIndex(value, lastWeight) }
+              ? { ...item, BSA: bodyMassIndex(feetToCm(value), lastWeight) }
               : item;
           })
         );
         break;
       case "Date":
         lastWeight =
-          datas.Weight.filter(
+          datas.Weight?.filter(
             ({ Date }) => Date <= (dateISOToTimestampTZ(value) ?? 0)
           )?.sort((a, b) => b.Date - a.Date)[0].Weight ?? "";
 
@@ -133,7 +138,9 @@ const HeightHistoryEdit = ({
               ? {
                   ...item,
                   BMI: bodyMassIndex(
-                    formDatasHeight.find(({ id }) => id === id)?.Height ?? "",
+                    feetToCm(
+                      formDatasHeight.find(({ id }) => id === id)?.Height ?? ""
+                    ),
                     lastWeight
                   ),
                   Date: dateISOToTimestampTZ(value) ?? 0,
@@ -147,7 +154,9 @@ const HeightHistoryEdit = ({
               ? {
                   ...item,
                   BSA: bodyMassIndex(
-                    formDatasHeight.find(({ id }) => id === id)?.Height ?? "",
+                    feetToCm(
+                      formDatasHeight.find(({ id }) => id === id)?.Height ?? ""
+                    ),
                     lastWeight
                   ),
                   Date: dateISOToTimestampTZ(value) ?? 0,
@@ -172,9 +181,11 @@ const HeightHistoryEdit = ({
       setErrMsgPost("Please enter a valid number for Height");
       return;
     }
-    const careElementToPut = {
+    const careElementToPut: CareElementType = {
       ...datas,
-      Height: formDatasHeight,
+      Height: formDatasHeight.map((item) => {
+        return { ...item, Height: feetToCm(item.Height) };
+      }),
       bodyMassIndex: formDatasBodyMassIndex,
       bodySurfaceArea: formDatasBodySurfaceArea,
       updates: [
@@ -197,24 +208,24 @@ const HeightHistoryEdit = ({
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block care-elements__edit-block--double">
               <InputDate
-                label="Date:"
                 value={timestampToDateISOTZ(
                   formDatasHeight.find(({ id }) => id === item.id)?.Date
                 )}
                 onChange={handleChange}
                 id={item.id.toString()}
                 name="Date"
+                label="Date:"
               />
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
               <Input
-                label="Height (cm):"
                 value={
                   formDatasHeight.find(({ id }) => id === item.id)?.Height ?? ""
                 }
                 onChange={handleChange}
                 id={item.id.toString()}
                 name="Height"
+                label="Height (feet): "
               />
             </span>
           </li>
@@ -228,4 +239,4 @@ const HeightHistoryEdit = ({
   );
 };
 
-export default HeightHistoryEdit;
+export default HeightFeetHistoryEdit;

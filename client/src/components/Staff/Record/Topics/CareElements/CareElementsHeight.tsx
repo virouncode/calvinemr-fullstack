@@ -9,7 +9,7 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import HeightHistoryEdit from "./HeightHistoryEdit";
+import HeightHistoryEdit from "./History/HeightHistoryEdit";
 
 type CareElementsHeightProps = {
   datas: CareElementType;

@@ -10,7 +10,7 @@ import { cmToFeet } from "../../../../../utils/measurements/measurements";
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import HeightFeetHistoryEdit from "./HeightFeetHistoryEdit";
+import HeightFeetHistoryEdit from "./History/HeightFeetHistoryEdit";
 
 type CareElementsHeightFeetProps = {
   datas: CareElementType;

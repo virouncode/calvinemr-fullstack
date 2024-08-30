@@ -1,25 +1,21 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
-import useUserContext from "../../../../../hooks/context/useUserContext";
-import { CareElementType } from "../../../../../types/api";
-import { UserStaffType } from "../../../../../types/app";
+import useUserContext from "../../../../../../hooks/context/useUserContext";
+import { CareElementType } from "../../../../../../types/api";
+import { UserStaffType } from "../../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
-} from "../../../../../utils/dates/formatDates";
-import {
-  bodyMassIndex,
-  kgToLbs,
-  lbsToKg,
-} from "../../../../../utils/measurements/measurements";
-import CloseButton from "../../../../UI/Buttons/CloseButton";
-import SaveButton from "../../../../UI/Buttons/SaveButton";
-import Input from "../../../../UI/Inputs/Input";
-import InputDate from "../../../../UI/Inputs/InputDate";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+} from "../../../../../../utils/dates/formatDates";
+import { bodyMassIndex } from "../../../../../../utils/measurements/measurements";
+import CloseButton from "../../../../../UI/Buttons/CloseButton";
+import SaveButton from "../../../../../UI/Buttons/SaveButton";
+import Input from "../../../../../UI/Inputs/Input";
+import InputDate from "../../../../../UI/Inputs/InputDate";
+import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 
-type WeightLbsHistoryEditProps = {
+type WeightHistoryEditProps = {
   datas: CareElementType;
   careElementPut: UseMutationResult<
     CareElementType,
@@ -30,11 +26,11 @@ type WeightLbsHistoryEditProps = {
   setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const WeightLbsHistoryEdit = ({
+const WeightHistoryEdit = ({
   datas,
   careElementPut,
   setEditVisible,
-}: WeightLbsHistoryEditProps) => {
+}: WeightHistoryEditProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [formDatasWeight, setFormDatasWeight] = useState<
@@ -46,7 +42,7 @@ const WeightLbsHistoryEdit = ({
     }[]
   >(
     datas?.Weight?.map((item, index) => {
-      return { ...item, id: index, Weight: kgToLbs(item.Weight) };
+      return { ...item, id: index };
     })
   );
   const [formDatasBodyMassIndex, setFormDatasBodyMassIndex] = useState<
@@ -108,14 +104,14 @@ const WeightLbsHistoryEdit = ({
         setFormDatasBodyMassIndex(
           formDatasBodyMassIndex.map((item) => {
             return item.id === id
-              ? { ...item, BMI: bodyMassIndex(lastHeight, lbsToKg(value)) }
+              ? { ...item, BMI: bodyMassIndex(lastHeight, value) }
               : item;
           })
         );
         setFormDatasBodySurfaceArea(
           formDatasBodySurfaceArea.map((item) => {
             return item.id === id
-              ? { ...item, BSA: bodyMassIndex(lastHeight, lbsToKg(value)) }
+              ? { ...item, BSA: bodyMassIndex(lastHeight, value) }
               : item;
           })
         );
@@ -140,9 +136,7 @@ const WeightLbsHistoryEdit = ({
                   ...item,
                   BMI: bodyMassIndex(
                     lastHeight,
-                    lbsToKg(
-                      formDatasWeight.find(({ id }) => id === id)?.Weight ?? ""
-                    )
+                    formDatasWeight.find(({ id }) => id === id)?.Weight ?? ""
                   ),
                   Date: dateISOToTimestampTZ(value) ?? 0,
                 }
@@ -156,9 +150,7 @@ const WeightLbsHistoryEdit = ({
                   ...item,
                   BSA: bodyMassIndex(
                     lastHeight,
-                    lbsToKg(
-                      formDatasWeight.find(({ id }) => id === id)?.Weight ?? ""
-                    )
+                    formDatasWeight.find(({ id }) => id === id)?.Weight ?? ""
                   ),
                   Date: dateISOToTimestampTZ(value) ?? 0,
                 }
@@ -184,9 +176,7 @@ const WeightLbsHistoryEdit = ({
     }
     const careElementToPut = {
       ...datas,
-      Weight: formDatasWeight.map((item) => {
-        return { ...item, Weight: lbsToKg(item.Weight) };
-      }),
+      Weight: formDatasWeight,
       bodyMassIndex: formDatasBodyMassIndex,
       bodySurfaceArea: formDatasBodySurfaceArea,
       updates: [
@@ -221,7 +211,7 @@ const WeightLbsHistoryEdit = ({
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
               <Input
-                label="Weight (lbs):"
+                label="Weight (kg):"
                 value={
                   formDatasWeight.find(({ id }) => id === item.id)?.Weight ?? ""
                 }
@@ -241,4 +231,4 @@ const WeightLbsHistoryEdit = ({
   );
 };
 
-export default WeightLbsHistoryEdit;
+export default WeightHistoryEdit;
