@@ -67,12 +67,15 @@ const EventFormTimeRow = ({
           label="End"
         />
       </div>
+
       <div className="event-form__item">
         <DurationPicker
           durationHours={
             formDatas.all_day
               ? "24"
-              : (formDatas.Duration / 60).toString().padStart(2, "0")
+              : Math.floor(formDatas.Duration / 60)
+                  .toString()
+                  .padStart(2, "0")
           }
           durationMin={
             formDatas.all_day

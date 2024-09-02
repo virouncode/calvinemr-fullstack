@@ -20,7 +20,7 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import ReportsInboxForm from "../ReportsInbox/ReportsInboxForm";
+import ReportInboxForm from "../ReportsInbox/ReportInboxForm";
 import Fax from "./Fax";
 import NewFax from "./NewFax";
 
@@ -231,7 +231,7 @@ const FaxDetail = ({
             color="#94bae8"
             setPopUpVisible={setAddToReportsVisible}
           >
-            <ReportsInboxForm
+            <ReportInboxForm
               setAddVisible={setAddToReportsVisible}
               initialAttachment={attachmentToForward as MessageAttachmentType}
               errMsgPost={errMsgPost}

@@ -10,16 +10,12 @@ type PatientMenuRightProps = {
   demographicsInfos: DemographicsType;
   patientId: number;
   contentsVisible: boolean;
-  loadingPatient: boolean;
-  errPatient: Error | null;
 };
 
 const PatientMenuRight = ({
   demographicsInfos,
   patientId,
   contentsVisible,
-  loadingPatient,
-  errPatient,
 }: PatientMenuRightProps) => {
   return (
     <div className="patient-record__menu">
@@ -114,8 +110,6 @@ const PatientMenuRight = ({
         patientName={toPatientName(demographicsInfos)}
         patientDob={demographicsInfos.DateOfBirth as number}
         side="right"
-        loadingPatient={loadingPatient}
-        errPatient={errPatient}
       />
       <PatientTopic
         textColor="#FEFEFE"

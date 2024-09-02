@@ -75,11 +75,11 @@
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     height: 935px;
     &-btn-container {
+      text-align: center;
+      margin-bottom: 20px;
       button {
         margin-left: 5px;
       }
-      text-align: center;
-      margin-bottom: 20px;
     }
   }
   &__content {
@@ -131,10 +131,10 @@
     }
   }
   &__btn-container {
+    text-align: center;
+    margin-top: 20px;
     button {
       margin-left: 5px;
     }
-    text-align: center;
-    margin-top: 20px;
   }
 }

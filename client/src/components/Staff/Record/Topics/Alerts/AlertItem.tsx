@@ -41,7 +41,7 @@ const AlertItem = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<AlertType | undefined>();
+  const [itemInfos, setItemInfos] = useState<AlertType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -55,18 +55,16 @@ const AlertItem = ({
     if (name === "DateActive" || name === "EndDate") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as AlertType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: AlertType = {
-      ...(itemInfos as AlertType),
-      AlertDescription: firstLetterOfFirstWordUpper(
-        itemInfos?.AlertDescription ?? ""
-      ),
+      ...itemInfos,
+      AlertDescription: firstLetterOfFirstWordUpper(itemInfos.AlertDescription),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

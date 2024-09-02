@@ -1,17 +1,17 @@
 import React from "react";
-import { useTopic } from "../../../../../../hooks/reactquery/queries/topicQueries";
-import { useFetchAllPages } from "../../../../../../hooks/reactquery/useFetchAllPages";
-import { timestampToDateISOTZ } from "../../../../../../utils/dates/formatDates";
-import LoadingLi from "../../../../../UI/Lists/LoadingLi";
-import EmptyParagraph from "../../../../../UI/Paragraphs/EmptyParagraph";
-import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
+import { useTopic } from "../../../../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../../../../hooks/reactquery/useFetchAllPages";
+import { timestampToDateISOTZ } from "../../../../../../../utils/dates/formatDates";
+import LoadingLi from "../../../../../../UI/Lists/LoadingLi";
+import EmptyParagraph from "../../../../../../UI/Paragraphs/EmptyParagraph";
+import ErrorParagraph from "../../../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../../../UI/Paragraphs/LoadingParagraph";
 
-type PregnanciesLetterProps = {
+type LetterPregnanciesProps = {
   patientId: number;
 };
 
-const PregnanciesLetter = ({ patientId }: PregnanciesLetterProps) => {
+const LetterPregnancies = ({ patientId }: LetterPregnanciesProps) => {
   //Queries
   const {
     data,
@@ -47,4 +47,4 @@ const PregnanciesLetter = ({ patientId }: PregnanciesLetterProps) => {
   );
 };
 
-export default PregnanciesLetter;
+export default LetterPregnancies;

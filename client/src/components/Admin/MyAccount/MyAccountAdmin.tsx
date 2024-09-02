@@ -19,7 +19,7 @@ const MyAccountAdmin = () => {
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
-  const [formDatas, setFormDatas] = useState(user);
+  const [formDatas, setFormDatas] = useState<AdminType>(user);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [progress, setProgress] = useState(false);
@@ -97,6 +97,7 @@ const MyAccountAdmin = () => {
 
   const handleCancel = () => {
     setErrMsg("");
+    setFormDatas(user);
     setEditVisible(false);
   };
 

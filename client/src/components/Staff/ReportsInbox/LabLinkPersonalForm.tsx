@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useLabLinksPersonalPost } from "../../../hooks/reactquery/mutations/labLinksMutations";
-import { LabLinkPersonalType } from "../../../types/api";
+import { LabLinkPersonalFormType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { lablinkSchema } from "../../../validation/lablinks/lablinkValidation";
@@ -54,7 +54,7 @@ const LabLinkPersonalForm = ({
     if (!url.includes("http") || !url.includes("https")) {
       urlFormatted = ["https://", url].join("");
     }
-    const labLinkPersonalToPost: Partial<LabLinkPersonalType> = {
+    const labLinkPersonalToPost: LabLinkPersonalFormType = {
       staff_id: user.id,
       name,
       url: urlFormatted,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
@@ -38,6 +38,10 @@ const StaffAccountEdit = ({
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    setFormDatas(infos);
+  }, [infos]);
 
   //HANDLERS
   const handleChange = (
@@ -101,23 +105,24 @@ const StaffAccountEdit = ({
         (formDatas.middle_name ? formDatas.middle_name + " " : "") +
         formDatas.last_name;
 
-      const datasToPut: StaffType = { ...formDatas };
+      const datasToPut: StaffType = {
+        ...formDatas,
+        first_name: firstLetterUpper(formDatas.first_name),
+        middle_name: firstLetterUpper(formDatas.middle_name),
+        last_name: firstLetterUpper(formDatas.last_name),
+        full_name: firstLetterUpper(full_name),
+        speciality: firstLetterUpper(formDatas.speciality),
+        subspeciality: firstLetterUpper(formDatas.subspeciality),
+        updates: [
+          ...(infos.updates ?? []),
+          {
+            date_updated: nowTZTimestamp(),
+            updated_by_id: user.id,
+            updated_by_user_type: "admin",
+          },
+        ],
+      };
 
-      //Formatting
-      datasToPut.first_name = firstLetterUpper(datasToPut.first_name);
-      datasToPut.middle_name = firstLetterUpper(datasToPut.middle_name);
-      datasToPut.last_name = firstLetterUpper(datasToPut.last_name);
-      datasToPut.full_name = firstLetterUpper(full_name);
-      datasToPut.speciality = firstLetterUpper(datasToPut.speciality);
-      datasToPut.subspeciality = firstLetterUpper(datasToPut.subspeciality);
-      datasToPut.updates = [
-        ...(infos.updates ?? []),
-        {
-          date_updated: nowTZTimestamp(),
-          updated_by_id: user.id,
-          updated_by_user_type: "admin",
-        },
-      ];
       if (
         datasToPut.video_link.trim() &&
         (!datasToPut.video_link.includes("http") ||
@@ -232,6 +237,9 @@ const StaffAccountEdit = ({
                 name="account_status"
                 id="status"
               >
+                <option value="" disabled>
+                  Choose a status...
+                </option>
                 <option value="Active">Active</option>
                 <option value="Closed">Closed</option>
                 <option value="Suspended">Suspended</option>

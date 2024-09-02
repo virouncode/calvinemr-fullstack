@@ -5,7 +5,7 @@ type GenericListProps = {
   value: string;
   name?: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  placeHolder?: string;
+  placeHolder: string;
   noneOption?: boolean;
   id?: string;
   label?: string;
@@ -24,7 +24,13 @@ const GenericList = ({
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
-      <select value={value} name={name} onChange={handleChange} id={id}>
+      <select
+        value={value}
+        name={name}
+        onChange={handleChange}
+        id={id}
+        style={{ color: value === "" ? "#a3a3a3" : "" }}
+      >
         <option value="" disabled>
           {placeHolder}
         </option>

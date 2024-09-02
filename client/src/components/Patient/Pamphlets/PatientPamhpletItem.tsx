@@ -25,7 +25,7 @@ const PatientPamphletItem = ({
           className="patient-pamphlets__item-link"
           onClick={() => showDocument(item.file?.url, item.file?.mime)}
         >
-          {item.file.name}
+          {item.file?.name}
         </td>
         <td>{item.notes}</td>
         <td>{staffIdToTitleAndName(staffInfos, item.created_by_id)}</td>

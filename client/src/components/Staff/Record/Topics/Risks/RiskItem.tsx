@@ -43,7 +43,7 @@ const RiskItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<RiskFactorType | undefined>();
+  const [itemInfos, setItemInfos] = useState<RiskFactorType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -60,20 +60,18 @@ const RiskItem = ({
     if (name === "StartDate" || name === "EndDate") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as RiskFactorType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: RiskFactorType = {
-      ...(itemInfos as RiskFactorType),
-      RiskFactor: firstLetterOfFirstWordUpper(itemInfos?.RiskFactor ?? ""),
-      ExposureDetails: firstLetterOfFirstWordUpper(
-        itemInfos?.ExposureDetails ?? ""
-      ),
-      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      ...itemInfos,
+      RiskFactor: firstLetterOfFirstWordUpper(itemInfos.RiskFactor),
+      ExposureDetails: firstLetterOfFirstWordUpper(itemInfos.ExposureDetails),
+      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

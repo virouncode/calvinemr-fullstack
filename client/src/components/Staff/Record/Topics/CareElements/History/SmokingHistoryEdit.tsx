@@ -163,6 +163,7 @@ const SmokingHistoryEdit = ({
                 noneOption={false}
                 id={item.id.toString()}
                 label="Smoking:"
+                placeHolder="Choose..."
               />
             </span>
             <span className="care-elements__edit-block">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useClinicalNotesTemplatesPost } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
-import { ClinicalNoteTemplateType } from "../../../../../types/api";
+import { ClinicalNoteTemplateFormType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
@@ -19,9 +19,12 @@ const ClinicalNotesTemplateForm = ({
 }: ClinicalNotesTemplateFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [newTemplate, setNewTemplate] = useState<
-    Partial<ClinicalNoteTemplateType>
-  >({ name: "", body: "" });
+  const [newTemplate, setNewTemplate] = useState<ClinicalNoteTemplateFormType>({
+    name: "",
+    author_id: user.id,
+    body: "",
+    date_created: nowTZTimestamp(),
+  });
   const [errMsg, setErrMsg] = useState("");
   //Queries
   const templatePost = useClinicalNotesTemplatesPost();
@@ -45,12 +48,11 @@ const ClinicalNotesTemplateForm = ({
       setErrMsg("Please enter a name for your template");
       return;
     }
-    const templateToPost = {
+    const templateToPost: ClinicalNoteTemplateFormType = {
       ...newTemplate,
       name: firstLetterOfFirstWordUpper(newTemplate.name),
+      date_created: nowTZTimestamp(),
     };
-    templateToPost.date_created = nowTZTimestamp();
-    templateToPost.author_id = user.id;
     templatePost.mutate(templateToPost, {
       onSuccess: () => setNewTemplateVisible(false),
     });
@@ -60,7 +62,7 @@ const ClinicalNotesTemplateForm = ({
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="new-template-name">
         <Input
-          value={newTemplate.name ?? ""}
+          value={newTemplate.name}
           onChange={handleChange}
           name="name"
           id="clinical-template-name"

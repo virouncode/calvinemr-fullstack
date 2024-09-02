@@ -28,7 +28,13 @@ const GenericListToggle = ({
     <>
       {label && <label htmlFor={id}>{label}</label>}
       {editVisible ? (
-        <select value={value} name={name} onChange={handleChange} id={id}>
+        <select
+          value={value}
+          name={name}
+          onChange={handleChange}
+          id={id}
+          style={{ color: value === "" ? "#a3a3a3" : "" }}
+        >
           <option value="" disabled>
             {placeHolder}
           </option>

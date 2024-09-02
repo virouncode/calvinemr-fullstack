@@ -2,7 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
-import { RiskFactorType } from "../../../../../types/api";
+import { RiskFactorFormType, RiskFactorType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -42,13 +42,15 @@ const RiskForm = ({
 }: RiskFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<RiskFactorType>>({
+  const [formDatas, setFormDatas] = useState<RiskFactorFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     RiskFactor: "",
     ExposureDetails: "",
+    AgeOfOnset: "",
     StartDate: null,
     EndDate: null,
-    AgeOfOnset: "",
     LifeStage: "N",
     Notes: "",
   });
@@ -62,14 +64,14 @@ const RiskForm = ({
     let value: string | number | null = e.target.value;
     const name = e.target.name;
     if (name === "StartDate" || name === "EndDate") {
-      value = value === "" ? null : dateISOToTimestampTZ(value);
+      value = dateISOToTimestampTZ(value);
     }
     setFormDatas({ ...formDatas, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
-    const topicToPost: Partial<RiskFactorType> = {
+    const topicToPost: RiskFactorFormType = {
       ...formDatas,
       RiskFactor: firstLetterOfFirstWordUpper(formDatas.RiskFactor ?? ""),
       ExposureDetails: firstLetterOfFirstWordUpper(

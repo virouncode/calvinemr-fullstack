@@ -1,7 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import { ReminderType } from "../../../../../types/api";
+import { ReminderFormType, ReminderType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
@@ -35,9 +35,11 @@ const ReminderForm = ({
 }: ReminderFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<ReminderType>>({
+  const [formDatas, setFormDatas] = useState<ReminderFormType>({
     patient_id: patientId,
     reminder: "",
+    created_by_id: user.id,
+    date_created: nowTZTimestamp(),
   });
   const [progress, setProgress] = useState(false);
 
@@ -57,9 +59,9 @@ const ReminderForm = ({
 
   const handleSubmit = async () => {
     //Formatting
-    const topicToPost: Partial<ReminderType> = {
+    const topicToPost: ReminderFormType = {
       ...formDatas,
-      reminder: firstLetterOfFirstWordUpper(formDatas.reminder ?? ""),
+      reminder: firstLetterOfFirstWordUpper(formDatas.reminder),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -96,7 +98,7 @@ const ReminderForm = ({
       </td>
       <td>
         <Input
-          value={formDatas.reminder ?? ""}
+          value={formDatas.reminder}
           name="reminder"
           onChange={handleChange}
         />

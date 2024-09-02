@@ -18,15 +18,11 @@ import PatientMenuRight from "./PatientMenuRight";
 
 type PatientRecordProps = {
   demographicsInfos: DemographicsType;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   patientId: number;
 };
 
 const PatientRecord = ({
   demographicsInfos,
-  loadingPatient,
-  errPatient,
   patientId,
 }: PatientRecordProps) => {
   //Hooks
@@ -158,8 +154,6 @@ const PatientRecord = ({
           demographicsInfos={demographicsInfos}
           patientId={patientId}
           contentsVisible={leftContentsVisible}
-          loadingPatient={loadingPatient}
-          errPatient={errPatient}
         />
         <ClinicalNotes
           demographicsInfos={demographicsInfos}
@@ -168,15 +162,11 @@ const PatientRecord = ({
           contentsVisible={notesContentsVisible}
           setContentsVisible={setNotesContentsVisible}
           patientId={patientId}
-          loadingPatient={loadingPatient}
-          errPatient={errPatient}
         />
         <PatientMenuRight
           demographicsInfos={demographicsInfos}
           patientId={patientId}
           contentsVisible={rightContentsVisible}
-          loadingPatient={loadingPatient}
-          errPatient={errPatient}
         />
       </div>
       {exportVisible && (

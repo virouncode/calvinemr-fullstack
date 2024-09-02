@@ -2,7 +2,7 @@ import { Reorder } from "framer-motion";
 import React, { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroupPost } from "../../../hooks/reactquery/mutations/patientsGroupsMutations";
-import { DemographicsType, GroupType } from "../../../types/api";
+import { DemographicsType, GroupFormType, GroupType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { groupSchema } from "../../../validation/groups/groupValidation";
@@ -29,12 +29,13 @@ const PatientsGroupForm = ({
 }: PatientsGroupFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [groupInfos, setGroupInfos] = useState<Partial<GroupType>>({
+  const [formDatas, setFormDatas] = useState<GroupFormType>({
+    date_created: nowTZTimestamp(),
+    staff_id: user.id,
+    patients: [],
     name: "",
     description: "",
     color: "#6492d8",
-    patients: [],
-    staff_id: user.id,
     global,
   });
   const [order, setOrder] = useState<number[]>([]);
@@ -50,26 +51,23 @@ const PatientsGroupForm = ({
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
-    setGroupInfos({ ...groupInfos, [name]: value });
+    setFormDatas({ ...formDatas, [name]: value });
   };
 
   const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value === "true" ? true : false;
-    setGroupInfos({ ...groupInfos, global: value });
+    setFormDatas({ ...formDatas, global: value });
   };
 
   const handleClickColor = (color: string) => {
-    setGroupInfos({ ...groupInfos, color: color });
+    setFormDatas({ ...formDatas, color: color });
   };
 
   const handleClickPatient = (patient: DemographicsType) => {
     setErrMsg("");
-    setGroupInfos({
-      ...groupInfos,
-      patients: [
-        ...(groupInfos.patients as { patient_infos: DemographicsType }[]),
-        { patient_infos: patient },
-      ],
+    setFormDatas({
+      ...formDatas,
+      patients: [...formDatas.patients, { patient_infos: patient }],
     });
     setOrder([...order, patient.patient_id]);
   };
@@ -82,8 +80,8 @@ const PatientsGroupForm = ({
   };
   const handleSave = async () => {
     setErrMsg("");
-    const datasToPost = {
-      ...groupInfos,
+    const datasToPost: Partial<GroupType> = {
+      ...formDatas,
       patients: order,
       date_created: nowTZTimestamp(),
     };
@@ -113,12 +111,12 @@ const PatientsGroupForm = ({
         <label>Color</label>
         <ColorPicker
           handleClickColor={handleClickColor}
-          choosenColor={groupInfos.color ?? "#6492d8"}
+          choosenColor={formDatas.color ?? "#6492d8"}
         />
       </div>
       <div className="patients-groups__edit-name">
         <Input
-          value={groupInfos.name ?? ""}
+          value={formDatas.name}
           onChange={handleChange}
           name="name"
           id="name"
@@ -130,7 +128,7 @@ const PatientsGroupForm = ({
         <label htmlFor="description">Description</label>
         <textarea
           name="description"
-          value={groupInfos.description}
+          value={formDatas.description}
           onChange={handleChange}
           id="description"
         />
@@ -138,7 +136,7 @@ const PatientsGroupForm = ({
       <div className="patients-groups__edit-type">
         <label>Type</label>
         <PatientsGroupTypeRadio
-          groupInfos={groupInfos}
+          groupInfos={formDatas}
           handleChangeType={handleChangeType}
         />
       </div>
@@ -151,9 +149,7 @@ const PatientsGroupForm = ({
           {order.length > 0 ? (
             order.map((item) => (
               <PatientsGroupEditPatientItem
-                patient={(
-                  groupInfos.patients as { patient_infos: DemographicsType }[]
-                ).find(
+                patient={formDatas.patients.find(
                   ({ patient_infos }) => patient_infos.patient_id === item
                 )}
                 key={item}
@@ -178,7 +174,7 @@ const PatientsGroupForm = ({
           height={600}
           x={(window.innerWidth - 800) / 2 + 300}
           y={(window.innerHeight - 600) / 2}
-          color={groupInfos.color ?? "#6492d8"}
+          color={formDatas.color ?? "#6492d8"}
           setPopUpVisible={setAddPatientsVisible}
         >
           <PatientChartHealthSearch

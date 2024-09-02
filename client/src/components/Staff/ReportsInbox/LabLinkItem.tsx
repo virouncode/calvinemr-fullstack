@@ -135,11 +135,11 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
           <Input
             value={login}
             onChange={handleChangeLogin}
-            ref={loginRef}
+            inputRef={loginRef}
             id="lablink-login"
           />
         ) : (
-          <Input value={login} readOnly ref={loginRef} />
+          <Input value={login} readOnly inputRef={loginRef} />
         )}
       </div>
       <div className="lablink__item-pwd">
@@ -151,11 +151,11 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
           <Input
             value={pwd}
             onChange={handleChangePwd}
-            ref={pwdRef}
+            inputRef={pwdRef}
             id="lablink-pwd"
           />
         ) : (
-          <Input value={pwd.replace(/./g, "*")} readOnly ref={pwdRef} />
+          <Input value={pwd.replace(/./g, "*")} readOnly inputRef={pwdRef} />
         )}
       </div>
     </li>

@@ -13,9 +13,11 @@ import {
   NotepadType,
   SettingsType,
   SiteType,
+  StaffFormType,
   StaffType,
 } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
+import { initialStaff } from "../../../utils/initialDatas/initialDatas";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { staffSchema } from "../../../validation/signup/staffValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
@@ -29,19 +31,19 @@ import SiteSelect from "../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 axios.defaults.withCredentials = true;
 
-type SignupStaffFormProps = {
+type StaffAccountFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   sites: SiteType[];
 };
 
-const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
+const StaffAccountForm = ({ setAddVisible, sites }: StaffAccountFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext() as { clinic: ClinicType };
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [formDatas, setFormDatas] = useState<Partial<StaffType> | undefined>();
+  const [formDatas, setFormDatas] = useState<StaffFormType>(initialStaff);
   const [progress, setProgress] = useState(false);
 
   const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,6 +64,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     const name = e.target.name;
     setFormDatas({ ...formDatas, [name]: value });
   };
+
   const handleSignChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -104,31 +107,26 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     //Validation
     try {
       const full_name =
-        formDatas?.first_name +
+        formDatas.first_name +
         " " +
-        (formDatas?.middle_name ? formDatas.middle_name + " " : "") +
-        formDatas?.last_name;
+        (formDatas.middle_name ? formDatas.middle_name + " " : "") +
+        formDatas.last_name;
 
-      const datasToPost: Partial<StaffType> & { clinic_name: string } = {
+      const datasToPost: StaffFormType & { clinic_name: string } = {
         ...formDatas,
-        created_by_id: user?.id,
+        created_by_id: user.id,
         date_created: nowTZTimestamp(),
-        access_level: "staff",
-        account_status: "Active",
-        ai_consent: true,
         clinic_name: clinic.name,
       };
 
       //Formatting
-      datasToPost.email = datasToPost.email?.toLowerCase() ?? "";
-      datasToPost.first_name = firstLetterUpper(datasToPost.first_name ?? "");
-      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name ?? "");
-      datasToPost.last_name = firstLetterUpper(datasToPost.last_name ?? "");
+      datasToPost.email = datasToPost.email.toLowerCase();
+      datasToPost.first_name = firstLetterUpper(datasToPost.first_name);
+      datasToPost.middle_name = firstLetterUpper(datasToPost.middle_name);
+      datasToPost.last_name = firstLetterUpper(datasToPost.last_name);
       datasToPost.full_name = firstLetterUpper(full_name);
-      datasToPost.speciality = firstLetterUpper(datasToPost.speciality ?? "");
-      datasToPost.subspeciality = firstLetterUpper(
-        datasToPost.subspeciality ?? ""
-      );
+      datasToPost.speciality = firstLetterUpper(datasToPost.speciality);
+      datasToPost.subspeciality = firstLetterUpper(datasToPost.subspeciality);
       if (
         datasToPost.video_link?.trim() &&
         (!datasToPost.video_link.includes("http") ||
@@ -502,4 +500,4 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   );
 };
 
-export default SignupStaffForm;
+export default StaffAccountForm;

@@ -49,8 +49,9 @@ const ImmunizationItem = ({
 }: ImmunizationItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<ImmunizationType | undefined>();
+  const [itemInfos, setItemInfos] = useState<ImmunizationType>(item);
   const [progress, setProgress] = useState(false);
+
   useEffect(() => {
     setItemInfos(item);
   }, [item]);
@@ -62,26 +63,25 @@ const ImmunizationItem = ({
     let value: string | number | null = e.target.value;
     if (name === "RefusedFlag") {
       setItemInfos({
-        ...(itemInfos as ImmunizationType),
-        RefusedFlag: { ynIndicatorsimple: value },
+        ...itemInfos,
+        RefusedFlag: { ynIndicatorsimple: value as "Y" | "N" },
       });
       return;
-    }
-    if (name === "Date") {
+    } else if (name === "Date") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as ImmunizationType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleRouteChange = (value: string) => {
-    setItemInfos({ ...(itemInfos as ImmunizationType), Route: value });
+    setItemInfos({ ...itemInfos, Route: value });
   };
   const handleSiteChange = (value: string) => {
-    setItemInfos({ ...(itemInfos as ImmunizationType), Site: value });
+    setItemInfos({ ...itemInfos, Site: value });
   };
   const handleImmunizationChange = (value: string) => {
     setItemInfos({
-      ...(itemInfos as ImmunizationType),
+      ...itemInfos,
       ImmunizationType: value,
     });
   };
@@ -120,9 +120,9 @@ const ImmunizationItem = ({
     setErrMsgPost("");
     //Formatting
     const topicToPut: ImmunizationType = {
-      ...(itemInfos as ImmunizationType),
-      ImmunizationName: firstLetterUpper(itemInfos?.ImmunizationName ?? ""),
-      Manufacturer: firstLetterUpper(itemInfos?.Manufacturer ?? ""),
+      ...itemInfos,
+      ImmunizationName: firstLetterUpper(itemInfos.ImmunizationName),
+      Manufacturer: firstLetterUpper(itemInfos.Manufacturer),
       updates: [
         ...item.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },

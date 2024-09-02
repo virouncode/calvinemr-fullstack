@@ -43,7 +43,7 @@ const PastHealthItem = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<PastHealthType | undefined>();
+  const [itemInfos, setItemInfos] = useState<PastHealthType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -64,23 +64,21 @@ const PastHealthItem = ({
     ) {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as PastHealthType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     setErrMsgPost("");
     //Formatting
     const topicToPut: PastHealthType = {
-      ...(itemInfos as PastHealthType),
+      ...itemInfos,
       PastHealthProblemDescriptionOrProcedures: firstLetterOfFirstWordUpper(
-        itemInfos?.PastHealthProblemDescriptionOrProcedures ?? ""
+        itemInfos.PastHealthProblemDescriptionOrProcedures
       ),
-      ProblemStatus: firstLetterOfFirstWordUpper(
-        itemInfos?.ProblemStatus ?? ""
-      ),
-      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      ProblemStatus: firstLetterOfFirstWordUpper(itemInfos.ProblemStatus),
+      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
       updates: [
-        ...item.updates,
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

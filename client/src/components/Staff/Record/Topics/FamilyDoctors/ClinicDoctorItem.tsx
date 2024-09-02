@@ -27,7 +27,7 @@ const ClinicDoctorItem = ({ item, patientId, site }: ClinicDoctorItemProps) => {
   const handleAddToPatient = async () => {
     try {
       //Add patient to clinic doctor
-      const datasToPut = {
+      const datasToPut: StaffType = {
         ...item,
         patients: [...item.patients, patientId],
         updates: [

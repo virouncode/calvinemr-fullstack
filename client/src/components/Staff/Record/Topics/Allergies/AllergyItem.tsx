@@ -48,7 +48,7 @@ const AllergyItem = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<AllergyType | undefined>();
+  const [itemInfos, setItemInfos] = useState<AllergyType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -65,20 +65,20 @@ const AllergyItem = ({
     if (name === "StartDate" || name === "RecordedDate") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as AllergyType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: AllergyType = {
-      ...(itemInfos as AllergyType),
+      ...itemInfos,
       OffendingAgentDescription: firstLetterOfFirstWordUpper(
-        itemInfos?.OffendingAgentDescription ?? ""
+        itemInfos.OffendingAgentDescription
       ),
-      Reaction: firstLetterOfFirstWordUpper(itemInfos?.Reaction ?? ""),
-      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      Reaction: firstLetterOfFirstWordUpper(itemInfos.Reaction),
+      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

@@ -12,7 +12,7 @@ import {
   AttachmentType,
   DemographicsType,
   LetterAttachmentType,
-  LetterType,
+  LetterFormType,
   MessageAttachmentType,
   SiteType,
 } from "../../../../../../types/api";
@@ -236,13 +236,13 @@ const LetterPreview = ({
       );
       setLetter(fileToUpload);
       //Create the letter
-      const letterToPost: Partial<LetterType> = {
+      const letterToPost: LetterFormType = {
+        date_created: nowTZTimestamp(),
+        created_by_id: user.id,
         patient_id: patientId,
         file: fileToUpload,
         name,
         description,
-        date_created: nowTZTimestamp(),
-        created_by_id: user.id,
       };
       letterPost.mutate(letterToPost);
       return fileToUpload;

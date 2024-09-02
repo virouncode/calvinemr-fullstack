@@ -21,10 +21,15 @@ const SiteSelect = ({
           {label}
         </label>
       )}
-      <select value={value} onChange={handleSiteChange} id="site-select">
+      <select
+        value={value}
+        onChange={handleSiteChange}
+        id="site-select"
+        style={{ color: value === 0 ? "#a3a3a3" : "" }}
+      >
         {all && <option value="-1">All</option>}
         <option value="0" disabled>
-          Select a site
+          Choose a site...
         </option>
         {sites &&
           sites.map((site) => (

@@ -11,7 +11,7 @@ type InputProps = {
   readOnly?: boolean;
   className?: string;
   mt?: number;
-  ref?: React.MutableRefObject<HTMLInputElement | null>;
+  inputRef?: React.MutableRefObject<HTMLInputElement | null>;
 };
 const Input = ({
   value,
@@ -25,7 +25,7 @@ const Input = ({
   readOnly = false,
   className = "",
   mt = 0,
-  ref,
+  inputRef,
 }: InputProps) => {
   return (
     <>
@@ -42,7 +42,7 @@ const Input = ({
         autoFocus={autoFocus}
         readOnly={readOnly}
         className={className}
-        ref={ref}
+        ref={inputRef}
       />
     </>
   );

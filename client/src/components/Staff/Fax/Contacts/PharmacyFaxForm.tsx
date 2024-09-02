@@ -162,6 +162,7 @@ const PharmacyFaxForm = ({
           handleChange={handleChange}
           noneOption={false}
           label="Province/State:"
+          placeHolder="Choose province/state..."
         />
       </div>
       <div className="pharmacy-fax__form-row pharmacy-fax__form-row--postal">

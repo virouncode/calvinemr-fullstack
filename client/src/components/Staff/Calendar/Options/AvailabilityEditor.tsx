@@ -1,46 +1,37 @@
+import { cloneDeep } from "lodash";
 import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useAvailabilityPut } from "../../../../hooks/reactquery/mutations/availabilityMutations";
-import { useAvailability } from "../../../../hooks/reactquery/queries/availabilityQueries";
 import { AvailabilityType, ScheduleType } from "../../../../types/api";
 import { DayType, UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
-import { initialAvailability } from "../../../../utils/initialDatas/initialDatas";
 import { availabilitySchema } from "../../../../validation/calendar/availabilityValidation";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SubmitButton from "../../../UI/Buttons/SubmitButton";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import DurationPicker from "../../../UI/Pickers/DurationPicker";
 import AvailabilityItem from "./AvailabilityItem";
 
 type AvailabilityEditorProps = {
+  availability: AvailabilityType;
   setEditAvailability: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AvailabilityEditor = ({
+  availability,
   setEditAvailability,
 }: AvailabilityEditorProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
-  const [availability, setAvailability] =
-    useState<AvailabilityType>(initialAvailability);
+  const [itemInfos, setItemInfos] = useState<AvailabilityType>(availability);
   const [errMsg, setErrMsg] = useState("");
-  //Queries
-  const {
-    data: availabilityQuery,
-    isPending,
-    isError,
-    error,
-  } = useAvailability(user.id);
-  const availabilityPut = useAvailabilityPut(user.id);
 
   useEffect(() => {
-    if (availabilityQuery) {
-      setAvailability(availabilityQuery);
-    }
-  }, [availabilityQuery]);
+    setItemInfos(cloneDeep(availability));
+  }, [availability]);
+
+  const availabilityPut = useAvailabilityPut(user.id);
 
   const days: DayType[] = [
     "monday",
@@ -56,7 +47,7 @@ const AvailabilityEditor = ({
     e.preventDefault();
     //Validation
     const scheduleToPut: AvailabilityType = {
-      ...availability,
+      ...itemInfos,
       date_created: nowTZTimestamp(),
     };
 
@@ -82,13 +73,13 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
-      ...availability.schedule_morning,
+      ...itemInfos.schedule_morning,
     };
     if (name === "ampm")
       scheduleMorningUpdated[day][0][name] = value as "AM" | "PM";
     else scheduleMorningUpdated[day][0][name] = value;
-    setAvailability({
-      ...availability,
+    setItemInfos({
+      ...itemInfos,
       schedule_morning: scheduleMorningUpdated,
     });
   };
@@ -99,13 +90,13 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleMorningUpdated: ScheduleType = {
-      ...availability.schedule_morning,
+      ...itemInfos.schedule_morning,
     };
     if (name === "ampm")
       scheduleMorningUpdated[day][1][name] = value as "AM" | "PM";
     else scheduleMorningUpdated[day][1][name] = value;
-    setAvailability({
-      ...availability,
+    setItemInfos({
+      ...itemInfos,
       schedule_morning: scheduleMorningUpdated,
     });
   };
@@ -116,13 +107,13 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
-      ...availability.schedule_afternoon,
+      ...itemInfos.schedule_afternoon,
     };
     if (name === "ampm")
       scheduleAfternoonUpdated[day][0][name] = value as "AM" | "PM";
     else scheduleAfternoonUpdated[day][0][name] = value;
-    setAvailability({
-      ...availability,
+    setItemInfos({
+      ...itemInfos,
       schedule_afternoon: scheduleAfternoonUpdated,
     });
   };
@@ -133,22 +124,22 @@ const AvailabilityEditor = ({
   ) => {
     const value = e.target.value;
     const scheduleAfternoonUpdated: ScheduleType = {
-      ...availability.schedule_afternoon,
+      ...itemInfos.schedule_afternoon,
     };
     if (name === "ampm")
       scheduleAfternoonUpdated[day][1][name] = value as "AM" | "PM";
     else scheduleAfternoonUpdated[day][1][name] = value;
-    setAvailability({
-      ...availability,
+    setItemInfos({
+      ...itemInfos,
       schedule_afternoon: scheduleAfternoonUpdated,
     });
   };
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>, day: string) => {
     const checked = e.target.checked;
-    setAvailability({
-      ...availability,
+    setItemInfos({
+      ...itemInfos,
       unavailability: {
-        ...availability.unavailability,
+        ...itemInfos.unavailability,
         [day]: checked,
       },
     });
@@ -159,14 +150,14 @@ const AvailabilityEditor = ({
     const name = e.target.name;
     switch (name) {
       case "hoursDuration":
-        setAvailability({
-          ...availability,
+        setItemInfos({
+          ...itemInfos,
           default_duration_hours: value,
         });
         break;
       case "minutesDuration":
-        setAvailability({
-          ...availability,
+        setItemInfos({
+          ...itemInfos,
           default_duration_min: value,
         });
         break;
@@ -176,25 +167,12 @@ const AvailabilityEditor = ({
   };
 
   const handleCancel = () => {
-    setAvailability(initialAvailability);
+    setItemInfos(availability);
     setEditAvailability(false);
   };
 
-  if (isPending)
-    return (
-      <div className="availability__heads">
-        <LoadingParagraph />
-      </div>
-    );
-  if (isError)
-    return (
-      <div className="availability__heads">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-
   return (
-    availability && (
+    itemInfos && (
       <div>
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
         <div className="availability__heads">
@@ -210,19 +188,19 @@ const AvailabilityEditor = ({
               handleStartAfternoonChange={handleStartAfternoonChange}
               handleEndAfternoonChange={handleEndAfternoonChange}
               handleCheck={handleCheck}
-              scheduleMorning={availability.schedule_morning[day]}
-              scheduleAfternoon={availability.schedule_afternoon[day]}
-              unavailable={availability.unavailability[day]}
+              scheduleMorning={itemInfos.schedule_morning[day]}
+              scheduleAfternoon={itemInfos.schedule_afternoon[day]}
+              unavailable={itemInfos.unavailability[day]}
               key={day}
             />
           ))}
           <div className="availability__duration">
             <label>Default appointment duration</label>
             <DurationPicker
-              durationHours={availability.default_duration_hours
+              durationHours={itemInfos.default_duration_hours
                 .toString()
                 .padStart(2, "0")}
-              durationMin={availability.default_duration_min
+              durationMin={itemInfos.default_duration_min
                 .toString()
                 .padStart(2, "0")}
               handleChange={handleDurationChange}

@@ -1,5 +1,5 @@
 import { Reorder } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroupPut } from "../../../hooks/reactquery/mutations/patientsGroupsMutations";
 import { DemographicsType, GroupType } from "../../../types/api";
@@ -28,7 +28,7 @@ const PatientsGroupEdit = ({
 }: PatientsGroupEditProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [groupInfos, setGroupInfos] = useState(group);
+  const [itemInfos, setItemInfos] = useState(group);
   const [order, setOrder] = useState(
     (group.patients as { patient_infos: DemographicsType }[]).map(
       ({ patient_infos }) => patient_infos.patient_id
@@ -40,25 +40,29 @@ const PatientsGroupEdit = ({
   //Queries
   const groupPut = usePatientsGroupPut(user.id);
 
+  useEffect(() => {
+    setItemInfos(group);
+  }, [group]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setErrMsg("");
     const value = e.target.value;
     const name = e.target.name;
-    setGroupInfos({ ...groupInfos, [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleClickColor = (color: string) => {
-    setGroupInfos({ ...groupInfos, color: color });
+    setItemInfos({ ...itemInfos, color: color });
   };
 
   const handleClickPatient = (patient: DemographicsType) => {
     setErrMsg("");
-    setGroupInfos({
-      ...groupInfos,
+    setItemInfos({
+      ...itemInfos,
       patients: [
-        ...(groupInfos.patients as { patient_infos: DemographicsType }[]),
+        ...(itemInfos.patients as { patient_infos: DemographicsType }[]),
         { patient_infos: patient },
       ],
     });
@@ -70,14 +74,14 @@ const PatientsGroupEdit = ({
   };
   const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value === "true" ? true : false;
-    setGroupInfos({ ...groupInfos, global: value });
+    setItemInfos({ ...itemInfos, global: value });
   };
   const handleCancel = () => {
     setEditVisible(false);
   };
   const handleSave = async () => {
     setErrMsg("");
-    const groupToPut: GroupType = { ...groupInfos, patients: order };
+    const groupToPut: GroupType = { ...itemInfos, patients: order };
 
     //Validation
     try {
@@ -106,12 +110,12 @@ const PatientsGroupEdit = ({
         <label>Color</label>
         <ColorPicker
           handleClickColor={handleClickColor}
-          choosenColor={groupInfos.color}
+          choosenColor={itemInfos.color}
         />
       </div>
       <div className="patients-groups__edit-name">
         <Input
-          value={groupInfos.name}
+          value={itemInfos.name}
           onChange={handleChange}
           name="name"
           id="name"
@@ -123,7 +127,7 @@ const PatientsGroupEdit = ({
         <label htmlFor="description">Description</label>
         <textarea
           name="description"
-          value={groupInfos.description}
+          value={itemInfos.description}
           onChange={handleChange}
           id="description"
         />
@@ -131,7 +135,7 @@ const PatientsGroupEdit = ({
       <div className="patients-groups__edit-type">
         <label>Type</label>
         <PatientsGroupTypeRadio
-          groupInfos={groupInfos}
+          groupInfos={itemInfos}
           handleChangeType={handleChangeType}
         />
       </div>
@@ -145,7 +149,7 @@ const PatientsGroupEdit = ({
             order.map((item) => (
               <PatientsGroupEditPatientItem
                 patient={(
-                  groupInfos.patients as { patient_infos: DemographicsType }[]
+                  itemInfos.patients as { patient_infos: DemographicsType }[]
                 ).find(
                   ({ patient_infos }) => patient_infos.patient_id === item
                 )}
@@ -171,7 +175,7 @@ const PatientsGroupEdit = ({
           height={600}
           x={(window.innerWidth - 800) / 2 + 300}
           y={(window.innerHeight - 600) / 2}
-          color={groupInfos.color}
+          color={itemInfos.color}
           setPopUpVisible={setAddPatientsVisible}
           textColor="#3D3759"
         >

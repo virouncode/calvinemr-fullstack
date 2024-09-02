@@ -309,9 +309,6 @@
     }
     &-patient {
       width: 48%;
-      &--todo {
-        width: 46%;
-      }
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -321,6 +318,9 @@
       align-items: center;
       justify-content: space-between;
       padding: 2px 0;
+      &--todo {
+        width: 46%;
+      }
       &-text {
         display: flex;
         width: 60%;
@@ -342,11 +342,11 @@
     }
     &-logos {
       width: 2%;
+      text-align: center;
+      cursor: pointer;
       &--todo {
         width: 4%;
       }
-      text-align: center;
-      cursor: pointer;
     }
   }
 
@@ -476,6 +476,8 @@
     margin-top: 0;
   }
   &__template-name {
+    margin-left: 10px;
+    margin-top: 50px;
     label {
       font-weight: bold;
       margin-right: 10px;
@@ -483,8 +485,6 @@
     input {
       width: 500px;
     }
-    margin-left: 10px;
-    margin-top: 50px;
   }
   &__contacts {
     width: 19%;
@@ -867,6 +867,7 @@
     flex-wrap: wrap;
     padding-top: 5px;
     padding-bottom: 5px;
+    font-size: 0.8rem;
     label {
       font-weight: bold;
     }
@@ -874,7 +875,6 @@
       cursor: pointer;
       margin-left: 5px;
     }
-    font-size: 0.8rem;
   }
   &__importance {
     border-bottom: solid 0.3px $grey;

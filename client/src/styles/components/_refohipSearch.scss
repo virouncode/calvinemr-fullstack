@@ -32,11 +32,12 @@
   &__item {
     cursor: pointer;
     display: flex;
+    padding: 0 20px;
     justify-content: flex-start;
     &:hover {
       text-decoration: underline;
     }
-    padding: 0 20px;
+
     &--headers {
       position: sticky;
       top: 0;

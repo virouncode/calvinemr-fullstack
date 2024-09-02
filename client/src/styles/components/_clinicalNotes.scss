@@ -55,12 +55,11 @@
       width: 5%;
     }
     &-btn-container {
-      width: 45%;
+      width: 50%;
+      text-align: right;
       button {
         margin-left: 5px;
       }
-      width: 50%;
-      text-align: right;
     }
   }
   &__order {
@@ -186,22 +185,22 @@
   &__card-author {
     display: flex;
     align-items: center;
+    width: 50%;
     input,
     p {
       padding: 5px;
       margin: 0;
     }
-    width: 50%;
   }
   &__card-version {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    width: 20%;
     select {
       margin-left: 5px;
       width: 50px;
     }
-    width: 20%;
   }
   &__card-triangle {
     width: 2%;
@@ -210,6 +209,7 @@
   &__card-subject {
     display: flex;
     align-items: center;
+    width: 80%;
     label {
       font-weight: bold;
       margin-right: 5px;
@@ -217,15 +217,14 @@
     input {
       min-width: 500px;
     }
-    width: 80%;
   }
 
   &__card-btns {
+    width: 48%;
+    text-align: end;
     button {
       margin-left: 5px;
     }
-    width: 48%;
-    text-align: end;
   }
 
   &__card-body {
@@ -352,10 +351,10 @@
       padding: 10px;
       &-item {
         cursor: pointer;
+        margin-bottom: 5px;
         &:hover {
           text-decoration: underline;
         }
-        margin-bottom: 5px;
       }
     }
     &-search {

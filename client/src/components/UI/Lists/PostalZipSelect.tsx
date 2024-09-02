@@ -20,6 +20,9 @@ const PostalZipSelect = ({
         onChange={onChange}
         id="postalZipCode"
       >
+        <option value="" disabled>
+          Choose...
+        </option>
         <option value="postal">Postal</option>
         <option value="zip">Zip</option>
       </select>

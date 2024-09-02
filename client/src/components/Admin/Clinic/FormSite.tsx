@@ -1,6 +1,6 @@
 import React from "react";
 import { provinceStateTerritoryCT } from "../../../omdDatas/codesTables";
-import { SiteType } from "../../../types/api";
+import { SiteFormType, SiteType } from "../../../types/api";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
@@ -13,8 +13,9 @@ import SiteStatusSelect from "../../UI/Lists/SiteStatusSelect";
 import RoomsForm from "./RoomsForm";
 
 type FormSiteProps = {
-  formDatas: SiteType;
-  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
+  formDatas: SiteFormType | SiteType;
+  setFormDatas: React.Dispatch<React.SetStateAction<SiteFormType | SiteType>>;
+
   handleChange: (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -81,6 +82,7 @@ const FormSite = ({
               handleChange={handleChange}
               name="province_state"
               label="Province/State*:"
+              placeHolder="Choose province/state..."
             />
           </div>
           <div className="site-form__row">

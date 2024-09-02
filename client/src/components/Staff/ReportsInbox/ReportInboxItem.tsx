@@ -90,6 +90,10 @@ const ReportInboxItem = ({
     );
   }, [patientAppointments, isPending, error]);
 
+  useEffect(() => {
+    setItemInfos(item);
+  }, [item]);
+
   const handleEdit = () => {
     setEditVisible(true);
   };
@@ -204,6 +208,7 @@ const ReportInboxItem = ({
 
   const handleCancel = () => {
     setErrMsgPost("");
+    setItemInfos(item);
     setEditVisible(false);
   };
 

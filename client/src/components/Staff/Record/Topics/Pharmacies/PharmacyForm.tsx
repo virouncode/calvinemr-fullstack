@@ -163,6 +163,7 @@ const PharmacyForm = ({
           name="province"
           handleChange={handleChange}
           noneOption={false}
+          placeHolder="Choose a province/state..."
         />
       </td>
       <td className="td--postal">

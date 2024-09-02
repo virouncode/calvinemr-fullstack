@@ -188,14 +188,14 @@
     flex-wrap: wrap;
     justify-content: space-between;
     &-item {
-      label {
-        margin: 0;
-        font-weight: normal;
-      }
       display: flex;
       align-items: center;
       margin-right: 5px;
       width: 20%;
+      label {
+        margin: 0;
+        font-weight: normal;
+      }
       input[type="radio"] {
         margin-right: 5px;
       }

@@ -29,8 +29,6 @@ type ImmunizationsPopUpProps = {
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   patientDob: number;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   isFetchingNextPage: boolean;
   fetchNextPage: (
     options?: FetchNextPageOptions
@@ -53,8 +51,6 @@ const ImmunizationsPopUp = ({
   patientId,
   setPopUpVisible,
   patientDob,
-  loadingPatient,
-  errPatient,
   isFetchingNextPage,
   fetchNextPage,
   isFetching,
@@ -139,8 +135,6 @@ const ImmunizationsPopUp = ({
         patientDob={patientDob}
         datas={datas?.filter(({ recommended }) => recommended) ?? []}
         patientId={patientId}
-        loadingPatient={loadingPatient}
-        errPatient={errPatient}
         topicPost={topicPost}
         topicPut={topicPut}
         topicDelete={topicDelete}

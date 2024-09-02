@@ -1,7 +1,7 @@
 import React from "react";
 
-const ImmunizationsContent = () => {
+const ImmunizationsDropDown = () => {
   return <div className="topic-content">Open immunizations pop-up</div>;
 };
 
-export default ImmunizationsContent;
+export default ImmunizationsDropDown;

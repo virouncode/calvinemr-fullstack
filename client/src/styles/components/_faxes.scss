@@ -373,6 +373,8 @@
     margin-top: 0;
   }
   &__template-name {
+    margin-left: 10px;
+    margin-top: 50px;
     label {
       font-weight: bold;
       margin-right: 10px;
@@ -380,8 +382,6 @@
     input {
       width: 500px;
     }
-    margin-left: 10px;
-    margin-top: 50px;
   }
   &__contacts {
     width: 25%;
@@ -748,11 +748,11 @@
     flex-wrap: wrap;
     padding-top: 5px;
     padding-bottom: 5px;
+    font-size: 0.8rem;
     i {
       cursor: pointer;
       margin-left: 5px;
     }
-    font-size: 0.8rem;
   }
   &__importance {
     border-bottom: solid 0.3px $grey;

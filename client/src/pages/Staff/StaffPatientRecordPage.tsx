@@ -1,37 +1,66 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PatientRecord from "../../components/Staff/Record/Sections/PatientRecord";
+import ErrorParagraph from "../../components/UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../components/UI/Paragraphs/LoadingParagraph";
 import { usePatient } from "../../hooks/reactquery/queries/patientsQueries";
 import useTitle from "../../hooks/useTitle";
 import { toPatientName } from "../../utils/names/toPatientName";
 
 const StaffPatientRecordPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     data: demographicsInfos,
     isPending,
     error,
   } = usePatient(parseInt(id as string));
   useTitle("Patient Medical Record");
-  return (
-    demographicsInfos && (
-      <>
-        <HelmetProvider>
-          <Helmet>
-            <title>{`EMR: ${toPatientName(demographicsInfos)}`}</title>
-          </Helmet>
-        </HelmetProvider>
-        <section className="patient-record-section">
-          <PatientRecord
-            demographicsInfos={demographicsInfos}
-            loadingPatient={isPending}
-            errPatient={error}
-            patientId={parseInt(id as string)}
-          />
-        </section>
-      </>
-    )
+
+  if (isPending)
+    return (
+      <section className="patient-record-section">
+        <LoadingParagraph />
+      </section>
+    );
+  if (error)
+    return (
+      <section className="patient-record-section">
+        <ErrorParagraph errorMsg={error.message} />
+      </section>
+    );
+  return demographicsInfos ? (
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>{`EMR: ${toPatientName(demographicsInfos)}`}</title>
+        </Helmet>
+      </HelmetProvider>
+      <section className="patient-record-section">
+        <PatientRecord
+          demographicsInfos={demographicsInfos}
+          patientId={parseInt(id as string)}
+        />
+      </section>
+    </>
+  ) : (
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>{`EMR: Not found`}</title>
+        </Helmet>
+      </HelmetProvider>
+      <section className="patient-record-section">
+        <div className="missing-container">
+          <h2 className="missing-container-title">Page not found</h2>
+          <div>Unable to find the patient infos</div>
+          <div className="missing-container-link" onClick={() => navigate(-1)}>
+            Go back
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

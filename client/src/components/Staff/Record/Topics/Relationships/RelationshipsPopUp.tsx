@@ -6,11 +6,7 @@ import {
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import {
-  DemographicsType,
-  RelationshipType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+import { RelationshipType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,8 +14,6 @@ import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
-import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import PatientChartHealthSearch from "../../../Billing/PatientChartHealthSearch";
 import RelationshipForm from "./RelationshipForm";
 import RelationshipItem from "./RelationshipItem";
 
@@ -66,10 +60,6 @@ const RelationshipsPopUp = ({
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
-  const [patientSearchVisible, setPatientSearchVisible] = useState(false);
-  const [patientSelected, setPatientSelected] = useState<
-    DemographicsType | undefined
-  >();
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(
@@ -95,11 +85,6 @@ const RelationshipsPopUp = ({
     setErrMsgPost("");
     editCounter.current += 1;
     setAddVisible((v) => !v);
-  };
-
-  const handleClickPatient = (patient: DemographicsType) => {
-    setPatientSelected(patient);
-    setPatientSearchVisible(false);
   };
 
   if (isPending) {
@@ -146,8 +131,6 @@ const RelationshipsPopUp = ({
                   setErrMsgPost={setErrMsgPost}
                   errMsgPost={errMsgPost}
                   topicPost={topicPost}
-                  setPatientSearchVisible={setPatientSearchVisible}
-                  patientSelected={patientSelected}
                 />
               )}
               {datas && datas.length > 0
@@ -163,9 +146,6 @@ const RelationshipsPopUp = ({
                         topicPost={topicPost}
                         topicPut={topicPut}
                         topicDelete={topicDelete}
-                        setPatientSearchVisible={setPatientSearchVisible}
-                        patientSelected={patientSelected}
-                        setPatientSelected={setPatientSelected}
                       />
                     ) : (
                       <RelationshipItem
@@ -177,9 +157,6 @@ const RelationshipsPopUp = ({
                         topicPost={topicPost}
                         topicPut={topicPut}
                         topicDelete={topicDelete}
-                        setPatientSearchVisible={setPatientSearchVisible}
-                        patientSelected={patientSelected}
-                        setPatientSelected={setPatientSelected}
                       />
                     )
                   )
@@ -196,19 +173,6 @@ const RelationshipsPopUp = ({
           <CloseButton onClick={handleClose} />
         </div>
       </>
-      {patientSearchVisible && (
-        <FakeWindow
-          title="PATIENT SEARCH"
-          width={800}
-          height={600}
-          x={(window.innerWidth - 800) / 2}
-          y={(window.innerHeight - 600) / 2}
-          color="#94bae8"
-          setPopUpVisible={setPatientSearchVisible}
-        >
-          <PatientChartHealthSearch handleClickPatient={handleClickPatient} />
-        </FakeWindow>
-      )}
     </>
   );
 };

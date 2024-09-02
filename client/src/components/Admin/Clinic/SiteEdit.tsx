@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPut } from "../../../hooks/reactquery/mutations/sitesMutations";
-import { AdminType, SiteType } from "../../../types/api";
+import { AdminType, SiteFormType, SiteType } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
@@ -21,9 +21,12 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
   const { user } = useUserContext() as { user: AdminType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState(site);
+  const [formDatas, setFormDatas] = useState<SiteType | SiteFormType>(site);
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  useEffect(() => {
+    setFormDatas(site);
+  }, [site]);
   //Queries
   const sitePut = useSitesPut();
 
@@ -95,30 +98,30 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
   };
 
   const handleSubmit = async () => {
-    if (formDatas?.rooms?.find((room) => !room.title)) {
-      setErrMsg("All rooms should have a Name");
+    if (formDatas.rooms?.find((room) => !room.title)) {
+      setErrMsg("All rooms must have a Name");
       return;
     }
-    if (formDatas?.site_status === "Closed") {
+    if (formDatas.site_status === "Closed") {
       alert(
         "You have decided to close this site. Please inform all staff members to update their site information in their 'My Account' section."
       );
     }
     //Formatting
     const siteToPut: SiteType = {
-      ...formDatas,
-      name: firstLetterUpper(formDatas?.name ?? ""),
-      address: firstLetterUpper(formDatas?.address ?? ""),
-      city: firstLetterUpper(formDatas?.city ?? ""),
+      ...(formDatas as SiteType),
+      name: firstLetterUpper(formDatas.name),
+      address: firstLetterUpper(formDatas.address),
+      city: firstLetterUpper(formDatas.city),
       rooms: [
-        ...(formDatas?.rooms ?? [])
+        ...(formDatas.rooms ?? [])
           .filter((room) => room.title)
           .map((room) => {
             return { id: room.id, title: firstLetterUpper(room.title) };
           }),
       ],
       updates: [
-        ...(formDatas?.updates || []),
+        ...((formDatas as SiteType).updates || []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
       email: formDatas.email.toLowerCase(),

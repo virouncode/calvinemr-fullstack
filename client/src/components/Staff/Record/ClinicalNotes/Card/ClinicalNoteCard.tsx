@@ -68,10 +68,12 @@ const ClinicalNoteCard = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
-  const [tempFormDatas, setTempFormDatas] = useState<ClinicalNoteType | null>(
-    null
+  const [tempFormDatas, setTempFormDatas] = useState<ClinicalNoteType>(
+    editClinicalNoteInMemory ?? clinicalNote
   );
-  const [formDatas, setFormDatas] = useState<ClinicalNoteType | null>(null);
+  const [formDatas, setFormDatas] = useState<ClinicalNoteType>(
+    editClinicalNoteInMemory ?? clinicalNote
+  );
   const [bodyVisible, setBodyVisible] = useState(true);
   const [aiVisible, setAIVisible] = useState(false);
   const [versionsVisible, setVersionsVisible] = useState(false);
@@ -134,7 +136,7 @@ const ClinicalNoteCard = ({
     if (textareaRef.current && !isTyping) {
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
     }
-  }, [isTyping, tempFormDatas?.MyClinicalNotesContent]);
+  }, [isTyping, tempFormDatas.MyClinicalNotesContent]);
 
   const { isListening, setIsListening, recognition } = useSpeechRecognition(
     setInputText,
@@ -438,7 +440,7 @@ const ClinicalNoteCard = ({
                   attachment: ClinicalNoteAttachmentType;
                 }[]
               ).map(({ attachment }) => attachment)}
-              initialBody={formDatas?.MyClinicalNotesContent ?? ""}
+              initialBody={formDatas?.MyClinicalNotesContent}
               demographicsInfos={demographicsInfos}
               setEditVisible={setEditVisible}
               setAIRewritedText={setAIRewritedText}

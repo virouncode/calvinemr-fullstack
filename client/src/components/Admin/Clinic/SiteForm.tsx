@@ -3,7 +3,12 @@ import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPost } from "../../../hooks/reactquery/mutations/sitesMutations";
-import { AdminType, AttachmentType, SiteType } from "../../../types/api";
+import {
+  AdminType,
+  AttachmentType,
+  SiteFormType,
+  SiteType,
+} from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { initialSite } from "../../../utils/initialDatas/initialDatas";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
@@ -20,7 +25,9 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
   const { user } = useUserContext() as { user: AdminType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [formDatas, setFormDatas] = useState(initialSite);
+  const [formDatas, setFormDatas] = useState<SiteFormType | SiteType>(
+    initialSite
+  );
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
   //Queries
@@ -118,7 +125,7 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
       return;
     }
     if (formDatas?.rooms?.find((room) => !room.title)) {
-      setErrMsg("All rooms should have a Name");
+      setErrMsg("All rooms must have a Name");
       return;
     }
 

@@ -1,17 +1,17 @@
 import React from "react";
-import { useTopic } from "../../../../../../hooks/reactquery/queries/topicQueries";
-import { useFetchAllPages } from "../../../../../../hooks/reactquery/useFetchAllPages";
-import { isMedicationActive } from "../../../../../../utils/medications/isMedicationActive";
-import LoadingLi from "../../../../../UI/Lists/LoadingLi";
-import EmptyParagraph from "../../../../../UI/Paragraphs/EmptyParagraph";
-import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
+import { useTopic } from "../../../../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../../../../hooks/reactquery/useFetchAllPages";
+import { isMedicationActive } from "../../../../../../../utils/medications/isMedicationActive";
+import LoadingLi from "../../../../../../UI/Lists/LoadingLi";
+import EmptyParagraph from "../../../../../../UI/Paragraphs/EmptyParagraph";
+import ErrorParagraph from "../../../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../../../UI/Paragraphs/LoadingParagraph";
 
-type MedicationsLetterProps = {
+type LetterMedicationsProps = {
   patientId: number;
 };
 
-const MedicationsLetter = ({ patientId }: MedicationsLetterProps) => {
+const LetterMedications = ({ patientId }: LetterMedicationsProps) => {
   //Queries
   const {
     data,
@@ -52,4 +52,4 @@ const MedicationsLetter = ({ patientId }: MedicationsLetterProps) => {
   );
 };
 
-export default MedicationsLetter;
+export default LetterMedications;

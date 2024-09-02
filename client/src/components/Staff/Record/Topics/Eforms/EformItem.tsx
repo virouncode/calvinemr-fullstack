@@ -47,6 +47,7 @@ const EformItem = ({
   const [name, setName] = useState(item.name);
 
   const handleCancel = () => {
+    setName(item.name);
     setRenameVisible(false);
   };
 

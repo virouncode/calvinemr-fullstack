@@ -30,6 +30,16 @@ export type AlertType = {
   EndDate: number | null;
 };
 
+export type AlertFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  AlertDescription: string;
+  Notes: string;
+  DateActive: number | null;
+  EndDate: number | null;
+};
+
 export type AllergyType = {
   id: number;
   patient_id: number;
@@ -42,6 +52,21 @@ export type AllergyType = {
   OffendingAgentDescription: string;
   PropertyOfOffendingAgent: string;
   Code: { CodeType: string; CodeValue: string };
+  ReactionType: string;
+  StartDate: number | null;
+  LifeStage: string;
+  Severity: string;
+  Reaction: string;
+  RecordedDate: number;
+  Notes: string;
+};
+
+export type AllergyFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  OffendingAgentDescription: string;
+  PropertyOfOffendingAgent: string;
   ReactionType: string;
   StartDate: number | null;
   LifeStage: string;
@@ -80,6 +105,31 @@ export type AppointmentType = {
   //add-ons
   site_infos?: SiteType;
   host_infos?: StaffType;
+};
+
+export type AppointmentFormType = {
+  host_id: number;
+  date_created: number;
+  created_by_id: number;
+  start: number;
+  end: number;
+  patients_guests_ids: number[];
+  room_id: string;
+  all_day: boolean;
+  AppointmentTime: string;
+  Duration: number;
+  AppointmentStatus: string;
+  AppointmentDate: string;
+  Provider: {
+    Name: { FirstName: string; LastName: string };
+    OHIPPhysicianId: string;
+  };
+  AppointmentPurpose: string;
+  AppointmentNotes: string;
+  site_id: number;
+  rrule: RruleType;
+  exrule: ExruleType;
+  recurrence: string;
 };
 
 export type RruleType = {
@@ -181,7 +231,7 @@ export type BillingType = {
 };
 
 export type BillingFormType = {
-  date: string;
+  dateStr: string;
   provider_ohip_billing_nbr: string;
   referrer_ohip_billing_nbr: string;
   patient_id: number;
@@ -372,6 +422,21 @@ export type ClinicalNoteType = {
   versions?: ClinicalNoteLogType[];
 };
 
+export type ClinicalNoteFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  subject: string;
+  MyClinicalNotesContent: string;
+  ParticipatingProviders: {
+    Name: { FirstName: string; LastName: string };
+    OHIPPhysicianId: string;
+    DateTimeNoteCreated: number;
+  }[];
+  version_nbr: 1;
+  attachments_ids: number[] | { attachment: ClinicalNoteAttachmentType }[];
+};
+
 export type ClinicalNoteAttachmentType = {
   id: number | string;
   file: AttachmentType;
@@ -406,6 +471,13 @@ export type ClinicalNoteLogType = {
 
 export type ClinicalNoteTemplateType = {
   id: number;
+  name: string;
+  author_id: number;
+  body: string;
+  date_created: number;
+};
+
+export type ClinicalNoteTemplateFormType = {
   name: string;
   author_id: number;
   body: string;
@@ -714,6 +786,14 @@ export type EdocType = {
   name: string;
 };
 
+export type EdocFormType = {
+  date_created: number;
+  created_by_id: number;
+  file: AttachmentType | null;
+  notes: string;
+  name: string;
+};
+
 export type EformType = {
   id: number;
   date_created: number;
@@ -754,6 +834,19 @@ export type FamilyHistoryType = {
   Notes: string;
 };
 
+export type FamilyHistoryFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  StartDate: number | null;
+  AgeAtOnset: string;
+  LifeStage: string;
+  ProblemDiagnosisProcedureDescription: string;
+  Treatment: string;
+  Relationship: string;
+  Notes: string;
+};
+
 export type FaxContactType = {
   id: number;
   name: string;
@@ -783,6 +876,16 @@ export type GroupType = {
   global: boolean;
 };
 
+export type GroupFormType = {
+  date_created: number;
+  staff_id: number;
+  patients: { patient_infos: DemographicsType }[];
+  name: string;
+  description: string;
+  color: string;
+  global: boolean;
+};
+
 export type ImmunizationType = {
   id: number;
   patient_id: number;
@@ -805,7 +908,27 @@ export type ImmunizationType = {
     Description: string;
   };
   Date: number | null;
-  RefusedFlag: { ynIndicatorsimple: string };
+  RefusedFlag: { ynIndicatorsimple: "Y" | "N" };
+  Instructions: string;
+  Notes: string;
+  age: string;
+  doseNumber: number;
+  recommended: boolean;
+};
+
+export type ImmunizationFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  ImmunizationName: string;
+  ImmunizationType: string;
+  Manufacturer: string;
+  LotNumber: string;
+  Route: string;
+  Site: string;
+  Dose: string;
+  Date: number | null;
+  RefusedFlag: { ynIndicatorsimple: "Y" | "N" };
   Instructions: string;
   Notes: string;
   age: string;
@@ -884,6 +1007,16 @@ export type LabLinkPersonalType = {
   pwd: string;
 };
 
+export type LabLinkPersonalFormType = {
+  staff_id: number;
+  name: string;
+  url: string;
+  date_created: number;
+  created_by_id: number;
+  login: string;
+  pwd: string;
+};
+
 export type LetterType = {
   id: number;
   date_created: number;
@@ -893,6 +1026,15 @@ export type LetterType = {
   name: string;
   description: string;
   updates: { date_updated: number; updated_by_id: number }[];
+};
+
+export type LetterFormType = {
+  date_created: number;
+  created_by_id: number;
+  patient_id: number;
+  file: AttachmentType;
+  name: string;
+  description: string;
 };
 
 export type LetterAttachmentType = {
@@ -915,6 +1057,16 @@ export type LetterTemplateType = {
   recipient_infos: string;
 };
 
+export type LetterTemplateFormType = {
+  date_created: number;
+  author_id: number;
+  body: string;
+  name: string;
+  description: string;
+  subject: string;
+  recipient_infos?: string;
+};
+
 export type LinkType = {
   id: number;
   staff_id: number;
@@ -923,6 +1075,14 @@ export type LinkType = {
   date_created: number;
   created_by_id: number;
   updates: { updated_by_id: number; date_updated: number }[];
+};
+
+export type LinkFormType = {
+  staff_id: number;
+  name: string;
+  url: string;
+  date_created: number;
+  created_by_id: number;
 };
 
 export type MedType = {
@@ -974,8 +1134,64 @@ export type MedType = {
   site_id: number;
 };
 
+export type MedFormType = {
+  temp_id?: string;
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  StartDate: number | null;
+  DrugIdentificationNumber: string;
+  DrugName: string;
+  Strength: { Amount: string; UnitOfMeasure: string };
+  NumberOfRefills: string;
+  Dosage: string;
+  DosageUnitOfMeasure: string;
+  Form: string;
+  Route: string;
+  Frequency: string;
+  Duration: string;
+  RefillDuration: string;
+  Quantity: string;
+  RefillQuantity: string;
+  LongTermMedication: { ynIndicatorsimple: string; boolean?: boolean };
+  PrescribedBy: {
+    Name: { FirstName: string; LastName: string };
+    OHIPPhysicianId: string;
+  };
+  Notes: string;
+  PrescriptionInstructions: string;
+  SubstitutionNotAllowed: string;
+  duration: { Y: number; M: number; W: number; D: number };
+  refill_duration: { Y: number; M: number; W: number; D: number };
+  site_id: number;
+};
+
 export type MedTemplateType = {
   id: number;
+  author_id: number;
+  date_created: number;
+  DrugIdentificationNumber: string;
+  DrugName: string;
+  Strength: { Amount: string; UnitOfMeasure: string };
+  Dosage: string;
+  DosageUnitOfMeasure: string;
+  Form: string;
+  Route: string;
+  Frequency: string;
+  Duration: string;
+  RefillDuration: string;
+  NumberOfRefills: string;
+  Quantity: string;
+  RefillQuantity: string;
+  LongTermMedication: { ynIndicatorsimple: string };
+  Notes: string;
+  PrescriptionInstructions: string;
+  SubstitutionNotAllowed: string;
+  duration: { Y: number; M: number; W: number; D: number };
+  refill_duration: { Y: number; M: number; W: number; D: number };
+};
+
+export type MedTemplateFormType = {
   author_id: number;
   date_created: number;
   DrugIdentificationNumber: string;
@@ -1089,7 +1305,15 @@ export type PamphletType = {
   id: number;
   date_created: number;
   created_by_id: number;
-  file: AttachmentType;
+  file: AttachmentType | null;
+  notes: string;
+  name: string;
+};
+
+export type PamphletFormType = {
+  date_created: number;
+  created_by_id: number;
+  file: AttachmentType | null;
   notes: string;
   name: string;
 };
@@ -1109,6 +1333,19 @@ export type PastHealthType = {
     StandardCode: string;
     StandardCodeDescription: string;
   };
+  OnsetOrEventDate: number | null;
+  LifeStage: string;
+  ResolvedDate: number | null;
+  ProcedureDate: number | null;
+  Notes: string;
+  ProblemStatus: string;
+};
+
+export type PastHealthFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  PastHealthProblemDescriptionOrProcedures: string;
   OnsetOrEventDate: number | null;
   LifeStage: string;
   ResolvedDate: number | null;
@@ -1246,6 +1483,19 @@ export type ProblemListType = {
   Notes: string;
 };
 
+export type ProblemListFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  ProblemDiagnosisDescription: string;
+  ProblemDescription: string;
+  ProblemStatus: string;
+  OnsetDate: number | null;
+  LifeStage: string;
+  ResolutionDate: number | null;
+  Notes: string;
+};
+
 export type RelationshipType = {
   id: number;
   patient_id: number;
@@ -1265,6 +1515,13 @@ export type ReminderType = {
   created_by_id: number;
   date_created: number;
   updates: { updated_by_id: number; date_updated: number }[];
+};
+
+export type ReminderFormType = {
+  patient_id: number;
+  reminder: string;
+  created_by_id: number;
+  date_created: number;
 };
 
 export type ReportType = {
@@ -1314,23 +1571,34 @@ export type ReportType = {
 };
 
 export type ReportFormType = {
-  name: string;
   patient_id: number;
-  assigned_staff_id: number;
+  date_created: number;
+  created_by_id: number;
+  name: string;
   Media: string;
   Format: string;
   FileExtensionAndVersion: string;
-  File: AttachmentType | null;
-  AuthorFreeText: string;
-  Content: {
-    TextContent: string;
-    Media: string;
-  };
+  FilePath: string;
+  Content: { TextContent: string; Media: string };
   Class: string;
   SubClass: string;
   EventDateTime: number | null;
   ReceivedDateTime: number | null;
-  Notes: "";
+  SourceAuthorPhysician: {
+    AuthorName?: { FirstName: string; LastName: string };
+    AuthorFreeText: string;
+  };
+  ReportReviewed: {
+    Name: { FirstName: string; LastName: string };
+    ReviewingOHIPPhysicianId: string;
+    DateTimeReportReviewed: number | null;
+  }[];
+  Notes: string;
+  RecipientName: { FirstName: string; LastName: string };
+  DateTimeSent: number | null;
+  acknowledged: boolean;
+  assigned_staff_id: number;
+  File: AttachmentType | null;
 };
 
 export type RiskFactorType = {
@@ -1342,6 +1610,19 @@ export type RiskFactorType = {
   ResidualInfo: {
     DataElement: { Name: string; DataType: string; Content: string }[];
   };
+  RiskFactor: string;
+  ExposureDetails: string;
+  AgeOfOnset: string;
+  StartDate: number | null;
+  EndDate: number | null;
+  LifeStage: string;
+  Notes: string;
+};
+
+export type RiskFactorFormType = {
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
   RiskFactor: string;
   ExposureDetails: string;
   AgeOfOnset: string;
@@ -1389,6 +1670,23 @@ export type SiteType = {
   site_status: "Open" | "Closed";
 };
 
+export type SiteFormType = {
+  name: string;
+  address: string;
+  postal_code: string;
+  zip_code: string;
+  province_state: string;
+  city: string;
+  phone: string;
+  fax: string;
+  logo: AttachmentType | null;
+  rooms: RoomType[];
+  created_by_id: number;
+  date_created: number;
+  email: string;
+  site_status: "Open";
+};
+
 export type RoomType = { id: string; title: string };
 
 export type StaffType = {
@@ -1404,7 +1702,7 @@ export type StaffType = {
   subspeciality: string;
   licence_nbr: string;
   access_level: "staff";
-  account_status: string;
+  account_status: "Active" | "Closed" | "Suspended";
   cell_phone: string;
   backup_phone: string;
   video_link: string;
@@ -1426,6 +1724,30 @@ export type StaffType = {
   staff_settings?: {
     authorized_messages_patients_ids: number[];
   };
+};
+
+export type StaffFormType = {
+  email: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  full_name: string;
+  gender: string;
+  title: string;
+  speciality: string;
+  subspeciality: string;
+  licence_nbr: string;
+  access_level: "staff";
+  account_status: "Active" | "Closed" | "Suspended";
+  cell_phone: string;
+  backup_phone: string;
+  video_link: string;
+  sign: AttachmentType | null;
+  ai_consent: boolean;
+  ohip_billing_nbr: string;
+  date_created: number;
+  created_by_id: number;
+  site_id: number;
 };
 
 export type SearchStaffType = {

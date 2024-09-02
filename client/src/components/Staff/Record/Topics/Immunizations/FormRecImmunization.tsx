@@ -5,7 +5,7 @@ import {
   ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
 import {
-  ImmunizationType,
+  ImmunizationFormType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
@@ -19,7 +19,7 @@ import GenericList from "../../../../UI/Lists/GenericList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 type FormRecImmunizationProps = {
-  formDatas: Partial<ImmunizationType>;
+  formDatas: ImmunizationFormType;
   errMsgPost: string;
   type: RecImmunizationTypeListType;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -56,7 +56,7 @@ const FormRecImmunization = ({
       </div>
       <div className="recimmunizations-form__row">
         <Input
-          value={formDatas.ImmunizationName ?? ""}
+          value={formDatas.ImmunizationName}
           onChange={handleChange}
           name="ImmunizationName"
           id="recimmunization-brand-name"
@@ -65,7 +65,7 @@ const FormRecImmunization = ({
       </div>
       <div className="recimmunizations-form__row">
         <Input
-          value={formDatas.Manufacturer ?? ""}
+          value={formDatas.Manufacturer}
           onChange={handleChange}
           name="Manufacturer"
           id="recimmunization-manufacturer"
@@ -74,7 +74,7 @@ const FormRecImmunization = ({
       </div>
       <div className="recimmunizations-form__row">
         <Input
-          value={formDatas.LotNumber ?? ""}
+          value={formDatas.LotNumber}
           onChange={handleChange}
           name="LotNumber"
           id="recimmunization-lot"
@@ -84,7 +84,7 @@ const FormRecImmunization = ({
       <div className="recimmunizations-form__row">
         <GenericCombo
           list={routeCT}
-          value={formDatas.Route ?? ""}
+          value={formDatas.Route}
           handleChange={handleRouteChange}
           label="Route:"
         />
@@ -92,14 +92,14 @@ const FormRecImmunization = ({
       <div className="recimmunizations-form__row">
         <GenericCombo
           list={siteCT}
-          value={formDatas.Site ?? ""}
+          value={formDatas.Site}
           handleChange={handleSiteChange}
           label="Site:"
         />
       </div>
       <div className="recimmunizations-form__row">
         <Input
-          value={formDatas.Dose ?? ""}
+          value={formDatas.Dose}
           onChange={handleChange}
           name="Dose"
           id="recimmunization-dose"
@@ -120,8 +120,9 @@ const FormRecImmunization = ({
           list={ynIndicatorsimpleCT}
           name="RefusedFlag"
           handleChange={handleChange}
-          value={formDatas.RefusedFlag?.ynIndicatorsimple ?? ""}
+          value={formDatas.RefusedFlag.ynIndicatorsimple}
           label="Refused: "
+          placeHolder="Choose..."
         />
       </div>
       <div className="recimmunizations-form__row recimmunizations-form__row--text">

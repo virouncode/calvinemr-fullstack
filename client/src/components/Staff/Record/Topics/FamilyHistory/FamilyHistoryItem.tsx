@@ -49,7 +49,7 @@ const FamilyHistoryItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<FamilyHistoryType | undefined>();
+  const [itemInfos, setItemInfos] = useState<FamilyHistoryType>(item);
   const [progress, setProgress] = useState(false);
   useEffect(() => {
     setItemInfos(item);
@@ -65,20 +65,20 @@ const FamilyHistoryItem = ({
     if (name === "StartDate") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as FamilyHistoryType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: FamilyHistoryType = {
-      ...(itemInfos as FamilyHistoryType),
+      ...itemInfos,
       ProblemDiagnosisProcedureDescription: firstLetterOfFirstWordUpper(
-        itemInfos?.ProblemDiagnosisProcedureDescription ?? ""
+        itemInfos.ProblemDiagnosisProcedureDescription
       ),
-      Treatment: firstLetterOfFirstWordUpper(itemInfos?.Treatment ?? ""),
-      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      Treatment: firstLetterOfFirstWordUpper(itemInfos.Treatment),
+      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };
@@ -111,7 +111,7 @@ const FamilyHistoryItem = ({
   };
 
   const handleMemberChange = (value: string) => {
-    setItemInfos({ ...(itemInfos as FamilyHistoryType), Relationship: value });
+    setItemInfos({ ...itemInfos, Relationship: value });
   };
 
   const handleEditClick = () => {

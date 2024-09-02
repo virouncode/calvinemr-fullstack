@@ -24,8 +24,6 @@ type ClinicalNotesProps = {
   contentsVisible: boolean;
   setContentsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   patientId: number;
-  loadingPatient: boolean;
-  errPatient: Error | null;
 };
 
 const ClinicalNotes = ({
@@ -35,8 +33,6 @@ const ClinicalNotes = ({
   contentsVisible,
   setContentsVisible,
   patientId,
-  loadingPatient,
-  errPatient,
 }: ClinicalNotesProps) => {
   //Hooks
   const [checkedNotesIds, setCheckedNotesIds] = useState<number[]>([]);
@@ -130,8 +126,6 @@ const ClinicalNotes = ({
         setSelectAll={setSelectAll}
         order={order}
         setOrder={setOrder}
-        loadingPatient={loadingPatient}
-        errPatient={errPatient}
         overviewVisible={overviewVisible}
         setOverviewVisible={setOverviewVisible}
         newButtonDisabled={newButtonDisabled}

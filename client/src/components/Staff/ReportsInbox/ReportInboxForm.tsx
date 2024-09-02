@@ -6,7 +6,6 @@ import {
   DemographicsType,
   MessageAttachmentType,
   ReportFormType,
-  ReportType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import {
@@ -25,39 +24,48 @@ import GenericList from "../../UI/Lists/GenericList";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import ReportsInboxPatients from "./ReportsInboxPatients";
 
-type ReportsInboxFormProps = {
+type ReportInboxFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   initialAttachment: Partial<MessageAttachmentType>;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const ReportsInboxForm = ({
+const ReportInboxForm = ({
   setAddVisible,
   initialAttachment,
   errMsgPost,
   setErrMsgPost,
-}: ReportsInboxFormProps) => {
+}: ReportInboxFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [formDatas, setFormDatas] = useState<ReportFormType>({
-    name: "",
     patient_id: 0,
-    assigned_staff_id: 0,
-    Media: "Download",
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
+    name: "",
+    Media: "",
     Format: "Binary",
-    FileExtensionAndVersion: getExtension(initialAttachment.file?.path),
-    File: initialAttachment.file ?? null,
-    AuthorFreeText: "",
-    Content: {
-      TextContent: "",
-      Media: "",
-    },
+    FileExtensionAndVersion: getExtension(initialAttachment?.file?.path),
+    FilePath: "",
+    Content: { TextContent: "", Media: "" },
     Class: "",
     SubClass: "",
     EventDateTime: null,
     ReceivedDateTime: null,
+    SourceAuthorPhysician: {
+      AuthorFreeText: "",
+    },
+    ReportReviewed: [],
     Notes: "",
+    RecipientName: {
+      FirstName: "",
+      LastName: "",
+    },
+    DateTimeSent: null,
+    acknowledged: false,
+    assigned_staff_id: 0,
+    File: initialAttachment?.file ?? null,
   });
   const [progress, setProgress] = useState(false);
   const reportPost = useReportPost();
@@ -71,7 +79,9 @@ const ReportsInboxForm = ({
     setErrMsgPost("");
     let value: string | number | null = e.target.value;
     const name = e.target.name;
-    if (name === "Format") {
+    if (name === "EventDateTime" || name === "ReceivedDateTime") {
+      value = dateISOToTimestampTZ(value);
+    } else if (name === "Format") {
       setFormDatas({
         ...formDatas,
         Content: {
@@ -83,9 +93,15 @@ const ReportsInboxForm = ({
         Format: value as string,
       });
       return;
-    }
-    if (name === "EventDateTime" || name === "ReceivedDateTime") {
-      value = dateISOToTimestampTZ(value);
+    } else if (name === "AuthorFreeText") {
+      setFormDatas({
+        ...formDatas,
+        SourceAuthorPhysician: {
+          ...formDatas.SourceAuthorPhysician,
+          AuthorFreeText: value,
+        },
+      });
+      return;
     }
     setFormDatas({ ...formDatas, [name]: value });
   };
@@ -109,12 +125,8 @@ const ReportsInboxForm = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrMsgPost("");
-    const reportToPost: Partial<ReportType> = {
+    const reportToPost: ReportFormType = {
       ...formDatas,
-      SourceAuthorPhysician: {
-        AuthorFreeText: formDatas.AuthorFreeText,
-        AuthorName: { FirstName: "", LastName: "" },
-      },
       acknowledged: false,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
@@ -157,7 +169,7 @@ const ReportsInboxForm = ({
           <Input
             label="Report Name"
             name="name"
-            value={formDatas.name || ""}
+            value={formDatas.name}
             onChange={handleChange}
             id="inbox-name"
           />
@@ -171,22 +183,23 @@ const ReportsInboxForm = ({
         </div>
         <div className="reportsinbox__form-row">
           <label>File extension</label>
-          <p>{formDatas.FileExtensionAndVersion || ""}</p>
+          <p>{formDatas.FileExtensionAndVersion}</p>
         </div>
         <div className="reportsinbox__form-row">
           <GenericList
             label="Class"
             name="Class"
-            value={formDatas.Class || ""}
+            value={formDatas.Class}
             handleChange={handleChange}
             list={reportClassCT}
+            placeHolder="Choose..."
           />
         </div>
         <div className="reportsinbox__form-row">
           <Input
             label="Sub class"
             name="SubClass"
-            value={formDatas.SubClass || ""}
+            value={formDatas.SubClass}
             onChange={handleChange}
             id="inbox-subclass"
           />
@@ -213,7 +226,7 @@ const ReportsInboxForm = ({
           <Input
             label="Author"
             name="AuthorFreeText"
-            value={formDatas.AuthorFreeText || ""}
+            value={formDatas.SourceAuthorPhysician.AuthorFreeText}
             onChange={handleChange}
             id="inbox-author"
           />
@@ -222,7 +235,7 @@ const ReportsInboxForm = ({
           <label htmlFor="inbox-notes">Notes</label>
           <textarea
             name="Notes"
-            value={formDatas.Notes || ""}
+            value={formDatas.Notes}
             onChange={handleChange}
             autoComplete="off"
             id="inbox-notes"
@@ -238,4 +251,4 @@ const ReportsInboxForm = ({
   );
 };
 
-export default ReportsInboxForm;
+export default ReportInboxForm;

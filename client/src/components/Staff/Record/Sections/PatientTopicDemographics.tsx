@@ -7,10 +7,8 @@ import PatientTopicHeader from "./PatientTopicHeader";
 
 type PatientTopicDemographicsProps = {
   demographicsInfos: DemographicsType;
-  loadingPatient: boolean;
   patientId: number;
   patientName: string;
-  errPatient: Error | null;
   textColor: string;
   backgroundColor: string;
   side: "right" | "left";
@@ -19,10 +17,8 @@ type PatientTopicDemographicsProps = {
 
 const PatientTopicDemographics = ({
   demographicsInfos,
-  loadingPatient,
   patientId,
   patientName,
-  errPatient,
   textColor,
   backgroundColor,
   side,
@@ -71,11 +67,7 @@ const PatientTopicDemographics = ({
         }
         ref={containerRef}
       >
-        <DemographicsDropDown
-          demographicsInfos={demographicsInfos}
-          loadingPatient={loadingPatient}
-          errPatient={errPatient}
-        />
+        <DemographicsDropDown demographicsInfos={demographicsInfos} />
 
         {popUpVisible && (
           <FakeWindow
@@ -91,8 +83,6 @@ const PatientTopicDemographics = ({
               demographicsInfos={demographicsInfos}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              loadingPatient={loadingPatient}
-              errPatient={errPatient}
             />
           </FakeWindow>
         )}

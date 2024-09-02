@@ -39,10 +39,10 @@
     }
   }
   &__item {
+    border-bottom: solid 1px $grey;
     &--notactive {
       background: $grey;
     }
-    border-bottom: solid 1px $grey;
     td {
       text-align: center;
       padding: 10px;
@@ -65,11 +65,11 @@
     }
   }
   &__btn-container {
+    text-align: center;
+    margin-top: 20px;
     button {
       margin-left: 5px;
     }
-    text-align: center;
-    margin-top: 20px;
   }
   &__allergies {
     color: red;
@@ -146,11 +146,11 @@
     }
   }
   &__links {
+    width: 30%;
     h3 {
       font-size: 0.85rem;
       margin-bottom: 10px;
     }
-    width: 30%;
     li {
       text-decoration: underline;
     }

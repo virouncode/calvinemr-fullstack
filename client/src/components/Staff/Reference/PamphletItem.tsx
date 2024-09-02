@@ -35,7 +35,7 @@ const PamphletItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<PamphletType | undefined>();
+  const [itemInfos, setItemInfos] = useState<PamphletType>(item);
   const pamphletPut = usePamphletPut();
   const pamphletDelete = usePamphletDelete();
 
@@ -56,10 +56,15 @@ const PamphletItem = ({
   };
   const handleCancelClick = () => {
     setErrMsgPost("");
+    setItemInfos(item);
     setEditVisible(false);
   };
   const handleSaveClick = async () => {
     setErrMsgPost("");
+    if (!itemInfos.file) {
+      setErrMsgPost("Please upload a file");
+      return;
+    }
     //Validation
     try {
       await pamphletSchema.validate(itemInfos);
@@ -67,7 +72,7 @@ const PamphletItem = ({
       if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
-    if (!itemInfos?.file) {
+    if (!itemInfos.file) {
       setErrMsgPost("Please upload a file");
       return;
     }
@@ -137,7 +142,7 @@ const PamphletItem = ({
         </td>
         <td style={{ textAlign: "left" }}>
           <InputTextToggle
-            value={itemInfos?.name ?? ""}
+            value={itemInfos.name}
             onChange={handleChange}
             name="name"
             editVisible={editVisible}
@@ -147,11 +152,11 @@ const PamphletItem = ({
           className="reference-edocs__item-link"
           onClick={() => showDocument(item.file?.url, item.file?.mime)}
         >
-          {item.file.name}
+          {item.file?.name}
         </td>
         <td>
           <InputTextToggle
-            value={itemInfos?.notes ?? ""}
+            value={itemInfos.notes}
             onChange={handleChange}
             name="notes"
             editVisible={editVisible}

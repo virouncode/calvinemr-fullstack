@@ -10,8 +10,8 @@ import { useSpeechRecognition } from "../../../../../hooks/useSpeechRecognition"
 import {
   AttachmentType,
   ClinicalNoteAttachmentType,
+  ClinicalNoteFormType,
   ClinicalNoteTemplateType,
-  ClinicalNoteType,
   DemographicsType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -41,9 +41,9 @@ type ClinicalNoteFormProps = {
   patientId: number;
   demographicsInfos: DemographicsType;
   formRef: React.MutableRefObject<HTMLFormElement | null>;
-  newClinicalNoteInMemory: ClinicalNoteType | null;
+  newClinicalNoteInMemory: ClinicalNoteFormType | null;
   setNewClinicalNoteInMemory: React.Dispatch<
-    React.SetStateAction<ClinicalNoteType | null>
+    React.SetStateAction<ClinicalNoteFormType | null>
   >;
 };
 
@@ -59,11 +59,20 @@ const ClinicalNoteForm = ({
   const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [formDatas, setFormDatas] = useState<Partial<ClinicalNoteType>>(
+  const [formDatas, setFormDatas] = useState<ClinicalNoteFormType>(
     newClinicalNoteInMemory ?? {
       patient_id: patientId,
+      date_created: nowTZTimestamp(),
+      created_by_id: user.id,
       subject: "Clinical note",
       MyClinicalNotesContent: "",
+      ParticipatingProviders: [
+        {
+          Name: { FirstName: user.first_name, LastName: user.last_name },
+          OHIPPhysicianId: user.ohip_billing_nbr,
+          DateTimeNoteCreated: nowTZTimestamp(),
+        },
+      ],
       version_nbr: 1,
       attachments_ids: [],
     }
@@ -125,7 +134,7 @@ const ClinicalNoteForm = ({
       "staff",
       { attachments_array: attachments }
     );
-    const clinicalNoteToPost: Partial<ClinicalNoteType> = {
+    const clinicalNoteToPost: ClinicalNoteFormType = {
       ...formDatas,
       attachments_ids: attach_ids,
       MyClinicalNotesContent: inputText,
@@ -164,7 +173,7 @@ const ClinicalNoteForm = ({
       "staff",
       { attachments_array: attachments }
     );
-    const clinicalNoteToPost: Partial<ClinicalNoteType> = {
+    const clinicalNoteToPost: ClinicalNoteFormType = {
       ...formDatas,
       attachments_ids: attach_ids,
       MyClinicalNotesContent: inputText,

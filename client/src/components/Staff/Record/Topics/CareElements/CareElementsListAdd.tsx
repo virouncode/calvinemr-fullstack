@@ -418,6 +418,7 @@ const CareElementsListAdd = ({
             handleChange={handleChange}
             value={addFormDatas.SmokingStatus?.Status ?? ""}
             noneOption={false}
+            placeHolder="Choose status..."
           />
         </div>
       </div>

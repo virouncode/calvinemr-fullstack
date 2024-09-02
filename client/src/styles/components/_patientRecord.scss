@@ -21,11 +21,11 @@
     justify-content: center;
     margin-bottom: 10px;
     &--center {
+      display: grid;
+      grid-template-columns: 60.5% 39.5%;
       .MuiFormControlLabel-label {
         font-size: 0.8rem;
       }
-      display: grid;
-      grid-template-columns: 60.5% 39.5%;
       button {
         margin-right: 5px;
       }

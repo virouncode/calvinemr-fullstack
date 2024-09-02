@@ -12,22 +12,21 @@
     z-index: 100000;
   }
   &-dialog {
-    // border: solid 1px $black;
     border-radius: 6px;
     width: 400px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $white;
+    overflow: hidden;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     &--credits {
       width: 300px;
     }
     &--recurring {
       width: 300px;
     }
-    position: absolute;
-    // top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: $white;
-    overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+
     &-header {
       display: flex;
       justify-content: space-between;

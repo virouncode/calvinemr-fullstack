@@ -24,8 +24,6 @@ type ClinicalNotesTitleProps = {
   setNotesVisible: React.Dispatch<React.SetStateAction<boolean>>;
   contentRef: React.MutableRefObject<HTMLDivElement | null>;
   triangleRef: React.MutableRefObject<SVGSVGElement | null>;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   setNewMessageVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -35,8 +33,6 @@ const ClinicalNotesTitle = ({
   setNotesVisible,
   contentRef,
   triangleRef,
-  loadingPatient,
-  errPatient,
   setNewMessageVisible,
 }: ClinicalNotesTitleProps) => {
   //Hooks
@@ -93,54 +89,51 @@ const ClinicalNotesTitle = ({
           triangleRef={triangleRef}
         />
       </div>
-      {errPatient && <ErrorParagraph errorMsg={errPatient.message} />}
-      {loadingPatient && <LoadingParagraph />}
-      {!loadingPatient && !errPatient && demographicsInfos && (
-        <span>
-          {toPatientName(demographicsInfos)},{" "}
-          {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
-          {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
-          {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
-          {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
-          <span
-            style={{ cursor: "pointer", textDecoration: "underline" }}
-            onClick={handleClickMail}
-          >
-            {demographicsInfos.Email}
-          </span>
-          , <PhoneIcon />{" "}
-          {
-            demographicsInfos.PhoneNumber?.find(
-              ({ _phoneNumberType }) => _phoneNumberType === "C"
-            )?.phoneNumber
-          }
-          <br />
-          <span>
-            {" "}
-            Next appointment:{" "}
-            {patientNextAppointment
-              ? `${timestampToHumanDateTimeTZ(
-                  patientNextAppointment.start
-                )} with ${staffIdToTitleAndName(
-                  staffInfos,
-                  patientNextAppointment.host_id
-                )}`
-              : "no appointment scheduled"}
-          </span>
-          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
-            <>
-              {" "}
-              / <span style={{ color: "red" }}> Patient Inactive</span>
-            </>
-          )}
-          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
-            <>
-              {" "}
-              / <span style={{ color: "red" }}> Patient Deceased</span>
-            </>
-          )}
+
+      <span>
+        {toPatientName(demographicsInfos)},{" "}
+        {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
+        {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
+        {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
+        {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
+        <span
+          style={{ cursor: "pointer", textDecoration: "underline" }}
+          onClick={handleClickMail}
+        >
+          {demographicsInfos.Email}
         </span>
-      )}
+        , <PhoneIcon />{" "}
+        {
+          demographicsInfos.PhoneNumber?.find(
+            ({ _phoneNumberType }) => _phoneNumberType === "C"
+          )?.phoneNumber
+        }
+        <br />
+        <span>
+          {" "}
+          Next appointment:{" "}
+          {patientNextAppointment
+            ? `${timestampToHumanDateTimeTZ(
+                patientNextAppointment.start
+              )} with ${staffIdToTitleAndName(
+                staffInfos,
+                patientNextAppointment.host_id
+              )}`
+            : "no appointment scheduled"}
+        </span>
+        {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
+          <>
+            {" "}
+            / <span style={{ color: "red" }}> Patient Inactive</span>
+          </>
+        )}
+        {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
+          <>
+            {" "}
+            / <span style={{ color: "red" }}> Patient Deceased</span>
+          </>
+        )}
+      </span>
     </div>
   );
 };

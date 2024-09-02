@@ -1,7 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import { AlertType } from "../../../../../types/api";
+import { AlertFormType, AlertType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -35,11 +35,14 @@ const AlertForm = ({
 }: AlertFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<AlertType>>({
+  const [formDatas, setFormDatas] = useState<AlertFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     AlertDescription: "",
-    DateActive: nowTZTimestamp(),
     Notes: "",
+    DateActive: nowTZTimestamp(),
+    EndDate: null,
   });
   const [progress, setProgress] = useState(false);
 
@@ -57,11 +60,9 @@ const AlertForm = ({
 
   const handleSubmit = async () => {
     //Formatting
-    const topicToPost: Partial<AlertType> = {
+    const topicToPost: AlertFormType = {
       ...formDatas,
-      AlertDescription: firstLetterOfFirstWordUpper(
-        formDatas.AlertDescription ?? ""
-      ),
+      AlertDescription: firstLetterOfFirstWordUpper(formDatas.AlertDescription),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -105,7 +106,7 @@ const AlertForm = ({
       </td>
       <td>
         <Input
-          value={formDatas.AlertDescription ?? ""}
+          value={formDatas.AlertDescription}
           onChange={handleChange}
           name="AlertDescription"
         />
@@ -125,11 +126,7 @@ const AlertForm = ({
         />
       </td>
       <td>
-        <Input
-          value={formDatas.Notes ?? ""}
-          onChange={handleChange}
-          name="Notes"
-        />
+        <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
       <FormSignCell />
     </tr>

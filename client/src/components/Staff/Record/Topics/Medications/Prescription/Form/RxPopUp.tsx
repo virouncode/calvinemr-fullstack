@@ -6,6 +6,7 @@ import { useSites } from "../../../../../../../hooks/reactquery/queries/sitesQue
 import {
   AllergyType,
   DemographicsType,
+  MedFormType,
   MedType,
 } from "../../../../../../../types/api";
 import { UserStaffType } from "../../../../../../../types/app";
@@ -44,7 +45,7 @@ const RxPopUp = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [previewVisible, setPreviewVisible] = useState(false);
   const [siteSelectedId, setSiteSelectedId] = useState(user.site_id);
-  const [addedMeds, setAddedMeds] = useState<Partial<MedType>[]>([]);
+  const [addedMeds, setAddedMeds] = useState<MedFormType[]>([]);
   const [freeText, setFreeText] = useState("");
   const [calvinAIVisible, setCalvinAIVisible] = useState(false);
   const [prescriptionStamp, setPrescriptionStamp] = useState("");
@@ -113,6 +114,7 @@ const RxPopUp = ({
             setAddedMeds={setAddedMeds}
             allergies={allergies}
             progress={false}
+            patientId={patientId}
           />
         </div>
       </div>

@@ -240,6 +240,7 @@ const NewEnrolmentForm = ({
             handleChange={handleChange}
             name="TerminationReason"
             label="Termination reason:"
+            placeHolder="Choose a reason..."
           />
         </div>
         <div className="new-enrolment__btn-container">

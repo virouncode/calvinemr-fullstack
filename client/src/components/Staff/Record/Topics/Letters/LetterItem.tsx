@@ -50,7 +50,7 @@ const LetterItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<LetterType | undefined>();
+  const [itemInfos, setItemInfos] = useState<LetterType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -62,14 +62,14 @@ const LetterItem = ({
     setErrMsgPost("");
     const name = e.target.name;
     const value = e.target.value;
-    setItemInfos({ ...(itemInfos as LetterType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     const topicToPut: LetterType = {
-      ...(itemInfos as LetterType),
+      ...itemInfos,
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };
@@ -198,9 +198,9 @@ const LetterItem = ({
               textDecoration: "underline",
               cursor: "pointer",
             }}
-            onClick={() => showDocument(item.file?.url, "pdf")}
+            onClick={() => showDocument(item.file.url, "pdf")}
           >
-            {item.file?.name}
+            {item.file.name}
           </span>
         </td>
         <td>

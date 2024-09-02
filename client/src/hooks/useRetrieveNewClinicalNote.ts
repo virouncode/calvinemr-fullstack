@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
-import { ClinicalNoteType } from "../types/api";
+import { ClinicalNoteFormType } from "../types/api";
 
 const useRetrieveNewClinicalNote = (
   patientId: number,
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const [newClinicalNoteInMemory, setNewClinicalNoteInMemory] =
-    useState<ClinicalNoteType | null>(null);
+    useState<ClinicalNoteFormType | null>(null);
   useEffect(() => {
     const retrieveClinicalNote = async () => {
       if (localStorage.getItem("currentNewClinicalNote")) {

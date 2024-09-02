@@ -7,7 +7,7 @@ import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQuerie
 import {
   DemographicsType,
   DoctorType,
-  LetterTemplateType,
+  LetterTemplateFormType,
   StaffType,
 } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
@@ -87,13 +87,14 @@ const LetterTemplateForm = ({
     }
     setProgress(true);
     //create the message template
-    const letterTemplateToPost: Partial<LetterTemplateType> = {
+    const letterTemplateToPost: LetterTemplateFormType = {
+      date_created: nowTZTimestamp(),
+      author_id: user.id,
+      body,
       name,
       description,
-      author_id: user.id,
       subject,
-      body,
-      date_created: nowTZTimestamp(),
+      recipient_infos: recipientInfos,
     };
     letterTemplatePost.mutate(letterTemplateToPost, {
       onSuccess: () => {

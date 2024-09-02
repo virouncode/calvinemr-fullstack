@@ -58,12 +58,12 @@
       align-items: center;
     }
     &--checkbox {
-      input[type="checkbox"] {
-        margin-right: 5px;
-      }
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      input[type="checkbox"] {
+        margin-right: 5px;
+      }
     }
   }
   &__duration {

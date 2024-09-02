@@ -150,6 +150,7 @@ const FakeWindow = ({
         top: windowPosition.y,
         width: windowSize.width,
         height: windowSize.height,
+        fontFamily: "Lato, sans-serif",
       }}
     >
       <div

@@ -20,7 +20,16 @@ const OccupationsSelect = ({
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
-      <select value={value} onChange={onChange} name={name} id={id}>
+      <select
+        value={value}
+        onChange={onChange}
+        name={name}
+        id={id}
+        style={{ color: value === "" ? "#a3a3a3" : "" }}
+      >
+        <option value="" disabled>
+          Choose occupation...
+        </option>
         {all && <option value="All">All</option>}
         <option value="Doctor">Doctor</option>
         <option value="Medical Student">Medical Student</option>

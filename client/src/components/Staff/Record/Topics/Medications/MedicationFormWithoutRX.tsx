@@ -14,6 +14,7 @@ import {
 } from "../../../../../omdDatas/codesTables";
 import {
   AllergyType,
+  MedFormType,
   MedTemplateType,
   MedType,
 } from "../../../../../types/api";
@@ -53,37 +54,25 @@ const MedicationFormWithoutRX = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [templatesVisible, setTemplatesVisible] = useState(false);
-  const [formDatas, setFormDatas] = useState<Partial<MedType>>({
+  const [formDatas, setFormDatas] = useState<MedFormType>({
+    patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     StartDate: nowTZTimestamp(),
     DrugIdentificationNumber: "",
     DrugName: "",
     Strength: { Amount: "", UnitOfMeasure: "" },
+    NumberOfRefills: "",
     Dosage: "",
     DosageUnitOfMeasure: "",
     Form: "",
     Route: "",
     Frequency: "",
     Duration: "",
-    duration: {
-      Y: 0,
-      M: 0,
-      W: 0,
-      D: 0,
-    },
     RefillDuration: "",
-    refill_duration: {
-      Y: 0,
-      M: 0,
-      W: 0,
-      D: 0,
-    },
     Quantity: "",
     RefillQuantity: "",
-    NumberOfRefills: "",
     LongTermMedication: { ynIndicatorsimple: "N" },
-    Notes: "",
-    PrescriptionInstructions: "",
-    SubstitutionNotAllowed: "N",
     PrescribedBy: {
       Name: {
         FirstName: "",
@@ -91,6 +80,22 @@ const MedicationFormWithoutRX = ({
       },
       OHIPPhysicianId: "",
     },
+    Notes: "",
+    PrescriptionInstructions: "",
+    SubstitutionNotAllowed: "N",
+    duration: {
+      Y: 0,
+      M: 0,
+      W: 0,
+      D: 0,
+    },
+    refill_duration: {
+      Y: 0,
+      M: 0,
+      W: 0,
+      D: 0,
+    },
+    site_id: user.site_id,
   });
   const [errMsg, setErrMsg] = useState("");
   const [search, setSearch] = useState("");
@@ -111,13 +116,13 @@ const MedicationFormWithoutRX = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Formatting
-    const medicationToPost: Partial<MedType> = {
+    const medicationToPost: MedFormType = {
       ...formDatas,
       patient_id: patientId,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
       site_id: user.site_id,
-      DrugName: formDatas.DrugName?.toUpperCase(),
+      DrugName: formDatas.DrugName.toUpperCase(),
     };
     //Validation
     try {
@@ -136,10 +141,19 @@ const MedicationFormWithoutRX = ({
   };
 
   const handleSelectTemplate = (template: MedTemplateType) => {
-    const newFormDatas: Partial<MedTemplateType> = { ...template };
-    delete newFormDatas.id;
-    delete newFormDatas.author_id;
-    delete newFormDatas.date_created;
+    const selectedTemplate: Partial<MedTemplateType> = { ...template };
+    delete selectedTemplate.id;
+    delete selectedTemplate.author_id;
+    delete selectedTemplate.date_created;
+    const newFormDatas: MedFormType = {
+      ...(selectedTemplate as MedTemplateType),
+      patient_id: patientId,
+      date_created: nowTZTimestamp(),
+      created_by_id: user.id,
+      StartDate: formDatas.StartDate,
+      site_id: user.site_id,
+      PrescribedBy: formDatas.PrescribedBy,
+    };
     setFormDatas(newFormDatas);
   };
 
@@ -155,7 +169,7 @@ const MedicationFormWithoutRX = ({
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
       site_id: user.site_id,
-      DrugName: formDatas.DrugName?.toUpperCase(),
+      DrugName: formDatas.DrugName.toUpperCase(),
     };
     //Validation
     try {
@@ -177,7 +191,7 @@ const MedicationFormWithoutRX = ({
       ...formDatas,
       author_id: user.id,
       date_created: nowTZTimestamp(),
-      DrugName: formDatas.DrugName?.toUpperCase() ?? "",
+      DrugName: formDatas.DrugName.toUpperCase(),
     };
     //Submission
     setProgressTemplates(true);
@@ -208,20 +222,20 @@ const MedicationFormWithoutRX = ({
             Amount: value,
           },
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
+            formDatas.DrugName,
             value,
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -245,19 +259,19 @@ const MedicationFormWithoutRX = ({
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
             value,
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -266,20 +280,20 @@ const MedicationFormWithoutRX = ({
           ...formDatas,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
+            formDatas.DrugName,
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
             value,
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -288,20 +302,20 @@ const MedicationFormWithoutRX = ({
           ...formDatas,
           [name]: value === "Y" ? "N" : "Y",
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
+            formDatas.DrugName,
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
             value === "Y" ? "N" : "Y",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -310,20 +324,20 @@ const MedicationFormWithoutRX = ({
           ...formDatas,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
+            formDatas.DrugName,
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
             value,
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -332,20 +346,20 @@ const MedicationFormWithoutRX = ({
           ...formDatas,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
+            formDatas.DrugName,
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
+            formDatas.NumberOfRefills,
             value,
-            formDatas.RefillDuration ?? ""
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -354,20 +368,20 @@ const MedicationFormWithoutRX = ({
           ...formDatas,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
+            formDatas.DrugName,
+            formDatas.Strength.Amount,
+            formDatas.Strength.UnitOfMeasure,
+            formDatas.SubstitutionNotAllowed,
+            formDatas.Quantity,
+            formDatas.Form,
+            formDatas.Route,
+            formDatas.Dosage,
+            formDatas.DosageUnitOfMeasure,
+            formDatas.Frequency,
+            formDatas.Duration,
             value,
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            formDatas.RefillQuantity,
+            formDatas.RefillDuration
           ),
         });
         break;
@@ -393,35 +407,35 @@ const MedicationFormWithoutRX = ({
         [type]: parseInt(value),
       },
       Duration: toDurationText(
-        formDatas.duration?.Y ?? 0,
-        formDatas.duration?.M ?? 0,
-        formDatas.duration?.W ?? 0,
-        formDatas.duration?.D ?? 0,
+        formDatas.duration.Y,
+        formDatas.duration.M,
+        formDatas.duration.W,
+        formDatas.duration.D,
         type,
         parseInt(value)
       ),
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
+        formDatas.Route,
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
+        formDatas.Frequency,
         toDurationText(
-          formDatas.duration?.Y ?? 0,
-          formDatas.duration?.M ?? 0,
-          formDatas.duration?.W ?? 0,
-          formDatas.duration?.D ?? 0,
+          formDatas.duration.Y,
+          formDatas.duration.M,
+          formDatas.duration.W,
+          formDatas.duration.D,
           type,
           parseInt(value)
         ),
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -443,32 +457,32 @@ const MedicationFormWithoutRX = ({
         [type]: parseInt(value),
       },
       RefillDuration: toDurationText(
-        formDatas.refill_duration?.Y ?? 0,
-        formDatas.refill_duration?.M ?? 0,
-        formDatas.refill_duration?.W ?? 0,
-        formDatas.refill_duration?.D ?? 0,
+        formDatas.refill_duration.Y,
+        formDatas.refill_duration.M,
+        formDatas.refill_duration.W,
+        formDatas.refill_duration.D,
         type,
         parseInt(value)
       ),
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
+        formDatas.Route,
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
+        formDatas.Frequency,
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
         toDurationText(
-          formDatas.refill_duration?.Y ?? 0,
-          formDatas.refill_duration?.M ?? 0,
-          formDatas.refill_duration?.W ?? 0,
-          formDatas.refill_duration?.D ?? 0,
+          formDatas.refill_duration.Y,
+          formDatas.refill_duration.M,
+          formDatas.refill_duration.W,
+          formDatas.refill_duration.D,
           type,
           parseInt(value)
         )
@@ -480,20 +494,20 @@ const MedicationFormWithoutRX = ({
       ...formDatas,
       Route: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
         value,
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
+        formDatas.Frequency,
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -502,20 +516,20 @@ const MedicationFormWithoutRX = ({
       ...formDatas,
       Frequency: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
+        formDatas.Route,
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
         value,
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -524,20 +538,20 @@ const MedicationFormWithoutRX = ({
       ...formDatas,
       DosageUnitOfMeasure: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
+        formDatas.Route,
+        formDatas.Dosage,
         value,
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.Frequency,
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -549,20 +563,20 @@ const MedicationFormWithoutRX = ({
         UnitOfMeasure: value,
       },
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
         value,
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
+        formDatas.Form,
+        formDatas.Route,
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
+        formDatas.Frequency,
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -571,20 +585,20 @@ const MedicationFormWithoutRX = ({
       ...formDatas,
       Form: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
+        formDatas.DrugName,
+        formDatas.Strength.Amount,
+        formDatas.Strength.UnitOfMeasure,
+        formDatas.SubstitutionNotAllowed,
+        formDatas.Quantity,
         value,
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        formDatas.Route,
+        formDatas.Dosage,
+        formDatas.DosageUnitOfMeasure,
+        formDatas.Frequency,
+        formDatas.Duration,
+        formDatas.NumberOfRefills,
+        formDatas.RefillQuantity,
+        formDatas.RefillDuration
       ),
     });
   };
@@ -634,7 +648,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Drug identification number"
             name="DrugIdentificationNumber"
-            value={formDatas.DrugIdentificationNumber ?? ""}
+            value={formDatas.DrugIdentificationNumber}
             onChange={handleChange}
             id="med-template-drug-number"
           />
@@ -643,7 +657,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Drug name*"
             name="DrugName"
-            value={formDatas.DrugName ?? ""}
+            value={formDatas.DrugName}
             onChange={handleChange}
             id="med-template-drug-name"
           />
@@ -652,7 +666,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Strength*"
             name="Strength"
-            value={formDatas.Strength?.Amount ?? ""}
+            value={formDatas.Strength.Amount}
             onChange={handleChange}
             id="med-template-strength"
           />
@@ -660,7 +674,7 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <GenericCombo
             list={strengthUnitCT}
-            value={formDatas.Strength?.UnitOfMeasure ?? ""}
+            value={formDatas.Strength.UnitOfMeasure}
             handleChange={handleStrengthUnitChange}
             label="Strength unit of measure*"
           />
@@ -668,7 +682,7 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <GenericCombo
             list={formCT}
-            value={formDatas.Form ?? ""}
+            value={formDatas.Form}
             handleChange={handleFormChange}
             label="Form*"
           />
@@ -677,7 +691,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Dosage*"
             name="Dosage"
-            value={formDatas.Dosage ?? ""}
+            value={formDatas.Dosage}
             onChange={handleChange}
             id="med-template-dosage"
           />
@@ -685,7 +699,7 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <GenericCombo
             list={dosageUnitCT}
-            value={formDatas.DosageUnitOfMeasure ?? ""}
+            value={formDatas.DosageUnitOfMeasure}
             handleChange={handleDosageUnitChange}
             label="Dosage unit of measure*"
           />
@@ -693,7 +707,7 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <GenericCombo
             list={routeCT}
-            value={formDatas.Route ?? ""}
+            value={formDatas.Route}
             handleChange={handleRouteChange}
             label="Route*"
           />
@@ -701,7 +715,7 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <GenericCombo
             list={frequencyCT}
-            value={formDatas.Frequency ?? ""}
+            value={formDatas.Frequency}
             handleChange={handleFrequencyChange}
             label="Frequency*"
           />
@@ -709,10 +723,10 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <DurationPickerLong
             label="Duration"
-            durationYears={formDatas.duration?.Y ?? 0}
-            durationMonths={formDatas.duration?.M ?? 0}
-            durationWeeks={formDatas.duration?.W ?? 0}
-            durationDays={formDatas.duration?.D ?? 0}
+            durationYears={formDatas.duration.Y}
+            durationMonths={formDatas.duration.M}
+            durationWeeks={formDatas.duration.W}
+            durationDays={formDatas.duration.D}
             handleDurationPickerChange={handleDurationPickerChange}
           />
         </div>
@@ -720,7 +734,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Quantity"
             name="Quantity"
-            value={formDatas.Quantity ?? ""}
+            value={formDatas.Quantity}
             onChange={handleChange}
             id="med-template-quantity"
           />
@@ -728,10 +742,10 @@ const MedicationFormWithoutRX = ({
         <div className="med-templates__form-row">
           <DurationPickerLong
             label="Refill duration"
-            durationYears={formDatas.refill_duration?.Y ?? 0}
-            durationMonths={formDatas.refill_duration?.M ?? 0}
-            durationWeeks={formDatas.refill_duration?.W ?? 0}
-            durationDays={formDatas.refill_duration?.D ?? 0}
+            durationYears={formDatas.refill_duration.Y}
+            durationMonths={formDatas.refill_duration.M}
+            durationWeeks={formDatas.refill_duration.W}
+            durationDays={formDatas.refill_duration.D}
             handleDurationPickerChange={handleRefillDurationPickerChange}
           />
         </div>
@@ -739,7 +753,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Refill quantity"
             name="RefillQuantity"
-            value={formDatas.RefillQuantity ?? ""}
+            value={formDatas.RefillQuantity}
             onChange={handleChange}
             id="med-template-refill-quantity"
           />
@@ -748,7 +762,7 @@ const MedicationFormWithoutRX = ({
           <Input
             label="Number of refills"
             name="NumberOfRefills"
-            value={formDatas.NumberOfRefills ?? ""}
+            value={formDatas.NumberOfRefills}
             onChange={handleChange}
             id="med-template-nbr-refills"
           />
@@ -757,7 +771,7 @@ const MedicationFormWithoutRX = ({
           <GenericList
             name="LongTermMedication"
             list={ynIndicatorsimpleCT}
-            value={formDatas.LongTermMedication?.ynIndicatorsimple ?? "N"}
+            value={formDatas.LongTermMedication.ynIndicatorsimple ?? "N"}
             handleChange={handleChange}
             placeHolder="Choose..."
             label="Long-term medication*"

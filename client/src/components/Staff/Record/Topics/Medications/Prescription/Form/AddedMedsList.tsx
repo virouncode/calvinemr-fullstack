@@ -1,10 +1,10 @@
 import React from "react";
-import { MedType } from "../../../../../../../types/api";
 import AddedMedItem from "./AddedMedItem";
+import { MedFormType } from "../../../../../../../types/api";
 
 type AddedMedsListProps = {
-  addedMeds: Partial<MedType>[];
-  setAddedMeds: React.Dispatch<React.SetStateAction<Partial<MedType>[]>>;
+  addedMeds: MedFormType[];
+  setAddedMeds: React.Dispatch<React.SetStateAction<MedFormType[]>>;
 };
 
 const AddedMedsList = ({ addedMeds, setAddedMeds }: AddedMedsListProps) => {

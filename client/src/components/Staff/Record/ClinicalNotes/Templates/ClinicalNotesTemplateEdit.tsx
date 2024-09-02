@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useClinicalNotesTemplatesPut } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
 import { ClinicalNoteTemplateType } from "../../../../../types/api";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
@@ -23,6 +23,10 @@ const ClinicalNotesTemplateEdit = ({
   const [errMsg, setErrMsg] = useState("");
   //Queries
   const templatePut = useClinicalNotesTemplatesPut();
+
+  useEffect(() => {
+    setEditedTemplate(templateToEdit);
+  }, [templateToEdit]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

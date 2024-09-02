@@ -57,7 +57,7 @@ const BillingForm = ({
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [formDatas, setFormDatas] = useState<BillingFormType>({
-    date: date
+    dateStr: date
       ? timestampToDateISOTZ(parseInt(date))
       : timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto"),
     provider_ohip_billing_nbr:
@@ -95,6 +95,7 @@ const BillingForm = ({
     setErrMsgPost("");
     const name = e.target.name;
     const value = e.target.value;
+    if (name === "dateStr" && !value) return;
     setFormDatas({ ...formDatas, [name]: value });
   };
   const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -159,9 +160,7 @@ const BillingForm = ({
       .split(",");
     //Validation
     try {
-      await billingFormSchema.validate({
-        ...formDatas,
-      });
+      await billingFormSchema.validate(formDatas);
     } catch (err) {
       if (err instanceof Error) setErrMsgPost(err.message);
       return;
@@ -189,7 +188,7 @@ const BillingForm = ({
       const billingsToPost: Partial<BillingType>[] = [];
       for (const billing_code of billingCodesArray) {
         const billingToPost: Partial<BillingType> = {
-          date: dateISOToTimestampTZ(formDatas.date) as number,
+          date: dateISOToTimestampTZ(formDatas.dateStr) as number,
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
           created_by_user_type: user.access_level,
@@ -232,9 +231,9 @@ const BillingForm = ({
       <div className="billing-form__row">
         <div className="billing-form__item">
           <InputDate
-            value={formDatas.date}
+            value={formDatas.dateStr}
             onChange={handleChange}
-            name="date"
+            name="dateStr"
             id="date"
             label="Date*"
             width={150}

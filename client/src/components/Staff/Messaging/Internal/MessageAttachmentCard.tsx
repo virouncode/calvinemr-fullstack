@@ -11,7 +11,7 @@ import Button from "../../../UI/Buttons/Button";
 import XmarkIcon from "../../../UI/Icons/XmarkIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ReportForm from "../../Record/Topics/Reports/ReportForm";
-import ReportsInboxForm from "../../ReportsInbox/ReportsInboxForm";
+import ReportInboxForm from "../../ReportsInbox/ReportInboxForm";
 
 type MessageAttachmentCardProps = {
   handleRemoveAttachment?: (attachmentName: string) => void;
@@ -239,7 +239,7 @@ const MessageAttachmentCard = ({
         >
           {errMsgPost && <span>{errMsgPost}</span>}
 
-          <ReportsInboxForm
+          <ReportInboxForm
             setAddVisible={setAddVisible}
             initialAttachment={attachment}
             errMsgPost={errMsgPost}

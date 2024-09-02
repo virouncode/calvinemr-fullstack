@@ -36,7 +36,7 @@ const ReminderItem = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<ReminderType | undefined>();
+  const [itemInfos, setItemInfos] = useState<ReminderType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -48,16 +48,16 @@ const ReminderItem = ({
     setErrMsgPost("");
     const name = e.target.name;
     const value = e.target.value;
-    setItemInfos({ ...(itemInfos as ReminderType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: ReminderType = {
-      ...(itemInfos as ReminderType),
-      reminder: firstLetterOfFirstWordUpper(itemInfos?.reminder ?? ""),
+      ...itemInfos,
+      reminder: firstLetterOfFirstWordUpper(itemInfos.reminder),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

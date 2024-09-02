@@ -2,7 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
-import { PastHealthType } from "../../../../../types/api";
+import { PastHealthFormType, PastHealthType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -42,8 +42,10 @@ const PastHealthForm = ({
 }: PastHealthFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<PastHealthType>>({
+  const [formDatas, setFormDatas] = useState<PastHealthFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     PastHealthProblemDescriptionOrProcedures: "",
     OnsetOrEventDate: null,
     LifeStage: "A",
@@ -74,13 +76,13 @@ const PastHealthForm = ({
   const handleSubmit = async () => {
     setErrMsgPost("");
     //Formatting
-    const topicToPost: Partial<PastHealthType> = {
+    const topicToPost: PastHealthFormType = {
       ...formDatas,
       PastHealthProblemDescriptionOrProcedures: firstLetterOfFirstWordUpper(
-        formDatas.PastHealthProblemDescriptionOrProcedures ?? ""
+        formDatas.PastHealthProblemDescriptionOrProcedures
       ),
-      ProblemStatus: firstLetterOfFirstWordUpper(formDatas.ProblemStatus ?? ""),
-      Notes: firstLetterOfFirstWordUpper(formDatas.Notes ?? ""),
+      ProblemStatus: firstLetterOfFirstWordUpper(formDatas.ProblemStatus),
+      Notes: firstLetterOfFirstWordUpper(formDatas.Notes),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -124,7 +126,7 @@ const PastHealthForm = ({
       <td>
         <Input
           name="PastHealthProblemDescriptionOrProcedures"
-          value={formDatas.PastHealthProblemDescriptionOrProcedures ?? ""}
+          value={formDatas.PastHealthProblemDescriptionOrProcedures}
           onChange={handleChange}
         />
       </td>
@@ -139,7 +141,7 @@ const PastHealthForm = ({
       <td>
         <GenericList
           list={lifeStageCT}
-          value={formDatas.LifeStage ?? ""}
+          value={formDatas.LifeStage}
           name="LifeStage"
           handleChange={handleChange}
           placeHolder="Choose a lifestage..."
@@ -165,16 +167,12 @@ const PastHealthForm = ({
       <td>
         <Input
           name="ProblemStatus"
-          value={formDatas.ProblemStatus ?? ""}
+          value={formDatas.ProblemStatus}
           onChange={handleChange}
         />
       </td>
       <td>
-        <Input
-          name="Notes"
-          value={formDatas.Notes ?? ""}
-          onChange={handleChange}
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <FormSignCell />
     </tr>

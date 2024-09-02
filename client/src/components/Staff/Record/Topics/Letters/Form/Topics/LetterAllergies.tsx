@@ -1,16 +1,16 @@
 import React from "react";
-import { useTopic } from "../../../../../../hooks/reactquery/queries/topicQueries";
-import { useFetchAllPages } from "../../../../../../hooks/reactquery/useFetchAllPages";
-import LoadingLi from "../../../../../UI/Lists/LoadingLi";
-import EmptyParagraph from "../../../../../UI/Paragraphs/EmptyParagraph";
-import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
+import { useTopic } from "../../../../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../../../../hooks/reactquery/useFetchAllPages";
+import LoadingLi from "../../../../../../UI/Lists/LoadingLi";
+import EmptyParagraph from "../../../../../../UI/Paragraphs/EmptyParagraph";
+import ErrorParagraph from "../../../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../../../UI/Paragraphs/LoadingParagraph";
 
-type AllergiesLetterProps = {
+type LetterAllergiesProps = {
   patientId: number;
 };
 
-const AllergiesLetter = ({ patientId }: AllergiesLetterProps) => {
+const LetterAllergies = ({ patientId }: LetterAllergiesProps) => {
   //Queries
   const {
     data,
@@ -46,4 +46,4 @@ const AllergiesLetter = ({ patientId }: AllergiesLetterProps) => {
   );
 };
 
-export default AllergiesLetter;
+export default LetterAllergies;

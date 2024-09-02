@@ -102,13 +102,10 @@
   }
   &__cell {
     display: flex;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     align-items: center;
     justify-content: flex-start;
     padding: 5px;
-    label {
-      margin-left: 3px;
-    }
     &-multiple-btn {
       width: 20px;
       height: 20px;
@@ -133,11 +130,11 @@
     margin: 10px auto;
     width: 90%;
     &--text {
+      align-items: flex-start;
       textarea {
         height: 100px;
         width: 350px;
       }
-      align-items: flex-start;
     }
   }
   &__btns {
@@ -200,12 +197,12 @@
       border-radius: 6px;
     }
     th {
-      &:nth-child(2) {
-        min-width: 200px;
-      }
       min-width: 120px;
       padding: 10px;
       cursor: pointer;
+      &:nth-child(2) {
+        min-width: 200px;
+      }
     }
   }
   &__item,

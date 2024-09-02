@@ -41,7 +41,14 @@ export const reportSchema = yup.object({
   //       ),
   //   })
   // ),
-  patient_id: yup.number().required("Please choose a related patient"),
+  patient_id: yup
+    .number()
+    .required("Please choose a related patient")
+    .notOneOf([0], "Please choose a related patient"),
+  assigned_staff_id: yup
+    .number()
+    .required("Please choose a staff member")
+    .notOneOf([0], "Please choose a staff member"),
   RecipientName: yup.object({
     FirstName: yup.string().matches(/^([^0-9]*)$/, {
       message: "Invalid Author First Name",

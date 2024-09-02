@@ -91,9 +91,6 @@ const RecImmunizationItemSingle = ({
           <RecImmunizationForm
             setFormVisible={setFormVisible}
             type={type}
-            age={age}
-            rangeStart={rangeStart}
-            route={route}
             patientId={patientId}
             errMsgPost={errMsgPost}
             setErrMsgPost={setErrMsgPost}

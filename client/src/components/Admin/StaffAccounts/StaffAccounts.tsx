@@ -7,8 +7,8 @@ import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
-import SignupStaffForm from "./SignupStaffForm";
 import StaffAccountEdit from "./StaffAccountEdit";
+import StaffAccountForm from "./StaffAccountForm";
 import StaffAccountSearch from "./StaffAccountSearch";
 import StaffAccountsTable from "./StaffAccountsTable";
 
@@ -97,7 +97,7 @@ const StaffAccounts = () => {
             color="#94bae8"
             setPopUpVisible={setAddVisible}
           >
-            <SignupStaffForm setAddVisible={setAddVisible} sites={sites} />
+            <StaffAccountForm setAddVisible={setAddVisible} sites={sites} />
           </FakeWindow>
         )}
       </>

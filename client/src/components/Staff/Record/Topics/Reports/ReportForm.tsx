@@ -8,6 +8,7 @@ import {
   AttachmentType,
   DemographicsType,
   MessageAttachmentType,
+  ReportFormType,
   ReportType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -44,12 +45,33 @@ const ReportForm = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [formDatas, setFormDatas] = useState<Partial<ReportType>>({
+  const [formDatas, setFormDatas] = useState<ReportFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
+    name: "",
+    Media: "",
     Format: "Binary",
+    FileExtensionAndVersion: getExtension(initialAttachment?.file?.path),
+    FilePath: "",
+    Content: { TextContent: "", Media: "" },
+    Class: "",
+    SubClass: "",
+    EventDateTime: null,
+    ReceivedDateTime: null,
+    SourceAuthorPhysician: {
+      AuthorFreeText: "",
+    },
+    ReportReviewed: [],
+    Notes: "",
+    RecipientName: {
+      FirstName: "",
+      LastName: "",
+    },
+    DateTimeSent: null,
+    acknowledged: false,
     assigned_staff_id: demographicsInfos.assigned_staff_id,
     File: initialAttachment?.file ?? null,
-    FileExtensionAndVersion: getExtension(initialAttachment?.file?.path) ?? "",
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [sentOrReceived, setSentOrReceived] = useState("Received");
@@ -77,6 +99,15 @@ const ReportForm = ({
         File: null,
         FileExtensionAndVersion: "",
         Format: value,
+      });
+      return;
+    } else if (name === "AuthorFreeText") {
+      setFormDatas({
+        ...formDatas,
+        SourceAuthorPhysician: {
+          ...formDatas.SourceAuthorPhysician,
+          AuthorFreeText: value,
+        },
       });
       return;
     }
@@ -111,7 +142,7 @@ const ReportForm = ({
           ReviewingOHIPPhysicianId:
             formDatas.ReportReviewed?.[0]?.ReviewingOHIPPhysicianId ?? "",
           DateTimeReportReviewed:
-            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? Date.now(),
+            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? null,
         },
       ],
     });
@@ -130,7 +161,7 @@ const ReportForm = ({
             LastName: "",
           },
           DateTimeReportReviewed:
-            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? Date.now(),
+            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? null,
         },
       ],
     });
@@ -161,7 +192,7 @@ const ReportForm = ({
     setFormDatas({
       ...formDatas,
       RecipientName: {
-        ...(formDatas.RecipientName ?? { FirstName: "", LastName: "" }),
+        ...formDatas.RecipientName,
         [name]: value,
       },
     });
@@ -176,13 +207,10 @@ const ReportForm = ({
     const value = e.target.value;
     setErrMsgPost("");
     setSentOrReceived(value);
-
     setFormDatas({
       ...formDatas,
       SourceAuthorPhysician: {
-        ...(formDatas.SourceAuthorPhysician ?? {
-          AuthorName: { FirstName: "", LastName: "" },
-        }),
+        ...formDatas.SourceAuthorPhysician,
         AuthorFreeText:
           value === "Sent"
             ? patientIdToAssignedStaffTitleAndName(
@@ -199,7 +227,7 @@ const ReportForm = ({
     e.preventDefault();
     setErrMsgPost("");
 
-    const reportToPost: Partial<ReportType> = {
+    const reportToPost: ReportFormType = {
       ...formDatas,
       date_created: nowTZTimestamp(),
       created_by_id: user?.id,

@@ -154,7 +154,7 @@ const AppointmentItem = ({
             DateTime.fromMillis(itemInfos.start, {
               zone: "America/Toronto",
             }).toISO() ?? "",
-          until: itemInfos.rrule?.until ?? "",
+          until: itemInfos.rrule?.until,
         };
         break;
       case "Every week":
@@ -165,7 +165,7 @@ const AppointmentItem = ({
             DateTime.fromMillis(itemInfos.start, {
               zone: "America/Toronto",
             }).toISO() ?? "",
-          until: itemInfos.rrule?.until ?? "",
+          until: itemInfos.rrule?.until,
         };
         break;
       case "Every month":
@@ -176,7 +176,7 @@ const AppointmentItem = ({
             DateTime.fromMillis(itemInfos.start, {
               zone: "America/Toronto",
             }).toISO() ?? "",
-          until: itemInfos.rrule?.until ?? "",
+          until: itemInfos.rrule?.until,
         };
         break;
       case "Every year":
@@ -187,7 +187,7 @@ const AppointmentItem = ({
             DateTime.fromMillis(itemInfos.start, {
               zone: "America/Toronto",
             }).toISO() ?? "",
-          until: itemInfos.rrule?.until ?? "",
+          until: itemInfos.rrule?.until,
         };
         break;
       default:

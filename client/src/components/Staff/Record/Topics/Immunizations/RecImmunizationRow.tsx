@@ -29,8 +29,6 @@ type RecImmunizationRowProps = {
   patientDob: number;
   immunizationInfos: ImmunizationType[];
   patientId: number;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   topicPost: UseMutationResult<
     ImmunizationType,
     Error,
@@ -46,8 +44,6 @@ const RecImmunizationRow = ({
   patientDob,
   immunizationInfos,
   patientId,
-  loadingPatient,
-  errPatient,
   topicPost,
   topicPut,
   topicDelete,
@@ -90,8 +86,6 @@ const RecImmunizationRow = ({
           )}
           patientDob={patientDob}
           patientId={patientId}
-          loadingPatient={loadingPatient}
-          errPatient={errPatient}
           topicPost={topicPost}
           topicPut={topicPut}
           topicDelete={topicDelete}

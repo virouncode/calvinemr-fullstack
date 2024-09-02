@@ -1,5 +1,6 @@
 import { Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
@@ -45,7 +46,7 @@ import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
 
-type BillingTableItemProps = {
+type BillingItemProps = {
   billing: BillingType;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
@@ -53,13 +54,13 @@ type BillingTableItemProps = {
   sites: SiteType[];
 };
 
-const BillingTableItem = ({
+const BillingItem = ({
   billing,
   errMsgPost,
   setErrMsgPost,
   lastItemRef,
   sites,
-}: BillingTableItemProps) => {
+}: BillingItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
@@ -97,11 +98,42 @@ const BillingTableItem = ({
   const billingPut = useBillingPut();
   const billingDelete = useBillingDelete();
 
+  useEffect(() => {
+    setItemInfos({
+      id: billing.id,
+      date: billing.date,
+      date_created: billing.date_created,
+      created_by_id: billing.created_by_id,
+      created_by_user_type: billing.created_by_user_type,
+      provider_ohip_billing_nbr:
+        billing.provider_ohip_billing_nbr?.ohip_billing_nbr,
+      referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
+      patient_id: billing.patient_id,
+      patient_hcn: billing.patient_infos?.HealthCard?.Number,
+      patient_name: toPatientName(billing.patient_infos),
+      diagnosis_code: billing.diagnosis_code?.code,
+      billing_code:
+        billing.billing_infos?.billing_code + billing.billing_code_suffix,
+      site_id: billing.site_id,
+      provider_fee: billing.billing_infos?.provider_fee,
+      assistant_fee: billing.billing_infos?.assistant_fee,
+      specialist_fee: billing.billing_infos?.specialist_fee,
+      anaesthetist_fee: billing.billing_infos?.anaesthetist_fee,
+      non_anaesthetist_fee: billing.billing_infos?.non_anaesthetist_fee,
+      updates: billing.updates,
+    });
+  }, [billing]);
+
+  const fakewindowRoot = document.getElementById("fake-window");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
-    if (name === "date") value = dateISOToTimestampTZ(value);
+    if (name === "date") {
+      if (!value) return;
+      value = dateISOToTimestampTZ(value);
+    }
     setItemInfos({ ...itemInfos, [name]: value });
   };
 
@@ -138,6 +170,29 @@ const BillingTableItem = ({
 
   const handleCancel = () => {
     setErrMsgPost("");
+    setItemInfos({
+      id: billing.id,
+      date: billing.date,
+      date_created: billing.date_created,
+      created_by_id: billing.created_by_id,
+      created_by_user_type: billing.created_by_user_type,
+      provider_ohip_billing_nbr:
+        billing.provider_ohip_billing_nbr?.ohip_billing_nbr,
+      referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
+      patient_id: billing.patient_id,
+      patient_hcn: billing.patient_infos?.HealthCard?.Number,
+      patient_name: toPatientName(billing.patient_infos),
+      diagnosis_code: billing.diagnosis_code?.code,
+      billing_code:
+        billing.billing_infos?.billing_code + billing.billing_code_suffix,
+      site_id: billing.site_id,
+      provider_fee: billing.billing_infos?.provider_fee,
+      assistant_fee: billing.billing_infos?.assistant_fee,
+      specialist_fee: billing.billing_infos?.specialist_fee,
+      anaesthetist_fee: billing.billing_infos?.anaesthetist_fee,
+      non_anaesthetist_fee: billing.billing_infos?.non_anaesthetist_fee,
+      updates: billing.updates,
+    });
     setEditVisible(false);
   };
 
@@ -406,48 +461,59 @@ const BillingTableItem = ({
           <td>{itemInfos.non_anaesthetist_fee ?? 0 / 10000} $</td>
           <SignCellMultipleTypes item={billing} />
         </tr>
-        {diagnosisSearchVisible && (
-          <FakeWindow
-            title="DIAGNOSIS CODES SEARCH"
-            width={800}
-            height={600}
-            x={(window.innerWidth - 800) / 2}
-            y={(window.innerHeight - 600) / 2}
-            color="#94bae8"
-            setPopUpVisible={setDiagnosisSearchVisible}
-          >
-            <DiagnosisSearch handleClickDiagnosis={handleClickDiagnosis} />
-          </FakeWindow>
-        )}
-        {refOHIPSearchVisible && (
-          <FakeWindow
-            title="REFERRING MD OHIP# SEARCH"
-            width={800}
-            height={600}
-            x={(window.innerWidth - 800) / 2}
-            y={(window.innerHeight - 600) / 2}
-            color="#94bae8"
-            setPopUpVisible={setRefOHIPSearchVisible}
-          >
-            <ReferringOHIPSearch handleClickRefOHIP={handleClickRefOHIP} />
-          </FakeWindow>
-        )}
-        {patientSearchVisible && (
-          <FakeWindow
-            title="PATIENT SEARCH"
-            width={800}
-            height={600}
-            x={(window.innerWidth - 800) / 2}
-            y={(window.innerHeight - 600) / 2}
-            color="#94bae8"
-            setPopUpVisible={setPatientSearchVisible}
-          >
-            <PatientChartHealthSearch handleClickPatient={handleClickPatient} />
-          </FakeWindow>
-        )}
+        {fakewindowRoot &&
+          diagnosisSearchVisible &&
+          createPortal(
+            <FakeWindow
+              title="DIAGNOSIS CODES SEARCH"
+              width={800}
+              height={600}
+              x={(window.innerWidth - 800) / 2}
+              y={(window.innerHeight - 600) / 2}
+              color="#94bae8"
+              setPopUpVisible={setDiagnosisSearchVisible}
+            >
+              <DiagnosisSearch handleClickDiagnosis={handleClickDiagnosis} />
+            </FakeWindow>,
+            fakewindowRoot
+          )}
+        {fakewindowRoot &&
+          refOHIPSearchVisible &&
+          createPortal(
+            <FakeWindow
+              title="REFERRING MD OHIP# SEARCH"
+              width={800}
+              height={600}
+              x={(window.innerWidth - 800) / 2}
+              y={(window.innerHeight - 600) / 2}
+              color="#94bae8"
+              setPopUpVisible={setRefOHIPSearchVisible}
+            >
+              <ReferringOHIPSearch handleClickRefOHIP={handleClickRefOHIP} />
+            </FakeWindow>,
+            fakewindowRoot
+          )}
+        {fakewindowRoot &&
+          patientSearchVisible &&
+          createPortal(
+            <FakeWindow
+              title="PATIENT SEARCH"
+              width={800}
+              height={600}
+              x={(window.innerWidth - 800) / 2}
+              y={(window.innerHeight - 600) / 2}
+              color="#94bae8"
+              setPopUpVisible={setPatientSearchVisible}
+            >
+              <PatientChartHealthSearch
+                handleClickPatient={handleClickPatient}
+              />
+            </FakeWindow>,
+            fakewindowRoot
+          )}
       </>
     )
   );
 };
 
-export default BillingTableItem;
+export default BillingItem;

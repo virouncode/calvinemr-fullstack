@@ -478,7 +478,7 @@ const EventForm = ({
         minInt = formDatas.Duration % 60;
         break;
       case "minutesDuration":
-        hoursInt = formDatas.Duration / 60;
+        hoursInt = Math.floor(formDatas.Duration / 60);
         minInt = value === "" ? 0 : parseInt(value);
         break;
       default:

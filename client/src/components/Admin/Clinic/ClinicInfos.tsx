@@ -13,7 +13,6 @@ import CancelButton from "../../UI/Buttons/CancelButton";
 import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputEmailToggle from "../../UI/Inputs/InputEmailToggle";
-import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 import InputTextToggleLink from "../../UI/Inputs/InputTextToggleLink";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
@@ -53,6 +52,7 @@ const ClinicInfos = () => {
   };
 
   const handleCancelClinic = () => {
+    setFormDatas(clinic as ClinicType);
     setEditClinicVisible(false);
   };
 
@@ -117,14 +117,6 @@ const ClinicInfos = () => {
     <>
       <div className="clinic__global-infos">
         <span className="clinic__global-infos-title">Global clinic infos</span>
-        <InputTextToggle
-          value={formDatas?.name}
-          onChange={handleChange}
-          name="name"
-          id="name"
-          editVisible={editClinicVisible}
-          label="Name: "
-        />
         <InputEmailToggle
           value={formDatas?.email}
           onChange={handleChange}

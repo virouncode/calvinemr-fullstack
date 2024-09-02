@@ -1,6 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -62,7 +62,11 @@ const ReportItemReceived = ({
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState(item);
+  const [itemInfos, setItemInfos] = useState<ReportType>(item);
+
+  useEffect(() => {
+    setItemInfos(item);
+  }, [item]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -94,7 +98,7 @@ const ReportItemReceived = ({
 
   const handleAcknowledge = async () => {
     setErrMsgPost("");
-    const reportToPut = {
+    const reportToPut: ReportType = {
       ...item,
       acknowledged: true,
       ReportReviewed: [
@@ -105,10 +109,6 @@ const ReportItemReceived = ({
           },
           ReviewingOHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
           DateTimeReportReviewed: nowTZTimestamp(),
-          updates: [
-            ...item.updates,
-            { updated_by_id: user.id, date_updated: nowTZTimestamp() },
-          ],
         },
       ],
       updates: [
@@ -143,7 +143,7 @@ const ReportItemReceived = ({
     }
 
     setProgress(true);
-    const reportToPut = {
+    const reportToPut: ReportType = {
       ...itemInfos,
       updates: [
         ...item.updates,
@@ -295,6 +295,7 @@ const ReportItemReceived = ({
             value={itemInfos.Class}
             handleChange={handleChange}
             list={reportClassCT}
+            placeHolder="Choose..."
           />
         ) : (
           item.Class

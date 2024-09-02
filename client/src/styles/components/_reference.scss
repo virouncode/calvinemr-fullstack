@@ -34,6 +34,7 @@
     }
   }
   &__personal-search {
+    margin-bottom: 10px;
     label {
       font-weight: bold;
       margin-right: 10px;
@@ -42,7 +43,6 @@
     input {
       width: 350px;
     }
-    margin-bottom: 10px;
   }
   &__personal-links {
     overflow-y: scroll;
@@ -190,11 +190,11 @@
     padding: 20px 40px;
     width: 100%;
     &-btn-container {
+      text-align: center;
+      margin-bottom: 20px;
       button {
         margin-left: 5px;
       }
-      text-align: center;
-      margin-bottom: 20px;
     }
   }
   &__row {

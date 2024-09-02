@@ -107,8 +107,8 @@ const BillingFilter = ({
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (!value) return;
     const name = e.target.name;
+    if (!value) return;
     if (name === "date_start") {
       initialRangeStart.current = dateISOToTimestampTZ(value) as number;
       setRangeStart(dateISOToTimestampTZ(value) as number);

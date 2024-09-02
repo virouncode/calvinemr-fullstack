@@ -1,42 +1,42 @@
 .med-templates {
   &__search {
+    margin: 10px 0;
     input {
-      width:300px;
+      width: 300px;
     }
     label {
       font-weight: bold;
       margin-right: 10px;
     }
-    margin: 10px 0;
   }
   &__form {
     width: 90%;
     margin: 50px auto 20px;
   }
   &__form-row {
-    padding-bottom:10px;
+    padding-bottom: 10px;
     display: flex;
     align-items: center;
     label {
       font-weight: bold;
-      min-width:180px;
+      min-width: 180px;
     }
     input {
-        width:150px;
+      width: 150px;
     }
     &--text {
       align-items: start;
     }
   }
   &__form-notes {
-    width:60%;
-    height:50px;
+    width: 60%;
+    height: 50px;
     white-space: pre-wrap;
   }
   &__form-instructions {
-      width:60%;
-      height:100px;
-      white-space: pre-wrap;
+    width: 60%;
+    height: 100px;
+    white-space: pre-wrap;
   }
   &__form-btn-container {
     text-align: center;
@@ -46,12 +46,12 @@
     }
   }
   &__form-err {
-    padding : 10px 20px;
+    padding: 10px 20px;
     font-size: 0.8rem;
-    width : 90%;
+    width: 90%;
     margin: 0 auto 10px;
-    color : red;
-    background-color:rgba(255, 0, 0, 0.403);
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
     border-radius: 6px;
     text-align: center;
   }
@@ -62,7 +62,7 @@
     justify-content: space-between;
   }
   &__list {
-    height:350px;
+    height: 350px;
     padding: 10px 20px;
     margin-top: 40px;
     ul {
@@ -71,14 +71,14 @@
       border-radius: 6px;
       overflow: scroll;
       padding: 10px 20px;
-      max-width:100%;
+      max-width: 100%;
     }
-    button{
+    button {
       margin-left: 5px;
     }
   }
   &__allergies {
-    color:red;
+    color: red;
     margin-top: 5px;
     margin-bottom: 5px;
   }
@@ -94,13 +94,12 @@
     i {
       cursor: pointer;
     }
-    
   }
 }
 .meds-results {
   border: solid 1px $grey;
   border-radius: 6px;
   margin-top: 1px;
-  height:500px;
+  height: 500px;
   overflow: scroll;
 }

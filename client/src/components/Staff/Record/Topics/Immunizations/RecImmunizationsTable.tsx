@@ -8,8 +8,6 @@ type RecImmunizationsTableProps = {
   datas: ImmunizationType[];
   patientId: number;
   patientDob: number;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   topicPost: UseMutationResult<
     ImmunizationType,
     Error,
@@ -24,8 +22,6 @@ const RecImmunizationsTable = ({
   datas,
   patientId,
   patientDob,
-  loadingPatient,
-  errPatient,
   topicPost,
   topicPut,
   topicDelete,
@@ -91,8 +87,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "DTaP-IPV-Hib"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -111,8 +105,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Pneu-C-7"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -131,8 +123,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "ROT"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -151,8 +141,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Men-C"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -171,8 +159,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "MMR"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -191,8 +177,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Var"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -213,8 +197,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "MMR-Var"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -235,8 +217,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "TdapIPV"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -255,8 +235,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "HB"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -275,8 +253,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Men-C"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -295,8 +271,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "HPV"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -317,8 +291,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Tdap"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -337,8 +309,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Td"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -357,8 +327,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Zos"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -379,8 +347,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Pneu-P-23"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -399,8 +365,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Tdap_pregnancy"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}
@@ -419,8 +383,6 @@ const RecImmunizationsTable = ({
               ({ ImmunizationType }) => ImmunizationType === "Inf"
             )}
             patientId={patientId}
-            loadingPatient={loadingPatient}
-            errPatient={errPatient}
             topicPost={topicPost}
             topicPut={topicPut}
             topicDelete={topicDelete}

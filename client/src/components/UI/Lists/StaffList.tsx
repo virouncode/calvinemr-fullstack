@@ -11,9 +11,14 @@ type StaffListProps = {
 const StaffList = ({ value, name, handleChange }: StaffListProps) => {
   const { staffInfos } = useStaffInfosContext();
   return (
-    <select value={value} name={name} onChange={handleChange}>
+    <select
+      value={value}
+      name={name}
+      onChange={handleChange}
+      style={{ color: value === 0 ? "#a3a3a3" : "" }}
+    >
       <option value="0" disabled>
-        Select practitioner...
+        Choose a practitioner...
       </option>
       {staffInfos
         .filter(({ account_status }) => account_status !== "Closed")

@@ -3,7 +3,10 @@ import {
   reportClassCT,
   reportFormatCT,
 } from "../../../../../omdDatas/codesTables";
-import { MessageAttachmentType, ReportType } from "../../../../../types/api";
+import {
+  MessageAttachmentType,
+  ReportFormType,
+} from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SubmitButton from "../../../../UI/Buttons/SubmitButton";
@@ -16,7 +19,7 @@ import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 
 type FormReportProps = {
   errMsgPost: string;
-  formDatas: Partial<ReportType>;
+  formDatas: ReportFormType;
   isLoadingFile: boolean;
   progress: boolean;
   sentOrReceived: string;
@@ -87,7 +90,7 @@ const FormReport = ({
           <Input
             label="Report Name*"
             name="name"
-            value={formDatas.name || ""}
+            value={formDatas.name}
             onChange={handleChange}
             id="report-name"
             autoFocus={true}
@@ -97,14 +100,15 @@ const FormReport = ({
           <GenericList
             label="Format*"
             name="Format"
-            value={formDatas.Format || ""}
+            value={formDatas.Format}
             handleChange={handleChange}
             list={reportFormatCT}
+            placeHolder="Choose format..."
           />
         </div>
         <div className="reports__row">
           <label>File extension</label>
-          <span>{formDatas.FileExtensionAndVersion || ""}</span>
+          <p>{formDatas.FileExtensionAndVersion}</p>
         </div>
         {formDatas.Format === "Binary" ? (
           !initialAttachment && ( //If there is an initial attachment don't show the input
@@ -124,7 +128,7 @@ const FormReport = ({
             <label htmlFor="report-content">Content</label>
             <textarea
               name="Content"
-              value={formDatas.Content?.TextContent || ""}
+              value={formDatas.Content.TextContent}
               onChange={handleContentChange}
               id="report-content"
             />
@@ -134,16 +138,17 @@ const FormReport = ({
           <GenericList
             label="Class*"
             name="Class"
-            value={formDatas.Class || ""}
+            value={formDatas.Class}
             handleChange={handleChange}
             list={reportClassCT}
+            placeHolder="Choose..."
           />
         </div>
         <div className="reports__row">
           <Input
             label="Sub class"
             name="SubClass"
-            value={formDatas.SubClass || ""}
+            value={formDatas.SubClass}
             onChange={handleChange}
             id="report-subclass"
           />
@@ -183,7 +188,7 @@ const FormReport = ({
           <Input
             label="Author"
             name="AuthorFreeText"
-            value={formDatas.SourceAuthorPhysician?.AuthorFreeText || ""}
+            value={formDatas.SourceAuthorPhysician.AuthorFreeText}
             onChange={handleChange}
             id="report-author"
           />
@@ -196,7 +201,7 @@ const FormReport = ({
                 <Input
                   label="First name"
                   name="FirstName"
-                  value={formDatas.ReportReviewed?.[0].Name?.FirstName || ""}
+                  value={formDatas.ReportReviewed?.[0].Name?.FirstName ?? ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-first-name"
                 />
@@ -205,7 +210,7 @@ const FormReport = ({
                 <Input
                   label="Last name"
                   name="LastName"
-                  value={formDatas.ReportReviewed?.[0].Name?.LastName || ""}
+                  value={formDatas.ReportReviewed?.[0].Name?.LastName ?? ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-last-name"
                 />
@@ -215,7 +220,7 @@ const FormReport = ({
                   label="OHIP#"
                   name="ReviewingOHIPPhysicianId"
                   value={
-                    formDatas.ReportReviewed?.[0].ReviewingOHIPPhysicianId || ""
+                    formDatas.ReportReviewed?.[0].ReviewingOHIPPhysicianId ?? ""
                   }
                   onChange={handleReviewedOHIP}
                   id="report-reviewed-ohip"
@@ -239,7 +244,7 @@ const FormReport = ({
           <label htmlFor="report-notes">Notes</label>
           <textarea
             name="Notes"
-            value={formDatas.Notes || ""}
+            value={formDatas.Notes}
             onChange={handleChange}
             id="report-notes"
           />
@@ -252,7 +257,7 @@ const FormReport = ({
                 <Input
                   label="First name"
                   name="FirstName"
-                  value={formDatas.RecipientName?.FirstName || ""}
+                  value={formDatas.RecipientName.FirstName}
                   onChange={handleRecipientName}
                   id="report-recipient-first-name"
                 />
@@ -261,7 +266,7 @@ const FormReport = ({
                 <Input
                   label="Last name"
                   name="LastName"
-                  value={formDatas.RecipientName?.LastName || ""}
+                  value={formDatas.RecipientName.LastName}
                   onChange={handleRecipientName}
                   id="report-recipient-last-name"
                 />

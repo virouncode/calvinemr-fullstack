@@ -14,7 +14,16 @@ const SiteStatusSelect = ({
   return (
     <>
       {label && <label htmlFor="status">Site status*:</label>}
-      <select name="site_status" value={value} onChange={onChange} id="status">
+      <select
+        name="site_status"
+        value={value}
+        onChange={onChange}
+        id="status"
+        style={{ color: value === "" ? "#a3a3a3" : "" }}
+      >
+        <option value="" disabled>
+          Choose a status...
+        </option>
         <option value="Open">Open</option>
         <option value="Closed">Closed</option>
       </select>

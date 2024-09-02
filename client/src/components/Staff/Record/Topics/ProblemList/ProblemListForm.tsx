@@ -2,7 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
-import { ProblemListType } from "../../../../../types/api";
+import { ProblemListFormType, ProblemListType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -42,8 +42,10 @@ const ProblemListForm = ({
 }: ProblemListFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<ProblemListType>>({
+  const [formDatas, setFormDatas] = useState<ProblemListFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     ProblemDiagnosisDescription: "",
     ProblemDescription: "",
     ProblemStatus: "",
@@ -73,18 +75,18 @@ const ProblemListForm = ({
 
   const handleSubmit = async () => {
     //Formatting
-    const topicToPost: Partial<ProblemListType> = {
+    const topicToPost: ProblemListFormType = {
       ...formDatas,
-      ProblemDiagnosisDescription: firstLetterOfFirstWordUpper(
-        formDatas.ProblemDiagnosisDescription ?? ""
-      ),
-      ProblemDescription: firstLetterOfFirstWordUpper(
-        formDatas.ProblemDescription ?? ""
-      ),
-      ProblemStatus: firstLetterOfFirstWordUpper(formDatas.ProblemStatus ?? ""),
-      Notes: firstLetterOfFirstWordUpper(formDatas.Notes ?? ""),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
+      ProblemDiagnosisDescription: firstLetterOfFirstWordUpper(
+        formDatas.ProblemDiagnosisDescription
+      ),
+      ProblemDescription: firstLetterOfFirstWordUpper(
+        formDatas.ProblemDescription
+      ),
+      ProblemStatus: firstLetterOfFirstWordUpper(formDatas.ProblemStatus),
+      Notes: firstLetterOfFirstWordUpper(formDatas.Notes),
     };
     //Validation
     try {
@@ -120,21 +122,21 @@ const ProblemListForm = ({
       <td>
         <Input
           name="ProblemDiagnosisDescription"
-          value={formDatas.ProblemDiagnosisDescription ?? ""}
+          value={formDatas.ProblemDiagnosisDescription}
           onChange={handleChange}
         />
       </td>
       <td>
         <Input
           name="ProblemDescription"
-          value={formDatas.ProblemDescription ?? ""}
+          value={formDatas.ProblemDescription}
           onChange={handleChange}
         />
       </td>
       <td>
         <Input
           name="ProblemStatus"
-          value={formDatas.ProblemStatus ?? ""}
+          value={formDatas.ProblemStatus}
           onChange={handleChange}
         />
       </td>
@@ -148,9 +150,10 @@ const ProblemListForm = ({
       <td>
         <GenericList
           list={lifeStageCT}
-          value={formDatas.LifeStage ?? ""}
+          value={formDatas.LifeStage}
           name="LifeStage"
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>
@@ -161,11 +164,7 @@ const ProblemListForm = ({
         />
       </td>
       <td>
-        <Input
-          name="Notes"
-          value={formDatas.Notes ?? ""}
-          onChange={handleChange}
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <FormSignCell />
     </tr>

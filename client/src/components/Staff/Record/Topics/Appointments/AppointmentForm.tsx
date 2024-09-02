@@ -5,7 +5,12 @@ import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/availableRoomsQueries";
-import { AppointmentType, RruleType, SiteType } from "../../../../../types/api";
+import {
+  AppointmentFormType,
+  AppointmentType,
+  RruleType,
+  SiteType,
+} from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { getAvailableRooms } from "../../../../../utils/appointments/getAvailableRooms";
 import { statuses } from "../../../../../utils/appointments/statuses";
@@ -70,22 +75,29 @@ const AppointmentForm = ({
   const initialStart = nowTZ()
     .set({ hour: 7, minute: 0, second: 0 })
     .toMillis();
-  const [formDatas, setFormDatas] = useState({
+  const [formDatas, setFormDatas] = useState<AppointmentFormType>({
     host_id: user.title === "Secretary" ? 0 : user.id,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     start: initialStart,
     end: initialStart + 60 * 1000,
     patients_guests_ids: [patientId],
-    staff_guests_ids: [],
-    room: "To Be Determined",
+    room_id: "z",
     all_day: false,
+    AppointmentTime: "",
     Duration: 60,
     AppointmentStatus: "Scheduled",
+    AppointmentDate: "",
+    Provider: {
+      Name: { FirstName: user.first_name, LastName: user.last_name },
+      OHIPPhysicianId: user.ohip_billing_nbr,
+    },
     AppointmentPurpose: "Appointment",
     AppointmentNotes: "",
     site_id: user.site_id,
-    room_id: "z",
+    rrule: { freq: "", interval: 0, until: "", dtstart: "" },
+    exrule: [],
     recurrence: "Once",
-    rrule: { freq: "", interval: 1, until: "", dtstart: "" },
   });
   const [previousStart, setPreviousStart] = useState(
     nowTZ().set({ hour: 7, minute: 0, second: 0 }).toMillis()
@@ -503,7 +515,7 @@ const AppointmentForm = ({
   const handleSubmit = async () => {
     setErrMsgPost("");
     //Formatting
-    const topicToPost: Partial<AppointmentType> = {
+    const topicToPost: AppointmentFormType = {
       ...formDatas,
       AppointmentPurpose: firstLetterOfFirstWordUpper(
         formDatas.AppointmentPurpose

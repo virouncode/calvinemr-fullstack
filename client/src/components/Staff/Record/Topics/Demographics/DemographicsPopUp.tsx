@@ -56,7 +56,6 @@ import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
 import PostalZipSelect from "../../../../UI/Lists/PostalZipSelect";
 import StaffList from "../../../../UI/Lists/StaffList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import WebcamCapture from "../../../Signup/WebcamCapture";
 import DemographicsAvatar from "./DemographicsAvatar";
@@ -67,16 +66,12 @@ type DemographicsPopUpProps = {
   demographicsInfos: DemographicsType;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  loadingPatient: boolean;
-  errPatient: Error | null;
 };
 
 const DemographicsPopUp = ({
   demographicsInfos,
   patientId,
   setPopUpVisible,
-  loadingPatient,
-  errPatient,
 }: DemographicsPopUpProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -495,511 +490,509 @@ const DemographicsPopUp = ({
             )}
           </div>
         </div>
-        {errPatient && <ErrorParagraph errorMsg={errPatient.message} />}
+
         {errMsgPost && editVisible && <ErrorParagraph errorMsg={errMsgPost} />}
-        {loadingPatient && <LoadingParagraph />}
-        {!loadingPatient && !errPatient && (
-          <form className="demographics-card__form">
-            <div className="demographics-card__content">
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Name Prefix:"
-                  name="prefix"
-                  list={namePrefixCT}
-                  value={formDatas?.prefix ?? ""}
-                  handleChange={handleChange}
-                  placeHolder="Choose a name prefix..."
-                  editVisible={editVisible}
-                  noneOption={false}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  value={formDatas?.firstName ?? ""}
-                  onChange={handleChange}
-                  name="firstName"
-                  id="first-name"
-                  label="First Name*:"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  value={formDatas?.middleName ?? ""}
-                  onChange={handleChange}
-                  name="middleName"
-                  id="middle-name"
-                  label="Middle Name:"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  value={formDatas?.lastName ?? ""}
-                  onChange={handleChange}
-                  name="lastName"
-                  id="last-name"
-                  label="Last Name*:"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Name Suffix:"
-                  name="suffix"
-                  list={nameSuffixCT}
-                  value={formDatas?.suffix ?? ""}
-                  handleChange={handleChange}
-                  placeHolder="Choose a name suffix..."
-                  editVisible={editVisible}
-                  noneOption={false}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="Nick Name:"
-                  value={formDatas?.nickName ?? ""}
-                  onChange={handleChange}
-                  name="nickName"
-                  id="nick-name"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Chart#*: </label>
-                <p>{formDatas?.chart}</p>
-              </div>
-              <div className="demographics-card__content-row">
-                <InputDateToggle
-                  label="Date of birth*:"
-                  value={formDatas?.dob ?? ""}
-                  onChange={handleChange}
-                  name="dob"
-                  max={timestampToDateISOTZ(nowTZTimestamp())}
-                  id="dob"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Age: </label>
-                <p>{getAgeTZ(dateISOToTimestampTZ(formDatas?.dob))}</p>
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="Health Card#:"
-                  value={formDatas?.healthNbr ?? ""}
-                  onChange={handleChange}
-                  name="healthNbr"
-                  id="hcn"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="Health Card Version:"
-                  value={formDatas?.healthVersion ?? ""}
-                  onChange={handleChange}
-                  name="healthVersion"
-                  id="hcv"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputDateToggle
-                  label="Health Card Expiry:"
-                  value={formDatas?.healthExpiry ?? ""}
-                  onChange={handleChange}
-                  name="healthExpiry"
-                  id="hce"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Health Card Province:"
-                  list={provinceStateTerritoryCT}
-                  value={formDatas?.healthProvince ?? ""}
-                  name="healthProvince"
-                  handleChange={handleChange}
-                  noneOption={false}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Gender:"
-                  list={genderCT}
-                  value={formDatas?.gender ?? "M"}
-                  name="gender"
-                  handleChange={handleChange}
-                  noneOption={false}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="SIN:"
-                  value={formDatas?.sin ?? ""}
-                  onChange={handleChange}
-                  name="sin"
-                  id="sin"
-                  editVisible={editVisible}
-                  placeholder="xxx xxx xxx"
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Email: </label>
-                <p>{formDatas?.email}</p>
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="Address*:"
-                  value={formDatas?.line1 ?? ""}
-                  onChange={handleChange}
-                  name="line1"
-                  id="line1"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTextToggle
-                  label="City*:"
-                  value={formDatas?.city ?? ""}
-                  onChange={handleChange}
-                  name="city"
-                  id="city"
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Province/State*"
-                  list={provinceStateTerritoryCT}
-                  value={formDatas?.province ?? ""}
-                  name="province"
-                  handleChange={handleChange}
-                  noneOption={false}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                {editVisible ? (
-                  <>
-                    <PostalZipSelect
-                      onChange={handleChangePostalOrZip}
-                      postalOrZip={postalOrZip}
-                    />
-                    <Input
-                      value={
-                        postalOrZip === "postal"
-                          ? formDatas?.postalCode ?? ""
-                          : formDatas?.zipCode ?? ""
-                      }
-                      onChange={handleChange}
-                      name="postalCode"
-                      id="postalZipCode"
-                      width={68}
-                      placeholder={
-                        postalOrZip === "postal"
-                          ? "A1A 1A1"
-                          : "12345 or 12345-6789"
-                      }
-                    />
-                  </>
-                ) : (
-                  <p>
-                    {postalOrZip === "postal"
-                      ? formDatas?.postalCode
-                      : formDatas?.zipCode}
-                  </p>
-                )}
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTelToggle
-                  label="Cell Phone*:"
-                  value={formDatas?.cellphone ?? ""}
-                  onChange={handleChange}
-                  name="cellphone"
-                  id="cellphone"
-                  placeholder="xxx-xxx-xxxx"
-                  editVisible={editVisible}
-                />
-                <InputTelExtToggle
-                  id="cellphoneExt"
-                  name="cellphoneExt"
-                  value={formDatas?.cellphoneExt ?? ""}
-                  onChange={handleChange}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTelToggle
-                  label="Home Phone:"
-                  value={formDatas?.homephone ?? ""}
-                  onChange={handleChange}
-                  name="homephone"
-                  id="homephone"
-                  placeholder="xxx-xxx-xxxx"
-                  editVisible={editVisible}
-                />
-                <InputTelExtToggle
-                  id="homephoneExt"
-                  name="homephoneExt"
-                  value={formDatas?.homephoneExt ?? ""}
-                  onChange={handleChange}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <InputTelToggle
-                  label="Work Phone:"
-                  value={formDatas?.workphone ?? ""}
-                  onChange={handleChange}
-                  name="workphone"
-                  id="workphone"
-                  placeholder="xxx-xxx-xxxx"
-                  editVisible={editVisible}
-                />
-                <InputTelExtToggle
-                  id="workphoneExt"
-                  name="workphoneExt"
-                  value={formDatas?.workphoneExt ?? ""}
-                  onChange={handleChange}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Preferred Official Language:"
-                  list={officialLanguageCT}
-                  value={formDatas?.preferredOff ?? ""}
-                  name="preferredOff"
-                  handleChange={handleChange}
-                  noneOption={false}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <GenericListToggle
-                  label="Status:"
-                  name="status"
-                  list={personStatusCT}
-                  value={formDatas?.status ?? ""}
-                  handleChange={handleChange}
-                  placeHolder="Choose a status..."
-                  noneOption={false}
-                  editVisible={editVisible}
-                />
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Assigned Clinic Physician: </label>
-                {editVisible ? (
-                  <StaffList
-                    value={formDatas?.assignedMd ?? 0}
-                    name="assignedMd"
-                    handleChange={handleChange}
+
+        <form className="demographics-card__form">
+          <div className="demographics-card__content">
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Name Prefix:"
+                name="prefix"
+                list={namePrefixCT}
+                value={formDatas?.prefix ?? ""}
+                handleChange={handleChange}
+                placeHolder="Choose a name prefix..."
+                editVisible={editVisible}
+                noneOption={false}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                value={formDatas?.firstName ?? ""}
+                onChange={handleChange}
+                name="firstName"
+                id="first-name"
+                label="First Name*:"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                value={formDatas?.middleName ?? ""}
+                onChange={handleChange}
+                name="middleName"
+                id="middle-name"
+                label="Middle Name:"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                value={formDatas?.lastName ?? ""}
+                onChange={handleChange}
+                name="lastName"
+                id="last-name"
+                label="Last Name*:"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Name Suffix:"
+                name="suffix"
+                list={nameSuffixCT}
+                value={formDatas?.suffix ?? ""}
+                handleChange={handleChange}
+                placeHolder="Choose a name suffix..."
+                editVisible={editVisible}
+                noneOption={false}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="Nick Name:"
+                value={formDatas?.nickName ?? ""}
+                onChange={handleChange}
+                name="nickName"
+                id="nick-name"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Chart#*: </label>
+              <p>{formDatas?.chart}</p>
+            </div>
+            <div className="demographics-card__content-row">
+              <InputDateToggle
+                label="Date of birth*:"
+                value={formDatas?.dob ?? ""}
+                onChange={handleChange}
+                name="dob"
+                max={timestampToDateISOTZ(nowTZTimestamp())}
+                id="dob"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Age: </label>
+              <p>{getAgeTZ(dateISOToTimestampTZ(formDatas?.dob))}</p>
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="Health Card#:"
+                value={formDatas?.healthNbr ?? ""}
+                onChange={handleChange}
+                name="healthNbr"
+                id="hcn"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="Health Card Version:"
+                value={formDatas?.healthVersion ?? ""}
+                onChange={handleChange}
+                name="healthVersion"
+                id="hcv"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputDateToggle
+                label="Health Card Expiry:"
+                value={formDatas?.healthExpiry ?? ""}
+                onChange={handleChange}
+                name="healthExpiry"
+                id="hce"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Health Card Province:"
+                list={provinceStateTerritoryCT}
+                value={formDatas?.healthProvince ?? ""}
+                name="healthProvince"
+                handleChange={handleChange}
+                noneOption={false}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Gender:"
+                list={genderCT}
+                value={formDatas?.gender ?? "M"}
+                name="gender"
+                handleChange={handleChange}
+                noneOption={false}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="SIN:"
+                value={formDatas?.sin ?? ""}
+                onChange={handleChange}
+                name="sin"
+                id="sin"
+                editVisible={editVisible}
+                placeholder="xxx xxx xxx"
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Email: </label>
+              <p>{formDatas?.email}</p>
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="Address*:"
+                value={formDatas?.line1 ?? ""}
+                onChange={handleChange}
+                name="line1"
+                id="line1"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTextToggle
+                label="City*:"
+                value={formDatas?.city ?? ""}
+                onChange={handleChange}
+                name="city"
+                id="city"
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Province/State*"
+                list={provinceStateTerritoryCT}
+                value={formDatas?.province ?? ""}
+                name="province"
+                handleChange={handleChange}
+                noneOption={false}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              {editVisible ? (
+                <>
+                  <PostalZipSelect
+                    onChange={handleChangePostalOrZip}
+                    postalOrZip={postalOrZip}
                   />
-                ) : (
-                  <p>
-                    {staffIdToTitleAndName(staffInfos, formDatas?.assignedMd)}
-                  </p>
-                )}
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Enrolled to physician: </label>
-                {enrolmentCaption(lastEnrolment)}
-                <Tooltip title="Add new enrolment" placement="top-start" arrow>
-                  <span>
-                    <SquarePlusIcon onClick={handleClickNewEnrolment} ml={5} />
-                  </span>
-                </Tooltip>
-                <Tooltip
-                  title="See enrolment history"
-                  placement="top-start"
-                  arrow
-                >
-                  <span>
-                    <ClockIcon onClick={handleClickHistory} ml={5} />
-                  </span>
-                </Tooltip>
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Enrollment status: </label>
-                {toCodeTableName(
-                  enrollmentStatusCT,
-                  lastEnrolment?.EnrollmentStatus
-                )}
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Enrollment date: </label>
-                {timestampToDateISOTZ(lastEnrolment?.EnrollmentDate)}
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Enrollment termination date: </label>
-                {timestampToDateISOTZ(lastEnrolment?.EnrollmentTerminationDate)}
-              </div>
-              <div className="demographics-card__content-row">
-                <label>Termination reason: </label>
-                {toCodeTableName(
-                  terminationReasonCT,
-                  lastEnrolment?.TerminationReason
-                )}
-              </div>
-              {editVisible ? (
-                <fieldset>
-                  <legend>Primary Physician</legend>
-                  <div className="demographics-card__row-special">
-                    <Input
-                      value={formDatas?.pPhysicianFirstName ?? ""}
-                      onChange={handleChange}
-                      name="pPhysicianFirstName"
-                      id="primary-first-name"
-                      label="First Name:"
-                    />
-                    <Input
-                      value={formDatas?.pPhysicianLastName ?? ""}
-                      onChange={handleChange}
-                      name="pPhysicianLastName"
-                      id="primary-last-name"
-                      label="Last Name:"
-                    />
-                  </div>
-                  <div className="demographics-card__row-special">
-                    <Input
-                      value={formDatas?.pPhysicianOHIP ?? ""}
-                      onChange={handleChange}
-                      name="pPhysicianOHIP"
-                      id="primary-ohip"
-                      label="OHIP#:"
-                    />
-                    <Input
-                      value={formDatas?.pPhysicianCPSO ?? ""}
-                      onChange={handleChange}
-                      name="pPhysicianCPSO"
-                      id="primary-cpso"
-                      label="CPSO:"
-                    />
-                  </div>
-                </fieldset>
+                  <Input
+                    value={
+                      postalOrZip === "postal"
+                        ? formDatas?.postalCode ?? ""
+                        : formDatas?.zipCode ?? ""
+                    }
+                    onChange={handleChange}
+                    name="postalCode"
+                    id="postalZipCode"
+                    width={68}
+                    placeholder={
+                      postalOrZip === "postal"
+                        ? "A1A 1A1"
+                        : "12345 or 12345-6789"
+                    }
+                  />
+                </>
               ) : (
-                <div className="demographics-card__content-row">
-                  <label>Primary Physician: </label>
-                  {primaryPhysicianCaption(demographicsInfos.PrimaryPhysician)}
-                </div>
-              )}
-              {editVisible ? (
-                <fieldset>
-                  <legend>Referred Physician</legend>
-                  <div className="demographics-card__row-special">
-                    <Input
-                      value={formDatas?.rPhysicianFirstName ?? ""}
-                      onChange={handleChange}
-                      name="rPhysicianFirstName"
-                      id="referred-first-name"
-                      label="First Name:"
-                    />
-                    <Input
-                      value={formDatas?.rPhysicianLastName ?? ""}
-                      onChange={handleChange}
-                      name="rPhysicianLastName"
-                      id="referred-last-name"
-                      label="Last Name:"
-                    />
-                  </div>
-                </fieldset>
-              ) : (
-                <div className="demographics-card__content-row">
-                  <label>Referred Physician: </label>
-                  {demographicsInfos.ReferredPhysician?.FirstName}{" "}
-                  {demographicsInfos.ReferredPhysician?.LastName}
-                </div>
-              )}
-              {editVisible ? (
-                <fieldset>
-                  <legend>Family Physician</legend>
-                  <div className="demographics-card__row-special">
-                    <Input
-                      value={formDatas?.fPhysicianFirstName ?? ""}
-                      onChange={handleChange}
-                      name="fPhysicianFirstName"
-                      id="family-first-name"
-                      label="First Name:"
-                    />
-                    <Input
-                      value={formDatas?.fPhysicianLastName ?? ""}
-                      onChange={handleChange}
-                      name="fPhysicianLastName"
-                      id="family-last-name"
-                      label="Last Name:"
-                    />
-                  </div>
-                </fieldset>
-              ) : (
-                <div className="demographics-card__content-row">
-                  <label>Family Physician: </label>
-                  {demographicsInfos.FamilyPhysician?.FirstName}{" "}
-                  {demographicsInfos.FamilyPhysician?.LastName}
-                </div>
-              )}
-              {editVisible ? (
-                <fieldset>
-                  <legend>Emergency Contact</legend>
-                  <div className="demographics-card__row-special">
-                    <Input
-                      value={formDatas?.emergencyFirstName ?? ""}
-                      onChange={handleChange}
-                      name="emergencyFirstName"
-                      id="emergency-first-name"
-                      label="First Name:"
-                    />
-                    <Input
-                      value={formDatas?.emergencyMiddleName ?? ""}
-                      onChange={handleChange}
-                      name="emergencyMiddleName"
-                      id="emergency-middle-name"
-                      label="Middle Name:"
-                    />
-                    <Input
-                      value={formDatas?.emergencyLastName ?? ""}
-                      onChange={handleChange}
-                      name="emergencyLastName"
-                      id="emergency-last-name"
-                      label="Last Name:"
-                    />
-                  </div>
-                  <div className="demographics-card__row-special">
-                    <InputEmail
-                      value={formDatas?.emergencyEmail ?? ""}
-                      onChange={handleChange}
-                      name="emergencyEmail"
-                      id="emergency-email"
-                      label="Email:"
-                    />
-                    <InputTel
-                      value={formDatas?.emergencyPhone ?? ""}
-                      onChange={handleChange}
-                      name="emergencyPhone"
-                      id="emergency-phone"
-                      label="Phone:"
-                      placeholder="xxx-xxx-xxxx"
-                    />
-                  </div>
-                </fieldset>
-              ) : (
-                <div className="demographics-card__content-row">
-                  <label>Emergency Contact: </label>
-                  {emergencyContactCaption(emergencyContact)}
-                </div>
+                <p>
+                  {postalOrZip === "postal"
+                    ? formDatas?.postalCode
+                    : formDatas?.zipCode}
+                </p>
               )}
             </div>
-            <DemographicsAvatar
-              avatar={formDatas?.avatar ?? null}
-              editVisible={editVisible}
-              setWebcamVisible={setWebcamVisible}
-              handleAvatarChange={handleAvatarChange}
-            />
-          </form>
-        )}
+            <div className="demographics-card__content-row">
+              <InputTelToggle
+                label="Cell Phone*:"
+                value={formDatas?.cellphone ?? ""}
+                onChange={handleChange}
+                name="cellphone"
+                id="cellphone"
+                placeholder="xxx-xxx-xxxx"
+                editVisible={editVisible}
+              />
+              <InputTelExtToggle
+                id="cellphoneExt"
+                name="cellphoneExt"
+                value={formDatas?.cellphoneExt ?? ""}
+                onChange={handleChange}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTelToggle
+                label="Home Phone:"
+                value={formDatas?.homephone ?? ""}
+                onChange={handleChange}
+                name="homephone"
+                id="homephone"
+                placeholder="xxx-xxx-xxxx"
+                editVisible={editVisible}
+              />
+              <InputTelExtToggle
+                id="homephoneExt"
+                name="homephoneExt"
+                value={formDatas?.homephoneExt ?? ""}
+                onChange={handleChange}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <InputTelToggle
+                label="Work Phone:"
+                value={formDatas?.workphone ?? ""}
+                onChange={handleChange}
+                name="workphone"
+                id="workphone"
+                placeholder="xxx-xxx-xxxx"
+                editVisible={editVisible}
+              />
+              <InputTelExtToggle
+                id="workphoneExt"
+                name="workphoneExt"
+                value={formDatas?.workphoneExt ?? ""}
+                onChange={handleChange}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Preferred Official Language:"
+                list={officialLanguageCT}
+                value={formDatas?.preferredOff ?? ""}
+                name="preferredOff"
+                handleChange={handleChange}
+                noneOption={false}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <GenericListToggle
+                label="Status:"
+                name="status"
+                list={personStatusCT}
+                value={formDatas?.status ?? ""}
+                handleChange={handleChange}
+                placeHolder="Choose a status..."
+                noneOption={false}
+                editVisible={editVisible}
+              />
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Assigned Clinic Physician: </label>
+              {editVisible ? (
+                <StaffList
+                  value={formDatas?.assignedMd ?? 0}
+                  name="assignedMd"
+                  handleChange={handleChange}
+                />
+              ) : (
+                <p>
+                  {staffIdToTitleAndName(staffInfos, formDatas?.assignedMd)}
+                </p>
+              )}
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Enrolled to physician: </label>
+              {enrolmentCaption(lastEnrolment)}
+              <Tooltip title="Add new enrolment" placement="top-start" arrow>
+                <span>
+                  <SquarePlusIcon onClick={handleClickNewEnrolment} ml={5} />
+                </span>
+              </Tooltip>
+              <Tooltip
+                title="See enrolment history"
+                placement="top-start"
+                arrow
+              >
+                <span>
+                  <ClockIcon onClick={handleClickHistory} ml={5} />
+                </span>
+              </Tooltip>
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Enrollment status: </label>
+              {toCodeTableName(
+                enrollmentStatusCT,
+                lastEnrolment?.EnrollmentStatus
+              )}
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Enrollment date: </label>
+              {timestampToDateISOTZ(lastEnrolment?.EnrollmentDate)}
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Enrollment termination date: </label>
+              {timestampToDateISOTZ(lastEnrolment?.EnrollmentTerminationDate)}
+            </div>
+            <div className="demographics-card__content-row">
+              <label>Termination reason: </label>
+              {toCodeTableName(
+                terminationReasonCT,
+                lastEnrolment?.TerminationReason
+              )}
+            </div>
+            {editVisible ? (
+              <fieldset>
+                <legend>Primary Physician</legend>
+                <div className="demographics-card__row-special">
+                  <Input
+                    value={formDatas?.pPhysicianFirstName ?? ""}
+                    onChange={handleChange}
+                    name="pPhysicianFirstName"
+                    id="primary-first-name"
+                    label="First Name:"
+                  />
+                  <Input
+                    value={formDatas?.pPhysicianLastName ?? ""}
+                    onChange={handleChange}
+                    name="pPhysicianLastName"
+                    id="primary-last-name"
+                    label="Last Name:"
+                  />
+                </div>
+                <div className="demographics-card__row-special">
+                  <Input
+                    value={formDatas?.pPhysicianOHIP ?? ""}
+                    onChange={handleChange}
+                    name="pPhysicianOHIP"
+                    id="primary-ohip"
+                    label="OHIP#:"
+                  />
+                  <Input
+                    value={formDatas?.pPhysicianCPSO ?? ""}
+                    onChange={handleChange}
+                    name="pPhysicianCPSO"
+                    id="primary-cpso"
+                    label="CPSO:"
+                  />
+                </div>
+              </fieldset>
+            ) : (
+              <div className="demographics-card__content-row">
+                <label>Primary Physician: </label>
+                {primaryPhysicianCaption(demographicsInfos.PrimaryPhysician)}
+              </div>
+            )}
+            {editVisible ? (
+              <fieldset>
+                <legend>Referred Physician</legend>
+                <div className="demographics-card__row-special">
+                  <Input
+                    value={formDatas?.rPhysicianFirstName ?? ""}
+                    onChange={handleChange}
+                    name="rPhysicianFirstName"
+                    id="referred-first-name"
+                    label="First Name:"
+                  />
+                  <Input
+                    value={formDatas?.rPhysicianLastName ?? ""}
+                    onChange={handleChange}
+                    name="rPhysicianLastName"
+                    id="referred-last-name"
+                    label="Last Name:"
+                  />
+                </div>
+              </fieldset>
+            ) : (
+              <div className="demographics-card__content-row">
+                <label>Referred Physician: </label>
+                {demographicsInfos.ReferredPhysician?.FirstName}{" "}
+                {demographicsInfos.ReferredPhysician?.LastName}
+              </div>
+            )}
+            {editVisible ? (
+              <fieldset>
+                <legend>Family Physician</legend>
+                <div className="demographics-card__row-special">
+                  <Input
+                    value={formDatas?.fPhysicianFirstName ?? ""}
+                    onChange={handleChange}
+                    name="fPhysicianFirstName"
+                    id="family-first-name"
+                    label="First Name:"
+                  />
+                  <Input
+                    value={formDatas?.fPhysicianLastName ?? ""}
+                    onChange={handleChange}
+                    name="fPhysicianLastName"
+                    id="family-last-name"
+                    label="Last Name:"
+                  />
+                </div>
+              </fieldset>
+            ) : (
+              <div className="demographics-card__content-row">
+                <label>Family Physician: </label>
+                {demographicsInfos.FamilyPhysician?.FirstName}{" "}
+                {demographicsInfos.FamilyPhysician?.LastName}
+              </div>
+            )}
+            {editVisible ? (
+              <fieldset>
+                <legend>Emergency Contact</legend>
+                <div className="demographics-card__row-special">
+                  <Input
+                    value={formDatas?.emergencyFirstName ?? ""}
+                    onChange={handleChange}
+                    name="emergencyFirstName"
+                    id="emergency-first-name"
+                    label="First Name:"
+                  />
+                  <Input
+                    value={formDatas?.emergencyMiddleName ?? ""}
+                    onChange={handleChange}
+                    name="emergencyMiddleName"
+                    id="emergency-middle-name"
+                    label="Middle Name:"
+                  />
+                  <Input
+                    value={formDatas?.emergencyLastName ?? ""}
+                    onChange={handleChange}
+                    name="emergencyLastName"
+                    id="emergency-last-name"
+                    label="Last Name:"
+                  />
+                </div>
+                <div className="demographics-card__row-special">
+                  <InputEmail
+                    value={formDatas?.emergencyEmail ?? ""}
+                    onChange={handleChange}
+                    name="emergencyEmail"
+                    id="emergency-email"
+                    label="Email:"
+                  />
+                  <InputTel
+                    value={formDatas?.emergencyPhone ?? ""}
+                    onChange={handleChange}
+                    name="emergencyPhone"
+                    id="emergency-phone"
+                    label="Phone:"
+                    placeholder="xxx-xxx-xxxx"
+                  />
+                </div>
+              </fieldset>
+            ) : (
+              <div className="demographics-card__content-row">
+                <label>Emergency Contact: </label>
+                {emergencyContactCaption(emergencyContact)}
+              </div>
+            )}
+          </div>
+          <DemographicsAvatar
+            avatar={formDatas?.avatar ?? null}
+            editVisible={editVisible}
+            setWebcamVisible={setWebcamVisible}
+            handleAvatarChange={handleAvatarChange}
+          />
+        </form>
         <p className="demographics-card__sign">
           {isUpdated(demographicsInfos) ? (
             <em>

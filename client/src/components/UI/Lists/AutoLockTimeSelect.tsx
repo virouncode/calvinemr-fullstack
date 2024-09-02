@@ -14,7 +14,12 @@ const AutoLockTimeSelect = ({
   return (
     <>
       {label && <label style={{ marginRight: "10px" }}>{label}</label>}
-      <select value={autolockTime} onChange={onChange}>
+      <select
+        value={autolockTime}
+        onChange={onChange}
+        style={{ color: autolockTime === 0 ? "#a3a3a3" : "" }}
+      >
+        <option value="0">Choose autolock time...</option>
         <option value="1">1 min</option>
         <option value="5">5 min</option>
         <option value="10">10 min</option>

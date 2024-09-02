@@ -7,7 +7,7 @@ import {
   reactionSeverityCT,
   reactionTypeCT,
 } from "../../../../../omdDatas/codesTables";
-import { AllergyType } from "../../../../../types/api";
+import { AllergyFormType, AllergyType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -42,8 +42,10 @@ const AllergyForm = ({
 }: AllergyFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<AllergyType>>({
+  const [formDatas, setFormDatas] = useState<AllergyFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     OffendingAgentDescription: "",
     PropertyOfOffendingAgent: "",
     ReactionType: "",
@@ -54,6 +56,7 @@ const AllergyForm = ({
     RecordedDate: nowTZTimestamp(),
     Notes: "",
   });
+
   const [progress, setProgress] = useState(false);
 
   const handleChange = (
@@ -76,15 +79,15 @@ const AllergyForm = ({
 
   const handleSubmit = async () => {
     //Formatting
-    const topicToPost: Partial<AllergyType> = {
+    const topicToPost: AllergyFormType = {
       ...formDatas,
-      OffendingAgentDescription: firstLetterOfFirstWordUpper(
-        formDatas.OffendingAgentDescription ?? ""
-      ),
-      Reaction: firstLetterOfFirstWordUpper(formDatas.Reaction ?? ""),
-      Notes: firstLetterOfFirstWordUpper(formDatas.Notes ?? ""),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
+      OffendingAgentDescription: firstLetterOfFirstWordUpper(
+        formDatas.OffendingAgentDescription
+      ),
+      Reaction: firstLetterOfFirstWordUpper(formDatas.Reaction),
+      Notes: firstLetterOfFirstWordUpper(formDatas.Notes),
     };
     //Validation
     try {
@@ -119,7 +122,7 @@ const AllergyForm = ({
       </td>
       <td>
         <Input
-          value={formDatas.OffendingAgentDescription ?? ""}
+          value={formDatas.OffendingAgentDescription}
           onChange={handleChange}
           name="OffendingAgentDescription"
         />
@@ -127,17 +130,19 @@ const AllergyForm = ({
       <td>
         <GenericList
           list={propertyOfOffendingAgentCT}
-          value={formDatas.PropertyOfOffendingAgent ?? ""}
+          value={formDatas.PropertyOfOffendingAgent}
           name="PropertyOfOffendingAgent"
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>
         <GenericList
           list={reactionTypeCT}
-          value={formDatas.ReactionType ?? ""}
+          value={formDatas.ReactionType}
           name="ReactionType"
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>
@@ -150,33 +155,31 @@ const AllergyForm = ({
       <td>
         <GenericList
           list={lifeStageCT}
-          value={formDatas.LifeStage ?? ""}
+          value={formDatas.LifeStage}
           name="LifeStage"
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>
         <GenericList
           list={reactionSeverityCT}
-          value={formDatas.Severity ?? ""}
+          value={formDatas.Severity}
           name="Severity"
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>
         <Input
-          value={formDatas.Reaction ?? ""}
+          value={formDatas.Reaction}
           onChange={handleChange}
           name="Reaction"
         />
       </td>
       <td>{timestampToDateISOTZ(formDatas.RecordedDate)}</td>
       <td>
-        <Input
-          value={formDatas.Notes ?? ""}
-          onChange={handleChange}
-          name="Notes"
-        />
+        <Input value={formDatas.Notes} onChange={handleChange} name="Notes" />
       </td>
       <FormSignCell />
     </tr>

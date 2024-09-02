@@ -1,38 +1,14 @@
 import React, { useRef } from "react";
-import { RoomType, SiteType } from "../../../types/api";
+import { RoomType, SiteFormType, SiteType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
 import RoomItem from "./RoomItem";
-const roomIds = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-];
+// prettier-ignore
+const roomIds = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"];
 
 type RoomsFormProps = {
-  formDatas: SiteType;
-  setFormDatas: React.Dispatch<React.SetStateAction<SiteType>>;
+  formDatas: SiteFormType | SiteType;
+  setFormDatas: React.Dispatch<React.SetStateAction<SiteFormType | SiteType>>;
+
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -42,7 +18,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
 
   const handleAddRoom = () => {
     setErrMsg("");
-    const idsTaken = [...(formDatas?.rooms ?? [])].map(({ id }) => id);
+    const idsTaken = [...(formDatas.rooms ?? [])].map(({ id }) => id);
     let nextId = roomIdCounter.current;
     let i = 0;
     while (idsTaken.includes(nextId)) {
@@ -53,7 +29,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
     setFormDatas({
       ...formDatas,
       rooms: [
-        ...(formDatas?.rooms ?? []),
+        ...(formDatas.rooms ?? []),
         { id: roomIdCounter.current, title: "" },
       ],
     });
@@ -67,7 +43,7 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      rooms: (formDatas?.rooms ?? []).map(
+      rooms: (formDatas.rooms ?? []).map(
         (room: { id: string; title: string }) => {
           return room.id === id ? { id: id, title: value } : room;
         }
@@ -78,11 +54,11 @@ const RoomsForm = ({ formDatas, setFormDatas, setErrMsg }: RoomsFormProps) => {
   const handleDeleteRoom = (id: string) => {
     setFormDatas({
       ...formDatas,
-      rooms: (formDatas?.rooms ?? []).filter(
+      rooms: (formDatas.rooms ?? []).filter(
         (room: { id: string; title: string }) => room.id !== id
       ),
     });
-    const idsTaken = (formDatas?.rooms ?? [])
+    const idsTaken = (formDatas.rooms ?? [])
       .filter((room: { id: string; title: string }) => room.id !== id)
       .map(({ id }) => id);
     let nextId = "a";

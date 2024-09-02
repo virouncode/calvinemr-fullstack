@@ -1,11 +1,11 @@
 import React from "react";
-import { MedType } from "../../../../../../../types/api";
+import { MedFormType } from "../../../../../../../types/api";
 import TrashIcon from "../../../../../../UI/Icons/TrashIcon";
 
 type AddedMedItemProps = {
-  med: Partial<MedType>;
-  addedMeds: Partial<MedType>[];
-  setAddedMeds: React.Dispatch<React.SetStateAction<Partial<MedType>[]>>;
+  med: MedFormType;
+  addedMeds: MedFormType[];
+  setAddedMeds: React.Dispatch<React.SetStateAction<MedFormType[]>>;
 };
 
 const AddedMedItem = ({ med, addedMeds, setAddedMeds }: AddedMedItemProps) => {

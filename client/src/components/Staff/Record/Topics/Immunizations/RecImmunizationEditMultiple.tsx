@@ -1,5 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   ImmunizationType,
@@ -39,6 +39,10 @@ const RecImmunizationEditMultiple = ({
   const [formDatas, setFormDatas] =
     useState<ImmunizationType>(immunizationInfos);
   const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    setFormDatas(immunizationInfos);
+  }, [immunizationInfos]);
 
   //HANDLERS
   const handleCancel = () => {
@@ -103,7 +107,7 @@ const RecImmunizationEditMultiple = ({
     if (name === "RefusedFlag") {
       setFormDatas({
         ...formDatas,
-        RefusedFlag: { ynIndicatorsimple: value },
+        RefusedFlag: { ynIndicatorsimple: value as "Y" | "N" },
       });
       return;
     }

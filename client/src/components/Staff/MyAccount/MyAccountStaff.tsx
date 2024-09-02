@@ -26,8 +26,12 @@ const MyAccountStaff = () => {
   const { staffInfos } = useStaffInfosContext();
   const { socket } = useSocketContext();
   const [editVisible, setEditVisible] = useState(false);
-  const [formDatas, setFormDatas] = useState<StaffType | null>(null);
-  const [tempFormDatas, setTempFormDatas] = useState<StaffType | null>(null);
+  const [formDatas, setFormDatas] = useState<StaffType>(
+    staffInfos.find(({ id }) => id === user.id) as StaffType
+  );
+  const [tempFormDatas, setTempFormDatas] = useState<StaffType>(
+    staffInfos.find(({ id }) => id === user.id) as StaffType
+  );
   const [errMsg, setErrMsg] = useState("");
   const [progress, setProgress] = useState(false);
   //Queries
@@ -83,9 +87,9 @@ const MyAccountStaff = () => {
           id: user.id,
           data: {
             ...user,
-            cell_phone: tempFormDatas?.cell_phone,
-            backup_phone: tempFormDatas?.backup_phone,
-            video_link: tempFormDatas?.video_link,
+            cell_phone: tempFormDatas.cell_phone,
+            backup_phone: tempFormDatas.backup_phone,
+            video_link: tempFormDatas.video_link,
           },
         },
       });

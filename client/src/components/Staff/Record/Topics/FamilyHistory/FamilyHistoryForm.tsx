@@ -2,7 +2,10 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { lifeStageCT } from "../../../../../omdDatas/codesTables";
-import { FamilyHistoryType } from "../../../../../types/api";
+import {
+  FamilyHistoryFormType,
+  FamilyHistoryType,
+} from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -43,8 +46,10 @@ const FamilyHistoryForm = ({
 }: FamilyHistoryFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<FamilyHistoryType>>({
+  const [formDatas, setFormDatas] = useState<FamilyHistoryFormType>({
     patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     StartDate: null,
     AgeAtOnset: "",
     LifeStage: "A",
@@ -73,10 +78,10 @@ const FamilyHistoryForm = ({
     const topicToPost: Partial<FamilyHistoryType> = {
       ...formDatas,
       ProblemDiagnosisProcedureDescription: firstLetterOfFirstWordUpper(
-        formDatas.ProblemDiagnosisProcedureDescription ?? ""
+        formDatas.ProblemDiagnosisProcedureDescription
       ),
-      Treatment: firstLetterOfFirstWordUpper(formDatas.Treatment ?? ""),
-      Notes: firstLetterOfFirstWordUpper(formDatas.Notes ?? ""),
+      Treatment: firstLetterOfFirstWordUpper(formDatas.Treatment),
+      Notes: firstLetterOfFirstWordUpper(formDatas.Notes),
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -125,14 +130,14 @@ const FamilyHistoryForm = ({
       <td>
         <Input
           name="ProblemDiagnosisProcedureDescription"
-          value={formDatas.ProblemDiagnosisProcedureDescription ?? ""}
+          value={formDatas.ProblemDiagnosisProcedureDescription}
           onChange={handleChange}
         />
       </td>
       <td>
         <RelativesList
           handleChange={handleMemberChange}
-          value={formDatas.Relationship ?? ""}
+          value={formDatas.Relationship}
         />
       </td>
       <td>
@@ -146,14 +151,14 @@ const FamilyHistoryForm = ({
       <td>
         <Input
           name="AgeAtOnset"
-          value={formDatas.AgeAtOnset ?? ""}
+          value={formDatas.AgeAtOnset}
           onChange={handleChange}
         />
       </td>
       <td>
         <GenericList
           list={lifeStageCT}
-          value={formDatas.LifeStage ?? ""}
+          value={formDatas.LifeStage}
           name="LifeStage"
           handleChange={handleChange}
           placeHolder="Choose a lifestage..."
@@ -163,16 +168,12 @@ const FamilyHistoryForm = ({
       <td>
         <Input
           name="Treatment"
-          value={formDatas.Treatment ?? ""}
+          value={formDatas.Treatment}
           onChange={handleChange}
         />
       </td>
       <td>
-        <Input
-          name="Notes"
-          value={formDatas.Notes ?? ""}
-          onChange={handleChange}
-        />
+        <Input name="Notes" value={formDatas.Notes} onChange={handleChange} />
       </td>
       <FormSignCell />
     </tr>

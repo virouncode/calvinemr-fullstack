@@ -35,7 +35,7 @@ const EdocItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<EdocType | undefined>();
+  const [itemInfos, setItemInfos] = useState<EdocType>(item);
   const edocPut = useEdocPut();
   const edocDelete = useEdocDelete();
 
@@ -56,6 +56,7 @@ const EdocItem = ({
   };
   const handleCancelClick = () => {
     setErrMsgPost("");
+    setItemInfos(item);
     setEditVisible(false);
   };
   const handleSaveClick = async () => {
@@ -67,7 +68,7 @@ const EdocItem = ({
       if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
-    if (!itemInfos?.file) {
+    if (!itemInfos.file) {
       setErrMsgPost("Please upload a file");
       return;
     }
@@ -137,7 +138,7 @@ const EdocItem = ({
         </td>
         <td style={{ textAlign: "left" }}>
           <InputTextToggle
-            value={itemInfos?.name ?? ""}
+            value={itemInfos.name}
             onChange={handleChange}
             name="name"
             editVisible={editVisible}
@@ -151,7 +152,7 @@ const EdocItem = ({
         </td>
         <td>
           <InputTextToggle
-            value={itemInfos?.notes ?? ""}
+            value={itemInfos.notes}
             onChange={handleChange}
             name="notes"
             editVisible={editVisible}

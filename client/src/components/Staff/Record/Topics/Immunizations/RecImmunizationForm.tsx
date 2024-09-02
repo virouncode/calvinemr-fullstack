@@ -2,9 +2,8 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
+  ImmunizationFormType,
   ImmunizationType,
-  RecImmunizationAgeType,
-  RecImmunizationRouteType,
   RecImmunizationTypeListType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -19,9 +18,6 @@ import FormRecImmunization from "./FormRecImmunization";
 type RecImmunizationFormProps = {
   setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   type: RecImmunizationTypeListType;
-  age: RecImmunizationAgeType;
-  rangeStart: number;
-  route: RecImmunizationRouteType;
   patientId: number;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
@@ -36,9 +32,6 @@ type RecImmunizationFormProps = {
 const RecImmunizationForm = ({
   setFormVisible,
   type,
-  age,
-  rangeStart,
-  route,
   patientId,
   errMsgPost,
   setErrMsgPost,
@@ -46,20 +39,24 @@ const RecImmunizationForm = ({
 }: RecImmunizationFormProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<ImmunizationType>>({
+  const [formDatas, setFormDatas] = useState<ImmunizationFormType>({
+    patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     ImmunizationName: "",
-    ImmunizationType: type,
+    ImmunizationType: "",
     Manufacturer: "",
     LotNumber: "",
-    Route: route,
+    Route: "",
     Site: "",
     Dose: "",
-    Date: rangeStart,
+    Date: null,
     RefusedFlag: { ynIndicatorsimple: "N" },
     Instructions: "",
     Notes: "",
-    age: age,
-    recommended: true,
+    age: "",
+    doseNumber: 0,
+    recommended: false,
   });
   const [progress, setProgress] = useState(false);
 
@@ -71,7 +68,7 @@ const RecImmunizationForm = ({
     setErrMsgPost("");
     e.preventDefault();
     //Formatting
-    const topicToPost: Partial<ImmunizationType> = {
+    const topicToPost: ImmunizationFormType = {
       ...formDatas,
       ImmunizationName: firstLetterUpper(formDatas.ImmunizationName ?? ""),
       Manufacturer: firstLetterUpper(formDatas.Manufacturer ?? ""),
@@ -108,7 +105,7 @@ const RecImmunizationForm = ({
     if (name === "RefusedFlag") {
       setFormDatas({
         ...formDatas,
-        RefusedFlag: { ynIndicatorsimple: value },
+        RefusedFlag: { ynIndicatorsimple: value as "Y" | "N" },
       });
       return;
     }

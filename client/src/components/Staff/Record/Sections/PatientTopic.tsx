@@ -57,7 +57,7 @@ import EformsDropDown from "../Topics/Eforms/EformsDropDown";
 import EformsPopUp from "../Topics/Eforms/EformsPopUp";
 import FamilyHistoryDropDown from "../Topics/FamilyHistory/FamilyHistoryDropDown";
 import FamilyHistoryPopUp from "../Topics/FamilyHistory/FamilyHistoryPopUp";
-import ImmunizationsContent from "../Topics/Immunizations/ImmunizationsContent";
+import ImmunizationsDropDown from "../Topics/Immunizations/ImmunizationsDropDown";
 import ImmunizationsPopUp from "../Topics/Immunizations/ImmunizationsPopUp";
 import LettersDropDown from "../Topics/Letters/LettersDropDown";
 import LettersPopUp from "../Topics/Letters/LettersPopUp";
@@ -96,8 +96,6 @@ type PatientTopicProps = {
   contentsVisible?: boolean;
   side: "right" | "left";
   demographicsInfos?: DemographicsType;
-  loadingPatient?: boolean;
-  errPatient?: Error | null;
 };
 
 const PatientTopic = ({
@@ -110,8 +108,6 @@ const PatientTopic = ({
   contentsVisible,
   side,
   demographicsInfos,
-  loadingPatient,
-  errPatient,
 }: PatientTopicProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
@@ -616,8 +612,6 @@ const PatientTopic = ({
         {topic === "PHARMACIES" && (
           <PharmaciesDropDown
             demographicsInfos={demographicsInfos as DemographicsType}
-            loadingPatient={loadingPatient as boolean}
-            errPatient={errPatient as Error | null}
           />
         )}
         {topic === "PHARMACIES" && popUpVisible && (
@@ -1225,7 +1219,7 @@ const PatientTopic = ({
           </FakeWindow>
         )}
         {/* IMMUNIZATIONS */}
-        {topic === "IMMUNIZATIONS" && <ImmunizationsContent />}
+        {topic === "IMMUNIZATIONS" && <ImmunizationsDropDown />}
         {topic === "IMMUNIZATIONS" && popUpVisible && (
           <FakeWindow
             title={`IMMUNIZATIONS of ${patientName}`}
@@ -1264,8 +1258,6 @@ const PatientTopic = ({
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               patientDob={patientDob as number}
-              loadingPatient={loadingPatient as boolean}
-              errPatient={errPatient as Error | null}
               isFetchingNextPage={isFetchingNextPage}
               fetchNextPage={
                 fetchNextPage as (

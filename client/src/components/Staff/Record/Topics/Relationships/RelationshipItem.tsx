@@ -1,5 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import "react-widgets/scss/styles.scss";
 import xanoGet from "../../../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -18,6 +19,8 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputWithSearchInTable from "../../../../UI/Inputs/InputWithSearchInTable";
 import SignCell from "../../../../UI/Tables/SignCell";
+import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import PatientChartHealthSearch from "../../../Billing/PatientChartHealthSearch";
 import RelationshipList from "./RelationshipList";
 
 type RelationshipItemProps = {
@@ -34,11 +37,6 @@ type RelationshipItemProps = {
   >;
   topicPut: UseMutationResult<RelationshipType, Error, RelationshipType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
-  setPatientSelected: React.Dispatch<
-    React.SetStateAction<DemographicsType | undefined>
-  >;
-  patientSelected: DemographicsType | undefined;
-  setPatientSearchVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const RelationshipItem = ({
@@ -50,18 +48,21 @@ const RelationshipItem = ({
   topicPost,
   topicPut,
   topicDelete,
-  setPatientSelected,
-  patientSelected,
-  setPatientSearchVisible,
 }: RelationshipItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<RelationshipType | undefined>();
+  const [itemInfos, setItemInfos] = useState<RelationshipType>(item);
   const [progress, setProgress] = useState(false);
+  const [patientSearchVisible, setPatientSearchVisible] = useState(false);
+  const [patientSelected, setPatientSelected] = useState<
+    DemographicsType | undefined
+  >();
+
+  const fakewindowRoot = document.getElementById("fake-window");
 
   useEffect(() => {
     setItemInfos(item);
-    setPatientSelected(item.relation_infos as DemographicsType);
+    setPatientSelected(item.relation_infos);
   }, [item, setPatientSelected]);
 
   //HANDLERS
@@ -75,7 +76,7 @@ const RelationshipItem = ({
       ...(itemInfos as RelationshipType),
       relation_id: patientSelected?.patient_id ?? 0,
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...(itemInfos.updates ?? []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };
@@ -104,10 +105,10 @@ const RelationshipItem = ({
     const inverseRelationToPost: Partial<RelationshipType> = {
       patient_id: patientSelected?.patient_id,
       relationship: toInverseRelation(
-        itemInfos?.relationship ?? "",
+        itemInfos.relationship,
         toCodeTableName(genderCT, gender)
       ),
-      relation_id: itemInfos?.patient_id,
+      relation_id: itemInfos.patient_id,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
     };
@@ -129,6 +130,7 @@ const RelationshipItem = ({
     editCounter.current -= 1;
     setErrMsgPost("");
     setItemInfos(item);
+    setPatientSelected(item.relation_infos);
     setEditVisible(false);
   };
 
@@ -146,7 +148,7 @@ const RelationshipItem = ({
       })
     ) {
       setProgress(true);
-      if (relations.includes(itemInfos?.relationship ?? "")) {
+      if (relations.includes(itemInfos.relationship)) {
         const inverseRelationToDeleteId = (
           await xanoGet("/relationship_between", "staff", {
             patient_id: item.relation_id,
@@ -165,58 +167,85 @@ const RelationshipItem = ({
       });
     }
   };
+  const handleClickPatient = (patient: DemographicsType) => {
+    setPatientSelected(patient);
+    setPatientSearchVisible(false);
+  };
 
   return (
     itemInfos && (
-      <tr
-        className="relationships-item"
-        style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
-      >
-        <td>
-          <div className="relationships-item__btn-container">
-            {!editVisible ? (
-              <>
-                <EditButton onClick={handleEditClick} disabled={progress} />
-                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
-              </>
-            ) : (
-              <>
-                <SaveButton onClick={handleSubmit} disabled={progress} />
-                <CancelButton onClick={handleCancel} disabled={progress} />
-              </>
-            )}
-          </div>
-        </td>
-        <td>
-          <div className="relationships-item__relationship">
+      <>
+        <tr
+          className="relationships-item"
+          style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
+          ref={lastItemRef}
+        >
+          <td>
+            <div className="relationships-item__btn-container">
+              {!editVisible ? (
+                <>
+                  <EditButton onClick={handleEditClick} disabled={progress} />
+                  <DeleteButton
+                    onClick={handleDeleteClick}
+                    disabled={progress}
+                  />
+                </>
+              ) : (
+                <>
+                  <SaveButton onClick={handleSubmit} disabled={progress} />
+                  <CancelButton onClick={handleCancel} disabled={progress} />
+                </>
+              )}
+            </div>
+          </td>
+          <td>
+            <div className="relationships-item__relationship">
+              {editVisible ? (
+                <RelationshipList
+                  value={itemInfos.relationship}
+                  handleChange={handleRelationshipChange}
+                />
+              ) : (
+                itemInfos.relationship
+              )}
+              <span>of</span>
+            </div>
+          </td>
+          <td style={{ position: "relative" }}>
             {editVisible ? (
-              <RelationshipList
-                value={itemInfos.relationship}
-                handleChange={handleRelationshipChange}
-              />
+              <>
+                <InputWithSearchInTable
+                  name="patient_id"
+                  value={toPatientName(patientSelected)}
+                  readOnly={true}
+                  onClick={() => setPatientSearchVisible(true)}
+                />
+              </>
             ) : (
-              itemInfos.relationship
+              <p>{toPatientName(itemInfos.relation_infos)}</p>
             )}
-            <span>of</span>
-          </div>
-        </td>
-        <td style={{ position: "relative" }}>
-          {editVisible ? (
-            <>
-              <InputWithSearchInTable
-                name="patient_id"
-                value={toPatientName(patientSelected)}
-                readOnly={true}
-                onClick={() => setPatientSearchVisible(true)}
+          </td>
+          <SignCell item={item} />
+        </tr>
+        {fakewindowRoot &&
+          patientSearchVisible &&
+          createPortal(
+            <FakeWindow
+              title="PATIENT SEARCH"
+              width={800}
+              height={600}
+              x={(window.innerWidth - 800) / 2}
+              y={(window.innerHeight - 600) / 2}
+              color="#94bae8"
+              setPopUpVisible={setPatientSearchVisible}
+            >
+              <PatientChartHealthSearch
+                handleClickPatient={handleClickPatient}
               />
-            </>
-          ) : (
-            <p>{toPatientName(itemInfos.relation_infos)}</p>
+            </FakeWindow>,
+            fakewindowRoot
           )}
-        </td>
-        <SignCell item={item} />
-      </tr>
+      </>
     )
   );
 };

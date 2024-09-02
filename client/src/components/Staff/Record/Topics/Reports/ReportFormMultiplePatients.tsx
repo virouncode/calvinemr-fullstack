@@ -8,6 +8,7 @@ import {
   AttachmentType,
   DemographicsType,
   MessageAttachmentType,
+  ReportFormType,
   ReportType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -40,12 +41,33 @@ const ReportFormMultiplePatients = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [formDatas, setFormDatas] = useState<Partial<ReportType>>({
+  const [formDatas, setFormDatas] = useState<ReportFormType>({
+    patient_id: 0,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
+    name: "",
+    Media: "",
     Format: "Binary",
-    File: initialAttachment ? initialAttachment.file : null,
-    FileExtensionAndVersion: initialAttachment
-      ? getExtension(initialAttachment.file?.path)
-      : "",
+    FileExtensionAndVersion: getExtension(initialAttachment?.file?.path),
+    FilePath: "",
+    Content: { TextContent: "", Media: "" },
+    Class: "",
+    SubClass: "",
+    EventDateTime: null,
+    ReceivedDateTime: null,
+    SourceAuthorPhysician: {
+      AuthorFreeText: "",
+    },
+    ReportReviewed: [],
+    Notes: "",
+    RecipientName: {
+      FirstName: "",
+      LastName: "",
+    },
+    DateTimeSent: null,
+    acknowledged: false,
+    assigned_staff_id: 0,
+    File: initialAttachment?.file ?? null,
   });
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [sentOrReceived, setSentOrReceived] = useState("Received");
@@ -69,8 +91,7 @@ const ReportFormMultiplePatients = ({
       name === "DateTimeSent"
     ) {
       value = dateISOToTimestampTZ(value);
-    }
-    if (name === "Format") {
+    } else if (name === "Format") {
       setFormDatas({
         ...formDatas,
         Content: {
@@ -79,7 +100,16 @@ const ReportFormMultiplePatients = ({
         },
         File: null,
         FileExtensionAndVersion: "",
-        Format: value as "Binary" | "Text",
+        Format: value,
+      });
+      return;
+    } else if (name === "AuthorFreeText") {
+      setFormDatas({
+        ...formDatas,
+        SourceAuthorPhysician: {
+          ...formDatas.SourceAuthorPhysician,
+          AuthorFreeText: value,
+        },
       });
       return;
     }
@@ -112,7 +142,7 @@ const ReportFormMultiplePatients = ({
           ReviewingOHIPPhysicianId:
             formDatas.ReportReviewed?.[0]?.ReviewingOHIPPhysicianId ?? "",
           DateTimeReportReviewed:
-            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? Date.now(),
+            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? null,
         },
       ],
     });
@@ -130,7 +160,7 @@ const ReportFormMultiplePatients = ({
             LastName: "",
           },
           DateTimeReportReviewed:
-            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? Date.now(),
+            formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed ?? null,
         },
       ],
     });
@@ -160,7 +190,7 @@ const ReportFormMultiplePatients = ({
     setFormDatas({
       ...formDatas,
       RecipientName: {
-        ...(formDatas.RecipientName ?? { FirstName: "", LastName: "" }),
+        ...formDatas.RecipientName,
         [name]: value,
       },
     });
@@ -178,9 +208,7 @@ const ReportFormMultiplePatients = ({
     setFormDatas({
       ...formDatas,
       SourceAuthorPhysician: {
-        ...(formDatas.SourceAuthorPhysician ?? {
-          AuthorName: { FirstName: "", LastName: "" },
-        }),
+        ...formDatas.SourceAuthorPhysician,
         AuthorFreeText: "",
       },
     });
@@ -200,12 +228,12 @@ const ReportFormMultiplePatients = ({
     const reportsToPost: Partial<ReportType>[] = [];
 
     for (const patientId of patientsIds) {
-      const reportToPost: Partial<ReportType> = {
+      const reportToPost: ReportFormType = {
         ...formDatas,
         patient_id: patientId,
         assigned_staff_id: demographicsInfos.find(
           ({ patient_id }) => patient_id === patientId
-        )?.assigned_staff_id,
+        )?.assigned_staff_id as number,
         SourceAuthorPhysician: {
           AuthorFreeText:
             sentOrReceived === "Sent"

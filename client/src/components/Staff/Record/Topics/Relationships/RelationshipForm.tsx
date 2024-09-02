@@ -1,5 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { createPortal } from "react-dom";
 import "react-widgets/scss/styles.scss";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { genderCT, toCodeTableName } from "../../../../../omdDatas/codesTables";
@@ -13,6 +14,8 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import InputWithSearchInTable from "../../../../UI/Inputs/InputWithSearchInTable";
 import FormSignCell from "../../../../UI/Tables/FormSignCell";
+import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import PatientChartHealthSearch from "../../../Billing/PatientChartHealthSearch";
 import RelationshipList from "./RelationshipList";
 
 type RelationshipFormProps = {
@@ -27,8 +30,6 @@ type RelationshipFormProps = {
     Partial<RelationshipType>,
     void
   >;
-  patientSelected: DemographicsType | undefined;
-  setPatientSearchVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const RelationshipForm = ({
@@ -38,8 +39,6 @@ const RelationshipForm = ({
   setErrMsgPost,
   errMsgPost,
   topicPost,
-  patientSelected,
-  setPatientSearchVisible,
 }: RelationshipFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [formDatas, setFormDatas] = useState<Partial<RelationshipType>>({
@@ -48,6 +47,11 @@ const RelationshipForm = ({
   });
 
   const [progress, setProgress] = useState(false);
+  const [patientSearchVisible, setPatientSearchVisible] = useState(false);
+  const [patientSelected, setPatientSelected] = useState<
+    DemographicsType | undefined
+  >();
+  const fakewindowRoot = document.getElementById("fake-window");
 
   const handleRelationshipChange = (value: string) => {
     setErrMsgPost("");
@@ -105,36 +109,59 @@ const RelationshipForm = ({
     setAddVisible(false);
   };
 
+  const handleClickPatient = (patient: DemographicsType) => {
+    setPatientSelected(patient);
+    setPatientSearchVisible(false);
+  };
+
   return (
-    <tr
-      className="relationships-form"
-      style={{ border: errMsgPost && "solid 1.5px red" }}
-    >
-      <td>
-        <div className="relationships-form__btn-container">
-          <SaveButton onClick={handleSubmit} disabled={progress} />
-          <CancelButton onClick={handleCancel} disabled={progress} />
-        </div>
-      </td>
-      <td>
-        <div className="relationships-form__relationship">
-          <RelationshipList
-            value={formDatas.relationship ?? ""}
-            handleChange={handleRelationshipChange}
+    <>
+      <tr
+        className="relationships-form"
+        style={{ border: errMsgPost && "solid 1.5px red" }}
+      >
+        <td>
+          <div className="relationships-form__btn-container">
+            <SaveButton onClick={handleSubmit} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
+          </div>
+        </td>
+        <td>
+          <div className="relationships-form__relationship">
+            <RelationshipList
+              value={formDatas.relationship ?? ""}
+              handleChange={handleRelationshipChange}
+            />
+            <span>of</span>
+          </div>
+        </td>
+        <td style={{ position: "relative" }}>
+          <InputWithSearchInTable
+            name="patient_id"
+            value={toPatientName(patientSelected)}
+            readOnly={true}
+            onClick={() => setPatientSearchVisible(true)}
           />
-          <span>of</span>
-        </div>
-      </td>
-      <td style={{ position: "relative" }}>
-        <InputWithSearchInTable
-          name="patient_id"
-          value={toPatientName(patientSelected)}
-          readOnly={true}
-          onClick={() => setPatientSearchVisible(true)}
-        />
-      </td>
-      <FormSignCell />
-    </tr>
+        </td>
+        <FormSignCell />
+      </tr>
+      {fakewindowRoot &&
+        patientSearchVisible &&
+        createPortal(
+          <FakeWindow
+            title="PATIENT SEARCH"
+            width={800}
+            height={600}
+            x={(window.innerWidth - 800) / 2}
+            y={(window.innerHeight - 600) / 2}
+            color="#94bae8"
+            setPopUpVisible={setPatientSearchVisible}
+          >
+            <PatientChartHealthSearch handleClickPatient={handleClickPatient} />
+          </FakeWindow>,
+          fakewindowRoot
+        )}
+    </>
   );
 };
 

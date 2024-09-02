@@ -197,6 +197,7 @@ const AddAttachmentToReportsForm = ({
             list={reportClassCT}
             label="Class"
             noneOption={false}
+            placeHolder="Choose class..."
           />
         </div>
         <div className="reports__row">

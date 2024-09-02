@@ -48,19 +48,29 @@ const PharmacyItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<PharmacyFormType | undefined>();
+  const [itemInfos, setItemInfos] = useState<PharmacyFormType>({
+    name: item.Name,
+    line1: item.Address?.Structured?.Line1,
+    city: item.Address?.Structured?.City,
+    province: item.Address?.Structured?.CountrySubDivisionCode,
+    postalCode: item.Address?.Structured?.PostalZipCode.PostalCode,
+    zipCode: item.Address?.Structured?.PostalZipCode.ZipCode,
+    phone: item.PhoneNumber?.[0]?.phoneNumber,
+    fax: item.FaxNumber?.phoneNumber,
+    email: item.EmailAddress,
+  });
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
   const patientPut = usePatientPut(patientId);
 
   useEffect(() => {
     setItemInfos({
-      name: item.Name || "",
-      line1: item.Address?.Structured?.Line1 || "",
-      city: item.Address?.Structured?.City || "",
-      province: item.Address?.Structured?.CountrySubDivisionCode || "",
-      postalCode: item.Address?.Structured?.PostalZipCode.PostalCode || "",
-      zipCode: item.Address?.Structured?.PostalZipCode.ZipCode || "",
+      name: item.Name,
+      line1: item.Address?.Structured?.Line1,
+      city: item.Address?.Structured?.City,
+      province: item.Address?.Structured?.CountrySubDivisionCode,
+      postalCode: item.Address?.Structured?.PostalZipCode.PostalCode,
+      zipCode: item.Address?.Structured?.PostalZipCode.ZipCode,
       phone: item.PhoneNumber?.[0]?.phoneNumber,
       fax: item.FaxNumber?.phoneNumber,
       email: item.EmailAddress,
@@ -115,30 +125,30 @@ const PharmacyItem = ({
     //Formatting
     const topicToPut: PharmacyType = {
       ...item,
-      Name: firstLetterUpper(itemInfos?.name ?? ""),
+      Name: firstLetterUpper(itemInfos.name),
       Address: {
         Structured: {
-          Line1: firstLetterUpper(itemInfos?.line1 ?? ""),
-          City: firstLetterUpper(itemInfos?.city ?? ""),
-          CountrySubDivisionCode: itemInfos?.province ?? "",
+          Line1: firstLetterUpper(itemInfos.line1),
+          City: firstLetterUpper(itemInfos.city),
+          CountrySubDivisionCode: itemInfos.province,
           PostalZipCode: {
-            PostalCode: itemInfos?.postalCode ?? "",
-            ZipCode: itemInfos?.zipCode ?? "",
+            PostalCode: itemInfos.postalCode,
+            ZipCode: itemInfos.zipCode,
           },
         },
         _addressType: "M",
       },
       PhoneNumber: [
         {
-          phoneNumber: itemInfos?.phone ?? "",
+          phoneNumber: itemInfos.phone,
           _phoneNumberType: "W",
         },
       ],
       FaxNumber: {
         _phoneNumberType: "W",
-        phoneNumber: itemInfos?.fax ?? "",
+        phoneNumber: itemInfos.fax,
       },
-      EmailAddress: itemInfos?.email.toLowerCase() ?? "",
+      EmailAddress: itemInfos.email.toLowerCase(),
       updates: [
         ...item.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
@@ -147,7 +157,7 @@ const PharmacyItem = ({
 
     if (
       await confirmAlert({
-        content: `You're about to update ${itemInfos?.name} infos, proceed ?`,
+        content: `You're about to update ${itemInfos.name} infos, proceed ?`,
       })
     ) {
       //Submission
@@ -196,12 +206,12 @@ const PharmacyItem = ({
     setErrMsgPost("");
     setEditVisible(false);
     setItemInfos({
-      name: item.Name || "",
-      line1: item.Address?.Structured?.Line1 || "",
-      city: item.Address?.Structured?.City || "",
-      province: item.Address?.Structured?.CountrySubDivisionCode || "",
-      postalCode: item.Address?.Structured?.PostalZipCode.PostalCode || "",
-      zipCode: item.Address?.Structured?.PostalZipCode.ZipCode || "",
+      name: item.Name,
+      line1: item.Address?.Structured?.Line1,
+      city: item.Address?.Structured?.City,
+      province: item.Address?.Structured?.CountrySubDivisionCode,
+      postalCode: item.Address?.Structured?.PostalZipCode.PostalCode,
+      zipCode: item.Address?.Structured?.PostalZipCode.ZipCode,
       phone: item.PhoneNumber?.[0]?.phoneNumber,
       fax: item.FaxNumber?.phoneNumber,
       email: item.EmailAddress,

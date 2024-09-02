@@ -160,6 +160,12 @@ input:-moz-read-only {
 input:read-only {
   outline: none;
 }
+input::-moz-placeholder {
+  color: rgb(163, 163, 163);
+}
+input::placeholder {
+  color: rgb(163, 163, 163);
+}
 
 input[type=checkbox] {
   outline: none;
@@ -182,6 +188,12 @@ textarea {
 }
 textarea:focus {
   outline: solid 2px #93b5e9;
+}
+textarea::-moz-placeholder {
+  color: rgb(163, 163, 163);
+}
+textarea::placeholder {
+  color: rgb(163, 163, 163);
 }
 
 select {
@@ -1851,7 +1863,6 @@ select:focus {
   width: 5%;
 }
 .clinical-notes__toolbar-btn-container {
-  width: 45%;
   width: 50%;
   text-align: right;
 }
@@ -2520,7 +2531,9 @@ select:focus {
   padding: 10px;
   word-break: break-word;
 }
-.pasthealth__item td input, .pasthealth__item td input[type=date], .pasthealth__form td input, .pasthealth__form td input[type=date] {
+.pasthealth__item td input,
+.pasthealth__item td input[type=date], .pasthealth__form td input,
+.pasthealth__form td input[type=date] {
   width: 100%;
 }
 .pasthealth__item td input[type=submit], .pasthealth__form td input[type=submit] {
@@ -2591,7 +2604,11 @@ select:focus {
   padding: 10px;
   word-break: break-word;
 }
-.famhistory__item td input, .famhistory__item td input[type=date], .famhistory__item td select, .famhistory__form td input, .famhistory__form td input[type=date], .famhistory__form td select {
+.famhistory__item td input,
+.famhistory__item td input[type=date],
+.famhistory__item td select, .famhistory__form td input,
+.famhistory__form td input[type=date],
+.famhistory__form td select {
   width: 100%;
 }
 .famhistory__item td input[type=submit], .famhistory__form td input[type=submit] {
@@ -3776,13 +3793,10 @@ select:focus {
 }
 .recimmunizations-item__cell {
   display: flex;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   align-items: center;
   justify-content: flex-start;
   padding: 5px;
-}
-.recimmunizations-item__cell label {
-  margin-left: 3px;
 }
 .recimmunizations-item__cell-multiple-btn {
   width: 20px;
@@ -5915,40 +5929,50 @@ select:focus {
   margin-left: 5px;
 }
 
-.relationships-item, .relationships-form {
+.relationships-item,
+.relationships-form {
   border-bottom: solid 1px #cecdcd;
 }
-.relationships-item td, .relationships-form td {
+.relationships-item td,
+.relationships-form td {
   text-align: center;
   padding: 10px;
   word-break: break-word;
 }
-.relationships-item td input[type=text], .relationships-form td input[type=text] {
+.relationships-item td input[type=text],
+.relationships-form td input[type=text] {
   width: 100%;
   padding-right: 20px;
 }
-.relationships-item td input[type=submit], .relationships-form td input[type=submit] {
+.relationships-item td input[type=submit],
+.relationships-form td input[type=submit] {
   width: auto;
 }
-.relationships-item td .rw-combobox, .relationships-form td .rw-combobox {
+.relationships-item td .rw-combobox,
+.relationships-form td .rw-combobox {
   width: 87%;
 }
-.relationships-item td .rw-widget-picker .rw-widget-container, .relationships-form td .rw-widget-picker .rw-widget-container {
+.relationships-item td .rw-widget-picker .rw-widget-container,
+.relationships-form td .rw-widget-picker .rw-widget-container {
   width: 100%;
 }
-.relationships-item__relationship, .relationships-form__relationship {
+.relationships-item__relationship,
+.relationships-form__relationship {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.relationships-item__relationship span, .relationships-form__relationship span {
+.relationships-item__relationship span,
+.relationships-form__relationship span {
   margin-left: 10px;
 }
-.relationships-item__btn-container, .relationships-form__btn-container {
+.relationships-item__btn-container,
+.relationships-form__btn-container {
   display: flex;
   justify-content: center;
 }
-.relationships-item__btn-container button, .relationships-form__btn-container button {
+.relationships-item__btn-container button,
+.relationships-form__btn-container button {
   margin-left: 5px;
 }
 
@@ -8096,8 +8120,8 @@ select:focus {
 .refohip-results__item {
   cursor: pointer;
   display: flex;
-  justify-content: flex-start;
   padding: 0 20px;
+  justify-content: flex-start;
 }
 .refohip-results__item:hover {
   text-decoration: underline;
@@ -8649,7 +8673,7 @@ select:focus {
   font-weight: bold;
 }
 .patients-accounts__table tbody tr .record-link:hover {
-  color: #A4B9E2;
+  color: #a4b9e2;
 }
 .patients-accounts__table tbody tr td {
   border: solid 1px #3d375a;

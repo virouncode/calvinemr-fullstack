@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -31,9 +31,13 @@ const LabLinkPersonalItem = ({
 }: LabLinkPersonalItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState(link);
+  const [itemInfos, setItemInfos] = useState<LabLinkPersonalType>(link);
   const labLinkPersonalPut = useLabLinksPersonalPut(user.id);
   const labLinkPersonalDelete = useLabLinksPersonalDelete(user.id);
+
+  useEffect(() => {
+    setItemInfos(link);
+  }, [link]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -158,14 +162,14 @@ const LabLinkPersonalItem = ({
 
         {!editVisible && (
           <>
-            <PenIcon onClick={handleClickEdit} />
-            <TrashIcon onClick={handleDelete} />
+            <PenIcon onClick={handleClickEdit} ml={5} />
+            <TrashIcon onClick={handleDelete} ml={5} />
           </>
         )}
         {editVisible && (
           <>
-            <SaveIcon onClick={handleClickSave} color="#f53f77" />
-            <XmarkIcon onClick={handleCancel} />
+            <SaveIcon onClick={handleClickSave} color="#f53f77" ml={5} />
+            <XmarkIcon onClick={handleCancel} ml={5} />
           </>
         )}
       </div>

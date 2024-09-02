@@ -47,10 +47,10 @@
       font-size: 0.8rem;
       &-item {
         cursor: pointer;
+        margin-bottom: 5px;
         &:hover {
           text-decoration: underline;
         }
-        margin-bottom: 5px;
       }
     }
     &-search {

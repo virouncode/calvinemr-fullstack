@@ -1,15 +1,15 @@
 import React from "react";
-import { useTopic } from "../../../../../../hooks/reactquery/queries/topicQueries";
-import { useFetchAllPages } from "../../../../../../hooks/reactquery/useFetchAllPages";
-import EmptyParagraph from "../../../../../UI/Paragraphs/EmptyParagraph";
-import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
+import { useTopic } from "../../../../../../../hooks/reactquery/queries/topicQueries";
+import { useFetchAllPages } from "../../../../../../../hooks/reactquery/useFetchAllPages";
+import EmptyParagraph from "../../../../../../UI/Paragraphs/EmptyParagraph";
+import ErrorParagraph from "../../../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../../../UI/Paragraphs/LoadingParagraph";
 
-type FamilyHistoryLetterProps = {
+type LetterFamilyHistoryProps = {
   patientId: number;
 };
 
-const FamilyHistoryLetter = ({ patientId }: FamilyHistoryLetterProps) => {
+const LetterFamilyHistory = ({ patientId }: LetterFamilyHistoryProps) => {
   //Queries
   const {
     data,
@@ -45,4 +45,4 @@ const FamilyHistoryLetter = ({ patientId }: FamilyHistoryLetterProps) => {
   );
 };
 
-export default FamilyHistoryLetter;
+export default LetterFamilyHistory;

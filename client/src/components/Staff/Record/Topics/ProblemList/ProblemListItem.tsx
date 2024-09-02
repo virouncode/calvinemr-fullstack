@@ -43,7 +43,7 @@ const ProblemListItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<ProblemListType | undefined>();
+  const [itemInfos, setItemInfos] = useState<ProblemListType>(item);
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
@@ -60,25 +60,23 @@ const ProblemListItem = ({
     if (name === "OnsetDate" || name === "ResolutionDate") {
       value = dateISOToTimestampTZ(value);
     }
-    setItemInfos({ ...(itemInfos as ProblemListType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleSubmit = async () => {
     //Formatting
     const topicToPut: ProblemListType = {
-      ...(itemInfos as ProblemListType),
+      ...itemInfos,
       ProblemDiagnosisDescription: firstLetterOfFirstWordUpper(
-        itemInfos?.ProblemDiagnosisDescription ?? ""
+        itemInfos.ProblemDiagnosisDescription
       ),
       ProblemDescription: firstLetterOfFirstWordUpper(
-        itemInfos?.ProblemDescription ?? ""
+        itemInfos.ProblemDescription
       ),
-      ProblemStatus: firstLetterOfFirstWordUpper(
-        itemInfos?.ProblemStatus ?? ""
-      ),
-      Notes: firstLetterOfFirstWordUpper(itemInfos?.Notes ?? ""),
+      ProblemStatus: firstLetterOfFirstWordUpper(itemInfos.ProblemStatus),
+      Notes: firstLetterOfFirstWordUpper(itemInfos.Notes),
       updates: [
-        ...(itemInfos?.updates ?? []),
+        ...itemInfos.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };

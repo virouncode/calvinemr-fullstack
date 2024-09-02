@@ -179,14 +179,16 @@ input {
   outline: solid 1px $grey;
   font-size: 0.85rem;
   color: $black;
+  text-overflow: ellipsis;
+  font-family: $font1, sans-serif;
   &:focus {
     outline: solid 2px $blue;
   }
-  text-overflow: ellipsis;
-  font-family: $font1, sans-serif;
   &:read-only {
     outline: none;
-    // text-align: center;
+  }
+  &::placeholder {
+    color: $grey2;
   }
 }
 
@@ -211,6 +213,9 @@ textarea {
   &:focus {
     outline: solid 2px $blue;
   }
+  &::placeholder {
+    color: $grey2;
+  }
 }
 
 select {
@@ -221,18 +226,18 @@ select {
   outline: solid 1px $grey;
   font-size: 0.85rem;
   color: $black;
+  font-family: $font1, sans-serif;
   &:focus {
     outline: solid 2px $blue;
   }
-  font-family: $font1, sans-serif;
 }
+
 @media print {
   html,
   body {
+    min-width: auto;
     .prescription-page {
       height: 99% !important;
-      // margin: 0 !important;
-      // padding: 0 !important;
       overflow: hidden;
     }
     .clinical-notes-print-page {
@@ -240,10 +245,6 @@ select {
       // margin: 0 !important;
       // padding: 0 !important;
     }
-    // .message-detail-print {
-
-    // }
-    min-width: auto;
   }
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   DemographicsType,
-  MedType,
+  MedFormType,
   SiteType,
 } from "../../../../../../../types/api";
 import PrescriptionBody from "./PrescriptionBody";
@@ -14,8 +14,8 @@ type PrescriptionPageProps = {
   sites: SiteType[];
   siteSelectedId: number;
   demographicsInfos: DemographicsType;
-  addedMeds: Partial<MedType>[];
-  setAddedMeds: React.Dispatch<React.SetStateAction<Partial<MedType>[]>>;
+  addedMeds: MedFormType[];
+  setAddedMeds: React.Dispatch<React.SetStateAction<MedFormType[]>>;
   uniqueId: string;
   setFreeText: React.Dispatch<React.SetStateAction<string>>;
   freeText: string;

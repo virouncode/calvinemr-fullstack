@@ -3,7 +3,7 @@ import { useState } from "react";
 import React from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useLinkPost } from "../../../hooks/reactquery/mutations/linksMutations";
-import { LinkType } from "../../../types/api";
+import { LinkFormType, LinkType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { linkSchema } from "../../../validation/reference/linkValidation";
@@ -19,10 +19,11 @@ type LinkFormProps = {
 
 const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
-  const [newLink, setNewLink] = useState<Partial<LinkType>>({
+  const [newLink, setNewLink] = useState<LinkFormType>({
+    staff_id: user.id,
     name: "",
     url: "",
-    staff_id: user.id,
+    date_created: nowTZTimestamp(),
     created_by_id: user.id,
   });
   const [errMsg, setErrMsg] = useState("");
@@ -47,11 +48,11 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
       setErrMsg("You already have a link with this name");
       return;
     }
-    let urlFormatted;
+    let urlFormatted: string = newLink.url;
     if (!newLink.url?.includes("http") || !newLink.url?.includes("https")) {
       urlFormatted = ["https://", newLink.url].join("");
     }
-    const linkToPost: Partial<LinkType> = {
+    const linkToPost: LinkFormType = {
       ...newLink,
       url: urlFormatted,
       date_created: nowTZTimestamp(),
@@ -80,7 +81,7 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
       <div className="reference-links__form-row">
         <Input
           label="Name"
-          value={newLink?.name ?? ""}
+          value={newLink.name}
           id="name"
           onChange={handleChange}
           autoFocus
@@ -89,7 +90,7 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
       <div className="reference-links__form-row">
         <Input
           label="URL"
-          value={newLink?.url ?? ""}
+          value={newLink.url}
           id="url"
           onChange={handleChange}
         />

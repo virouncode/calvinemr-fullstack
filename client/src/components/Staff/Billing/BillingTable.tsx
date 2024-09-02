@@ -8,7 +8,7 @@ import useIntersection from "../../../hooks/useIntersection";
 import { BillingType, SiteType, XanoPaginatedType } from "../../../types/api";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
-import BillingTableItem from "./BillingTableItem";
+import BillingItem from "./BillingItem";
 
 type BillingTableProps = {
   billings: BillingType[];
@@ -76,7 +76,7 @@ const BillingTable = ({
           {billings && billings.length > 0
             ? billings.map((item: BillingType, index: number) =>
                 index === billings.length - 1 ? (
-                  <BillingTableItem
+                  <BillingItem
                     key={item.id}
                     billing={item}
                     errMsgPost={errMsgPost}
@@ -85,7 +85,7 @@ const BillingTable = ({
                     lastItemRef={lastItemRef}
                   />
                 ) : (
-                  <BillingTableItem
+                  <BillingItem
                     key={item.id}
                     billing={item}
                     errMsgPost={errMsgPost}

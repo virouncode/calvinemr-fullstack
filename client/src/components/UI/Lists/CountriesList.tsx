@@ -14,9 +14,10 @@ const CountriesList = ({ handleChange, value, name }: CountriesListProps) => {
       value={value}
       autoComplete="off"
       id="country"
+      style={{ color: value === "" ? "#a3a3a3" : "" }}
     >
       <option value="" disabled>
-        Choose a Country
+        Choose a Country...
       </option>
       <option value="Afghanistan">Afghanistan</option>
       <option value="Aland Islands">Aland Islands</option>

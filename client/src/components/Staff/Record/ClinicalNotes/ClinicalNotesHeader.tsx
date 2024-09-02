@@ -32,8 +32,6 @@ type ClinicalNotesHeaderProps = {
   setSelectAll: React.Dispatch<React.SetStateAction<boolean>>;
   order: "asc" | "desc";
   setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   overviewVisible: boolean;
   setOverviewVisible: React.Dispatch<React.SetStateAction<boolean>>;
   newButtonDisabled: boolean;
@@ -73,8 +71,6 @@ const ClinicalNotesHeader = ({
   setSelectAll,
   order,
   setOrder,
-  loadingPatient,
-  errPatient,
   overviewVisible,
   setOverviewVisible,
   newButtonDisabled,
@@ -94,8 +90,6 @@ const ClinicalNotesHeader = ({
         setNotesVisible={setNotesVisible}
         contentRef={contentRef}
         triangleRef={triangleRef}
-        loadingPatient={loadingPatient}
-        errPatient={errPatient}
         setNewMessageVisible={setNewMessageVisible}
       />
       <ClinicalNotesToolBar

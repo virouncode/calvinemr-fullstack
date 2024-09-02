@@ -2,6 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
+  ImmunizationFormType,
   ImmunizationType,
   RecImmunizationAgeType,
   RecImmunizationRouteType,
@@ -11,7 +12,6 @@ import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
-  timestampMonthsLaterTZ,
 } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { immunizationSchema } from "../../../../../validation/record/immunizationValidation";
@@ -47,26 +47,24 @@ const RecImmunizationFormSecondDose = ({
 }: RecImmunizationFormSecondDoseProps) => {
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<ImmunizationType>>({
+  const [formDatas, setFormDatas] = useState<ImmunizationFormType>({
+    patient_id: patientId,
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     ImmunizationName: "",
-    ImmunizationType: type,
+    ImmunizationType: "",
     Manufacturer: "",
     LotNumber: "",
-    Route: route,
+    Route: "",
     Site: "",
     Dose: "",
-    Date: timestampMonthsLaterTZ(
-      immunizationInfos.find(({ doseNumber }) => doseNumber === 1)
-        ?.Date as number,
-      6
-    ),
+    Date: null,
     RefusedFlag: { ynIndicatorsimple: "N" },
     Instructions: "",
     Notes: "",
-    age: age,
+    age: "",
     doseNumber: 2,
-    patient_id: patientId,
-    recommended: true,
+    recommended: false,
   });
   const [progress, setProgress] = useState(false);
 
@@ -78,7 +76,7 @@ const RecImmunizationFormSecondDose = ({
     setErrMsgPost("");
     e.preventDefault();
     //Formatting
-    const topicToPost: Partial<ImmunizationType> = {
+    const topicToPost: ImmunizationFormType = {
       ...formDatas,
       ImmunizationName: firstLetterUpper(formDatas.ImmunizationName ?? ""),
       Manufacturer: firstLetterUpper(formDatas.Manufacturer ?? ""),
@@ -115,7 +113,7 @@ const RecImmunizationFormSecondDose = ({
     if (name === "RefusedFlag") {
       setFormDatas({
         ...formDatas,
-        RefusedFlag: { ynIndicatorsimple: value },
+        RefusedFlag: { ynIndicatorsimple: value as "Y" | "N" },
       });
       return;
     }

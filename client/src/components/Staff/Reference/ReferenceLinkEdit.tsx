@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import React from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -23,6 +23,10 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
   const [editedLink, setEditedLink] = useState<LinkType>(link);
   const [progress, setProgress] = useState(false);
   const linkPut = useLinkPut(link.staff_id);
+
+  useEffect(() => {
+    setEditedLink(link);
+  }, [link]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -207,6 +207,7 @@ const DoctorFaxForm = ({
           handleChange={handleChange}
           noneOption={false}
           label="Province/State"
+          placeHolder="Choose province/state..."
         />
       </div>
       <div className="doctor-fax__form-row doctor-fax__form-row--postal">

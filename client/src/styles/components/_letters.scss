@@ -346,6 +346,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    margin-top: 10px;
     label {
       margin-right: 10px;
       font-weight: bold;
@@ -354,7 +355,6 @@
     input {
       width: 500px;
     }
-    margin-top: 10px;
   }
   &-subheader {
     position: relative;

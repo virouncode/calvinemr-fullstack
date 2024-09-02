@@ -1,6 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { reportClassCT } from "../../../../../omdDatas/codesTables";
@@ -55,7 +55,11 @@ const ReportItemSent = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState(item);
+  const [itemInfos, setItemInfos] = useState<ReportType>(item);
+
+  useEffect(() => {
+    setItemInfos(item);
+  }, [item]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -99,7 +103,7 @@ const ReportItemSent = ({
       if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
-    const reportToPut = {
+    const reportToPut: ReportType = {
       ...itemInfos,
       updates: [
         ...item.updates,

@@ -1,10 +1,10 @@
 import React from "react";
 import { TopicType } from "../../../../../../types/api";
-import AllergiesLetter from "./AllergiesLetter";
-import FamilyHistoryLetter from "./FamilyHistoryLetter";
-import MedicationsLetter from "./MedicationsLetter";
-import PastHealthLetter from "./PastHealthLetter";
-import PregnanciesLetter from "./PregnanciesLetter";
+import LetterAllergies from "./Topics/LetterAllergies";
+import LetterFamilyHistory from "./Topics/LetterFamilyHistory";
+import LetterMedications from "./Topics/LetterMedications";
+import LetterPastHealth from "./Topics/LetterPastHealth";
+import LetterPregnancies from "./Topics/LetterPregnancies";
 
 type LetterRecordInfosItemProps = {
   topic: TopicType;
@@ -17,15 +17,15 @@ const LetterRecordInfosItem = ({
 }: LetterRecordInfosItemProps) => {
   switch (topic) {
     case "PAST HEALTH":
-      return <PastHealthLetter patientId={patientId} />;
+      return <LetterPastHealth patientId={patientId} />;
     case "FAMILY HISTORY":
-      return <FamilyHistoryLetter patientId={patientId} />;
+      return <LetterFamilyHistory patientId={patientId} />;
     case "MEDICATIONS & TREATMENTS":
-      return <MedicationsLetter patientId={patientId} />;
+      return <LetterMedications patientId={patientId} />;
     case "ALLERGIES & ADVERSE REACTIONS":
-      return <AllergiesLetter patientId={patientId} />;
+      return <LetterAllergies patientId={patientId} />;
     case "PREGNANCIES":
-      return <PregnanciesLetter patientId={patientId} />;
+      return <LetterPregnancies patientId={patientId} />;
   }
 };
 export default LetterRecordInfosItem;

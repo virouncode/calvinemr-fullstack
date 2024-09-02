@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMedsTemplatePut } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import {
   dosageUnitCT,
@@ -28,11 +28,15 @@ type MedTemplateEditProps = {
 
 const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
   //Hooks
-  const [formDatas, setFormDatas] = useState<MedTemplateType>(med);
+  const [itemInfos, setItemInfos] = useState<MedTemplateType>(med);
   const [errMsg, setErrMsg] = useState("");
   const [progress, setProgress] = useState(false);
   //Queries
   const medTemplatePut = useMedsTemplatePut();
+
+  useEffect(() => {
+    setItemInfos(med);
+  }, [med]);
 
   const handleCancel = () => {
     setEditVisible(false);
@@ -41,8 +45,8 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
   const handleSubmit = async () => {
     //Formatting
     const templateToPut: MedTemplateType = {
-      ...formDatas,
-      DrugName: formDatas.DrugName.toUpperCase(),
+      ...itemInfos,
+      DrugName: itemInfos.DrugName.toUpperCase(),
     };
     //Validation
     try {
@@ -72,178 +76,178 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
     const name = e.target.name;
     switch (name) {
       case "Strength":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           Strength: {
-            ...(formDatas.Strength as { Amount: ""; UnitOfMeasure: "" }),
+            ...(itemInfos.Strength as { Amount: ""; UnitOfMeasure: "" }),
             Amount: value,
           },
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
+            itemInfos.DrugName,
             value,
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "LongTermMedication":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           LongTermMedication: {
             ynIndicatorsimple: value,
           },
         });
         break;
       case "DrugIdentificationNumber":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
         });
         break;
       case "DrugName":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
             value,
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "Dosage":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
+            itemInfos.DrugName,
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
             value,
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "SubstitutionNotAllowed":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value === "Y" ? "N" : "Y",
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
+            itemInfos.DrugName,
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
             value === "Y" ? "N" : "Y",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "Quantity":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
+            itemInfos.DrugName,
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
             value,
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "RefillQuantity":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
-            formDatas.NumberOfRefills ?? "",
+            itemInfos.DrugName,
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
+            itemInfos.NumberOfRefills,
             value,
-            formDatas.RefillDuration ?? ""
+            itemInfos.RefillDuration
           ),
         });
         break;
       case "NumberOfRefills":
-        setFormDatas({
-          ...formDatas,
+        setItemInfos({
+          ...itemInfos,
           [name]: value,
           PrescriptionInstructions: toPrescriptionInstructions(
-            formDatas.DrugName ?? "",
-            formDatas.Strength?.Amount ?? "",
-            formDatas.Strength?.UnitOfMeasure ?? "",
-            formDatas.SubstitutionNotAllowed ?? "",
-            formDatas.Quantity ?? "",
-            formDatas.Form ?? "",
-            formDatas.Route ?? "",
-            formDatas.Dosage ?? "",
-            formDatas.DosageUnitOfMeasure ?? "",
-            formDatas.Frequency ?? "",
-            formDatas.Duration ?? "",
+            itemInfos.DrugName,
+            itemInfos.Strength.Amount,
+            itemInfos.Strength.UnitOfMeasure,
+            itemInfos.SubstitutionNotAllowed,
+            itemInfos.Quantity,
+            itemInfos.Form,
+            itemInfos.Route,
+            itemInfos.Dosage,
+            itemInfos.DosageUnitOfMeasure,
+            itemInfos.Frequency,
+            itemInfos.Duration,
             value,
-            formDatas.RefillQuantity ?? "",
-            formDatas.RefillDuration ?? ""
+            itemInfos.RefillQuantity,
+            itemInfos.RefillDuration
           ),
         });
         break;
       default:
-        setFormDatas({ ...formDatas, [name]: value });
+        setItemInfos({ ...itemInfos, [name]: value });
         break;
     }
   };
@@ -253,10 +257,10 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
     type: "Y" | "M" | "W" | "D"
   ) => {
     const value = e.target.value;
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       duration: {
-        ...(formDatas.duration as {
+        ...(itemInfos.duration as {
           Y: number;
           M: number;
           W: number;
@@ -265,35 +269,35 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         [type]: parseInt(value),
       },
       Duration: toDurationText(
-        formDatas.duration?.Y ?? 0,
-        formDatas.duration?.M ?? 0,
-        formDatas.duration?.W ?? 0,
-        formDatas.duration?.D ?? 0,
+        itemInfos.duration.Y,
+        itemInfos.duration.M,
+        itemInfos.duration.W,
+        itemInfos.duration.D,
         type,
         parseInt(value)
       ),
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
+        itemInfos.Route,
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
+        itemInfos.Frequency,
         toDurationText(
-          formDatas.duration?.Y ?? 0,
-          formDatas.duration?.M ?? 0,
-          formDatas.duration?.W ?? 0,
-          formDatas.duration?.D ?? 0,
+          itemInfos.duration.Y,
+          itemInfos.duration.M,
+          itemInfos.duration.W,
+          itemInfos.duration.D,
           type,
           parseInt(value)
         ),
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
@@ -303,10 +307,10 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
     type: "Y" | "M" | "W" | "D"
   ) => {
     const value = e.target.value;
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       refill_duration: {
-        ...(formDatas.refill_duration as {
+        ...(itemInfos.refill_duration as {
           Y: number;
           M: number;
           W: number;
@@ -315,32 +319,32 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         [type]: parseInt(value),
       },
       RefillDuration: toDurationText(
-        formDatas.refill_duration?.Y ?? 0,
-        formDatas.refill_duration?.M ?? 0,
-        formDatas.refill_duration?.W ?? 0,
-        formDatas.refill_duration?.D ?? 0,
+        itemInfos.refill_duration.Y,
+        itemInfos.refill_duration.M,
+        itemInfos.refill_duration.W,
+        itemInfos.refill_duration.D,
         type,
         parseInt(value)
       ),
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
+        itemInfos.Route,
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
+        itemInfos.Frequency,
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
         toDurationText(
-          formDatas.refill_duration?.Y ?? 0,
-          formDatas.refill_duration?.M ?? 0,
-          formDatas.refill_duration?.W ?? 0,
-          formDatas.refill_duration?.D ?? 0,
+          itemInfos.refill_duration.Y,
+          itemInfos.refill_duration.M,
+          itemInfos.refill_duration.W,
+          itemInfos.refill_duration.D,
           type,
           parseInt(value)
         )
@@ -349,115 +353,115 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
   };
 
   const handleRouteChange = (value: string) => {
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       Route: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
         value,
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
+        itemInfos.Frequency,
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
   const handleFrequencyChange = (value: string) => {
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       Frequency: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
+        itemInfos.Route,
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
         value,
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
   const handleDosageUnitChange = (value: string) => {
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       DosageUnitOfMeasure: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
+        itemInfos.Route,
+        itemInfos.Dosage,
         value,
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.Frequency,
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
   const handleStrengthUnitChange = (value: string) => {
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       Strength: {
-        ...(formDatas.Strength as { Amount: ""; UnitOfMeasure: "" }),
+        ...(itemInfos.Strength as { Amount: ""; UnitOfMeasure: "" }),
         UnitOfMeasure: value,
       },
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
         value,
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
-        formDatas.Form ?? "",
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
+        itemInfos.Form,
+        itemInfos.Route,
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
+        itemInfos.Frequency,
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
   const handleFormChange = (value: string) => {
-    setFormDatas({
-      ...formDatas,
+    setItemInfos({
+      ...itemInfos,
       Form: value,
       PrescriptionInstructions: toPrescriptionInstructions(
-        formDatas.DrugName ?? "",
-        formDatas.Strength?.Amount ?? "",
-        formDatas.Strength?.UnitOfMeasure ?? "",
-        formDatas.SubstitutionNotAllowed ?? "",
-        formDatas.Quantity ?? "",
+        itemInfos.DrugName,
+        itemInfos.Strength.Amount,
+        itemInfos.Strength.UnitOfMeasure,
+        itemInfos.SubstitutionNotAllowed,
+        itemInfos.Quantity,
         value,
-        formDatas.Route ?? "",
-        formDatas.Dosage ?? "",
-        formDatas.DosageUnitOfMeasure ?? "",
-        formDatas.Frequency ?? "",
-        formDatas.Duration ?? "",
-        formDatas.NumberOfRefills ?? "",
-        formDatas.RefillQuantity ?? "",
-        formDatas.RefillDuration ?? ""
+        itemInfos.Route,
+        itemInfos.Dosage,
+        itemInfos.DosageUnitOfMeasure,
+        itemInfos.Frequency,
+        itemInfos.Duration,
+        itemInfos.NumberOfRefills,
+        itemInfos.RefillQuantity,
+        itemInfos.RefillDuration
       ),
     });
   };
@@ -469,7 +473,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Drug identification number"
           name="DrugIdentificationNumber"
-          value={formDatas.DrugIdentificationNumber}
+          value={itemInfos.DrugIdentificationNumber}
           onChange={handleChange}
           id="med-template-drug-number"
         />
@@ -478,7 +482,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Drug name*"
           name="DrugName"
-          value={formDatas.DrugName}
+          value={itemInfos.DrugName}
           onChange={handleChange}
           id="med-template-drug-name"
         />
@@ -487,7 +491,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Strength*"
           name="Strength"
-          value={formDatas.Strength.Amount}
+          value={itemInfos.Strength.Amount}
           onChange={handleChange}
           id="med-template-strength"
         />
@@ -495,7 +499,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <GenericCombo
           list={strengthUnitCT}
-          value={formDatas.Strength.UnitOfMeasure}
+          value={itemInfos.Strength.UnitOfMeasure}
           handleChange={handleStrengthUnitChange}
           label="Strength unit of measure*"
         />
@@ -503,7 +507,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <GenericCombo
           list={formCT}
-          value={formDatas.Form}
+          value={itemInfos.Form}
           handleChange={handleFormChange}
           label="Form*"
         />
@@ -512,7 +516,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Dosage*"
           name="Dosage"
-          value={formDatas.Dosage}
+          value={itemInfos.Dosage}
           onChange={handleChange}
           id="med-template-dosage"
         />
@@ -520,7 +524,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <GenericCombo
           list={dosageUnitCT}
-          value={formDatas.DosageUnitOfMeasure}
+          value={itemInfos.DosageUnitOfMeasure}
           handleChange={handleDosageUnitChange}
           label="Dosage unit of measure*"
         />
@@ -528,7 +532,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <GenericCombo
           list={routeCT}
-          value={formDatas.Route}
+          value={itemInfos.Route}
           handleChange={handleRouteChange}
           label="Route*"
         />
@@ -536,7 +540,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <GenericCombo
           list={frequencyCT}
-          value={formDatas.Frequency}
+          value={itemInfos.Frequency}
           handleChange={handleFrequencyChange}
           label="Frequency*"
         />
@@ -544,10 +548,10 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <DurationPickerLong
           label="Duration"
-          durationYears={formDatas.duration.Y}
-          durationMonths={formDatas.duration.M}
-          durationWeeks={formDatas.duration.W}
-          durationDays={formDatas.duration.D}
+          durationYears={itemInfos.duration.Y}
+          durationMonths={itemInfos.duration.M}
+          durationWeeks={itemInfos.duration.W}
+          durationDays={itemInfos.duration.D}
           handleDurationPickerChange={handleDurationPickerChange}
         />
       </div>
@@ -555,7 +559,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Quantity"
           name="Quantity"
-          value={formDatas.Quantity}
+          value={itemInfos.Quantity}
           onChange={handleChange}
           id="med-template-quantity"
         />
@@ -563,10 +567,10 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
       <div className="med-templates__form-row">
         <DurationPickerLong
           label="Refill duration"
-          durationYears={formDatas.refill_duration.Y}
-          durationMonths={formDatas.refill_duration.M}
-          durationWeeks={formDatas.refill_duration.W}
-          durationDays={formDatas.refill_duration.D}
+          durationYears={itemInfos.refill_duration.Y}
+          durationMonths={itemInfos.refill_duration.M}
+          durationWeeks={itemInfos.refill_duration.W}
+          durationDays={itemInfos.refill_duration.D}
           handleDurationPickerChange={handleRefillDurationPickerChange}
         />
       </div>
@@ -574,7 +578,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Refill quantity"
           name="RefillQuantity"
-          value={formDatas.RefillQuantity}
+          value={itemInfos.RefillQuantity}
           onChange={handleChange}
           id="med-template-refill-quantity"
         />
@@ -583,7 +587,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <Input
           label="Number of refills"
           name="NumberOfRefills"
-          value={formDatas.NumberOfRefills}
+          value={itemInfos.NumberOfRefills}
           onChange={handleChange}
           id="med-template-nbr-refills"
         />
@@ -592,7 +596,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <GenericList
           name="LongTermMedication"
           list={ynIndicatorsimpleCT}
-          value={formDatas.LongTermMedication.ynIndicatorsimple}
+          value={itemInfos.LongTermMedication.ynIndicatorsimple}
           handleChange={handleChange}
           placeHolder="Choose..."
           label="Long-term medication*"
@@ -602,7 +606,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <GenericList
           name="SubstitutionNotAllowed"
           list={ynIndicatorsimpleCT}
-          value={formDatas.SubstitutionNotAllowed === "Y" ? "N" : "Y"}
+          value={itemInfos.SubstitutionNotAllowed === "Y" ? "N" : "Y"}
           handleChange={handleChange}
           placeHolder="Choose..."
           label="Substitution allowed*"
@@ -612,7 +616,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         <label htmlFor="med-template-notes">Notes</label>
         <textarea
           className="med-templates__form-notes"
-          value={formDatas.Notes}
+          value={itemInfos.Notes}
           onChange={handleChange}
           name="Notes"
           id="med-template-notes"
@@ -628,7 +632,7 @@ const MedTemplateEdit = ({ setEditVisible, med }: MedTemplateEditProps) => {
         </Tooltip>
         <textarea
           className="med-templates__form-instructions"
-          value={formDatas.PrescriptionInstructions}
+          value={itemInfos.PrescriptionInstructions}
           onChange={handleChange}
           name="PrescriptionInstructions"
           id="med-template-instructions"

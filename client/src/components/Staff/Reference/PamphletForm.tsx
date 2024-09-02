@@ -6,7 +6,7 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 
 import React from "react";
 import { usePamphletPost } from "../../../hooks/reactquery/mutations/pamphletsMutations";
-import { AttachmentType, PamphletType } from "../../../types/api";
+import { AttachmentType, PamphletFormType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { pamphletSchema } from "../../../validation/reference/pamphletValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
@@ -29,10 +29,12 @@ const PamphletForm = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
-  const [formDatas, setFormDatas] = useState<Partial<PamphletType>>({
-    name: "",
+  const [formDatas, setFormDatas] = useState<PamphletFormType>({
+    date_created: nowTZTimestamp(),
     created_by_id: user.id,
+    file: null,
     notes: "",
+    name: "",
   });
   const pamphletPost = usePamphletPost();
 
@@ -40,7 +42,11 @@ const PamphletForm = ({
     e.preventDefault();
     setErrMsgPost("");
     //Formatting
-    const datasToPost: Partial<PamphletType> = {
+    if (!formDatas.file) {
+      setErrMsgPost("Please upload a file");
+      return;
+    }
+    const datasToPost: PamphletFormType = {
       ...formDatas,
       date_created: nowTZTimestamp(),
     };

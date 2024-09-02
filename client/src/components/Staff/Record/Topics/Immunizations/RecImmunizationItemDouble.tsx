@@ -20,7 +20,6 @@ type RecImmunizationItemDoubleProps = {
   type: RecImmunizationTypeListType;
   route: RecImmunizationRouteType;
   immunizationInfos: ImmunizationType[];
-  rangeStart: number;
   rangeEnd: number;
   patientId: number;
   topicPost: UseMutationResult<
@@ -40,7 +39,6 @@ const RecImmunizationItemDouble = ({
   route,
   immunizationInfos,
   patientDob,
-  rangeStart,
   rangeEnd,
   patientId,
   topicPost,

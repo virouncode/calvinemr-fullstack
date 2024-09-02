@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useEdocPost } from "../../../hooks/reactquery/mutations/edocsMutations";
-import { AttachmentType, EdocType } from "../../../types/api";
+import { AttachmentType, EdocFormType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { edocSchema } from "../../../validation/reference/edocValidation";
@@ -28,11 +28,12 @@ const EdocForm = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
-  const [formDatas, setFormDatas] = useState<Partial<EdocType>>({
-    name: "",
-    file: null,
+  const [formDatas, setFormDatas] = useState<EdocFormType>({
+    date_created: nowTZTimestamp(),
     created_by_id: user.id,
+    file: null,
     notes: "",
+    name: "",
   });
   const edocPost = useEdocPost();
 
@@ -40,7 +41,7 @@ const EdocForm = ({
     e.preventDefault();
     setErrMsgPost("");
     //Formatting
-    const datasToPost: Partial<EdocType> = {
+    const datasToPost: EdocFormType = {
       ...formDatas,
       date_created: nowTZTimestamp(),
     };
@@ -128,7 +129,7 @@ const EdocForm = ({
         <div className="reference-edocs__row">
           <Input
             label="Name"
-            value={formDatas?.name ?? ""}
+            value={formDatas.name}
             onChange={handleChange}
             name="name"
             id="name"
@@ -148,7 +149,7 @@ const EdocForm = ({
           <label htmlFor="notes">Notes</label>
           <textarea
             name="notes"
-            value={formDatas.notes || ""}
+            value={formDatas.notes}
             onChange={handleChange}
             autoComplete="off"
             id="notes"

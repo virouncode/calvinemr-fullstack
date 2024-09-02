@@ -7,7 +7,10 @@ import {
   siteCT,
   ynIndicatorsimpleCT,
 } from "../../../../../omdDatas/codesTables";
-import { ImmunizationType } from "../../../../../types/api";
+import {
+  ImmunizationFormType,
+  ImmunizationType,
+} from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   dateISOToTimestampTZ,
@@ -48,20 +51,24 @@ const ImmunizationForm = ({
   topicPost,
 }: ImmunizationFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatas, setFormDatas] = useState<Partial<ImmunizationType>>({
+  const [formDatas, setFormDatas] = useState<ImmunizationFormType>({
     patient_id: patientId,
-    ImmunizationType: "",
+    date_created: nowTZTimestamp(),
+    created_by_id: user.id,
     ImmunizationName: "",
+    ImmunizationType: "",
     Manufacturer: "",
     LotNumber: "",
     Route: "",
     Site: "",
     Dose: "",
+    Date: null,
+    RefusedFlag: { ynIndicatorsimple: "N" },
     Instructions: "",
     Notes: "",
+    age: "",
+    doseNumber: 0,
     recommended: false,
-    Date: nowTZTimestamp(),
-    RefusedFlag: { ynIndicatorsimple: "N" },
   });
   const [progress, setProgress] = useState(false);
 
@@ -112,10 +119,12 @@ const ImmunizationForm = ({
     const name = e.target.name;
     let value: string | number | null = e.target.value;
     if (name === "RefusedFlag") {
-      setFormDatas({ ...formDatas, RefusedFlag: { ynIndicatorsimple: value } });
+      setFormDatas({
+        ...formDatas,
+        RefusedFlag: { ynIndicatorsimple: value as "Y" | "N" },
+      });
       return;
-    }
-    if (name === "Date") {
+    } else if (name === "Date") {
       value = dateISOToTimestampTZ(value);
     }
     setFormDatas({ ...formDatas, [name]: value });
@@ -199,6 +208,7 @@ const ImmunizationForm = ({
           name="RefusedFlag"
           value={formDatas.RefusedFlag?.ynIndicatorsimple ?? "N"}
           handleChange={handleChange}
+          placeHolder="Choose..."
         />
       </td>
       <td>

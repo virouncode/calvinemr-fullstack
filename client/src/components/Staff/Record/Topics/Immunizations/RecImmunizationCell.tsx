@@ -20,8 +20,6 @@ type RecImmunizationCellProps = {
   immunizationInfos: ImmunizationType[];
   patientDob: number;
   patientId: number;
-  loadingPatient: boolean;
-  errPatient: Error | null;
   topicPost: UseMutationResult<
     ImmunizationType,
     Error,
@@ -41,8 +39,6 @@ const RecImmunizationCell = ({
   immunizationInfos,
   patientDob,
   patientId,
-  loadingPatient,
-  errPatient,
   topicPost,
   topicPut,
   topicDelete,
@@ -81,7 +77,6 @@ const RecImmunizationCell = ({
             route={route}
             immunizationInfos={immunizationInfos}
             patientDob={patientDob}
-            rangeStart={getImmunizationInterval(age, patientDob).rangeStart}
             rangeEnd={getImmunizationInterval(age, patientDob).rangeEnd}
             patientId={patientId}
             topicPost={topicPost}

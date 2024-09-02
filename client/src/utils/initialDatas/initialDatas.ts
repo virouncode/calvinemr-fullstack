@@ -1,84 +1,7 @@
-import { AvailabilityType, CycleType, SiteType } from "../../types/api";
+import { CycleType, SiteFormType, StaffFormType } from "../../types/api";
+import { nowTZTimestamp } from "../dates/formatDates";
 
-export const initialAvailability: AvailabilityType = {
-  id: 0,
-  staff_id: 0,
-  schedule_morning: {
-    monday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    tuesday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    wednesday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    thursday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    friday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    saturday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-    sunday: [
-      { hours: "", min: "", ampm: "AM" },
-      { hours: "", min: "", ampm: "AM" },
-    ],
-  },
-  schedule_afternoon: {
-    monday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    tuesday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    wednesday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    thursday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    friday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    saturday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-    sunday: [
-      { hours: "", min: "", ampm: "PM" },
-      { hours: "", min: "", ampm: "PM" },
-    ],
-  },
-  unavailability: {
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-    sunday: false,
-  },
-  default_duration_hours: 1,
-  default_duration_min: 0,
-  date_created: 0,
-};
-
-export const initialSite: SiteType = {
-  id: 0,
+export const initialSite: SiteFormType = {
   name: "",
   address: "",
   postal_code: "",
@@ -90,8 +13,7 @@ export const initialSite: SiteType = {
   logo: null,
   rooms: [],
   created_by_id: 0,
-  date_created: 0,
-  updates: [],
+  date_created: nowTZTimestamp(),
   email: "",
   site_status: "Open",
 };
@@ -133,3 +55,27 @@ export const initialCycle = (patientId: number): Partial<CycleType> => ({
   cycle_notes: "",
   status: "Active",
 });
+
+export const initialStaff: StaffFormType = {
+  email: "",
+  first_name: "",
+  middle_name: "",
+  last_name: "",
+  full_name: "",
+  gender: "Male",
+  title: "Doctor",
+  speciality: "",
+  subspeciality: "",
+  licence_nbr: "",
+  access_level: "staff",
+  account_status: "Active",
+  cell_phone: "",
+  backup_phone: "",
+  video_link: "",
+  sign: null,
+  ai_consent: true,
+  ohip_billing_nbr: "",
+  date_created: nowTZTimestamp(),
+  created_by_id: 0,
+  site_id: 0,
+};

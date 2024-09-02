@@ -41,23 +41,38 @@ const FamilyDoctorListItem = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
-  const [itemInfos, setItemInfos] = useState<DoctorFormType | undefined>();
+  const [itemInfos, setItemInfos] = useState<DoctorFormType>({
+    firstName: item.FirstName,
+    lastName: item.LastName,
+    line1: item.Address?.Structured?.Line1,
+    city: item.Address?.Structured?.City,
+    province: item.Address?.Structured?.CountrySubDivisionCode,
+    postalCode: item.Address?.Structured?.PostalZipCode?.PostalCode,
+    zipCode: item.Address?.Structured?.PostalZipCode?.ZipCode,
+    phone: item.PhoneNumber?.[0]?.phoneNumber,
+    fax: item.FaxNumber?.phoneNumber,
+    email: item.EmailAddress,
+    speciality: item.speciality,
+    licence_nbr: item.licence_nbr,
+    ohip_billing_nbr: item.ohip_billing_nbr,
+    patients: item.patients,
+  });
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
     setItemInfos({
-      firstName: item.FirstName || "",
-      lastName: item.LastName || "",
-      line1: item.Address?.Structured?.Line1 || "",
-      city: item.Address?.Structured?.City || "",
-      province: item.Address?.Structured?.CountrySubDivisionCode || "",
-      postalCode: item.Address?.Structured?.PostalZipCode?.PostalCode || "",
-      zipCode: item.Address?.Structured?.PostalZipCode?.ZipCode || "",
-      phone: item.PhoneNumber?.[0]?.phoneNumber || "",
-      fax: item.FaxNumber?.phoneNumber || "",
-      email: item.EmailAddress || "",
-      speciality: item.speciality || "",
+      firstName: item.FirstName,
+      lastName: item.LastName,
+      line1: item.Address?.Structured?.Line1,
+      city: item.Address?.Structured?.City,
+      province: item.Address?.Structured?.CountrySubDivisionCode,
+      postalCode: item.Address?.Structured?.PostalZipCode?.PostalCode,
+      zipCode: item.Address?.Structured?.PostalZipCode?.ZipCode,
+      phone: item.PhoneNumber?.[0]?.phoneNumber,
+      fax: item.FaxNumber?.phoneNumber,
+      email: item.EmailAddress,
+      speciality: item.speciality,
       licence_nbr: item.licence_nbr,
       ohip_billing_nbr: item.ohip_billing_nbr,
       patients: item.patients,
@@ -74,28 +89,28 @@ const FamilyDoctorListItem = ({
     if (name === "postalZipCode") {
       if (postalOrZip === "postal") {
         setItemInfos({
-          ...(itemInfos as DoctorFormType),
+          ...itemInfos,
           postalCode: value,
           zipCode: "",
         });
         return;
       } else {
         setItemInfos({
-          ...(itemInfos as DoctorFormType),
+          ...itemInfos,
           postalCode: "",
           zipCode: value,
         });
         return;
       }
     }
-    setItemInfos({ ...(itemInfos as DoctorFormType), [name]: value });
+    setItemInfos({ ...itemInfos, [name]: value });
   };
 
   const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsgPost("");
     setPostalOrZip(e.target.value);
     setItemInfos({
-      ...(itemInfos as DoctorFormType),
+      ...itemInfos,
       postalCode: "",
       zipCode: "",
     });
@@ -113,34 +128,34 @@ const FamilyDoctorListItem = ({
     //Formatting
     const doctorToPut: DoctorType = {
       ...item,
-      FirstName: firstLetterUpper(itemInfos?.firstName ?? ""),
-      LastName: firstLetterUpper(itemInfos?.lastName ?? ""),
+      FirstName: firstLetterUpper(itemInfos.firstName),
+      LastName: firstLetterUpper(itemInfos.lastName),
       Address: {
         _addressType: "M",
         Structured: {
-          Line1: firstLetterUpper(itemInfos?.line1 ?? ""),
-          City: firstLetterUpper(itemInfos?.city ?? ""),
-          CountrySubDivisionCode: itemInfos?.province ?? "",
+          Line1: firstLetterUpper(itemInfos.line1),
+          City: firstLetterUpper(itemInfos.city),
+          CountrySubDivisionCode: itemInfos.province,
           PostalZipCode: {
-            PostalCode: itemInfos?.postalCode ?? "",
-            ZipCode: itemInfos?.zipCode ?? "",
+            PostalCode: itemInfos.postalCode,
+            ZipCode: itemInfos.zipCode,
           },
         },
       },
       PhoneNumber: [
         {
           _phoneNumberType: "W",
-          phoneNumber: itemInfos?.phone ?? "",
+          phoneNumber: itemInfos.phone,
         },
       ],
       FaxNumber: {
         _phoneNumberType: "W",
-        phoneNumber: itemInfos?.fax ?? "",
+        phoneNumber: itemInfos.fax,
       },
-      EmailAddress: itemInfos?.email.toLowerCase() ?? "",
-      speciality: firstLetterUpper(itemInfos?.speciality ?? ""),
-      licence_nbr: itemInfos?.licence_nbr ?? "",
-      ohip_billing_nbr: itemInfos?.ohip_billing_nbr ?? "",
+      EmailAddress: itemInfos.email.toLowerCase(),
+      speciality: firstLetterUpper(itemInfos.speciality),
+      licence_nbr: itemInfos.licence_nbr,
+      ohip_billing_nbr: itemInfos.ohip_billing_nbr,
       updates: [
         ...item.updates,
         {
@@ -153,9 +168,7 @@ const FamilyDoctorListItem = ({
 
     if (
       await confirmAlert({
-        content: `You're about to update Dr. ${itemInfos?.firstName ?? ""} ${
-          itemInfos?.lastName ?? ""
-        } infos, proceed ?`,
+        content: `You're about to update Dr. ${itemInfos.firstName} ${itemInfos.lastName} infos, proceed ?`,
       })
     ) {
       //Submission
@@ -199,17 +212,17 @@ const FamilyDoctorListItem = ({
     setErrMsgPost("");
     setEditVisible(false);
     setItemInfos({
-      firstName: item.FirstName || "",
-      lastName: item.LastName || "",
-      line1: item.Address?.Structured?.Line1 || "",
-      city: item.Address?.Structured?.City || "",
-      province: item.Address?.Structured?.CountrySubDivisionCode || "",
-      postalCode: item.Address?.Structured?.PostalZipCode?.PostalCode || "",
-      zipCode: item.Address?.Structured?.PostalZipCode?.ZipCode || "",
-      phone: item.PhoneNumber?.[0]?.phoneNumber || "",
-      fax: item.FaxNumber?.phoneNumber || "",
-      email: item.EmailAddress || "",
-      speciality: item.speciality || "",
+      firstName: item.FirstName,
+      lastName: item.LastName,
+      line1: item.Address?.Structured?.Line1,
+      city: item.Address?.Structured?.City,
+      province: item.Address?.Structured?.CountrySubDivisionCode,
+      postalCode: item.Address?.Structured?.PostalZipCode?.PostalCode,
+      zipCode: item.Address?.Structured?.PostalZipCode?.ZipCode,
+      phone: item.PhoneNumber?.[0]?.phoneNumber,
+      fax: item.FaxNumber?.phoneNumber,
+      email: item.EmailAddress,
+      speciality: item.speciality,
       licence_nbr: item.licence_nbr,
       ohip_billing_nbr: item.ohip_billing_nbr,
       patients: item.patients,
