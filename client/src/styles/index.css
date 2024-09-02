@@ -11264,11 +11264,14 @@ select:focus {
   margin-top: 20px;
 }
 .cycles-form__events-table-container {
-  height: 200px;
+  height: 400px;
   width: 100%;
   overflow: scroll;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+}
+.cycles-form__events-table-container .rw-combobox input:focus {
+  outline: none;
 }
 .cycles-form__events-table {
   table-layout: fixed;
@@ -11281,6 +11284,7 @@ select:focus {
   top: 0;
   background: #93b5e9;
   border-radius: 6px;
+  z-index: 1000;
 }
 .cycles-form__events-table th {
   min-width: 70px;

@@ -22,10 +22,10 @@ const CyclePrintEventItem = ({ event }: CyclePrintEventItemProps) => {
     <tr className="cycle-print__events-item">
       <td>{timestampToDateISOTZ(event.date)}</td>
       <td>{event.day_of_cycle}</td>
-      <td>{event.endometrial_thickness}</td>
       <td>{event.e2}</td>
       <td>{event.lh}</td>
       <td>{event.p4}</td>
+      <td>{event.endometrial_thickness}</td>
       <td>{event.left_follicles}</td>
       <td>{event.right_follicles}</td>
       <td>

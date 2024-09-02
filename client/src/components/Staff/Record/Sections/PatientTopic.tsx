@@ -1102,8 +1102,12 @@ const PatientTopic = ({
                 | InfiniteData<XanoPaginatedType<CycleType>>
                 | undefined
             }
+            topicPut={
+              topicPut as UseMutationResult<CycleType, Error, CycleType, void>
+            }
             isPending={isPending}
             error={error}
+            demographicsInfos={demographicsInfos as DemographicsType}
           />
         )}
         {topic === "CYCLES" && popUpVisible && (

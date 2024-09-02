@@ -19,6 +19,7 @@ type CycleEventFormProps = {
   setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
   item: CycleEventType;
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  index: number;
 };
 
 const CycleEventForm = ({
@@ -26,6 +27,7 @@ const CycleEventForm = ({
   setFormDatas,
   item,
   setErrMsg,
+  index,
 }: CycleEventFormProps) => {
   const handleRemove = async () => {
     setErrMsg("");
@@ -119,14 +121,6 @@ const CycleEventForm = ({
         />
       </td>
       <td>
-        <Input
-          name="endometrial_thickness"
-          value={item.endometrial_thickness}
-          onChange={handleChange}
-          width={60}
-        />
-      </td>
-      <td>
         <Input name="e2" value={item.e2} onChange={handleChange} width={60} />
       </td>
       <td>
@@ -134,6 +128,14 @@ const CycleEventForm = ({
       </td>
       <td>
         <Input name="p4" value={item.p4} onChange={handleChange} width={60} />
+      </td>
+      <td>
+        <Input
+          name="endometrial_thickness"
+          value={item.endometrial_thickness}
+          onChange={handleChange}
+          width={60}
+        />
       </td>
       <td>
         <textarea
@@ -160,6 +162,7 @@ const CycleEventForm = ({
           value={item.med_1.name}
           handleChange={handleChangeMedName}
           med_number={1}
+          index={index}
         />
         <Input
           value={item.med_1.notes}
@@ -172,6 +175,7 @@ const CycleEventForm = ({
           value={item.med_2.name}
           handleChange={handleChangeMedName}
           med_number={2}
+          index={index}
         />
         <Input
           value={item.med_2.notes}
@@ -184,6 +188,7 @@ const CycleEventForm = ({
           value={item.med_3.name}
           handleChange={handleChangeMedName}
           med_number={3}
+          index={index}
         />
         <Input
           value={item.med_3.notes}
@@ -196,6 +201,7 @@ const CycleEventForm = ({
           value={item.med_4.name}
           handleChange={handleChangeMedName}
           med_number={4}
+          index={index}
         />
         <Input
           value={item.med_4.notes}
@@ -208,6 +214,7 @@ const CycleEventForm = ({
           value={item.med_5.name}
           handleChange={handleChangeMedName}
           med_number={5}
+          index={index}
         />
         <Input
           value={item.med_5.notes}
@@ -220,6 +227,7 @@ const CycleEventForm = ({
           value={item.med_6.name}
           handleChange={handleChangeMedName}
           med_number={6}
+          index={index}
         />
         <Input
           value={item.med_6.notes}
@@ -232,6 +240,7 @@ const CycleEventForm = ({
           value={item.med_7.name}
           handleChange={handleChangeMedName}
           med_number={7}
+          index={index}
         />
         <Input
           value={item.med_7.notes}

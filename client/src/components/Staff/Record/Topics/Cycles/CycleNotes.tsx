@@ -41,7 +41,10 @@ const CycleNotes = ({
       <div style={{ marginBottom: "10px" }}>
         <Button onClick={handleAdd} label="Add" />
       </div>
-      <div className="cycles-form__events-table-container">
+      <div
+        className="cycles-form__events-table-container"
+        style={{ height: "200px" }}
+      >
         <table className="cycles-form__events-table">
           <thead>
             <tr>

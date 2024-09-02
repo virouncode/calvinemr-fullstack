@@ -62,10 +62,10 @@ const CycleEvents = ({
               <th>Action</th>
               <th>Date</th>
               <th>Day of cycle</th>
-              <th>End</th>
               <th>E2</th>
               <th>LH</th>
               <th>P4</th>
+              <th>End</th>
               <th>Left follicles</th>
               <th>Right follicles</th>
               <th>Medication 1</th>
@@ -86,6 +86,7 @@ const CycleEvents = ({
                   formDatas={formDatas}
                   setFormDatas={setFormDatas}
                   setErrMsg={setErrMsg}
+                  index={index}
                 />
               ))
             ) : (

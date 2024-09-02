@@ -27,12 +27,12 @@ const PrescriptionHeader = ({ site }: PrescriptionHeaderProps) => {
         </p>
         {site && (
           <p>
-            {site?.address} {site?.city} {site?.province_state}{" "}
+            {site?.address}, {site?.city}, {site?.province_state},{" "}
             {site?.postal_code}{" "}
           </p>
         )}
-        <p>Phone: {site?.phone || ""}</p>
-        <p>Fax: {site?.fax || ""}</p>
+        <p>Phone: {site?.phone ?? ""}</p>
+        <p>Fax: {site?.fax ?? ""}</p>
         <p>{clinic?.email ?? ""}</p>
         <p>{clinic?.website ?? ""}</p>
       </div>

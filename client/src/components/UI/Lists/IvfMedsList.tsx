@@ -39,15 +39,22 @@ type IvfMedsListProps = {
   handleChange: (value: string, med_number: number) => void;
   value: string;
   med_number: number;
+  index: number;
 };
 
-const IvfMedsList = ({ handleChange, value, med_number }: IvfMedsListProps) => {
+const IvfMedsList = ({
+  handleChange,
+  value,
+  med_number,
+  index,
+}: IvfMedsListProps) => {
   return (
     <Combobox
       placeholder="Choose or type..."
       value={value}
       onChange={(value) => handleChange(value, med_number)}
       data={ivfMeds}
+      dropUp={index >= 3}
     />
   );
 };

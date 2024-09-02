@@ -398,7 +398,7 @@ const CareElementsListAdd = ({
   return (
     <>
       <div className="care-elements__row">
-        <Button onClick={handleAddTopic} label="Add topic" />
+        <Button onClick={handleAddTopic} label="Add item" />
       </div>
       <div className="care-elements__row">
         <label className="care-elements__row-label">Date:</label>
