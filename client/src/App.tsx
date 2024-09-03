@@ -51,6 +51,7 @@ import StaffReferencePage from "./pages/Staff/StaffReferencePage";
 import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
 import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
+import PatientPharmaciesPage from "./pages/Patient/PatientPharmaciesPage";
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
@@ -164,6 +165,7 @@ const App = () => {
             <Route path="messages" element={<PatientMessagesPage />} />
             <Route path="appointments" element={<PatientAppointmentsPage />} />
             <Route path="pamphlets" element={<PatientPamphletsPage />} />
+            <Route path="pharmacies" element={<PatientPharmaciesPage />} />
             <Route path="my-account" element={<PatientMyAccountPage />} />
             <Route path="credentials" element={<PatientCredentialsPage />} />
           </Route>

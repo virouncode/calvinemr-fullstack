@@ -27,6 +27,7 @@
 @import "./pages/faxPage";
 @import "./pages/patientPamphletsPage";
 @import "./pages/closedPage";
+@import "./pages/patientPharmaciesPage";
 @import "./components/header";
 @import "./components/carousel";
 @import "./components/footer";
@@ -139,4 +140,5 @@
 @import "./components/closed";
 @import "./components/closed";
 @import "./components/closedPractician";
+@import "./components/patientPharmacies";
 @import "flatpickr/dist/themes/material_blue.css";

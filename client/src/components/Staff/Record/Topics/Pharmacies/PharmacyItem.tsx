@@ -8,7 +8,7 @@ import {
   PharmacyFormType,
   PharmacyType,
 } from "../../../../../types/api";
-import { UserStaffType } from "../../../../../types/app";
+import { UserPatientType, UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
@@ -46,7 +46,9 @@ const PharmacyItem = ({
   patientId,
 }: PharmacyItemProps) => {
   //HOOKS
-  const { user } = useUserContext() as { user: UserStaffType };
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<PharmacyFormType>({
     name: item.Name,
@@ -236,7 +238,10 @@ const PharmacyItem = ({
                   }
                   label="Prefer"
                 />
-                <EditButton onClick={handleEditClick} disabled={progress} />
+                <EditButton
+                  onClick={handleEditClick}
+                  disabled={progress || user.access_level === "patient"}
+                />
               </>
             ) : (
               <>

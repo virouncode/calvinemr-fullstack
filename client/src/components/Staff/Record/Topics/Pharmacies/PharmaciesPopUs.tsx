@@ -110,7 +110,6 @@ const PharmaciesPopUp = ({
           topicDatas={topicDatas}
           topicPost={topicPost}
           topicPut={topicPut}
-          topicDelete={topicDelete}
           isPending={isPending}
           error={error}
           patientId={patientId}

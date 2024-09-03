@@ -8,6 +8,7 @@ import xanoGet from "../../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
+  useAppointmentDelete,
   useAppointmentPost,
   useAppointmentPut,
 } from "../../../../hooks/reactquery/mutations/appointmentsMutations";
@@ -21,7 +22,10 @@ import {
 } from "../../../../types/api";
 import { RemainingStaffType, UserStaffType } from "../../../../types/app";
 import { getAvailableRooms } from "../../../../utils/appointments/getAvailableRooms";
-import { toNextOccurence } from "../../../../utils/appointments/occurences";
+import {
+  toLastOccurence,
+  toNextOccurence,
+} from "../../../../utils/appointments/occurences";
 import { parseToAppointment } from "../../../../utils/appointments/parseToAppointment";
 import { statuses } from "../../../../utils/appointments/statuses";
 import {
@@ -42,6 +46,7 @@ import { appointmentSchema } from "../../../../validation/record/appointmentVali
 import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import ConfirmDialogRecurringChange from "../ConfirmDialogRecurringChange";
+import ConfirmDialogRecurringDelete from "../ConfirmDialogRecurringDelete";
 import EventFormButtons from "./EventFormButtons";
 import EventFormGuests from "./EventFormGuests";
 import EventFormHostRow from "./EventFormHostRow";
@@ -53,6 +58,8 @@ import Invitation from "./Invitation/Invitation";
 
 type EventFormProps = {
   currentEvent: React.MutableRefObject<EventInput | null>;
+  currentElement: React.MutableRefObject<HTMLElement | null>;
+  lastCurrentId: React.MutableRefObject<string>;
   setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   remainingStaff: RemainingStaffType[];
   setCalendarSelectable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,11 +71,14 @@ type EventFormProps = {
   sitesIds: number[];
   setSitesIds: React.Dispatch<React.SetStateAction<number[]>>;
   isFirstEvent: boolean;
+  setSelectable: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 //MY COMPONENT
 const EventForm = ({
   currentEvent,
+  currentElement,
+  lastCurrentId,
   setFormVisible,
   remainingStaff,
   setCalendarSelectable,
@@ -80,11 +90,12 @@ const EventForm = ({
   sitesIds,
   setSitesIds,
   isFirstEvent,
+  setSelectable,
 }: EventFormProps) => {
   //=========================== Hooks =================================//
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [formDatas, setFormDatas] = useState(
+  const [formDatas, setFormDatas] = useState<AppointmentType>(
     parseToAppointment(currentEvent.current as EventInput)
   );
   const [previousStart, setPreviousStart] = useState<number>(
@@ -97,6 +108,8 @@ const EventForm = ({
   const [invitationVisible, setInvitationVisible] = useState(false);
   const [progress, setProgress] = useState(false);
   const [confirmDlgRecChangeVisible, setConfirmDlgRecChangeVisible] =
+    useState(false);
+  const [confirmDlgRecDeleteVisible, setConfirmDlgRecDeleteVisible] =
     useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
 
@@ -118,6 +131,7 @@ const EventForm = ({
   //=========================== Queries =================================//
   const appointmentPost = useAppointmentPost();
   const appointmentPut = useAppointmentPut();
+  const appointmentDelete = useAppointmentDelete();
   //============================ HANDLERS ==========================//
   const handlePurposeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
@@ -530,6 +544,121 @@ const EventForm = ({
     setErrMsgPost("");
     setFormVisible(false);
     setCalendarSelectable(true);
+  };
+
+  const handleDeleteEvent = async () => {
+    //XANO
+    const appointment: AppointmentType = await xanoGet(
+      `/appointments/${formDatas.id}`,
+      "staff"
+    );
+    //If the event is recurring
+    if (appointment.recurrence !== "Once") {
+      //open dialog for recurring events
+      setConfirmDlgRecDeleteVisible(true);
+      return;
+    }
+    //Delete the event
+    else if (
+      await confirmAlert({
+        content: "Do you really want to remove this event ?",
+      })
+    ) {
+      appointmentDelete.mutate(formDatas.id);
+      setFormVisible(false);
+      setSelectable(true);
+      currentEvent.current = null;
+      currentElement.current = null;
+      lastCurrentId.current = "";
+    }
+  };
+
+  const handleCancelRecurringDelete = () => {
+    setConfirmDlgRecDeleteVisible(false);
+  };
+  const handleDeleteThisEvent = async () => {
+    const appointmentToPut: AppointmentType = await xanoGet(
+      `/appointments/${formDatas.id}`,
+      "staff"
+    );
+    if (isFirstEvent) {
+      const nextOccurence = toNextOccurence(
+        formDatas.start,
+        formDatas.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      );
+      appointmentToPut.start = nextOccurence[0];
+      appointmentToPut.end = nextOccurence[1];
+      appointmentToPut.AppointmentDate = timestampToDateISOTZ(nextOccurence[0]);
+      appointmentToPut.AppointmentTime = timestampToTimeISOTZ(nextOccurence[0]);
+      appointmentToPut.rrule.dtstart = timestampToDateTimeSecondsISOTZ(
+        nextOccurence[0]
+      );
+    } else {
+      appointmentToPut.exrule = appointmentToPut.exrule?.length
+        ? [
+            ...appointmentToPut.exrule,
+            {
+              freq: appointmentToPut.rrule?.freq,
+              interval: appointmentToPut.rrule?.interval,
+              dtstart: `${timestampToDateISOTZ(
+                formDatas.start
+              )}T${timestampToTimeISOTZ(appointmentToPut.start)}`,
+              until: `${timestampToDateISOTZ(
+                formDatas.end
+              )}T${timestampToTimeISOTZ(appointmentToPut.end)}`,
+            },
+          ]
+        : [
+            {
+              freq: appointmentToPut.rrule?.freq,
+              interval: appointmentToPut.rrule?.interval as number,
+              dtstart: `${timestampToDateISOTZ(
+                formDatas.start
+              )}T${timestampToTimeISOTZ(appointmentToPut.start)}`,
+              until: `${timestampToDateISOTZ(
+                formDatas.end
+              )}T${timestampToTimeISOTZ(appointmentToPut.end)}`,
+            },
+          ];
+    }
+    appointmentPut.mutate(appointmentToPut);
+    currentEvent.current = null;
+    lastCurrentId.current = "";
+    setConfirmDlgRecDeleteVisible(false);
+    setFormVisible(false);
+    setSelectable(true);
+  };
+
+  const handleDeleteAllEvents = async () => {
+    appointmentDelete.mutate(formDatas.id);
+    currentEvent.current = null;
+    lastCurrentId.current = "";
+    setConfirmDlgRecDeleteVisible(false);
+    setFormVisible(false);
+    setSelectable(true);
+  };
+
+  const handleDeleteAllFutureEvents = async () => {
+    const appointmentToPut: AppointmentType = await xanoGet(
+      `/appointments/${formDatas.id}`,
+      "staff"
+    );
+    appointmentToPut.rrule.until = timestampToDateTimeSecondsISOTZ(
+      toLastOccurence(
+        formDatas.start,
+        formDatas.end,
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
+      )[0]
+    );
+    appointmentPut.mutate(appointmentToPut);
+    currentEvent.current = null;
+    lastCurrentId.current = "";
+    setConfirmDlgRecDeleteVisible(false);
+    setFormVisible(false);
+    setSelectable(true);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -969,6 +1098,7 @@ const EventForm = ({
             handleCancel={handleCancel}
             handleInvitation={handleInvitation}
             progress={progress}
+            handleDeleteEvent={handleDeleteEvent}
           />
         </form>
       ) : (
@@ -999,6 +1129,15 @@ const EventForm = ({
           handleChangeAllFutureEvents={handleChangeAllFutureEvents}
           isFirstEvent={isFirstEvent}
           statusAdvice={statusAdvice}
+        />
+      )}
+      {confirmDlgRecDeleteVisible && (
+        <ConfirmDialogRecurringDelete
+          handleCancel={handleCancelRecurringDelete}
+          handleDeleteThisEvent={handleDeleteThisEvent}
+          handleDeleteAllEvents={handleDeleteAllEvents}
+          handleDeleteAllFutureEvents={handleDeleteAllFutureEvents}
+          isFirstEvent={isFirstEvent}
         />
       )}
     </div>

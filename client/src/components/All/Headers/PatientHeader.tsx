@@ -56,6 +56,18 @@ const PatientHeader = ({ setCreditsVisible }: PatientHeaderProps) => {
           </li>
           <li>
             <NavLink
+              to="/patient/pharmacies"
+              className={(nav) =>
+                nav.isActive
+                  ? "header__link header__link--patient header__link--active"
+                  : "header__link header__link--patient"
+              }
+            >
+              Pharmacies
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/patient/my-account"
               className={(nav) =>
                 nav.isActive

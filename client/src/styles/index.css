@@ -472,10 +472,6 @@ select:focus {
   height: 100%;
   padding: 20px 0;
 }
-.billing-section__title {
-  font-size: 1.2rem;
-  text-align: center;
-}
 
 .patient-messages-section {
   width: 100%;
@@ -593,6 +589,14 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.patient-pharmacies-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 20px 0;
+  overflow-y: scroll;
 }
 
 .header {
@@ -11581,4 +11585,51 @@ select:focus {
 }
 .closed-practician button {
   margin-left: 20px;
+}
+
+.patient-pharmacies__content {
+  width: 97%;
+  margin: 10px auto;
+}
+.patient-pharmacies__preferred label,
+.patient-pharmacies__preferred p {
+  font-size: 0.85rem;
+}
+.patient-pharmacies__preferred-title {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.patient-pharmacies__preferred-empty {
+  text-align: center;
+  font-size: 0.85rem;
+}
+.patient-pharmacies__directory {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.patient-pharmacies__directory-title {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.patient-pharmacies__directory-label {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.patient-pharmacies__directory-search-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+.patient-pharmacies__directory-search-item label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-right: 10px;
 }/*# sourceMappingURL=index.css.map */

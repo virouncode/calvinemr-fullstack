@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { provinceStateTerritoryCT } from "../../../../../omdDatas/codesTables";
 import { PharmacyFormType, PharmacyType } from "../../../../../types/api";
-import { UserStaffType } from "../../../../../types/app";
+import { UserPatientType, UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { pharmacySchema } from "../../../../../validation/record/pharmacyValidation";
@@ -36,7 +36,9 @@ const PharmacyForm = ({
   topicPost,
 }: PharmacyFormProps) => {
   //HOOKS
-  const { user } = useUserContext() as { user: UserStaffType };
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [formDatas, setFormDatas] = useState<PharmacyFormType>({
     name: "",
@@ -50,6 +52,7 @@ const PharmacyForm = ({
     email: "",
   });
   const [progress, setProgress] = useState(false);
+
   //HANDLERS
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -114,13 +117,13 @@ const PharmacyForm = ({
       },
       EmailAddress: formDatas.email.toLowerCase(),
       date_created: nowTZTimestamp(),
-      created_by_id: user.id,
+      created_by_id: user.access_level === "staff" ? user.id : 0,
     };
 
     //Submission
     setProgress(true);
     topicPost.mutate(topicToPost, {
-      onSuccess: () => {
+      onSuccess: async () => {
         editCounter.current -= 1;
         setAddVisible(false);
       },

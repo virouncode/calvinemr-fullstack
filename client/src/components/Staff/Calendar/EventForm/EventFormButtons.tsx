@@ -6,6 +6,7 @@ import { UserStaffType } from "../../../../types/app";
 import Button from "../../../UI/Buttons/Button";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import CloseButton from "../../../UI/Buttons/CloseButton";
+import DeleteButton from "../../../UI/Buttons/DeleteButton";
 import SubmitButton from "../../../UI/Buttons/SubmitButton";
 
 type EventFormButtonsProps = {
@@ -16,6 +17,7 @@ type EventFormButtonsProps = {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
   progress: boolean;
+  handleDeleteEvent: () => void;
 };
 
 const EventFormButtons = ({
@@ -24,6 +26,7 @@ const EventFormButtons = ({
   handleCancel,
   handleInvitation,
   progress,
+  handleDeleteEvent,
 }: EventFormButtonsProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -44,6 +47,7 @@ const EventFormButtons = ({
             }
             label="Send Invitation"
           />
+          <DeleteButton onClick={handleDeleteEvent} disabled={progress} />
         </>
       ) : (
         <CloseButton onClick={handleCancel} disabled={progress} />

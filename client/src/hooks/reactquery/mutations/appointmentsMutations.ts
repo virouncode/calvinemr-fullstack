@@ -336,3 +336,28 @@ export const useAppointmentPut = () => {
     },
   });
 };
+
+export const useAppointmentDelete = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (appointmentIdToDelete: number) =>
+      xanoDelete(`/appointments/${appointmentIdToDelete}`, "staff"),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["appointments"] });
+      socket?.emit("message", { key: ["appointment"] });
+      socket?.emit("message", { key: ["APPOINTMENTS"] });
+      socket?.emit("message", { key: ["staffAppointments"] });
+      socket?.emit("message", { key: ["patientAppointments"] });
+      socket?.emit("message", { key: ["dashboardVisits"] });
+      socket?.emit("message", { key: ["allPatientAppointments"] });
+      toast.success(`Appointment deleted successfully`, {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to delete appointment: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};

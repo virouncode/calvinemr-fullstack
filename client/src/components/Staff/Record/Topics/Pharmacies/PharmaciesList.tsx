@@ -5,12 +5,14 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useState } from "react";
+import useUserContext from "../../../../../hooks/context/useUserContext";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
   PharmacyType,
   XanoPaginatedType,
 } from "../../../../../types/api";
+import { UserPatientType, UserStaffType } from "../../../../../types/app";
 import Button from "../../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
@@ -28,7 +30,6 @@ type PharmaciesListProps = {
     void
   >;
   topicPut: UseMutationResult<PharmacyType, Error, PharmacyType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
   isPending: boolean;
   error: Error | null;
   patientId: number;
@@ -50,7 +51,6 @@ const PharmaciesList = ({
   topicDatas,
   topicPost,
   topicPut,
-  topicDelete,
   isPending,
   error,
   patientId,
@@ -61,6 +61,9 @@ const PharmaciesList = ({
   isFetching,
 }: PharmaciesListProps) => {
   //HOOKS
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
 
@@ -107,7 +110,17 @@ const PharmaciesList = ({
         />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="pharmacies-list__table-container" ref={divRef}>
+      <div
+        className="pharmacies-list__table-container"
+        ref={divRef}
+        style={{
+          height:
+            user.access_level === "patient" &&
+            user.demographics.PreferredPharmacy
+              ? "240px"
+              : "",
+        }}
+      >
         <table className="pharmacies-list__table">
           <thead>
             <tr>

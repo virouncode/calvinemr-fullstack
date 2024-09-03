@@ -4,26 +4,33 @@ import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { TopicDataMap, TopicType } from "../../../types/api";
+import { UserPatientType, UserStaffType } from "../../../types/app";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { getTopicUrlMutation } from "../../../utils/topics/getTopicUrl";
 import useSocketContext from "../../context/useSocketContext";
+import useUserContext from "../../context/useUserContext";
 
 export const useTopicPost = <T extends TopicType>(
   topic: T,
   patientId: number
 ) => {
   const { socket } = useSocketContext();
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
+  const userType = user.access_level;
   const queryClient = useQueryClient();
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
   return useMutation<TopicDataMap[T], Error, Partial<TopicDataMap[T]>, void>({
     mutationFn: (topicToPost: Partial<TopicDataMap[T]>) =>
-      xanoPost(topicUrlMutation, "staff", topicToPost),
+      xanoPost(topicUrlMutation, userType, topicToPost),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [topic, patientId] });
     },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
+
       if (topic === "APPOINTMENTS") {
         socket?.emit("message", { key: ["appointments"] });
         socket?.emit("message", { key: ["appointment"] });
@@ -36,6 +43,7 @@ export const useTopicPost = <T extends TopicType>(
       }
       if (topic === "PHARMACIES") {
         socket?.emit("message", { key: [topic] });
+        socket?.emit("message", { key: ["pharmacies"] });
       }
       if (topic === "CARE ELEMENTS") {
         socket?.emit("message", { key: ["patient", patientId] });
@@ -61,12 +69,16 @@ export const useTopicPut = <T extends TopicType>(
   patientId: number
 ) => {
   const { socket } = useSocketContext();
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
+  const userType = user.access_level;
   const queryClient = useQueryClient();
   const topicUrlMutation: string = getTopicUrlMutation(topic);
 
   return useMutation<TopicDataMap[T], Error, TopicDataMap[T], void>({
     mutationFn: (topicToPut: TopicDataMap[T]) =>
-      xanoPut(`${topicUrlMutation}/${topicToPut.id}`, "staff", topicToPut),
+      xanoPut(`${topicUrlMutation}/${topicToPut.id}`, userType, topicToPut),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [topic, patientId] });
     },

@@ -8,21 +8,14 @@ export const usePamphlets = (search: string) => {
   const { user } = useUserContext() as {
     user: UserStaffType | UserPatientType;
   };
+  const userType = user.access_level;
   return useInfiniteQuery<XanoPaginatedType<PamphletType>>({
     queryKey: ["pamphlets", search],
-    queryFn: ({ pageParam }) => {
-      if (user.access_level === "staff")
-        return xanoGet("/pamphlets", "staff", {
-          search,
-          page: pageParam,
-        });
-      else {
-        return xanoGet("/pamphlets", "patient", {
-          search,
-          page: pageParam,
-        });
-      }
-    },
+    queryFn: ({ pageParam }) =>
+      xanoGet("/pamphlets", userType, {
+        search,
+        page: pageParam,
+      }),
     initialPageParam: 1,
     getNextPageParam: (prevData) => prevData.nextPage,
   });

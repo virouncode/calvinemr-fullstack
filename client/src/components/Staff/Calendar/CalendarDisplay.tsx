@@ -55,6 +55,8 @@ type CalendarDisplayProps = {
   formVisible: boolean;
   setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   currentEvent: React.MutableRefObject<EventInput | null>;
+  currentElement: React.MutableRefObject<HTMLElement | null>;
+  lastCurrentId: React.MutableRefObject<string>;
   setFormColor: React.Dispatch<React.SetStateAction<string>>;
   formColor: string;
   setSelectable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -92,6 +94,8 @@ const CalendarDisplay = ({
   formVisible,
   setFormVisible,
   currentEvent,
+  currentElement,
+  lastCurrentId,
   setFormColor,
   formColor,
   setSelectable,
@@ -207,6 +211,8 @@ const CalendarDisplay = ({
         >
           <EventForm
             currentEvent={currentEvent}
+            currentElement={currentElement}
+            lastCurrentId={lastCurrentId}
             setFormVisible={setFormVisible}
             remainingStaff={getRemainingStaff(user.id, staffInfos)}
             setFormColor={setFormColor}
@@ -218,6 +224,7 @@ const CalendarDisplay = ({
             sitesIds={sitesIds}
             setSitesIds={setSitesIds}
             isFirstEvent={isFirstEvent}
+            setSelectable={setSelectable}
           />
         </FakeWindow>
       )}

@@ -1356,8 +1356,8 @@ const Calendar = () => {
       const nextOccurence = toNextOccurence(
         startDate,
         endDate,
-        appointmentToPut.rrule as RruleType,
-        appointmentToPut.exrule as ExruleType
+        appointmentToPut.rrule,
+        appointmentToPut.exrule
       );
       appointmentToPut.start = nextOccurence[0];
       appointmentToPut.end = nextOccurence[1];
@@ -1497,6 +1497,8 @@ const Calendar = () => {
           formVisible={formVisible}
           setFormVisible={setFormVisible}
           currentEvent={currentEvent}
+          currentElement={currentElement}
+          lastCurrentId={lastCurrentId}
           setFormColor={setFormColor}
           formColor={formColor}
           setSelectable={setSelectable}
