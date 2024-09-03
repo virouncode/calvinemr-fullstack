@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { toast } from "react-toastify";
 import userLogo from "../../../../../assets/img/doctorLogo.png";
-import botLogo from "../../../../../assets/img/logoCarreTest.png";
+import botLogo from "../../../../../assets/img/logoCarre.png";
 import { AIMessageType } from "../../../../../types/app";
 import { copyCalvinAIMsgToClipboard } from "../../../../../utils/js/copyToClipboard";
 import Button from "../../../../UI/Buttons/Button";
