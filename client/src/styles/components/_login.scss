@@ -1,0 +1,86 @@
+.login {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__title {
+  font-size: $size-3xl;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.login__form {
+  width: 15.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.login__instructions {
+  text-align: center;
+  font-size: $size-sm;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.login__form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  label {
+    font-weight: bold;
+    font-size: $size-sm;
+  }
+}
+
+.login__btn-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  button {
+    flex: 1;
+    font-size: $size-xs;
+  }
+}
+
+.login__forgot {
+  text-align: end;
+  font-size: $size-xs;
+  margin-top: 5px;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/*md*/
+@media (min-width: 768px) {
+  .login__title {
+    font-size: $size-4xl;
+  }
+  .login__form {
+    width: 18rem;
+  }
+  .login__form-row {
+    label {
+      font-size: $size-base;
+    }
+    input {
+      font-size: $size-base;
+    }
+  }
+  .login__instructions {
+    font-size: $size-base;
+  }
+  .login__btn-container {
+    button {
+      font-size: $size-sm;
+    }
+  }
+}

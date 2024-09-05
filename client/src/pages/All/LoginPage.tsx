@@ -1,5 +1,7 @@
-import React, { Helmet, HelmetProvider } from "react-helmet-async";
-import Login from "../../components/All/Login/Login";
+import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import LoginForm from "../../components/All/Login/LoginForm";
+import LoginTitle from "../../components/All/Login/LoginTitle";
 
 const LoginPage = () => {
   return (
@@ -9,9 +11,9 @@ const LoginPage = () => {
           <title>Calvin EMR Login</title>
         </Helmet>
       </HelmetProvider>
-      <section className="login-section">
-        {/* <LoginCard /> */}
-        <Login />
+      <section className="login container">
+        <LoginTitle />
+        <LoginForm />
       </section>
     </>
   );

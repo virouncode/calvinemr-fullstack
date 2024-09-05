@@ -55,12 +55,6 @@ $pink2: #e63a6e;
   justify-content: center;
   align-items: center;
 }
-@mixin alignChidren($space) {
-  display: flex;
-  justify-content: $space;
-  align-items: center;
-}
-
 //RESETS
 * {
   margin: 0;

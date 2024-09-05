@@ -5,28 +5,35 @@ import { UserStaffType } from "../../../../types/app";
 import PenIcon from "../../../UI/Icons/PenIcon";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
+import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import AvailabilityEditor from "./AvailabilityEditor";
 
 type AvailabilityProps = {
   editAvailability: boolean;
   setEditAvailability: React.Dispatch<React.SetStateAction<boolean>>;
+  isPending: boolean;
 };
 
 const Availability = ({
   editAvailability,
   setEditAvailability,
+  isPending,
 }: AvailabilityProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   //Queries
-  const { data: availability, isPending, error } = useAvailability(user.id);
+  const {
+    data: availability,
+    isPending: isPendingAvailability,
+    error,
+  } = useAvailability(user.id);
 
   const handleEdit = () => {
     setEditAvailability((v) => !v);
   };
 
-  if (isPending)
+  if (isPendingAvailability)
     return (
       <div className="calendar__availability">
         <LoadingParagraph />
@@ -43,7 +50,13 @@ const Availability = ({
       <>
         <div className="calendar__availability">
           <label>Availability</label>
-          <PenIcon onClick={handleEdit}></PenIcon>
+          <span style={{ width: "0.8rem", display: "inline-block" }}>
+            {isPending ? (
+              <CircularProgressSmall />
+            ) : (
+              <PenIcon onClick={handleEdit}></PenIcon>
+            )}
+          </span>
         </div>
         {editAvailability && (
           <FakeWindow

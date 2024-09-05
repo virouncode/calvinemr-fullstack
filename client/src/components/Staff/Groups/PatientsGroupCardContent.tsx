@@ -13,11 +13,9 @@ const PatientsGroupCardContent = ({ group }: PatientsGroupCardContentProps) => {
     ({ patient_infos }) => patient_infos.patient_id
   );
   return (
-    <div className="patients-groups__card-content">
-      <div className="patients-groups__card-description">
-        {group.description}
-      </div>
-      <div className="patients-groups__card-list">
+    <>
+      <div className="groups__card-description">{group.description}</div>
+      <div className="groups__card-list">
         <ul>
           {order.length > 0 ? (
             order.map((item, index) => (
@@ -32,11 +30,11 @@ const PatientsGroupCardContent = ({ group }: PatientsGroupCardContentProps) => {
               />
             ))
           ) : (
-            <EmptyLi text="No patients in this group" paddingLateral={5} />
+            <EmptyLi text="No patients in this group" paddingLateral={8} />
           )}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 

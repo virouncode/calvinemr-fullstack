@@ -17,7 +17,6 @@ import PatientsGroupEdit from "./PatientsGroupEdit";
 
 type PatientsClinicGroupCardProps = {
   group: GroupType;
-  global: boolean;
   setNewMessageExternalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setInitialRecipients: React.Dispatch<
     React.SetStateAction<
@@ -33,7 +32,6 @@ type PatientsClinicGroupCardProps = {
 
 const PatientsClinicGroupCard = ({
   group,
-  global,
   setNewMessageExternalVisible,
   setInitialRecipients,
 }: PatientsClinicGroupCardProps) => {
@@ -81,7 +79,7 @@ const PatientsClinicGroupCard = ({
     });
   };
   return (
-    <div className="patients-groups__card">
+    <div className="groups__card">
       <PatientsGroupCardHeader
         group={group}
         handleDelete={handleDelete}

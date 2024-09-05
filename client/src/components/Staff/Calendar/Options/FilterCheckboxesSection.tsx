@@ -28,8 +28,8 @@ const FilterCheckboxesSection = ({
   const { user } = useUserContext() as { user: UserStaffType };
 
   return (
-    <ul>
-      <li className="filter-checkbox-category">
+    <>
+      <li className="calendar__staff-checkboxes-title">
         <Checkbox
           id={categoryName}
           onChange={handleCheckCategory}
@@ -52,7 +52,7 @@ const FilterCheckboxesSection = ({
           }
         />
       ))}
-    </ul>
+    </>
   );
 };
 

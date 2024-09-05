@@ -1,0 +1,97 @@
+// /*xs*/
+// @media (min-width: 475px) {
+// }
+// /*sm*/
+// @media (min-width: 640px) {
+// }
+// /*md*/
+// @media (min-width: 768px) {
+// }
+// /*lg*/
+// @media (min-width: 1024px) {
+// }
+// /*xl*/
+// @media (min-width: 1280px) {
+// }
+// /*2xl*/
+// @media (min-width: 1536px) {
+// }
+
+.btn {
+  font-size: $size-sm;
+  display: inline-block;
+  text-decoration: none;
+  background-color: $greylight;
+  color: $black;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  transition: transform 0.2s;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  &:hover {
+    background: $grey2;
+  }
+  &:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+}
+.save-btn {
+  background: $pink;
+  color: $white;
+  &:hover {
+    background: $pink2;
+  }
+}
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $white;
+  &--login {
+    backdrop-filter: blur(20px);
+    background-color: transparent;
+  }
+}
+
+/*xs*/
+@media (min-width: 475px) {
+  .container {
+    max-width: 475px;
+  }
+}
+/*sm*/
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+/*md*/
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+/*lg*/
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+/*xl*/
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+/*2xl*/
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}

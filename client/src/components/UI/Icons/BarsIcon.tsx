@@ -1,30 +1,26 @@
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-type EyeIconProps = {
+type BarsIconProps = {
   onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   ml?: number;
   mr?: number;
-  slash?: boolean;
 };
 
-const EyeIcon = ({ onClick, ml = 0, mr = 0, slash = false }: EyeIconProps) => {
+const BarsIcon = ({ onClick, ml = 0, mr = 0 }: BarsIconProps) => {
   return (
     <FontAwesomeIcon
-      icon={slash ? faEyeSlash : faEye}
+      icon={faBars}
       onClick={onClick}
       style={{
         cursor: "pointer",
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
-        position: "absolute",
-        right: "5px",
-        top: "6px",
-        fontSize: "0.7rem",
+        fontSize: "1.5rem",
       }}
     />
   );
 };
 
-export default EyeIcon;
+export default BarsIcon;

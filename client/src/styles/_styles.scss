@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  // line-height: calc(1em + 0.5rem);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+//COLORS
+$white: #fefefe;
+$black: #3d375a;
+$grey: #cecdcd;
+$grey2: #a3a3a3;
+$greylight: #eeeeee;
+$blue: #93b5e9;
+$blue2: #6492d8;
+$darkblue: #327ae6;
+$orange: #e6aa32;
+$green: #5ebac7;
+$pink: #f53f77;
+$pink2: #e63a6e;
+
+@mixin childCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//SIZES
+$size-xxs: 0.5rem;
+$size-xs: 0.7rem;
+$size-sm: 0.8rem;
+$size-base: 0.9rem;
+$size-lg: 1.125rem;
+$size-xl: 1.25rem;
+$size-2xl: 1.5rem;
+$size-3xl: 1.875rem;
+$size-4xl: 2.25rem;
+$size-5xl: 3rem;
+$size-6xl: 3.75rem;
+$size-7xl: 4.5rem;
+$size-8xl: 6rem;
+$size-9xl: 8rem;
+$size-10xl: 10rem;
+
+//FONTS
+@font-face {
+  font-family: "Lato";
+  src: url(../assets/fonts/Lato-Regular.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Lato";
+  src: url(../assets/fonts/Lato-Bold.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Lato";
+  src: url(../assets/fonts/Lato-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Lato";
+  src: url(../assets/fonts/Lato-Italic.ttf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(../assets/fonts/Rubik-Regular.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url(../assets/fonts/Rubik-Bold.ttf);
+  font-weight: bold;
+}
+
+$font1: Lato, sans-serif;
+$font2: Rubik, sans-serif;
+
+body {
+  font-family: $font1;
+  background-color: black;
+  color: $black;
+}
+
+img,
+picture,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  user-select: none;
+}
+
+button {
+  display: inline-block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: $black;
+}
+
+textarea {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 3px;
+  outline: solid 1px $grey;
+  resize: none;
+  font-size: $size-sm;
+  color: $black;
+  &:focus {
+    outline: solid 2px $blue;
+  }
+  &::placeholder {
+    color: $grey2;
+  }
+}
+
+input {
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 3px;
+  outline: solid 1px $grey;
+  font-size: $size-sm;
+  color: $black;
+  text-overflow: ellipsis;
+  &:focus {
+    outline: solid 2px $blue;
+  }
+  &:read-only {
+    outline: none;
+  }
+  &::placeholder {
+    color: $grey2;
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="date"],
+input[type="tel"] {
+  width: 150px;
+}
+input[type="file"] {
+  padding: 0;
+}
+
+select {
+  cursor: pointer;
+  padding: 0.125rem;
+  border: none;
+  border-radius: 3px;
+  outline: solid 1px $grey;
+  font-size: $size-sm;
+  &:focus {
+    outline: solid 2px $blue;
+  }
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper-login {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: url("@/assets/img/splashscreen.png") center/cover;
+}
+.main-login {
+  flex: 1;
+  background-color: transparent;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex: 1;
+  background-color: transparent;
+  overflow: hidden;
+}

@@ -7,8 +7,8 @@ const WeatherLogo = () => {
   if (isLoading) return <CircularProgressSmall />;
   if (!error)
     return (
-      <div className="subheader-section__weather">
-        <div className="subheader-section__weather-logo">
+      <div className="subheader__weather">
+        <div className="subheader__weather-logo">
           <img src={weather?.current.condition.icon} alt="weather-logo" />
         </div>
         <p>{weather?.current.temp_c}°C</p>

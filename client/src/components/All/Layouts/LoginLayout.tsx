@@ -10,10 +10,9 @@ const LoginLayout = () => {
 
   const onConfirm = () => setCreditsVisible(false);
   return (
-    <div className="wrapper-login">
+    <div className="wrapper-login container container--login">
       <LoginHeader setCreditsVisible={setCreditsVisible} />
-      <main>
-        {/* all the children of the Layout component */}
+      <main className="main-login">
         <Outlet />
         <ConfirmGlobal />
       </main>

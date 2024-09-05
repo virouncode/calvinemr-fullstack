@@ -1,5 +1,4 @@
 import React from "react";
-import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import Availability from "./Availability";
 import FirstDaySelect from "./FirstDaySelect";
 import SlotSelect from "./SlotSelect";
@@ -24,8 +23,8 @@ const CalendarOptions = ({
         <Availability
           editAvailability={editAvailability}
           setEditAvailability={setEditAvailability}
+          isPending={isPending}
         />
-        {isPending && <CircularProgressSmall />}
       </div>
       <Timezone />
     </div>

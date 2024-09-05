@@ -18,12 +18,12 @@ const Subheader = ({
 }: SubheaderProps) => {
   //=================== STATES =======================//
   return (
-    <section className="subheader-section">
-      <div className="subheader-section__left">
+    <section className="subheader">
+      <div className="subheader__left">
         <SubheaderClinic />
         <WeatherLogo />
       </div>
-      <div className="subheader-section__center">
+      <div className="subheader__center">
         <SubheaderTitle title={title} />
       </div>
       <SubheaderWelcome

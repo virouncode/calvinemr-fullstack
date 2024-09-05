@@ -1,7 +1,7 @@
-@import "./settings";
-@import "./pages/loginPage";
-@import "./pages/calendarPage";
-@import "./pages/searchPatientPage";
+// @import "./settings";
+@import "./modern-normalize.scss";
+@import "./styles.scss";
+
 @import "./pages/missingPage";
 @import "./pages/unauthorizedPage";
 @import "./pages/signupPage";
@@ -13,7 +13,7 @@
 @import "./pages/calvinAIPage";
 @import "./pages/referencePage";
 @import "./pages/patientRecordPage";
-@import "./pages/reportsInboxPage";
+
 @import "./pages/messagesPage";
 @import "./pages/billingPage";
 @import "./pages/messagesPatientPage";
@@ -22,29 +22,19 @@
 @import "./pages/suspendedPage";
 @import "./pages/dashboardPage";
 @import "./pages/clinicPage";
-@import "./pages/groupsPage";
+
 @import "./pages/lockPage";
 @import "./pages/faxPage";
 @import "./pages/patientPamphletsPage";
 @import "./pages/closedPage";
 @import "./pages/patientPharmaciesPage";
 @import "./components/header";
-@import "./components/carousel";
-@import "./components/footer";
-@import "./components/loginCard";
 @import "./components/calendar";
-@import "./components/shortcutPickr";
-@import "./components/calendarFilter";
+@import "./components/searchPatient";
 @import "./components/eventForm";
-@import "./components/guestsCheckboxes";
-@import "./components/filterCheckboxes";
-@import "./components/slotSelect";
-@import "./components/firstDaySelect";
 @import "./components/subheader";
 @import "./components/toggleView";
-@import "./components/patientSearchForm";
 @import "./components/staffSearchForm";
-@import "./components/patientSearchResult";
 @import "./components/staffSearchResult";
 @import "./components/patientRecord";
 @import "./components/patientMenu";
@@ -109,7 +99,6 @@
 @import "./components/clinic";
 @import "./components/site";
 @import "./components/selectSite";
-@import "./components/siteCheckboxes";
 @import "./components/emptyRow";
 @import "./components/loadingRow";
 @import "./components/prescriptions";
@@ -141,4 +130,7 @@
 @import "./components/closed";
 @import "./components/closedPractician";
 @import "./components/patientPharmacies";
+@import "./components/login";
 @import "flatpickr/dist/themes/material_blue.css";
+
+@import "./utils.scss";

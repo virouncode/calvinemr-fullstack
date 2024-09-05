@@ -6,7 +6,7 @@ type PlusButtonProps = {
 };
 const PlusButton = ({ onClick, className }: PlusButtonProps) => {
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button type="button" onClick={onClick} className={`${className} btn`}>
       +
     </button>
   );

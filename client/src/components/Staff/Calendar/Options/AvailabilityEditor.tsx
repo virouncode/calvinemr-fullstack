@@ -175,11 +175,11 @@ const AvailabilityEditor = ({
     itemInfos && (
       <div>
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-        <div className="availability__heads">
+        <div className="calendar__availability-heads">
           <p>Morning</p>
           <p>Afternoon</p>
         </div>
-        <form className="availability__form" onSubmit={handleSubmit}>
+        <form className="calendar__availability-form" onSubmit={handleSubmit}>
           {days.map((day) => (
             <AvailabilityItem
               day={day}
@@ -194,7 +194,7 @@ const AvailabilityEditor = ({
               key={day}
             />
           ))}
-          <div className="availability__duration">
+          <div className="calendar__availability-duration">
             <label>Default appointment duration</label>
             <DurationPicker
               durationHours={itemInfos.default_duration_hours
@@ -207,7 +207,7 @@ const AvailabilityEditor = ({
               disabled={false}
             />
           </div>
-          <div className="availability__btns">
+          <div className="calendar__availability-btns">
             <SubmitButton label="Save" disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>

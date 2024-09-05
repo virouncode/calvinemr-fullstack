@@ -18,7 +18,7 @@ const PrintButton = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={className}
+      className={`${className} btn`}
     >
       {label}
     </button>

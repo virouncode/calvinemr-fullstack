@@ -17,7 +17,7 @@ const SubheaderClinic = () => {
   }, []);
 
   return (
-    <h2 className="subheader-section__clinic">
+    <h2 className="subheader__clinic">
       {clinic?.name}, {clock}
     </h2>
   );

@@ -12,7 +12,7 @@ const StaffCalendarPage = () => {
           <title>Calendar</title>
         </Helmet>
       </HelmetProvider>
-      <section className="calendar-section">
+      <section className="calendar">
         <Calendar />
       </section>
     </>

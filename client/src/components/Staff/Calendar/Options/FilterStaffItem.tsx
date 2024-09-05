@@ -22,7 +22,7 @@ const FilterStaffItem = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
-    <li className="filter-checkbox">
+    <li className="calendar__staff-checkboxes-item">
       <Checkbox
         id={info.id?.toString()}
         name={categoryName}

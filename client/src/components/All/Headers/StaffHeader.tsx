@@ -1,8 +1,10 @@
+import logo from "@/assets/img/logoRectTest.png";
 import { Tooltip } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { UserStaffType } from "../../../types/app";
+import BarsIcon from "../../UI/Icons/BarsIcon";
 import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
 import LockIcon from "../../UI/Icons/LockIcon";
 import QuestionIcon from "../../UI/Icons/QuestionIcon";
@@ -33,13 +35,16 @@ const StaffHeader = ({
       "_blank"
     );
   };
+  const handleClickBars = () => {};
 
   return (
     <header className="header">
       <div
         className="header__logo"
         onClick={() => setCreditsVisible((p) => !p)}
-      ></div>
+      >
+        <img src={logo} alt="CalvinEMR-logo" />
+      </div>
       <nav className="header__nav">
         <ul>
           <li>
@@ -198,6 +203,9 @@ const StaffHeader = ({
           </li>
         </ul>
       </nav>
+      <div className="header__bars">
+        <BarsIcon onClick={handleClickBars} />
+      </div>
       <h1 className="header__title">Electronic Medical Records</h1>
     </header>
   );

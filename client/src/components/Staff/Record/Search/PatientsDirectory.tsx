@@ -3,7 +3,7 @@ import { SearchPatientType } from "../../../../types/app";
 import PatientSearchForm from "./PatientSearchForm";
 import PatientSearchResult from "./PatientSearchResult";
 
-const PatientSearch = () => {
+const PatientsDirectory = () => {
   const [search, setSearch] = useState<SearchPatientType>({
     name: "",
     email: "",
@@ -26,4 +26,4 @@ const PatientSearch = () => {
   );
 };
 
-export default PatientSearch;
+export default PatientsDirectory;

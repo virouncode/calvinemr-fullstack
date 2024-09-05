@@ -11,8 +11,8 @@ const PatientsGroupsToggle = ({
   handleTypeChanged,
 }: PatientsGroupsToggleProps) => {
   return (
-    <div className="patients-groups-toggle">
-      <div className="patients-groups-toggle__radio">
+    <div className="groups__toggle">
+      <div className="groups__toggle-radio">
         <Radio
           id="my-groups"
           name="patients-group-type"
@@ -22,7 +22,7 @@ const PatientsGroupsToggle = ({
           label="My groups"
         />
       </div>
-      <div className="patients-groups-toggle__radio">
+      <div className="groups__toggle-radio">
         <Radio
           id="clinic-groups"
           name="patients-group-type"

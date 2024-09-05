@@ -20,7 +20,6 @@ import { SiteType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
-import Button from "../../UI/Buttons/Button";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalendarView from "./CalendarView";
@@ -112,7 +111,7 @@ const CalendarDisplay = ({
   return (
     <div className="calendar__display">
       {timelineVisible && (
-        <div className="calendar-section__select-site">
+        <div className="calendar__select-site">
           <SiteSelect
             handleSiteChange={(e) =>
               setTimelineSiteId(parseInt(e.target.value))
@@ -128,12 +127,13 @@ const CalendarDisplay = ({
         timelineVisible={timelineVisible}
       />
       {(currentView === "timeGrid" || timelineVisible) && (
-        <Button
+        <button
           onClick={handlePrintDay}
           disabled={events?.length === 0}
-          className="calendar__print-day"
-          label={"Print day sheet"}
-        />
+          className="calendar__print-btn"
+        >
+          Print day sheet
+        </button>
       )}
       {printDayVisible && (
         <NewWindow

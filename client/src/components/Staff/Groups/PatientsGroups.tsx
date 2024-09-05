@@ -36,8 +36,8 @@ const PatientsGroups = () => {
   if (error) return <ErrorParagraph errorMsg={error.message} />;
 
   return (
-    <div className="patients-groups">
-      <div className="patients-groups__title">
+    <>
+      <div className="groups__title">
         <span style={{ marginRight: "10px" }}>My groups</span>
         <Button
           onClick={handleAdd}
@@ -45,13 +45,12 @@ const PatientsGroups = () => {
           disabled={addGroupVisible}
         />
       </div>
-      <div className="patients-groups__content">
+      <div className="groups__content">
         {groups && groups.length > 0 ? (
           groups.map((group) => (
             <PatientsClinicGroupCard
               group={group}
               key={group.id}
-              global={false}
               setInitialRecipients={setInitialRecipients}
               setNewMessageExternalVisible={setNewMessageExternalVisible}
             />
@@ -92,7 +91,7 @@ const PatientsGroups = () => {
           />
         </FakeWindow>
       )}
-    </div>
+    </>
   );
 };
 

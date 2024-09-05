@@ -72,7 +72,7 @@ const SubheaderWelcome = ({
     navigate("/");
   };
   return (
-    <div className="subheader-section__right">
+    <div className="subheader__right">
       <span style={{ marginRight: "5px" }}>
         {welcomeMessage} {toWelcomeName(user, staffInfos, adminsInfos)}
       </span>

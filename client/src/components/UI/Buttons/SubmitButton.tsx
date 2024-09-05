@@ -11,7 +11,7 @@ const SubmitButton = ({
   disabled = false,
 }: SubmitButtonProps) => {
   return (
-    <button type="submit" className="save-btn" disabled={disabled}>
+    <button type="submit" className="btn save-btn" disabled={disabled}>
       {label}
     </button>
   );

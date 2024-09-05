@@ -16,7 +16,7 @@ const StaffReportsInboxPage = () => {
           <title>Inbox</title>
         </Helmet>
       </HelmetProvider>
-      <section className="reportsinbox-section">
+      <section className="reportsinbox">
         {user.title === "Secretary" ? (
           <ReportsInboxSecretary />
         ) : (

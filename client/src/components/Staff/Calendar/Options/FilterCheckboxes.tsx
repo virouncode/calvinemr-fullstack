@@ -73,11 +73,14 @@ const FilterCheckboxes = ({
   };
 
   return (
-    <form className="filter-checkboxes">
+    <div className="calendar__staff-checkboxes">
       {categoriesInfos
         .filter((category) => category.infos.length !== 0)
         .map((category) => (
-          <div className="filter-checkboxes-section" key={category.name}>
+          <ul
+            className="calendar__staff-checkboxes-category"
+            key={category.name}
+          >
             <FilterCheckboxesSection
               isChecked={isChecked}
               handleCheck={handleCheck}
@@ -87,9 +90,9 @@ const FilterCheckboxes = ({
               categoryName={category.name}
               remainingStaff={remainingStaff}
             />
-          </div>
+          </ul>
         ))}
-    </form>
+    </div>
   );
 };
 

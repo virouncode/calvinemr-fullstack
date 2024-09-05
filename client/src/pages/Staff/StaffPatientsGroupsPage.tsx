@@ -24,7 +24,7 @@ const StaffPatientsGroupsPage = () => {
           <title>Patients</title>
         </Helmet>
       </HelmetProvider>
-      <section className="patients-groups-section">
+      <section className="groups">
         <PatientsGroupsToggle
           isTypeChecked={isTypeChecked}
           handleTypeChanged={handleTypeChanged}

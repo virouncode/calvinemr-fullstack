@@ -26,7 +26,7 @@ const LoginInputs = ({
 }: LoginInputsProps) => {
   return (
     <>
-      <div className="login-form__row">
+      <div className="login__form-row">
         <InputEmail
           id="email"
           name="email"
@@ -34,9 +34,10 @@ const LoginInputs = ({
           value={formDatas.email}
           autoFocus={true}
           label="Email"
+          width={170}
         />
       </div>
-      <div className="login-form__row" style={{ position: "relative" }}>
+      <div className="login__form-row" style={{ position: "relative" }}>
         {passwordVisible ? (
           <>
             <Input
@@ -45,6 +46,7 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.password}
               label="Password"
+              width={170}
             />
             <EyeIcon onClick={handleTogglePwd} />
           </>
@@ -56,12 +58,13 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.password}
               label="Password"
+              width={170}
             />
             <EyeIcon onClick={handleTogglePwd} slash={true} />
           </>
         )}
       </div>
-      <div className="login-form__row" style={{ position: "relative" }}>
+      <div className="login__form-row" style={{ position: "relative" }}>
         {pinVisible ? (
           <>
             <Input
@@ -70,6 +73,7 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.pin}
               label="PIN"
+              width={170}
             />
             <EyeIcon onClick={handleTogglePin} />
           </>
@@ -81,6 +85,7 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.pin}
               label="PIN"
+              width={170}
             />
             <EyeIcon onClick={handleTogglePin} slash={true} />
           </>

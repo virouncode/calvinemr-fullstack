@@ -28,7 +28,7 @@ const ExportCSVButton = ({
   const { user } = useUserContext() as { user: AdminType | UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (
-    <button>
+    <button className="btn">
       <CSVLink
         data={billings.map((billing) => {
           return {

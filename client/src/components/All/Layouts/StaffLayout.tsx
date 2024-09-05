@@ -35,7 +35,7 @@ const StaffLayout = ({
   const onConfirm = () => setCreditsVisible(false);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper container">
       <StaffHeader
         setCreditsVisible={setCreditsVisible}
         setLockedScreen={setLockedScreen}
@@ -46,7 +46,7 @@ const StaffLayout = ({
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-      <main>
+      <main className="main">
         {/* all the children of the Layout component */}
         <Outlet />
         {/********************************************/}

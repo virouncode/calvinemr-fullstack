@@ -1462,7 +1462,7 @@ const Calendar = () => {
         setEditAvailability={setEditAvailability}
         isPending={appointments.isPending}
       />
-      <div className="calendar">
+      <div className="calendar__layout">
         <CalendarLeftBar
           handleShortcutpickrChange={handleShortcutpickrChange}
           sites={sites as SiteType[]}

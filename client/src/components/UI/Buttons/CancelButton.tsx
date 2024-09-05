@@ -12,7 +12,7 @@ const CancelButton = ({
   disabled = false,
 }: CancelButtonProps) => {
   return (
-    <button type="button" onClick={onClick} disabled={disabled}>
+    <button type="button" onClick={onClick} disabled={disabled} className="btn">
       {label}
     </button>
   );

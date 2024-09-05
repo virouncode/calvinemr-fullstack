@@ -9,20 +9,6 @@ import NewMessageExternal from "../Messaging/External/NewMessageExternal";
 import PatientsClinicGroupCard from "./PatientsClinicGroupCard";
 import PatientsGroupForm from "./PatientsGroupForm";
 
-type PatientsClinicGroupsProps = {
-  setInitialRecipients: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: number;
-        name: string;
-        email: string;
-        phone: string;
-      }[]
-    >
-  >;
-  setNewMessageExternalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
 const PatientsClinicGroups = () => {
   //Hooks
   const [addGroupVisible, setAddGroupVisible] = useState(false);
@@ -47,8 +33,8 @@ const PatientsClinicGroups = () => {
   if (error) return <ErrorParagraph errorMsg={error.message} />;
 
   return (
-    <div className="patients-groups">
-      <div className="patients-groups__title">
+    <>
+      <div className="groups__title">
         <span style={{ marginRight: "10px" }}>Clinic groups</span>
         <Button
           onClick={handleAdd}
@@ -56,13 +42,12 @@ const PatientsClinicGroups = () => {
           disabled={addGroupVisible}
         />
       </div>
-      <div className="patients-groups__content">
+      <div className="groups__content">
         {groups && groups.length > 0 ? (
           groups.map((group) => (
             <PatientsClinicGroupCard
               group={group}
               key={group.id}
-              global={true}
               setInitialRecipients={setInitialRecipients}
               setNewMessageExternalVisible={setNewMessageExternalVisible}
             />
@@ -103,7 +88,7 @@ const PatientsClinicGroups = () => {
           />
         </FakeWindow>
       )}
-    </div>
+    </>
   );
 };
 

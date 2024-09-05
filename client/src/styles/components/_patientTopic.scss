@@ -42,11 +42,6 @@
     flex-direction: row;
     justify-content: space-between;
   }
-  &__err {
-    background: $red;
-    padding: 10px;
-    font-size: 0.8rem;
-  }
   &__link {
     color: $darkblue;
     text-decoration: underline;

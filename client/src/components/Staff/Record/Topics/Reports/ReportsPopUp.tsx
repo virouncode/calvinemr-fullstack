@@ -167,7 +167,7 @@ const ReportsPopUp = ({
               <th>Action</th>
               <th>Name</th>
               <th>Format</th>
-              <th>File extension and version</th>
+              <th>File extension</th>
               <th>File</th>
               <th>Class</th>
               <th>Subclass</th>
@@ -233,7 +233,7 @@ const ReportsPopUp = ({
               <th>Action</th>
               <th>Name</th>
               <th>Format</th>
-              <th>File extension and version</th>
+              <th>File extension</th>
               <th>File</th>
               <th>Class</th>
               <th>Subclass</th>
