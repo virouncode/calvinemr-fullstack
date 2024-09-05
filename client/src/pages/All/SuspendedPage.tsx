@@ -10,7 +10,7 @@ const SuspendedPage = () => {
           <title>Suspended account</title>
         </Helmet>
       </HelmetProvider>
-      <section className="suspended-section">
+      <section className="suspended">
         <Suspended />
       </section>
     </>

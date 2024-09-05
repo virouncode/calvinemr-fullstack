@@ -120,21 +120,21 @@ const ResetPasswordForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="reset-password-form">
-      <div className="reset-password-form-row">
+    <form onSubmit={handleSubmit} className="reset__form">
+      <div className="reset__row">
         <InputPassword
           value={pwd}
           onChange={handlePasswordChange}
           name="new-password"
           id="new-password"
-          label="Enter a new password:"
+          label="New password:"
           autoFocus={true}
         />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <PasswordValidator passwordValidity={passwordValidity} />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <InputPassword
           value={confirmPwd}
           onChange={handleConfirmPasswordChange}
@@ -143,16 +143,16 @@ const ResetPasswordForm = ({
           label="Confirm new password:"
         />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <InputPassword
           value={pin}
           onChange={handlePINChange}
           name="pin"
           id="pin"
-          label="Enter a new PIN:"
+          label="New PIN:"
         />
       </div>
-      <div className="reset-password-form-row-btn">
+      <div className="reset__row-btn">
         <SubmitButton />
       </div>
     </form>

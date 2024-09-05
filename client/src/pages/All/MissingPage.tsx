@@ -10,7 +10,7 @@ const MissingPage = () => {
           <title>Page not found</title>
         </Helmet>
       </HelmetProvider>
-      <section className="missing-section">
+      <section className="missing">
         <Missing />
       </section>
     </>

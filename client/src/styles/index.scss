@@ -2,14 +2,12 @@
 @import "./modern-normalize.scss";
 @import "./styles.scss";
 
-@import "./pages/missingPage";
-@import "./pages/unauthorizedPage";
 @import "./pages/signupPage";
 @import "./pages/myaccountPage";
 @import "./pages/credentialsPage";
 @import "./pages/patientaccountPage";
 @import "./pages/patientAppointmentsPage";
-@import "./pages/resetPage";
+
 @import "./pages/calvinAIPage";
 @import "./pages/referencePage";
 @import "./pages/patientRecordPage";
@@ -19,14 +17,14 @@
 @import "./pages/messagesPatientPage";
 @import "./pages/accountsPage";
 @import "./pages/migrationPage";
-@import "./pages/suspendedPage";
+
 @import "./pages/dashboardPage";
 @import "./pages/clinicPage";
 
 @import "./pages/lockPage";
 @import "./pages/faxPage";
 @import "./pages/patientPamphletsPage";
-@import "./pages/closedPage";
+
 @import "./pages/patientPharmaciesPage";
 @import "./components/header";
 @import "./components/calendar";

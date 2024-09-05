@@ -11,7 +11,7 @@ const LoginPage = () => {
           <title>Calvin EMR Login</title>
         </Helmet>
       </HelmetProvider>
-      <section className="login container">
+      <section className="login">
         <LoginTitle />
         <LoginForm />
       </section>

@@ -53,45 +53,73 @@
   margin-left: auto;
   margin-right: auto;
   background-color: $white;
-  &--login {
-    backdrop-filter: blur(20px);
-    background-color: transparent;
-  }
+}
+.container-login {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wrapper-login {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: url("@/assets/img/splashscreen.png") center/cover;
+}
+.main-login {
+  flex: 1;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex: 1;
+  overflow: hidden;
 }
 
 /*xs*/
 @media (min-width: 475px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 475px;
   }
 }
 /*sm*/
 @media (min-width: 640px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 640px;
   }
 }
 /*md*/
 @media (min-width: 768px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 768px;
   }
 }
 /*lg*/
 @media (min-width: 1024px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 1024px;
   }
 }
 /*xl*/
 @media (min-width: 1280px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 1280px;
   }
 }
 /*2xl*/
 @media (min-width: 1536px) {
-  .container {
+  .container,
+  .container-login {
     max-width: 1536px;
   }
 }

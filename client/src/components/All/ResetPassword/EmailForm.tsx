@@ -42,6 +42,10 @@ const EmailForm = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!emailInput) {
+      setErrMsg("Please enter an email");
+      return;
+    }
     //verifier l'email
     try {
       setProgress(true);
@@ -77,21 +81,22 @@ const EmailForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="email-form-row-radio">
+      <div className="reset__email-row-radio">
         <UserTypeRadioGroup type={type} handleTypeChange={handleTypeChange} />
       </div>
-      <div className="email-form-row">
+      <div className="reset__email-row">
         <InputEmail
           value={emailInput}
           onChange={handleChange}
           name="email"
           id="email"
-          label="Enter your email: "
+          label="Email:"
+          autoFocus={true}
         />
-        <div>
-          <SubmitButton disabled={progress} />
-          <CancelButton onClick={handleCancel} />
-        </div>
+      </div>
+      <div className="reset__email-row-btns">
+        <SubmitButton disabled={progress} />
+        <CancelButton onClick={handleCancel} />
         {progress && <CircularProgressSmall />}
       </div>
     </form>

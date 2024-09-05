@@ -10,7 +10,7 @@ const UnauthorizedPage = () => {
           <title>Unauthorized</title>
         </Helmet>
       </HelmetProvider>
-      <section className="unauthorized-section">
+      <section className="unauthorized">
         <Unauthorized />
       </section>
     </>

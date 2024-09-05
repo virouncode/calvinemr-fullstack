@@ -10,7 +10,7 @@ const ResetPage = () => {
           <title>Forgot Password</title>
         </Helmet>
       </HelmetProvider>
-      <section className="reset-section">
+      <section className="reset">
         <ForgotPassword />
       </section>
     </>
