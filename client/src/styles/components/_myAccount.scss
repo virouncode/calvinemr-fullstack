@@ -1,99 +1,95 @@
-.myaccount-section {
-  &__container {
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    border-radius: 6px;
-    background: $white;
-    padding: 20px;
-    width: 55%;
-    margin: 0 auto;
+.myaccount {
+  background: url("@/assets/img/splashscreen.png") center/cover;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.myaccount__container {
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  border-radius: 6px;
+  background: $white;
+  padding: 20px;
+  width: 55%;
+  margin: 0 auto;
+}
+.myaccount__success {
+  padding: 10px 20px;
+  width: 100%;
+  font-size: 0.9rem;
+  margin: 0 auto;
+  border-radius: 6px;
+  text-align: center;
+  color: forestgreen;
+  background-color: rgba(34, 139, 34, 0.4);
+  margin-bottom: 10px;
+}
+
+.myaccount__btns {
+  text-align: center;
+  margin-top: 20px;
+  button {
+    margin-left: 5px;
   }
-  &__success {
-    padding: 10px 20px;
-    width: 100%;
-    font-size: 0.9rem;
-    margin: 0 auto;
-    border-radius: 6px;
-    text-align: center;
-    color: forestgreen;
-    background-color: rgba(34, 139, 34, 0.4);
-    margin-bottom: 10px;
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  &__btns {
-    text-align: center;
-    margin-top: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &__form {
-    font-size: 0.85rem;
+}
+.myaccount__form {
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+}
+.myaccount__column {
+  width: 45%;
+}
+.myaccount__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  &--admin {
     display: flex;
     justify-content: space-between;
-  }
-  &__column {
-    width: 45%;
-  }
-  &__row {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 10px;
-    &--admin {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      label {
-        font-size: 0.85rem;
-        font-weight: bold;
-        min-width: 90px;
-      }
-    }
-    p {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
     label {
       font-size: 0.85rem;
       font-weight: bold;
-      min-width: 170px;
-    }
-    input {
-      width: 100%;
-    }
-    select {
-      width: 100%;
-    }
-    &-row-submit {
-      text-align: end;
-      margin-top: 20px;
-      input[type="submit"] {
-        width: 100px;
-      }
+      min-width: 90px;
     }
   }
-  &__image {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
+  p {
     overflow: hidden;
-    input[type="file"] {
-      width: 100%;
-      padding: 0;
-      &::-webkit-file-upload-button {
-        cursor: pointer;
-      }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    min-width: 170px;
+  }
+  input {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+  }
+  &-row-submit {
+    text-align: end;
+    margin-top: 20px;
+    input[type="submit"] {
+      width: 100px;
+    }
+  }
+}
+.myaccount__image {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  overflow: hidden;
+  input[type="file"] {
+    width: 100%;
+    padding: 0;
+    &::-webkit-file-upload-button {
+      cursor: pointer;
     }
   }
 }

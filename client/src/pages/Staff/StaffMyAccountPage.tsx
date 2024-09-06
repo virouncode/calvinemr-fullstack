@@ -12,7 +12,7 @@ const StaffMyAccountPage = () => {
           <title>My account</title>
         </Helmet>
       </HelmetProvider>
-      <section className="myaccount-section">
+      <section className="myaccount">
         <MyAccountStaff />
       </section>
     </>

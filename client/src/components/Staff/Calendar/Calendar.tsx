@@ -244,12 +244,6 @@ const Calendar = () => {
     const view = info.view.type; //the view i clicked on
 
     //CALENDAR
-    //change current event
-    currentEvent.current = eventImplToEventInput(event);
-    currentElement.current = element;
-    lastCurrentId.current = event.id;
-    element.style.border = "solid 1px red";
-    !timelineVisible && setCurrentView(view);
     //If the event event i clicked on is not the same as the current event or the start date is different (for recurring events)
     if (
       currentEvent.current &&
@@ -259,7 +253,12 @@ const Calendar = () => {
     )
       //remove red border on former current element
       (currentElement.current as HTMLElement).style.border = "none";
-
+    //change current event
+    currentEvent.current = eventImplToEventInput(event);
+    currentElement.current = element;
+    lastCurrentId.current = event.id;
+    element.style.border = "solid 1px red";
+    !timelineVisible && setCurrentView(view);
     //XANO
     //If the event is recurring
     if (event.extendedProps.recurrence !== "Once") {

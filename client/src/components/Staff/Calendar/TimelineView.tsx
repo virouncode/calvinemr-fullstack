@@ -57,6 +57,7 @@ const TimelineView = ({
 }: TimelineViewProps) => {
   return (
     <FullCalendar
+      longPressDelay={400}
       plugins={[resourceTimeGrid, interaction, luxonPlugin, rrulePlugin]}
       timeZone="America/Toronto"
       initialDate={initialDate}

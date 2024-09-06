@@ -326,20 +326,6 @@ li {
   list-style: none;
 }
 
-.myaccount-section {
-  background: url("@/assets/img/splashscreen.png") center/cover;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.myaccount-section__title {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
 .credentials-section {
   display: flex;
   align-items: center;
@@ -4676,7 +4662,16 @@ li {
   cursor: pointer;
 }
 
-.myaccount-section__container {
+.myaccount {
+  background: url("@/assets/img/splashscreen.png") center/cover;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.myaccount__container {
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   border-radius: 6px;
   background: #fefefe;
@@ -4684,7 +4679,8 @@ li {
   width: 55%;
   margin: 0 auto;
 }
-.myaccount-section__success {
+
+.myaccount__success {
   padding: 10px 20px;
   width: 100%;
   font-size: 0.9rem;
@@ -4695,82 +4691,76 @@ li {
   background-color: rgba(34, 139, 34, 0.4);
   margin-bottom: 10px;
 }
-.myaccount-section__err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 100%;
-  margin: 0 auto;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-.myaccount-section__btns {
+
+.myaccount__btns {
   text-align: center;
   margin-top: 20px;
 }
-.myaccount-section__btns button {
+.myaccount__btns button {
   margin-left: 5px;
 }
-.myaccount-section__form {
+
+.myaccount__form {
   font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
 }
-.myaccount-section__column {
+
+.myaccount__column {
   width: 45%;
 }
-.myaccount-section__row {
+
+.myaccount__row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.myaccount-section__row--admin {
+.myaccount__row--admin {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.myaccount-section__row--admin label {
+.myaccount__row--admin label {
   font-size: 0.85rem;
   font-weight: bold;
   min-width: 90px;
 }
-.myaccount-section__row p {
+.myaccount__row p {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.myaccount-section__row label {
+.myaccount__row label {
   font-size: 0.85rem;
   font-weight: bold;
   min-width: 170px;
 }
-.myaccount-section__row input {
+.myaccount__row input {
   width: 100%;
 }
-.myaccount-section__row select {
+.myaccount__row select {
   width: 100%;
 }
-.myaccount-section__row-row-submit {
+.myaccount__row-row-submit {
   text-align: end;
   margin-top: 20px;
 }
-.myaccount-section__row-row-submit input[type=submit] {
+.myaccount__row-row-submit input[type=submit] {
   width: 100px;
 }
-.myaccount-section__image {
+
+.myaccount__image {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 100%;
   overflow: hidden;
 }
-.myaccount-section__image input[type=file] {
+.myaccount__image input[type=file] {
   width: 100%;
   padding: 0;
 }
-.myaccount-section__image input[type=file]::-webkit-file-upload-button {
+.myaccount__image input[type=file]::-webkit-file-upload-button {
   cursor: pointer;
 }
 
