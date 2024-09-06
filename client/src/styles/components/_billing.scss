@@ -1,118 +1,110 @@
 .billing {
-  padding: 0 20px;
+  width: 100%;
   height: 100%;
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 50%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &__btn-container {
-    text-align: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.billing__btn {
+  text-align: center;
+  button {
+    font-size: $size-xs;
   }
 }
-.billing-form {
+.billing__form {
   background-color: $white;
-  width: 80%;
-  font-size: 0.85rem;
-  margin: 20px auto;
+  width: 100%;
+  max-width: 450px;
+  font-size: $size-sm;
+  margin: 1rem auto;
   border: solid 1px $grey;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  &__title {
-    font-size: 1rem;
+}
+.billing__form-row {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  gap: 0.5rem;
+}
+.billing__form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  label {
+    width: 50%;
     font-weight: bold;
-    margin-bottom: 10px;
+    font-size: $size-sm;
   }
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-  }
-  &__item {
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    select {
-      width: 150px;
-    }
-    label {
-      font-weight: bold;
-    }
-  }
-  &__btns {
-    margin-top: 20px;
-    text-align: center;
-    button {
-      margin-left: 5px;
-    }
+  input,
+  select,
+  textarea {
+    width: 50%;
   }
 }
-.billing-filter {
-  background-color: $white;
-  width: 80%;
-  margin: 20px auto;
+.billing__form-btns {
+  margin-top: 20px;
+  text-align: center;
+  button {
+    font-size: $size-xs;
+    margin-left: 5px;
+  }
+}
+
+.billing__filter {
+  margin: 1rem 0;
   border: solid 1px $grey;
   border-radius: 6px;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  &__title {
-    font-weight: bold;
-    width: 10%;
+}
+.billing__filter-row-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-style: $size-xs;
+  margin-bottom: 0.5rem;
+}
+.billing__filter-row-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    text-align: center;
+    margin-left: 10px;
   }
-  &__row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    font-style: 0.8rem;
-  }
-  &__item {
-    width: 20%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 20px;
-    label {
-      font-size: 0.8rem;
-      margin-right: 5px;
-      font-weight: bold;
-    }
-    input[type="date"] {
-      width: 150px;
-      &:disabled {
-        color: #fefefe;
-      }
-    }
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-  }
-  &__btn-container {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    button {
-      text-align: center;
-      margin-left: 10px;
-    }
-    a {
-      font-size: 0.85rem;
-      &:hover {
-        text-decoration: underline;
-      }
+  a {
+    font-size: $size-xs;
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
+.billing__filter-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  label {
+    font-size: $size-sm;
+    margin-right: 0.5rem;
+    font-weight: bold;
+    width: 15%;
+  }
+  input[type="date"] {
+    width: 120px;
+    &:disabled {
+      color: #fefefe;
+    }
+  }
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+}
+
 .billing-table__container {
-  height: 84%;
+  flex: 1;
   overflow: scroll;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
@@ -122,7 +114,7 @@
   min-width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: $size-xs;
   thead {
     position: sticky;
     z-index: 10;
@@ -150,6 +142,9 @@
       text-align: center;
       padding: 10px;
       word-break: break-word;
+      button {
+        font-size: $size-xs;
+      }
     }
     input {
       width: 100%;
@@ -240,6 +235,57 @@
     }
     input {
       width: 200px;
+    }
+  }
+}
+
+@media (min-width: 475px) {
+  .billing__filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .billing__filter-row-dates {
+    width: 50%;
+  }
+  .billing__filter-item {
+    label {
+      width: 20%;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .billing__filter-row-dates {
+    width: 70%;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 0;
+    gap: 2rem;
+  }
+  .billing__filter-item {
+    label {
+      width: auto;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .billing__btn {
+    button {
+      font-size: $size-sm;
+    }
+  }
+  .billing__filter-row-btns {
+    a {
+      font-size: $size-sm;
+    }
+  }
+  .billing-table {
+    font-size: $size-sm;
+  }
+  .billing__form-btns {
+    button {
+      font-size: $size-sm;
     }
   }
 }

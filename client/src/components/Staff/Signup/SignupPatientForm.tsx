@@ -387,8 +387,9 @@ const SignupPatientForm = () => {
       style={{ border: errMsg && "solid 1.5px red" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      {successMsg && <p className="signup-patient__success">{successMsg}</p>}
+
       <form className="signup-patient__form">
+        {successMsg && <p className="signup-patient__success">{successMsg}</p>}
         <div className="signup-patient__column">
           <div className="signup-patient__row">
             <GenericList
@@ -681,7 +682,7 @@ const SignupPatientForm = () => {
           </div>
         </div>
       </form>
-      <div className="signup-patient__submit">
+      <div className="signup-patient__btn">
         <SaveButton
           disabled={isLoadingFile || progress}
           onClick={handleSubmit}

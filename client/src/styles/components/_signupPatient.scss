@@ -1,117 +1,166 @@
 .signup-patient {
-  &__success {
-    padding: 10px 20px;
-    width: 50%;
-    font-size: 0.9rem;
-    margin: 0 auto 10px;
-    border-radius: 6px;
-    text-align: center;
-    color: forestgreen;
-    background-color: rgba(34, 139, 34, 0.4);
+  background: url("@/assets/img/splashscreen.png") center/cover;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  overflow: scroll;
+}
+.signup-patient__success {
+  padding: 0.5rem 1rem;
+  font-size: $size-sm;
+  width: 90%;
+  margin: 0.5rem auto;
+  color: forestgreen;
+  background-color: rgba(34, 139, 34, 0.4);
+  border-radius: 6px;
+  text-align: center;
+}
+.signup-patient__container {
+  padding: 1rem;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  border-radius: 6px;
+  background: $white;
+  height: 100%;
+  overflow: scroll;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.signup-patient__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.signup-patient__column {
+  // width: 45%;
+}
+.signup-patient__row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+  &--avatar {
+    align-items: start;
+    img {
+      margin-bottom: 5px;
+    }
   }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 50%;
-    margin: 0 auto 10px;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &__container {
-    padding: 20px;
-    width: 70%;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    border-radius: 6px;
-    background: $white;
-  }
-  &__form {
-    display: flex;
-    justify-content: space-between;
-  }
-  &__column {
+  label {
     width: 45%;
+    font-size: $size-xs;
+    font-weight: bold;
   }
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    align-items: center;
-    &--avatar {
-      align-items: start;
-      img {
-        margin-bottom: 5px;
-      }
-    }
-    &-relationship {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      align-items: center;
-      select {
-        width: 40% !important;
-      }
-      &-name {
-        width: 40%;
-      }
-    }
-    label {
-      width: 45%;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
-    input {
-      width: 55%;
-    }
-    input[type="file"] {
-      width: 100%;
-      padding: 0;
-      &::-webkit-file-upload-button {
-        cursor: pointer;
-      }
-    }
-    select {
-      width: 55%;
-    }
-    ul {
-      width: 55%;
-      margin-left: auto;
-      li {
-        font-size: 0.7rem;
-      }
-    }
-  }
-
-  &__submit {
-    text-align: center;
-    margin-top: 20px;
-  }
-  &__image {
-    display: flex;
-    flex-direction: column;
+  input,
+  select {
+    font-size: $size-xs;
     width: 55%;
-    &-preview {
-      display: flex;
-      align-items: flex-end;
-      margin-bottom: 10px;
+    max-width: 170px;
+  }
+  input[type="file"] {
+    font-size: $size-xs;
+    padding: 0;
+    width: auto;
+    // &::-webkit-file-upload-button {
+    //   cursor: pointer;
+    // }
+  }
+  select {
+    width: 55%;
+  }
+  ul {
+    width: 55%;
+    margin-left: auto;
+    li {
+      font-size: 0.7rem;
     }
-    &-preview-square {
-      width: 100px;
-      height: 100px;
-      border-radius: 6px;
-      margin-right: 15px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+  }
+}
+
+.signup-patient__btn {
+  text-align: center;
+  margin-top: 0.5rem;
+  button {
+    font-size: $size-xs;
+  }
+}
+.signup-patient__image {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  max-width: 170px;
+  &-preview {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+  &-preview-square {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    margin-right: 15px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  input[type="file"] {
+    &::-webkit-file-upload-button {
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 475px) {
+  .signup-patient__row {
+    label {
+      font-size: $size-sm;
+    }
+    input,
+    select {
+      font-size: $size-sm;
     }
     input[type="file"] {
-      &::-webkit-file-upload-button {
-        cursor: pointer;
-      }
+      font-size: $size-sm;
     }
+  }
+}
+@media (min-width: 768px) {
+  .signup-patient__success {
+    font-size: $size-base;
+  }
+  .signup-patient__btn {
+    button {
+      font-size: $size-sm;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .signup-patient {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .signup-patient__container {
+    max-width: 80%;
+    height: auto;
+  }
+  .signup-patient__form {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .signup-patient__row {
+    input,
+    select {
+      max-width: 200px;
+    }
+  }
+  .signup-patient__column {
+    width: 50%;
+  }
+  .signup-patient__image {
+    max-width: 200px;
   }
 }

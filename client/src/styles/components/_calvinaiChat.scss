@@ -21,55 +21,15 @@
   display: flex;
   flex-direction: column;
   background-color: $white;
+  gap: 0.25rem;
   border: solid 1px $grey;
   border-radius: 6px;
   padding: 1rem;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   height: 100%;
 }
-
 .calvinai__chat-templates {
   display: none;
-  width: 35%;
-  padding: 20px;
-  border: solid 1px $grey;
-  border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  font-size: 0.85rem;
-  &-btn-container {
-    text-align: center;
-    margin-bottom: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &-list {
-    height: 90%;
-    border: solid 0.5px $grey;
-    border-radius: 6px;
-    overflow-y: scroll;
-    padding: 10px;
-    font-size: 0.8rem;
-    &-item {
-      cursor: pointer;
-      margin-bottom: 5px;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  &-search {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    input {
-      width: 200px;
-    }
-  }
 }
 
 .calvinai__chat-content {
@@ -78,16 +38,25 @@
   border-bottom: solid 1px $grey;
   height: 70%;
 }
-.calvinai__chat-stop-btn {
+
+.calvinai__chat-btns {
   height: 5%;
   margin-left: auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 0.25rem;
+  padding: 0.25rem 0;
   button {
     font-size: $size-xs;
   }
+}
+.calvinai__chat-templates-btn {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 0.25rem;
+  font-size: $size-xs;
 }
 .calvinai__chat-send-btn {
   background-color: $blue;
@@ -146,6 +115,7 @@
   padding: 0 10px;
   white-space: pre-wrap;
   width: 92%;
+  font-size: $size-xs;
 }
 .calvinai__chat--meds {
   width: 98%;
@@ -164,11 +134,88 @@
     height: 100% !important;
     border: none !important;
     outline: none !important;
-    font-size: 0.85rem;
+    font-size: $size-xs;
     padding: 0;
     line-height: 1em;
   }
 }
 .css-1k5nzq7-MuiFormControl-root-MuiTextField-root {
   height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .calvinai__container {
+    margin: 0 auto;
+    width: 97%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .calvinai__chat {
+    width: 65%;
+  }
+  .calvinai__chat-templates {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 35%;
+    padding: 1rem;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    font-size: $size-sm;
+    &-btn-container {
+      text-align: center;
+      button {
+        margin-left: 5px;
+      }
+    }
+    &-search {
+      display: flex;
+      align-items: center;
+      label {
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+      input {
+        flex: 1;
+        max-width: 300px;
+      }
+    }
+    &-list {
+      flex: 1;
+      border: solid 0.5px $grey;
+      border-radius: 6px;
+      overflow-y: scroll;
+      padding: 0.5rem;
+      &-item {
+        cursor: pointer;
+        margin-bottom: 5px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .calvinai__disclaimer {
+    font-size: $size-sm;
+  }
+  .calvinai__chat-templates-btn {
+    display: none;
+  }
+  .calvinai__chat-btns {
+    button {
+      font-size: $size-sm;
+    }
+  }
+  .calvinai__chat-textarea {
+    font-size: $size-sm;
+  }
+  .calvinai__chat-message {
+    padding: 0 10px;
+    white-space: pre-wrap;
+    width: 92%;
+    font-size: $size-sm;
+  }
 }

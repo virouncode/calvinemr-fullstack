@@ -57,7 +57,7 @@ const CalvinAIChatMessage = ({
         </p>
       </div>
       {role !== "user" && (
-        <div className="calvinai__chat-card-btns">
+        <div className="calvinai__chat-btns">
           <Button
             onClick={handleCopyToClipboard}
             disabled={isLoading}

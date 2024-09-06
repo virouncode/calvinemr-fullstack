@@ -3,8 +3,10 @@ import { toast } from "react-toastify";
 import { useSpeechRecognition } from "../../../hooks/useSpeechRecognition";
 import { CalvinAITemplateType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
+import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalvinAIChatContent from "./CalvinAIChatContent";
 import CalvinAIInput from "./CalvinAIInput";
+import CalvinAITemplates from "./CalvinAITemplates";
 import CalvinAIChatTemplates from "./ClavinAIChatTemplates";
 
 type AIMessage = { role: string; content: string };
@@ -18,6 +20,7 @@ const CalvinAIChat = () => {
   const [inputText, setInputText] = useState("");
   const [lastResponse, setLastResponse] = useState("");
   const [autoScroll, setAutoScroll] = useState(true);
+  const [templatesVisible, setTemplatesVisible] = useState(false);
   const abortController = useRef<AbortController | null>(null);
   const inputTextRef = useRef<HTMLTextAreaElement | null>(null);
   const inputTextBeforeSpeech = useRef("");
@@ -130,34 +133,55 @@ const CalvinAIChat = () => {
     inputTextBeforeSpeech.current = "";
   };
   return (
-    <div className="calvinai__container">
-      <div className="calvinai__chat">
-        <CalvinAIChatContent
-          messages={messages}
-          msgEndRef={msgEndRef}
-          contentRef={contentRef}
-          isLoading={isLoading}
-        />
-        <div className="calvinai__chat-stop-btn">
-          <Button
-            onClick={() => abortController.current?.abort()}
-            label="Stop generating"
+    <>
+      <div className="calvinai__container">
+        <div className="calvinai__chat">
+          <CalvinAIChatContent
+            messages={messages}
+            msgEndRef={msgEndRef}
+            contentRef={contentRef}
+            isLoading={isLoading}
           />
-          <Button onClick={handleNew} label="New conversation" />
+          <div className="calvinai__chat-btns">
+            <span
+              className="calvinai__chat-templates-btn"
+              onClick={() => setTemplatesVisible((v) => !v)}
+            >
+              Use template
+            </span>
+            <Button
+              onClick={() => abortController.current?.abort()}
+              label="Stop generating"
+            />
+            <Button onClick={handleNew} label="New conversation" />
+          </div>
+          <CalvinAIInput
+            handleChangeInput={handleChangeInput}
+            value={inputText}
+            handleAskGPT={handleAskGPT}
+            isLoading={isLoading}
+            inputTextRef={inputTextRef}
+            isListening={isListening}
+            handleStopSpeech={handleStopSpeech}
+            handleStartSpeech={handleStartSpeech}
+          />
         </div>
-        <CalvinAIInput
-          handleChangeInput={handleChangeInput}
-          value={inputText}
-          handleAskGPT={handleAskGPT}
-          isLoading={isLoading}
-          inputTextRef={inputTextRef}
-          isListening={isListening}
-          handleStopSpeech={handleStopSpeech}
-          handleStartSpeech={handleStartSpeech}
-        />
+        <CalvinAIChatTemplates handleSelectTemplate={handleSelectTemplate} />
       </div>
-      <CalvinAIChatTemplates handleSelectTemplate={handleSelectTemplate} />
-    </div>
+      {templatesVisible && (
+        <FakeWindow
+          title={`CALVIN AI PROMPTS TEMPLATES`}
+          width={500}
+          height={600}
+          x={window.innerWidth - 500}
+          y={0}
+          color="#93b5e9"
+          setPopUpVisible={setTemplatesVisible}
+        >
+          <CalvinAITemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+    </>
   );
 };
 

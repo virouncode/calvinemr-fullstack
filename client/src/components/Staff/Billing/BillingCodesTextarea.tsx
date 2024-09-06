@@ -25,7 +25,6 @@ const BillingCodesTextarea = ({
         style={{
           padding: "5px 20px 5px 5px",
           whiteSpace: "pre-wrap",
-          width: "170px",
         }}
         id="billing_codes"
       />
