@@ -109,12 +109,12 @@ const PamphletItem = ({
   return (
     item && (
       <tr
-        className="reference-edocs__item"
+        className="reference__edocs-item"
         style={{ border: errMsgPost && "solid 1.5px red" }}
         ref={lastItemRef}
       >
         <td>
-          <div className="reference-edocs__item-btn-container">
+          <div className="reference__edocs-item-btn-container">
             {editVisible ? (
               <>
                 <SaveButton
@@ -149,7 +149,7 @@ const PamphletItem = ({
           />
         </td>
         <td
-          className="reference-edocs__item-link"
+          className="reference__edocs-item-link"
           onClick={() => showDocument(item.file?.url, item.file?.mime)}
         >
           {item.file?.name}

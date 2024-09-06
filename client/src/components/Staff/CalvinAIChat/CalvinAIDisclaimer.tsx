@@ -2,7 +2,7 @@ import React from "react";
 
 const CalvinAIDisclaimer = () => {
   return (
-    <div className="calvinai-disclaimer">
+    <div className="calvinai__disclaimer">
       <p style={{ textAlign: "center", marginBottom: "5px" }}>
         ****** DISCLAIMER ******
       </p>

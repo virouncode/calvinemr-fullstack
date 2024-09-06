@@ -130,15 +130,15 @@ const CalvinAIChat = () => {
     inputTextBeforeSpeech.current = "";
   };
   return (
-    <div className="calvinai-container">
-      <div className="calvinai-chat">
+    <div className="calvinai__container">
+      <div className="calvinai__chat">
         <CalvinAIChatContent
           messages={messages}
           msgEndRef={msgEndRef}
           contentRef={contentRef}
           isLoading={isLoading}
         />
-        <div className="calvinai-chat__stop-btn">
+        <div className="calvinai__chat-stop-btn">
           <Button
             onClick={() => abortController.current?.abort()}
             label="Stop generating"

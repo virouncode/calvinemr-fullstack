@@ -55,7 +55,7 @@ const CalvinAIChatTemplates = ({
 
   if (error) {
     return (
-      <div className="calvinai-chat__templates">
+      <div className="calvinai__chat-templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -64,11 +64,11 @@ const CalvinAIChatTemplates = ({
   const templatesDatas = templates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="calvinai-chat__templates">
-      <div className="calvinai-chat__templates-btn-container">
+    <div className="calvinai__chat-templates">
+      <div className="calvinai__chat-templates-btn-container">
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
-      <div className="calvinai-chat__templates-search">
+      <div className="calvinai__chat-templates-search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -79,7 +79,7 @@ const CalvinAIChatTemplates = ({
           width={300}
         />
       </div>
-      <div className="calvinai-chat__templates-list" ref={divRef}>
+      <div className="calvinai__chat-templates-list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />

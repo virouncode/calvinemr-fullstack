@@ -7,7 +7,7 @@ const SubheaderTitle = ({ title }: SubheaderTitleProps) => {
     <h2 className="subheader__title">
       {title}{" "}
       {title === "Calvin AI Chat" && (
-        <sup style={{ fontSize: "0.5rem" }}>Powered by ChatGPT</sup>
+        <sup style={{ fontSize: "0.5rem" }}>ChatGPT</sup>
       )}
     </h2>
   );

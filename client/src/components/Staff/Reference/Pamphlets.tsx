@@ -41,12 +41,12 @@ const Pamphlets = () => {
   const pamphlets = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="reference-edocs">
-      <div className="reference-edocs__title">
+    <div className="reference__edocs">
+      <div className="reference__edocs-title">
         <h3>Pamphlets</h3>
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
-      <div className="reference-edocs__search">
+      <div className="reference__edocs-search">
         <Input
           label="Search"
           value={search}
@@ -55,11 +55,11 @@ const Pamphlets = () => {
           width={300}
         />
       </div>
-      <div className="reference-edocs__results">
+      <div className="reference__edocs-results">
         {error && <ErrorParagraph errorMsg={error.message} />}
         <>
-          <div className="reference-edocs__table-container" ref={divRef}>
-            <table className="reference-edocs__table">
+          <div className="reference__edocs-table-container" ref={divRef}>
+            <table className="reference__edocs-table">
               <thead>
                 <tr>
                   <th>Action</th>

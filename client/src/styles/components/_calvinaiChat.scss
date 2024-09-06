@@ -1,152 +1,156 @@
-.calvinai-disclaimer {
-  font-size: 0.7rem;
+.calvinai {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0;
+}
+.calvinai__container {
+  margin: 0 auto;
+  width: 97%;
+  height: 100%;
+}
+.calvinai__disclaimer {
+  font-size: $size-xs;
   font-style: italic;
-  width: 70%;
-  margin: 0px auto 20px;
+  width: 90%;
+  margin: 0px auto 1rem;
   p {
-    padding: 2px;
+    padding: 0.125rem;
   }
 }
-.calvinai-container {
-  display: flex;
-  height: 97%;
-  margin: 15px auto 15px;
-  width: 97%;
-}
-.calvinai-chat {
-  width: 65%;
-  height: 100%;
-  margin-right: 20px;
+.calvinai__chat {
   display: flex;
   flex-direction: column;
   background-color: $white;
   border: solid 1px $grey;
   border-radius: 6px;
-  padding: 20px;
+  padding: 1rem;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  &__templates {
-    width: 35%;
-    padding: 20px;
-    border: solid 1px $grey;
-    border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    font-size: 0.85rem;
-    &-btn-container {
-      text-align: center;
-      margin-bottom: 20px;
-      button {
-        margin-left: 5px;
-      }
-    }
-    &-list {
-      height: 90%;
-      border: solid 0.5px $grey;
-      border-radius: 6px;
-      overflow-y: scroll;
-      padding: 10px;
-      font-size: 0.8rem;
-      &-item {
-        cursor: pointer;
-        margin-bottom: 5px;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-    &-search {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      label {
-        font-weight: bold;
-        margin-right: 10px;
-      }
-      input {
-        width: 200px;
-      }
-    }
-  }
-  &__content {
-    overflow: scroll;
-    font-size: 0.85rem;
-    border-bottom: solid 1px $grey;
-    height: 70%;
-  }
-  &__stop-btn {
-    height: 5%;
-    margin-left: auto;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  height: 100%;
+}
+
+.calvinai__chat-templates {
+  display: none;
+  width: 35%;
+  padding: 20px;
+  border: solid 1px $grey;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  font-size: 0.85rem;
+  &-btn-container {
+    text-align: center;
+    margin-bottom: 20px;
     button {
-      font-size: 0.8rem;
-      padding: 5px 10px;
-      margin-right: 5px;
+      margin-left: 5px;
     }
   }
-  &__send-btn {
-    background-color: $blue;
-    &:hover {
-      background-color: $blue2;
+  &-list {
+    height: 90%;
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    overflow-y: scroll;
+    padding: 10px;
+    font-size: 0.8rem;
+    &-item {
+      cursor: pointer;
+      margin-bottom: 5px;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
-  &__input {
-    height: 30%;
-    position: relative;
+  &-search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    input {
+      width: 200px;
+    }
+  }
+}
+
+.calvinai__chat-content {
+  overflow: scroll;
+  font-size: $size-xs;
+  border-bottom: solid 1px $grey;
+  height: 70%;
+}
+.calvinai__chat-stop-btn {
+  height: 5%;
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25rem;
+  button {
+    font-size: $size-xs;
+  }
+}
+.calvinai__chat-send-btn {
+  background-color: $blue;
+  &:hover {
+    background-color: $blue2;
+  }
+}
+.calvinai__chat-input {
+  height: 25%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: solid 1px $grey;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  padding: 5px 20px 5px 10px;
+}
+.calvinai__chat-textarea {
+  width: 93%;
+  overflow: scroll;
+  font-family: $font1;
+  font-size: $size-xs;
+  padding: 10px;
+  outline: none;
+  height: 100%;
+  &:focus {
+    outline: none;
+  }
+}
+.calvinai__chat-card {
+  padding: 20px;
+  border: solid 1px $grey;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  margin-bottom: 10px;
+  &-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-radius: 6px;
-    border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    padding: 5px 20px 5px 10px;
+    align-items: flex-start;
+    margin-bottom: 20px;
   }
-  &__textarea {
-    width: 93%;
-    overflow: scroll;
-    font-family: $font1;
-    font-size: 0.85rem;
-    padding: 10px;
-    outline: none;
-    height: 100%;
-    &:focus {
-      outline: none;
-    }
+  &-btns {
+    text-align: end;
   }
-  &__card {
-    padding: 20px;
-    border: solid 1px $grey;
-    border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    margin-bottom: 10px;
-    &-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
-    }
-    &-btns {
-      text-align: end;
-    }
-  }
-  &__img-bot {
-    width: 7%;
-    height: auto;
-  }
-  &__img-user {
-    width: 7%;
-    height: auto;
-  }
-  &__message {
-    padding: 0 10px;
-    white-space: pre-wrap;
-    width: 92%;
-  }
-  &--meds {
-    width: 98%;
-    height: 93%;
-    margin: 40px auto 0;
-  }
+}
+.calvinai__chat-img-bot {
+  width: 7%;
+  height: auto;
+}
+.calvinai__chat-img-user {
+  width: 7%;
+  height: auto;
+}
+.calvinai__chat-message {
+  padding: 0 10px;
+  white-space: pre-wrap;
+  width: 92%;
+}
+.calvinai__chat--meds {
+  width: 98%;
+  height: 93%;
+  margin: 40px auto 0;
 }
 
 .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {

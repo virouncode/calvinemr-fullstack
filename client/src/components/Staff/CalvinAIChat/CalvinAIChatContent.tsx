@@ -16,7 +16,7 @@ const CalvinAIChatContent = ({
   isLoading,
 }: CalvinAIChatContentProps) => {
   return (
-    <div className="calvinai-chat__content" ref={contentRef}>
+    <div className="calvinai__chat-content" ref={contentRef}>
       <CalvinAIDisclaimer />
       {messages.map((message, i) => (
         <CalvinAIChatMessage

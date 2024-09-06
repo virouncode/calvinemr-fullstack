@@ -36,28 +36,28 @@ const CalvinAIChatMessage = ({
   };
 
   return (
-    <div className="calvinai-chat__card">
-      <div className="calvinai-chat__card-content">
+    <div className="calvinai__chat-card">
+      <div className="calvinai__chat-card-content">
         {role === "user" ? (
           <img
             src={userLogo}
             alt="user logo"
-            className="calvinai-chat__img-user"
+            className="calvinai__chat-img-user"
           />
         ) : (
           <img
             src={botLogo}
             alt="bot logo"
-            className="calvinai-chat__img-bot"
+            className="calvinai__chat-img-bot"
           />
         )}
 
-        <p className="calvinai-chat__message" ref={textRef}>
+        <p className="calvinai__chat-message" ref={textRef}>
           {message.content}
         </p>
       </div>
       {role !== "user" && (
-        <div className="calvinai-chat__card-btns">
+        <div className="calvinai__chat-card-btns">
           <Button
             onClick={handleCopyToClipboard}
             disabled={isLoading}
