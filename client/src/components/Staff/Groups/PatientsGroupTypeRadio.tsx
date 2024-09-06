@@ -16,8 +16,8 @@ const PatientsGroupTypeRadio = ({
       <div className="patients-groups__edit-row-radio-item">
         <Radio
           id="personal"
-          name="personal"
-          value="personal"
+          name="global"
+          value="false"
           checked={!groupInfos.global}
           onChange={handleChangeType}
           label="Personal Group"
@@ -27,8 +27,8 @@ const PatientsGroupTypeRadio = ({
         <Radio
           id="global"
           name="global"
-          value="global"
-          checked={groupInfos.global as boolean}
+          value="true"
+          checked={!!groupInfos.global}
           onChange={handleChangeType}
           label="Clinic Group"
         />
