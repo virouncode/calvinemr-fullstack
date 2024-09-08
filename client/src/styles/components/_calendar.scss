@@ -267,7 +267,7 @@
   white-space: nowrap;
   left: 50%;
   transform: translate(-50%);
-  top: 35px;
+  top: 40px;
   &:hover {
     background: $grey2;
   }
@@ -397,6 +397,10 @@
     height: 100%;
     font-size: $size-xs;
   }
+  .fc-icon.fc-icon-chevron-right,
+  .fc-icon.fc-icon-chevron-left {
+    font-size: $size-xs;
+  }
   .fc-daygrid-week-number {
     display: none;
   }
@@ -464,6 +468,7 @@
   .fc-prev-button.fc-button.fc-button-primary,
   .fc-next-button.fc-button.fc-button-primary {
     width: auto;
+    padding: 0.4em 0.65em;
   }
   .fc-button.fc-button-primary.fc-button-active {
     background: $pink;
@@ -635,10 +640,10 @@
   justify-content: space-between;
   align-items: start;
   &-infos {
-    width: 85%;
+    width: 80%;
   }
   &-btns {
-    width: 15%;
+    width: 20%;
     text-align: end;
   }
 }
