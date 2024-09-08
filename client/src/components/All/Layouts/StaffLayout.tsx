@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Id } from "react-toastify";
 import useTitleContext from "../../../hooks/context/useTitleContext";
@@ -13,6 +13,7 @@ import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import StaffHeader from "../Headers/StaffHeader";
+import StaffMobileNav from "../Navigation/StaffMobileNav";
 import Subheader from "../Subheader/Subheader";
 
 type StaffLayoutProps = {
@@ -32,14 +33,28 @@ const StaffLayout = ({
   useAutoLockScreen(setLockedScreen);
   useLocalStorageLock(setLockedScreen);
 
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickBars = () => {
+    if (mobileNavRef.current) {
+      mobileNavRef.current.classList.add("mobile-nav__container--active");
+    }
+  };
   const onConfirm = () => setCreditsVisible(false);
 
   return (
     <div className="wrapper container">
+      <StaffMobileNav
+        setNotepadVisible={setNotepadVisible}
+        setLockedScreen={setLockedScreen}
+        mobileNavRef={mobileNavRef}
+      />
+
       <StaffHeader
         setCreditsVisible={setCreditsVisible}
         setLockedScreen={setLockedScreen}
         setNotepadVisible={setNotepadVisible}
+        handleClickBars={handleClickBars}
       />
       <Subheader
         title={title}

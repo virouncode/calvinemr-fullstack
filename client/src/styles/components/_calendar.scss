@@ -502,7 +502,6 @@
   top: 120px;
   right: 1rem;
   display: flex;
-  // display: none;
 }
 .calendar__toggle-option {
   border-radius: 2px;
@@ -518,10 +517,10 @@
   cursor: pointer;
   width: 70px;
   padding: 0.4em 0.65em;
-  &:hover {
-    background: $grey;
-    color: rgb(70, 70, 70);
-  }
+  // &:hover {
+  //   background: $grey;
+  //   color: rgb(70, 70, 70);
+  // }
   &--active {
     background: $pink;
     color: $white;

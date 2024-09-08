@@ -1,3 +1,4 @@
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -8,6 +9,7 @@ type XmarkRectangleIconProps = {
   mr?: number;
   color?: string;
   clickable?: boolean;
+  size?: SizeProp;
 };
 
 const XmarkRectangleIcon = ({
@@ -16,6 +18,7 @@ const XmarkRectangleIcon = ({
   mr = 0,
   color,
   clickable = true,
+  size = "1x",
 }: XmarkRectangleIconProps) => {
   return (
     <FontAwesomeIcon
@@ -27,6 +30,7 @@ const XmarkRectangleIcon = ({
         marginRight: `${mr}px`,
         color: color,
       }}
+      size={size}
     />
   );
 };
