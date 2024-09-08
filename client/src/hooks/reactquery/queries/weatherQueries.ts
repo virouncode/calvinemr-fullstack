@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { WeatherType } from "../../../types/api";
+axios.defaults.withCredentials = true;
 
 const fetchWeather = async (): Promise<WeatherType> => {
   const response = await axios.get("/api/weather");

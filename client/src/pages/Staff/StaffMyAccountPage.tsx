@@ -4,7 +4,7 @@ import MyAccountStaff from "../../components/Staff/MyAccount/MyAccountStaff";
 import useTitle from "../../hooks/useTitle";
 
 const StaffMyAccountPage = () => {
-  useTitle("My personal information");
+  useTitle("My account");
   return (
     <>
       <HelmetProvider>

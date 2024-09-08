@@ -34,7 +34,6 @@ const LoginInputs = ({
           value={formDatas.email}
           autoFocus={true}
           label="Email"
-          width={170}
         />
       </div>
       <div className="login__form-row" style={{ position: "relative" }}>
@@ -46,7 +45,6 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.password}
               label="Password"
-              width={170}
             />
             <EyeIcon onClick={handleTogglePwd} />
           </>
@@ -58,7 +56,6 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.password}
               label="Password"
-              width={170}
             />
             <EyeIcon onClick={handleTogglePwd} slash={true} />
           </>
@@ -73,7 +70,6 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.pin}
               label="PIN"
-              width={170}
             />
             <EyeIcon onClick={handleTogglePin} />
           </>
@@ -85,7 +81,6 @@ const LoginInputs = ({
               onChange={handleChange}
               value={formDatas.pin}
               label="PIN"
-              width={170}
             />
             <EyeIcon onClick={handleTogglePin} slash={true} />
           </>

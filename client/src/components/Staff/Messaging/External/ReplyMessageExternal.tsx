@@ -26,7 +26,6 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
-
 axios.defaults.withCredentials = true;
 
 type ReplyMessageExternalProps = {

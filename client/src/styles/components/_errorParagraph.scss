@@ -1,16 +1,10 @@
 .error-paragraph {
   padding: 0.5rem 1rem;
-  font-size: $size-sm;
+  font-size: $size-base;
   width: 90%;
   margin: 0.5rem auto;
   color: red;
   background-color: rgba(255, 0, 0, 0.403);
   border-radius: 6px;
   text-align: center;
-}
-
-@media (min-width: 768px) {
-  .error-paragraph {
-    font-size: $size-base;
-  }
 }

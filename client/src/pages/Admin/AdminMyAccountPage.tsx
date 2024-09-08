@@ -4,7 +4,7 @@ import MyAccountAdmin from "../../components/Admin/MyAccount/MyAccountAdmin";
 import useTitle from "../../hooks/useTitle";
 
 const AdminMyAccountPage = () => {
-  useTitle("My personal information");
+  useTitle("My account");
   return (
     <>
       <HelmetProvider>

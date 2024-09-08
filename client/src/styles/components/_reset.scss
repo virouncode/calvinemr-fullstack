@@ -10,18 +10,20 @@
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   background: $white;
-  max-width: 90%;
+  width: 90%;
+  max-width: 310px;
 }
 .reset__title {
   width: 100%;
   text-align: center;
-  margin-bottom: 1rem;
-  font-size: $size-base;
+  margin-bottom: 2rem;
+  font-size: $size-2xl;
+  color: $blue2;
 }
 .reset__success {
   padding: 0.5rem 1rem;
   width: 100%;
-  font-size: $size-sm;
+  font-size: $size-base;
   margin: 0 auto 0.5rem;
   border-radius: 6px;
   text-align: center;
@@ -30,108 +32,126 @@
 }
 .reset__email-row-radio {
   display: flex;
-  justify-content: space-between;
-  font-size: $size-xs;
+  justify-content: center;
+  font-size: $size-base;
   margin: 0 auto 2rem;
+  gap: 1rem;
 }
 .reset__email-row-radio-item {
   display: flex;
   align-items: center;
   label {
+    font-size: $size-base;
     font-weight: bold;
-  }
-  input[type="radio"] {
-    margin-right: 0.25rem;
+    margin-left: 0.25rem;
   }
 }
 .reset__email-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto 1rem;
+  flex-direction: column;
+  margin: 0 auto 2rem;
+  width: 80%;
   label {
-    font-size: $size-sm;
+    font-size: $size-lg;
     font-weight: bold;
-    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
   }
   input[type="email"] {
     flex: 1;
+    font-size: $size-lg;
   }
 }
 .reset__email-row-btns {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
+  margin: 0 auto;
   button {
-    margin-right: 0.5rem;
-    font-size: $size-xs;
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
   }
 }
 .reset__temp-password-instructions {
-  font-size: $size-xs;
+  font-size: $size-base;
   margin-bottom: 20px;
   text-align: center;
 }
 .reset__temp-password-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   input[type="password"] {
     width: 100%;
+    font-size: $size-lg;
   }
 }
 .reset__temp-password-row-btns {
-  text-align: center;
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 90%;
+  margin: 1rem auto 0;
   button {
-    font-size: $size-xs;
-    margin-right: 0.5rem;
+    flex: 1;
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
   }
 }
-.reset__row {
-  margin: 0 auto;
+.reset__form {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+}
+.reset__row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   label {
-    font-size: $size-sm;
+    font-size: $size-lg;
     font-weight: bold;
-    width: 45%;
+    margin-bottom: 0.25rem;
   }
-  input {
-    width: 55%;
+  input[type="password"] {
+    width: 100%;
+    font-size: $size-lg;
   }
   ul {
-    width: 55%;
+    width: 100%;
     margin-left: auto;
     li {
       font-size: $size-xs;
     }
   }
 }
-
-.reset__row-btn {
+.reset__row-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
-  text-align: center;
-  margin-top: 20px;
+  margin: 2rem auto 0;
   button {
-    font-size: $size-xs;
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
   }
 }
 
-@media (min-width: 768px) {
-  .reset__container {
-    width: 400px;
-  }
+@media (min-width: 1024px) {
   .reset__title {
-    font-size: $size-lg;
-  }
-  .reset__email-row-radio {
-    width: 200px;
-    font-size: $size-sm;
+    font-size: $size-xl;
   }
   .reset__email-row {
-    width: 70%;
+    label {
+      font-size: $size-base;
+    }
     input[type="email"] {
       font-size: $size-base;
     }
@@ -141,13 +161,14 @@
       font-size: $size-sm;
     }
   }
-  .reset__email-row {
-    label {
-      font-size: $size-base;
-    }
-  }
   .reset__temp-password-instructions {
     font-size: $size-sm;
+  }
+  .reset__temp-password-row {
+    input[type="password"] {
+      width: 100%;
+      font-size: $size-base;
+    }
   }
   .reset__temp-password-row-btns {
     button {
@@ -158,13 +179,11 @@
     label {
       font-size: $size-base;
     }
-    ul {
-      li {
-        font-size: $size-sm;
-      }
+    input[type="password"] {
+      font-size: $size-base;
     }
   }
-  .reset__row-btn {
+  .reset__row-btns {
     button {
       font-size: $size-sm;
     }

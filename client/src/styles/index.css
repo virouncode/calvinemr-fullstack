@@ -185,6 +185,8 @@ summary {
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
 }
 
 @font-face {
@@ -222,6 +224,8 @@ body {
   font-family: Lato, sans-serif;
   background-color: black;
   color: #3d375a;
+  height: 100%;
+  width: 100%;
 }
 
 img,
@@ -451,23 +455,6 @@ li {
   margin-bottom: 30px;
 }
 
-.lock-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("@/assets/img/splashscreen.png") center/cover;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 10000;
-}
-.lock-section-title {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
 .fax-section {
   width: 100%;
   height: 100%;
@@ -500,7 +487,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   background-color: #6492d8;
 }
 .header--login {
@@ -509,9 +496,10 @@ li {
   background-color: transparent;
 }
 .header__title {
+  text-align: end;
   display: none;
 }
-.header__logo {
+.header__logo img {
   width: 120px;
 }
 .header__nav {
@@ -531,7 +519,11 @@ li {
   }
 }
 @media (min-width: 1024px) {
+  .header__logo {
+    width: 20%;
+  }
   .header__nav {
+    width: 80%;
     display: block;
   }
   .header__nav ul {
@@ -564,10 +556,17 @@ li {
 @media (min-width: 1280px) {
   .header__title {
     display: inline;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    width: 16%;
+  }
+  .header__nav {
+    width: 68%;
   }
   .header__nav ul {
     font-size: 0.8rem;
+  }
+  .header__logo {
+    width: 16%;
   }
 }
 @media print {
@@ -1150,7 +1149,7 @@ li {
 /*xl*/
 @media (min-width: 1280px) {
   .calendar__display .fc-toolbar-title {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .calendar__display .fc-button.fc-button-primary {
     width: 70px;
@@ -1616,7 +1615,7 @@ li {
      object-fit: cover;
 }
 .subheader__title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-align: center;
   font-weight: bold;
   text-align: center;
@@ -4542,7 +4541,7 @@ li {
 }
 @media (min-width: 768px) {
   .signup-patient__success {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .signup-patient__btn button {
     font-size: 0.8rem;
@@ -4669,61 +4668,53 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 
 .myaccount__container {
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   border-radius: 6px;
   background: #fefefe;
-  padding: 20px;
-  width: 55%;
+  padding: 1rem;
   margin: 0 auto;
+  width: 100%;
 }
 
 .myaccount__success {
-  padding: 10px 20px;
-  width: 100%;
-  font-size: 0.9rem;
-  margin: 0 auto;
-  border-radius: 6px;
-  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  width: 90%;
+  margin: 0.5rem auto;
   color: forestgreen;
   background-color: rgba(34, 139, 34, 0.4);
-  margin-bottom: 10px;
+  border-radius: 6px;
+  text-align: center;
 }
 
 .myaccount__btns {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1rem;
 }
 .myaccount__btns button {
-  margin-left: 5px;
+  font-size: 0.7rem;
+  margin-left: 0.25rem;
 }
 
 .myaccount__form {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .myaccount__column {
-  width: 45%;
+  width: 100%;
 }
 
 .myaccount__row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-}
-.myaccount__row--admin {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.myaccount__row--admin label {
-  font-size: 0.85rem;
-  font-weight: bold;
-  min-width: 90px;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }
 .myaccount__row p {
   overflow: hidden;
@@ -4731,22 +4722,18 @@ li {
   text-overflow: ellipsis;
 }
 .myaccount__row label {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   font-weight: bold;
-  min-width: 170px;
+  width: 150px;
 }
-.myaccount__row input {
-  width: 100%;
-}
+.myaccount__row input,
 .myaccount__row select {
-  width: 100%;
+  flex: 1;
+  font-size: 0.7rem;
+  max-width: 170px;
 }
-.myaccount__row-row-submit {
-  text-align: end;
-  margin-top: 20px;
-}
-.myaccount__row-row-submit input[type=submit] {
-  width: 100px;
+.myaccount__row--admin label {
+  min-width: 90px;
 }
 
 .myaccount__image {
@@ -4764,6 +4751,29 @@ li {
   cursor: pointer;
 }
 
+@media (min-width: 475px) {
+  .myaccount__container {
+    width: 450px;
+  }
+  .myaccount__form {
+    font-size: 0.8rem;
+  }
+  .myaccount__row label {
+    font-size: 0.8rem;
+  }
+  .myaccount__row input,
+  .myaccount__row select {
+    font-size: 0.8rem;
+  }
+  .myaccount__btns button {
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 768px) {
+  .signup-patient__success {
+    font-size: 1rem;
+  }
+}
 .staff-account__container {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border: solid 1px #cecdcd;
@@ -6632,10 +6642,10 @@ li {
 /*lg*/
 @media (min-width: 1024px) {
   .reportsinbox__subtitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reportsinbox__results {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reportsinbox__table {
     font-size: 0.8rem;
@@ -6663,20 +6673,22 @@ li {
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   background: #fefefe;
-  max-width: 90%;
+  width: 90%;
+  max-width: 310px;
 }
 
 .reset__title {
   width: 100%;
   text-align: center;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #6492d8;
 }
 
 .reset__success {
   padding: 0.5rem 1rem;
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 0 auto 0.5rem;
   border-radius: 6px;
   text-align: center;
@@ -6686,9 +6698,10 @@ li {
 
 .reset__email-row-radio {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.7rem;
+  justify-content: center;
+  font-size: 1rem;
   margin: 0 auto 2rem;
+  gap: 1rem;
 }
 
 .reset__email-row-radio-item {
@@ -6696,37 +6709,43 @@ li {
   align-items: center;
 }
 .reset__email-row-radio-item label {
+  font-size: 1rem;
   font-weight: bold;
-}
-.reset__email-row-radio-item input[type=radio] {
-  margin-right: 0.25rem;
+  margin-left: 0.25rem;
 }
 
 .reset__email-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto 1rem;
+  flex-direction: column;
+  margin: 0 auto 2rem;
+  width: 80%;
 }
 .reset__email-row label {
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   font-weight: bold;
-  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 .reset__email-row input[type=email] {
   flex: 1;
+  font-size: 1.125rem;
 }
 
 .reset__email-row-btns {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
+  margin: 0 auto;
 }
 .reset__email-row-btns button {
-  margin-right: 0.5rem;
-  font-size: 0.7rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.75rem;
 }
 
 .reset__temp-password-instructions {
-  font-size: 0.7rem;
+  font-size: 1rem;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -6739,6 +6758,7 @@ li {
 }
 .reset__temp-password-row input[type=password] {
   width: 100%;
+  font-size: 1.125rem;
 }
 
 .reset__temp-password-row-btns {
@@ -6746,7 +6766,7 @@ li {
   margin-top: 20px;
 }
 .reset__temp-password-row-btns button {
-  font-size: 0.7rem;
+  font-size: 1rem;
   margin-right: 0.5rem;
 }
 
@@ -6758,12 +6778,13 @@ li {
   align-items: center;
 }
 .reset__row label {
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   font-weight: bold;
   width: 45%;
 }
 .reset__row input {
   width: 55%;
+  font-size: 1.125rem;
 }
 .reset__row ul {
   width: 55%;
@@ -6783,27 +6804,8 @@ li {
 }
 
 @media (min-width: 768px) {
-  .reset__container {
-    width: 400px;
-  }
-  .reset__title {
-    font-size: 1.125rem;
-  }
-  .reset__email-row-radio {
-    width: 200px;
-    font-size: 0.8rem;
-  }
-  .reset__email-row {
-    width: 70%;
-  }
-  .reset__email-row input[type=email] {
-    font-size: 0.9rem;
-  }
   .reset__email-row-btns button {
-    font-size: 0.8rem;
-  }
-  .reset__email-row label {
-    font-size: 0.9rem;
+    padding: 0.5rem;
   }
   .reset__temp-password-instructions {
     font-size: 0.8rem;
@@ -6812,7 +6814,7 @@ li {
     font-size: 0.8rem;
   }
   .reset__row label {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reset__row ul li {
     font-size: 0.8rem;
@@ -8089,13 +8091,13 @@ li {
 
 @media (min-width: 1024px) {
   .reference__links h3 {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reference__links ul {
     font-size: 0.8rem;
   }
   .reference__links-personal-title h3 {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reference__links-personal-title button {
     font-size: 0.8rem;
@@ -8104,7 +8106,7 @@ li {
     font-size: 0.8rem;
   }
   .reference__edocs-title h3 {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .reference__edocs-title button {
     font-size: 0.8rem;
@@ -8137,13 +8139,13 @@ li {
 }
 
 .missing__title {
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .missing__link {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-decoration: underline;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -8154,7 +8156,7 @@ li {
     font-size: 1.125rem;
   }
   .missing__link {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 .unauthorized {
@@ -8182,13 +8184,13 @@ li {
 }
 
 .unauthorized__title {
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .unauthorized__link {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-decoration: underline;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -8199,10 +8201,10 @@ li {
     font-size: 1.125rem;
   }
   .unauthorized__container p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .unauthorized__link {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 .appointments-patient {
@@ -8701,7 +8703,7 @@ li {
 }
 
 .suspended__title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -8716,10 +8718,10 @@ li {
     font-size: 1.125rem;
   }
   .suspended__container p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .suspended__link {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 .dashboard {
@@ -9927,16 +9929,16 @@ li {
 @media (min-width: 1024px) {
   .groups__toggle {
     width: 250px;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .groups__title {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .groups__content {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
   .groups__card-title {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .groups__card-list {
     font-size: 0.8rem;
@@ -10085,30 +10087,42 @@ li {
   margin-right: 5px;
 }
 
-.unlock-form {
-  width: 30%;
+.lock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("@/assets/img/splashscreen.png") center/cover;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.lock__form {
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   background: #fefefe;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
-.unlock-form__message {
+.lock__form__message {
   margin-bottom: 20px;
   text-align: center;
 }
-.unlock-form__input {
+.lock__form__input {
   margin: 0 auto;
   text-align: center;
 }
-.unlock-form__input input {
+.lock__form__input input {
   margin-right: 10px;
 }
-.unlock-form__input button {
+.lock__form__input button {
   margin-left: 5px;
 }
-.unlock-form__err {
+.lock__form__err {
   padding: 10px 20px;
   font-size: 0.9rem;
   width: 100%;
@@ -10121,20 +10135,15 @@ li {
 
 .error-paragraph {
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   width: 90%;
-  margin: 0.5rem auto;
+  margin: 1rem auto;
   color: red;
   background-color: rgba(255, 0, 0, 0.403);
   border-radius: 6px;
   text-align: center;
 }
 
-@media (min-width: 768px) {
-  .error-paragraph {
-    font-size: 0.9rem;
-  }
-}
 .empty-paragraph {
   padding: 10px 20px;
   font-size: 0.9rem;
@@ -11677,7 +11686,7 @@ li {
 }
 
 .closed__title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -11692,10 +11701,10 @@ li {
     font-size: 1.125rem;
   }
   .closed__container p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .closed__link {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 .closed {
@@ -11724,7 +11733,7 @@ li {
 }
 
 .closed__title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -11739,10 +11748,10 @@ li {
     font-size: 1.125rem;
   }
   .closed__container p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   .closed__link {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 .closed-practician {
@@ -11815,27 +11824,30 @@ li {
 }
 
 .login__title {
-  font-size: 1.875rem;
+  color: #6492d8;
+  font-size: 2.25rem;
   font-weight: bold;
   font-style: italic;
   text-align: center;
   white-space: pre-wrap;
   word-break: break-word;
+  max-width: 95%;
 }
 
 .login__form {
-  width: 250px;
+  width: 70%;
+  max-width: 250px;
   display: flex;
   flex-direction: column;
 }
 
 .login__err-placeholder {
-  height: 51px;
+  height: 67px;
 }
 
 .login__instructions {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1.125rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
   font-weight: bold;
@@ -11843,27 +11855,36 @@ li {
 
 .login__form-row {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 .login__form-row label {
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+}
+.login__form-row input {
+  font-size: 1.125rem;
+  width: 100%;
 }
 
 .login__btn-container {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   gap: 0.5rem;
 }
 .login__btn-container button {
   flex: 1;
-  font-size: 0.7rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.75rem;
 }
 
 .login__forgot {
   text-align: end;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin-top: 0.25rem;
   cursor: pointer;
 }
@@ -11871,30 +11892,33 @@ li {
   text-decoration: underline;
 }
 
-/*md*/
-@media (min-width: 768px) {
+.eye-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 30px;
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
   .login__title {
-    font-size: 2.25rem;
-  }
-  .login__form {
-    width: 18rem;
-  }
-  .login__form-row label {
-    font-size: 0.9rem;
-  }
-  .login__form-row input {
-    font-size: 0.9rem;
-  }
-  .login__instructions {
-    font-size: 0.9rem;
-  }
-  .login__btn-container button {
-    font-size: 0.8rem;
-  }
-  .login__err-placeholder {
-    height: 53px;
+    max-width: 75%;
   }
 }
+/*md*/
+@media (min-width: 1024px) {
+  .login__title {
+    font-size: 3rem;
+  }
+  .login__btn-container button {
+    padding: 0.5rem;
+  }
+}
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .btn {
   font-size: 0.8rem;
   display: inline-block;
@@ -11942,11 +11966,13 @@ li {
 }
 
 .wrapper-login {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: url("@/assets/img/splashscreen.png") center/cover;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fefefe;
 }
 
 .main-login {
@@ -11954,8 +11980,8 @@ li {
 }
 
 .wrapper {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -11965,7 +11991,7 @@ li {
   overflow: hidden;
 }
 
-/*xs*/
+/*xs (tablets start)*/
 @media (min-width: 475px) {
   .container,
   .container-login {

@@ -45,7 +45,6 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import PatientAvatarInput from "./PatientAvatarInput";
 import WebcamCapture from "./WebcamCapture";
-
 axios.defaults.withCredentials = true;
 
 const SignupPatientForm = () => {

@@ -29,7 +29,6 @@ import InvitationInfos from "./InvitationInfos";
 import InvitationIntro from "./InvitationIntro";
 import InvitationMessage from "./InvitationMessage";
 import InvitationTemplatesRadio from "./Templates/InvitationTemplatesRadio";
-
 axios.defaults.withCredentials = true;
 
 type InvitationProps = {

@@ -22,7 +22,6 @@ import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import TriangleIcon from "../../../../UI/Icons/TriangleIcon";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
-
 axios.defaults.withCredentials = true;
 
 type ClinicalNoteCardHeaderProps = {

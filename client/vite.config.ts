@@ -24,5 +24,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
+    host: "0.0.0.0", // Allow access from external devices
+    port: 5173, // You can specify the port, default is 3000
   },
 });

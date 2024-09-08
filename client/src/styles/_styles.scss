@@ -5,6 +5,8 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
 }
 
 //COLORS
@@ -30,8 +32,8 @@ $pink2: #e63a6e;
 //SIZES
 $size-xxs: 0.5rem;
 $size-xs: 0.7rem;
-$size-sm: 0.8rem;
-$size-base: 0.9rem;
+$size-sm: 0.85rem;
+$size-base: 1rem;
 $size-lg: 1.125rem;
 $size-xl: 1.25rem;
 $size-2xl: 1.5rem;
@@ -85,6 +87,8 @@ body {
   font-family: $font1;
   background-color: black;
   color: $black;
+  height: 100%;
+  width: 100%;
 }
 
 img,
@@ -128,7 +132,7 @@ textarea {
 }
 
 input {
-  padding: 0.125rem 0.25rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 3px;
   outline: solid 1px $grey;
@@ -159,7 +163,7 @@ input[type="file"] {
 
 select {
   cursor: pointer;
-  padding: 0.125rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 3px;
   outline: solid 1px $grey;

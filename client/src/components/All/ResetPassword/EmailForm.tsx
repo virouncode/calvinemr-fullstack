@@ -6,7 +6,6 @@ import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputEmail from "../../UI/Inputs/InputEmail";
-import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 import UserTypeRadioGroup from "../../UI/Radio/UserTypeRadioGroup";
 axios.defaults.withCredentials = true;
 
@@ -90,14 +89,13 @@ const EmailForm = ({
           onChange={handleChange}
           name="email"
           id="email"
-          label="Email:"
+          label="Email"
           autoFocus={true}
         />
       </div>
       <div className="reset__email-row-btns">
-        <SubmitButton disabled={progress} />
+        <SubmitButton disabled={progress} loading={progress} />
         <CancelButton onClick={handleCancel} />
-        {progress && <CircularProgressSmall />}
       </div>
     </form>
   );

@@ -1,11 +1,9 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-
-// Load environment variables
 dotenv.config();
+axios.defaults.withCredentials = true;
 
-// Error handling function to handle different types of errors
 const handleError = (err: unknown): string => {
   if (err instanceof Error) {
     return err.message;
@@ -16,7 +14,6 @@ const handleError = (err: unknown): string => {
   }
 };
 
-// Fetch weather data from WeatherAPI
 export const getWeather = async (
   req: Request,
   res: Response

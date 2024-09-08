@@ -17,22 +17,13 @@
   border: solid 2px $pink;
 }
 .missing__title {
-  font-size: $size-base;
+  font-size: $size-xl;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 .missing__link {
-  font-size: $size-sm;
+  font-size: $size-base;
   text-decoration: underline;
   cursor: pointer;
   margin-bottom: 0.5rem;
-}
-
-@media (min-width: 768px) {
-  .missing__title {
-    font-size: $size-lg;
-  }
-  .missing__link {
-    font-size: $size-base;
-  }
 }

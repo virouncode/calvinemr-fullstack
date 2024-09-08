@@ -29,7 +29,6 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import Patients from "../Patients";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
-
 axios.defaults.withCredentials = true;
 
 type NewMessageExternalProps = {

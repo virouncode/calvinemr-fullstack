@@ -18,17 +18,17 @@ import AutoLockTimeSelect from "../../UI/Lists/AutoLockTimeSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 axios.defaults.withCredentials = true;
 
-type UnlockFormProps = {
+type LockFormProps = {
   setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
   toastExpiredID: React.MutableRefObject<Id | null>;
   tokenLimitVerifierID: React.MutableRefObject<number | null>;
 };
 
-const UnlockForm = ({
+const LockForm = ({
   setLockedScreen,
   toastExpiredID,
   tokenLimitVerifierID,
-}: UnlockFormProps) => {
+}: LockFormProps) => {
   //Hooks
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
@@ -169,15 +169,15 @@ const UnlockForm = ({
   }, [handleSubmit]);
 
   return (
-    <div className="unlock-form">
-      <div className="unlock-form__message">
+    <div className="lock__form">
+      <div className="lock__form-message">
         This session was locked by <strong>{user?.full_name}</strong>
         <br />
         <br />
         Please enter PIN to unlock:
       </div>
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="unlock-form__input">
+      <div className="lock__form-input">
         <InputPassword
           value={pin}
           onChange={handleChange}
@@ -189,7 +189,7 @@ const UnlockForm = ({
         <SaveButton label="Unlock" onClick={handleSubmit} />
         <Button label="Logout" onClick={handleLogout} />
       </div>
-      <div className="unlock-form__message" style={{ marginTop: "20px" }}>
+      <div className="lock__form-message" style={{ marginTop: "20px" }}>
         <AutoLockTimeSelect
           autolockTime={autolockTime}
           onChange={handleAutoLockChange}
@@ -200,4 +200,4 @@ const UnlockForm = ({
   );
 };
 
-export default UnlockForm;
+export default LockForm;

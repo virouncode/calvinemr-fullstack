@@ -21,27 +21,13 @@
   }
 }
 .unauthorized__title {
-  font-size: $size-base;
+  font-size: $size-xl;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 .unauthorized__link {
-  font-size: $size-sm;
+  font-size: $size-base;
   text-decoration: underline;
   cursor: pointer;
   margin-bottom: 0.5rem;
-}
-
-@media (min-width: 768px) {
-  .unauthorized__title {
-    font-size: $size-lg;
-  }
-  .unauthorized__container {
-    p {
-      font-size: $size-base;
-    }
-  }
-  .unauthorized__link {
-    font-size: $size-base;
-  }
 }

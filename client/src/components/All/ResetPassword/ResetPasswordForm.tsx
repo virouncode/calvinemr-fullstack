@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPostReset from "../../../api/xanoCRUD/xanoPostReset";
 import { PasswordValidityType } from "../../../types/app";
+import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputPassword from "../../UI/Inputs/InputPassword";
 import PasswordValidator from "../../UI/Inputs/PasswordValidator";
@@ -119,6 +120,10 @@ const ResetPasswordForm = ({
     setErrMsg("");
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <form onSubmit={handleSubmit} className="reset__form">
       <div className="reset__row">
@@ -127,7 +132,7 @@ const ResetPasswordForm = ({
           onChange={handlePasswordChange}
           name="new-password"
           id="new-password"
-          label="New password:"
+          label="New password"
           autoFocus={true}
         />
       </div>
@@ -140,7 +145,7 @@ const ResetPasswordForm = ({
           onChange={handleConfirmPasswordChange}
           name="confirm-password"
           id="confirm-password"
-          label="Confirm new password:"
+          label="Confirm new password"
         />
       </div>
       <div className="reset__row">
@@ -149,11 +154,12 @@ const ResetPasswordForm = ({
           onChange={handlePINChange}
           name="pin"
           id="pin"
-          label="New PIN:"
+          label="New PIN"
         />
       </div>
-      <div className="reset__row-btn">
+      <div className="reset__row-btns">
         <SubmitButton />
+        <CancelButton onClick={handleCancel} />
       </div>
     </form>
   );

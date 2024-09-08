@@ -38,6 +38,7 @@ import PatientCredentialsPage from "./pages/Patient/PatientCredentialsPage";
 import PatientMessagesPage from "./pages/Patient/PatientMessagesPage";
 import PatientMyAccountPage from "./pages/Patient/PatientMyAccountPage";
 import PatientPamphletsPage from "./pages/Patient/PatientPamphletsPage";
+import PatientPharmaciesPage from "./pages/Patient/PatientPharmaciesPage";
 import StaffBillingPage from "./pages/Staff/StaffBillingPage";
 import StaffCalendarPage from "./pages/Staff/StaffCalendarPage";
 import StaffCalvinAIPage from "./pages/Staff/StaffCalvinAIPage";
@@ -51,7 +52,6 @@ import StaffReferencePage from "./pages/Staff/StaffReferencePage";
 import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
 import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
-import PatientPharmaciesPage from "./pages/Patient/PatientPharmaciesPage";
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();

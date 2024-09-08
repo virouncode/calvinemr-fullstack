@@ -17,6 +17,11 @@
 // @media (min-width: 1536px) {
 // }
 
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .btn {
   font-size: $size-sm;
   display: inline-block;
@@ -60,19 +65,22 @@
   margin-right: auto;
 }
 .wrapper-login {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: url("@/assets/img/splashscreen.png") center/cover;
+  // background: url("@/assets/img/splashscreen.png") center/cover;
+  background: $white;
+  border-radius: 6px;
+  overflow: hidden;
 }
 .main-login {
   flex: 1;
 }
 
 .wrapper {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -81,7 +89,7 @@
   overflow: hidden;
 }
 
-/*xs*/
+/*xs (tablets start)*/
 @media (min-width: 475px) {
   .container,
   .container-login {

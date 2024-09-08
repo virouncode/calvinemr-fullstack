@@ -22,25 +22,11 @@
   }
 }
 .closed__title {
-  font-size: $size-base;
+  font-size: $size-xl;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 .closed__link {
-  font-size: $size-xs;
+  font-size: $size-base;
   text-decoration: underline;
-}
-
-@media (min-width: 768px) {
-  .closed__title {
-    font-size: $size-lg;
-  }
-  .closed__container {
-    p {
-      font-size: $size-base;
-    }
-  }
-  .closed__link {
-    font-size: $size-base;
-  }
 }

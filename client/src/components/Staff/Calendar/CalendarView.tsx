@@ -59,7 +59,7 @@ const CalendarView = ({
 }: CalendarViewProps) => {
   return (
     <FullCalendar
-      longPressDelay={400}
+      longPressDelay={200}
       plugins={[
         dayGrid,
         timeGrid,

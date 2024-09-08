@@ -4,25 +4,15 @@ import React from "react";
 
 type EyeIconProps = {
   onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
-  ml?: number;
-  mr?: number;
   slash?: boolean;
 };
 
-const EyeIcon = ({ onClick, ml = 0, mr = 0, slash = false }: EyeIconProps) => {
+const EyeIcon = ({ onClick, slash = false }: EyeIconProps) => {
   return (
     <FontAwesomeIcon
       icon={slash ? faEyeSlash : faEye}
       onClick={onClick}
-      style={{
-        cursor: "pointer",
-        marginLeft: `${ml}px`,
-        marginRight: `${mr}px`,
-        position: "absolute",
-        right: "5px",
-        top: "6px",
-        fontSize: "0.7rem",
-      }}
+      className="eye-icon"
     />
   );
 };

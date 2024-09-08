@@ -404,7 +404,7 @@ const LoginForm = () => {
         handleTogglePwd={handleTogglePwd}
         handleTogglePin={handleTogglePin}
       />
-      <div className="login__instructions">Sign In as</div>
+      <div className="login__instructions">Sign In As</div>
       <LoginBtnContainer
         loadingAdmin={loadingAdmin}
         loadingPatient={loadingPatient}
