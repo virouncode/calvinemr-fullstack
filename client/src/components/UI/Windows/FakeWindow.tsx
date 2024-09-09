@@ -30,7 +30,7 @@ const FakeWindow = ({
 }: FakeWindowProps) => {
   const isDragging = useRef(false);
   const isResizing = useRef(false);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useRef<HTMLDivElement | null>(null);
   const [windowPosition, setWindowPosition] = useState({ x, y });
   const [windowSize, setWindowSize] = useState({ width, height });
 
@@ -145,12 +145,10 @@ const FakeWindow = ({
       ref={windowRef}
       className="window"
       style={{
-        position: "fixed",
         left: windowPosition.x,
         top: windowPosition.y,
         width: windowSize.width,
         height: windowSize.height,
-        fontFamily: "Lato, sans-serif",
       }}
     >
       <div
