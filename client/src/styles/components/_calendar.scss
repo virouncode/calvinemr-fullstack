@@ -223,6 +223,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .calendar__options {
   border: solid 1px $grey;
@@ -232,6 +233,7 @@
   width: 98%;
   margin: 0.5rem auto 0;
   padding: 0 0.5rem;
+  display: none;
 }
 .calendar__options-menu {
   display: flex;
@@ -278,6 +280,14 @@
   &:active {
     transform: translate(-50%, 1px);
   }
+  &--timeline {
+    left: auto;
+    right: 0.5rem;
+    transform: translate(0);
+    &:active {
+      transform: translateY(1px);
+    }
+  }
 }
 .calendar__slot-select,
 .calendar__day-select,
@@ -298,7 +308,7 @@
 }
 .calendar__select-site {
   position: absolute;
-  top: 40px;
+  top: 36px;
   label {
     margin-right: 0.5rem;
   }
@@ -666,6 +676,27 @@
     text-decoration: underline;
   }
 }
+.gear-icon {
+  position: absolute;
+  top: 0.75rem;
+}
+.calendar__mobile-options {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-color: $white;
+  padding: 0.5rem;
+}
+.calendar__mobile-options-header {
+  margin-bottom: 1rem;
+}
+.calendar__mobile-options-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
 @media (min-width: 475px) {
   .calendar__event-element-list {
@@ -679,6 +710,12 @@
 }
 /*sm*/
 @media (min-width: 640px) {
+  .calendar__options {
+    display: block;
+  }
+  .gear-icon {
+    display: none;
+  }
   .calendar__event-element-day {
     &-time {
       width: 10%;
@@ -716,12 +753,7 @@
       text-align: end;
     }
   }
-}
-/*lg*/
-@media (min-width: 1024px) {
-  .calendar__options-timezone {
-    display: block;
-  }
+
   .calendar__options {
     display: flex;
     justify-content: space-between;
@@ -730,6 +762,12 @@
   .calendar__slot-select,
   .calendar__day-select {
     margin-right: 2rem;
+  }
+}
+/*lg*/
+@media (min-width: 1024px) {
+  .calendar__options-timezone {
+    display: block;
   }
   .calendar__left-bar {
     display: flex;

@@ -63,6 +63,7 @@ import EventElement from "./EventElement";
 import EventElementListWeek from "./EventElementListWeek";
 import EventElementTimegrid from "./EventElementTimegrid";
 import CalendarOptions from "./Options/CalendarOptions";
+import CalendarOptionsMobile from "./Options/CalendarOptionsMobile";
 
 //MY COMPONENT
 const Calendar = () => {
@@ -80,6 +81,8 @@ const Calendar = () => {
   const [timelineSiteId, setTimelineSiteId] = useState(user.site_id); //Selected Timeline Site
   const [editAvailability, setEditAvailability] = useState(false);
   const [printDayVisible, setPrintDayVisible] = useState(false);
+  const [mobileCalendarOptionsVisible, setMobileCalendarOptionsVisible] =
+    useState(false);
   const [hostsIds, setHostsIds] = useState(
     user.title === "Secretary"
       ? [
@@ -1461,6 +1464,14 @@ const Calendar = () => {
         setEditAvailability={setEditAvailability}
         isPending={appointments.isPending}
       />
+      {mobileCalendarOptionsVisible && (
+        <CalendarOptionsMobile
+          editAvailability={editAvailability}
+          setEditAvailability={setEditAvailability}
+          isPending={appointments.isPending}
+          setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
+        />
+      )}
       <div className="calendar__layout">
         <CalendarLeftBar
           handleShortcutpickrChange={handleShortcutpickrChange}
@@ -1507,6 +1518,7 @@ const Calendar = () => {
           sitesIds={sitesIds}
           setSitesIds={setSitesIds}
           isFirstEvent={isFirstEvent}
+          setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
         />
       </div>
       {confirmDlgRecChangeVisible && (

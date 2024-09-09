@@ -20,6 +20,7 @@ import { SiteType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
+import GearIcon from "../../UI/Icons/GearIcon";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalendarView from "./CalendarView";
@@ -65,6 +66,9 @@ type CalendarDisplayProps = {
   sitesIds: number[];
   setSitesIds: React.Dispatch<React.SetStateAction<number[]>>;
   isFirstEvent: boolean;
+  setMobileCalendarOptionsVisible: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 };
 
 const CalendarDisplay = ({
@@ -104,6 +108,7 @@ const CalendarDisplay = ({
   sitesIds,
   setSitesIds,
   isFirstEvent,
+  setMobileCalendarOptionsVisible,
 }: CalendarDisplayProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -126,11 +131,16 @@ const CalendarDisplay = ({
         setTimelineVisible={setTimelineVisible}
         timelineVisible={timelineVisible}
       />
+      <GearIcon onClick={() => setMobileCalendarOptionsVisible((v) => !v)} />
       {(currentView === "timeGrid" || timelineVisible) && (
         <button
           onClick={handlePrintDay}
           disabled={events?.length === 0}
-          className="calendar__print-btn"
+          className={
+            timelineVisible
+              ? "calendar__print-btn calendar__print-btn--timeline"
+              : "calendar__print-btn"
+          }
         >
           Print day sheet
         </button>
