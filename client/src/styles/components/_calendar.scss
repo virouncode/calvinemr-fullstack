@@ -278,6 +278,11 @@
   &:active {
     transform: translate(-50%, 1px);
   }
+  &--timeline {
+    transform: translate(0);
+    right: 0.5rem;
+    left: auto;
+  }
 }
 .calendar__slot-select,
 .calendar__day-select,
@@ -295,6 +300,13 @@
   width: 14%;
   height: 99%;
   display: none;
+}
+.calendar__select-site {
+  position: absolute;
+  top: 40px;
+  label {
+    margin-right: 0.5rem;
+  }
 }
 .calendar__shortcutpickr {
   border: solid 1px $grey;
