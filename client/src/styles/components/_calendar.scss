@@ -541,14 +541,19 @@
   cursor: pointer;
   width: 70px;
   padding: 0.4em 0.65em;
-  // &:hover {
-  //   background: $grey;
-  //   color: rgb(70, 70, 70);
-  // }
+  &:hover {
+    background: $grey;
+    color: rgb(70, 70, 70);
+  }
   &--active {
     background: $pink;
     color: $white;
     border: none;
+    &:hover {
+      background: $pink;
+      color: $white;
+      border: none;
+    }
   }
 }
 
@@ -626,10 +631,10 @@
     width: 15%;
   }
   &-guests-infos {
-    width: 75%;
+    width: 70%;
   }
   &-btns {
-    width: 10%;
+    width: 15%;
     text-align: end;
   }
 }
@@ -696,6 +701,21 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+@media (min-width: 425px) {
+  .calendar__event-element-day {
+    &-time {
+      width: 15%;
+    }
+    &-guests-infos {
+      width: 75%;
+    }
+    &-btns {
+      width: 10%;
+      text-align: end;
+    }
+  }
 }
 
 @media (min-width: 475px) {
@@ -837,6 +857,14 @@
     &-btns {
       width: 5%;
     }
+  }
+  .calendar__print-btn--timeline {
+    right: auto;
+  }
+  .calendar__select-site {
+    top: 11px;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 /*xl*/
