@@ -278,11 +278,6 @@
   &:active {
     transform: translate(-50%, 1px);
   }
-  &--timeline {
-    transform: translate(0);
-    right: 0.5rem;
-    left: auto;
-  }
 }
 .calendar__slot-select,
 .calendar__day-select,
@@ -343,7 +338,7 @@
       }
     }
     &-monthDropdown-months {
-      font-size: $size-xs;
+      font-size: $size-sm;
       color: $black;
       width: 60%;
       background-color: $blue;
@@ -355,7 +350,7 @@
       .numInputWrapper {
         display: flex;
         align-items: center;
-        font-size: $size-xs;
+        font-size: $size-sm;
       }
     }
     &-weekdaycontainer {
@@ -365,7 +360,7 @@
     &-innerContainer,
     &-rContainer,
     &-days {
-      font-size: $size-xs;
+      font-size: $size-sm;
       width: 100%;
     }
     &-weekdays,
@@ -377,7 +372,7 @@
       border: none;
     }
     &-day {
-      font-size: $size-xxs;
+      font-size: $size-xs;
       height: 10%;
       line-height: 1.25rem;
     }
@@ -486,6 +481,7 @@
     background: $pink;
     color: $white;
     border: none;
+    outline: none;
     box-shadow: none;
     &:focus {
       box-shadow: none;
@@ -507,6 +503,9 @@
       }
     }
   }
+  .fc-col-header-cell.fc-resource {
+    word-break: break-all;
+  }
 }
 
 .calendar__toggle {
@@ -514,13 +513,16 @@
   top: 120px;
   right: 1rem;
   display: flex;
+  &--timeline {
+    top: 90px;
+  }
 }
 .calendar__toggle-option {
   border-radius: 2px;
   border: 0.5px solid #a4a3a3;
   background: $white;
   color: grey;
-  line-height: 1.3;
+  line-height: 1.5;
   text-align: center;
   user-select: none;
   box-shadow: none;
@@ -557,7 +559,7 @@
   position: sticky;
   top: 0;
   border-radius: 4px 4px 0 0;
-  font-size: $size-xs;
+  font-size: $size-sm;
   height: 3rem;
   color: $black;
   background: $blue;
@@ -568,7 +570,7 @@
   &-title {
     display: flex;
     align-items: center;
-    font-size: $size-xs;
+    font-size: $size-sm;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
@@ -590,7 +592,7 @@
   &-title {
     display: flex;
     align-items: center;
-    font-size: $size-xs;
+    font-size: $size-sm;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
@@ -651,10 +653,10 @@
   justify-content: space-between;
   align-items: start;
   &-infos {
-    width: 80%;
+    width: 70%;
   }
   &-btns {
-    width: 20%;
+    width: 30%;
     text-align: end;
   }
 }
@@ -665,34 +667,27 @@
   }
 }
 
+@media (min-width: 475px) {
+  .calendar__event-element-list {
+    &-infos {
+      width: 85%;
+    }
+    &-btns {
+      width: 15%;
+    }
+  }
+}
 /*sm*/
 @media (min-width: 640px) {
-  .calendar__options {
-    font-size: $size-xs;
-    display: block;
-    select {
-      font-size: $size-xs;
-    }
-  }
-  .calendar__display {
-    .fc-toolbar-title {
-      font-size: $size-xs;
-    }
-  }
-  .calendar__toggle {
-    font-size: $size-xxs;
-    display: flex;
-    right: 17.5%;
-  }
   .calendar__event-element-day {
     &-time {
       width: 10%;
     }
     &-guests-infos {
-      width: 85%;
+      width: 80%;
     }
     &-btns {
-      width: 5%;
+      width: 10%;
       text-align: end;
     }
   }
@@ -708,40 +703,6 @@
 
 /*md*/
 @media (min-width: 768px) {
-  .calendar__display {
-    .fc-toolbar-title {
-      font-size: $size-xs;
-    }
-    .fc-toolbar-chunk {
-      &:nth-child(2) {
-        justify-content: flex-start;
-      }
-    }
-    .fc-button.fc-button-primary {
-      width: 50px;
-      font-size: $size-xs;
-    }
-    .fc-view-harness.fc-view-harness-active {
-      font-size: $size-xs;
-    }
-    .fc .fc-toolbar.fc-header-toolbar {
-      margin-bottom: 2.5rem;
-    }
-  }
-  .calendar__toggle {
-    font-size: $size-xs;
-    display: flex;
-    top: 12px;
-    right: 22%;
-  }
-  .calendar__toggle-option {
-    width: 60px;
-    padding: 0.375rem;
-  }
-  .calendar__print-btn {
-    font-size: $size-xs;
-    top: 48px;
-  }
   .calendar__event-element-day {
     font-size: $size-xs;
     &-time {
@@ -782,20 +743,23 @@
   }
   .calendar__display {
     width: 85%;
-    .fc-toolbar-title {
-      font-size: $size-sm;
-    }
     .fc-toolbar-chunk {
       &:nth-child(2) {
         justify-content: center;
       }
     }
     .fc .fc-toolbar.fc-header-toolbar {
-      margin-bottom: 1rem;
+      flex-direction: row;
+      .fc-toolbar-chunk {
+        &:nth-child(1) {
+          margin-bottom: 0;
+        }
+      }
     }
   }
   .calendar__toggle {
-    right: 17%;
+    top: 12px;
+    right: 15.4%;
   }
   .calendar__print-btn {
     left: 18%;
@@ -845,16 +809,7 @@
     }
     .fc-button.fc-button-primary {
       width: 70px;
-      font-size: $size-sm;
     }
-  }
-  .calendar__toggle {
-    font-size: $size-sm;
-    right: 16.5%;
-  }
-  .calendar__toggle-option {
-    width: 70px;
-    padding: 0.4375rem;
   }
   .calendar__options {
     font-size: $size-sm;
@@ -862,12 +817,6 @@
   .calendar__print-btn {
     font-size: $size-sm;
     top: 16px;
-  }
-  .calendar-slot-select,
-  .calendar-day-select,
-  .calendar__availability {
-    padding: 0.5rem;
-    font-size: $size-sm;
   }
   .calendar__shortcutpickr {
     .flatpickr {
@@ -877,9 +826,6 @@
           width: 10px;
           height: 10px;
         }
-      }
-      &-monthDropdown-months {
-        font-size: $size-sm;
       }
       &-current-month {
         display: flex;

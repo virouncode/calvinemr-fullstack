@@ -1,3 +1,4 @@
+import logo from "@/assets/img/logoRectTest.png";
 import { Tooltip } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
@@ -40,8 +41,13 @@ const StaffMobileNav = ({
 
   return (
     <div className="mobile-nav__container container" ref={mobileNavRef}>
-      <div className="mobile-nav__cross" onClick={handleClose}>
-        <XmarkRectangleIcon size="2x" />
+      <div className="mobile-nav__header">
+        <div className="mobile-nav__logo">
+          <img src={logo} alt="CalvinEMR-logo" />
+        </div>
+        <div className="mobile-nav__cross" onClick={handleClose}>
+          <XmarkRectangleIcon size="2x" />
+        </div>
       </div>
       <nav className="mobile-nav">
         <ul>

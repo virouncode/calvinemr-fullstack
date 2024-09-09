@@ -114,7 +114,7 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
         ...formDatas.rooms.map((room) => {
           return { id: room.id, title: firstLetterUpper(room.title) };
         }),
-        { id: "z", title: "To Be Determined" },
+        { id: "z", title: "TBD" },
       ],
       created_by_id: user.id,
       date_created: nowTZTimestamp(),

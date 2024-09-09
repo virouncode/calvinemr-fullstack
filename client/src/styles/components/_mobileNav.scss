@@ -4,25 +4,36 @@
   position: fixed;
   background-color: $white;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   z-index: 100000;
   overflow: hidden;
   opacity: 0;
   transform: translateX(-100%);
   transition: all 0.3s ease;
 }
+.mobile-nav__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+}
+.mobile-nav__logo {
+  img {
+    width: 120px;
+  }
+}
+.mobile-nav__cross {
+  cursor: pointer;
+}
 .mobile-nav__container--active {
   transform: translateX(0);
   opacity: 1;
 }
-.mobile-nav__cross {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  cursor: pointer;
-}
+
 .mobile-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   ul {
     display: flex;
     flex-direction: column;

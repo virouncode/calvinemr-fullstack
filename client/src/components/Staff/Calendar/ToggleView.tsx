@@ -16,7 +16,13 @@ const ToggleView = ({
     setTimelineVisible(true);
   };
   return (
-    <div className="calendar__toggle">
+    <div
+      className={`${
+        timelineVisible
+          ? "calendar__toggle calendar__toggle--timeline"
+          : "calendar__toggle"
+      }`}
+    >
       <p
         className={
           timelineVisible

@@ -130,11 +130,7 @@ const CalendarDisplay = ({
         <button
           onClick={handlePrintDay}
           disabled={events?.length === 0}
-          className={`${
-            timelineVisible
-              ? "calendar__print-btn calendar__print-btn--timeline"
-              : "calendar__print-btn"
-          }`}
+          className="calendar__print-btn"
         >
           Print day sheet
         </button>
