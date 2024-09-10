@@ -165,6 +165,7 @@ const EventForm = ({
   };
 
   const handleUntilChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) return;
     const untilDate = DateTime.fromISO(e.target.value, {
       zone: "America/Toronto",
     }).set({ hour: 23, minute: 59, second: 59 });
