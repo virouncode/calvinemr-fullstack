@@ -97,33 +97,35 @@ const GuestsSearchResults = ({
       </div>
       <div className="results__staff">
         <div className="results__title">Staff</div>
-        {search.chart === "" &&
-          search.health === "" &&
-          search.birth === "" &&
-          staffInfos
-            .filter(({ account_status }) => account_status !== "Closed")
-            .filter(
-              (staff) =>
-                staff.full_name
-                  .toLowerCase()
-                  .includes(search.name.toLowerCase()) &&
-                staff.email
-                  .toLowerCase()
-                  .includes(search.email.toLowerCase()) &&
-                (staff.cell_phone.includes(search.phone) ||
-                  staff.backup_phone.includes(search.phone)) &&
-                staff.id !== hostId &&
-                !staff_guests_ids
-                  .map(({ staff_infos }) => staff_infos.id)
-                  .includes(staff.id)
-            )
-            .map((staff) => (
-              <GuestStaffResultItem
-                key={staff.id}
-                staff={staff}
-                handleAddStaffGuest={handleAddStaffGuest}
-              />
-            ))}
+        <ul>
+          {search.chart === "" &&
+            search.health === "" &&
+            search.birth === "" &&
+            staffInfos
+              .filter(({ account_status }) => account_status !== "Closed")
+              .filter(
+                (staff) =>
+                  staff.full_name
+                    .toLowerCase()
+                    .includes(search.name.toLowerCase()) &&
+                  staff.email
+                    .toLowerCase()
+                    .includes(search.email.toLowerCase()) &&
+                  (staff.cell_phone.includes(search.phone) ||
+                    staff.backup_phone.includes(search.phone)) &&
+                  staff.id !== hostId &&
+                  !staff_guests_ids
+                    .map(({ staff_infos }) => staff_infos.id)
+                    .includes(staff.id)
+              )
+              .map((staff) => (
+                <GuestStaffResultItem
+                  key={staff.id}
+                  staff={staff}
+                  handleAddStaffGuest={handleAddStaffGuest}
+                />
+              ))}
+        </ul>
       </div>
     </div>
   );

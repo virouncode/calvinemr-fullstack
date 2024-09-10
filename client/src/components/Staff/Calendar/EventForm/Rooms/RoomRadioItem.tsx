@@ -1,5 +1,6 @@
 import React from "react";
 import Radio from "../../../../UI/Radio/Radio";
+import { onChange } from "react-toastify/dist/core/store";
 
 type RoomRadioItemProps = {
   roomId: string;
@@ -17,7 +18,7 @@ const RoomRadioItem = ({
   isRoomSelected,
 }: RoomRadioItemProps) => {
   return (
-    <div className="event-form__item event-form__item--radio">
+    <li className="event-form__item event-form__item--radio">
       <Radio
         id={roomId}
         name="room_id"
@@ -26,7 +27,7 @@ const RoomRadioItem = ({
         onChange={handleRoomChange}
         label={`${roomName}` + `${isRoomOccupied(roomId) ? " (Occupied)" : ""}`}
       />
-    </div>
+    </li>
   );
 };
 

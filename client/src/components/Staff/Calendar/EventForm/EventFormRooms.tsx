@@ -23,7 +23,7 @@ const EventFormRooms = ({
 }: EventFormRoomsProps) => {
   return (
     <div className="event-form__row event-form__row--radio">
-      <div style={{ marginBottom: "5px" }}>
+      <div className="site-select">
         <SiteSelect
           label="Site"
           handleSiteChange={handleSiteChange}

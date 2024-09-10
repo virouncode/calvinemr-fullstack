@@ -67,7 +67,6 @@ const EventFormTimeRow = ({
           label="End"
         />
       </div>
-
       <div className="event-form__item">
         <DurationPicker
           durationHours={
@@ -87,12 +86,13 @@ const EventFormTimeRow = ({
           label="Duration"
         />
       </div>
-      <div className="event-form__item">
+      <div className="event-form__item event-form__item--allday">
         <Checkbox
           id="all-day"
           onChange={handleCheckAllDay}
           checked={formDatas.all_day}
           label="All Day"
+          labelSide="left"
         />
       </div>
     </div>
