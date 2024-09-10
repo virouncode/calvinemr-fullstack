@@ -1,7 +1,12 @@
 import logo from "@/assets/img/logoRectTest.png";
 import { Tooltip } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Id, toast } from "react-toastify";
+import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
+import useAuthContext from "../../../hooks/context/useAuthContext";
+import useClinicContext from "../../../hooks/context/useClinicContext";
+import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { UserStaffType } from "../../../types/app";
 import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
@@ -13,14 +18,25 @@ type StaffMobileNavProps = {
   setNotepadVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
   mobileNavRef: React.MutableRefObject<HTMLDivElement | null>;
+  toastExpiredID: React.MutableRefObject<Id | null>;
+  tokenLimitVerifierID: React.MutableRefObject<number | null>;
 };
 
 const StaffMobileNav = ({
   setNotepadVisible,
   setLockedScreen,
   mobileNavRef,
+  toastExpiredID,
+  tokenLimitVerifierID,
 }: StaffMobileNavProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
+  const navigate = useNavigate();
+  const { setUser } = useUserContext();
+  const { setClinic } = useClinicContext();
+  const { setAuth } = useAuthContext();
+  const { setStaffInfos } = useStaffInfosContext();
+  const { setAdminsInfos } = useAdminsInfosContext();
+
   const handleLock = () => {
     setLockedScreen(true);
     localStorage.setItem("locked", "true");
@@ -37,6 +53,28 @@ const StaffMobileNav = ({
   const handleClose = () => {
     if (mobileNavRef.current)
       mobileNavRef.current.classList.remove("mobile-nav__container--active");
+  };
+
+  const handleLogout = () => {
+    setAuth(null);
+    setUser(null);
+    setStaffInfos([]);
+    setAdminsInfos([]);
+    setClinic(null);
+    localStorage.removeItem("auth");
+    localStorage.removeItem("user");
+    localStorage.removeItem("staffInfos");
+    localStorage.removeItem("adminsInfos");
+    localStorage.removeItem("clinic");
+    localStorage.removeItem("locked");
+    localStorage.removeItem("lastAction");
+    localStorage.removeItem("currentNewClinicalNote");
+    localStorage.removeItem("currentEditClinicalNote");
+    localStorage.setItem("message", "logout");
+    localStorage.removeItem("message");
+    tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
+    toastExpiredID.current && toast.dismiss(toastExpiredID.current);
+    navigate("/");
   };
 
   return (
@@ -127,6 +165,11 @@ const StaffMobileNav = ({
                 <QuestionIcon onClick={handleTutorial} />
               </span>
             </Tooltip>
+          </li>
+          <li onClick={handleLogout}>
+            <NavLink to="/" className="mobile-nav__link">
+              Logout
+            </NavLink>
           </li>
         </ul>
       </nav>

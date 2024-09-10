@@ -48,6 +48,8 @@ const StaffLayout = ({
         setNotepadVisible={setNotepadVisible}
         setLockedScreen={setLockedScreen}
         mobileNavRef={mobileNavRef}
+        toastExpiredID={toastExpiredID}
+        tokenLimitVerifierID={tokenLimitVerifierID}
       />
 
       <StaffHeader
