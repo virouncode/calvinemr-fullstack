@@ -61,10 +61,10 @@ const Availability = ({
         {editAvailability && (
           <FakeWindow
             title="MY AVAILABILITY"
-            width={1000}
-            height={400}
-            x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 400) / 2}
+            width={1024}
+            height={500}
+            x={(window.innerWidth - 1024) / 2}
+            y={(window.innerHeight - 500) / 2}
             color={"#94bae8"}
             setPopUpVisible={setEditAvailability}
           >

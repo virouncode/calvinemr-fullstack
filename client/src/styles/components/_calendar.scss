@@ -702,6 +702,78 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+.calendar__availability-editor-form {
+  margin-top: 30px;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .calendar__availability-editor-heads {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .calendar__availability-editor-row {
+    display: grid;
+    grid-template-columns: 8% 40% 40% 12%;
+    align-items: center;
+    gap: 0.5rem;
+    .calendar__availability-editor-day {
+      font-weight: bold;
+    }
+    .calendar__availability-editor-head {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .calendar__availability-editor-time {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      .time-picker {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        select {
+          width: auto;
+        }
+      }
+    }
+    .calendar__availability-editor-unavailable {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .calendar__availability-editor-duration {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    label {
+      font-weight: bold;
+    }
+    .durationpicker__select {
+      display: flex;
+      gap: 1rem;
+      label {
+        font-weight: normal;
+        margin-right: 0.5rem;
+      }
+      select {
+        width: auto;
+      }
+    }
+  }
+  .calendar__availability-editor-btns {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+}
 
 @media (min-width: 425px) {
   .calendar__event-element-day {
@@ -970,6 +1042,43 @@
     }
     &-btns {
       width: 40%;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .calendar__availability-editor-form {
+    font-size: $size-base;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    .calendar__availability-editor-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      &:nth-child(1) {
+        display: none;
+      }
+      .calendar__availability-editor-time {
+        flex-direction: column;
+        gap: 0.25rem;
+        .time-picker {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          select {
+            width: auto;
+          }
+        }
+      }
+    }
+    .calendar__availability-editor-duration {
+      flex-direction: column;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      width: 100%;
     }
   }
 }

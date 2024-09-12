@@ -50,7 +50,6 @@ const AvailabilityEditor = ({
       ...itemInfos,
       date_created: nowTZTimestamp(),
     };
-
     try {
       await availabilitySchema.validate(scheduleToPut);
     } catch (err) {
@@ -173,13 +172,19 @@ const AvailabilityEditor = ({
 
   return (
     itemInfos && (
-      <div>
+      <div className="calendar__availability-editor">
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-        <div className="calendar__availability-heads">
-          <p>Morning</p>
-          <p>Afternoon</p>
-        </div>
-        <form className="calendar__availability-form" onSubmit={handleSubmit}>
+
+        <form
+          className="calendar__availability-editor-form"
+          onSubmit={handleSubmit}
+        >
+          <div className="calendar__availability-editor-row">
+            <p></p>
+            <p className="calendar__availability-editor-head">Morning</p>
+            <p className="calendar__availability-editor-head">Afternoon</p>
+            <p></p>
+          </div>
           {days.map((day) => (
             <AvailabilityItem
               day={day}
@@ -194,7 +199,7 @@ const AvailabilityEditor = ({
               key={day}
             />
           ))}
-          <div className="calendar__availability-duration">
+          <div className="calendar__availability-editor-duration">
             <label>Default appointment duration</label>
             <DurationPicker
               durationHours={itemInfos.default_duration_hours
@@ -207,7 +212,7 @@ const AvailabilityEditor = ({
               disabled={false}
             />
           </div>
-          <div className="calendar__availability-btns">
+          <div className="calendar__availability-editor-btns">
             <SubmitButton label="Save" disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>

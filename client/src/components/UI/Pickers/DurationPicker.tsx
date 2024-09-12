@@ -22,7 +22,6 @@ const DurationPicker = ({
         <div className="durationpicker__hours">
           <label>Hrs</label>
           <select
-            className="durationpicker__hours"
             onChange={handleChange}
             value={durationHours}
             disabled={disabled}
@@ -58,7 +57,6 @@ const DurationPicker = ({
         <div className="durationpicker__mins">
           <label>Min</label>
           <select
-            className="durationpicker__hours"
             onChange={handleChange}
             value={durationMin}
             disabled={disabled}

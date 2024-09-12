@@ -46,7 +46,6 @@ const TimePickerAvailability = ({
         onChange={(e) => handleChange(e, day, "hours")}
         value={timeValueHour}
         disabled={readOnly}
-        style={{ width: "40px" }}
       >
         {hoursOptions}
       </select>
@@ -56,7 +55,6 @@ const TimePickerAvailability = ({
         value={timeValueMin}
         name="min"
         disabled={readOnly}
-        style={{ width: "40px", marginLeft: "3px" }}
       >
         {minutesOptions}
       </select>
@@ -66,7 +64,6 @@ const TimePickerAvailability = ({
         value={timeValueAMPM}
         name="ampm"
         disabled={readOnly}
-        style={{ width: "45px", marginLeft: "3px" }}
       >
         <option value="AM">AM</option>
         <option value="PM">PM</option>
