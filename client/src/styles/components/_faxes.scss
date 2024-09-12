@@ -95,11 +95,11 @@
     width: 100%;
     cursor: pointer;
     &:hover {
-      background: $green;
+      background: $pink;
     }
     &--active {
       font-weight: bold;
-      background: $green;
+      background: $pink;
     }
   }
   &__box {
