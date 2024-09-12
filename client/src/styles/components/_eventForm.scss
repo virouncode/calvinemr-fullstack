@@ -345,6 +345,11 @@
       }
     }
   }
+  .event-form__notes {
+    textarea {
+      font-size: $size-base;
+    }
+  }
   .event-form__invitation {
     font-size: $size-base;
     textarea {
