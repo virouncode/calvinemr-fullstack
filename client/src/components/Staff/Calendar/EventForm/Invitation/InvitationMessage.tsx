@@ -10,7 +10,7 @@ const InvitationMessage = ({
   handleMessageChange,
 }: InvitationMessageProps) => {
   return (
-    <div className="invitation__row">
+    <div className="event-form__invitation-message">
       <label htmlFor="message">Message</label>
       <textarea
         onChange={handleMessageChange}

@@ -1,6 +1,5 @@
 import React from "react";
 import Radio from "../../../../UI/Radio/Radio";
-import { onChange } from "react-toastify/dist/core/store";
 
 type RoomRadioItemProps = {
   roomId: string;
@@ -18,7 +17,7 @@ const RoomRadioItem = ({
   isRoomSelected,
 }: RoomRadioItemProps) => {
   return (
-    <li className="event-form__item event-form__item--radio">
+    <li className="event-form__rooms-radio-item">
       <Radio
         id={roomId}
         name="room_id"

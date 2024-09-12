@@ -1030,7 +1030,7 @@ const EventForm = ({
   };
 
   return (
-    <div className="event-form__container">
+    <>
       {!invitationVisible ? (
         <form
           className={
@@ -1041,11 +1041,7 @@ const EventForm = ({
           }
           onSubmit={handleSubmit}
         >
-          {errMsgPost && (
-            <div className="event-form__row">
-              <ErrorParagraph errorMsg={errMsgPost} />
-            </div>
-          )}
+          {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
           <EventFormHostRow
             formDatas={formDatas}
             handleHostChange={handleHostChange}
@@ -1141,7 +1137,7 @@ const EventForm = ({
           isFirstEvent={isFirstEvent}
         />
       )}
-    </div>
+    </>
   );
 };
 

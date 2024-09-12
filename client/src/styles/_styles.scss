@@ -154,7 +154,9 @@ input[type="text"],
 input[type="password"],
 input[type="file"],
 input[type="date"],
-input[type="tel"] {
+input[type="tel"],
+input[type="email"],
+select {
   width: 150px;
 }
 input[type="file"] {
@@ -179,4 +181,7 @@ ul {
 
 li {
   list-style: none;
+}
+select:disabled {
+  z-index: -1;
 }

@@ -285,8 +285,8 @@ const Invitation = ({
   };
 
   return (
-    <form className="invitation">
-      <div className="invitation__edit">
+    <form className="event-form__invitation">
+      <div className="event-form__invitation-content">
         <InvitationTemplatesRadio
           handleTemplateChange={handleTemplateChange}
           templates={user.settings.invitation_templates}
@@ -304,7 +304,7 @@ const Invitation = ({
           handleMessageChange={handleMessageChange}
         />
       </div>
-      <div className="invitation__btns">
+      <div className="event-form__invitation-btns">
         {user.id === hostId && (
           <SaveButton
             onClick={handleSendAndSave}

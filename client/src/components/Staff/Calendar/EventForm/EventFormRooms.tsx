@@ -22,8 +22,8 @@ const EventFormRooms = ({
   isPending,
 }: EventFormRoomsProps) => {
   return (
-    <div className="event-form__row event-form__row--radio">
-      <div className="site-select">
+    <div className="event-form__rooms">
+      <div className="event-form__rooms-site">
         <SiteSelect
           label="Site"
           handleSiteChange={handleSiteChange}

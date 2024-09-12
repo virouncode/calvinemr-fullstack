@@ -17,9 +17,11 @@ const EventFormStatus = ({
   const isStatusSelected = (status: string) => selectedStatus === status;
 
   return (
-    <div className="event-form__row event-form__row--radio">
-      <div className="event-form__radio-container">
-        {label && <label className="event-form__radio-title">Status</label>}
+    <div className="event-form__status">
+      <div className="event-form__status-radio">
+        {label && (
+          <label className="event-form__status-radio-title">Status</label>
+        )}
         <ul>
           {statuses.map((status) => (
             <StatusRadioItem

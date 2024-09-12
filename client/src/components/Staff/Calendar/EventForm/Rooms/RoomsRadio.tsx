@@ -20,8 +20,10 @@ const RoomsRadio = ({
   const isRoomSelected = (roomId: string) => roomSelectedId === roomId;
   return (
     <>
-      <div className="event-form__radio-container">
-        {label && <label className="event-form__radio-title">{label}</label>}
+      <div className="event-form__rooms-radio">
+        {label && (
+          <label className="event-form__rooms-radio-title">{label}</label>
+        )}
         <ul>
           {rooms.map((room) => (
             <RoomRadioItem

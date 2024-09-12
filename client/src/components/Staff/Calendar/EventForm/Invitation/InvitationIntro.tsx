@@ -10,7 +10,7 @@ const InvitationIntro = ({
   handleIntroChange,
 }: InvitationIntroProps) => {
   return (
-    <div className="invitation__row">
+    <div className="event-form__invitation-intro">
       <label htmlFor="introduction">Introduction</label>
       <textarea
         onChange={handleIntroChange}

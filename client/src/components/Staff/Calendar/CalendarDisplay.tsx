@@ -210,10 +210,10 @@ const CalendarDisplay = ({
       {formVisible && (
         <FakeWindow
           title={`APPOINTMENT DETAILS`}
-          width={1050}
-          height={790}
-          x={(window.innerWidth - 1050) / 2}
-          y={(window.innerHeight - 790) / 2}
+          width={1024}
+          height={window.innerHeight}
+          x={(window.innerWidth - 1024) / 2}
+          y={0}
           color={formColor}
           setPopUpVisible={setFormVisible}
           closeCross={false}

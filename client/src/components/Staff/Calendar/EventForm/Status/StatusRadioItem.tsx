@@ -13,7 +13,7 @@ const StatusRadioItem = ({
   isStatusSelected,
 }: StatusRadioItemProps) => {
   return (
-    <div className="event-form__item event-form__item--radio">
+    <div className="event-form__status-radio-item">
       <Radio
         id={status}
         name="AppointmentStatus"

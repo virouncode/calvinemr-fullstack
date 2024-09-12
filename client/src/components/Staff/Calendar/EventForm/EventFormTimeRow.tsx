@@ -40,53 +40,47 @@ const EventFormTimeRow = ({
   handleCheckAllDay,
 }: EventFormTimeRowProps) => {
   return (
-    <div className="event-form__row">
-      <div className="event-form__item">
-        <DateTimePicker
-          value={formDatas.start}
-          refDate={refDateStart}
-          refHours={refHoursStart}
-          refMinutes={refMinutesStart}
-          refAMPM={refAMPMStart}
-          timezone="America/Toronto"
-          locale="en-CA"
-          handleChange={handleStartChange}
-          label="Start"
-        />
-      </div>
-      <div className="event-form__item">
-        <DateTimePicker
-          value={formDatas.end}
-          refDate={refDateEnd}
-          refHours={refHoursEnd}
-          refMinutes={refMinutesEnd}
-          refAMPM={refAMPMEnd}
-          timezone="America/Toronto"
-          locale="en-CA"
-          handleChange={handleEndChange}
-          label="End"
-        />
-      </div>
-      <div className="event-form__item">
-        <DurationPicker
-          durationHours={
-            formDatas.all_day
-              ? "24"
-              : Math.floor(formDatas.Duration / 60)
-                  .toString()
-                  .padStart(2, "0")
-          }
-          durationMin={
-            formDatas.all_day
-              ? "00"
-              : (formDatas.Duration % 60).toString().padStart(2, "0")
-          }
-          disabled={formDatas.all_day}
-          handleChange={handleDurationChange}
-          label="Duration"
-        />
-      </div>
-      <div className="event-form__item event-form__item--allday">
+    <div className="event-form__time">
+      <DateTimePicker
+        value={formDatas.start}
+        refDate={refDateStart}
+        refHours={refHoursStart}
+        refMinutes={refMinutesStart}
+        refAMPM={refAMPMStart}
+        timezone="America/Toronto"
+        locale="en-CA"
+        handleChange={handleStartChange}
+        label="Start"
+      />
+      <DateTimePicker
+        value={formDatas.end}
+        refDate={refDateEnd}
+        refHours={refHoursEnd}
+        refMinutes={refMinutesEnd}
+        refAMPM={refAMPMEnd}
+        timezone="America/Toronto"
+        locale="en-CA"
+        handleChange={handleEndChange}
+        label="End"
+      />
+      <DurationPicker
+        durationHours={
+          formDatas.all_day
+            ? "24"
+            : Math.floor(formDatas.Duration / 60)
+                .toString()
+                .padStart(2, "0")
+        }
+        durationMin={
+          formDatas.all_day
+            ? "00"
+            : (formDatas.Duration % 60).toString().padStart(2, "0")
+        }
+        disabled={formDatas.all_day}
+        handleChange={handleDurationChange}
+        label="Duration"
+      />
+      <div className="event-form__time-allday">
         <Checkbox
           id="all-day"
           onChange={handleCheckAllDay}

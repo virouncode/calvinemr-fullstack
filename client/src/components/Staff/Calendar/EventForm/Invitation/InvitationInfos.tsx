@@ -21,7 +21,7 @@ const InvitationInfos = ({
   const { user } = useUserContext() as { user: UserStaffType };
 
   return (
-    <div className="invitation__row">
+    <div className="event-form__invitation-infos">
       {templateSelected === "Video appointment" ? (
         <label>
           Appointment Infos (read only,{" "}
@@ -44,7 +44,7 @@ const InvitationInfos = ({
           {templateSelected !== "Video appointment" &&
             templateSelected !== "Phone appointment" &&
             templateSelected !== "[Blank]" && (
-              <div>
+              <div className="site-select">
                 <SiteSelect
                   label="Site"
                   handleSiteChange={handleSiteChange}
