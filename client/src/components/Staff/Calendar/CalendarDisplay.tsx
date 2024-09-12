@@ -138,8 +138,8 @@ const CalendarDisplay = ({
           disabled={events?.length === 0}
           className={
             timelineVisible
-              ? "calendar__print-btn calendar__print-btn--timeline"
-              : "calendar__print-btn"
+              ? "calendar__print-btn calendar__print-btn--timelineview"
+              : "calendar__print-btn calendar__print-btn--calendarview"
           }
         >
           Print day sheet

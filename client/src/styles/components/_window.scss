@@ -7,7 +7,7 @@
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   overflow: hidden;
   font-size: $size-sm;
-  position: absolute;
+  position: fixed;
 }
 
 .window-title {
@@ -54,11 +54,11 @@
   overflow: scroll;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .window {
     width: 100% !important;
-    height: 100% !important;
-    top: 0 !important;
+    height: calc(100% - 100px) !important;
+    top: 100px !important;
     left: 0 !important;
   }
   .window-title {
