@@ -7,6 +7,7 @@ import {
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
+  toDayOfCycle,
 } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -50,8 +51,25 @@ const CycleEventForm = ({
     setErrMsg("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
-    if (name === "date")
-      value = value === "" ? null : dateISOToTimestampTZ(value);
+    if (name === "date") {
+      value = dateISOToTimestampTZ(value);
+      setFormDatas({
+        ...formDatas,
+        events: formDatas.events?.map((event) => {
+          return event.temp_id === item.temp_id
+            ? {
+                ...(event as CycleEventType),
+                date: value as number | null,
+                day_of_cycle:
+                  formDatas.lmp && value
+                    ? toDayOfCycle(value as number, formDatas.lmp)
+                    : event.day_of_cycle,
+              }
+            : event;
+        }),
+      });
+      return;
+    }
     setFormDatas({
       ...formDatas,
       events: formDatas.events?.map((event) => {
@@ -110,6 +128,7 @@ const CycleEventForm = ({
           value={timestampToDateISOTZ(item.date)}
           onChange={handleChange}
           width={110}
+          min={formDatas.lmp ? timestampToDateISOTZ(formDatas.lmp) : ""}
         />
       </td>
       <td>

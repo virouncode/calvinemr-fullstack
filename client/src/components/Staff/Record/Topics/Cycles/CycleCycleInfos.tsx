@@ -3,6 +3,7 @@ import { CycleType } from "../../../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
+  toDayOfCycle,
 } from "../../../../../utils/dates/formatDates";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
 import Input from "../../../../UI/Inputs/Input";
@@ -33,8 +34,23 @@ const CycleCycleInfos = ({
     setErrMsg("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
-    if (name === "lmp")
-      value = value === "" ? null : dateISOToTimestampTZ(value);
+    if (name === "lmp") {
+      value = dateISOToTimestampTZ(value);
+      setFormDatas({
+        ...formDatas,
+        lmp: value,
+        events:
+          formDatas.events?.map((event) => {
+            if (event.date && value) {
+              return {
+                ...event,
+                day_of_cycle: toDayOfCycle(event.date, value as number),
+              };
+            } else return event;
+          }) ?? [],
+      });
+      return;
+    }
     setFormDatas({ ...formDatas, [name]: value });
   };
 

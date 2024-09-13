@@ -423,3 +423,13 @@ export const dateStringToISO = (dateString: string | undefined | null) => {
   // Combine them with hyphens
   return `${year}-${month}-${day}`;
 };
+
+export const toDayOfCycle = (date: number, lmp: number) => {
+  const dateLmp = DateTime.fromMillis(lmp);
+  const dateCurrent = DateTime.fromMillis(date);
+
+  // Calculate the difference in days
+  const diffInDays = dateCurrent.diff(dateLmp, "days").days + 1;
+  if (diffInDays < 0) return "";
+  return diffInDays.toString();
+};
