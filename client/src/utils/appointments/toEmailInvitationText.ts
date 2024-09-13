@@ -39,9 +39,8 @@ export const toEmailInvitationText = (
         )
         .replace("[video_call_link]", video_link)
     : "";
-  const emailText = `
-Hello ${recipientName},
-              
+  const emailText = `Hello ${recipientName},
+
 ${intro.replace("email/text", "email")}
                           
 ${infosToSend}

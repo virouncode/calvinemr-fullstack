@@ -92,7 +92,10 @@ const ClinicalNoteCardHeader = ({
   const { staffInfos } = useStaffInfosContext();
   const { user } = useUserContext() as { user: UserStaffType };
 
-  const handleClickTemplate = () => {
+  const handleClickTemplate = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
     setTemplatesVisible((v) => !v);
   };
 

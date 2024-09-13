@@ -208,8 +208,7 @@ export const newStaff = async (req: Request, res: Response): Promise<void> => {
     const emailToPost = {
       to: datasToPost.email,
       subject: `Welcome to ${clinicName} - DO NOT REPLY`,
-      text: `
-Dear ${datasToPost.full_name},
+      text: `Dear ${datasToPost.full_name},
 
 Welcome to ${clinicName}!
 
@@ -274,8 +273,7 @@ export const newPatient = async (
     const emailToPost = {
       to: datasToPost.email,
       subject: `Welcome to ${clinicName} - DO NOT REPLY`,
-      text: `
-Dear ${firstName}${middleName ? " " + middleName : ""} ${lastName},
+      text: `Dear ${firstName}${middleName ? " " + middleName : ""} ${lastName},
 
 Welcome to ${clinicName}!
 
@@ -335,8 +333,9 @@ export const tempPassword = async (
     const emailToPost = {
       to: response.data.email,
       subject: `${process.env.CLINIC_NAME}: Temporary Password - DO NOT REPLY`,
-      text: `
-Hello ${response.data.full_name || toPatientName(response.data.patient_infos)}
+      text: `Hello ${
+        response.data.full_name || toPatientName(response.data.patient_infos)
+      }
 
 Please find your temporary password for your account: ${
         response.data.temp_login.temp_password

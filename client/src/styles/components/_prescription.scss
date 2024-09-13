@@ -136,6 +136,9 @@
     display: flex;
     justify-content: flex-end;
     font-size: 0.8rem;
+    label {
+      margin-right: 5px;
+    }
     &-image {
       img {
         height: 100%;

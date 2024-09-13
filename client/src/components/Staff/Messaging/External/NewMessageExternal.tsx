@@ -202,16 +202,15 @@ const NewMessageExternal = ({
           try {
             await axios.post(`/api/mailgun`, {
               to: recipient.email, //to be changed to patient email
-              subject: `${clinic?.name ?? ""} - New message - DO NO REPLY`,
-              text: `
-    Hello ${recipient.name},
+              subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+              text: `Hello ${recipient.name},
     
-    You have a new message, please login to your patient portal.
+  You have a new message, please login to your patient portal.
     
-    Please do not reply to this email, as this address is automated and not monitored. 
+  Please do not reply to this email, as this address is automated and not monitored. 
     
-    Best wishes, 
-    Powered by CalvinEMR`,
+  Best wishes, 
+  Powered by CalvinEMR`,
             });
           } catch (err) {
             if (err instanceof Error)
@@ -352,8 +351,6 @@ const NewMessageExternal = ({
               checked={important}
               label="High importance"
             />
-            import MessagesExternalTemplates from
-            './Templates/MessagesExternalTemplates';
           </div>
           <div>
             <strong

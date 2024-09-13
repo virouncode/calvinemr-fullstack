@@ -136,9 +136,8 @@ const ReplyMessageExternal = ({
     try {
       await axios.post(`/api/mailgun`, {
         to_email: message.from_patient_infos?.Email ?? "", //to be changed to patient email
-        subject: `${clinic?.name ?? ""} - New message - DO NO REPLY`,
-        text: `
-Hello ${toPatientName(message.from_patient_infos)},
+        subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+        text: `Hello ${toPatientName(message.from_patient_infos)},
 
 You have a new message, please login to your patient portal.
 

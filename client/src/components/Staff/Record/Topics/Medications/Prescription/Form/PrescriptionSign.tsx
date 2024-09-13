@@ -6,6 +6,7 @@ const PrescriptionSign = () => {
   const { user } = useUserContext() as { user: UserStaffType };
   return (
     <div className="prescription__sign">
+      <label>Signature: </label>
       {user.sign?.url && (
         <div className="prescription__sign-image">
           <img src={user.sign?.url} alt="doctor-sign" crossOrigin="anonymous" />

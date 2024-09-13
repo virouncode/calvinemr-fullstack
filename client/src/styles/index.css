@@ -4421,6 +4421,9 @@ select:focus {
   justify-content: flex-end;
   font-size: 0.8rem;
 }
+.prescription__sign label {
+  margin-right: 5px;
+}
 .prescription__sign-image img {
   height: 100%;
 }
@@ -6460,16 +6463,6 @@ select:focus {
 }
 .reportsinbox__noinbox {
   font-weight: bold;
-  text-align: center;
-}
-.reportsinbox__err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 50%;
-  margin: 0 auto 10px;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
   text-align: center;
 }
 .reportsinbox__instructions {
@@ -9259,6 +9252,9 @@ select:focus {
   justify-content: flex-end;
   font-size: 0.8rem;
   padding: 0 10px;
+}
+.letter__sign label {
+  margin-right: 5px;
 }
 .letter__sign-image img {
   height: 100%;

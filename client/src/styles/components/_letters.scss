@@ -181,6 +181,9 @@
     justify-content: flex-end;
     font-size: 0.8rem;
     padding: 0 10px;
+    label {
+      margin-right: 5px;
+    }
     &-image {
       img {
         height: 100%;

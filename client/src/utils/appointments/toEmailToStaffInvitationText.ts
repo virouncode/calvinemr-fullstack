@@ -18,8 +18,7 @@ export const toEmailToStaffInvitationText = (
   const cityToSend = site?.city ?? "";
   const provinceToSend = site?.province_state ?? "";
   const postalCodeToSend = site?.postal_code || site?.zip_code || "";
-  const emailText = `
-Hello ${recipientName},
+  const emailText = `Hello ${recipientName},
 
 ${hostName} has invited you to a meeting on: ${
     allDay
