@@ -5,6 +5,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  svg {
+    margin-left: 0.7rem;
+  }
 }
 .groups__toggle {
   width: 250px;
@@ -27,7 +30,7 @@
   }
 }
 .groups__title {
-  font-size: $size-sm;
+  font-size: $size-base;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -51,7 +54,7 @@
   flex-direction: column;
 }
 .groups__card-title {
-  font-size: $size-sm;
+  font-size: $size-base;
   font-weight: bold;
   padding: 0.75rem;
   display: flex;
@@ -195,18 +198,18 @@
 
 /*lg*/
 @media (min-width: 1024px) {
+  .groups {
+    svg {
+      margin-left: 0.25rem;
+    }
+  }
+
   .groups__toggle {
     width: 250px;
     font-size: $size-base;
   }
-  .groups__title {
-    font-size: $size-base;
-  }
   .groups__content {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-  .groups__card-title {
-    font-size: $size-base;
   }
   .groups__card-list {
     font-size: $size-sm;
