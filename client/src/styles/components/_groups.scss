@@ -5,9 +5,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  svg {
-    margin-left: 0.7rem;
-  }
 }
 .groups__toggle {
   width: 250px;
@@ -196,14 +193,13 @@
   gap: 0.25rem;
 }
 
+@media (min-width: 768px) {
+  .groups__content {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
 /*lg*/
 @media (min-width: 1024px) {
-  .groups {
-    svg {
-      margin-left: 0.25rem;
-    }
-  }
-
   .groups__toggle {
     width: 250px;
     font-size: $size-base;
