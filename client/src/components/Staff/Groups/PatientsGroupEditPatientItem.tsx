@@ -30,7 +30,7 @@ const PatientsGroupEditPatientItem = ({
           </div>
           <div>
             <TrashIcon onClick={() => handleRemovePatient(item)} />
-            <CrossArrowIcon ml={5} onPointerDown={(e) => controls.start(e)} />
+            <CrossArrowIcon ml={10} onPointerDown={(e) => controls.start(e)} />
           </div>
         </div>
       </Reorder.Item>
