@@ -63,7 +63,12 @@ const LabLinksPersonal = () => {
         />
       )}
       <div className="lablinks__personal-search">
-        <Input label="Search" value={search} onChange={handleSearch} />
+        <Input
+          label="Search"
+          value={search}
+          onChange={handleSearch}
+          placeholder="Name, URL,..."
+        />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
 

@@ -1,6 +1,9 @@
 import { StaffType } from "../../types/api";
 
-export const splitStaffInfos = (staffInfos: StaffType[]) => {
+export const splitStaffInfos = (
+  staffInfos: StaffType[],
+  noSecretaries = false
+) => {
   const activeStaff = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
   );
@@ -50,17 +53,30 @@ export const splitStaffInfos = (staffInfos: StaffType[]) => {
     name: "Others",
     infos: activeStaff.filter(({ title }) => title === "Other"),
   };
-  return [
-    doctorsInfos,
-    medStudentsInfos,
-    nursesInfos,
-    nursingStudentsInfos,
-    secretariesInfos,
-    ultrasoundInfos,
-    labTechInfos,
-    nutritionistInfos,
-    physiosInfos,
-    psychosInfos,
-    othersInfos,
-  ];
+  return noSecretaries
+    ? [
+        doctorsInfos,
+        medStudentsInfos,
+        nursesInfos,
+        nursingStudentsInfos,
+        ultrasoundInfos,
+        labTechInfos,
+        nutritionistInfos,
+        physiosInfos,
+        psychosInfos,
+        othersInfos,
+      ]
+    : [
+        doctorsInfos,
+        medStudentsInfos,
+        nursesInfos,
+        nursingStudentsInfos,
+        secretariesInfos,
+        ultrasoundInfos,
+        labTechInfos,
+        nutritionistInfos,
+        physiosInfos,
+        psychosInfos,
+        othersInfos,
+      ];
 };

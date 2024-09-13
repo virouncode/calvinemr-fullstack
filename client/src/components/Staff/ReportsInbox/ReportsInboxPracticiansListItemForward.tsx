@@ -19,7 +19,7 @@ const ReportsInboxPracticiansListItemForward = ({
 }: ReportsInboxPracticiansListItemForwardProps) => {
   const { staffInfos } = useStaffInfosContext();
   return (
-    <li className="practicians-forward__list-item">
+    <li className="reportsinbox__forward-list-item">
       <Checkbox
         id={info.id.toString()}
         name={categoryName}

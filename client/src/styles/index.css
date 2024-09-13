@@ -6967,6 +6967,50 @@ select:disabled {
   width: auto;
 }
 
+.reportsinbox__forward {
+  margin-top: 30px;
+  padding: 0.5rem;
+}
+.reportsinbox__forward .reportsinbox__forward-title {
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.reportsinbox__forward .reportsinbox__forward-title .reportsinbox__forward-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.reportsinbox__forward .reportsinbox__forward-list {
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  padding: 1rem;
+}
+.reportsinbox__forward .reportsinbox__forward-list .reportsinbox__forward-category {
+  margin-bottom: 1rem;
+}
+.reportsinbox__forward .reportsinbox__forward-list .reportsinbox__forward-category-overview {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.reportsinbox__forward .reportsinbox__forward-list .reportsinbox__forward-category-overview label {
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+.reportsinbox__forward .reportsinbox__forward-list .reportsinbox__forward-category-list {
+  margin-left: 1em;
+}
+.reportsinbox__forward .reportsinbox__forward-list .reportsinbox__forward-category-list .reportsinbox__forward-list-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
 @media (min-width: 768px) {
   .reportsinbox__form {
     display: flex;
