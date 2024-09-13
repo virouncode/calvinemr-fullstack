@@ -568,14 +568,15 @@
   padding: 1rem;
   .calendar__daysheet-btn {
     margin: 0 auto 1rem;
-    width: 90%;
+    width: 50%;
     button {
-      font-size: $size-base;
+      font-size: $size-2xl;
       width: 100%;
       margin: 0 auto;
       border-radius: 3px;
       background-color: $pink;
       color: $white;
+      padding: 1rem;
     }
   }
   .calendar__daysheet-date {
