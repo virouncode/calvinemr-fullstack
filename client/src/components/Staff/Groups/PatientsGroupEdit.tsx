@@ -104,16 +104,16 @@ const PatientsGroupEdit = ({
   };
 
   return (
-    <div className="patients-groups__edit">
+    <div className="groups__edit">
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="patients-groups__edit-color">
+      <div className="groups__edit-color">
         <label>Color</label>
         <ColorPicker
           handleClickColor={handleClickColor}
           choosenColor={itemInfos.color}
         />
       </div>
-      <div className="patients-groups__edit-name">
+      <div className="groups__edit-name">
         <Input
           value={itemInfos.name}
           onChange={handleChange}
@@ -123,7 +123,7 @@ const PatientsGroupEdit = ({
           autoFocus={true}
         />
       </div>
-      <div className="patients-groups__edit-description">
+      <div className="groups__edit-description">
         <label htmlFor="description">Description</label>
         <textarea
           name="description"
@@ -132,14 +132,14 @@ const PatientsGroupEdit = ({
           id="description"
         />
       </div>
-      <div className="patients-groups__edit-type">
+      <div className="groups__edit-type">
         <label>Type</label>
         <PatientsGroupTypeRadio
           groupInfos={itemInfos}
           handleChangeType={handleChangeType}
         />
       </div>
-      <div className="patients-groups__edit-patients">
+      <div className="groups__edit-patients">
         <label>
           Patients{" "}
           <UserPlusIcon ml={5} onClick={() => setAddPatientsVisible(true)} />
@@ -164,7 +164,7 @@ const PatientsGroupEdit = ({
           )}
         </Reorder.Group>
       </div>
-      <div className="patients-groups__edit-btns">
+      <div className="groups__edit-btns">
         <SaveButton onClick={handleSave} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>

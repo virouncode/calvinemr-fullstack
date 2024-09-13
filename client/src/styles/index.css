@@ -10249,6 +10249,7 @@ select:disabled {
 }
 
 .groups__card-list-item {
+  font-size: 0.85rem;
   padding: 5px 10px;
   border-top: solid 0.5px #cecdcd;
   border-bottom: solid 0.5px #cecdcd;
@@ -10271,6 +10272,102 @@ select:disabled {
 }
 .groups__card-list-item--edit:hover {
   text-decoration: none;
+}
+
+.groups__edit {
+  margin-top: 30px;
+  padding: 1rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.groups__edit input[type=text],
+.groups__edit textarea {
+  font-size: 1rem;
+}
+
+.groups__edit-color {
+  display: flex;
+  flex-direction: column;
+}
+.groups__edit-color label {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+.groups__edit-color .colors-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.groups__edit-color .colors-palette .colors-palette__item {
+  width: 30px;
+  height: 30px;
+}
+.groups__edit-color .colors-palette .colors-palette__item--choosen {
+  width: 60px;
+  height: 60px;
+}
+
+.groups__edit-name {
+  display: flex;
+  flex-direction: column;
+}
+.groups__edit-name label {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+
+.groups__edit-description {
+  display: flex;
+  flex-direction: column;
+}
+.groups__edit-description label {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+.groups__edit-description textarea {
+  height: 200px;
+}
+
+.groups__edit-type {
+  display: flex;
+  flex-direction: column;
+}
+.groups__edit-type label {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+.groups__edit-type .groups__edit-row-radio {
+  display: flex;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+.groups__edit-type .groups__edit-row-radio .groups__edit-row-radio-item label {
+  font-weight: normal;
+  margin-left: 0.5em;
+}
+
+.groups__edit-patients {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.groups__edit-patients label {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+.groups__edit-patients ul {
+  border: solid 1px #cecdcd;
+  border-radius: 4px;
+  overflow: scroll;
+  height: 200px;
+}
+
+.groups__edit-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
 }
 
 /*lg*/
