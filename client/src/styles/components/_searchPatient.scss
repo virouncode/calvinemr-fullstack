@@ -1,5 +1,4 @@
 .search-patient {
-  height: 100%;
   padding: 1rem;
   width: 98%;
   margin: 0 auto;
@@ -37,7 +36,8 @@
   text-align: end;
 }
 .search-patient__table-container {
-  flex: 1;
+  // flex: 1;
+  height: 300px;
   overflow-y: scroll;
   position: relative;
   border-radius: 6px;
@@ -98,6 +98,15 @@
 }
 
 /*lg*/
+@media (min-width: 475px) {
+  .search-patient {
+    height: 100%;
+  }
+  .search-patient__table-container {
+    flex: 1;
+    height: auto;
+  }
+}
 @media (min-width: 1024px) {
   .search-patient__form {
     font-size: $size-sm;
