@@ -27,7 +27,7 @@ const useIntersection = <TData, TError>(
       const options: IntersectionObserverInit = {
         root: elementType === "div" ? divRef.current : ulRef.current,
         rootMargin: "0px",
-        threshold: 0.5,
+        threshold: 0.1,
       };
 
       observer.current = new IntersectionObserver(async (entries) => {

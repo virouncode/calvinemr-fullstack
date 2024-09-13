@@ -21,8 +21,8 @@
   align-self: flex-start;
 }
 .reportsinbox__table-container {
-  width: 100%;
   flex: 1;
+  height: 100px;
   font-size: $size-xs;
   overflow: scroll;
   border-radius: 6px;

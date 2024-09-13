@@ -6824,8 +6824,8 @@ select:disabled {
 }
 
 .reportsinbox__table-container {
-  width: 100%;
   flex: 1;
+  height: 100px;
   font-size: 0.7rem;
   overflow: scroll;
   border-radius: 6px;
