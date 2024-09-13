@@ -106,17 +106,17 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
           {link.name}
         </a>
         {credentials && !editVisible && (
-          <PenIcon onClick={handleClickEdit} ml={5} />
+          <PenIcon onClick={handleClickEdit} ml={15} />
         )}
         {credentials && editVisible && (
           <>
-            <SaveIcon onClick={handleClickSave} color="#f53f77" ml={5} />
+            <SaveIcon onClick={handleClickSave} color="#f53f77" ml={15} />
             <XmarkIcon onClick={handleCancel} ml={15} />
           </>
         )}
         {addCredentialsVisible && (
           <>
-            <SaveIcon onClick={handleClickSaveNew} color="#f53f77" ml={5} />
+            <SaveIcon onClick={handleClickSaveNew} color="#f53f77" ml={15} />
             <XmarkIcon onClick={handleCancelNew} ml={15} />
           </>
         )}
