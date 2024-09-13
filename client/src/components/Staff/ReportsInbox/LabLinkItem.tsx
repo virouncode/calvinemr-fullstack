@@ -100,8 +100,8 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
     });
   };
   return (
-    <li className="lablink__item">
-      <div className="lablink__item-link">
+    <li className="lablinks__item">
+      <div className="lablinks__item-link">
         <a href={link.url} target="_blank" rel="noreferrer">
           {link.name}
         </a>
@@ -111,13 +111,13 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
         {credentials && editVisible && (
           <>
             <SaveIcon onClick={handleClickSave} color="#f53f77" ml={5} />
-            <XmarkIcon onClick={handleCancel} ml={5} />
+            <XmarkIcon onClick={handleCancel} ml={15} />
           </>
         )}
         {addCredentialsVisible && (
           <>
             <SaveIcon onClick={handleClickSaveNew} color="#f53f77" ml={5} />
-            <XmarkIcon onClick={handleCancelNew} ml={5} />
+            <XmarkIcon onClick={handleCancelNew} ml={15} />
           </>
         )}
         {!credentials && !addCredentialsVisible && (
@@ -127,36 +127,38 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
           />
         )}
       </div>
-      <div className="lablink__item-login">
-        <label htmlFor="lablink-login">
-          Login {login && <CopyIcon onClick={handleCopyLogin} ml={5} />}
-        </label>
-        {editVisible || addCredentialsVisible ? (
-          <Input
-            value={login}
-            onChange={handleChangeLogin}
-            inputRef={loginRef}
-            id="lablink-login"
-          />
-        ) : (
-          <Input value={login} readOnly inputRef={loginRef} />
-        )}
-      </div>
-      <div className="lablink__item-pwd">
-        <label htmlFor="lablink-pwd">
-          Password
-          {pwd && <CopyIcon onClick={handleCopyPwd} ml={5} />}
-        </label>
-        {editVisible || addCredentialsVisible ? (
-          <Input
-            value={pwd}
-            onChange={handleChangePwd}
-            inputRef={pwdRef}
-            id="lablink-pwd"
-          />
-        ) : (
-          <Input value={pwd.replace(/./g, "*")} readOnly inputRef={pwdRef} />
-        )}
+      <div className="lablinks__item-credentials">
+        <div className="lablinks__item-login">
+          <label htmlFor="lablink-login">
+            Login {login && <CopyIcon onClick={handleCopyLogin} ml={5} />}
+          </label>
+          {editVisible || addCredentialsVisible ? (
+            <Input
+              value={login}
+              onChange={handleChangeLogin}
+              inputRef={loginRef}
+              id="lablink-login"
+            />
+          ) : (
+            <Input value={login} readOnly inputRef={loginRef} />
+          )}
+        </div>
+        <div className="lablinks__item-pwd">
+          <label htmlFor="lablink-pwd">
+            Password
+            {pwd && <CopyIcon onClick={handleCopyPwd} ml={5} />}
+          </label>
+          {editVisible || addCredentialsVisible ? (
+            <Input
+              value={pwd}
+              onChange={handleChangePwd}
+              inputRef={pwdRef}
+              id="lablink-pwd"
+            />
+          ) : (
+            <Input value={pwd.replace(/./g, "*")} readOnly inputRef={pwdRef} />
+          )}
+        </div>
       </div>
     </li>
   );

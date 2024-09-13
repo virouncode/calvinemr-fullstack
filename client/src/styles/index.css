@@ -6808,16 +6808,17 @@ select:disabled {
 }
 
 .reportsinbox__subtitle {
-  font-size: 0.85rem;
-  text-align: center;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+  font-weight: normal;
 }
 
 .reportsinbox__results {
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1rem;
   margin-bottom: 10px;
 }
 
@@ -6979,10 +6980,10 @@ select:disabled {
 /*lg*/
 @media (min-width: 1024px) {
   .reportsinbox__subtitle {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
   .reportsinbox__results {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
   .reportsinbox__table {
     font-size: 0.85rem;
@@ -10019,150 +10020,146 @@ select:disabled {
   width: 95%;
   margin: 40px auto 0;
 }
-.lablinks__btn {
-  text-align: center;
-  margin-bottom: 10px;
-}
+
 .lablinks__list {
-  padding: 10px;
-  height: 230px;
+  padding: 1rem;
+  height: 500px;
   overflow-y: scroll;
-  border: solid 1px #cecdcd;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-}
-.lablinks__form {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  border: solid 1px #cecdcd;
-  border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  padding: 10px;
-}
-.lablinks__form-inputs {
-  width: 75%;
-  display: flex;
-  justify-content: space-between;
   flex-direction: column;
-}
-.lablinks__form-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-.lablinks__form-err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 100%;
-  margin: 10px auto;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-}
-.lablinks__form-item {
-  display: flex;
-  align-items: center;
-}
-.lablinks__form-item label {
-  font-weight: bold;
-  margin-right: 10px;
-  width: 70px;
-  margin-right: 10px;
-}
-.lablinks__form-item input {
-  width: 200px;
-}
-.lablinks__form-btns {
-  width: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lablinks__form-btns button {
-  margin-right: 5px;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.lablink__item {
+.lablinks__item {
   display: flex;
-  margin-bottom: 20px;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
 }
-.lablink__item-link {
+
+.lablinks__item-link {
+  font-size: 1rem;
+  font-weight: bold;
   text-decoration: underline;
-  width: 55%;
-  font-weight: bold;
-}
-.lablink__item-link i {
-  margin-left: 5px;
-  cursor: pointer;
-}
-.lablink__item-login {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-}
-.lablink__item-login label {
-  font-weight: bold;
-}
-.lablink__item-login label i {
-  margin-left: 5px;
-  cursor: pointer;
-}
-.lablink__item-pwd {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-}
-.lablink__item-pwd label {
-  font-weight: bold;
-}
-.lablink__item-pwd label i {
-  margin-left: 5px;
-  cursor: pointer;
 }
 
-.lablinks__personal-err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 100%;
-  margin: 10px auto;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
+.lablinks__item-credentials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.5rem;
 }
-.lablinks__personal-title {
-  margin: 10px 0;
+
+.lablinks__item-pwd {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.25rem;
 }
-.lablinks__personal-title h3 {
-  font-size: 0.85rem;
+.lablinks__item-pwd label {
+  font-size: 1rem;
+}
+.lablinks__item-pwd input {
+  width: 100%;
+  font-size: 1rem;
+}
+
+.lablinks__item-login {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.lablinks__item-login label {
+  font-size: 1rem;
+}
+.lablinks__item-login input {
+  width: 100%;
+  font-size: 1rem;
+}
+
+.lablinks__personal .lablinks__personal-title {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.lablinks__personal .lablinks__personal-title h3 {
+  font-size: 1rem;
+}
+.lablinks__personal .lablinks__personal-search {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.lablinks__personal .lablinks__personal-search label {
+  font-size: 1rem;
   font-weight: bold;
-  margin-right: 10px;
+  margin-bottom: 0.25rem;
 }
-.lablinks__personal-list {
-  padding: 10px;
-  height: 230px;
+.lablinks__personal .lablinks__personal-search input {
+  width: 100%;
+  font-size: 1rem;
+}
+.lablinks__personal .lablinks__personal-list {
+  padding: 1rem;
+  height: 300px;
   overflow-y: scroll;
-  border: solid 1px #cecdcd;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
-.lablinks__personal-search {
-  margin-bottom: 10px;
+.lablinks__personal .lablinks__personal-form {
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  margin-bottom: 1rem;
 }
-.lablinks__personal-search label {
+.lablinks__personal .lablinks__personal-form-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  row-gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.lablinks__personal .lablinks__personal-form-inputs .lablinks__personal-form-item {
+  display: flex;
+  flex-direction: column;
+}
+.lablinks__personal .lablinks__personal-form-inputs .lablinks__personal-form-item label {
   font-weight: bold;
-  margin-right: 10px;
-  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
 }
-.lablinks__personal-search input {
-  width: 350px;
+.lablinks__personal .lablinks__personal-form-inputs .lablinks__personal-form-item input {
+  font-size: 1rem;
+  width: 100%;
+}
+.lablinks__personal .lablinks__personal-form-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
+@media (min-width: 1024px) {
+  .lablinks__item-link {
+    font-size: 0.85rem;
+  }
+  .lablinks__item-pwd label,
+  .lablinks__item-login label {
+    font-size: 0.85rem;
+  }
+  .lablinks__item-pwd input,
+  .lablinks__item-login input {
+    font-size: 0.85rem;
+  }
+  .lablinks__personal .lablinks__personal-title h3 {
+    font-size: 0.85rem;
+  }
+  .lablinks__personal .lablinks__personal-search label {
+    font-size: 0.85rem;
+  }
+  .lablinks__personal .lablinks__personal-search input {
+    font-size: 0.85rem;
+  }
+}
 .age-calculator {
   margin-top: 50px;
 }

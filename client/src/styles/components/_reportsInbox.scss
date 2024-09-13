@@ -7,15 +7,16 @@
   margin: 0 auto;
 }
 .reportsinbox__subtitle {
-  font-size: $size-sm;
-  text-align: center;
-  margin-bottom: 1rem;
+  font-size: $size-base;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+  font-weight: normal;
 }
 .reportsinbox__results {
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
-  font-size: $size-sm;
+  font-size: $size-base;
   margin-bottom: 10px;
 }
 .reportsinbox__table-container {
@@ -173,10 +174,10 @@
 /*lg*/
 @media (min-width: 1024px) {
   .reportsinbox__subtitle {
-    font-size: $size-base;
+    font-size: $size-sm;
   }
   .reportsinbox__results {
-    font-size: $size-base;
+    font-size: $size-sm;
   }
   .reportsinbox__table {
     font-size: $size-sm;

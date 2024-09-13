@@ -55,7 +55,6 @@ const ReportsInbox = () => {
   const reportsDatas = reports.pages.flatMap((page) => page.items);
   return (
     <>
-      <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
       {user.access_level === "staff" && user.title === "Doctor" && (
         <div
           className="reportsinbox__results"
@@ -64,6 +63,8 @@ const ReportsInbox = () => {
           External Results
         </div>
       )}
+      <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
+
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="reportsinbox__table-container" ref={divRef}>
         <table className="reportsinbox__table">

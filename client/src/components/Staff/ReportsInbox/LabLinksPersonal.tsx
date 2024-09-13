@@ -55,10 +55,6 @@ const LabLinksPersonal = () => {
         <h3>Personal Links</h3>
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
-      <div className="lablinks__personal-search">
-        <Input label="Search" value={search} onChange={handleSearch} />
-      </div>
-      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       {addVisible && (
         <LabLinkPersonalForm
           setAddVisible={setAddVisible}
@@ -66,8 +62,13 @@ const LabLinksPersonal = () => {
           setErrMsgPost={setErrMsgPost}
         />
       )}
+      <div className="lablinks__personal-search">
+        <Input label="Search" value={search} onChange={handleSearch} />
+      </div>
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+
       <ul
-        className="lablinks__personal-list"
+        className="lablinks__list"
         ref={ulRef}
         style={{ border: errMsgPost && "solid 1px red" }}
       >

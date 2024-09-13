@@ -115,94 +115,56 @@ const LabLinkPersonalItem = ({
   };
 
   return (
-    <li className="lablink__item" ref={lastItemRef}>
-      <div
-        className="lablink__item-link"
-        style={{ textDecoration: editVisible ? "none" : "underline" }}
-      >
+    <li className="lablinks__item" ref={lastItemRef}>
+      <div className="lablinks__item-link">
+        <a href={link.url} target="_blank" rel="noreferrer">
+          {link.name}
+        </a>
         {editVisible ? (
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                textDecoration: "none",
-                display: "flex",
-                flexDirection: "column",
-                marginRight: "20px",
-              }}
-            >
-              <Input
-                label="Name"
-                name="name"
-                value={itemInfos.name}
-                onChange={handleChange}
-                id="lablink-name"
-              />
-            </div>
-            <div
-              style={{
-                textDecoration: "none",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Input
-                label="URL"
-                name="url"
-                value={itemInfos.url}
-                onChange={handleChange}
-                id="lablink-url"
-              />
-            </div>
-          </div>
-        ) : (
-          <a href={link.url} target="_blank" rel="noreferrer">
-            {link.name}
-          </a>
-        )}
-
-        {!editVisible && (
-          <>
-            <PenIcon onClick={handleClickEdit} ml={5} />
-            <TrashIcon onClick={handleDelete} ml={5} />
-          </>
-        )}
-        {editVisible && (
           <>
             <SaveIcon onClick={handleClickSave} color="#f53f77" ml={5} />
-            <XmarkIcon onClick={handleCancel} ml={5} />
+            <XmarkIcon onClick={handleCancel} ml={15} />
+          </>
+        ) : (
+          <>
+            <PenIcon onClick={handleClickEdit} ml={5} />
+            <TrashIcon onClick={handleDelete} ml={15} />
           </>
         )}
       </div>
-      <div className="lablink__item-login">
-        <label htmlFor="lablink-login">
-          Login <CopyIcon onClick={handleCopyLogin} />
-        </label>
-        {editVisible ? (
-          <Input
-            name="login"
-            value={itemInfos.login}
-            onChange={handleChange}
-            id="lablink-login"
-          />
-        ) : (
-          <Input value={link.login} readOnly />
-        )}
-      </div>
-      <div className="lablink__item-pwd">
-        <label htmlFor="lablink-pwd">
-          Password
-          <CopyIcon onClick={handleCopyPwd} />
-        </label>
-        {editVisible ? (
-          <Input
-            name="pwd"
-            value={itemInfos.pwd}
-            onChange={handleChange}
-            id="lablink-pwd"
-          />
-        ) : (
-          <Input value={link.pwd.replace(/./g, "*")} readOnly />
-        )}
+      <div className="lablinks__item-credentials">
+        <div className="lablinks__item-login">
+          <label htmlFor="lablink-login">
+            Login
+            <CopyIcon ml={5} onClick={handleCopyLogin} />
+          </label>
+          {editVisible ? (
+            <Input
+              name="login"
+              value={itemInfos.login}
+              onChange={handleChange}
+              id="lablink-login"
+            />
+          ) : (
+            <Input value={link.login} readOnly />
+          )}
+        </div>
+        <div className="lablinks__item-pwd">
+          <label htmlFor="lablink-pwd">
+            Password
+            <CopyIcon ml={5} onClick={handleCopyPwd} />
+          </label>
+          {editVisible ? (
+            <Input
+              name="pwd"
+              value={itemInfos.pwd}
+              onChange={handleChange}
+              id="lablink-pwd"
+            />
+          ) : (
+            <Input value={link.pwd.replace(/./g, "*")} readOnly />
+          )}
+        </div>
       </div>
     </li>
   );
