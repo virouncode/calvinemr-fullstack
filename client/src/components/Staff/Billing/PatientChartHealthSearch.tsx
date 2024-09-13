@@ -52,7 +52,7 @@ const PatientChartHealthSearch = ({
 
   return (
     <div className="hcn__container">
-      <div className="hcn-search">
+      <div className="hcn__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -60,51 +60,45 @@ const PatientChartHealthSearch = ({
           label="Search"
           autoFocus={true}
           placeholder="Chart#, Health Card#, Name..."
-          width={300}
         />
       </div>
-      <ul className="hcn-results" ref={ulRef}>
+      <ul className="hcn__results" ref={ulRef}>
         {isPending ? (
           <LoadingLi />
         ) : patientsDatas && patientsDatas.length > 0 ? (
           <>
-            <li className="hcn-results__item hcn-results__item--headers">
-              <span className="hcn-results__code">Chart#</span>
-              <span className="hcn-results__code">Health Card#</span>
-              <span
-                className="hcn-results__name"
-                style={{ fontWeight: "bold" }}
-              >
-                Name
-              </span>
+            <li className="hcn__results-item hcn__results-item--headers">
+              <span className="hcn__results-code">Chart#</span>
+              <span className="hcn__results-code">Health Card#</span>
+              <span className="hcn__results-name">Name</span>
             </li>
             {patientsDatas.map((item, index) =>
               index === patientsDatas.length - 1 ? (
                 <li
-                  className="hcn-results__item"
+                  className="hcn__results-item"
                   key={item.id}
                   onClick={() => handleClickPatient(item)}
                   ref={lastItemRef}
                 >
-                  <span className="hcn-results__code">{item.ChartNumber}</span>{" "}
-                  <span className="hcn-results__code">
+                  <span className="hcn__results-code">{item.ChartNumber}</span>{" "}
+                  <span className="hcn__results-code">
                     {item.HealthCard?.Number}
                   </span>{" "}
-                  <span className="hcn-results__name">
+                  <span className="hcn__results-name">
                     {toPatientName(item)}
                   </span>
                 </li>
               ) : (
                 <li
-                  className="hcn-results__item"
+                  className="hcn__results-item"
                   key={item.id}
                   onClick={() => handleClickPatient(item)}
                 >
-                  <span className="hcn-results__code">{item.ChartNumber}</span>{" "}
-                  <span className="hcn-results__code">
+                  <span className="hcn__results-code">{item.ChartNumber}</span>{" "}
+                  <span className="hcn__results-code">
                     {item.HealthCard?.Number}
                   </span>{" "}
-                  <span className="hcn-results__name">
+                  <span className="hcn__results-name">
                     {toPatientName(item)}
                   </span>
                 </li>
