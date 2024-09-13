@@ -7,17 +7,24 @@
   flex-direction: column;
 }
 .search-patient__form {
-  font-size: $size-sm;
+  font-size: $size-base;
   margin: 0 auto 1rem;
   padding: 1rem;
-  width: 300px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  column-gap: 2rem;
+  row-gap: 1rem;
+  width: 100%;
   input {
     width: auto;
+    font-size: $size-base;
   }
 }
 .search-patient__item {
-  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
   label {
+    margin-bottom: 0.25em;
     font-weight: bold;
     display: inline-block;
     width: 100px;
@@ -25,8 +32,9 @@
 }
 .search-patient__count {
   font-weight: bold;
-  font-size: $size-xs;
+  font-size: $size-sm;
   margin-bottom: 0.5rem;
+  text-align: end;
 }
 .search-patient__table-container {
   overflow-y: scroll;
@@ -92,17 +100,8 @@
 @media (min-width: 1024px) {
   .search-patient__form {
     font-size: $size-sm;
-    margin: 0 auto 1rem;
-    width: 100%;
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .search-patient__item {
-    flex: 1;
-    label {
-      margin-bottom: 0.25rem;
+    input {
+      font-size: $size-sm;
     }
   }
   .search-patient__table {
