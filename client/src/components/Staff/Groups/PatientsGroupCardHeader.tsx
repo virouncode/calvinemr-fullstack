@@ -65,12 +65,12 @@ const PatientsGroupCardHeader = ({
         {group.staff_id === user.id && (
           <PenIcon ml={10} onClick={handleEditClick} />
         )}
-        <CloneIcon onClick={handleDuplicate} ml={10} />
-        <PaperPlaneIcon ml={10} onClick={handleSend} />
+        <CloneIcon onClick={handleDuplicate} ml={20} />
+        <PaperPlaneIcon ml={20} onClick={handleSend} />
       </div>
       <div className="groups__card-count">
         {group.staff_id === user.id && (
-          <TrashIcon mr={10} onClick={handleDelete} />
+          <TrashIcon mr={5} onClick={handleDelete} />
         )}
         ({group.patients.length})
       </div>
