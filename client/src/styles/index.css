@@ -222,10 +222,10 @@ html {
 }
 body {
   font-family: Lato, sans-serif;
-  background-color: black;
   color: #3d375a;
   height: 100%;
   width: 100%;
+  overscroll-behavior: none;
 }
 
 img,
@@ -260,7 +260,7 @@ textarea {
   border-radius: 3px;
   outline: solid 1px #cecdcd;
   resize: none;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #3d375a;
 }
 textarea:focus {
@@ -274,11 +274,11 @@ textarea::placeholder {
 }
 
 input {
-  padding: 0.125rem 0.25rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 3px;
   outline: solid 1px #cecdcd;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #3d375a;
   text-overflow: ellipsis;
 }
@@ -302,7 +302,9 @@ input[type=text],
 input[type=password],
 input[type=file],
 input[type=date],
-input[type=tel] {
+input[type=tel],
+input[type=email],
+select {
   width: 150px;
 }
 
@@ -312,11 +314,11 @@ input[type=file] {
 
 select {
   cursor: pointer;
-  padding: 0.125rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 3px;
   outline: solid 1px #cecdcd;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 select:focus {
   outline: solid 2px #93b5e9;
@@ -328,6 +330,10 @@ ul {
 
 li {
   list-style: none;
+}
+
+select:disabled {
+  z-index: -1;
 }
 
 .credentials-section {
@@ -509,15 +515,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 50px;
-  height: 50px;
 }
 
-@media (min-width: 768px) {
-  .header__logo {
-    width: 145px;
-  }
-}
 @media (min-width: 1024px) {
   .header__logo {
     width: 20%;
@@ -529,10 +528,9 @@ li {
   .header__nav ul {
     display: flex;
     justify-content: space-between;
-    font-size: 0.7rem;
+    font-size: 0.85rem;
   }
   .header__nav ul li {
-    margin-right: 1.5em;
     font-weight: bold;
     cursor: pointer;
   }
@@ -563,14 +561,72 @@ li {
     width: 68%;
   }
   .header__nav ul {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .header__logo {
     width: 16%;
   }
 }
+.mobile-nav__container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: column;
+  z-index: 100000;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 0.3s ease;
+}
+
+.mobile-nav__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+}
+
+.mobile-nav__logo img {
+  width: 120px;
+}
+
+.mobile-nav__cross {
+  cursor: pointer;
+}
+
+.mobile-nav__container--active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.mobile-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.125rem;
+}
+.mobile-nav li {
+  text-align: center;
+}
+
+.mobile-nav__link {
+  color: #3d375a;
+  font-weight: bold;
+  cursor: pointer;
+}
+.mobile-nav__link:hover {
+  text-decoration: underline;
+}
+
 @media print {
-  .daysheet__btn-container {
+  .calendar__daysheet-btn {
     display: none !important;
   }
 }
@@ -578,16 +634,18 @@ li {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .calendar__options {
   border: solid 1px #cecdcd;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  font-size: 0.5rem;
+  font-size: 0.85rem;
   width: 98%;
   margin: 0.5rem auto 0;
   padding: 0 0.5rem;
+  display: none;
 }
 
 .calendar__options-menu {
@@ -612,7 +670,7 @@ li {
 }
 
 .calendar__print-btn {
-  font-size: 0.5rem;
+  font-size: 0.85rem;
   position: absolute;
   display: inline-block;
   text-decoration: none;
@@ -625,9 +683,7 @@ li {
   border: none;
   outline: none;
   white-space: nowrap;
-  left: 50%;
-  transform: translate(-50%);
-  top: 35px;
+  top: 40px;
 }
 .calendar__print-btn:hover {
   background: #a3a3a3;
@@ -636,8 +692,19 @@ li {
   opacity: 0.2;
   cursor: default;
 }
-.calendar__print-btn:active {
+.calendar__print-btn--calendarview {
+  left: 50%;
+  transform: translate(-50%);
+}
+.calendar__print-btn--calendarview:active {
   transform: translate(-50%, 1px);
+}
+.calendar__print-btn--timelineview {
+  left: auto;
+  right: 0.5rem;
+}
+.calendar__print-btn--timelineview:active {
+  transform: translateY(1px);
 }
 
 .calendar__slot-select,
@@ -654,13 +721,21 @@ li {
 .calendar__slot-select select,
 .calendar__day-select select,
 .calendar__availability select {
-  font-size: 0.5rem;
+  font-size: 0.85rem;
 }
 
 .calendar__left-bar {
   width: 14%;
   height: 99%;
   display: none;
+}
+
+.calendar__select-site {
+  position: absolute;
+  top: 36px;
+}
+.calendar__select-site label {
+  margin-right: 0.5rem;
 }
 
 .calendar__shortcutpickr {
@@ -695,7 +770,7 @@ li {
   height: 8px;
 }
 .calendar__shortcutpickr .flatpickr-monthDropdown-months {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: #3d375a;
   width: 60%;
   background-color: #93b5e9;
@@ -708,14 +783,14 @@ li {
 .calendar__shortcutpickr .flatpickr-current-month .numInputWrapper {
   display: flex;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
 }
 .calendar__shortcutpickr .flatpickr-weekdaycontainer {
   display: flex;
   justify-content: space-between;
 }
 .calendar__shortcutpickr .flatpickr-innerContainer, .calendar__shortcutpickr .flatpickr-rContainer, .calendar__shortcutpickr .flatpickr-days {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   width: 100%;
 }
 .calendar__shortcutpickr .flatpickr-weekdays, .calendar__shortcutpickr .flatpickr-weekday {
@@ -726,7 +801,7 @@ li {
   border: none;
 }
 .calendar__shortcutpickr .flatpickr-day {
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   height: 10%;
   line-height: 1.25rem;
 }
@@ -755,9 +830,22 @@ li {
 }
 .calendar__display .fc {
   height: 100%;
+  font-size: 0.7rem;
+}
+.calendar__display .fc-icon.fc-icon-chevron-right,
+.calendar__display .fc-icon.fc-icon-chevron-left {
+  font-size: 0.7rem;
+}
+.calendar__display .fc-daygrid-week-number {
+  display: none;
+}
+.calendar__display .fc-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .calendar__display .fc-toolbar-title {
-  font-size: 0.5rem;
+  font-size: 1rem;
 }
 .calendar__display .fc-timegrid-col.fc-day-today {
   background: rgb(243, 243, 243);
@@ -769,29 +857,27 @@ li {
   max-height: 15px;
   overflow: hidden;
 }
+.calendar__display .fc-timegrid-event .fc-event-main {
+  overflow: hidden;
+}
 .calendar__display .fc-toolbar-chunk:nth-child(1) {
-  width: 20%;
+  margin-bottom: 2.5rem;
 }
 .calendar__display .fc-toolbar-chunk:nth-child(2) {
-  width: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .calendar__display .fc-toolbar-chunk:nth-child(3) {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  text-align: end;
-  justify-content: end;
+  align-self: flex-start;
 }
 .calendar__display .fc-button.fc-button-primary {
-  width: 35px;
+  width: 60px;
   border-radius: 2px;
   border: 0.5px solid #a4a3a3;
   background: #fefefe;
   color: grey;
-  font-size: 0.5rem;
+  font-size: 0.85rem;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -815,27 +901,39 @@ li {
 .calendar__display .fc-prev-button.fc-button.fc-button-primary,
 .calendar__display .fc-next-button.fc-button.fc-button-primary {
   width: auto;
+  padding: 0.4em 0.65em;
 }
 .calendar__display .fc-button.fc-button-primary.fc-button-active {
-  background: #cecdcd;
-  color: rgb(70, 70, 70);
+  background: #f53f77;
+  color: #fefefe;
   border: none;
+  outline: none;
   box-shadow: none;
 }
 .calendar__display .fc-button.fc-button-primary.fc-button-active:focus {
   box-shadow: none;
 }
-.calendar__display .fc-view-harness.fc-view-harness-active {
-  font-size: 0.5rem;
+.calendar__display .fc-today-button.fc-button.fc-button-primary:disabled {
+  background: #f53f77;
+  color: #fefefe;
+  border: none;
+  box-shadow: none;
 }
-.calendar__display .fc-view-harness.fc-view-harness-active .fc-scrollgrid.fc-scrollgrid-liquid .fc-event-main {
+.calendar__display .fc-button.fc-button-primary:disabled .fc-view-harness.fc-view-harness-active .fc-scrollgrid.fc-scrollgrid-liquid .fc-event-main {
   overflow: hidden;
+}
+.calendar__display .fc-col-header-cell.fc-resource {
+  word-break: break-all;
 }
 
 .calendar__toggle {
   position: absolute;
-  top: 13px;
-  display: none;
+  top: 120px;
+  right: 1rem;
+  display: flex;
+}
+.calendar__toggle--timeline {
+  top: 90px;
 }
 
 .calendar__toggle-option {
@@ -843,24 +941,30 @@ li {
   border: 0.5px solid #a4a3a3;
   background: #fefefe;
   color: grey;
-  line-height: 1.3;
+  line-height: 1.5;
   text-align: center;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
   box-shadow: none;
   margin-left: 0;
+  font-size: 0.85rem;
   cursor: pointer;
-  width: 45px;
-  padding: 0.25rem;
+  width: 70px;
+  padding: 0.4em 0.65em;
 }
 .calendar__toggle-option:hover {
   background: #cecdcd;
   color: rgb(70, 70, 70);
 }
 .calendar__toggle-option--active {
-  background: #cecdcd;
-  color: rgb(70, 70, 70);
+  background: #f53f77;
+  color: #fefefe;
+  border: none;
+}
+.calendar__toggle-option--active:hover {
+  background: #f53f77;
+  color: #fefefe;
   border: none;
 }
 
@@ -882,7 +986,7 @@ li {
   position: sticky;
   top: 0;
   border-radius: 4px 4px 0 0;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   height: 3rem;
   color: #3d375a;
   background: #93b5e9;
@@ -895,7 +999,7 @@ li {
 .calendar__site-checkboxes-title {
   display: flex;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -918,7 +1022,7 @@ li {
 .calendar__staff-checkboxes-title {
   display: flex;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -937,15 +1041,16 @@ li {
   justify-content: space-between;
   padding: 0 0.125rem;
   gap: 0.25rem;
+  overflow: hidden;
 }
 .calendar__event-element-day-time {
   width: 15%;
 }
 .calendar__event-element-day-guests-infos {
-  width: 75%;
+  width: 85%;
 }
 .calendar__event-element-day-btns {
-  width: 10%;
+  display: none;
   text-align: end;
 }
 
@@ -979,10 +1084,10 @@ li {
   align-items: start;
 }
 .calendar__event-element-list-infos {
-  width: 85%;
+  width: 100%;
 }
 .calendar__event-element-list-btns {
-  width: 15%;
+  display: none;
   text-align: end;
 }
 
@@ -993,31 +1098,186 @@ li {
   text-decoration: underline;
 }
 
+.gear-icon {
+  position: absolute;
+  top: 0.75rem;
+}
+
+.calendar__mobile-options {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fefefe;
+  padding: 0.5rem;
+}
+
+.calendar__mobile-options-header {
+  margin-bottom: 1rem;
+}
+
+.calendar__mobile-options-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.calendar__availability-editor-form {
+  margin-top: 30px;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-heads {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row {
+  display: grid;
+  grid-template-columns: 8% 40% 40% 12%;
+  align-items: center;
+  gap: 0.5rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-day {
+  font-weight: bold;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-head {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time .time-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time .time-picker select {
+  width: auto;
+}
+.calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-unavailable {
+  display: flex;
+  align-items: center;
+}
+.calendar__availability-editor-form .calendar__availability-editor-duration {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-duration label {
+  font-weight: bold;
+}
+.calendar__availability-editor-form .calendar__availability-editor-duration .durationpicker__select {
+  display: flex;
+  gap: 1rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-duration .durationpicker__select label {
+  font-weight: normal;
+  margin-right: 0.5rem;
+}
+.calendar__availability-editor-form .calendar__availability-editor-duration .durationpicker__select select {
+  width: auto;
+}
+.calendar__availability-editor-form .calendar__availability-editor-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.calendar__daysheet {
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+.calendar__daysheet .calendar__daysheet-btn {
+  margin: 0 auto 1rem;
+  width: 50%;
+}
+.calendar__daysheet .calendar__daysheet-btn button {
+  font-size: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  background-color: #f53f77;
+  color: #fefefe;
+  padding: 1rem;
+}
+.calendar__daysheet .calendar__daysheet-date {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.calendar__daysheet .calendar__daysheet-event-card {
+  width: 90%;
+  margin: 0.5rem auto;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+}
+.calendar__daysheet .calendar__daysheet-event-card .calendar__daysheet-event-card-header {
+  padding: 0.5rem;
+  background-color: #93b5e9;
+  font-size: 1rem;
+  overflow: hidden;
+}
+.calendar__daysheet .calendar__daysheet-event-card .calendar__daysheet-event-card-content {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  overflow: hidden;
+}
+
+@media (min-width: 425px) {
+  .calendar__event-element-day-time {
+    width: 15%;
+  }
+  .calendar__event-element-day-guests-infos {
+    width: 75%;
+  }
+  .calendar__event-element-day-btns {
+    width: 10%;
+    text-align: end;
+  }
+}
+@media (min-width: 475px) {
+  .calendar__event-element-list-infos {
+    width: 85%;
+  }
+  .calendar__event-element-list-btns {
+    width: 15%;
+  }
+}
 /*sm*/
 @media (min-width: 640px) {
   .calendar__options {
-    font-size: 0.7rem;
     display: block;
   }
-  .calendar__options select {
-    font-size: 0.7rem;
-  }
-  .calendar__display .fc-toolbar-title {
-    font-size: 0.7rem;
-  }
-  .calendar__toggle {
-    font-size: 0.5rem;
-    display: flex;
-    right: 17.5%;
+  .gear-icon {
+    display: none;
   }
   .calendar__event-element-day-time {
     width: 10%;
   }
   .calendar__event-element-day-guests-infos {
-    width: 85%;
+    width: 80%;
   }
   .calendar__event-element-day-btns {
-    width: 5%;
+    width: 10%;
     text-align: end;
   }
   .calendar__event-element-list-infos {
@@ -1029,36 +1289,6 @@ li {
 }
 /*md*/
 @media (min-width: 768px) {
-  .calendar__display .fc-toolbar-title {
-    font-size: 0.7rem;
-  }
-  .calendar__display .fc-toolbar-chunk:nth-child(2) {
-    justify-content: flex-start;
-  }
-  .calendar__display .fc-button.fc-button-primary {
-    width: 50px;
-    font-size: 0.7rem;
-  }
-  .calendar__display .fc-view-harness.fc-view-harness-active {
-    font-size: 0.7rem;
-  }
-  .calendar__display .fc .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 2.5rem;
-  }
-  .calendar__toggle {
-    font-size: 0.7rem;
-    display: flex;
-    top: 12px;
-    right: 22%;
-  }
-  .calendar__toggle-option {
-    width: 60px;
-    padding: 0.375rem;
-  }
-  .calendar__print-btn {
-    font-size: 0.7rem;
-    top: 48px;
-  }
   .calendar__event-element-day {
     font-size: 0.7rem;
   }
@@ -1072,12 +1302,6 @@ li {
     width: 5%;
     text-align: end;
   }
-}
-/*lg*/
-@media (min-width: 1024px) {
-  .calendar__options-timezone {
-    display: block;
-  }
   .calendar__options {
     display: flex;
     justify-content: space-between;
@@ -1086,6 +1310,12 @@ li {
   .calendar__slot-select,
   .calendar__day-select {
     margin-right: 2rem;
+  }
+}
+/*lg*/
+@media (min-width: 1024px) {
+  .calendar__options-timezone {
+    display: block;
   }
   .calendar__left-bar {
     display: flex;
@@ -1100,22 +1330,29 @@ li {
   .calendar__display {
     width: 85%;
   }
-  .calendar__display .fc-toolbar-title {
-    font-size: 0.8rem;
-  }
   .calendar__display .fc-toolbar-chunk:nth-child(2) {
     justify-content: center;
   }
   .calendar__display .fc .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 1rem;
+    flex-direction: row;
+  }
+  .calendar__display .fc .fc-toolbar.fc-header-toolbar .fc-toolbar-chunk:nth-child(1) {
+    margin-bottom: 0;
   }
   .calendar__toggle {
-    right: 17%;
+    top: 12px;
+    right: 15.4%;
   }
-  .calendar__print-btn {
+  .calendar__print-btn--calendarview,
+  .calendar__print-btn--timelineview {
     left: 18%;
+    right: auto;
     top: 15px;
     transform: none;
+  }
+  .calendar__print-btn--calendarview:active,
+  .calendar__print-btn--timelineview:active {
+    transform: translateY(1px);
   }
   .calendar__event-element-day-time {
     width: 10%;
@@ -1124,6 +1361,7 @@ li {
     width: 85%;
   }
   .calendar__event-element-day-btns {
+    display: block;
     width: 5%;
     text-align: end;
   }
@@ -1143,7 +1381,16 @@ li {
     width: 95%;
   }
   .calendar__event-element-list-btns {
+    display: block;
     width: 5%;
+  }
+  .calendar__print-btn--timeline {
+    right: auto;
+  }
+  .calendar__select-site {
+    top: 11px;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 /*xl*/
@@ -1153,34 +1400,16 @@ li {
   }
   .calendar__display .fc-button.fc-button-primary {
     width: 70px;
-    font-size: 0.8rem;
-  }
-  .calendar__toggle {
-    font-size: 0.8rem;
-    right: 16.5%;
-  }
-  .calendar__toggle-option {
-    width: 70px;
-    padding: 0.4375rem;
   }
   .calendar__options {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__print-btn {
-    font-size: 0.8rem;
     top: 16px;
-  }
-  .calendar-slot-select,
-  .calendar-day-select,
-  .calendar__availability {
-    padding: 0.5rem;
   }
   .calendar__shortcutpickr .flatpickr-prev-month svg, .calendar__shortcutpickr .flatpickr-next-month svg {
     width: 10px;
     height: 10px;
-  }
-  .calendar__shortcutpickr .flatpickr-monthDropdown-months {
-    font-size: 0.8rem;
   }
   .calendar__shortcutpickr .flatpickr-current-month {
     display: flex;
@@ -1190,10 +1419,10 @@ li {
   .calendar__shortcutpickr .flatpickr-current-month .numInputWrapper {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__shortcutpickr .flatpickr-innerContainer, .calendar__shortcutpickr .flatpickr-rContainer, .calendar__shortcutpickr .flatpickr-days {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__shortcutpickr .flatpickr-weekday {
     font-size: 0.7rem;
@@ -1204,13 +1433,13 @@ li {
     font-size: 0.7rem;
   }
   .calendar__filter-title {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__site-checkboxes-title {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__staff-checkboxes-title {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calendar__event-element-day-time {
     width: 8%;
@@ -1250,8 +1479,43 @@ li {
     width: 40%;
   }
 }
+@media (max-width: 1023px) {
+  .calendar__availability-editor-form {
+    font-size: 1rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-row:nth-child(1) {
+    display: none;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time .time-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-row .calendar__availability-editor-time .time-picker select {
+    width: auto;
+  }
+  .calendar__availability-editor-form .calendar__availability-editor-duration {
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}
 .search-patient {
-  height: 100%;
   padding: 1rem;
   width: 98%;
   margin: 0 auto;
@@ -1260,19 +1524,27 @@ li {
 }
 
 .search-patient__form {
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 0 auto 1rem;
-  padding: 1rem;
-  width: 300px;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  -moz-column-gap: 2rem;
+       column-gap: 2rem;
+  row-gap: 0.5rem;
+  width: 100%;
 }
 .search-patient__form input {
   width: auto;
+  font-size: 1rem;
 }
 
 .search-patient__item {
-  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .search-patient__item label {
+  margin-bottom: 0.25em;
   font-weight: bold;
   display: inline-block;
   width: 100px;
@@ -1280,11 +1552,13 @@ li {
 
 .search-patient__count {
   font-weight: bold;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   margin-bottom: 0.5rem;
+  text-align: end;
 }
 
 .search-patient__table-container {
+  height: 300px;
   overflow-y: scroll;
   position: relative;
   border-radius: 6px;
@@ -1337,251 +1611,387 @@ li {
 }
 
 /*lg*/
+@media (min-width: 475px) {
+  .search-patient {
+    height: 100%;
+  }
+  .search-patient__table-container {
+    flex: 1;
+    height: auto;
+  }
+}
 @media (min-width: 1024px) {
   .search-patient__form {
-    font-size: 0.8rem;
-    margin: 0 auto 1rem;
-    width: 100%;
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    font-size: 0.85rem;
   }
-  .search-patient__item {
-    flex: 1;
-  }
-  .search-patient__item label {
-    margin-bottom: 0.25rem;
+  .search-patient__form input {
+    font-size: 0.85rem;
   }
   .search-patient__table {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .search-patient__count {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .event-form {
-  padding: 10px;
-}
-.event-form--uneditable {
-  pointer-events: none;
-}
-.event-form__container {
-  margin-top: 40px;
-}
-.event-form__err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 100%;
-  margin: 0 auto 10px;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-}
-.event-form__row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  border-radius: 6px;
-  padding: 10px;
-}
-.event-form__row--guest {
-  flex-direction: column;
-}
-.event-form__row--radio {
-  flex-direction: column;
-  align-items: flex-start;
-}
-.event-form__row--radio label {
-  margin-right: 10px;
-}
-.event-form__row--radio p {
-  font-weight: bold;
-}
-.event-form__btns {
-  text-align: center;
-  pointer-events: all;
-}
-.event-form__btns button,
-.event-form__btns input[type=submit] {
-  margin-right: 5px;
-}
-.event-form__radio-container {
-  display: flex;
-  padding: 10px;
-}
-.event-form__item {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  width: 100%;
-}
-.event-form__item label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-.event-form__item textarea {
-  width: 100%;
-}
-.event-form__item--guestlist {
-  width: 100%;
-  margin-left: 20px;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-.event-form__item--guestlist .guest-patient-item:hover {
-  text-decoration: underline;
-}
-.event-form__item--guestsearch {
-  width: 100%;
-  height: 200px;
-  margin: 0 auto;
-  display: grid;
-  border: solid 1px #cecdcd;
-  padding: 10px;
-  border-radius: 6px;
-  justify-content: space-between;
-  grid-template-columns: 40% 60%;
-  align-items: flex-start;
-}
-.event-form__item--guestsearch .results {
-  font-size: 0.75rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-.event-form__item--guestsearch .results__sertarien {
-  height: 400px;
-}
-.event-form__item--guestsearch .results__title {
-  font-weight: bold;
-  position: sticky;
-  top: 0;
-  background-color: #fefefe;
-  padding-top: 10px;
-}
-.event-form__item--guestsearch .results__patients {
-  border: solid 1px #cecdcd;
-  padding: 0 10px 10px;
-  border-radius: 6px;
-  height: 175px;
-  overflow: scroll;
-  width: 50%;
-}
-.event-form__item--guestsearch .results__staff {
-  border: solid 1px #cecdcd;
-  padding: 0 10px 10px;
-  border-radius: 6px;
-  height: 175px;
-  overflow: scroll;
-  width: 50%;
-}
-.event-form__item--guestsearch .search-bar {
+  margin-top: 30px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 0 10px;
-}
-.event-form__item--guestsearch .search-bar-title {
-  padding: 0;
-  text-align: left;
-  font-weight: bold;
-}
-.event-form__item--guestsearch .search-bar-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.event-form__item--guestsearch .search-bar-item {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  padding: 5px;
-}
-.event-form__item--guestsearch .search-bar-item label {
-  font-size: 0.75rem;
-}
-.event-form__item--guestsearch .search-bar-item input {
-  font-size: 0.75rem;
-}
-.event-form__item--guestsearch .search-bar button {
-  font-size: 0.7rem;
-  cursor: pointer;
-  margin: 20px auto 0;
-  width: 80px;
-}
-.event-form__item--radio {
-  margin-right: 10px;
-}
-.event-form__item--radio label {
-  font-weight: normal;
-  margin-left: 5px;
-}
-.event-form__item .guests-list {
-  font-size: 0.7rem;
-  padding: 0;
+  gap: 0.5rem;
+  width: 100%;
+  overflow: hidden;
 }
 
-.invitation {
-  margin-top: 40px;
-  padding: 10px;
+.event-form__host {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  -moz-column-gap: 3rem;
+       column-gap: 3rem;
+  row-gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #cecdcd;
 }
-.invitation__row {
-  border: solid 1px #cecdcd;
-  width: 100%;
-  border-radius: 6px;
-  padding: 10px;
-  margin-bottom: 10px;
+.event-form__host .event-form__host-item {
   display: flex;
   flex-direction: column;
 }
-.invitation__row label {
+.event-form__host .event-form__host-item label {
   font-weight: bold;
-  margin-bottom: 10px;
-  margin-right: 10px;
+  margin-bottom: 0.25rem;
 }
-.invitation__radio {
+
+.event-form__time {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  border-bottom: solid 1px #cecdcd;
 }
-.invitation__radio-item {
+.event-form__time .datetimepicker {
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+.event-form__time .datetimepicker .datetimepicker__label {
+  font-weight: bold;
+}
+.event-form__time .datetimepicker .datetimepicker__select {
+  display: flex;
+  gap: 0.25rem;
+}
+.event-form__time .datetimepicker .datetimepicker__select input[type=date] {
+  width: 120px;
+}
+.event-form__time .datetimepicker .datetimepicker__select .datetimepicker__time select {
+  width: auto;
+  margin-right: 0.25rem;
+}
+.event-form__time .durationpicker {
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  min-width: 180px;
+}
+.event-form__time .durationpicker .durationpicker__label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+.event-form__time .durationpicker .durationpicker__select {
+  display: flex;
+  gap: 0.5rem;
+}
+.event-form__time .durationpicker .durationpicker__select select {
+  width: auto;
+}
+.event-form__time .durationpicker .durationpicker__hours label,
+.event-form__time .durationpicker .durationpicker__mins label {
+  margin-right: 0.5rem;
+}
+.event-form__time .event-form__time-allday {
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 50px;
+}
+.event-form__time .event-form__time-allday label {
+  font-weight: bold;
+}
+
+.event-form__guests {
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #cecdcd;
+}
+.event-form__guests .event-form__guests-list {
+  margin-bottom: 1rem;
+}
+.event-form__guests .event-form__guests-list label {
+  font-weight: bold;
+}
+.event-form__guests .event-form__guests-list .guests-list {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+}
+.event-form__guests .event-form__guests-search {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.event-form__guests .event-form__guests-search .guests-search {
+  min-width: 270px;
+  flex: 1;
+}
+.event-form__guests .event-form__guests-search .guests-search .guests-search__title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.event-form__guests .event-form__guests-search .guests-search .guests-search__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  row-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+.event-form__guests .event-form__guests-search .guests-search .guests-search__item {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__guests .event-form__guests-search .guests-search .guests-search__item label {
+  margin-bottom: 0.25rem;
+  width: 150px;
+}
+.event-form__guests .event-form__guests-search .guests-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+  row-gap: 1rem;
+  justify-content: space-between;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  min-width: 270px;
+  flex: 1;
+}
+.event-form__guests .event-form__guests-search .guests-results .guests-results__title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.event-form__guests .event-form__guests-search .guests-results .guests-results__patients,
+.event-form__guests .event-form__guests-search .guests-results .guests-results__staff {
+  flex: 1;
+}
+.event-form__guests .event-form__guests-search .guests-results .guests-results__patients ul,
+.event-form__guests .event-form__guests-search .guests-results .guests-results__staff ul {
+  height: 165px;
+  overflow-y: scroll;
+  font-size: 0.7rem;
+}
+
+.event-form__rooms {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: solid 1px #cecdcd;
+}
+.event-form__rooms .event-form__rooms-site {
+  display: flex;
+  flex-direction: column;
+  margin-right: 6rem;
+  margin-bottom: 1rem;
+}
+.event-form__rooms .event-form__rooms-site label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.event-form__rooms .event-form__rooms-radio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.event-form__rooms .event-form__rooms-radio .event-form__rooms-radio-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.event-form__rooms .event-form__rooms-radio ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+.event-form__rooms .event-form__rooms-radio ul .event-form__rooms-radio-item {
   display: flex;
   align-items: center;
-  margin-right: 5px;
-  width: 20%;
 }
-.invitation__radio-item label {
-  margin: 0;
-  font-weight: normal;
+.event-form__rooms .event-form__rooms-radio ul .event-form__rooms-radio-item label {
+  white-space: nowrap;
+  margin-left: 0.25rem;
 }
-.invitation__radio-item input[type=radio] {
-  margin-right: 5px;
-}
-.invitation__btns {
-  text-align: center;
-  pointer-events: all;
-}
-.invitation__btns button,
-.invitation__btns input[type=submit] {
-  margin-right: 5px;
+.event-form__rooms .event-form__rooms-radio ul .event-form__rooms-radio-item input[type=radio] {
+  width: auto;
 }
 
-.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 0;
-  font-size: 0.75rem;
+.event-form__status {
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #cecdcd;
+}
+.event-form__status .event-form__status-radio {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__status .event-form__status-radio .event-form__status-radio-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.event-form__status .event-form__status-radio ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+.event-form__status .event-form__status-radio ul .event-form__status-radio-item {
+  display: flex;
+  align-items: center;
+}
+.event-form__status .event-form__status-radio ul .event-form__status-radio-item label {
+  white-space: nowrap;
+  margin-left: 0.25rem;
+}
+.event-form__status .event-form__status-radio ul .event-form__status-radio-item input[type=radio] {
+  width: auto;
 }
 
-.css-zvyeh0-MuiFormControl-root-MuiTextField-root input {
-  padding: 2px 5px;
-  font-size: 0.85rem;
+.event-form__notes {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__notes label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.event-form__notes textarea {
+  height: 100px;
 }
 
+.event-form__btns {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.event-form__invitation {
+  margin-top: 30px;
+  padding: 1rem;
+}
+.event-form__invitation .event-form__invitation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.event-form__invitation .event-form__invitation-templates {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-title {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-radio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-radio .event-form__invitation-templates-radio-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-radio ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-radio ul .event-form__invitation-templates-radio-item {
+  display: flex;
+  align-items: center;
+}
+.event-form__invitation .event-form__invitation-templates .event-form__invitation-templates-radio ul .event-form__invitation-templates-radio-item label {
+  white-space: nowrap;
+  margin-left: 0.25rem;
+}
+.event-form__invitation .event-form__invitation-intro {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__invitation .event-form__invitation-intro label {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.event-form__invitation .event-form__invitation-infos {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__invitation .event-form__invitation-infos label {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.event-form__invitation .event-form__invitation-infos .site-select label {
+  margin-right: 0.5rem;
+}
+.event-form__invitation .event-form__invitation-message {
+  display: flex;
+  flex-direction: column;
+}
+.event-form__invitation .event-form__invitation-message label {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.event-form__invitation .event-form__invitation-btns {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+@media (max-width: 780px) {
+  .event-form {
+    font-size: 1rem;
+  }
+  .event-form input,
+  .event-form select {
+    width: 100%;
+    font-size: 1rem;
+  }
+  .event-form__guests .guests-list {
+    font-size: 0.85rem;
+  }
+  .event-form__guests .event-form__guests-search .guests-results .guests-results__patients ul,
+  .event-form__guests .event-form__guests-search .guests-results .guests-results__staff ul {
+    font-size: 0.85rem;
+  }
+  .event-form__notes textarea {
+    font-size: 1rem;
+  }
+  .event-form__invitation {
+    font-size: 1rem;
+  }
+  .event-form__invitation textarea {
+    font-size: 1rem;
+  }
+}
 .subheader {
   position: sticky;
-  top: 60px;
+  top: 55px;
   width: 100%;
   z-index: 100;
   padding: 10px 0.935rem;
@@ -1634,11 +2044,11 @@ li {
   .subheader__left {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .subheader__right {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-style: italic;
     text-align: end;
     padding: 0;
@@ -1891,7 +2301,7 @@ li {
   text-align: center;
 }
 .clinical-notes__form-header {
-  background: #5ebac7;
+  background: #f53f77;
   padding: 10px;
 }
 .clinical-notes__form-row {
@@ -4425,7 +4835,7 @@ li {
 
 .signup-patient__success {
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   width: 90%;
   margin: 0.5rem auto;
   color: forestgreen;
@@ -4529,14 +4939,14 @@ li {
 
 @media (min-width: 475px) {
   .signup-patient__row label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .signup-patient__row input,
   .signup-patient__row select {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .signup-patient__row input[type=file] {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 @media (min-width: 768px) {
@@ -4544,7 +4954,7 @@ li {
     font-size: 1rem;
   }
   .signup-patient__btn button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 @media (min-width: 1024px) {
@@ -4682,7 +5092,7 @@ li {
 
 .myaccount__success {
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   width: 90%;
   margin: 0.5rem auto;
   color: forestgreen;
@@ -4756,17 +5166,17 @@ li {
     width: 450px;
   }
   .myaccount__form {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .myaccount__row label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .myaccount__row input,
   .myaccount__row select {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .myaccount__btns button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 @media (min-width: 768px) {
@@ -4958,11 +5368,11 @@ li {
   cursor: pointer;
 }
 .messages-content__category:hover {
-  background: #5ebac7;
+  background: #e63a6e;
 }
 .messages-content__category--active {
   font-weight: bold;
-  background: #5ebac7;
+  background: #e63a6e;
 }
 .messages-content__box {
   background-color: #fefefe;
@@ -6315,79 +6725,6 @@ li {
   font-weight: bold;
 }
 
-.availability__err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 50%;
-  margin: 0 auto 10px;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-}
-.availability__heads {
-  margin: 50px auto 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 66%;
-}
-.availability__heads p {
-  width: 50%;
-  text-align: center;
-}
-.availability__form {
-  font-size: 0.9rem;
-  width: 95%;
-  margin: 20px auto 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.availability__row {
-  display: grid;
-  grid-template-columns: 15% 35% 35% 15%;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-.availability__column--day {
-  font-weight: bold;
-}
-.availability__column--time {
-  margin-right: 15px;
-  margin-left: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.availability__column--checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.availability__column--checkbox input[type=checkbox] {
-  margin-right: 5px;
-}
-.availability__duration {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 20px;
-}
-.availability__duration label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-.availability__btns {
-  text-align: center;
-  margin-top: 10px;
-}
-.availability__btns button {
-  margin-left: 5px;
-}
-
 .new-appointments {
   background-color: #fefefe;
   width: 100%;
@@ -6471,7 +6808,7 @@ li {
 }
 
 .reportsinbox__subtitle {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -6480,7 +6817,7 @@ li {
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
 }
 
@@ -6564,7 +6901,7 @@ li {
 }
 
 .reportsinbox__form-preview-title {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
@@ -6648,16 +6985,16 @@ li {
     font-size: 1rem;
   }
   .reportsinbox__table {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reportsinbox__table button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reportsinbox__form {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reportsinbox__form .patient-search {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .reset {
@@ -6752,9 +7089,9 @@ li {
 
 .reset__temp-password-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
 }
 .reset__temp-password-row input[type=password] {
   width: 100%;
@@ -6762,65 +7099,94 @@ li {
 }
 
 .reset__temp-password-row-btns {
-  text-align: center;
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 90%;
+  margin: 1rem auto 0;
 }
 .reset__temp-password-row-btns button {
+  flex: 1;
   font-size: 1rem;
-  margin-right: 0.5rem;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.75rem;
+}
+
+.reset__form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
 }
 
 .reset__row {
-  margin: 0 auto;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  align-items: center;
+  flex-direction: column;
 }
 .reset__row label {
   font-size: 1.125rem;
   font-weight: bold;
-  width: 45%;
+  margin-bottom: 0.25rem;
 }
-.reset__row input {
-  width: 55%;
+.reset__row input[type=password] {
+  width: 100%;
   font-size: 1.125rem;
 }
 .reset__row ul {
-  width: 55%;
+  width: 100%;
   margin-left: auto;
 }
 .reset__row ul li {
   font-size: 0.7rem;
 }
 
-.reset__row-btn {
+.reset__row-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
-  text-align: center;
-  margin-top: 20px;
+  margin: 2rem auto 0;
 }
-.reset__row-btn button {
-  font-size: 0.7rem;
+.reset__row-btns button {
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.75rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
+  .reset__title {
+    font-size: 1.25rem;
+  }
+  .reset__email-row label {
+    font-size: 1rem;
+  }
+  .reset__email-row input[type=email] {
+    font-size: 1rem;
+  }
   .reset__email-row-btns button {
-    padding: 0.5rem;
+    font-size: 0.85rem;
   }
   .reset__temp-password-instructions {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+  }
+  .reset__temp-password-row input[type=password] {
+    width: 100%;
+    font-size: 1rem;
   }
   .reset__temp-password-row-btns button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reset__row label {
     font-size: 1rem;
   }
-  .reset__row ul li {
-    font-size: 0.8rem;
+  .reset__row input[type=password] {
+    font-size: 1rem;
   }
-  .reset__row-btn button {
-    font-size: 0.8rem;
+  .reset__row-btns button {
+    font-size: 0.85rem;
   }
 }
 .calvinai-prompt {
@@ -7205,7 +7571,7 @@ li {
     border: solid 1px #cecdcd;
     border-radius: 6px;
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calvinai__chat-templates-btn-container {
     text-align: center;
@@ -7240,22 +7606,22 @@ li {
     text-decoration: underline;
   }
   .calvinai__disclaimer {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calvinai__chat-templates-btn {
     display: none;
   }
   .calvinai__chat-btns button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calvinai__chat-textarea {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .calvinai__chat-message {
     padding: 0 10px;
     white-space: pre-wrap;
     width: 92%;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .typing {
@@ -7316,6 +7682,7 @@ li {
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   overflow: hidden;
   font-size: 0.85rem;
+  position: fixed;
 }
 
 .window-title {
@@ -7323,7 +7690,7 @@ li {
   position: fixed;
   height: 40px;
   color: #fefefe;
-  padding: 10px;
+  padding: 0.7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7356,12 +7723,23 @@ li {
 }
 
 .window-content {
-  padding: 10px;
+  padding: 0.5rem;
   width: 100%;
   height: 100%;
   overflow: scroll;
 }
 
+@media (max-width: 1023px) {
+  .window {
+    width: 100% !important;
+    height: calc(100% - 100px) !important;
+    top: 100px !important;
+    left: 0 !important;
+  }
+  .window-title {
+    width: 100% !important;
+  }
+}
 .staff-ai-agreement {
   padding: 20px;
   height: 100%;
@@ -7468,7 +7846,7 @@ li {
   background-color: #fefefe;
   width: 100%;
   max-width: 450px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin: 1rem auto;
   border: solid 1px #cecdcd;
   padding: 0.5rem 1rem;
@@ -7491,7 +7869,7 @@ li {
 .billing__form-item label {
   width: 50%;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .billing__form-item input,
 .billing__form-item select,
@@ -7546,7 +7924,7 @@ li {
   align-items: center;
 }
 .billing__filter-item label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-right: 0.5rem;
   font-weight: bold;
   width: 15%;
@@ -7721,16 +8099,16 @@ li {
 }
 @media (min-width: 1024px) {
   .billing__btn button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .billing__filter-row-btns a {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .billing-table {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .billing__form-btns button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .diagnosis__err {
@@ -7855,7 +8233,7 @@ li {
 }
 .reference__links h3 {
   margin-bottom: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .reference__links ul {
   font-size: 0.7rem;
@@ -7880,7 +8258,7 @@ li {
 .reference__links-personal-title h3 {
   margin: 0;
   margin-right: 10px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .reference__links-personal-title button {
   font-size: 0.7rem;
@@ -7966,7 +8344,7 @@ li {
   margin-bottom: 1rem;
 }
 .reference__edocs-title h3 {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .reference__edocs-title button {
   font-size: 0.7rem;
@@ -8094,28 +8472,28 @@ li {
     font-size: 1rem;
   }
   .reference__links ul {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reference__links-personal-title h3 {
     font-size: 1rem;
   }
   .reference__links-personal-title button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reference__links-personal-search label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reference__edocs-title h3 {
     font-size: 1rem;
   }
   .reference__edocs-title button {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reference__edocs-search label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   .reference__edocs-table {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .missing {
@@ -8151,14 +8529,6 @@ li {
   margin-bottom: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  .missing__title {
-    font-size: 1.125rem;
-  }
-  .missing__link {
-    font-size: 1rem;
-  }
-}
 .unauthorized {
   padding: 1rem;
   height: 100%;
@@ -8179,7 +8549,7 @@ li {
   border: solid 2px #f53f77;
 }
 .unauthorized__container p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 0.5rem;
 }
 
@@ -8196,17 +8566,6 @@ li {
   margin-bottom: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  .unauthorized__title {
-    font-size: 1.125rem;
-  }
-  .unauthorized__container p {
-    font-size: 1rem;
-  }
-  .unauthorized__link {
-    font-size: 1rem;
-  }
-}
 .appointments-patient {
   background-color: #fefefe;
   width: 100%;
@@ -8698,32 +9057,21 @@ li {
   border: solid 2px #f53f77;
 }
 .suspended__container p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
 }
 
 .suspended__title {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .suspended__link {
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
-  .suspended__title {
-    font-size: 1.125rem;
-  }
-  .suspended__container p {
-    font-size: 1rem;
-  }
-  .suspended__link {
-    font-size: 1rem;
-  }
-}
 .dashboard {
   width: 90%;
   margin: 0 auto;
@@ -9826,8 +10174,8 @@ li {
 }
 
 .groups__toggle {
-  width: 200px;
-  font-size: 0.8rem;
+  width: 250px;
+  font-size: 1rem;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
   border: solid 1px #cecdcd;
@@ -9848,7 +10196,7 @@ li {
 }
 
 .groups__title {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -9864,7 +10212,7 @@ li {
 }
 
 .groups__card {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   border-radius: 6px;
   overflow: hidden;
@@ -9875,7 +10223,7 @@ li {
 }
 
 .groups__card-title {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: bold;
   padding: 0.75rem;
   display: flex;
@@ -9883,7 +10231,7 @@ li {
 }
 
 .groups__card-description {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-style: italic;
   padding: 0.75rem;
   background-color: #cecdcd;
@@ -9941,7 +10289,7 @@ li {
     font-size: 1rem;
   }
   .groups__card-list {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
 .colors-palette {
@@ -10106,7 +10454,7 @@ li {
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   background: #fefefe;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .lock__form__message {
   margin-bottom: 20px;
@@ -10137,7 +10485,7 @@ li {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   width: 90%;
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   color: red;
   background-color: rgba(255, 0, 0, 0.403);
   border-radius: 6px;
@@ -10253,11 +10601,11 @@ li {
   cursor: pointer;
 }
 .fax-content__category:hover {
-  background: #5ebac7;
+  background: #f53f77;
 }
 .fax-content__category--active {
   font-weight: bold;
-  background: #5ebac7;
+  background: #f53f77;
 }
 .fax-content__box {
   background-color: #fefefe;
@@ -11681,32 +12029,21 @@ li {
   border: solid 2px #f53f77;
 }
 .closed__container p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
 }
 
 .closed__title {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .closed__link {
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
-  .closed__title {
-    font-size: 1.125rem;
-  }
-  .closed__container p {
-    font-size: 1rem;
-  }
-  .closed__link {
-    font-size: 1rem;
-  }
-}
 .closed {
   padding: 1rem;
   height: 100%;
@@ -11728,32 +12065,21 @@ li {
   border: solid 2px #f53f77;
 }
 .closed__container p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
 }
 
 .closed__title {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
 .closed__link {
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
-  .closed__title {
-    font-size: 1.125rem;
-  }
-  .closed__container p {
-    font-size: 1rem;
-  }
-  .closed__link {
-    font-size: 1rem;
-  }
-}
 .closed-practician {
   padding: 20px;
   font-size: 0.9rem;
@@ -11842,14 +12168,13 @@ li {
 }
 
 .login__err-placeholder {
-  height: 67px;
+  height: 51px;
 }
 
 .login__instructions {
   text-align: center;
   font-size: 1.125rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin: 0.5rem 0;
   font-weight: bold;
 }
 
@@ -11884,7 +12209,7 @@ li {
 
 .login__forgot {
   text-align: end;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
   cursor: pointer;
 }
@@ -11896,7 +12221,7 @@ li {
   cursor: pointer;
   position: absolute;
   right: 5px;
-  top: 30px;
+  top: 35px;
   font-size: 1rem;
 }
 
@@ -11910,8 +12235,24 @@ li {
   .login__title {
     font-size: 3rem;
   }
+  .login__form-row label {
+    font-size: 1rem;
+  }
+  .login__form-row input {
+    font-size: 1rem;
+  }
+  .login__instructions {
+    font-size: 1rem;
+  }
   .login__btn-container button {
-    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+  .eye-icon {
+    top: 33px;
+    font-size: 0.85rem;
+  }
+  .login__forgot {
+    font-size: 0.7rem;
   }
 }
 #root {
@@ -11920,7 +12261,7 @@ li {
 }
 
 .btn {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   display: inline-block;
   text-decoration: none;
   background-color: #eeeeee;
@@ -11970,9 +12311,9 @@ li {
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: #fefefe;
   border-radius: 6px;
   overflow: hidden;
-  background: #fefefe;
 }
 
 .main-login {
@@ -11988,48 +12329,5 @@ li {
 
 .main {
   flex: 1;
-  overflow: hidden;
-}
-
-/*xs (tablets start)*/
-@media (min-width: 475px) {
-  .container,
-  .container-login {
-    max-width: 475px;
-  }
-}
-/*sm*/
-@media (min-width: 640px) {
-  .container,
-  .container-login {
-    max-width: 640px;
-  }
-}
-/*md*/
-@media (min-width: 768px) {
-  .container,
-  .container-login {
-    max-width: 768px;
-  }
-}
-/*lg*/
-@media (min-width: 1024px) {
-  .container,
-  .container-login {
-    max-width: 1024px;
-  }
-}
-/*xl*/
-@media (min-width: 1280px) {
-  .container,
-  .container-login {
-    max-width: 1280px;
-  }
-}
-/*2xl*/
-@media (min-width: 1536px) {
-  .container,
-  .container-login {
-    max-width: 1536px;
-  }
+  overflow-y: scroll;
 }/*# sourceMappingURL=index.css.map */
