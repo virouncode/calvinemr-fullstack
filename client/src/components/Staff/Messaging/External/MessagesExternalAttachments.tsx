@@ -22,7 +22,7 @@ const MessagesExternalAttachments = ({
 }: MessagesExternalAttachmentsProps) => {
   return (
     attachments && (
-      <div className="message-attachments">
+      <div className="message__attachments">
         {attachments.map((attachment) => (
           <MessageExternalAttachmentCard
             attachment={attachment}

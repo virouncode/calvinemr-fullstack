@@ -157,13 +157,13 @@ const MessageExternalThumbnail = ({
         message.to_staff_id &&
         message.to_staff_id === user.id &&
         !message.read_by_staff_id
-          ? "message-thumbnail message-thumbnail--unread"
-          : "message-thumbnail"
+          ? "message__thumbnail message__thumbnail--external message__thumbnail--unread"
+          : "message__thumbnail message__thumbnail--external"
       }
       ref={lastItemRef}
     >
       {/*========== FROM =============*/}
-      <div className="message-thumbnail__from">
+      <div className="message__thumbnail-from">
         <Checkbox
           id={message.id.toString()}
           onChange={handleCheckMsg}
@@ -171,7 +171,7 @@ const MessageExternalThumbnail = ({
         />
         <div
           onClick={handleMsgClick}
-          className="message-thumbnail__from-author"
+          className="message__thumbnail-from-author"
         >
           {section !== "Sent messages" //messages reçus ou effacés
             ? message.from_patient_id //le "From" est un patient
@@ -188,12 +188,9 @@ const MessageExternalThumbnail = ({
         </div>
       </div>
       {/*========== SUBJECT =============*/}
-      <div
-        className="message-thumbnail__subject message-thumbnail__subject--external"
-        onClick={handleMsgClick}
-      >
+      <div className="message__thumbnail-subject" onClick={handleMsgClick}>
         {message.high_importance && <ExclamationIcon mr={5} />}
-        <div className="message-thumbnail__subject-text">
+        <div className="message__thumbnail-subject-text">
           {message.subject} - {message.body}
         </div>
         {message.attachments_ids.length !== 0 && (
@@ -201,11 +198,11 @@ const MessageExternalThumbnail = ({
         )}
       </div>
       {/*========== DATE =============*/}
-      <div className="message-thumbnail__date message-thumbnail__date--external">
+      <div className="message__thumbnail-date">
         {timestampToDateTimeStrTZ(message.date_created)}
       </div>
       {/*========== LOGOS =============*/}
-      <div className="message-thumbnail__logos">
+      <div className="message__thumbnail-logos">
         {section !== "Deleted messages" && (
           <TrashIcon onClick={handleDeleteMsg} />
         )}

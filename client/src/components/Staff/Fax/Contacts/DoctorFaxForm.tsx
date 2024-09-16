@@ -13,7 +13,7 @@ import Input from "../../../UI/Inputs/Input";
 import InputEmail from "../../../UI/Inputs/InputEmail";
 import InputTel from "../../../UI/Inputs/InputTel";
 import GenericList from "../../../UI/Lists/GenericList";
-import PostalZipSelect from "../../../UI/Lists/PostalZipSelect";
+import PostalZipSelectInput from "../../../UI/Lists/PostalZipSelectInput";
 
 type DoctorFaxFormProps = {
   initialFaxNumber: string;
@@ -134,134 +134,135 @@ const DoctorFaxForm = ({
   };
 
   return (
-    <div className="doctor-fax__form">
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.lastName}
-          onChange={handleChange}
-          name="lastName"
-          id="lastName"
-          label="Last Name"
-          autoFocus={true}
-        />
+    <>
+      <div className="doctor-fax__form">
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.firstName}
+            onChange={handleChange}
+            name="firstName"
+            id="firstName"
+            label="First Name*"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.lastName}
+            onChange={handleChange}
+            name="lastName"
+            id="lastName"
+            label="Last Name*"
+            autoFocus={true}
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.speciality}
+            onChange={handleChange}
+            name="speciality"
+            id="speciality"
+            label="Speciality"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.licence_nbr}
+            onChange={handleChange}
+            name="licence_nbr"
+            id="licence_nbr"
+            label="CPSO#"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.ohip_billing_nbr}
+            onChange={handleChange}
+            name="ohip_billing_nbr"
+            id="ohip_billing_nbr"
+            label="OHIP#"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.line1}
+            onChange={handleChange}
+            name="line1"
+            id="line1"
+            label="Address"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <Input
+            value={formDatas.city}
+            onChange={handleChange}
+            name="city"
+            id="city"
+            label="City"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <GenericList
+            list={provinceStateTerritoryCT}
+            value={formDatas.province}
+            name="province"
+            handleChange={handleChange}
+            noneOption={false}
+            label="Province/State"
+            placeHolder="Choose province/state..."
+          />
+        </div>
+        <div className="doctor-fax__form-row doctor-fax__form-row--postal">
+          <PostalZipSelectInput
+            onChangeSelect={handleChangePostalOrZip}
+            onChangeInput={handleChange}
+            postalOrZip={postalOrZip}
+            value={
+              postalOrZip === "postal"
+                ? formDatas.postalCode
+                : formDatas.zipCode
+            }
+            id="postalZipCode"
+            name="postalZipCode"
+            placeholder={
+              postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
+            }
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <InputTel
+            value={formDatas.phone}
+            onChange={handleChange}
+            name="phone"
+            id="phone"
+            label="Phone"
+            placeholder="xxx-xxx-xxxx"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <InputTel
+            value={formDatas.fax}
+            onChange={handleChange}
+            name="fax"
+            id="fax"
+            label="Fax"
+            placeholder="xxx-xxx-xxxx"
+          />
+        </div>
+        <div className="doctor-fax__form-row">
+          <InputEmail
+            value={formDatas.email}
+            onChange={handleChange}
+            name="email"
+            id="email"
+            label="Email"
+          />
+        </div>
       </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.firstName}
-          onChange={handleChange}
-          name="firstName"
-          id="firstName"
-          label="First Name"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.speciality}
-          onChange={handleChange}
-          name="speciality"
-          id="speciality"
-          label="Speciality"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.licence_nbr}
-          onChange={handleChange}
-          name="licence_nbr"
-          id="licence_nbr"
-          label="CPSO#"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.ohip_billing_nbr}
-          onChange={handleChange}
-          name="ohip_billing_nbr"
-          id="ohip_billing_nbr"
-          label="OHIP#"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.line1}
-          onChange={handleChange}
-          name="line1"
-          id="line1"
-          label="Address"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <Input
-          value={formDatas.city}
-          onChange={handleChange}
-          name="city"
-          id="city"
-          label="City"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <GenericList
-          list={provinceStateTerritoryCT}
-          value={formDatas.province}
-          name="province"
-          handleChange={handleChange}
-          noneOption={false}
-          label="Province/State"
-          placeHolder="Choose province/state..."
-        />
-      </div>
-      <div className="doctor-fax__form-row doctor-fax__form-row--postal">
-        <PostalZipSelect
-          onChange={handleChangePostalOrZip}
-          postalOrZip={postalOrZip}
-        />
-        <Input
-          value={
-            postalOrZip === "postal" ? formDatas.postalCode : formDatas.zipCode
-          }
-          onChange={handleChange}
-          name="postalZipCode"
-          id="postalZipCode"
-          width={57}
-          placeholder={
-            postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
-          }
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <InputTel
-          value={formDatas.phone}
-          onChange={handleChange}
-          name="phone"
-          id="phone"
-          label="Phone"
-          placeholder="xxx-xxx-xxxx"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <InputTel
-          value={formDatas.fax}
-          onChange={handleChange}
-          name="fax"
-          id="fax"
-          label="Fax"
-          placeholder="xxx-xxx-xxxx"
-        />
-      </div>
-      <div className="doctor-fax__form-row">
-        <InputEmail
-          value={formDatas.email}
-          onChange={handleChange}
-          name="email"
-          id="email"
-          label="Email"
-        />
-      </div>
-      <div className="doctor-fax__form-btns">
+      <div className="contact-fax__form-btns">
         <SaveButton onClick={handleSubmit} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
-    </div>
+    </>
   );
 };
 

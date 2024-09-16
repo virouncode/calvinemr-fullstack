@@ -4,8 +4,8 @@ import {
   MessageExternalType,
 } from "../../../../types/api";
 import Button from "../../../UI/Buttons/Button";
-import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
+import MessagesExternalAttachments from "./MessagesExternalAttachments";
 
 type MessagesExternalPrintProps = {
   message: MessageExternalType;
@@ -18,24 +18,24 @@ const MessagesExternalPrint = ({
   previousMsgs,
   attachments,
 }: MessagesExternalPrintProps) => {
-  const CONTAINER_STYLE = {
-    fontFamily: "Arial, sans-serif",
-  };
   const handleClickPrint = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.nativeEvent.view?.print();
   };
   return (
-    <div className="messages-print__container" style={CONTAINER_STYLE}>
-      <div className="messages-print__section">
-        <div className="messages-print__title">
-          <p className="messages-print__subject">
+    <div className="message__print">
+      <div className="message__print-btn">
+        <Button onClick={handleClickPrint} label="Print" />
+      </div>
+      <div className="message__print-container">
+        <div className="message__print-title">
+          <p className="message__print-subject">
             <strong>Subject:{"\u00A0"}</strong>
             {message.subject}
           </p>
         </div>
-        <div className="messages-print__content">
+        <div className="message__detail-content">
           <MessageExternal message={message} key={message.id} index={0} />
           {previousMsgs &&
             previousMsgs.map((message, index) => (
@@ -45,15 +45,13 @@ const MessagesExternalPrint = ({
                 index={index + 1}
               />
             ))}
-          <MessagesAttachments
+          <MessagesExternalAttachments
+            message={message}
             attachments={attachments}
             deletable={false}
             cardWidth="20%"
             addable={false}
           />
-        </div>
-        <div className="messages-print__btn">
-          <Button onClick={handleClickPrint} label="Print" />
         </div>
       </div>
     </div>

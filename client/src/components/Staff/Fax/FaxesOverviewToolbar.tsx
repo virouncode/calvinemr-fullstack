@@ -6,13 +6,13 @@ type FaxesOverviewToolbarProps = {
 
 const FaxesOverviewToolbar = ({ section }: FaxesOverviewToolbarProps) => {
   return (
-    <div className="fax-overview__toolbar">
-      <div className="fax-overview__from">
+    <div className="fax__overview-toolbar">
+      <div className="fax__overview-from">
         {section === "Received faxes" ? "From Fax#/Name" : "To Fax#/Name"}
       </div>
-      <div className="fax-overview__pages">Nbr of pages</div>
-      <div className="fax-overview__date">Date</div>
-      <div className="fax-overview__fake-div"></div>
+      <div className="fax__overview-pages">Nbr of pages</div>
+      <div className="fax__overview-date">Date</div>
+      <div className="fax__overview-fake-div"></div>
     </div>
   );
 };

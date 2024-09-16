@@ -72,7 +72,7 @@ const MessagesBox = ({
 
   if (isPending)
     return (
-      <div className="messages-content__box">
+      <div className="messages__content-box">
         <LoadingParagraph />
       </div>
     );
@@ -80,7 +80,7 @@ const MessagesBox = ({
   return (
     messages && (
       <>
-        <div className="messages-content__box" ref={divRef}>
+        <div className="messages__content-box" ref={divRef}>
           {currentMsgId === 0 ? (
             <MessagesOverview
               messages={messages}

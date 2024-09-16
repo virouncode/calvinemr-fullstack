@@ -1392,9 +1392,9 @@ const PatientTopic = ({
           <FakeWindow
             title="NEW EXTERNAL MESSAGE"
             width={1000}
-            height={600}
+            height={630}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            y={(window.innerHeight - 630) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >

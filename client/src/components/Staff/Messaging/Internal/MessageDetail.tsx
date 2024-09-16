@@ -258,7 +258,7 @@ const MessageDetail = ({
           handleEdit={handleEdit}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div ref={messageContentRef} className="message-detail__content">
+        <div ref={messageContentRef} className="message__detail-content">
           <Message
             message={message}
             key={message.id}
@@ -297,6 +297,28 @@ const MessageDetail = ({
             message={message}
           />
         </div>
+        {section !== "Deleted messages" &&
+          section !== "To-dos" &&
+          !replyVisible &&
+          !forwardVisible &&
+          !newTodoVisible && (
+            <div className="message__detail-btns">
+              {section !== "Sent messages" && (
+                <Button onClick={handleClickReply} label="Reply" />
+              )}
+              {(message as MessageType).to_staff_ids.length >= 2 &&
+                section !== "Sent messages" && (
+                  <Button onClick={handleClickReplyAll} label="Reply all" />
+                )}
+              <Button onClick={handleClickForward} label="Forward" />
+              <Button onClick={handleClickTodo} label="Todo" />
+            </div>
+          )}
+        {section === "To-dos" && (
+          <div className="message__detail-btns">
+            <Button onClick={handleClickForwardTodo} label="Forward To-do" />
+          </div>
+        )}
         {printVisible && (
           <NewWindow
             title={`Message(s) / Subject: ${message.subject} ${
@@ -336,28 +358,6 @@ const MessageDetail = ({
             section={section}
           />
         )}
-        {section !== "Deleted messages" &&
-          section !== "To-dos" &&
-          !replyVisible &&
-          !forwardVisible &&
-          !newTodoVisible && (
-            <div className="message-detail__btns">
-              {section !== "Sent messages" && (
-                <Button onClick={handleClickReply} label="Reply" />
-              )}
-              {(message as MessageType).to_staff_ids.length >= 2 &&
-                section !== "Sent messages" && (
-                  <Button onClick={handleClickReplyAll} label="Reply all" />
-                )}
-              <Button onClick={handleClickForward} label="Forward" />
-              <Button onClick={handleClickTodo} label="Todo" />
-            </div>
-          )}
-        {section === "To-dos" && (
-          <div className="message-detail__btns">
-            <Button onClick={handleClickForwardTodo} label="Forward To-do" />
-          </div>
-        )}
         {forwardVisible && (
           <FakeWindow
             title="FORWARD MESSAGE"
@@ -383,9 +383,9 @@ const MessageDetail = ({
           <FakeWindow
             title="EDIT TO-DO"
             width={1000}
-            height={600}
+            height={630}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            y={(window.innerHeight - 630) / 2}
             color={"#94bae8"}
             setPopUpVisible={setEditTodoVisible}
           >
@@ -417,10 +417,10 @@ const MessageDetail = ({
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1000}
-            height={600}
-            x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            width={1300}
+            height={620}
+            x={(window.innerWidth - 1300) / 2}
+            y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >

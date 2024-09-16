@@ -6,41 +6,27 @@ type MessagesOverviewToolbarProps = {
 
 const MessagesOverviewToolbar = ({ section }: MessagesOverviewToolbarProps) => {
   return (
-    <div className="messages-overview__toolbar">
-      <div className="messages-overview__from">
+    <div
+      className={
+        section !== "To-dos"
+          ? "messages__overview-toolbar"
+          : "messages__overview-toolbar  messages__overview-toolbar--todo"
+      }
+    >
+      <div className="messages__overview-from">
         {section === "Sent messages" ? "To" : "From"}
       </div>
-      <div
-        className={
-          section !== "To-dos"
-            ? "messages-overview__subject"
-            : "messages-overview__subject messages-overview__subject--todo"
-        }
-      >
+      <div className="messages__overview-subject">
         {`Subject / ${section !== "To-dos" ? "Message" : "To-do"} overview`}
       </div>
-      <div
-        className={
-          section !== "To-dos"
-            ? "messages-overview__patient"
-            : "messages-overview__patient messages-overview__patient--todo"
-        }
-      >
-        Related patient
-      </div>
-      <div className="messages-overview__date">Date</div>
+      <div className={"messages__overview-patient"}>Related patient</div>
+      <div className="messages__overview-date">Date</div>
       {section === "To-dos" && (
         <>
-          <div className="messages-overview__duedate">Due Date</div>
+          <div className="messages__overview-duedate">Due Date</div>
         </>
       )}
-      <div
-        className={
-          section === "To-dos"
-            ? "messages-overview__fakediv messages-overview__fakediv--todo"
-            : "messages-overview__fakediv"
-        }
-      ></div>
+      <div className="messages__overview-fakediv"></div>
     </div>
   );
 };

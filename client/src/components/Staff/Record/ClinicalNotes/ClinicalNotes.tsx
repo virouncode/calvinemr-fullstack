@@ -290,9 +290,9 @@ const ClinicalNotes = ({
       {newMessageVisible && (
         <FakeWindow
           title={`NEW MESSAGE TO ${toPatientName(demographicsInfos)}`}
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color={"#848484"}
           setPopUpVisible={setNewMessageVisible}

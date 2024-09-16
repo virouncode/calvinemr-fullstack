@@ -319,9 +319,9 @@ const NewMessageExternal = ({
   };
 
   return (
-    <div className="new-message">
+    <div className="new-message new-message--external">
       <div className="new-message__form">
-        <div className="new-message__recipients">
+        <div className="new-message__form-recipients">
           <Input
             value={recipients.map(({ name }) => name).join(" / ")}
             id="to"
@@ -330,7 +330,7 @@ const NewMessageExternal = ({
             placeholder="Patient(s)"
           />
         </div>
-        <div className="new-message__subject">
+        <div className="new-message__form-subject">
           <Input
             value={subject}
             id="subject"
@@ -339,11 +339,11 @@ const NewMessageExternal = ({
             placeholder="Subject"
           />
         </div>
-        <div className="new-message__attach">
+        <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="new-message__importance">
-          <div className="new-message__importance-check">
+        <div className="new-message__form-importance">
+          <div className="new-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -351,8 +351,6 @@ const NewMessageExternal = ({
               checked={important}
               label="High importance"
             />
-            import MessagesExternalTemplates from
-            './Templates/MessagesExternalTemplates';
           </div>
           <div>
             <strong
@@ -363,7 +361,7 @@ const NewMessageExternal = ({
             </strong>
           </div>
         </div>
-        <div className="new-message__body">
+        <div className="new-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
@@ -377,7 +375,7 @@ const NewMessageExternal = ({
             handleRemoveAttachment={handleRemoveAttachment}
           />
         </div>
-        <div className="new-message__btns">
+        <div className="new-message__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}

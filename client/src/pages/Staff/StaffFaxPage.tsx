@@ -12,7 +12,7 @@ const StaffFaxPage = () => {
           <title>Fax</title>
         </Helmet>
       </HelmetProvider>
-      <section className="fax-section">
+      <section className="fax">
         <Faxes />
       </section>
     </>

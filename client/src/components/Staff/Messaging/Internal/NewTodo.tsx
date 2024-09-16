@@ -232,7 +232,7 @@ const NewTodo = ({
         />
       </div>
       <div className="new-message__form">
-        <div className="new-message__recipients">
+        <div className="new-message__form-recipients">
           <Input
             label="To:"
             id="to"
@@ -244,7 +244,7 @@ const NewTodo = ({
             readOnly={true}
           />
         </div>
-        <div className="new-message__subject">
+        <div className="new-message__form-subject">
           <Input
             value={subject}
             onChange={handleChangeSubject}
@@ -253,7 +253,7 @@ const NewTodo = ({
             placeholder="Subject"
           />
         </div>
-        <div className="new-message__patient">
+        <div className="new-message__form-patient">
           <Input
             id="patient"
             label="About patient:"
@@ -262,10 +262,10 @@ const NewTodo = ({
             readOnly
           />
         </div>
-        <div className="new-message__attach">
+        <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="new-message__duedate">
+        <div className="new-message__form-duedate">
           <InputDate
             value={dueDate}
             onChange={handleChangeDueDate}
@@ -273,8 +273,8 @@ const NewTodo = ({
             label="Due date:"
           />
         </div>
-        <div className="new-message__importance">
-          <div className="new-message__importance-check">
+        <div className="new-message__form-importance">
+          <div className="new-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -292,7 +292,7 @@ const NewTodo = ({
             </strong>
           </div>
         </div>
-        <div className="new-message__body">
+        <div className="new-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
@@ -306,7 +306,7 @@ const NewTodo = ({
             addable={false}
           />
         </div>
-        <div className="new-message__btns">
+        <div className="new-message__form-btns">
           <SaveButton
             onClick={handleSave}
             disabled={isLoadingFile || progress}

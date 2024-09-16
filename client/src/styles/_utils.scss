@@ -35,6 +35,8 @@
   border: none;
   outline: none;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:hover {
     background: $grey2;
   }

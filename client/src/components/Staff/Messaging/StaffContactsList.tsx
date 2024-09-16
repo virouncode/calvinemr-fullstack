@@ -16,7 +16,7 @@ const StaffContactsList = ({
   categoryName,
 }: StaffContactsListProps) => {
   return (
-    <ul className="contacts-list">
+    <ul>
       {categoryInfos.map((info) => (
         <StaffContactsListItem
           info={info}

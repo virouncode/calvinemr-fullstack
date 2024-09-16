@@ -70,8 +70,8 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
   };
 
   return (
-    <>
-      <div className="new-message__template-name">
+    <div className="message-template__form">
+      <div className="message-template__form-name">
         <Input
           value={name}
           onChange={handleChangeName}
@@ -80,9 +80,9 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
           autoFocus={true}
         />
       </div>
-      <div className="new-message new-message--template">
-        <div className="new-message__form new-message__form--todo">
-          <div className="new-message__subject">
+      <div className="message-template__form-content message-template__form-content--todo">
+        <div className="message-template__form-message">
+          <div className="message-template__form-message-subject">
             <Input
               value={subject}
               onChange={handleChangeSubject}
@@ -90,16 +90,16 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
               label="Subject:"
             />
           </div>
-          <div className="new-message__body">
+          <div className="message-template__form-message-body">
             <textarea value={body} onChange={handleChange} autoFocus></textarea>
           </div>
-          <div className="new-message__btns">
+          <div className="message-template__form-message-btns">
             <SaveButton onClick={handleSave} disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

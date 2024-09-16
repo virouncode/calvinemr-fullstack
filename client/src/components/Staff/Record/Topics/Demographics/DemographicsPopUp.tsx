@@ -53,7 +53,7 @@ import InputTelExtToggle from "../../../../UI/Inputs/InputTelExtToggle";
 import InputTelToggle from "../../../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
-import PostalZipSelect from "../../../../UI/Lists/PostalZipSelect";
+import PostalZipSelectInput from "../../../../UI/Lists/PostalZipSelectInput";
 import StaffList from "../../../../UI/Lists/StaffList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -679,20 +679,18 @@ const DemographicsPopUp = ({
             <div className="demographics-card__content-row">
               {editVisible ? (
                 <>
-                  <PostalZipSelect
-                    onChange={handleChangePostalOrZip}
+                  <PostalZipSelectInput
+                    onChangeSelect={handleChangePostalOrZip}
                     postalOrZip={postalOrZip}
-                  />
-                  <Input
                     value={
                       postalOrZip === "postal"
                         ? formDatas?.postalCode ?? ""
                         : formDatas?.zipCode ?? ""
                     }
-                    onChange={handleChange}
+                    onChangeInput={handleChange}
                     name="postalCode"
                     id="postalZipCode"
-                    width={68}
+                    inputWidth={68}
                     placeholder={
                       postalOrZip === "postal"
                         ? "A1A 1A1"

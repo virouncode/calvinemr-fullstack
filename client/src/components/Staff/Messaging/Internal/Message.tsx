@@ -16,17 +16,15 @@ const Message = ({ message, index, section }: MessageProps) => {
   return (
     <div className="message" style={{ marginLeft: `${index * 20}px` }}>
       <div className="message__title">
-        {section !== "To-dos" ? (
-          <div className="message__author">
-            From:{" "}
-            {staffIdToTitleAndName(
-              staffInfos,
-              (message as MessageType).from_id
-            )}
-          </div>
-        ) : (
-          <div className="message__author"></div>
-        )}
+        <div className="message__author">
+          From:{" "}
+          {staffIdToTitleAndName(
+            staffInfos,
+            section !== "To-dos"
+              ? (message as MessageType).from_id
+              : (message as TodoType).from_staff_id
+          )}
+        </div>
         <div className="message__date">
           <div>{timestampToDateTimeStrTZ(message.date_created)}</div>
         </div>

@@ -3,7 +3,6 @@ import {
   useFaxesInbox,
   useFaxesOutbox,
 } from "../../../hooks/reactquery/queries/faxQueries";
-import useTitle from "../../../hooks/useTitle";
 import {
   getEndOfTheMonthTZ,
   getStartOfTheMonthTZ,
@@ -48,7 +47,7 @@ const Faxes = () => {
   } = useFaxesOutbox(all, rangeStart, rangeEnd);
 
   return (
-    <div className="fax-container">
+    <div className="fax__container">
       <FaxToolBar
         newVisible={newVisible}
         setNewVisible={setNewVisible}
@@ -71,7 +70,7 @@ const Faxes = () => {
         all={all}
         setAll={setAll}
       />
-      <div className="fax-content">
+      <div className="fax__content">
         <FaxLeftBar
           section={section}
           setSection={setSection}

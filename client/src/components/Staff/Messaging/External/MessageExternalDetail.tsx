@@ -282,7 +282,7 @@ const MessageExternalDetail = ({
           handleAddToClinicalNotes={handleAddToClinicalNotes}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div className="message-detail__content" ref={messageContentRef}>
+        <div className="message__detail-content" ref={messageContentRef}>
           <MessageExternal message={message} key={message.id} index={0} />
           {previousMsgs &&
             previousMsgs.length > 0 &&
@@ -312,6 +312,15 @@ const MessageExternalDetail = ({
             message={message}
           />
         </div>
+        {section !== "Deleted messages" && !replyVisible && (
+          <div className="message__detail-btns">
+            {section !== "Sent messages" && (
+              <Button onClick={handleClickReply} label="Reply" />
+            )}
+            <Button onClick={handleClickForward} label="Forward" />
+            <Button onClick={handleClickTodo} label="Todo" />
+          </div>
+        )}
         {printVisible && (
           <NewWindow
             title={`Message(s) / Subject: ${message.subject}`}
@@ -335,6 +344,7 @@ const MessageExternalDetail = ({
             />
           </NewWindow>
         )}
+
         {replyVisible && (
           <ReplyMessageExternal
             setReplyVisible={setReplyVisible}
@@ -343,15 +353,7 @@ const MessageExternalDetail = ({
             setCurrentMsgId={setCurrentMsgId}
           />
         )}
-        {section !== "Deleted messages" && !replyVisible && (
-          <div className="message-detail__btns">
-            {section !== "Sent messages" && (
-              <Button onClick={handleClickReply} label="Reply" />
-            )}
-            <Button onClick={handleClickForward} label="Forward" />
-            <Button onClick={handleClickTodo} label="Todo" />
-          </div>
-        )}
+
         {forwardVisible && (
           <FakeWindow
             title="FORWARD MESSAGE"
@@ -378,10 +380,10 @@ const MessageExternalDetail = ({
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1000}
-            height={600}
-            x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            width={1300}
+            height={620}
+            x={(window.innerWidth - 1300) / 2}
+            y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >

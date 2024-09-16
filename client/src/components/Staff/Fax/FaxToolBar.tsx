@@ -128,18 +128,18 @@ const FaxToolBar = ({
   };
 
   return (
-    <div className="fax-toolbar">
-      <p className="fax-toolbar__title">Faxing</p>
-      <div className="fax-toolbar__filter">
+    <div className="fax__toolbar">
+      <p className="fax__toolbar-title">Faxing</p>
+      <div className="fax__toolbar-filter">
         <Input
           value={search}
           onChange={handleChange}
           id="search"
           placeholder="Search by fax number..."
-          className="fax-toolbar__filter-search"
+          className="fax__toolbar-filter-search"
         />
-        <div className="fax-toolbar__filter-date">
-          <div className="fax-toolbar__filter-date-item">
+        <div className="fax__toolbar-filter-date">
+          <div className="fax__toolbar-filter-date-item">
             <InputDate
               value={dateStringToISO(rangeStart)}
               onChange={handleDateChange}
@@ -149,7 +149,7 @@ const FaxToolBar = ({
               name="date_start"
             />
           </div>
-          <div className="fax-toolbar__filter-date-item">
+          <div className="fax__toolbar-filter-date-item">
             <InputDate
               value={dateStringToISO(rangeEnd)}
               onChange={handleDateChange}
@@ -159,7 +159,7 @@ const FaxToolBar = ({
               name="date_end"
             />
           </div>
-          <div className="fax-toolbar__filter-date-item">
+          <div className="fax__toolbar-filter-date-item">
             <Checkbox
               id="all"
               name="all"
@@ -171,7 +171,7 @@ const FaxToolBar = ({
         </div>
       </div>
 
-      <div className="fax-toolbar__btns">
+      <div className="fax__toolbar-btns">
         <Button onClick={handleClickNew} label="New" disabled={newVisible} />
         {currentFaxId === "" && faxesSelectedIds.length !== 0 && (
           <Button onClick={handleDeleteSelected} label="Delete Selected" />

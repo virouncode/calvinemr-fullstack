@@ -267,7 +267,7 @@ Powered by Calvin EMR`,
   };
 
   return (
-    <div className="reply-message__form">
+    <div className="reply-message">
       <div className="reply-message__title">
         <p>
           <strong>To: </strong>
@@ -294,8 +294,6 @@ Powered by Calvin EMR`,
             checked={important}
             label="High importance"
           />
-          import MessagesExternalTemplates from
-          './Templates/MessagesExternalTemplates';
         </div>
         <div>
           <strong

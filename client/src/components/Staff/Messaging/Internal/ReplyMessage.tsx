@@ -217,7 +217,7 @@ const ReplyMessage = ({
   };
 
   return (
-    <div className="reply-message__form">
+    <div className="reply-message">
       <div className="reply-message__title">
         <p>
           <strong>To: </strong>
@@ -245,7 +245,7 @@ const ReplyMessage = ({
       )}
       <div className="reply-message__attach">
         <strong>Attach files</strong>
-        <PaperclipIcon onClick={handleAttach} />
+        <PaperclipIcon onClick={handleAttach} ml={5} />
         {attachments.map((attachment) => (
           <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
             {attachment.alias},
@@ -261,7 +261,6 @@ const ReplyMessage = ({
             checked={important}
             label="High importance"
           />
-          import MessagesTemplates from './Templates/MessagesTemplates';
         </div>
         <div>
           <strong

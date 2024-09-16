@@ -63,7 +63,7 @@ const MessagesExternalBox = ({
 
   if (isPending)
     return (
-      <div className="messages-content__box">
+      <div className="messages__content-box">
         <LoadingParagraph />
       </div>
     );
@@ -71,7 +71,7 @@ const MessagesExternalBox = ({
   return (
     messages && (
       <>
-        <div className="messages-content__box" ref={divRef}>
+        <div className="messages__content-box" ref={divRef}>
           {currentMsgId === 0 ? (
             <MessagesExternalOverview
               messages={messages}
@@ -96,9 +96,9 @@ const MessagesExternalBox = ({
         {newVisible && (
           <FakeWindow
             title="NEW EXTERNAL MESSAGE"
-            width={1300}
+            width={1000}
             height={630}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1000) / 2}
             y={(window.innerHeight - 630) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewVisible}

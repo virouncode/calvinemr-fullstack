@@ -64,11 +64,7 @@ const TodoTemplateItem = ({
 
   return (
     <>
-      <li
-        className="messages__templates-list-item"
-        key={template.id}
-        ref={lastItemRef}
-      >
+      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id

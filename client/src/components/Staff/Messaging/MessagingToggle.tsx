@@ -15,8 +15,8 @@ const MessagingToggle = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   return (
-    <div className="messages-toggle">
-      <div className="messages-toggle__radio">
+    <div className="messages__toggle">
+      <div className="messages__toggle-radio">
         <Radio
           id="internal"
           name="message-type"
@@ -31,7 +31,7 @@ const MessagingToggle = ({
           }
         />
       </div>
-      <div className="messages-toggle__radio">
+      <div className="messages__toggle-radio">
         <Radio
           id="external"
           name="message-type"

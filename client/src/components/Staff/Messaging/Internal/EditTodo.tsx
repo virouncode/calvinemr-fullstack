@@ -239,9 +239,9 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
   };
 
   return (
-    <div className="new-message">
+    <div className="new-message new-message--external">
       <div className="new-message__form">
-        <div className="new-message__subject">
+        <div className="new-message__form-subject">
           <Input
             value={subject}
             id="subject"
@@ -250,7 +250,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             placeholder="Subject"
           />
         </div>
-        <div className="new-message__patient">
+        <div className="new-message__form-patient">
           <Input
             value={patient.name}
             id="patient"
@@ -259,10 +259,10 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             readOnly={true}
           />
         </div>
-        <div className="new-message__attach">
+        <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="new-message__duedate">
+        <div className="new-message__form-duedate">
           <InputDate
             value={dueDate}
             onChange={handleChangeDueDate}
@@ -270,8 +270,8 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             label="Due date:"
           />
         </div>
-        <div className="new-message__importance">
-          <div className="new-message__importance-check">
+        <div className="new-message__form-importance">
+          <div className="new-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -289,7 +289,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             </strong>
           </div>
         </div>
-        <div className="new-message__body">
+        <div className="new-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
@@ -303,7 +303,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             addable={false}
           />
         </div>
-        <div className="new-message__btns">
+        <div className="new-message__form-btns">
           <SaveButton
             onClick={handleSave}
             disabled={isLoadingFile || progress}
@@ -312,7 +312,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>
-      <div className={"new-message__patients new-message__patients--todo"}>
+      <div className={"new-message__patients"}>
         <Patients
           handleCheckPatient={handleCheckPatient}
           isPatientChecked={isPatientChecked}

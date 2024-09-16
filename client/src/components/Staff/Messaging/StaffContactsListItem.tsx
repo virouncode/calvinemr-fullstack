@@ -20,7 +20,7 @@ const StaffContactsListItem = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
-    <li className="contacts-list__item">
+    <li className="contacts__list-item">
       <Checkbox
         id={info.id.toString()}
         name={categoryName}

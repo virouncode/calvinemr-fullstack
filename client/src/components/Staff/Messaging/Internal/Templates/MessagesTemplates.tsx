@@ -48,7 +48,7 @@ const MessagesTemplates = ({
 
   if (error) {
     return (
-      <div className="messages__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -56,15 +56,15 @@ const MessagesTemplates = ({
   const messagesTemplates = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="messages__templates">
-      <div className="messages__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           disabled={newTemplateVisible}
           label="Add a new template"
         />
       </div>
-      <div className="messages__templates-search">
+      <div className="templates__search">
         <Input
           width={300}
           id="template-search"
@@ -75,7 +75,7 @@ const MessagesTemplates = ({
           autoFocus={true}
         />
       </div>
-      <div className="messages__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -105,9 +105,9 @@ const MessagesTemplates = ({
           <FakeWindow
             title="NEW MESSAGE TEMPLATE"
             width={900}
-            height={550}
+            height={630}
             x={(window.innerWidth - 900) / 2}
-            y={(window.innerHeight - 550) / 2}
+            y={(window.innerHeight - 630) / 2}
             color="#93B5E9"
             setPopUpVisible={setNewTemplateVisible}
           >

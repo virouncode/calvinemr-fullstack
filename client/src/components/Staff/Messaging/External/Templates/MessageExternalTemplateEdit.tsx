@@ -75,8 +75,8 @@ const MessageExternalTemplateEdit = ({
   };
 
   return (
-    <>
-      <div className="new-message__template-name">
+    <div className="message-template__form">
+      <div className="message-template__form-name">
         <Input
           value={name}
           onChange={handleChangeName}
@@ -85,9 +85,9 @@ const MessageExternalTemplateEdit = ({
           autoFocus={true}
         />
       </div>
-      <div className="new-message">
-        <div className="new-message__form new-message__form--template-external">
-          <div className="new-message__subject">
+      <div className="message-template__form-content message-template__form-content--external">
+        <div className="message-template__form-message">
+          <div className="message-template__form-message-subject">
             <Input
               value={subject}
               onChange={handleChangeSubject}
@@ -96,16 +96,16 @@ const MessageExternalTemplateEdit = ({
               label="Subject:"
             />
           </div>
-          <div className="new-message__body">
+          <div className="message-template__form-message-body">
             <textarea value={body} onChange={handleChange} />
           </div>
-          <div className="new-message__btns">
+          <div className="message-template__form-message-btns">
             <SaveButton onClick={handleSave} disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

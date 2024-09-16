@@ -101,6 +101,9 @@
     .guests-list {
       margin-top: 0.5rem;
       font-size: $size-xs;
+      .guest-patient-item:hover {
+        text-decoration: underline;
+      }
     }
   }
   .event-form__guests-search {

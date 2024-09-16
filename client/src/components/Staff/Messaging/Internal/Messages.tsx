@@ -49,7 +49,7 @@ const Messages = () => {
 
   if (error)
     return (
-      <div className="messages-container">
+      <div className="messages__container">
         <ErrorParagraph errorMsg={error.message} />E
       </div>
     );
@@ -63,7 +63,7 @@ const Messages = () => {
     : [];
 
   return (
-    <div className="messages-container">
+    <div className="messages__container">
       <MessagesToolBar
         search={search}
         setSearch={setSearch}
@@ -80,7 +80,7 @@ const Messages = () => {
         newTodoVisible={newTodoVisible}
         setNewTodoVisible={setNewTodoVisible}
       />
-      <div className="messages-content">
+      <div className="messages__content">
         <MessagesLeftBar
           msgType="internal"
           section={section}

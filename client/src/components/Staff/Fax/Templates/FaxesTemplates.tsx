@@ -45,7 +45,7 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
 
   if (error) {
     return (
-      <div className="fax__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -53,15 +53,15 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
   const faxesTemplates = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="fax__templates">
-      <div className="fax__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           label="Add a new template"
           disabled={newTemplateVisible}
         />
       </div>
-      <div className="fax__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -72,7 +72,7 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
           autoFocus={true}
         />
       </div>
-      <div className="fax__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />

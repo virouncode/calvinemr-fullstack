@@ -360,9 +360,9 @@ const PrescriptionPreview = ({
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#931621"
           setPopUpVisible={setNewMessageExternalVisible}
@@ -376,9 +376,9 @@ const PrescriptionPreview = ({
       {faxVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#931621"}
           setPopUpVisible={setFaxVisible}

@@ -48,7 +48,7 @@ const MessagesExternal = () => {
 
   if (error)
     return (
-      <div className="messages-container">
+      <div className="messages__container">
         <ErrorParagraph errorMsg={error.message} />E
       </div>
     );
@@ -63,7 +63,7 @@ const MessagesExternal = () => {
     : [];
 
   return (
-    <div className="messages-container">
+    <div className="messages__container">
       <MessagesExternalToolBar
         search={search}
         setSearch={setSearch}
@@ -77,7 +77,7 @@ const MessagesExternal = () => {
         selectAllVisible={selectAllVisible}
         setSelectAllVisible={setSelectAllVisible}
       />
-      <div className="messages-content">
+      <div className="messages__content">
         <MessagesLeftBar
           msgType="external"
           section={section}

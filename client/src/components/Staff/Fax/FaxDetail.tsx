@@ -158,9 +158,9 @@ const FaxDetail = ({
   return (
     fax && (
       <>
-        <div className="fax-detail__toolbar">
+        <div className="fax__detail-toolbar">
           <ArrowLeftIcon onClick={handleClickBack} mr={20} />
-          <div className="fax-detail__toolbar-btns">
+          <div className="fax__detail-toolbar-btns">
             <Button
               disabled={progress}
               onClick={handleAddToReports}
@@ -180,19 +180,19 @@ const FaxDetail = ({
             )}
             {progress && <CircularProgressSmall />}
           </div>
-          <div className="fax-detail__toolbar-logos">
+          <div className="fax__detail-toolbar-logos">
             <TrashIcon onClick={handleDeleteFax} />
           </div>
         </div>
-        <div className="fax-detail__content">
+        <div className="fax__detail-content">
           <Fax faxURL={fax} />
         </div>
         {forwardVisible && (
           <FakeWindow
             title="NEW FAX"
-            width={1300}
+            width={1000}
             height={700}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1000) / 2}
             y={(window.innerHeight - 700) / 2}
             color={"#94bae8"}
             setPopUpVisible={setForwardVisible}
@@ -206,9 +206,9 @@ const FaxDetail = ({
         {replyVisible && (
           <FakeWindow
             title="NEW FAX"
-            width={1300}
+            width={1000}
             height={700}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1000) / 2}
             y={(window.innerHeight - 700) / 2}
             color={"#94bae8"}
             setPopUpVisible={setReplyVisible}

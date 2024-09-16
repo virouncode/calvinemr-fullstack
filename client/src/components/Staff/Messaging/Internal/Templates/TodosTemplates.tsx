@@ -46,7 +46,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
 
   if (error) {
     return (
-      <div className="messages__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -54,15 +54,15 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
   const todosTemplates = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="messages__templates">
-      <div className="messages__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           disabled={newTemplateVisible}
           label="Add a new template"
         />
       </div>
-      <div className="messages__templates-search">
+      <div className="templates__search">
         <Input
           id="template-search"
           value={search}
@@ -73,7 +73,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
           label="Search"
         />
       </div>
-      <div className="messages__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />

@@ -46,14 +46,14 @@ const FaxBox = ({
 }: FaxBoxProps) => {
   if (isPendingOutbox || isPendingInbox)
     return (
-      <div className="fax-content__box">
+      <div className="fax__content-box">
         <LoadingParagraph />
       </div>
     );
 
   if (errorInbox || errorOutbox) {
     return (
-      <div className="fax-content__box">
+      <div className="fax__content-box">
         <ErrorParagraph
           errorMsg={`Unable to retrieve faxes:${
             errorInbox?.message || errorOutbox?.message
@@ -65,7 +65,7 @@ const FaxBox = ({
 
   return (
     <>
-      <div className="fax-content__box">
+      <div className="fax__content-box">
         {!currentFaxId ? (
           <FaxesOverview
             faxes={section === "Received faxes" ? faxesInbox : faxesOutbox}
@@ -88,9 +88,9 @@ const FaxBox = ({
       {newVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#94bae8"}
           setPopUpVisible={setNewVisible}

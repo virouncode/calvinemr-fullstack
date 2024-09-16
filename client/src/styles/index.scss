@@ -8,8 +8,6 @@
 
 @import "./pages/patientRecordPage";
 
-@import "./pages/messagesPage";
-
 @import "./pages/messagesPatientPage";
 @import "./pages/accountsPage";
 @import "./pages/migrationPage";
@@ -58,6 +56,10 @@
 @import "./components/myAccount";
 @import "./components/staffAccount";
 @import "./components/messages";
+@import "./components/templates";
+@import "./components/newMessage";
+@import "./components/replyMessage";
+@import "./components/forwardMessage";
 @import "./components/relationships";
 @import "./components/verifyPwd";
 @import "./components/credentialsForm";

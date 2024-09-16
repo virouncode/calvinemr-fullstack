@@ -64,11 +64,7 @@ const MessageTemplateItem = ({
 
   return (
     <>
-      <li
-        className="messages__templates-list-item"
-        key={template.id}
-        ref={lastItemRef}
-      >
+      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id
@@ -81,7 +77,7 @@ const MessageTemplateItem = ({
             <PenIcon ml={5} onClick={handleEditClick} />
           )}
           {template.author_id === user.id && (
-            <TrashIcon onClick={handleDelete} />
+            <TrashIcon ml={5} onClick={handleDelete} />
           )}
           <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
         </>
@@ -90,9 +86,9 @@ const MessageTemplateItem = ({
         <FakeWindow
           title="EDIT MESSAGE TEMPLATE"
           width={900}
-          height={550}
+          height={630}
           x={(window.innerWidth - 900) / 2}
-          y={(window.innerHeight - 550) / 2}
+          y={(window.innerHeight - 630) / 2}
           color="#93B5E9"
           setPopUpVisible={setEditTemplateVisible}
         >
