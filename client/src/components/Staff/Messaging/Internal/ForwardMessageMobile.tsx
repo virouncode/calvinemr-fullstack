@@ -285,12 +285,7 @@ const ForwardMessageMobile = ({
           </div>
         </div>
         <div className="forward-message__form-body">
-          <textarea
-            value={body}
-            onChange={handleChange}
-            ref={textareaRef}
-            autoFocus
-          />
+          <textarea value={body} onChange={handleChange} ref={textareaRef} />
           <div className="forward-message__form-history">
             <Message
               message={message}

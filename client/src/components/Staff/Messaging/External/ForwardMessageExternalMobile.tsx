@@ -292,12 +292,7 @@ const ForwardMessageExternalMobile = ({
           </div>
         </div>
         <div className="forward-message__form-body">
-          <textarea
-            value={body}
-            onChange={handleChange}
-            ref={textareaRef}
-            autoFocus
-          />
+          <textarea value={body} onChange={handleChange} ref={textareaRef} />
           <div className="forward-message__form-history">
             <MessageExternal message={message} key={message.id} index={0} />
             {previousMsgs.map((message, index) => (

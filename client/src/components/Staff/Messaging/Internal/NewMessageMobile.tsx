@@ -298,12 +298,7 @@ const NewMessageMobile = ({
           </div>
         </div>
         <div className="new-message__form-body">
-          <textarea
-            value={body}
-            onChange={handleChange}
-            autoFocus
-            ref={textareaRef}
-          />
+          <textarea value={body} onChange={handleChange} ref={textareaRef} />
           <MessagesAttachments
             attachments={attachments}
             handleRemoveAttachment={handleRemoveAttachment}

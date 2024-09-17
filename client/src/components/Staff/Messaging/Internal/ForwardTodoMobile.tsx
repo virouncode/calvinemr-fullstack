@@ -217,12 +217,7 @@ const ForwardTodoMobile = ({
           </div>
         </div>
         <div className="forward-message__form-body">
-          <textarea
-            value={body}
-            onChange={handleChange}
-            ref={textareaRef}
-            autoFocus
-          />
+          <textarea value={body} onChange={handleChange} ref={textareaRef} />
           <MessagesAttachments
             attachments={(
               todo.attachments_ids as { attachment: MessageAttachmentType }[]

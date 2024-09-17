@@ -97,7 +97,6 @@ const MessageTemplateEditMobile = ({
           onChange={handleChangeName}
           id="message-template-name"
           label="Template Name*"
-          autoFocus={true}
         />
       </div>
       <div className="message-template__form-content message-template__form-content--mobile">

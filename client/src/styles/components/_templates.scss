@@ -267,6 +267,11 @@
             font-size: $size-base;
           }
         }
+        .message-template__form-message-body {
+          textarea {
+            font-size: $size-base;
+          }
+        }
       }
     }
   }
