@@ -321,7 +321,7 @@
           }
           .message__attachments {
             display: flex;
-            padding: 15px;
+            padding: 1rem;
             flex-wrap: wrap;
             .message__attachment-card {
               border: solid 0.5px $grey;
@@ -439,7 +439,7 @@
     }
     .message__attachments {
       display: flex;
-      padding: 15px;
+      padding: 1rem;
       flex-wrap: wrap;
       .message__attachment-card {
         border: solid 0.5px $grey;

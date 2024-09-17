@@ -4601,7 +4601,7 @@ select:disabled {
 .confirm-dialog {
   border-radius: 6px;
   width: 400px;
-  max-width: 100%;
+  max-width: 95%;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -4636,15 +4636,11 @@ select:disabled {
 .confirm-dialog-btn-container {
   display: flex;
   justify-content: center;
-  gap: 0.25rem;
+  gap: 2rem;
   margin-bottom: 1rem;
 }
 .confirm-dialog-btn-container button {
   width: 80px;
-}
-.confirm-dialog-btn-container--credits {
-  width: 100%;
-  justify-content: center;
 }
 .confirm-dialog-btn-container--recurring {
   width: 100%;
@@ -4654,7 +4650,7 @@ select:disabled {
 }
 .confirm-dialog-btn-container--recurring button {
   width: 150px;
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .prescription__actions {
@@ -5585,7 +5581,7 @@ select:disabled {
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments {
   display: flex;
-  padding: 15px;
+  padding: 1rem;
   flex-wrap: wrap;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card {
@@ -5698,7 +5694,7 @@ select:disabled {
 }
 .message__print .message__detail-content .message__attachments {
   display: flex;
-  padding: 15px;
+  padding: 1rem;
   flex-wrap: wrap;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card {
