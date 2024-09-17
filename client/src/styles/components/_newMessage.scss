@@ -328,9 +328,9 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
-      font-size: $size-base;
       flex: 1;
       textarea {
+        font-size: $size-base;
         border: none;
         outline: none;
         padding: 0.5rem;
