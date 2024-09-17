@@ -108,6 +108,7 @@
       flex-direction: column;
       font-size: $size-sm;
       flex: 1;
+      overflow-y: scroll;
       textarea {
         border: none;
         outline: none;
@@ -329,6 +330,7 @@
       justify-content: center;
       flex-direction: column;
       flex: 1;
+      overflow-y: scroll;
       textarea {
         font-size: $size-base;
         border: none;

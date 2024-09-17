@@ -291,6 +291,7 @@ const NewMessage = ({
             handleRemoveAttachment={handleRemoveAttachment}
             deletable={true}
             addable={false}
+            cardWidth="30%"
           />
         </div>
         <div className="new-message__form-btns">

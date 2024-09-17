@@ -6181,6 +6181,7 @@ select:disabled {
   flex-direction: column;
   font-size: 0.85rem;
   flex: 1;
+  overflow-y: scroll;
 }
 .new-message .new-message__form .new-message__form-body textarea {
   border: none;
@@ -6397,6 +6398,7 @@ select:disabled {
   justify-content: center;
   flex-direction: column;
   flex: 1;
+  overflow-y: scroll;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body textarea {
   font-size: 1rem;
