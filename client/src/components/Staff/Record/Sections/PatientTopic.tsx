@@ -1359,9 +1359,9 @@ const PatientTopic = ({
         {topic === "MESSAGES ABOUT PATIENT" && popUpVisible && (
           <FakeWindow
             title="NEW MESSAGE"
-            width={1300}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}

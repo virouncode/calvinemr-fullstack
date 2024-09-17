@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { DemographicsType } from "../../../types/api";
+import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
 import Input from "../../UI/Inputs/Input";
 import PatientsList from "./PatientsList";
 
@@ -14,6 +15,8 @@ type PatientsProps = {
   allAvailable?: boolean;
   allPatientsChecked?: boolean;
   handleCheckAllPatients?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  closeCross?: boolean;
+  patientsRef?: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 const Patients = ({
@@ -24,6 +27,8 @@ const Patients = ({
   allAvailable = false,
   allPatientsChecked = false,
   handleCheckAllPatients,
+  closeCross = false,
+  patientsRef,
 }: PatientsProps) => {
   //Hooks
   const [search, setSearch] = useState("");
@@ -32,11 +37,18 @@ const Patients = ({
     const value = e.target.value;
     setSearch(value);
   };
+  const handleClose = () => {
+    if (patientsRef?.current)
+      patientsRef.current.style.transform = "translateX(-200%)";
+  };
   return (
     <div className="patients">
       {label && (
         <div className="patients__title">
           {msgType === "Internal" ? "Related patient" : "Recipients"}
+          {closeCross && (
+            <XmarkRectangleIcon color=" #3d375a" onClick={handleClose} />
+          )}
         </div>
       )}
       <div className="patients__search-input">

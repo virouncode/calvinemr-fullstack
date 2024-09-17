@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -16,6 +17,7 @@ import MessageDetail from "./MessageDetail";
 import MessagesOverview from "./MessagesOverview";
 import NewMessage from "./NewMessage";
 import NewTodo from "./NewTodo";
+import NewMessageMobile from "./NewMessageMobile";
 
 type MessagesBoxProps = {
   section: string;
@@ -69,6 +71,7 @@ const MessagesBox = ({
     fetchNextPage,
     isFetching
   );
+  const isTabletOrMobile = useMediaQuery("(max-width: 900px)");
 
   if (isPending)
     return (
@@ -109,14 +112,18 @@ const MessagesBox = ({
         {newVisible && (
           <FakeWindow
             title="NEW MESSAGE"
-            width={1300}
+            width={1024}
             height={630}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 630) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewVisible}
           >
-            <NewMessage setNewVisible={setNewVisible} />
+            {isTabletOrMobile ? (
+              <NewMessageMobile setNewVisible={setNewVisible} />
+            ) : (
+              <NewMessage setNewVisible={setNewVisible} />
+            )}
           </FakeWindow>
         )}
         {newTodoVisible && (

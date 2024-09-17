@@ -258,9 +258,9 @@ const LettersPopUp = ({
       {newMessageInternalVisible && (
         <FakeWindow
           title="NEW MESSAGE"
-          width={1300}
+          width={1024}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#848484"
           setPopUpVisible={setNewMessageInternalVisible}
