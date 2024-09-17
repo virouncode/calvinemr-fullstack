@@ -34,19 +34,19 @@ import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
 
-type NewTodoProps = {
+type NewTodoMobileProps = {
   setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
   initialPatient?: { id: number; name: string };
   initialAttachments?: MessageAttachmentType[];
   initialBody?: string;
 };
 
-const NewTodo = ({
+const NewTodoMobile = ({
   setNewTodoVisible,
   initialPatient = { id: 0, name: "" },
   initialAttachments = [],
   initialBody = "",
-}: NewTodoProps) => {
+}: NewTodoMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
@@ -63,6 +63,8 @@ const NewTodo = ({
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const recipientsRef = useRef<HTMLDivElement | null>(null);
+  const patientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const messagesPost = useMessagesPostBatch(user.id, "To-dos");
 
@@ -220,19 +222,35 @@ const NewTodo = ({
     input.click();
   };
 
+  const handleClickRecipients = () => {
+    if (recipientsRef.current) {
+      recipientsRef.current.style.transform = "translateX(0)";
+    }
+  };
+  const handleClickPatient = () => {
+    if (patientsRef.current) {
+      patientsRef.current.style.transform = "translateX(0)";
+    }
+  };
+
   return (
-    <div className="new-message">
-      <div className="new-message__contacts">
+    <div className="new-message-mobile">
+      <div className="new-message-mobile__contacts" ref={recipientsRef}>
         <StaffContacts
           recipientsIds={recipientsIds}
           setRecipientsIds={setRecipientsIds}
           unfoldedCategory={titleToCategory(
             staffInfos.find(({ id }) => id === user.id)?.title ?? ""
           )}
+          closeCross={true}
+          recipientsRef={recipientsRef}
         />
       </div>
-      <div className="new-message__form">
-        <div className="new-message__form-recipients">
+      <div className="new-message-mobile__form">
+        <div
+          className="new-message__form-recipients"
+          onClick={handleClickRecipients}
+        >
           <Input
             label="To:"
             id="to"
@@ -253,7 +271,7 @@ const NewTodo = ({
             placeholder="Subject"
           />
         </div>
-        <div className="new-message__form-patient">
+        <div className="new-message__form-patient" onClick={handleClickPatient}>
           <Input
             id="patient"
             label="About patient:"
@@ -316,11 +334,13 @@ const NewTodo = ({
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>
-      <div className="new-message__patients">
+      <div className="new-message-mobile__patients" ref={patientsRef}>
         <Patients
           handleCheckPatient={handleCheckPatient}
           isPatientChecked={isPatientChecked}
           msgType="Internal"
+          closeCross={true}
+          patientsRef={patientsRef}
         />
       </div>
       {templatesVisible && (
@@ -340,4 +360,4 @@ const NewTodo = ({
   );
 };
 
-export default NewTodo;
+export default NewTodoMobile;

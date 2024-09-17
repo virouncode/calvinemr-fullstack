@@ -17,6 +17,7 @@
     font-size: $size-sm;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     .forward-message__form-recipients {
       border-bottom: solid 0.5px $grey;
       height: 30px;
@@ -71,6 +72,18 @@
         text-overflow: ellipsis;
       }
     }
+    .forward-message__form-attach {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      font-size: $size-sm;
+      label {
+        font-weight: bold;
+      }
+    }
     .forward-message__form-duedate {
       border-bottom: solid 0.5px $grey;
       display: flex;
@@ -86,20 +99,8 @@
         width: 120px;
       }
     }
-    .forward-message__form-attach {
-      border-bottom: solid 0.3px $grey;
-      min-height: 30px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 0.5rem;
-      font-size: $size-sm;
-      label {
-        font-weight: bold;
-      }
-    }
     .forward-message__form-importance {
-      border-bottom: solid 0.3px $grey;
+      border-bottom: solid 0.5px $grey;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -116,41 +117,98 @@
     }
     .forward-message__form-body {
       display: flex;
-      justify-content: center;
       flex-direction: column;
-      font-size: $size-sm;
       flex: 1;
+      overflow-y: scroll;
       textarea {
-        border: none;
+        font-size: $size-sm;
         outline: none;
         padding: 0.5rem;
         width: 100%;
-        height: 100%;
+        min-height: 100%;
+      }
+      .forward-message__form-history {
+        .message {
+          padding: 1rem;
+          border-bottom: solid 0.5px $grey;
+          .message__title {
+            display: flex;
+            justify-content: space-between;
+            font-size: $size-sm;
+            .message__author {
+              font-weight: bold;
+            }
+            .message__date {
+              text-align: right;
+            }
+          }
+          .message__subtitle {
+            font-size: $size-xs;
+            width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .message__body {
+            padding: 1rem 1rem 0;
+            font-size: $size-sm;
+            white-space: pre-wrap;
+          }
+        }
+      }
+      .message__attachments {
+        display: flex;
+        padding: 1rem;
+        flex-wrap: wrap;
+        .message__attachment-card {
+          border: solid 0.5px $grey;
+          margin: 0.5rem 0.25rem 0;
+          .message__attachment-card-thumbnail {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            iframe {
+              border: none;
+              cursor: pointer;
+            }
+          }
+          .message__attachment-card-footer {
+            background: $grey;
+            padding: 0.25rem;
+            font-size: $size-xs;
+            display: flex;
+            flex-direction: column;
+          }
+          .message__attachment-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+              font-size: $size-xs;
+              margin-bottom: 0.25rem;
+            }
+          }
+          .message__attachment-card-btn {
+            text-align: center;
+            button {
+              font-size: $size-xs;
+              max-width: 100%;
+            }
+          }
+        }
       }
     }
     .forward-message__form-btns {
-      border-top: solid 0.3px $grey;
+      border-top: solid 0.5px $grey;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 0.25rem;
       padding: 0.5rem;
     }
-    &-duedate {
-      border-bottom: solid 0.3px $grey;
-      min-height: 30px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      font-size: 0.8rem;
-      label {
-        font-weight: bold;
-        margin-right: 5px;
-      }
-    }
-    &-templates {
+
+    .forward-message__form-templates {
       border-bottom: solid 0.3px $grey;
       min-height: 30px;
       padding-top: 5px;
@@ -158,19 +216,6 @@
       font-size: 0.8rem;
       text-decoration: underline;
       cursor: pointer;
-    }
-
-    &--patient {
-      width: 75%;
-    }
-    &--todo {
-      width: 90%;
-    }
-    &--template {
-      width: 70%;
-    }
-    &--template-external {
-      width: 90%;
     }
   }
   .forward-message__patients {
@@ -181,114 +226,276 @@
     display: flex;
     flex-direction: column;
   }
-  .message {
-    padding: 1rem;
-    border-bottom: solid 0.5px $grey;
-  }
-  .message__title {
-    display: flex;
-    justify-content: space-between;
-    font-size: $size-sm;
-    .message__author {
-      font-weight: bold;
-    }
-    .message__date {
-      text-align: right;
-    }
-  }
-  .message__subtitle {
-    font-size: $size-xs;
+}
+.forward-message-mobile {
+  padding: 0 0.5rem;
+  margin-top: 50px;
+  height: 90%;
+  position: relative;
+  .forward-message-mobile__contacts {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-base;
+    padding: 0.5rem;
+    position: absolute;
+    top: 0;
+    transform: translateX(-200%);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    background-color: $white;
+    height: 100%;
     width: 70%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .message__body {
-    padding: 1rem 1rem 0;
-    font-size: $size-sm;
-    white-space: pre-wrap;
-  }
-  .message__attachments {
-    display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-    .message__attachment-card {
-      border: solid 0.5px $grey;
-      margin: 0.5rem 0.25rem 0;
-      .message__attachment-card-thumbnail {
-        height: 80px;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        iframe {
-          border: none;
-          cursor: pointer;
-        }
-      }
-      .message__attachment-card-footer {
-        background: $grey;
-        padding: 0.25rem;
-        font-size: $size-xs;
+    .contacts {
+      .contacts__title {
         display: flex;
-        flex-direction: column;
-      }
-      .message__attachment-card-title {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        p {
-          font-size: $size-xs;
-          margin-bottom: 0.25rem;
-        }
+        justify-content: space-between;
       }
-      .message__attachment-card-btn {
-        text-align: center;
-        button {
-          font-size: $size-xs;
-          max-width: 100%;
+      .contacts__list {
+        .contacts__list-category {
+          .contacts__list-category-overview {
+            font-size: $size-base;
+          }
         }
       }
     }
   }
-  .message__attachments {
+  .forward-message-mobile__form {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-base;
     display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-    .message__attachment-card {
-      border: solid 0.5px $grey;
-      margin: 0.5rem 0.25rem 0;
-      .message__attachment-card-thumbnail {
-        height: 80px;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+    .forward-message__form-recipients {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        width: 97%;
         overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        iframe {
-          border: none;
-          cursor: pointer;
-        }
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
       }
-      .message__attachment-card-footer {
-        background: $grey;
-        padding: 0.25rem;
-        font-size: $size-xs;
-        display: flex;
-        flex-direction: column;
+    }
+    .forward-message__form-subject {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
       }
-      .message__attachment-card-title {
+      input {
+        outline: none;
+        width: 95%;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
+        overflow-x: scroll;
+      }
+    }
+    .forward-message__form-patient {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        outline: none;
+        width: 60%;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .forward-message__form-attach {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      font-size: $size-base;
+      label {
+        font-weight: bold;
+      }
+    }
+    .forward-message__form-duedate {
+      border-bottom: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+        margin-right: 1em;
+      }
+      input {
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+        width: 120px;
+      }
+    }
+    .forward-message__form-importance {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      font-size: $size-base;
+      label {
+        font-weight: bold;
+      }
+      &-check {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        p {
-          font-size: $size-xs;
-          margin-bottom: 0.25rem;
+      }
+    }
+    .forward-message__form-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: scroll;
+      textarea {
+        font-size: $size-base;
+        border-bottom: solid 0.5px $grey;
+        outline: none;
+        padding: 0.5rem;
+        width: 100%;
+        min-height: 100%;
+      }
+      .forward-message__form-history {
+        .message {
+          padding: 1rem;
+          border-bottom: solid 0.5px $grey;
+          .message__title {
+            display: flex;
+            justify-content: space-between;
+            font-size: $size-sm;
+            .message__author {
+              font-weight: bold;
+            }
+            .message__date {
+              text-align: right;
+            }
+          }
+          .message__subtitle {
+            font-size: $size-xs;
+            width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .message__body {
+            padding: 1rem 1rem 0;
+            font-size: $size-sm;
+            white-space: pre-wrap;
+          }
         }
       }
-      .message__attachment-card-btn {
-        text-align: center;
-        button {
-          font-size: $size-xs;
-          max-width: 100%;
+      .message__attachments {
+        display: flex;
+        padding: 15px;
+        flex-wrap: wrap;
+        .message__attachment-card {
+          border: solid 0.5px $grey;
+          margin: 0.5rem 0.25rem 0;
+          .message__attachment-card-thumbnail {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            iframe {
+              border: none;
+              cursor: pointer;
+            }
+          }
+          .message__attachment-card-footer {
+            background: $grey;
+            padding: 0.25rem;
+            font-size: $size-xs;
+            display: flex;
+            flex-direction: column;
+          }
+          .message__attachment-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+              font-size: $size-xs;
+              margin-bottom: 0.25rem;
+            }
+          }
+          .message__attachment-card-btn {
+            text-align: center;
+            button {
+              font-size: $size-xs;
+              max-width: 100%;
+            }
+          }
         }
+      }
+    }
+    .forward-message__form-btns {
+      border-top: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.25rem;
+      padding: 0.5rem;
+    }
+    .forward-message__form-templates {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .forward-message-mobile__patients {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-sm;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: $white;
+    transform: translateX(-200%);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    width: 70%;
+    .patients {
+      .patients__search-input {
+        input {
+          font-size: $size-base;
+        }
+      }
+      .patients__list {
+        height: 400px;
+      }
+      .patients__title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
   }

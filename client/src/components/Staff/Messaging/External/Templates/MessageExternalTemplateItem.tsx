@@ -73,13 +73,13 @@ const MessageExternalTemplateItem = ({
             : ""}
         </span>
         <>
-          {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
-            <TrashIcon ml={5} onClick={handleDelete} />
-          )}
           <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
+          {template.author_id === user.id && (
+            <PenIcon ml={15} onClick={handleEditClick} />
+          )}
+          {template.author_id === user.id && (
+            <TrashIcon ml={15} onClick={handleDelete} />
+          )}
         </>
       </li>
       {editTemplateVisible && (

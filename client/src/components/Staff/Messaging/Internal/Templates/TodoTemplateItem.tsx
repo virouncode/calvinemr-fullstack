@@ -73,13 +73,13 @@ const TodoTemplateItem = ({
             : ""}
         </span>
         <>
-          {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
-            <TrashIcon onClick={handleDelete} ml={5} />
-          )}
           <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
+          {template.author_id === user.id && (
+            <PenIcon ml={15} onClick={handleEditClick} />
+          )}
+          {template.author_id === user.id && (
+            <TrashIcon onClick={handleDelete} ml={15} />
+          )}
         </>
       </li>
       {editTemplateVisible && (

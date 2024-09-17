@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
@@ -32,7 +33,9 @@ import Button from "../../../UI/Buttons/Button";
 import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewTodo from "../Internal/NewTodo";
+import NewTodoMobile from "../Internal/NewTodoMobile";
 import ForwardMessageExternal from "./ForwardMessageExternal";
+import ForwardMessageExternalMobile from "./ForwardMessageExternalMobile";
 import MessageExternal from "./MessageExternal";
 import MessageExternalDetailToolbar from "./MessageExternalDetailToolbar";
 import MessagesExternalAttachments from "./MessagesExternalAttachments";
@@ -64,6 +67,7 @@ const MessageExternalDetail = ({
   const [newTodoVisible, setNewTodoVisible] = useState(false);
   const [posting, setPosting] = useState(false);
   const messageContentRef = useRef<HTMLDivElement | null>(null);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const messagePut = useMessageExternalPut();
   const clinicalNotePost = useClinicalNotePost();
@@ -363,38 +367,64 @@ const MessageExternalDetail = ({
             color={"#94bae8"}
             setPopUpVisible={setForwardVisible}
           >
-            <ForwardMessageExternal
-              setForwardVisible={setForwardVisible}
-              message={message}
-              previousMsgs={previousMsgs}
-              patientName={
-                message.from_patient_id
-                  ? toPatientName(message.from_patient_infos)
-                  : ""
-              }
-              section={section}
-            />
+            {isTabletOrMobile ? (
+              <ForwardMessageExternalMobile
+                setForwardVisible={setForwardVisible}
+                message={message}
+                previousMsgs={previousMsgs}
+                patientName={
+                  message.from_patient_id
+                    ? toPatientName(message.from_patient_infos)
+                    : ""
+                }
+                section={section}
+              />
+            ) : (
+              <ForwardMessageExternal
+                setForwardVisible={setForwardVisible}
+                message={message}
+                previousMsgs={previousMsgs}
+                patientName={
+                  message.from_patient_id
+                    ? toPatientName(message.from_patient_infos)
+                    : ""
+                }
+                section={section}
+              />
+            )}
           </FakeWindow>
         )}
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1300}
+            width={1024}
             height={620}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >
-            <NewTodo
-              setNewTodoVisible={setNewTodoVisible}
-              initialPatient={{
-                id: message.from_patient_id || 0,
-                name: toPatientName(message.from_patient_infos),
-              }}
-              initialAttachments={attachments}
-              initialBody={message.body}
-            />
+            {isTabletOrMobile ? (
+              <NewTodoMobile
+                setNewTodoVisible={setNewTodoVisible}
+                initialPatient={{
+                  id: message.from_patient_id || 0,
+                  name: toPatientName(message.from_patient_infos),
+                }}
+                initialAttachments={attachments}
+                initialBody={message.body}
+              />
+            ) : (
+              <NewTodo
+                setNewTodoVisible={setNewTodoVisible}
+                initialPatient={{
+                  id: message.from_patient_id || 0,
+                  name: toPatientName(message.from_patient_infos),
+                }}
+                initialAttachments={attachments}
+                initialBody={message.body}
+              />
+            )}
           </FakeWindow>
         )}
       </>

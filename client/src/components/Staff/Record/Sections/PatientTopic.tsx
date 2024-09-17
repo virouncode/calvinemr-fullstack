@@ -46,6 +46,7 @@ import NewMessageExternalMobile from "../../Messaging/External/NewMessageExterna
 import NewMessage from "../../Messaging/Internal/NewMessage";
 import NewMessageMobile from "../../Messaging/Internal/NewMessageMobile";
 import NewTodo from "../../Messaging/Internal/NewTodo";
+import NewTodoMobile from "../../Messaging/Internal/NewTodoMobile";
 import AlertsDropDown from "../Topics/Alerts/AlertsDropDown";
 import AlertsPopUp from "../Topics/Alerts/AlertsPopUp";
 import AllergiesDropDown from "../Topics/Allergies/AllergiesDropDown";
@@ -1461,20 +1462,30 @@ const PatientTopic = ({
         {topic === "TO-DOS ABOUT PATIENT" && popUpVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1300}
+            width={1024}
             height={620}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 620) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewTodo
-              setNewTodoVisible={setPopUpVisible}
-              initialPatient={{
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-              }}
-            />
+            {isTabletOrMobile ? (
+              <NewTodoMobile
+                setNewTodoVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            ) : (
+              <NewTodo
+                setNewTodoVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            )}
           </FakeWindow>
         )}
       </div>

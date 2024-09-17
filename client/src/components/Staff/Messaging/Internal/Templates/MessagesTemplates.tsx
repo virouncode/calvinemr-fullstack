@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import { useMessagesTemplates } from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
@@ -9,6 +10,7 @@ import LoadingLi from "../../../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateForm from "./MessageTemplateForm";
+import MessageTemplateFormMobile from "./MessageTemplateFormMobile";
 import MessageTemplateItem from "./MessageTemplateItem";
 
 type MessagesTemplatesProps = {
@@ -21,6 +23,7 @@ const MessagesTemplates = ({
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data,
@@ -111,9 +114,15 @@ const MessagesTemplates = ({
             color="#93B5E9"
             setPopUpVisible={setNewTemplateVisible}
           >
-            <MessageTemplateForm
-              setNewTemplateVisible={setNewTemplateVisible}
-            />
+            {isTabletOrMobile ? (
+              <MessageTemplateFormMobile
+                setNewTemplateVisible={setNewTemplateVisible}
+              />
+            ) : (
+              <MessageTemplateForm
+                setNewTemplateVisible={setNewTemplateVisible}
+              />
+            )}
           </FakeWindow>
         )}
       </div>

@@ -1,88 +1,76 @@
 import { uniqueId } from "lodash";
-import React, { createElement, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
-import { useMessagesPostBatch } from "../../../../hooks/reactquery/mutations/messagesMutations";
+import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
   AttachmentType,
-  DemographicsType,
   MessageAttachmentType,
-  TodoTemplateType,
-  TodoType,
+  MessageExternalType,
+  MessageTemplateType,
+  MessageType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
-import {
-  dateISOToTimestampTZ,
-  nowTZTimestamp,
-} from "../../../../utils/dates/formatDates";
-import { titleToCategory } from "../../../../utils/messages/titleToCategory";
+import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
-import { toPatientName } from "../../../../utils/names/toPatientName";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
 import Input from "../../../UI/Inputs/Input";
-import InputDate from "../../../UI/Inputs/InputDate";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
-import Patients from "../Patients";
+import MessageExternal from "../External/MessageExternal";
 import StaffContacts from "../StaffContacts";
+import Message from "./Message";
 import MessagesAttachments from "./MessagesAttachments";
-import TodosTemplates from "./Templates/TodosTemplates";
+import MessagesTemplates from "./Templates/MessagesTemplates";
 
-type NewTodoProps = {
-  setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  initialPatient?: { id: number; name: string };
-  initialAttachments?: MessageAttachmentType[];
-  initialBody?: string;
+type ForwardMessageMobileProps = {
+  setForwardVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  message: MessageType;
+  previousMsgs: (MessageType | MessageExternalType)[];
+  patientName: string;
+  section: string;
 };
 
-const NewTodo = ({
-  setNewTodoVisible,
-  initialPatient = { id: 0, name: "" },
-  initialAttachments = [],
-  initialBody = "",
-}: NewTodoProps) => {
+const ForwardMessageMobile = ({
+  setForwardVisible,
+  message,
+  previousMsgs,
+  patientName,
+  section,
+}: ForwardMessageMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
-  const [attachments, setAttachments] =
-    useState<MessageAttachmentType[]>(initialAttachments);
-  const [recipientsIds, setRecipientsIds] = useState([user.id]);
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState(initialBody);
+  const [attachments, setAttachments] = useState<MessageAttachmentType[]>([]);
+  const [recipientsIds, setRecipientsIds] = useState<number[]>([]);
+  const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
-  const [patient, setPatient] = useState(initialPatient);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
-  const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
-  const messagesPost = useMessagesPostBatch(user.id, "To-dos");
+  const messagePost = useMessagePost(user.id, section);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBody(e.target.value);
   };
 
-  const handleChangeSubject = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSubject(e.target.value);
+  const handleImportanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.checked;
+    setImportant(value);
   };
 
-  const handleChangeDueDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDueDate(value);
-  };
-
-  const isPatientChecked = (id: number) => patient.id === id;
-
-  const handleSelectTemplate = (template: TodoTemplateType) => {
-    if (template.subject) setSubject(template.subject);
+  const handleSelectTemplate = (template: MessageTemplateType) => {
+    if (template.to_staff_ids.length) setRecipientsIds(template.to_staff_ids);
     setBody((b) =>
       b ? b + "\n\n" + template.body + "\n" : template.body + "\n"
     );
@@ -95,78 +83,80 @@ const NewTodo = ({
     }
   };
 
-  const handleCheckPatient = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    info: DemographicsType
-  ) => {
-    const checked = e.target.checked;
-    if (checked) {
-      setPatient({ id: info.patient_id, name: toPatientName(info) });
-    } else {
-      setPatient({ id: 0, name: "" });
-    }
-  };
-
-  const handleImportanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.checked;
-    setImportant(value);
-  };
-
   const handleCancel = () => {
-    setNewTodoVisible(false);
+    setForwardVisible(false);
   };
 
-  const handleRemoveAttachment = (fileName: string) => {
-    let updatedAttachments = [...attachments];
-    updatedAttachments = updatedAttachments.filter(
-      (attachment) => attachment.file?.name !== fileName
-    );
-    setAttachments(updatedAttachments);
-  };
-
-  const handleSave = async () => {
-    try {
-      setProgress(true);
-      let attach_ids = [];
-      if (attachments.length > 0) {
-        attach_ids = await xanoPost("/messages_attachments", "staff", {
+  const handleSend = async () => {
+    if (!recipientsIds.length) {
+      toast.error("Please choose at least one recipient", { containerId: "A" });
+      return;
+    }
+    setProgress(true);
+    let attach_ids: number[] = [];
+    if (attachments.length > 0) {
+      const response: number[] = await xanoPost(
+        "/messages_attachments",
+        "staff",
+        {
           attachments_array: attachments,
+        }
+      );
+      attach_ids = [
+        ...(
+          message.attachments_ids as { attachment: MessageAttachmentType }[]
+        ).map(({ attachment }) => attachment.id as number),
+        ...response,
+      ];
+    } else {
+      attach_ids = [
+        ...(
+          message.attachments_ids as { attachment: MessageAttachmentType }[]
+        ).map(({ attachment }) => attachment.id as number),
+      ];
+    }
+    //create the message
+    const messageToPost: Partial<MessageType> = {
+      from_id: user.id,
+      to_staff_ids: recipientsIds,
+      subject: previousMsgs.length
+        ? `Fwd: ${message.subject.slice(message.subject.indexOf(":") + 1)}`
+        : `Fwd: ${message.subject}`,
+      body: body,
+      attachments_ids: attach_ids,
+      related_patient_id: message.related_patient_id || 0,
+      read_by_staff_ids: [user.id],
+      previous_messages: [
+        ...message.previous_messages,
+        { message_type: "Internal", id: message.id },
+      ],
+      date_created: nowTZTimestamp(),
+      type: "Internal",
+      high_importance: important,
+    };
+    messagePost.mutate(messageToPost, {
+      onSuccess: () => {
+        setForwardVisible(false);
+      },
+      onSettled: () => {
+        setProgress(false);
+      },
+    });
+    for (const to_staff_id of recipientsIds) {
+      if (to_staff_id !== user.id) {
+        socket?.emit("message", {
+          route: "UNREAD",
+          action: "update",
+          content: {
+            userId: to_staff_id,
+          },
         });
       }
-      const messagesToPost: Partial<TodoType>[] = [];
-      for (const recipientId of recipientsIds) {
-        //create the message
-        const messageToPost: Partial<TodoType> = {
-          from_staff_id: user.id,
-          to_staff_id: recipientId,
-          subject: subject,
-          body: body,
-          attachments_ids: attach_ids,
-          related_patient_id: patient.id,
-          done: false,
-          date_created: nowTZTimestamp(),
-          high_importance: important,
-          due_date: dueDate ? dateISOToTimestampTZ(dueDate) : null,
-          read: recipientId === user.id,
-        };
-        messagesToPost.push(messageToPost);
-      }
-      messagesPost.mutate(messagesToPost, {
-        onSuccess: () => setNewTodoVisible(false),
-      });
-    } catch (err) {
-      if (err instanceof Error)
-        toast.error(`Error: unable to save to-do: ${err.message}`, {
-          containerId: "A",
-        });
-    } finally {
-      setProgress(false);
     }
   };
 
   const handleAttach = () => {
     const input = document.createElement("input");
-    createElement("input");
     input.type = "file";
     input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
@@ -204,7 +194,7 @@ const NewTodo = ({
               date_created: nowTZTimestamp(),
               created_by_id: user.id,
               created_by_user_type: "staff",
-              id: uniqueId("todos_attachment_"),
+              id: uniqueId("messages_attachment_"),
             },
           ]); //meta, mime, name, path, size, type
           setIsLoadingFile(false);
@@ -220,23 +210,38 @@ const NewTodo = ({
     input.click();
   };
 
+  const handleRemoveAttachment = (fileName: string) => {
+    let updatedAttachments = [...attachments];
+    updatedAttachments = updatedAttachments.filter(
+      (attachment) => attachment.file?.name !== fileName
+    );
+    setAttachments(updatedAttachments);
+  };
+  const handleClickRecipients = () => {
+    if (recipientsRef.current) {
+      recipientsRef.current.style.transform = "translateX(0)";
+    }
+  };
+
   return (
-    <div className="new-message">
-      <div className="new-message__contacts">
+    <div className="forward-message-mobile">
+      <div className="forward-message-mobile__contacts" ref={recipientsRef}>
         <StaffContacts
           recipientsIds={recipientsIds}
           setRecipientsIds={setRecipientsIds}
-          unfoldedCategory={titleToCategory(
-            staffInfos.find(({ id }) => id === user.id)?.title ?? ""
-          )}
+          closeCross={true}
+          recipientsRef={recipientsRef}
         />
       </div>
-      <div className="new-message__form">
-        <div className="new-message__form-recipients">
+      <div className="forward-message-mobile__form">
+        <div
+          className="forward-message__form-recipients"
+          onClick={handleClickRecipients}
+        >
           <Input
-            label="To:"
             id="to"
-            placeholder="Recipient(s)"
+            label="To:"
+            placeholder="Recipients"
             value={staffInfos
               .filter(({ id }) => recipientsIds.includes(id))
               .map((staff) => staffIdToTitleAndName(staffInfos, staff.id))
@@ -244,37 +249,24 @@ const NewTodo = ({
             readOnly={true}
           />
         </div>
-        <div className="new-message__form-subject">
-          <Input
-            value={subject}
-            onChange={handleChangeSubject}
-            id="subject"
-            label="Subject:"
-            placeholder="Subject"
-          />
+        <div className="forward-message__form-subject">
+          <strong>Subject:</strong>
+          {previousMsgs.length
+            ? `\u00A0Fwd: ${message.subject.slice(
+                message.subject.indexOf(":") + 1
+              )}`
+            : `\u00A0Fwd: ${message.subject}`}
         </div>
-        <div className="new-message__form-patient">
-          <Input
-            id="patient"
-            label="About patient:"
-            placeholder="Patient"
-            value={patient.name}
-            readOnly
-          />
-        </div>
-        <div className="new-message__form-attach">
+        {patientName && (
+          <div className="forward-message__form-patient">
+            <strong>About patient: {"\u00A0"}</strong> {patientName}
+          </div>
+        )}
+        <div className="forward-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="new-message__form-duedate">
-          <InputDate
-            value={dueDate}
-            onChange={handleChangeDueDate}
-            id="due-date"
-            label="Due date:"
-          />
-        </div>
-        <div className="new-message__form-importance">
-          <div className="new-message__form-importance-check">
+        <div className="forward-message__form-importance">
+          <div className="forward-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -292,40 +284,58 @@ const NewTodo = ({
             </strong>
           </div>
         </div>
-        <div className="new-message__form-body">
+        <div className="forward-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
             ref={textareaRef}
             autoFocus
           />
+          <div className="forward-message__form-history">
+            <Message
+              message={message}
+              key={message.id}
+              index={0}
+              section={section}
+            />
+            {previousMsgs.map((message, index) =>
+              message.type === "Internal" ? (
+                <Message
+                  message={message as MessageType}
+                  key={message.id}
+                  index={index + 1}
+                  section={section}
+                />
+              ) : (
+                <MessageExternal
+                  message={message as MessageExternalType}
+                  key={message.id}
+                  index={index + 1}
+                />
+              )
+            )}
+          </div>
           <MessagesAttachments
             attachments={attachments}
             handleRemoveAttachment={handleRemoveAttachment}
             deletable={true}
-            addable={false}
             cardWidth="30%"
+            addable={false}
           />
         </div>
-        <div className="new-message__form-btns">
+        <div className="forward-message__form-btns">
           <SaveButton
-            onClick={handleSave}
+            onClick={handleSend}
             disabled={isLoadingFile || progress}
+            label="Send"
           />
           <CancelButton onClick={handleCancel} disabled={progress} />
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>
-      <div className="new-message__patients">
-        <Patients
-          handleCheckPatient={handleCheckPatient}
-          isPatientChecked={isPatientChecked}
-          msgType="Internal"
-        />
-      </div>
       {templatesVisible && (
         <FakeWindow
-          title={`CHOOSE TO-DO TEMPLATE`}
+          title={`CHOOSE MESSAGE TEMPLATE(S)`}
           width={800}
           height={600}
           x={window.innerWidth - 800}
@@ -333,11 +343,11 @@ const NewTodo = ({
           color="#93b5e9"
           setPopUpVisible={setTemplatesVisible}
         >
-          <TodosTemplates handleSelectTemplate={handleSelectTemplate} />
+          <MessagesTemplates handleSelectTemplate={handleSelectTemplate} />
         </FakeWindow>
       )}
     </div>
   );
 };
 
-export default NewTodo;
+export default ForwardMessageMobile;

@@ -18,6 +18,7 @@ import MessagesOverview from "./MessagesOverview";
 import NewMessage from "./NewMessage";
 import NewMessageMobile from "./NewMessageMobile";
 import NewTodo from "./NewTodo";
+import NewTodoMobile from "./NewTodoMobile";
 
 type MessagesBoxProps = {
   section: string;
@@ -129,14 +130,18 @@ const MessagesBox = ({
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1300}
+            width={1024}
             height={620}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >
-            <NewTodo setNewTodoVisible={setNewTodoVisible} />
+            {isTabletOrMobile ? (
+              <NewTodoMobile setNewTodoVisible={setNewTodoVisible} />
+            ) : (
+              <NewTodo setNewTodoVisible={setNewTodoVisible} />
+            )}
           </FakeWindow>
         )}
       </>

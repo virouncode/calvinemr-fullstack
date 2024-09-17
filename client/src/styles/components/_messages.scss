@@ -35,7 +35,7 @@
     flex-direction: column;
     overflow-y: scroll;
     .messages__toolbar {
-      height: 8%;
+      padding: 0.5rem;
       width: 100%;
       position: sticky;
       top: 0;
@@ -49,18 +49,17 @@
         font-size: $size-xl;
         font-weight: bold;
         padding: 0;
-        margin-left: 0.5rem;
       }
       input {
         width: 100%;
         font-size: $size-sm;
+        margin-left: -0.25rem;
       }
       .messages__toolbar-btns {
         display: flex;
         align-items: center;
         gap: 0.25rem;
         justify-content: flex-end;
-        margin-right: 0.5rem;
       }
     }
     .messages__content {

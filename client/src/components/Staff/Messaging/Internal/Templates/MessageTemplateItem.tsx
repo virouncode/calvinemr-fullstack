@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -15,6 +16,7 @@ import PenIcon from "../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateEdit from "./MessageTemplateEdit";
+import MessageTemplateEditMobile from "./MessageTemplateEditMobile";
 
 type MessageTemplateItemProps = {
   template: MessageTemplateType;
@@ -31,6 +33,7 @@ const MessageTemplateItem = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const messageTemplatePost = useMessagesTemplatePost();
   const messageTemplateDelete = useMessagesTemplateDelete();
@@ -73,13 +76,13 @@ const MessageTemplateItem = ({
             : ""}
         </span>
         <>
-          {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
-            <TrashIcon ml={5} onClick={handleDelete} />
-          )}
           <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
+          {template.author_id === user.id && (
+            <PenIcon ml={15} onClick={handleEditClick} />
+          )}
+          {template.author_id === user.id && (
+            <TrashIcon ml={15} onClick={handleDelete} />
+          )}
         </>
       </li>
       {editTemplateVisible && (
@@ -92,10 +95,17 @@ const MessageTemplateItem = ({
           color="#93B5E9"
           setPopUpVisible={setEditTemplateVisible}
         >
-          <MessageTemplateEdit
-            setEditTemplateVisible={setEditTemplateVisible}
-            template={template}
-          />
+          {isTabletOrMobile ? (
+            <MessageTemplateEditMobile
+              setEditTemplateVisible={setEditTemplateVisible}
+              template={template}
+            />
+          ) : (
+            <MessageTemplateEdit
+              setEditTemplateVisible={setEditTemplateVisible}
+              template={template}
+            />
+          )}
         </FakeWindow>
       )}
     </>
