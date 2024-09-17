@@ -6188,7 +6188,7 @@ select:disabled {
   outline: none;
   padding: 0.5rem;
   width: 100%;
-  height: 100%;
+  height: 70%;
 }
 .new-message .new-message__form .new-message__form-btns {
   border-top: solid 0.3px #cecdcd;
@@ -6234,6 +6234,7 @@ select:disabled {
   display: flex;
   padding: 15px;
   flex-wrap: wrap;
+  height: 30%;
 }
 .new-message .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
@@ -6406,7 +6407,7 @@ select:disabled {
   outline: none;
   padding: 0.5rem;
   width: 100%;
-  height: 100%;
+  height: 70%;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-btns {
   border-top: solid 0.3px #cecdcd;
@@ -6471,6 +6472,7 @@ select:disabled {
   display: flex;
   padding: 15px;
   flex-wrap: wrap;
+  height: 30%;
 }
 .new-message-mobile .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
