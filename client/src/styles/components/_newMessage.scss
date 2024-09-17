@@ -13,6 +13,30 @@
     border-radius: 6px;
     font-size: $size-sm;
     padding: 0.5rem;
+    .contacts {
+      .contacts__title {
+        font-weight: bold;
+        font-size: $size-base;
+      }
+      .contacts__list {
+        overflow-y: scroll;
+        .contacts__list-category {
+          margin-top: 1rem;
+          ul {
+            margin-top: 0.5rem;
+            margin-left: 2rem;
+          }
+          .contacts__list-category-overview {
+            display: flex;
+            align-items: center;
+            font-size: $size-sm;
+            label {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
   }
   .new-message__form {
     border: solid 0.5px $grey;
@@ -199,6 +223,32 @@
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
+    .patients {
+      .patients__title {
+        font-weight: bold;
+        font-size: $size-base;
+        margin-bottom: 1rem;
+      }
+      .patients__search-input {
+        margin-bottom: 10px;
+        input {
+          width: 100%;
+        }
+      }
+      .patients__list {
+        border: solid 0.5px $grey;
+        border-radius: 6px;
+        padding: 0.5rem;
+        height: 450px;
+        flex: 1;
+        overflow-y: scroll;
+        font-size: $size-sm;
+      }
+      .patients__list-item {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 }
 
@@ -222,14 +272,27 @@
     width: 70%;
     .contacts {
       .contacts__title {
+        font-weight: bold;
+        font-size: $size-base;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
       .contacts__list {
+        overflow-y: scroll;
         .contacts__list-category {
+          margin-top: 1rem;
+          ul {
+            margin-top: 0.5rem;
+            margin-left: 2rem;
+          }
           .contacts__list-category-overview {
+            display: flex;
+            align-items: center;
             font-size: $size-base;
+            label {
+              font-weight: bold;
+            }
           }
         }
       }
@@ -430,18 +493,29 @@
     transition: transform 0.3s ease-in-out;
     width: 70%;
     .patients {
+      .patients__title {
+        font-weight: bold;
+        font-size: $size-base;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
       .patients__search-input {
+        margin-bottom: 10px;
         input {
+          width: 100%;
           font-size: $size-base;
         }
       }
       .patients__list {
+        border: solid 0.5px $grey;
+        border-radius: 6px;
+        padding: 0.5rem;
         height: 400px;
-      }
-      .patients__title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex: 1;
+        overflow-y: scroll;
+        font-size: $size-sm;
       }
     }
   }

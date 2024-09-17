@@ -16,7 +16,7 @@
     overflow-y: scroll;
   }
   .fax__toolbar {
-    height: 8%;
+    padding: 0.5rem;
     width: 100%;
     position: sticky;
     display: grid;
@@ -29,7 +29,6 @@
       font-size: $size-xl;
       font-weight: bold;
       padding: 0;
-      margin-left: 0.5rem;
     }
     input {
       width: 100%;
@@ -39,6 +38,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-left: -0.25rem;
       .fax__toolbar-filter-search {
         flex: 1;
         margin-right: 50px;
@@ -72,7 +72,6 @@
       align-items: center;
       gap: 0.25rem;
       justify-content: flex-end;
-      margin-right: 0.5rem;
     }
   }
   .fax__content {

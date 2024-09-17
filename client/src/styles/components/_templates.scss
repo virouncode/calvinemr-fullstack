@@ -78,14 +78,27 @@
       padding: 0.5rem;
       .contacts {
         .contacts__title {
+          font-weight: bold;
+          font-size: $size-base;
           display: flex;
           align-items: center;
           justify-content: space-between;
         }
         .contacts__list {
+          overflow-y: scroll;
           .contacts__list-category {
+            margin-top: 1rem;
+            ul {
+              margin-top: 0.5rem;
+              margin-left: 2rem;
+            }
             .contacts__list-category-overview {
+              display: flex;
+              align-items: center;
               font-size: $size-base;
+              label {
+                font-weight: bold;
+              }
             }
           }
         }
