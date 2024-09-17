@@ -29,7 +29,7 @@ const MessageAttachmentCard = ({
   handleRemoveAttachment,
   attachment,
   deletable,
-  cardWidth = "30%",
+  cardWidth,
   addable = true,
   hasRelatedPatient = true,
   patientName,
@@ -52,7 +52,10 @@ const MessageAttachmentCard = ({
 
   return (
     <>
-      <div className="message__attachment-card" style={{ width: cardWidth }}>
+      <div
+        className="message__attachment-card"
+        style={{ width: cardWidth ?? "" }}
+      >
         <div className="message__attachment-card-thumbnail">
           {attachment.file?.mime.includes("image") ? (
             <img

@@ -199,10 +199,6 @@
             justify-content: center;
             gap: 0.5rem;
           }
-          .message__thumbnail-mobile-title {
-            display: flex;
-            justify-content: space-between;
-          }
         }
         .message__thumbnail-mobile {
           display: flex;
@@ -330,6 +326,7 @@
             .message__attachment-card {
               border: solid 0.5px $grey;
               margin: 0.5rem 0.25rem 0;
+              width: 15%;
               .message__attachment-card-thumbnail {
                 height: 80px;
                 overflow: hidden;
@@ -575,6 +572,46 @@
           flex: 1;
           .messages__overview-toolbar {
             display: none;
+          }
+          .message__detail-toolbar {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            padding: 0.5rem;
+            .message__detail-toolbar-subject {
+              grid-column: span 3;
+              text-align: end;
+            }
+            .message__detail-toolbar-patient {
+              grid-column: span 3;
+              .message__detail-toolbar-patient-btn {
+                display: none;
+              }
+            }
+            .message__detail-toolbar-logos {
+              gap: 1rem;
+              justify-content: flex-end;
+            }
+          }
+          .message__detail-content {
+            .message {
+              padding: 0.5rem;
+              .message__title {
+                flex-direction: column;
+                .message__date {
+                  text-align: left;
+                }
+              }
+              .message__author {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+            }
+            .message__attachments {
+              .message__attachment-card {
+                width: 30%;
+              }
+            }
           }
         }
       }

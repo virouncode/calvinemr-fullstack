@@ -48,7 +48,10 @@ const MessageExternalAttachmentCard = ({
 
   return (
     <>
-      <div className="message__attachment-card" style={{ width: cardWidth }}>
+      <div
+        className="message__attachment-card"
+        style={{ width: cardWidth ?? "" }}
+      >
         <div className="message__attachment-card-thumbnail">
           {attachment.file?.mime.includes("image") ? (
             <img

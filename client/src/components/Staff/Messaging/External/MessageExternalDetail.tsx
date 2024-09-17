@@ -296,7 +296,6 @@ const MessageExternalDetail = ({
           <MessagesExternalAttachments
             attachments={attachments}
             deletable={false}
-            cardWidth="15%"
             addable={true}
             patientsNames={
               message.from_patient_id

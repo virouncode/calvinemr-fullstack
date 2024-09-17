@@ -290,7 +290,6 @@ const MessageDetail = ({
           <MessagesAttachments
             attachments={attachments}
             deletable={false}
-            cardWidth="15%"
             addable={true}
             hasRelatedPatient={message.related_patient_id ? true : false}
             patientName={toPatientName(message.patient_infos)}

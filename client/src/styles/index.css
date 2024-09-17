@@ -5460,10 +5460,6 @@ select:disabled {
   justify-content: center;
   gap: 0.5rem;
 }
-.messages .messages__container .messages__content .messages__content-box .message__thumbnail .message__thumbnail-mobile-title {
-  display: flex;
-  justify-content: space-between;
-}
 .messages .messages__container .messages__content .messages__content-box .message__thumbnail-mobile {
   display: flex;
   flex-direction: column;
@@ -5591,6 +5587,7 @@ select:disabled {
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
   margin: 0.5rem 0.25rem 0;
+  width: 15%;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -5823,6 +5820,42 @@ select:disabled {
   }
   .messages .messages__container .messages__content .messages__content-box .messages__overview-toolbar {
     display: none;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 0.5rem;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar .message__detail-toolbar-subject {
+    grid-column: span 3;
+    text-align: end;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar .message__detail-toolbar-patient {
+    grid-column: span 3;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar .message__detail-toolbar-patient .message__detail-toolbar-patient-btn {
+    display: none;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar .message__detail-toolbar-logos {
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-content .message {
+    padding: 0.5rem;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-content .message .message__title {
+    flex-direction: column;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-content .message .message__title .message__date {
+    text-align: left;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-content .message .message__author {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card {
+    width: 30%;
   }
 }
 .templates {
