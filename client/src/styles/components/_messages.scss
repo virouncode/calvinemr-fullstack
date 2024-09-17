@@ -199,6 +199,55 @@
             justify-content: center;
             gap: 0.5rem;
           }
+          .message__thumbnail-mobile-title {
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+        .message__thumbnail-mobile {
+          display: flex;
+          flex-direction: column;
+          font-size: $size-xs;
+          gap: 0.25rem;
+          padding: 0.5rem;
+          border-bottom: solid 0.5px $grey;
+          height: 85px;
+          .message__thumbnail-mobile-title {
+            display: grid;
+            grid-template-columns: 75% 25%;
+            align-items: center;
+            column-gap: 0.25rem;
+            .message__thumbnail-mobile-title-from {
+              display: flex;
+              font-weight: bold;
+              align-items: center;
+              .message__thumbnail-mobile-title-from-author {
+                flex: 1;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
+            .message__thumbnail-mobile-title-date {
+              text-align: end;
+            }
+          }
+          .message__thumbnail-mobile-subject {
+            display: flex;
+            align-items: center;
+            .message__thumbnail-mobile-subject-text {
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              color: $grey2;
+              flex: 1;
+            }
+          }
+          .message__thumbnail-mobile-body {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+          }
         }
         .message__detail-toolbar {
           font-size: $size-sm;
@@ -494,7 +543,7 @@
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .messages {
     .messages__container {
       .messages__toolbar {
@@ -508,6 +557,7 @@
         }
         .messages__toolbar-title {
           margin-left: 0;
+          font-size: $size-base;
         }
         .messages__toolbar-btns {
           margin-right: 0;
@@ -521,13 +571,6 @@
         .messages__content-box {
           .messages__overview-toolbar {
             display: none;
-          }
-          .message__thumbnail {
-            display: none;
-          }
-          .message__thumbnail-mobile {
-            display: flex;
-            flex-direction: column;
           }
         }
       }
