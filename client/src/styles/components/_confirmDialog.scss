@@ -1,6 +1,5 @@
 .confirm {
   &-container {
-    // height: 200%;
     width: 100%;
     position: absolute;
     top: 0;
@@ -14,6 +13,7 @@
   &-dialog {
     border-radius: 6px;
     width: 400px;
+    max-width: 100%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -43,12 +43,15 @@
         color: $black;
       }
     }
+    &-text {
+      font-size: $size-sm;
+      padding: 0.5rem;
+    }
     &-btn-container {
       display: flex;
-      justify-content: space-between;
-      width: 50%;
-      margin: 0 auto;
-      padding: 5px 0 15px;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
       button {
         width: 80px;
       }

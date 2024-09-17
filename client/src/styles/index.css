@@ -4601,6 +4601,7 @@ select:disabled {
 .confirm-dialog {
   border-radius: 6px;
   width: 400px;
+  max-width: 100%;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -4628,12 +4629,15 @@ select:disabled {
 .confirm-dialog-header h2 {
   color: #3d375a;
 }
+.confirm-dialog-text {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+}
 .confirm-dialog-btn-container {
   display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin: 0 auto;
-  padding: 5px 0 15px;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
 }
 .confirm-dialog-btn-container button {
   width: 80px;
