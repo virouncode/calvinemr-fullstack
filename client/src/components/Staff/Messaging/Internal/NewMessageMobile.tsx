@@ -221,12 +221,12 @@ const NewMessageMobile = ({
   };
 
   const handleClickRecipients = () => {
-    if (recipientsRef.current && patientsRef.current) {
+    if (recipientsRef.current) {
       recipientsRef.current.style.transform = "translateX(0)";
     }
   };
   const handleClickPatient = () => {
-    if (patientsRef.current && recipientsRef.current) {
+    if (patientsRef.current) {
       patientsRef.current.style.transform = "translateX(0)";
     }
   };

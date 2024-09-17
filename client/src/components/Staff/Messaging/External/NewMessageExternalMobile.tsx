@@ -31,7 +31,7 @@ import Patients from "../Patients";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
 axios.defaults.withCredentials = true;
 
-type NewMessageExternalProps = {
+type NewMessageExternalMobileProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
   initialRecipients?: {
     id: number;
@@ -42,11 +42,11 @@ type NewMessageExternalProps = {
   initialAttachments?: Partial<MessageAttachmentType>[];
 };
 
-const NewMessageExternal = ({
+const NewMessageExternalMobile = ({
   setNewVisible,
   initialRecipients = [],
   initialAttachments = [],
-}: NewMessageExternalProps) => {
+}: NewMessageExternalMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
@@ -61,6 +61,7 @@ const NewMessageExternal = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const messagePost = useMessageExternalPost();
 
@@ -318,10 +319,19 @@ const NewMessageExternal = ({
     input.click();
   };
 
+  const handleClickRecipients = () => {
+    if (recipientsRef.current) {
+      recipientsRef.current.style.transform = "translateX(0)";
+    }
+  };
+
   return (
-    <div className="new-message new-message--external">
-      <div className="new-message__form">
-        <div className="new-message__form-recipients">
+    <div className="new-message-mobile">
+      <div className="new-message-mobile__form">
+        <div
+          className="new-message__form-recipients"
+          onClick={handleClickRecipients}
+        >
           <Input
             value={recipients.map(({ name }) => name).join(" / ")}
             id="to"
@@ -386,7 +396,7 @@ const NewMessageExternal = ({
           {isLoadingFile && <CircularProgressMedium />}
         </div>
       </div>
-      <div className="new-message__patients">
+      <div className="new-message-mobile__patients" ref={recipientsRef}>
         <Patients
           handleCheckPatient={handleCheckPatient}
           isPatientChecked={isPatientChecked}
@@ -394,6 +404,8 @@ const NewMessageExternal = ({
           allAvailable={true}
           allPatientsChecked={allPatientsChecked}
           handleCheckAllPatients={handleCheckAllPatients}
+          closeCross={true}
+          patientsRef={recipientsRef}
         />
       </div>
 
@@ -416,4 +428,4 @@ const NewMessageExternal = ({
   );
 };
 
-export default NewMessageExternal;
+export default NewMessageExternalMobile;

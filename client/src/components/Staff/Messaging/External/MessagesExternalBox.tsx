@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -11,6 +12,7 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternalDetail from "./MessageExternalDetail";
 import MessagesExternalOverview from "./MessagesExternalOverview";
 import NewMessageExternal from "./NewMessageExternal";
+import NewMessageExternalMobile from "./NewMessageExternalMobile";
 
 type MessagesExternalBoxProps = {
   section: string;
@@ -60,6 +62,7 @@ const MessagesExternalBox = ({
     fetchNextPage,
     isFetching
   );
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   if (isPending)
     return (
@@ -103,7 +106,11 @@ const MessagesExternalBox = ({
             color={"#94bae8"}
             setPopUpVisible={setNewVisible}
           >
-            <NewMessageExternal setNewVisible={setNewVisible} />
+            {isTabletOrMobile ? (
+              <NewMessageExternalMobile setNewVisible={setNewVisible} />
+            ) : (
+              <NewMessageExternal setNewVisible={setNewVisible} />
+            )}
           </FakeWindow>
         )}
       </>

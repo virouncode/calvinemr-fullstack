@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -24,8 +25,10 @@ import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import NewMessage from "../../../Messaging/Internal/NewMessage";
+import NewMessageMobile from "../../../Messaging/Internal/NewMessageMobile";
 import LetterForm from "./Form/LetterForm";
 import LetterItem from "./LetterItem";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 
 type LettersPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<LetterType>> | undefined;
@@ -69,6 +72,7 @@ const LettersPopUp = ({
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(
@@ -238,21 +242,39 @@ const LettersPopUp = ({
           color="#848484"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialRecipients={[
-              {
-                id: demographicsInfos.patient_id,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageInternalVisible && (
@@ -265,14 +287,25 @@ const LettersPopUp = ({
           color="#848484"
           setPopUpVisible={setNewMessageInternalVisible}
         >
-          <NewMessage
-            setNewVisible={setNewMessageInternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialPatient={{
-              id: demographicsInfos.patient_id,
-              name: toPatientName(demographicsInfos),
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageMobile
+              setNewVisible={setNewMessageInternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialPatient={{
+                id: demographicsInfos.patient_id,
+                name: toPatientName(demographicsInfos),
+              }}
+            />
+          ) : (
+            <NewMessage
+              setNewVisible={setNewMessageInternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialPatient={{
+                id: demographicsInfos.patient_id,
+                name: toPatientName(demographicsInfos),
+              }}
+            />
+          )}
         </FakeWindow>
       )}
     </>

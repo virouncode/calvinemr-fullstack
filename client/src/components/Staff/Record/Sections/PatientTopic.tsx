@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -41,7 +42,9 @@ import {
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../Messaging/Internal/NewMessage";
+import NewMessageMobile from "../../Messaging/Internal/NewMessageMobile";
 import NewTodo from "../../Messaging/Internal/NewTodo";
 import AlertsDropDown from "../Topics/Alerts/AlertsDropDown";
 import AlertsPopUp from "../Topics/Alerts/AlertsPopUp";
@@ -113,6 +116,7 @@ const PatientTopic = ({
   const [popUpVisible, setPopUpVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data: topicDatas,
@@ -1366,13 +1370,23 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewMessage
-              setNewVisible={setPopUpVisible}
-              initialPatient={{
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-              }}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageMobile
+                setNewVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            ) : (
+              <NewMessage
+                setNewVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            )}
           </FakeWindow>
         )}
         {/*******************/}
@@ -1398,20 +1412,37 @@ const PatientTopic = ({
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewMessageExternal
-              setNewVisible={setPopUpVisible}
-              initialRecipients={[
-                {
-                  id: patientId,
-                  name: toPatientName(demographicsInfos),
-                  email: demographicsInfos?.Email ?? "",
-                  phone:
-                    demographicsInfos?.PhoneNumber.find(
-                      ({ _phoneNumberType }) => _phoneNumberType === "C"
-                    )?.phoneNumber ?? "",
-                },
-              ]}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageExternalMobile
+                setNewVisible={setPopUpVisible}
+                initialRecipients={[
+                  {
+                    id: patientId,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos?.Email ?? "",
+                    phone:
+                      demographicsInfos?.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber ?? "",
+                  },
+                ]}
+              />
+            ) : (
+              <NewMessageExternal
+                setNewVisible={setPopUpVisible}
+                initialRecipients={[
+                  {
+                    id: patientId,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos?.Email ?? "",
+                    phone:
+                      demographicsInfos?.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber ?? "",
+                  },
+                ]}
+              />
+            )}
           </FakeWindow>
         )}
         {/*******************/}

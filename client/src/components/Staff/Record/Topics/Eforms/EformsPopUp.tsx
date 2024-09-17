@@ -2,6 +2,7 @@ import { PDFDocument } from "pdf-lib";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -33,6 +34,7 @@ import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import Eform from "./Eform";
 import EformEditPdfViewer from "./EformEditPdfViewer";
 import EformItem from "./EformItem";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 
 type EformsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<EformType>> | undefined;
@@ -76,6 +78,7 @@ const EformsPopUp = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [eformToEdit, setEformToEdit] = useState<EformType | undefined>();
   const [editVisible, setEditVisible] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(
@@ -312,21 +315,39 @@ const EformsPopUp = ({
           color="#29CBD6"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialRecipients={[
-              {
-                id: demographicsInfos.patient_id,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
     </>

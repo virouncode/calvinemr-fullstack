@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
 import { useClinicalNotes } from "../../../../hooks/reactquery/queries/clinicalNotesQueries";
@@ -10,6 +11,7 @@ import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import ClinicalNoteCard from "./Card/ClinicalNoteCard";
 import ClinicalNoteForm from "./Card/ClinicalNoteForm";
 import ClinicalNotesHeader from "./ClinicalNotesHeader";
@@ -67,6 +69,7 @@ const ClinicalNotes = ({
     useRetrieveNewClinicalNote(patientId, setAddVisible);
   const { editClinicalNoteInMemory, setEditClinicalNoteInMemory } =
     useRetrieveEditClinicalNote(patientId, fetchNextPage, clinicalNotes);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //Intersection observer
   const { divRef: contentRef, lastItemRef } = useIntersection(
@@ -297,20 +300,37 @@ const ClinicalNotes = ({
           color={"#848484"}
           setPopUpVisible={setNewMessageVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageVisible}
-            initialRecipients={[
-              {
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber?.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageVisible}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber?.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageVisible}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber?.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
     </div>

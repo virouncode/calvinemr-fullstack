@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { UseMutationResult } from "@tanstack/react-query";
 import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
@@ -36,6 +37,7 @@ import NewMessageExternal from "../../../../../Messaging/External/NewMessageExte
 import PrescriptionAdditionalPages from "./PrescriptionAdditionalPages";
 import PrescriptionOptionsPreview from "./PrescriptionOptionsPreview";
 import PrescriptionPagePreview from "./PrescriptionPagePreview";
+import NewMessageExternalMobile from "../../../../../Messaging/External/NewMessageExternalMobile";
 
 type PrescriptionPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -87,6 +89,7 @@ const PrescriptionPreview = ({
   const printRef = useRef<HTMLDivElement | null>(null);
   const printAdditionalRefs = useRef<HTMLDivElement[]>([]);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //Queries
   const clinicalNotePost = useClinicalNotePost();
@@ -367,10 +370,17 @@ const PrescriptionPreview = ({
           color="#931621"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentToSend}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentToSend}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentToSend}
+            />
+          )}
         </FakeWindow>
       )}
       {faxVisible && (

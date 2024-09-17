@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroups } from "../../../hooks/reactquery/queries/patientsGroupsQueries";
@@ -8,6 +9,7 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import NewMessageExternal from "../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../Messaging/External/NewMessageExternalMobile";
 import PatientsClinicGroupCard from "./PatientsClinicGroupCard";
 import PatientsGroupForm from "./PatientsGroupForm";
 
@@ -25,6 +27,7 @@ const PatientsGroups = () => {
       phone: string;
     }[]
   >([]);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const { data: groups, isPending, error } = usePatientsGroups(user.id);
 
@@ -85,10 +88,17 @@ const PatientsGroups = () => {
           color={"#94bae8"}
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialRecipients={initialRecipients}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialRecipients={initialRecipients}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialRecipients={initialRecipients}
+            />
+          )}
         </FakeWindow>
       )}
     </>

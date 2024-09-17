@@ -16,8 +16,8 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageDetail from "./MessageDetail";
 import MessagesOverview from "./MessagesOverview";
 import NewMessage from "./NewMessage";
-import NewTodo from "./NewTodo";
 import NewMessageMobile from "./NewMessageMobile";
+import NewTodo from "./NewTodo";
 
 type MessagesBoxProps = {
   section: string;
@@ -71,7 +71,7 @@ const MessagesBox = ({
     fetchNextPage,
     isFetching
   );
-  const isTabletOrMobile = useMediaQuery("(max-width: 900px)");
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   if (isPending)
     return (

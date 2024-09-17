@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -40,6 +41,7 @@ import SignCell from "../../UI/Tables/SignCell";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import NewMessage from "../Messaging/Internal/NewMessage";
 import NewTodo from "../Messaging/Internal/NewTodo";
+import NewMessageMobile from "../Messaging/Internal/NewMessageMobile";
 
 type ReportInboxItemProps = {
   item: ReportType;
@@ -73,6 +75,7 @@ const ReportInboxItem = ({
   const [patientNextAppointment, setPatientNextAppointment] = useState<
     AppointmentType | undefined
   >();
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data: patientAppointments,
@@ -355,15 +358,27 @@ const ReportInboxItem = ({
           color={"#94bae8"}
           setPopUpVisible={setMessageVisible}
         >
-          <NewMessage
-            setNewVisible={setMessageVisible}
-            initialAttachments={attachments}
-            initialPatient={{
-              id: item.patient_id,
-              name: toPatientName(item.patient_infos),
-            }}
-            initialBody={initialBody}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageMobile
+              setNewVisible={setMessageVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          ) : (
+            <NewMessage
+              setNewVisible={setMessageVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          )}
         </FakeWindow>
       )}
       {todoVisible && (

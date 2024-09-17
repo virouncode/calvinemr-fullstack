@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -22,6 +23,7 @@ import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import PrescriptionItem from "./PrescriptionItem";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 
 type PrescriptionsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<PrescriptionType>> | undefined;
@@ -67,6 +69,7 @@ const PrescriptionsPopUp = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState<
     Partial<MessageAttachmentType>[] | undefined
   >();
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   const handleClose = async () => {
     setPopUpVisible(false);
@@ -170,21 +173,39 @@ const PrescriptionsPopUp = ({
             color="#E3AFCD"
             setPopUpVisible={setNewMessageExternalVisible}
           >
-            <NewMessageExternal
-              setNewVisible={setNewMessageExternalVisible}
-              initialAttachments={attachmentsToSend}
-              initialRecipients={[
-                {
-                  id: demographicsInfos.patient_id,
-                  name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
-                  phone:
-                    demographicsInfos.PhoneNumber.find(
-                      ({ _phoneNumberType }) => _phoneNumberType === "C"
-                    )?.phoneNumber || "",
-                },
-              ]}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageExternalMobile
+                setNewVisible={setNewMessageExternalVisible}
+                initialAttachments={attachmentsToSend}
+                initialRecipients={[
+                  {
+                    id: demographicsInfos.patient_id,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos.Email,
+                    phone:
+                      demographicsInfos.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber || "",
+                  },
+                ]}
+              />
+            ) : (
+              <NewMessageExternal
+                setNewVisible={setNewMessageExternalVisible}
+                initialAttachments={attachmentsToSend}
+                initialRecipients={[
+                  {
+                    id: demographicsInfos.patient_id,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos.Email,
+                    phone:
+                      demographicsInfos.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber || "",
+                  },
+                ]}
+              />
+            )}
           </FakeWindow>
         )}
       </>
