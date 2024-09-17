@@ -60,10 +60,6 @@
               visibility: hidden;
             }
           }
-          input[type="checkbox"] {
-            margin-left: 10px;
-            margin-right: 5px;
-          }
         }
       }
     }
@@ -344,10 +340,12 @@
       .fax__toolbar {
         .fax__toolbar-filter {
           .fax__toolbar-filter-date {
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             align-items: flex-start;
             width: 100%;
-            gap: 0.5rem;
+            column-gap: 1rem;
+            row-gap: 0.5rem;
             .fax__toolbar-filter-date-item {
               width: 100%;
               flex-direction: column;
@@ -358,7 +356,7 @@
               &:nth-child(3) {
                 flex-direction: row;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 label {
                   margin: 0;
                 }
