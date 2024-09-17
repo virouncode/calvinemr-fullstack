@@ -5803,8 +5803,7 @@ select:disabled {
     font-size: 1rem;
   }
   .messages .messages__container .messages__toolbar .messages__toolbar-title {
-    margin-left: 0;
-    font-size: 1rem;
+    display: none;
   }
   .messages .messages__container .messages__toolbar .messages__toolbar-btns {
     margin-right: 0;
@@ -5814,6 +5813,13 @@ select:disabled {
     flex-direction: column;
     position: sticky;
     top: 0;
+  }
+  .messages .messages__container .messages__content .messages__content-leftbar {
+    border-radius: 0;
+    height: auto;
+  }
+  .messages .messages__container .messages__content .messages__content-box {
+    flex: 1;
   }
   .messages .messages__container .messages__content .messages__content-box .messages__overview-toolbar {
     display: none;

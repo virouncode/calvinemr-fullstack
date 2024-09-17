@@ -556,8 +556,7 @@
           font-size: $size-base;
         }
         .messages__toolbar-title {
-          margin-left: 0;
-          font-size: $size-base;
+          display: none;
         }
         .messages__toolbar-btns {
           margin-right: 0;
@@ -568,7 +567,12 @@
         flex-direction: column;
         position: sticky;
         top: 0;
+        .messages__content-leftbar {
+          border-radius: 0;
+          height: auto;
+        }
         .messages__content-box {
+          flex: 1;
           .messages__overview-toolbar {
             display: none;
           }

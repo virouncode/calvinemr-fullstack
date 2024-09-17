@@ -275,7 +275,6 @@ const MessageThumbnailMobile = ({
       ref={lastItemRef}
     >
       {/*========== FROM =============*/}
-
       <div className="message__thumbnail-mobile-title">
         <div className="message__thumbnail-mobile-title-from">
           <Checkbox
@@ -308,7 +307,6 @@ const MessageThumbnailMobile = ({
             </div>
           )}
         </div>
-
         <div className="message__thumbnail-mobile-title-date">
           {timestampToDateStrTZ(message.date_created)}
         </div>
