@@ -17,6 +17,9 @@
     padding: 0.25rem;
   }
 }
+.calvinai__chat-templates {
+  display: none;
+}
 .calvinai__chat {
   display: flex;
   flex-direction: column;
@@ -28,15 +31,41 @@
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   height: 100%;
 }
-.calvinai__chat-templates {
-  display: none;
-}
-
 .calvinai__chat-content {
   overflow: scroll;
   font-size: $size-sm;
   border-bottom: solid 1px $grey;
-  height: 70%;
+  height: 80%;
+  .calvinai__chat-card {
+    padding: 1rem;
+    border: solid 1px $grey;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    margin-bottom: 10px;
+    .calvinai__chat-card-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      .calvinai__chat-img-bot {
+        width: 7%;
+        height: auto;
+      }
+      .calvinai__chat-img-user {
+        width: 7%;
+        height: auto;
+      }
+      .calvinai__chat-message {
+        padding: 0 10px;
+        white-space: pre-wrap;
+        width: 92%;
+        font-size: $size-sm;
+      }
+    }
+    &-btns {
+      text-align: end;
+    }
+  }
 }
 
 .calvinai__chat-btns {
@@ -47,14 +76,9 @@
   align-items: center;
   padding: 0.25rem 0;
 }
-.calvinai__chat-send-btn {
-  background-color: $blue;
-  &:hover {
-    background-color: $blue2;
-  }
-}
+
 .calvinai__chat-input {
-  flex: 1;
+  height: 20%;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -63,49 +87,26 @@
   border: solid 1px $grey;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   padding: 5px 20px 5px 10px;
-}
-.calvinai__chat-textarea {
-  width: 93%;
-  overflow: scroll;
-  font-family: $font1;
-  font-size: $size-base;
-  padding: 10px;
-  outline: none;
-  height: 100%;
-  &:focus {
+  .calvinai__chat-send-btn {
+    background-color: $blue;
+    &:hover {
+      background-color: $blue2;
+    }
+  }
+  .calvinai__chat-textarea {
+    width: 93%;
+    overflow: scroll;
+    font-family: $font1;
+    font-size: $size-base;
+    padding: 10px;
     outline: none;
+    height: 100%;
+    &:focus {
+      outline: none;
+    }
   }
 }
-.calvinai__chat-card {
-  padding: 1rem;
-  border: solid 1px $grey;
-  border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  margin-bottom: 10px;
-  &-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  &-btns {
-    text-align: end;
-  }
-}
-.calvinai__chat-img-bot {
-  width: 7%;
-  height: auto;
-}
-.calvinai__chat-img-user {
-  width: 7%;
-  height: auto;
-}
-.calvinai__chat-message {
-  padding: 0 10px;
-  white-space: pre-wrap;
-  width: 92%;
-  font-size: $size-sm;
-}
+
 .calvinai__chat--meds {
   width: 98%;
   height: 93%;
