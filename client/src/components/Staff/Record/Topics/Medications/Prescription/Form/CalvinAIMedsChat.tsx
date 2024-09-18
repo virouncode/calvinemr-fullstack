@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useSpeechRecognition } from "../../../../../../../hooks/useSpeechRecognition";
 import { CalvinAITemplateType } from "../../../../../../../types/api";
 import { AIMessageType } from "../../../../../../../types/app";
+import { isChromeBrowser } from "../../../../../../../utils/browsers/isChromeBrowser";
 import Button from "../../../../../../UI/Buttons/Button";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import CalvinAIChatContent from "../../../../../CalvinAIChat/CalvinAIChatContent";
@@ -163,6 +164,10 @@ const CalvinAIMedsChat = ({ initialMessage }: CalvinAIMedsChatProps) => {
   };
 
   const handleStartSpeech = () => {
+    if (!isChromeBrowser())
+      toast.info("We recommend using Chrome for better speech recognition", {
+        containerId: "A",
+      });
     if (recognition) {
       setIsListening(true);
       recognition.start();

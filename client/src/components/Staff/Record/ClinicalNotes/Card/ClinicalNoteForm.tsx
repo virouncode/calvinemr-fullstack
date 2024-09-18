@@ -15,6 +15,7 @@ import {
   DemographicsType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
+import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import {
   staffIdToFirstName,
@@ -317,6 +318,10 @@ const ClinicalNoteForm = ({
   };
 
   const handleStartSpeech = () => {
+    if (!isChromeBrowser())
+      toast.info("We recommend using Chrome for better speech recognition", {
+        containerId: "A",
+      });
     if (recognition) {
       setErrMsg("");
       setIsListening(true);

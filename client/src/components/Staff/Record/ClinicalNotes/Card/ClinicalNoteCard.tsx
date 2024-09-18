@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
   useClinicalNoteLogPost,
@@ -13,6 +14,7 @@ import {
   ClinicalNoteType,
   DemographicsType,
 } from "../../../../../types/api";
+import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
 import {
   nowTZTimestamp,
   timestampToDateTimeSecondsStrTZ,
@@ -324,6 +326,10 @@ const ClinicalNoteCard = ({
   };
 
   const handleStartSpeech = () => {
+    if (!isChromeBrowser())
+      toast.info("We recommend using Chrome for better speech recognition", {
+        containerId: "A",
+      });
     if (recognition) {
       setErrMsg("");
       setIsListening(true);
