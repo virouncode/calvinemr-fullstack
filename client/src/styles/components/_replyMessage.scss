@@ -5,7 +5,6 @@
   padding: 0 10px;
   margin: 20px auto;
   width: 90%;
-  font-size: 0.8rem;
   .reply-message__title {
     display: flex;
     align-items: center;
@@ -14,8 +13,7 @@
     display: flex;
     align-items: center;
     p {
-      margin: 0;
-      font-size: 0.8rem;
+      font-size: $size-base;
     }
   }
   .reply-message__subject {
@@ -23,36 +21,44 @@
     height: 30px;
     display: flex;
     align-items: center;
-    input {
-      outline: none;
-      width: 92%;
-      font-size: 0.8rem;
-    }
+    font-size: $size-base;
   }
   .reply-message__patient {
     border-bottom: solid 0.3px $grey;
     height: 30px;
     display: flex;
     align-items: center;
-    input {
-      outline: none;
-      width: 92%;
-      font-size: 0.8rem;
-    }
+    font-size: $size-base;
   }
-  .reply-message__form-duedate {
-    border-bottom: solid 0.5px $grey;
+  .reply-message__attach {
+    border-bottom: solid 0.3px $grey;
+    min-height: 30px;
     display: flex;
     align-items: center;
-    padding: 0.5rem;
+    flex-wrap: wrap;
+    font-size: $size-base;
     label {
       font-weight: bold;
-      margin-right: 1em;
     }
-    input {
-      font-size: $size-sm;
-      padding: 0.25rem 0.5rem;
-      width: 120px;
+    i {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+  }
+  .reply-message__importance {
+    border-bottom: solid 0.3px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: $size-base;
+    label {
+      font-weight: bold;
+    }
+    &-check {
+      display: flex;
+      align-items: center;
     }
   }
   .reply-message__body {
@@ -66,12 +72,83 @@
       padding: 10px 0;
       width: 100%;
       min-height: 200px;
+      font-size: $size-base;
+    }
+    .message__attachments {
+      display: flex;
+      padding: 15px;
+      flex-wrap: wrap;
+      .message__attachment-card {
+        border: solid 0.5px $grey;
+        margin: 0.5rem 0.25rem 0;
+        .message__attachment-card-thumbnail {
+          height: 80px;
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          iframe {
+            border: none;
+            cursor: pointer;
+          }
+        }
+        .message__attachment-card-footer {
+          background: $grey;
+          padding: 0.25rem;
+          font-size: $size-xs;
+          display: flex;
+          flex-direction: column;
+        }
+        .message__attachment-card-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          p {
+            font-size: $size-xs;
+            margin-bottom: 0.25rem;
+          }
+        }
+        .message__attachment-card-btn {
+          text-align: center;
+          button {
+            font-size: $size-xs;
+            max-width: 100%;
+          }
+        }
+      }
+    }
+    .reply-message__history {
+      display: flex;
+      flex-direction: column;
+      .message {
+        padding: 1rem;
+        border-bottom: solid 0.5px $grey;
+      }
+      .message__title {
+        display: flex;
+        justify-content: space-between;
+        font-size: $size-sm;
+        .message__author {
+          font-weight: bold;
+        }
+        .message__date {
+          text-align: right;
+        }
+      }
+      .message__subtitle {
+        font-size: $size-xs;
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .message__body {
+        padding: 1rem 1rem 0;
+        font-size: $size-sm;
+        white-space: pre-wrap;
+      }
     }
   }
-  .reply-message__history {
-    display: flex;
-    flex-direction: column;
-  }
+
   .reply-message__btns {
     border-top: solid 0.3px $grey;
     height: 30px;
@@ -81,109 +158,31 @@
       margin-left: 5px;
     }
   }
-  .reply-message__attach {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    i {
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  }
-  .reply-message__importance {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    &-check {
-      display: flex;
-      align-items: center;
-    }
-  }
+}
 
-  .message {
-    padding: 1rem;
-    border-bottom: solid 0.5px $grey;
-  }
-  .message__title {
-    display: flex;
-    justify-content: space-between;
-    font-size: $size-sm;
-    .message__author {
-      font-weight: bold;
+@media (min-width: 1024px) {
+  .reply-message {
+    .reply-message__title {
+      p {
+        font-size: $size-sm;
+      }
     }
-    .message__date {
-      text-align: right;
+    .reply-message__subject {
+      font-size: $size-sm;
     }
-  }
-  .message__subtitle {
-    font-size: $size-xs;
-    width: 70%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .message__body {
-    padding: 1rem 1rem 0;
-    font-size: $size-sm;
-    white-space: pre-wrap;
-  }
-  .message__attachments {
-    display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-    .message__attachment-card {
-      border: solid 0.5px $grey;
-      margin: 0.5rem 0.25rem 0;
-      .message__attachment-card-thumbnail {
-        height: 80px;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        iframe {
-          border: none;
-          cursor: pointer;
-        }
+    .reply-message__patient {
+      font-size: $size-sm;
+    }
+    .reply-message__body {
+      textarea {
+        font-size: $size-sm;
       }
-      .message__attachment-card-footer {
-        background: $grey;
-        padding: 0.25rem;
-        font-size: $size-xs;
-        display: flex;
-        flex-direction: column;
-      }
-      .message__attachment-card-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p {
-          font-size: $size-xs;
-          margin-bottom: 0.25rem;
-        }
-      }
-      .message__attachment-card-btn {
-        text-align: center;
-        button {
-          font-size: $size-xs;
-          max-width: 100%;
-        }
-      }
+    }
+    .reply-message__attach {
+      font-size: $size-sm;
+    }
+    .reply-message__importance {
+      font-size: $size-sm;
     }
   }
 }

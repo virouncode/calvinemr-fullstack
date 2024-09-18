@@ -304,13 +304,15 @@ const ReplyMessage = ({
               )
             )}
         </div>
-        <MessagesAttachments
-          attachments={attachments}
-          handleRemoveAttachment={handleRemoveAttachment}
-          deletable={true}
-          cardWidth="17%"
-          addable={false}
-        />
+        {attachments.length > 0 && (
+          <MessagesAttachments
+            attachments={attachments}
+            handleRemoveAttachment={handleRemoveAttachment}
+            deletable={true}
+            cardWidth="17%"
+            addable={false}
+          />
+        )}
       </div>
       <div className="reply-message__btns">
         <SaveButton

@@ -31,14 +31,14 @@ const CalvinAIInput = ({
         <MicrophoneIcon
           onClick={handleStopSpeech}
           color="red"
-          top={15}
-          right={30}
+          top={10}
+          right={20}
         />
       ) : (
         <MicrophoneIcon
           onClick={handleStartSpeech}
-          top={15}
-          right={30}
+          top={10}
+          right={20}
           color="black"
         />
       )}
