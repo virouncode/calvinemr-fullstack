@@ -156,6 +156,44 @@
           gap: 0.5rem;
         }
       }
+      .fax__thumbnail-mobile {
+        font-size: $size-xs;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        border-bottom: solid 0.5px $grey;
+        gap: 0.5rem;
+        &:hover {
+          box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+        }
+        .fax__thumbnail-link {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          flex: 1;
+        }
+        .fax__thumbnail-author {
+          flex: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          padding-right: 0.5rem;
+          font-weight: bold;
+        }
+        .fax__thumbnail-pages {
+          text-align: center;
+        }
+        .fax__thumbnail-date {
+          text-align: center;
+        }
+        .fax__thumbnail-logos {
+          display: flex;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+      }
       .fax__detail-toolbar {
         font-size: $size-sm;
         padding: 0.25rem;
@@ -183,6 +221,7 @@
       }
       .fax__detail-content {
         flex: 1;
+        width: 100%;
       }
     }
   }
@@ -331,9 +370,23 @@
         }
       }
       .fax__content {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        .fax__content-leftbar {
+          border-radius: 0;
+          height: auto;
+        }
         .fax__content-box {
           flex: 1;
           height: auto;
+          .fax__overview-toolbar {
+            display: none;
+          }
+          .fax__detail-toolbar {
+            font-size: $size-base;
+          }
         }
       }
     }
@@ -370,21 +423,6 @@
                 }
               }
             }
-          }
-        }
-      }
-      .fax__content {
-        display: flex;
-        flex-direction: column;
-        position: sticky;
-        top: 0;
-        .fax__content-leftbar {
-          border-radius: 0;
-          height: auto;
-        }
-        .fax__content-box {
-          .fax__overview-toolbar {
-            display: none;
           }
         }
       }

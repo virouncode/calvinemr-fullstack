@@ -299,13 +299,15 @@ const NewMessageMobile = ({
         </div>
         <div className="new-message__form-body">
           <textarea value={body} onChange={handleChange} ref={textareaRef} />
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-            cardWidth="30%"
-          />
+          {attachments.length > 0 && (
+            <MessagesAttachments
+              attachments={attachments}
+              handleRemoveAttachment={handleRemoveAttachment}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
         <div className="new-message__form-btns">
           <SaveButton

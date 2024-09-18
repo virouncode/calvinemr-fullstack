@@ -1,8 +1,10 @@
+import { useMediaQuery } from "@mui/material";
 import React from "react";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
-import FaxThumbnail from "./FaxThumbnail";
 import FaxesOverviewToolbar from "./FaxesOverviewToolbar";
+import FaxThumbnail from "./FaxThumbnail";
+import FaxThumbnailMobile from "./FaxThumbnailMobile";
 
 type FaxesOverviewProps = {
   faxes: FaxInboxType[] | FaxOutboxType[] | undefined;
@@ -34,6 +36,8 @@ const FaxesOverview = ({
     }
   };
 
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+
   const faxesToShow = faxes
     ? section === "Received faxes"
       ? (faxes as FaxInboxType[]).filter(({ CallerID }) =>
@@ -48,17 +52,29 @@ const FaxesOverview = ({
     <>
       <FaxesOverviewToolbar section={section} />
       {faxesToShow && faxesToShow.length > 0 ? (
-        faxesToShow.map((item) => (
-          <FaxThumbnail
-            key={item.FileName}
-            fax={item}
-            setCurrentFaxId={setCurrentFaxId}
-            setCurrentCallerId={setCurrentCallerId}
-            setFaxesSelectedIds={setFaxesSelectedIds}
-            faxesSelectedIds={faxesSelectedIds}
-            section={section}
-          />
-        ))
+        faxesToShow.map((item) =>
+          isTabletOrMobile ? (
+            <FaxThumbnailMobile
+              key={item.FileName}
+              fax={item}
+              setCurrentFaxId={setCurrentFaxId}
+              setCurrentCallerId={setCurrentCallerId}
+              setFaxesSelectedIds={setFaxesSelectedIds}
+              faxesSelectedIds={faxesSelectedIds}
+              section={section}
+            />
+          ) : (
+            <FaxThumbnail
+              key={item.FileName}
+              fax={item}
+              setCurrentFaxId={setCurrentFaxId}
+              setCurrentCallerId={setCurrentCallerId}
+              setFaxesSelectedIds={setFaxesSelectedIds}
+              faxesSelectedIds={faxesSelectedIds}
+              section={section}
+            />
+          )
+        )
       ) : (
         <EmptyParagraph text={emptySectionMessages(section)} />
       )}

@@ -14,7 +14,7 @@ const FaxAttachmentCard = ({
   handleRemoveAttachment,
   attachment,
   deletable,
-  cardWidth = "20%",
+  cardWidth = "30%",
 }: FaxAttachmentCardProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);

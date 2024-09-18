@@ -85,7 +85,7 @@ const MessageTemplateFormMobile = ({
   };
 
   return (
-    <div className="message-template__form message-template__form--mobile">
+    <div className="message-template__form">
       <div className="message-template__form-name">
         <Input
           value={name}

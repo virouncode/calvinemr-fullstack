@@ -27,6 +27,7 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import ReportForm from "./ReportForm";
@@ -327,7 +328,17 @@ const ReportsPopUp = ({
           color={"#E3AFCD"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (

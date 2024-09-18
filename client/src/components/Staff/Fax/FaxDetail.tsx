@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import uniqueId from "lodash/uniqueId";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -23,6 +24,7 @@ import FakeWindow from "../../UI/Windows/FakeWindow";
 import ReportInboxForm from "../ReportsInbox/ReportInboxForm";
 import Fax from "./Fax";
 import NewFax from "./NewFax";
+import NewFaxMobile from "./NewFaxMobile";
 
 type FaxDetailProps = {
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
@@ -47,6 +49,7 @@ const FaxDetail = ({
   >(undefined);
   const [progress, setProgress] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data: fax,
@@ -197,10 +200,17 @@ const FaxDetail = ({
             color={"#94bae8"}
             setPopUpVisible={setForwardVisible}
           >
-            <NewFax
-              setNewVisible={setForwardVisible}
-              initialAttachment={attachmentToForward}
-            />
+            {isTabletOrMobile ? (
+              <NewFaxMobile
+                setNewVisible={setForwardVisible}
+                initialAttachment={attachmentToForward}
+              />
+            ) : (
+              <NewFax
+                setNewVisible={setForwardVisible}
+                initialAttachment={attachmentToForward}
+              />
+            )}
           </FakeWindow>
         )}
         {replyVisible && (
@@ -213,12 +223,21 @@ const FaxDetail = ({
             color={"#94bae8"}
             setPopUpVisible={setReplyVisible}
           >
-            <NewFax
-              setNewVisible={setReplyVisible}
-              initialAttachment={attachmentToForward}
-              initialRecipient={{ ToFaxNumber: currentCallerId }}
-              reply={true}
-            />
+            {isTabletOrMobile ? (
+              <NewFaxMobile
+                setNewVisible={setReplyVisible}
+                initialAttachment={attachmentToForward}
+                initialRecipient={{ ToFaxNumber: currentCallerId }}
+                reply={true}
+              />
+            ) : (
+              <NewFax
+                setNewVisible={setReplyVisible}
+                initialAttachment={attachmentToForward}
+                initialRecipient={{ ToFaxNumber: currentCallerId }}
+                reply={true}
+              />
+            )}
           </FakeWindow>
         )}
         {addToReportsVisible && (

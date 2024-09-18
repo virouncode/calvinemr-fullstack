@@ -23,13 +23,14 @@ import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../Fax/NewFax";
 import NewMessageExternal from "../../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../../../Messaging/Internal/NewMessage";
 import NewMessageMobile from "../../../../Messaging/Internal/NewMessageMobile";
 import LetterAdditionalPages from "./LetterAdditionalPages";
 import LetterOptionsPreview from "./LetterOptionsPreview";
 import LetterPagePreview from "./LetterPagePreview";
 import LetterRecordInfosPagePreview from "./LetterRecordInfosPagePreview";
-import NewMessageExternalMobile from "../../../../Messaging/External/NewMessageExternalMobile";
+import NewFaxMobile from "../../../../Fax/NewFaxMobile";
 
 type LetterPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -606,13 +607,23 @@ const LetterPreview = ({
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax
-            setNewVisible={setFaxVisible}
-            initialAttachment={{
-              alias: `${name.replaceAll(" ", "")}.pdf`,
-              file: letter,
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `${name.replaceAll(" ", "")}.pdf`,
+                file: letter,
+              }}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `${name.replaceAll(" ", "")}.pdf`,
+                file: letter,
+              }}
+            />
+          )}
         </FakeWindow>
       )}
     </>

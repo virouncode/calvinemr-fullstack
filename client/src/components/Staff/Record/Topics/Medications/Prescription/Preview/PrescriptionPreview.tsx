@@ -34,10 +34,11 @@ import { confirmAlert } from "../../../../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../../Fax/NewFax";
 import NewMessageExternal from "../../../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../../../Messaging/External/NewMessageExternalMobile";
 import PrescriptionAdditionalPages from "./PrescriptionAdditionalPages";
 import PrescriptionOptionsPreview from "./PrescriptionOptionsPreview";
 import PrescriptionPagePreview from "./PrescriptionPagePreview";
-import NewMessageExternalMobile from "../../../../../Messaging/External/NewMessageExternalMobile";
+import NewFaxMobile from "../../../../../Fax/NewFaxMobile";
 
 type PrescriptionPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -393,13 +394,23 @@ const PrescriptionPreview = ({
           color={"#931621"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax
-            setNewVisible={setFaxVisible}
-            initialAttachment={{
-              alias: `Prescription_${prescriptionStamp}.pdf`,
-              file: prescription,
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `Prescription_${prescriptionStamp}.pdf`,
+                file: prescription,
+              }}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `Prescription_${prescriptionStamp}.pdf`,
+                file: prescription,
+              }}
+            />
+          )}
         </FakeWindow>
       )}
     </div>

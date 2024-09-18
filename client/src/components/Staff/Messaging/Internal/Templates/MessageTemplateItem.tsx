@@ -76,7 +76,7 @@ const MessageTemplateItem = ({
             : ""}
         </span>
         <>
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
+          <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
           {template.author_id === user.id && (
             <PenIcon ml={15} onClick={handleEditClick} />
           )}

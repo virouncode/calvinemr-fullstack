@@ -22,8 +22,9 @@ import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
-import PrescriptionItem from "./PrescriptionItem";
 import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
+import PrescriptionItem from "./PrescriptionItem";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type PrescriptionsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<PrescriptionType>> | undefined;
@@ -157,10 +158,17 @@ const PrescriptionsPopUp = ({
             color="#E3AFCD"
             setPopUpVisible={setFaxVisible}
           >
-            <NewFax
-              setNewVisible={setFaxVisible}
-              initialAttachment={fileToFax}
-            />
+            {isTabletOrMobile ? (
+              <NewFaxMobile
+                setNewVisible={setFaxVisible}
+                initialAttachment={fileToFax}
+              />
+            ) : (
+              <NewFax
+                setNewVisible={setFaxVisible}
+                initialAttachment={fileToFax}
+              />
+            )}
           </FakeWindow>
         )}
         {newMessageExternalVisible && (

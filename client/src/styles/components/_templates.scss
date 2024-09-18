@@ -288,4 +288,25 @@
       }
     }
   }
+  .fax-template__form {
+    .fax-template__form-name {
+      label,
+      input {
+        font-size: $size-base;
+      }
+    }
+    .fax-template__form-content {
+      .fax-template__form-subject {
+        label,
+        input {
+          font-size: $size-base;
+        }
+      }
+      .fax-template__form-body {
+        textarea {
+          font-size: $size-base;
+        }
+      }
+    }
+  }
 }

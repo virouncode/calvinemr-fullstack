@@ -38,7 +38,7 @@ type NewFaxProps = {
   reply?: boolean;
 };
 
-const NewFax = ({
+const NewFaxMobile = ({
   setNewVisible,
   initialAttachment,
   initialRecipient,
@@ -59,6 +59,7 @@ const NewFax = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const { data: sites, isPending, error } = useSites();
   const faxPost = useFaxPost();
@@ -198,6 +199,11 @@ const NewFax = ({
   const handleClickOther = (other: FaxContactType) => {
     setToFaxNumber(other.fax_number.replace(/-/g, ""));
   };
+  const handleClickRecipients = () => {
+    if (recipientsRef.current) {
+      recipientsRef.current.style.transform = "translateX(0)";
+    }
+  };
 
   if (isPending)
     return (
@@ -213,16 +219,21 @@ const NewFax = ({
     );
 
   return (
-    <div className="new-fax">
-      <div className="new-fax__contacts">
+    <div className="new-fax-mobile">
+      <div className="new-fax-mobile__contacts" ref={recipientsRef}>
         <FaxContacts
           handleClickDoctor={handleClickDoctor}
           handleClickPharmacy={handleClickPharmacy}
           handleClickOther={handleClickOther}
+          closeCross={true}
+          recipientsRef={recipientsRef}
         />
       </div>
-      <div className="new-fax__form">
-        <div className="new-fax__form-recipients">
+      <div className="new-fax-mobile__form">
+        <div
+          className="new-fax__form-recipients"
+          onClick={handleClickRecipients}
+        >
           <Input
             value={toFaxNumber}
             onChange={handleChangeToFaxNumber}
@@ -303,4 +314,4 @@ const NewFax = ({
   );
 };
 
-export default NewFax;
+export default NewFaxMobile;

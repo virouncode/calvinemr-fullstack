@@ -23,11 +23,12 @@ import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewFax from "../../Fax/NewFax";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import ExportClinicalNotes from "./ExportClinicalNotes";
 import ExportDemographics from "./ExportDemographics";
 import ExportFamilyDoctors from "./ExportFamilyDoctors";
 import ExportTopic from "./ExportTopic";
-import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
+import NewFaxMobile from "../../Fax/NewFaxMobile";
 
 type ExportChartPreviewProps = {
   recordsSelected: TopicExportType[];
@@ -608,7 +609,17 @@ const ExportChartPreview = ({
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (

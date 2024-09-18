@@ -24,11 +24,12 @@ import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../../Messaging/Internal/NewMessage";
 import NewMessageMobile from "../../../Messaging/Internal/NewMessageMobile";
 import LetterForm from "./Form/LetterForm";
 import LetterItem from "./LetterItem";
-import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type LettersPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<LetterType>> | undefined;
@@ -229,7 +230,17 @@ const LettersPopUp = ({
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (

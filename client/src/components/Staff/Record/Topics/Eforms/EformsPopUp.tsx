@@ -31,10 +31,11 @@ import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import Eform from "./Eform";
 import EformEditPdfViewer from "./EformEditPdfViewer";
 import EformItem from "./EformItem";
-import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type EformsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<EformType>> | undefined;
@@ -302,7 +303,17 @@ const EformsPopUp = ({
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (
