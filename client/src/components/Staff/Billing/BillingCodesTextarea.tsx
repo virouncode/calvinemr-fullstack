@@ -28,7 +28,7 @@ const BillingCodesTextarea = ({
         }}
         id="billing_codes"
       />
-      <MagnifyingGlassIcon right={5} top={5} onClick={onClick} />
+      <MagnifyingGlassIcon right={5} top={30} onClick={onClick} />
     </>
   );
 };

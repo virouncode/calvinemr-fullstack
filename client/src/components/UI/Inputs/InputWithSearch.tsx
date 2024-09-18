@@ -36,7 +36,7 @@ const InputWithSearch = ({
         id="provider_ohip_billing_nbr"
         style={{ width: width ? `${width}px` : "" }}
       />
-      {logo && <MagnifyingGlassIcon right={5} top={4} onClick={onClick} />}
+      {logo && <MagnifyingGlassIcon right={5} top={33} onClick={onClick} />}
     </>
   );
 };

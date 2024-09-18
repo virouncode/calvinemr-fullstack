@@ -228,7 +228,7 @@ const BillingForm = ({
       onSubmit={handleSubmit}
       style={{ border: errMsgPost && "solid 1px red" }}
     >
-      <div className="billing__form-row">
+      <div className="billing__form-content">
         <div className="billing__form-item">
           <InputDate
             value={formDatas.dateStr}
@@ -260,8 +260,7 @@ const BillingForm = ({
             label="Referring MD OHIP#"
           />
         </div>
-      </div>
-      <div className="billing__form-row">
+
         <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="patient_hcn"
@@ -290,8 +289,7 @@ const BillingForm = ({
             onClick={() => setBillingCodesTemplatesVisible(true)}
           />
         </div>
-      </div>
-      <div className="billing__form-row">
+
         <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="patient_id"
