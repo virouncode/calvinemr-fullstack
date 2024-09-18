@@ -305,7 +305,6 @@
       .fax__toolbar {
         display: flex;
         flex-direction: column;
-        height: auto;
         padding: 0.5rem;
         gap: 0.5rem;
         .fax__toolbar-title {
@@ -329,6 +328,12 @@
               font-size: $size-base;
             }
           }
+        }
+      }
+      .fax__content {
+        .fax__content-box {
+          flex: 1;
+          height: auto;
         }
       }
     }
