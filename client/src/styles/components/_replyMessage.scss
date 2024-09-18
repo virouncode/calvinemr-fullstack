@@ -1,57 +1,85 @@
 .reply-message {
   min-height: 250px;
-  border: solid 0.3px $grey;
+  border: solid 0.5px $grey;
   border-radius: 6px;
-  padding: 0 10px;
-  margin: 20px auto;
+  margin: 1rem auto;
   width: 90%;
-  .reply-message__title {
-    display: flex;
-    align-items: center;
-    border-bottom: solid 0.3px $grey;
+  overflow-y: scroll;
+  .reply-message__recipients {
+    border-bottom: solid 0.5px $grey;
     height: 30px;
     display: flex;
     align-items: center;
-    p {
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
       font-size: $size-base;
+    }
+    input {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: $size-base;
+      padding: 0.25rem 0.5rem;
     }
   }
   .reply-message__subject {
-    border-bottom: solid 0.3px $grey;
+    border-bottom: solid 0.5px $grey;
     height: 30px;
     display: flex;
     align-items: center;
-    font-size: $size-base;
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
+      font-size: $size-base;
+    }
+    input {
+      flex: 1;
+      padding: 0.25rem 0.5rem;
+      overflow-x: scroll;
+      font-size: $size-base;
+    }
   }
   .reply-message__patient {
-    border-bottom: solid 0.3px $grey;
+    border-bottom: solid 0.5px $grey;
     height: 30px;
     display: flex;
     align-items: center;
-    font-size: $size-base;
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
+      font-size: $size-base;
+    }
+    input {
+      outline: none;
+      flex: 1;
+      font-size: $size-base;
+      padding: 0.25rem 0.5rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
   .reply-message__attach {
-    border-bottom: solid 0.3px $grey;
+    border-bottom: solid 0.5px $grey;
     min-height: 30px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    padding: 0.5rem;
     font-size: $size-base;
     label {
       font-weight: bold;
     }
-    i {
-      cursor: pointer;
-      margin-left: 5px;
-    }
   }
   .reply-message__importance {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
+    border-bottom: solid 0.5px $grey;
+    min-height: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    padding: 0.5rem;
     font-size: $size-base;
     label {
       font-weight: bold;
@@ -62,25 +90,23 @@
     }
   }
   .reply-message__body {
-    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     textarea {
-      border: none;
+      font-size: $size-base;
       outline: none;
-      padding: 10px 0;
+      padding: 0.5rem;
       width: 100%;
       min-height: 200px;
-      font-size: $size-base;
     }
     .message__attachments {
       display: flex;
-      padding: 15px;
+      padding: 1rem;
       flex-wrap: wrap;
       .message__attachment-card {
         border: solid 0.5px $grey;
-        margin: 0.5rem 0.25rem 0;
+        padding: 0.5rem 0.25rem 0;
         .message__attachment-card-thumbnail {
           height: 80px;
           overflow: hidden;
@@ -150,28 +176,24 @@
   }
 
   .reply-message__btns {
-    border-top: solid 0.3px $grey;
-    height: 30px;
+    border-top: solid 0.5px $grey;
     display: flex;
     align-items: center;
-    button {
-      margin-left: 5px;
-    }
+    justify-content: flex-end;
+    gap: 0.25rem;
+    padding: 0.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .reply-message {
-    .reply-message__title {
-      p {
+    .reply-message__recipients,
+    .reply-message__subject,
+    .reply-message__patient {
+      label,
+      input {
         font-size: $size-sm;
       }
-    }
-    .reply-message__subject {
-      font-size: $size-sm;
-    }
-    .reply-message__patient {
-      font-size: $size-sm;
     }
     .reply-message__body {
       textarea {

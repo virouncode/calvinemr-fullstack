@@ -55,7 +55,7 @@
         font-weight: bold;
       }
       input {
-        width: 97%;
+        flex: 1;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -74,7 +74,7 @@
       }
       input {
         outline: none;
-        width: 95%;
+        flex: 1;
         font-size: $size-sm;
         padding: 0.25rem 0.5rem;
         overflow-x: scroll;
@@ -91,7 +91,7 @@
       }
       input {
         outline: none;
-        width: 80%;
+        flex: 1;
         font-size: $size-sm;
         padding: 0.25rem 0.5rem;
         overflow: hidden;
