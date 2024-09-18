@@ -9,12 +9,12 @@
   height: 100%;
 }
 .calvinai__disclaimer {
-  font-size: $size-xs;
+  font-size: $size-sm;
   font-style: italic;
   width: 90%;
   margin: 0px auto 1rem;
   p {
-    padding: 0.125rem;
+    padding: 0.25rem;
   }
 }
 .calvinai__chat {
@@ -34,29 +34,18 @@
 
 .calvinai__chat-content {
   overflow: scroll;
-  font-size: $size-xs;
+  font-size: $size-sm;
   border-bottom: solid 1px $grey;
   height: 70%;
 }
 
 .calvinai__chat-btns {
-  height: 5%;
-  margin-left: auto;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  column-gap: 0.25rem;
+  row-gap: 0.25rem;
   align-items: center;
-  gap: 0.25rem;
   padding: 0.25rem 0;
-  button {
-    font-size: $size-xs;
-  }
-}
-.calvinai__chat-templates-btn {
-  text-decoration: underline;
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 0.25rem;
-  font-size: $size-xs;
 }
 .calvinai__chat-send-btn {
   background-color: $blue;
@@ -65,7 +54,7 @@
   }
 }
 .calvinai__chat-input {
-  height: 25%;
+  flex: 1;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -79,7 +68,7 @@
   width: 93%;
   overflow: scroll;
   font-family: $font1;
-  font-size: $size-xs;
+  font-size: $size-base;
   padding: 10px;
   outline: none;
   height: 100%;
@@ -88,7 +77,7 @@
   }
 }
 .calvinai__chat-card {
-  padding: 20px;
+  padding: 1rem;
   border: solid 1px $grey;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
@@ -115,7 +104,7 @@
   padding: 0 10px;
   white-space: pre-wrap;
   width: 92%;
-  font-size: $size-xs;
+  font-size: $size-sm;
 }
 .calvinai__chat--meds {
   width: 98%;
@@ -180,7 +169,7 @@
       }
       input {
         flex: 1;
-        max-width: 300px;
+        width: 100%;
       }
     }
     &-list {
@@ -198,24 +187,15 @@
       }
     }
   }
-  .calvinai__disclaimer {
-    font-size: $size-sm;
-  }
-  .calvinai__chat-templates-btn {
-    display: none;
-  }
   .calvinai__chat-btns {
-    button {
-      font-size: $size-sm;
+    display: flex;
+    gap: 0.25rem;
+    justify-content: flex-end;
+    button:nth-child(3) {
+      display: none;
     }
   }
   .calvinai__chat-textarea {
-    font-size: $size-sm;
-  }
-  .calvinai__chat-message {
-    padding: 0 10px;
-    white-space: pre-wrap;
-    width: 92%;
     font-size: $size-sm;
   }
 }

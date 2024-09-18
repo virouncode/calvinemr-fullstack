@@ -20,22 +20,16 @@ import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 
 type ReferenceEdocItemProps = {
   item: EdocType;
-  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  errMsgPost: string;
   lastItemRef?: (node: Element | null) => void;
 };
 
-const EdocItem = ({
-  item,
-  setErrMsgPost,
-  errMsgPost,
-  lastItemRef,
-}: ReferenceEdocItemProps) => {
+const EdocItem = ({ item, lastItemRef }: ReferenceEdocItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<EdocType>(item);
+  const [errMsgPost, setErrMsgPost] = useState("");
   const edocPut = useEdocPut();
   const edocDelete = useEdocDelete();
 

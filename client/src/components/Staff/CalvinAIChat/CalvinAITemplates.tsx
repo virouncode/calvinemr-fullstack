@@ -66,11 +66,11 @@ const CalvinAITemplates = ({
   const templatesDatas = templates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="calvinai__templates">
-      <div className="calvinai__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
-      <div className="calvinai__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -80,7 +80,7 @@ const CalvinAITemplates = ({
           autoFocus={true}
         />
       </div>
-      <div className="calvinai__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />

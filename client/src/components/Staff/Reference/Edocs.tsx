@@ -76,17 +76,10 @@ const Edocs = () => {
                         <EdocItem
                           item={item}
                           key={item.id}
-                          setErrMsgPost={setErrMsgPost}
-                          errMsgPost={errMsgPost}
                           lastItemRef={lastItemRef}
                         />
                       ) : (
-                        <EdocItem
-                          item={item}
-                          key={item.id}
-                          setErrMsgPost={setErrMsgPost}
-                          errMsgPost={errMsgPost}
-                        />
+                        <EdocItem item={item} key={item.id} />
                       )
                     )
                   : !isFetchingNextPage &&
@@ -102,18 +95,14 @@ const Edocs = () => {
       {addVisible && (
         <FakeWindow
           title="ADD A NEW E-DOC"
-          width={1000}
+          width={1024}
           height={550}
-          x={(window.innerWidth - 1000) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#94bae8"
           setPopUpVisible={setAddVisible}
         >
-          <EdocForm
-            setAddVisible={setAddVisible}
-            setErrMsgPost={setErrMsgPost}
-            errMsgPost={errMsgPost}
-          />
+          <EdocForm setAddVisible={setAddVisible} />
         </FakeWindow>
       )}
     </div>

@@ -247,6 +247,47 @@
   }
 }
 
+.calvinai-template__form {
+  margin-top: 30px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 96%;
+
+  .calvinai-template__form-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    label {
+      font-size: $size-sm;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    input {
+      flex: 1;
+      font-size: $size-sm;
+    }
+  }
+  .calvinai-template__form-content {
+    flex: 1;
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    textarea {
+      font-size: $size-sm;
+      height: 100%;
+      width: 100%;
+      outline: none;
+    }
+  }
+  .calvinai-template__form-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .templates__search {
     label {
@@ -306,6 +347,19 @@
         textarea {
           font-size: $size-base;
         }
+      }
+    }
+  }
+  .calvinai-template__form {
+    .calvinai-template__form-name {
+      label,
+      input {
+        font-size: $size-base;
+      }
+    }
+    .calvinai-template__form-content {
+      textarea {
+        font-size: $size-base;
       }
     }
   }

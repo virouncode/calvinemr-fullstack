@@ -143,17 +143,15 @@ const CalvinAIChat = () => {
             isLoading={isLoading}
           />
           <div className="calvinai__chat-btns">
-            <span
-              className="calvinai__chat-templates-btn"
-              onClick={() => setTemplatesVisible((v) => !v)}
-            >
-              Use template
-            </span>
             <Button
               onClick={() => abortController.current?.abort()}
               label="Stop generating"
             />
             <Button onClick={handleNew} label="New conversation" />
+            <Button
+              onClick={() => setTemplatesVisible((v) => !v)}
+              label="Use template"
+            />
           </div>
           <CalvinAIInput
             handleChangeInput={handleChangeInput}
