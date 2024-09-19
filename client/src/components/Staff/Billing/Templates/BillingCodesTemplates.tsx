@@ -51,7 +51,7 @@ const BillingCodesTemplates = ({
 
   if (error) {
     return (
-      <div className="billing-codes__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -60,15 +60,15 @@ const BillingCodesTemplates = ({
   const templates = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="billing-codes__templates">
-      <div className="billing-codes__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           disabled={newTemplateVisible}
           label="Add a new template"
         />
       </div>
-      <div className="billing-codes__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -79,10 +79,8 @@ const BillingCodesTemplates = ({
           autoFocus={true}
         />
       </div>
-      {errMsgPost && (
-        <p className="billing-codes__templates-err">{errMsgPost}</p>
-      )}
-      <div className="billing-codes__templates-list" ref={divRef}>
+      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+      <div className="templates__list" ref={divRef}>
         <div ref={billingCodesTemplatesStartRef}></div>
         <ul>
           {newTemplateVisible && (

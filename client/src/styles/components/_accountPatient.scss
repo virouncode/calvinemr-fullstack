@@ -1,6 +1,6 @@
 .patient-account {
   &__container {
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     border-radius: 6px;
     background: $white;
     padding: 20px;

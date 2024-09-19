@@ -23,6 +23,8 @@ $green: #5ebac7;
 $pink: #f53f77;
 $pink2: #e63a6e;
 
+$box-shadow-default: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+
 @mixin childCenter {
   display: flex;
   justify-content: center;

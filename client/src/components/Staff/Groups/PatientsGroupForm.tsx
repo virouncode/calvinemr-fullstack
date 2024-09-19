@@ -159,7 +159,7 @@ const PatientsGroupForm = ({
               />
             ))
           ) : (
-            <EmptyLi text="No patients in this group" paddingLateral={5} />
+            <EmptyLi text="No patients in this group" />
           )}
         </Reorder.Group>
       </div>

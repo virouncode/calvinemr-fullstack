@@ -13,7 +13,7 @@
 .calendar__options {
   border: solid 1px $grey;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   font-size: $size-sm;
   width: 98%;
   margin: 0.5rem auto 0;
@@ -47,7 +47,7 @@
   color: $black;
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   transition: transform 0.2s;
   border: none;
   outline: none;
@@ -103,7 +103,7 @@
   border: solid 1px $grey;
   overflow: hidden;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   .flatpickr {
     &-calendar.animate.inline {
       top: 0;
@@ -195,7 +195,7 @@
   padding: 0.75rem;
   height: 99%;
   overflow-y: scroll;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   .fc {
     height: 100%;
     font-size: $size-xs;
@@ -306,11 +306,11 @@
 
 .calendar__toggle {
   position: absolute;
-  top: 120px;
+  top: 119px;
   right: 1rem;
   display: flex;
   &--timeline {
-    top: 90px;
+    top: 87px;
   }
 }
 .calendar__toggle-option {
@@ -345,7 +345,7 @@
 
 .calendar__filter {
   margin-top: 0.5rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   width: 100%;
   border-radius: 6px;
   font-weight: bold;
@@ -589,7 +589,7 @@
     margin: 0.5rem auto;
     overflow: hidden;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     print-color-adjust: exact;
     .calendar__daysheet-event-card-header {
       padding: 0.5rem;

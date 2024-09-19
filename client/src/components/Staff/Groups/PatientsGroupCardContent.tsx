@@ -30,7 +30,7 @@ const PatientsGroupCardContent = ({ group }: PatientsGroupCardContentProps) => {
               />
             ))
           ) : (
-            <EmptyLi text="No patients in this group" paddingLateral={8} />
+            <EmptyLi text="No patients in this group" />
           )}
         </ul>
       </div>

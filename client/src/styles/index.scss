@@ -113,7 +113,7 @@
 @import "./components/emptyParagraph";
 @import "./components/faxes";
 @import "./components/loadingParagraph";
-@import "./components/contactForm";
+@import "./components/contactFaxForm";
 @import "./components/doctorFaxForm";
 @import "./components/pharmacyFaxForm";
 @import "./components/otherFaxForm";
@@ -125,6 +125,8 @@
 @import "./components/closedPractician";
 @import "./components/patientPharmacies";
 @import "./components/login";
+@import "./components/loadingli";
+@import "./components/emptyli";
 @import "flatpickr/dist/themes/material_blue.css";
 
 @import "./utils.scss";

@@ -1,56 +1,85 @@
-.refohip {
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &__container {
+.refohip__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  gap: 1rem;
+  .refohip__search {
     margin-top: 40px;
+    input {
+      font-size: $size-base;
+      width: 100%;
+    }
   }
-}
-.refohip-search {
-  padding: 10px 20px 20px;
-  background: $white;
-  label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-}
-.refohip-results {
-  height: 50px;
-  border: solid 0.5px $grey;
-  border-radius: 6px;
-  overflow-y: scroll;
-  height: 210px;
-  position: relative;
-  padding: 10px;
-  &__item {
-    cursor: pointer;
+  .refohip__results {
+    flex: 1;
+    max-height: 45%;
     display: flex;
-    padding: 0 20px;
-    justify-content: flex-start;
-    &:hover {
-      text-decoration: underline;
+    flex-direction: column;
+    .refohip__results-title {
+      font-size: $size-base;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
     }
+    ul {
+      flex: 1;
+      overflow-y: scroll;
+      border: solid 0.5px $grey;
+      border-radius: 6px;
+      padding-bottom: 0.5rem;
+      .refohip__results-item {
+        font-size: $size-xs;
+        padding: 0.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: solid 0.5px $grey;
+        &:hover {
+          text-decoration: underline;
+        }
+        &--headers {
+          font-size: $size-sm;
+          position: sticky;
+          top: 0;
+          background-color: $blue;
+          border-bottom: none;
+          .refohip__results-code {
+            font-weight: bold;
+            width: 40%;
+            text-align: center;
+          }
+          .refohip__results-name {
+            width: 60%;
+            text-align: center;
+          }
+        }
+        .refohip__results-code {
+          font-weight: bold;
+          width: 40%;
+          text-align: center;
+        }
+        .refohip__results-name {
+          width: 60%;
+        }
+      }
+    }
+  }
+}
 
-    &--headers {
-      position: sticky;
-      top: 0;
-      background-color: $white;
-      // padding: 5px 20px;
+@media (min-width: 1024px) {
+  .refohip__container {
+    .refohip__search {
+      input {
+        font-size: $size-sm;
+      }
     }
-  }
-  &__code {
-    font-weight: bold;
-    display: inline-block;
-    width: 10%;
-  }
-  &__name {
-    width: 80%;
+    .refohip__results {
+      ul {
+        .refohip__results-item {
+          font-size: $size-sm;
+        }
+      }
+    }
   }
 }

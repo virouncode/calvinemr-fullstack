@@ -23,7 +23,7 @@
     width: 95%;
     border-radius: 6px;
     margin: 0 auto;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   &__card-title {
     border-radius: 6px 6px 0 0;
@@ -98,7 +98,7 @@
       display: flex;
       justify-content: center;
       border: solid 1px $grey;
-      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      box-shadow: $box-shadow-default;
       border-radius: 6px;
       p {
         font-size: 0.85rem;

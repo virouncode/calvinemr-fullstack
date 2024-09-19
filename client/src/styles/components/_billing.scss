@@ -18,7 +18,7 @@
   border: solid 1px $grey;
   padding: 1rem;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   .billing__form-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -56,7 +56,7 @@
   padding: 1rem;
   width: 100%;
   max-width: 940px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   .billing__filter-row-dates {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -100,9 +100,10 @@
     }
     a {
       font-size: $size-sm;
-      &:hover {
-        text-decoration: underline;
-      }
+      text-decoration: underline;
+    }
+    button > a {
+      text-decoration: none;
     }
   }
 }
@@ -112,7 +113,7 @@
   min-height: 200px;
   overflow: scroll;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
 }
 .billing-table {
   table-layout: fixed;

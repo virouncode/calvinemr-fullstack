@@ -26,7 +26,7 @@
   font-size: $size-xs;
   overflow: scroll;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -59,7 +59,7 @@
   margin: 10px auto;
   border: solid 1px $grey;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   font-size: $size-xs;
   padding: 10px;
   width: 100%;
@@ -184,7 +184,7 @@
   }
   .reportsinbox__forward-list {
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     padding: 1rem;
     flex: 1;
     overflow-y: scroll;

@@ -41,7 +41,7 @@
   overflow-y: scroll;
   position: relative;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
 }
 .search-patient__table {
   table-layout: fixed;

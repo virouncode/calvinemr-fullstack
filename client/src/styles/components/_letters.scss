@@ -19,7 +19,7 @@
     height: 400px;
     overflow: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     position: relative;
   }
   &__table {
@@ -88,7 +88,7 @@
     height: 28cm;
     padding: 50px 60px;
     border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     border-radius: 6px;
     margin-bottom: 10px;
   }
@@ -191,7 +191,7 @@
     padding: 10px;
     width: 33%;
     border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     border-radius: 6px;
     &-name,
     &-site,

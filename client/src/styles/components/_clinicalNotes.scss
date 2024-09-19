@@ -32,7 +32,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     &-search {
       width: 30%;
       input {
@@ -81,7 +81,7 @@
     margin: 4px;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     &-err {
       padding: 10px 20px;
       font-size: 0.9rem;
@@ -147,7 +147,7 @@
     margin: 4px;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     print-color-adjust: exact;
     &--print {
       font-size: 0.8rem;
@@ -308,7 +308,7 @@
     overflow-y: scroll;
     &-card {
       border-radius: 6px;
-      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      box-shadow: $box-shadow-default;
       padding: 10px;
       margin: 10px;
       label {

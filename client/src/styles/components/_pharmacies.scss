@@ -91,7 +91,7 @@
     height: 400px;
     overflow: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   &__table {
     table-layout: fixed;
@@ -142,7 +142,7 @@
   // border: solid 1px $grey;
   border-radius: 6px;
   padding: 10px 20px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   &-row {
     display: flex;
     align-items: center;

@@ -40,6 +40,7 @@ import InputDate from "../../UI/Inputs/InputDate";
 import InputEmail from "../../UI/Inputs/InputEmail";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenericList from "../../UI/Lists/GenericList";
+import PostalZipSelectInput from "../../UI/Lists/PostalZipSelectInput";
 import StaffList from "../../UI/Lists/StaffList";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -551,105 +552,92 @@ const SignupPatientForm = () => {
               placeHolder="Choose a province/state..."
             />
           </div>
-          <div className="signup-patient__row">
-            <label htmlFor="postalZipCode">Postal/Zip Code*: </label>
-            <select
-              style={{ width: "20%", marginRight: "10px" }}
-              name="PostalOrZip"
-              value={postalOrZip}
-              onChange={handleChangePostalOrZip}
-            >
-              <option value="postal">Postal</option>
-              <option value="zip">Zip</option>
-            </select>
-            <Input
+          <div className="signup-patient__row signup-patient__row--postal">
+            <PostalZipSelectInput
+              onChangeSelect={handleChangePostalOrZip}
+              onChangeInput={handleChange}
+              postalOrZip={postalOrZip}
+              label={true}
               value={
                 postalOrZip === "postal"
                   ? formDatas.postalCode ?? ""
                   : formDatas.zipCode ?? ""
               }
-              onChange={handleChange}
-              name="postalZipCode"
               id="postalZipCode"
               placeholder={
                 postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
               }
+              name="postalZipCode"
             />
           </div>
-          <div className="signup-patient__row">
-            <InputTel
-              label="Cell Phone*:"
-              value={formDatas.cellphone ?? ""}
-              onChange={handleChange}
-              name="cellphone"
-              id="cellphone"
-              placeholder="xxx-xxx-xxxx"
-            />
-            <label
-              style={{ marginLeft: "30px", width: "10%" }}
-              htmlFor="cellphoneExt"
-            >
-              Ext
-            </label>
-            <input
-              style={{ width: "15%" }}
-              type="text"
-              value={formDatas.cellphoneExt}
-              onChange={handleChange}
-              name="cellphoneExt"
-              autoComplete="off"
-              id="cellphoneExt"
-            />
+          <div className="signup-patient__row signup-patient__row--tel">
+            <div className="signup-patient__row-item-number">
+              <InputTel
+                label="Cell Phone*:"
+                value={formDatas.cellphone ?? ""}
+                onChange={handleChange}
+                name="cellphone"
+                id="cellphone"
+                placeholder="xxx-xxx-xxxx"
+              />
+            </div>
+            <div className="signup-patient__row-item-extension">
+              <label htmlFor="cellphoneExt">Ext</label>
+              <input
+                type="text"
+                value={formDatas.cellphoneExt}
+                onChange={handleChange}
+                name="cellphoneExt"
+                autoComplete="off"
+                id="cellphoneExt"
+              />
+            </div>
           </div>
-          <div className="signup-patient__row">
-            <InputTel
-              label="Home Phone:"
-              value={formDatas.homephone ?? ""}
-              onChange={handleChange}
-              name="homephone"
-              id="homephone"
-              placeholder="xxx-xxx-xxxx"
-            />
-            <label
-              style={{ marginLeft: "30px", width: "10%" }}
-              htmlFor="homephoneExt"
-            >
-              Ext
-            </label>
-            <input
-              style={{ width: "15%" }}
-              type="text"
-              value={formDatas.homephoneExt}
-              onChange={handleChange}
-              name="homephoneExt"
-              autoComplete="off"
-              id="homephoneExt"
-            />
+          <div className="signup-patient__row signup-patient__row--tel">
+            <div className="signup-patient__row-item-number">
+              <InputTel
+                label="Home Phone:"
+                value={formDatas.homephone ?? ""}
+                onChange={handleChange}
+                name="homephone"
+                id="homephone"
+                placeholder="xxx-xxx-xxxx"
+              />
+            </div>
+            <div className="signup-patient__row-item-extension">
+              <label htmlFor="homephoneExt">Ext</label>
+              <input
+                type="text"
+                value={formDatas.homephoneExt}
+                onChange={handleChange}
+                name="homephoneExt"
+                autoComplete="off"
+                id="homephoneExt"
+              />
+            </div>
           </div>
-          <div className="signup-patient__row">
-            <InputTel
-              label="Work Phone:"
-              value={formDatas.workphone ?? ""}
-              onChange={handleChange}
-              name="workphone"
-              id="workphone"
-              placeholder="xxx-xxx-xxxx"
-            />
-            <label
-              style={{ marginLeft: "30px", width: "10%" }}
-              htmlFor="workphoneExt"
-            >
-              Ext
-            </label>
-            <input
-              style={{ width: "15%" }}
-              type="text"
-              value={formDatas.workphoneExt}
-              onChange={handleChange}
-              name="workphoneExt"
-              autoComplete="off"
-              id="workphoneExt"
-            />
+          <div className="signup-patient__row signup-patient__row--tel">
+            <div className="signup-patient__row-item-number">
+              <InputTel
+                label="Work Phone:"
+                value={formDatas.workphone ?? ""}
+                onChange={handleChange}
+                name="workphone"
+                id="workphone"
+                placeholder="xxx-xxx-xxxx"
+              />
+            </div>
+            <div className="signup-patient__row-item-extension">
+              <label htmlFor="workphoneExt">Ext</label>
+              <input
+                type="text"
+                value={formDatas.workphoneExt}
+                onChange={handleChange}
+                name="workphoneExt"
+                autoComplete="off"
+                id="workphoneExt"
+              />
+            </div>
           </div>
           <div className="signup-patient__row">
             <InputEmail

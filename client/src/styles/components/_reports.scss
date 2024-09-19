@@ -24,7 +24,7 @@
     height: 220px;
     overflow: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   &__table {
     table-layout: fixed;
@@ -72,7 +72,7 @@
     width: 100%;
     border: solid 1px $grey;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     height: 935px;
     &-btn-container {
       text-align: center;

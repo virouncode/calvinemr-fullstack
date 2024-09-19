@@ -19,7 +19,7 @@
     height: 400px;
     overflow: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   &__table {
     table-layout: fixed;
@@ -74,7 +74,7 @@
   &__sperm-infos,
   &__tests-infos {
     // display: block;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     padding: 10px;
     padding-bottom: 20px;
     border: solid 1px $grey;
@@ -141,7 +141,7 @@
     }
   }
   &__events {
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     padding: 10px;
     padding-bottom: 20px;
     border: solid 1px $grey;
@@ -154,7 +154,7 @@
       width: 100%;
       overflow: scroll;
       border-radius: 6px;
-      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      box-shadow: $box-shadow-default;
       .rw-combobox {
         input {
           &:focus {
@@ -341,7 +341,7 @@
       overflow: hidden;
       width: 25cm;
       border-radius: 6px;
-      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      box-shadow: $box-shadow-default;
     }
     &-table {
       table-layout: fixed;

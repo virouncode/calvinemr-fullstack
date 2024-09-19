@@ -19,7 +19,7 @@
     display: block;
     resize: none;
     overflow: scroll;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   &__intro-textarea {
     height: 40px;
@@ -50,7 +50,7 @@
   &__attachments,
   &__reports {
     border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     height: 200px;
     padding: 10px;
     border-radius: 6px;
@@ -118,7 +118,7 @@
     align-items: center;
     border-radius: 6px;
     border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     padding: 5px 0;
     padding-left: 10px;
     padding-right: 20px;
@@ -136,7 +136,7 @@
     padding: 20px;
     border: solid 1px $grey;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     margin-bottom: 10px;
     &-content {
       display: flex;

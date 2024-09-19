@@ -10,7 +10,7 @@
     height: 100%;
     width: 100%;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -127,7 +127,7 @@
         align-items: center;
         grid-template-columns: 60% 15% 23% 2%;
         &:hover {
-          box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+          box-shadow: $box-shadow-default;
         }
         &--unread {
           font-weight: bold;
@@ -157,7 +157,7 @@
         }
       }
       .fax__thumbnail-mobile {
-        font-size: $size-xs;
+        font-size: $size-sm;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -165,7 +165,7 @@
         border-bottom: solid 0.5px $grey;
         gap: 0.5rem;
         &:hover {
-          box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+          box-shadow: $box-shadow-default;
         }
         .fax__thumbnail-link {
           cursor: pointer;
@@ -199,7 +199,7 @@
         padding: 0.25rem;
         border-bottom: solid 0.5px $grey;
         display: grid;
-        grid-template-columns: 8% 90% 2%;
+        grid-template-columns: 5% 90% 5%;
         align-items: center;
         position: sticky;
         justify-content: space-between;

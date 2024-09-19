@@ -7,7 +7,7 @@
 
 .reference__links {
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   background: #fefefe;
   border-radius: 6px;
   padding: 0.5rem 1rem;
@@ -63,7 +63,7 @@
   padding: 0.5rem;
   border-radius: 6px;
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   font-size: $size-sm;
   li {
     margin-left: 0;
@@ -72,7 +72,7 @@
 .reference__links-form {
   border: solid 1px $grey;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   display: flex;
@@ -103,7 +103,7 @@
 }
 .reference__edocs {
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   background: #fefefe;
   border-radius: 6px;
   padding: 0.5rem 1rem;
@@ -138,7 +138,7 @@
   height: 400px;
   overflow: scroll;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   position: relative;
 }
 .reference__edocs-table {

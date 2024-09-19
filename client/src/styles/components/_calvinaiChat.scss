@@ -28,7 +28,7 @@
   border: solid 1px $grey;
   border-radius: 6px;
   padding: 1rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   height: 100%;
 }
 .calvinai__chat-content {
@@ -40,7 +40,7 @@
     padding: 1rem;
     border: solid 1px $grey;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     margin-bottom: 10px;
     .calvinai__chat-card-content {
       display: flex;
@@ -85,7 +85,7 @@
   align-items: center;
   border-radius: 6px;
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   padding: 5px 20px 5px 10px;
   .calvinai__chat-send-btn {
     background-color: $blue;
@@ -153,7 +153,7 @@
     padding: 1rem;
     border: solid 1px $grey;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     font-size: $size-sm;
     &-btn-container {
       text-align: center;
@@ -178,10 +178,11 @@
       border: solid 0.5px $grey;
       border-radius: 6px;
       overflow-y: scroll;
-      padding: 0.5rem;
+      padding: 0 0.5rem;
       &-item {
         cursor: pointer;
-        margin-bottom: 5px;
+        padding: 0.25rem;
+        border-bottom: solid 0.5px $grey;
         &:hover {
           text-decoration: underline;
         }
@@ -196,7 +197,9 @@
       display: none;
     }
   }
-  .calvinai__chat-textarea {
-    font-size: $size-sm;
+  .calvinai__chat-input {
+    .calvinai__chat-textarea {
+      font-size: $size-sm;
+    }
   }
 }

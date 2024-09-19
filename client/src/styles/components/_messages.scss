@@ -17,7 +17,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 auto 1.5rem;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     .messages__toggle-radio {
       display: flex;
       align-items: center;
@@ -30,7 +30,7 @@
     flex: 1;
     width: 100%;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -125,7 +125,7 @@
           align-items: center;
           grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv
           &:hover {
-            box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+            box-shadow: $box-shadow-default;
           }
           &--unread {
             font-weight: bold;
@@ -202,7 +202,7 @@
         .message__thumbnail-mobile {
           display: flex;
           flex-direction: column;
-          font-size: $size-xs;
+          font-size: $size-sm;
           gap: 0.25rem;
           padding: 0.5rem;
           border-bottom: solid 0.5px $grey;
@@ -398,7 +398,7 @@
     border-radius: 6px;
     border: solid 0.3px $grey;
     overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     .message__print-subject,
     .message__print-patient {
       font-size: $size-sm;

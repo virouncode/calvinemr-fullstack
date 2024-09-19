@@ -143,6 +143,7 @@ const DoctorFaxForm = ({
             name="firstName"
             id="firstName"
             label="First Name*"
+            autoFocus={true}
           />
         </div>
         <div className="doctor-fax__form-row">
@@ -152,7 +153,6 @@ const DoctorFaxForm = ({
             name="lastName"
             id="lastName"
             label="Last Name*"
-            autoFocus={true}
           />
         </div>
         <div className="doctor-fax__form-row">

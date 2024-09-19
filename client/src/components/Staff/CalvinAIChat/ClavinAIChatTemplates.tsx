@@ -65,10 +65,10 @@ const CalvinAIChatTemplates = ({
 
   return (
     <div className="calvinai__chat-templates">
-      <div className="calvinai__chat-templates-btn-container">
+      <div className="templates__btn-container">
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
-      <div className="calvinai__chat-templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -79,7 +79,7 @@ const CalvinAIChatTemplates = ({
           width={300}
         />
       </div>
-      <div className="calvinai__chat-templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />

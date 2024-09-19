@@ -30,7 +30,7 @@
   color: $black;
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   transition: transform 0.2s;
   border: none;
   outline: none;

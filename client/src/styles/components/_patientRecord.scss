@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: 20% 60% 20%;
     align-items: flex-start;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     border-radius: 6px;
   }
   &__actions {

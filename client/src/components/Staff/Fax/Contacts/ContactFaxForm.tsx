@@ -26,9 +26,7 @@ const ContactFaxForm = ({
   return (
     <div className="contact-fax__form">
       <div className="contact-fax__form-radios">
-        <label className="contact-fax__form-radios-label">
-          Add contact to:
-        </label>
+        <label>Add contact to:</label>
         <div className="contact-fax__form-radios-list">
           <div className="contact-fax__form-radios-item">
             <Radio

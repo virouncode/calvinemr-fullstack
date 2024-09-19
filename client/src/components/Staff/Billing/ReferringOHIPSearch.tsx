@@ -49,129 +49,104 @@ const ReferringOHIPSearch = ({
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
-  const doctorsDatas = doctors?.pages
+
+  const externalDoctorsDatas = doctors?.pages
     ?.flatMap((page) => page.items)
     ?.filter(({ id }) => !doctorsIdToRemove?.includes(id));
 
+  const filteredClinicDoctors = clinicDoctors.filter(
+    (clinicDoctor) =>
+      clinicDoctor.full_name?.includes(search) ||
+      clinicDoctor.ohip_billing_nbr.includes(search)
+  );
+
   return (
     <div className="refohip__container">
-      <div className="refohip-search">
+      <div className="refohip__search">
         <Input
           value={search}
           onChange={handleSearch}
           id="refohip-search"
-          label="Search"
           autoFocus={true}
-          placeholder="OHIP#, Name"
-          width={300}
+          placeholder="Search by OHIP#, Name"
         />
       </div>
-      <p
-        style={{
-          padding: 0,
-          marginBottom: "5px",
-          fontWeight: "bold",
-        }}
-      >
-        External doctors
-      </p>
-      <ul className="refohip-results" ref={ulRef}>
-        {isPending ? (
-          <LoadingLi paddingLateral={20} />
-        ) : doctorsDatas && doctorsDatas.length > 0 ? (
-          <>
-            <li className="refohip-results__item refohip-results__item--headers">
-              <span className="refohip-results__code">OHIP#</span>{" "}
-              <span
-                className="refohip-results__name"
-                style={{ fontWeight: "bold" }}
-              >
-                Name
-              </span>
-            </li>
-            {doctorsDatas.map((item, index) =>
-              index === doctorsDatas.length - 1 ? (
-                <li
-                  className="refohip-results__item"
-                  key={item.id}
-                  onClick={() => handleClickRefOHIP(item)}
-                  ref={lastItemRef}
-                >
-                  <span className="refohip-results__code">
-                    {item.ohip_billing_nbr}
-                  </span>{" "}
-                  <span className="refohip-results__name">
-                    Dr. {item.FirstName} {item.LastName} (
-                    {item.speciality || ""},{" "}
-                    {item.Address?.Structured?.City || ""})
-                  </span>
-                </li>
-              ) : (
-                <li
-                  className="refohip-results__item"
-                  key={item.id}
-                  onClick={() => handleClickRefOHIP(item)}
-                >
-                  <span className="refohip-results__code">
-                    {item.ohip_billing_nbr}
-                  </span>{" "}
-                  <span className="refohip-results__name">
-                    Dr. {item.FirstName} {item.LastName} (
-                    {item.speciality || ""},{" "}
-                    {item.Address?.Structured?.City || ""})
-                  </span>
-                </li>
+      <div className="refohip__results">
+        <p className="refohip__results-title">External doctors</p>
+        <ul ref={ulRef}>
+          <li className="refohip__results-item refohip__results-item--headers">
+            <span className="refohip__results-code">OHIP#</span>
+            <span className="refohip__results-name">Name</span>
+          </li>
+          {externalDoctorsDatas && externalDoctorsDatas.length > 0
+            ? externalDoctorsDatas.map((item, index) =>
+                index === externalDoctorsDatas.length - 1 ? (
+                  <li
+                    className="refohip__results-item"
+                    key={item.id}
+                    onClick={() => handleClickRefOHIP(item)}
+                    ref={lastItemRef}
+                  >
+                    <span className="refohip__results-code">
+                      {item.ohip_billing_nbr}
+                    </span>{" "}
+                    <span className="refohip__results-name">
+                      Dr. {item.FirstName} {item.LastName} (
+                      {item.speciality || ""},{" "}
+                      {item.Address?.Structured?.City || ""})
+                    </span>
+                  </li>
+                ) : (
+                  <li
+                    className="refohip__results-item"
+                    key={item.id}
+                    onClick={() => handleClickRefOHIP(item)}
+                  >
+                    <span className="refohip__results-code">
+                      {item.ohip_billing_nbr}
+                    </span>{" "}
+                    <span className="refohip__results-name">
+                      Dr. {item.FirstName} {item.LastName} (
+                      {item.speciality || ""},{" "}
+                      {item.Address?.Structured?.City || ""})
+                    </span>
+                  </li>
+                )
               )
-            )}
-          </>
-        ) : (
-          !isFetchingNextPage && (
-            <EmptyLi paddingLateral={20} text="No external doctors" />
-          )
-        )}
-        {isFetchingNextPage && <LoadingLi paddingLateral={20} />}
-      </ul>
-      <p
-        style={{
-          padding: 0,
-          marginBottom: "5px",
-          fontWeight: "bold",
-          marginTop: "20px",
-        }}
-      >
-        Clinic doctors
-      </p>
-      <ul className="refohip-results">
-        <li className="refohip-results__item refohip-results__item--headers">
-          <span className="refohip-results__code">OHIP#</span>{" "}
-          <span
-            className="refohip-results__name"
-            style={{ fontWeight: "bold" }}
-          >
-            Name
-          </span>
-        </li>
-        {clinicDoctors
-          .filter(
-            (clinicDoctor) =>
-              clinicDoctor.full_name?.includes(search) ||
-              clinicDoctor.ohip_billing_nbr.includes(search)
-          )
-          .map((item) => (
-            <li
-              className="refohip-results__item"
-              key={item.id}
-              onClick={() => handleClickRefOHIP(item)}
-            >
-              <span className="refohip-results__code">
-                {item.ohip_billing_nbr}
-              </span>{" "}
-              <span className="refohip-results__name">
-                Dr. {item.first_name} {item.last_name} ({item.speciality})
-              </span>
-            </li>
-          ))}
-      </ul>
+            : !isFetchingNextPage &&
+              !isPending && (
+                <EmptyLi text="No corresponding external doctors" />
+              )}
+          {(isFetchingNextPage || isPending) && <LoadingLi />}
+        </ul>
+      </div>
+      <div className="refohip__results">
+        <p className="refohip__results-title">Clinic doctors</p>
+        <ul>
+          <li className="refohip__results-item refohip__results-item--headers">
+            <span className="refohip__results-code">OHIP#</span>
+            <span className="refohip__results-name">Name</span>
+          </li>
+          {filteredClinicDoctors.length > 0 ? (
+            filteredClinicDoctors.map((item) => (
+              <li
+                className="refohip__results-item"
+                key={item.id}
+                onClick={() => handleClickRefOHIP(item)}
+              >
+                <span className="refohip__results-code">
+                  {item.ohip_billing_nbr}
+                </span>{" "}
+                <span className="refohip__results-name">
+                  Dr. {item.first_name} {item.last_name} ({item.speciality})
+                </span>
+              </li>
+            ))
+          ) : (
+            <EmptyLi text="No corresponding clinic doctors" />
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

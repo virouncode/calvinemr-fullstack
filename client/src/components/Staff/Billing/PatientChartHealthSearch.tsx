@@ -57,22 +57,18 @@ const PatientChartHealthSearch = ({
           value={search}
           onChange={handleSearch}
           id="search"
-          label="Search"
           autoFocus={true}
-          placeholder="Chart#, Health Card#, Name..."
+          placeholder="Search by Chart#, Health Card#, Name..."
         />
       </div>
       <ul className="hcn__results" ref={ulRef}>
-        {isPending ? (
-          <LoadingLi />
-        ) : patientsDatas && patientsDatas.length > 0 ? (
-          <>
-            <li className="hcn__results-item hcn__results-item--headers">
-              <span className="hcn__results-code">Chart#</span>
-              <span className="hcn__results-code">Health Card#</span>
-              <span className="hcn__results-name">Name</span>
-            </li>
-            {patientsDatas.map((item, index) =>
+        <li className="hcn__results-item hcn__results-item--headers">
+          <span className="hcn__results-code">Chart#</span>
+          <span className="hcn__results-code">Health Card#</span>
+          <span className="hcn__results-name">Name</span>
+        </li>
+        {patientsDatas && patientsDatas.length > 0
+          ? patientsDatas.map((item, index) =>
               index === patientsDatas.length - 1 ? (
                 <li
                   className="hcn__results-item"
@@ -103,12 +99,10 @@ const PatientChartHealthSearch = ({
                   </span>
                 </li>
               )
-            )}
-          </>
-        ) : (
-          !isFetchingNextPage && <EmptyLi text="No corresponding patients" />
-        )}
-        {isFetchingNextPage && <LoadingLi />}
+            )
+          : !isFetchingNextPage &&
+            !isPending && <EmptyLi text="No corresponding patients" />}
+        {(isFetchingNextPage || isPending) && <LoadingLi />}
       </ul>
     </div>
   );

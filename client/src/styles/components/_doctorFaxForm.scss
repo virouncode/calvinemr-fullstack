@@ -1,5 +1,5 @@
 .doctor-fax__form {
-  margin-top: 20px;
+  flex: 1;
   padding: 1rem;
   border: solid 1px $grey;
   border-radius: 6px;
@@ -14,10 +14,12 @@
     label {
       font-weight: bold;
       margin-bottom: 0.25rem;
+      font-size: $size-base;
     }
     select,
     input {
       width: 100%;
+      font-size: $size-base;
     }
     &--postal {
       .postalzip-select-input {
@@ -30,6 +32,20 @@
         input {
           flex: 1;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .doctor-fax__form {
+    .doctor-fax__form-row {
+      label {
+        font-size: $size-sm;
+      }
+      select,
+      input {
+        font-size: $size-sm;
       }
     }
   }

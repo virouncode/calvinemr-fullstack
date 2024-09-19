@@ -1,143 +1,146 @@
 .doctors {
-    &__title {
-        font-size: 1.2rem;
-        margin-top: 60px;
-        margin-bottom: 30px;
-        text-align: center;
+  &__title {
+    font-size: 1.2rem;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 50%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__table-title {
+    padding: 0;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  &__table-container {
+    height: 150px;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    margin-bottom: 20px;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
     }
-    &__err {
-        padding : 10px 20px;
-        font-size: 0.9rem;
-        width : 50%;
-        margin:10px auto;
-        color : red;
-        background-color:rgba(255, 0, 0, 0.403);
-        border-radius: 6px;
-        text-align: center;
+    th {
+      min-width: 120px;
+      padding: 10px;
+      cursor: pointer;
     }
-    &__table-title {
-        padding:0;
-        font-weight: bold;
-        margin-bottom: 10px;
+  }
+  &__item,
+  &__form {
+    border-bottom: solid 1px $grey;
+    td {
+      text-align: center;
+      padding: 10px;
+      word-break: break-word;
+      input,
+      select {
+        width: 100%;
+      }
+      input[type="submit"] {
+        width: auto;
+      }
     }
-    &__table-container {
-        height:150px;
-        overflow:scroll;
-        border-radius: 6px;
-        box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-        margin-bottom: 20px;
+    .td--postal {
+      input,
+      select {
+        width: 50%;
+      }
     }
-    &__table {
-        table-layout: fixed;
-        min-width:100%;
-        border-collapse: collapse;
-        font-size: 0.8rem;
-        thead {
-            position: sticky;
-            top:0;
-            background: $blue;
-            border-radius: 6px;
-        }
-        th {
-            min-width: 120px;
-            padding: 10px;
-            cursor: pointer;
-        }
+  }
+  &__item-btn-container,
+  &__form-btn-container {
+    display: flex;
+    justify-content: center;
+    button {
+      margin-left: 5px;
     }
-    &__item, &__form {
-        border-bottom:solid 1px $grey;
-        td {
-            text-align: center;
-            padding: 10px;
-            word-break: break-word;
-            input,select {
-                width:100%;
-            }
-            input[type="submit"]{
-                width: auto;
-            }
-        }
-        .td--postal {
-            input,select {
-                width:50%;
-            }
-        }
+  }
+  &__btn-container {
+    text-align: center;
+    margin-top: 20px;
+    button {
+      margin-left: 5px;
     }
-    &__item-btn-container, &__form-btn-container{
-        display: flex;
-        justify-content: center;
-        button {
-            margin-left: 5px;
-        }
-    }
-    &__btn-container {
-        text-align: center;
-        margin-top: 20px;
-        button {
-            margin-left: 5px;
-        }
-    }
+  }
 }
 .doctors-list {
-    &__err {
-        padding : 10px 20px;
-        font-size: 0.9rem;
-        width : 70%;
-        margin:10px auto;
-        color : red;
-        background-color:rgba(255, 0, 0, 0.403);
-        border-radius: 6px;
-        text-align: center;
+  &__err {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 70%;
+    margin: 10px auto;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.403);
+    border-radius: 6px;
+    text-align: center;
+  }
+  &__title {
+    margin: 40px 0 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    button {
+      margin-left: 20px;
     }
-    &__title {
-        margin: 40px 0 20px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        button {
-            margin-left: 20px;
-        }
+  }
+  &__table-container {
+    height: 500px;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
     }
-    &__table-container {
-        height:500px;
-        overflow:scroll;
-        border-radius: 6px;
-        box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    th {
+      min-width: 120px;
+      padding: 10px;
+      cursor: pointer;
+      &:nth-child(10) {
+        min-width: 160px;
+      }
     }
-    &__table {
-        table-layout: fixed;
-        min-width:100%;
-        border-collapse: collapse;
-        font-size: 0.8rem;
-        thead {
-            position: sticky;
-            top:0;
-            background: $blue;
-            border-radius: 6px;
-        }
-        th {
-            min-width: 120px;
-            padding: 10px;
-            cursor: pointer;
-            &:nth-child(10) {
-                min-width: 160px;
-            }
-        }
+  }
+  &__item,
+  &__form {
+    border-bottom: solid 1px $grey;
+    td {
+      text-align: center;
+      padding: 10px;
+      word-break: break-word;
+      input,
+      select {
+        width: 100%;
+      }
+      input[type="submit"] {
+        width: auto;
+      }
     }
-    &__item, &__form{
-        border-bottom:solid 1px $grey;
-        td {
-            text-align: center;
-            padding: 10px;
-            word-break: break-word;
-            input,select {
-                width:100%;
-            }
-            input[type="submit"]{
-                width: auto;
-            }
-        }
-    }
+  }
 }
-
-
-

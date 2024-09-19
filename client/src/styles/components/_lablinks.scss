@@ -7,7 +7,7 @@
   height: 500px;
   overflow-y: scroll;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -81,12 +81,12 @@
     height: 300px;
     overflow-y: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
   }
   .lablinks__personal-form {
     padding: 1rem;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     margin-bottom: 1rem;
   }
   .lablinks__personal-form-inputs {

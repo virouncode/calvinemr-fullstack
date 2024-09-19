@@ -1,13 +1,11 @@
 .signup-patient {
-  background: url("@/assets/img/splashscreen.png") center/cover;
   width: 100%;
   height: 100%;
   padding: 1rem;
-  overflow: scroll;
 }
 .signup-patient__success {
   padding: 0.5rem 1rem;
-  font-size: $size-sm;
+  font-size: 0.875rem;
   width: 90%;
   margin: 0.5rem auto;
   color: forestgreen;
@@ -17,74 +15,80 @@
 }
 .signup-patient__container {
   padding: 1rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
+  border: solid 1px $grey;
   border-radius: 6px;
-  background: $white;
   height: 100%;
-  overflow: scroll;
-  max-width: 480px;
   margin: 0 auto;
+  overflow-y: auto;
 }
+.signup-patient__column,
 .signup-patient__form {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   justify-content: space-between;
 }
-.signup-patient__column {
-  // width: 45%;
-}
+
 .signup-patient__row {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 10px;
-  align-items: center;
   &--avatar {
-    align-items: start;
+    align-items: flex-start;
     img {
       margin-bottom: 5px;
     }
   }
+
+  &--postal {
+    .postalzip-select-input {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      select {
+        width: auto;
+      }
+      input {
+        flex: 1;
+      }
+    }
+  }
+
+  &--tel {
+    flex-direction: row;
+    gap: 0.5rem;
+    input {
+      width: auto;
+    }
+    .signup-patient__row-item-number {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+    }
+    .signup-patient__row-item-extension {
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+    }
+  }
   label {
-    width: 45%;
-    font-size: $size-xs;
+    font-size: 1rem;
     font-weight: bold;
+    margin-bottom: 0.25rem;
   }
   input,
   select {
-    font-size: $size-xs;
-    width: 55%;
-    max-width: 170px;
-  }
-  input[type="file"] {
-    font-size: $size-xs;
-    padding: 0;
-    width: auto;
-  }
-  select {
-    width: 55%;
-  }
-  ul {
-    width: 55%;
-    margin-left: auto;
-    li {
-      font-size: 0.7rem;
-    }
+    font-size: 1rem;
+    width: 100%;
   }
 }
 
-.signup-patient__btn {
-  text-align: center;
-  margin-top: 0.5rem;
-  button {
-    font-size: $size-xs;
-  }
-}
 .signup-patient__image {
   display: flex;
   flex-direction: column;
-  width: 55%;
-  max-width: 170px;
+  width: 100%;
   &-preview {
     display: flex;
     align-items: flex-end;
@@ -102,62 +106,43 @@
       object-fit: cover;
     }
   }
-  input[type="file"] {
-    &::-webkit-file-upload-button {
-      cursor: pointer;
-    }
-  }
 }
 
-@media (min-width: 475px) {
-  .signup-patient__row {
-    label {
-      font-size: $size-sm;
-    }
-    input,
-    select {
-      font-size: $size-sm;
-    }
-    input[type="file"] {
-      font-size: $size-sm;
-    }
+input[type="file"] {
+  font-size: 1rem;
+  padding: 0;
+  width: 100%;
+  &::-webkit-file-upload-button {
+    cursor: pointer;
   }
 }
+.signup-patient__btn {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
 @media (min-width: 768px) {
-  .signup-patient__success {
-    font-size: $size-base;
-  }
-  .signup-patient__btn {
-    button {
-      font-size: $size-sm;
-    }
-  }
-}
-@media (min-width: 1024px) {
-  .signup-patient {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .signup-patient__container {
-    max-width: 80%;
-    height: auto;
-  }
   .signup-patient__form {
     flex-direction: row;
     justify-content: space-between;
     gap: 2rem;
   }
-  .signup-patient__row {
-    input,
-    select {
-      max-width: 200px;
-    }
-  }
   .signup-patient__column {
     width: 50%;
+    justify-content: flex-start;
   }
-  .signup-patient__image {
-    max-width: 200px;
+}
+
+@media (min-width: 1024px) {
+  .signup-patient__container {
+    width: 70%;
+  }
+  .signup-patient__row {
+    label,
+    input,
+    select,
+    input[type="file"] {
+      font-size: 0.875rem;
+    }
   }
 }

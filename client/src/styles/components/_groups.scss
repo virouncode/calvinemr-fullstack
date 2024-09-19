@@ -17,7 +17,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto 1.5rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
 }
 .groups__toggle-radio {
   display: flex;
@@ -42,7 +42,7 @@
 }
 .groups__card {
   font-size: $size-sm;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   border-radius: 6px;
   overflow: hidden;
   max-width: 100%;

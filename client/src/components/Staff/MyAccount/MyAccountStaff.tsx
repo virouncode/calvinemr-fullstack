@@ -141,23 +141,23 @@ const MyAccountStaff = () => {
       {tempFormDatas && (
         <div className="myaccount__form">
           <div className="myaccount__column">
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Email*: </label>
               <p>{tempFormDatas.email}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>First Name*: </label>
               <p>{tempFormDatas.first_name}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Middle Name: </label>
               <p>{tempFormDatas.middle_name}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Last Name*: </label>
               <p>{tempFormDatas.last_name}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               {editVisible ? (
                 <SiteSelect
                   handleSiteChange={handleSiteChange}
@@ -169,33 +169,33 @@ const MyAccountStaff = () => {
                 <p>{tempFormDatas.site_infos?.name ?? ""}</p>
               )}
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Gender*: </label>
               <p>{tempFormDatas.gender}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Occupation*: </label>
               <p>{tempFormDatas.title}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Speciality: </label>
               <p>{tempFormDatas.speciality}</p>
             </div>
           </div>
           <div className="myaccount__column">
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Subspeciality: </label>
               <p>{tempFormDatas.subspeciality}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>Licence#: </label>
               <p>{tempFormDatas.licence_nbr}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>OHIP#: </label>
               <p>{tempFormDatas.licence_nbr}</p>
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <InputTelToggle
                 value={tempFormDatas.cell_phone}
                 onChange={handleChange}
@@ -206,7 +206,7 @@ const MyAccountStaff = () => {
                 editVisible={editVisible}
               />
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <InputTelToggle
                 value={tempFormDatas.backup_phone}
                 onChange={handleChange}
@@ -217,7 +217,7 @@ const MyAccountStaff = () => {
                 editVisible={editVisible}
               />
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <InputTextToggle
                 value={tempFormDatas.video_link}
                 onChange={handleChange}
@@ -228,7 +228,7 @@ const MyAccountStaff = () => {
                 placeholder="https://mylink.com"
               />
             </div>
-            <div className="myaccount__row">
+            <div className="myaccount__item">
               <label>E-sign: </label>
               <div className="myaccount__image">
                 {tempFormDatas.sign ? (

@@ -19,7 +19,7 @@
     transform: translate(-50%, -50%);
     background: $white;
     overflow: hidden;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     &--credits {
       width: 300px;
     }
