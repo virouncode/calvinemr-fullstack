@@ -57,6 +57,7 @@
   width: 100%;
   max-width: 940px;
   box-shadow: $box-shadow-default;
+  background-color: $white;
   .billing__filter-row-dates {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -261,7 +262,6 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 2rem;
-    background-color: $white;
     .billing__filter-row-dates {
       width: 70%;
       .billing__filter-item {
