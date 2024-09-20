@@ -35,6 +35,8 @@ const InputDate = ({
         disabled={disabled}
         min={min}
         max={max}
+        autoComplete="off"
+        placeholder="Select a date"
       />
     </>
   );
