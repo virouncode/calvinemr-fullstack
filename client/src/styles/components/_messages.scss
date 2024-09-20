@@ -18,6 +18,7 @@
     align-items: center;
     margin: 0 auto 1.5rem;
     box-shadow: $box-shadow-default;
+    background-color: $white;
     .messages__toggle-radio {
       display: flex;
       align-items: center;
@@ -92,6 +93,7 @@
         height: 100%;
         overflow: scroll;
         position: relative;
+        background-color: $white;
         .messages__overview-toolbar {
           display: grid;
           grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv

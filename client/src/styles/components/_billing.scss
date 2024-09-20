@@ -114,6 +114,7 @@
   overflow: scroll;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
+  background-color: $white;
 }
 .billing-table {
   table-layout: fixed;
@@ -260,6 +261,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 2rem;
+    background-color: $white;
     .billing__filter-row-dates {
       width: 70%;
       .billing__filter-item {

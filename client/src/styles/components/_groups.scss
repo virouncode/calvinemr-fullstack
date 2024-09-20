@@ -18,6 +18,7 @@
   align-items: center;
   margin: 0 auto 1.5rem;
   box-shadow: $box-shadow-default;
+  background-color: $white;
 }
 .groups__toggle-radio {
   display: flex;
@@ -49,6 +50,7 @@
   height: 300px;
   display: flex;
   flex-direction: column;
+  background-color: $white;
 }
 .groups__card-title {
   font-size: $size-base;

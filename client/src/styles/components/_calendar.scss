@@ -19,6 +19,7 @@
   margin: 0.5rem auto 0;
   padding: 0 0.5rem;
   display: none;
+  background-color: $white;
 }
 .calendar__options-menu {
   display: flex;
@@ -196,6 +197,7 @@
   height: 99%;
   overflow-y: scroll;
   box-shadow: $box-shadow-default;
+  background-color: $white;
   .fc {
     height: 100%;
     font-size: $size-xs;
@@ -352,6 +354,7 @@
   overflow-y: scroll;
   flex: 1;
   border: solid 1px $grey;
+  background-color: $white;
 }
 .calendar__filter-title {
   display: flex;

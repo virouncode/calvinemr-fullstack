@@ -14,6 +14,11 @@
   column-gap: 2rem;
   row-gap: 0.5rem;
   width: 100%;
+  background-color: $white;
+  padding: 1rem;
+  border-radius: 6px;
+  border: solid 1px $grey;
+  box-shadow: $box-shadow-default;
   input {
     width: auto;
     font-size: $size-base;
@@ -33,7 +38,6 @@
   font-weight: bold;
   font-size: $size-sm;
   margin-bottom: 0.5rem;
-  text-align: end;
 }
 .search-patient__table-container {
   // flex: 1;
@@ -42,6 +46,7 @@
   position: relative;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
+  background-color: $white;
 }
 .search-patient__table {
   table-layout: fixed;
