@@ -2,6 +2,7 @@
   width: 100%;
   height: 100%;
   padding: 1rem;
+  overflow-y: scroll;
 }
 .signup-patient__success {
   padding: 0.5rem 1rem;
@@ -18,9 +19,7 @@
   box-shadow: $box-shadow-default;
   border: solid 1px $grey;
   border-radius: 6px;
-  height: 100%;
   margin: 0 auto;
-  overflow-y: auto;
 }
 .signup-patient__column,
 .signup-patient__form {

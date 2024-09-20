@@ -172,9 +172,6 @@ const LockForm = ({
     <div className="lock__form">
       <div className="lock__form-message">
         This session was locked by <strong>{user?.full_name}</strong>
-        <br />
-        <br />
-        Please enter PIN to unlock:
       </div>
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       <div className="lock__form-input">
@@ -185,16 +182,19 @@ const LockForm = ({
           id="password"
           placeholder="PIN 4-digits"
           autoFocus={true}
+          label="Please enter PIN to unlock"
         />
-        <SaveButton label="Unlock" onClick={handleSubmit} />
-        <Button label="Logout" onClick={handleLogout} />
       </div>
-      <div className="lock__form-message" style={{ marginTop: "20px" }}>
+      <div className="lock__form-time">
         <AutoLockTimeSelect
           autolockTime={autolockTime}
           onChange={handleAutoLockChange}
-          label="Change auto lock time:"
+          label="Change auto lock time"
         />
+      </div>
+      <div className="lock__form-btns">
+        <SaveButton label="Unlock" onClick={handleSubmit} />
+        <Button label="Logout" onClick={handleLogout} />
       </div>
     </div>
   );

@@ -39,6 +39,7 @@ const FormCredentials = ({
           onChange={handlePasswordChange}
           name="password"
           value={credentials.password}
+          autoFocus={true}
         />
       </div>
       <div className="credentials-form-row">
