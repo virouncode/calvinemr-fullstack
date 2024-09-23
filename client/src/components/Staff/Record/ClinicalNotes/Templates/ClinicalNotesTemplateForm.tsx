@@ -58,9 +58,9 @@ const ClinicalNotesTemplateForm = ({
     });
   };
   return (
-    <div className="new-template">
+    <div className="clinical-note-template__form">
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="new-template-name">
+      <div className="clinical-note-template__form-name">
         <Input
           value={newTemplate.name}
           onChange={handleChange}
@@ -68,16 +68,17 @@ const ClinicalNotesTemplateForm = ({
           id="clinical-template-name"
           label="Template name:"
           autoFocus={true}
+          placeholder="New template name"
         />
       </div>
-      <div className="new-template-body">
+      <div className="clinical-note-template__form-body">
         <textarea
           name="body"
           value={newTemplate.body}
           onChange={handleChange}
         />
       </div>
-      <div className="new-template-btns">
+      <div className="clinical-note-template__form-btns">
         <SaveButton onClick={handleSave} />
         <CancelButton onClick={handleCancel} />
       </div>

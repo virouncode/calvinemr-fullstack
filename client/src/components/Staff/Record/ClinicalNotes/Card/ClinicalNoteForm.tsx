@@ -340,12 +340,14 @@ const ClinicalNoteForm = ({
     <>
       <form className="clinical-notes__form" ref={formRef}>
         <div className="clinical-notes__form-header">
-          <div className="clinical-notes__form-row">
-            <p>
-              <strong>From: </strong>
-              {staffIdToTitleAndName(staffInfos, user.id)}
-            </p>
-            <div className="clinical-notes__form-template">
+          <div className="clinical-notes__form-header-row">
+            <div className="clinical-notes__form-header-author">
+              <p>
+                <strong>From: </strong>
+                {staffIdToTitleAndName(staffInfos, user.id)}
+              </p>
+            </div>
+            <div className="clinical-notes__form-header-template">
               <label style={{ textDecoration: "underline", cursor: "pointer" }}>
                 <strong onClick={() => setTemplatesVisible(true)}>
                   Use template
@@ -368,8 +370,8 @@ const ClinicalNoteForm = ({
               )}
             </div>
           </div>
-          <div className="clinical-notes__form-row">
-            <div className="clinical-notes__form-subject">
+          <div className="clinical-notes__form-header-row">
+            <div className="clinical-notes__form-header-subject">
               <Input
                 value={formDatas.subject ?? ""}
                 onChange={handleChange}
@@ -410,14 +412,16 @@ const ClinicalNoteForm = ({
             autoFocus
             ref={textareaRef}
           />
-          <ClinicalNoteAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-            patientId={patientId}
-            date={nowTZTimestamp()}
-          />
+          {attachments.length > 0 && (
+            <ClinicalNoteAttachments
+              attachments={attachments}
+              handleRemoveAttachment={handleRemoveAttachment}
+              deletable={true}
+              addable={false}
+              patientId={patientId}
+              date={nowTZTimestamp()}
+            />
+          )}
         </div>
         <div className="clinical-notes__form-btns">
           <SaveButton
