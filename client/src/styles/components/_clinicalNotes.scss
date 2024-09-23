@@ -1,70 +1,61 @@
 .clinical-notes {
   background-color: $white;
-  font-size: 0.85rem;
-  border-bottom: solid 0.5px $grey;
-  border-top: solid 0.5px $grey;
+  font-size: $size-sm;
   height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  &__title {
-    font-weight: bold;
-    padding: 5px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grey;
-    border-bottom: solid 1px grey;
-    span {
-      text-align: center;
-      width: 98%;
-    }
-  }
   &__header {
-    // position:sticky;
-    // top:0;
-    z-index: 1;
-    height: 13%;
-  }
-  &__toolbar {
-    padding: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grey;
-    box-shadow: $box-shadow-default;
-    &-search {
-      width: 30%;
-      input {
-        width: 160px;
-      }
-      label {
-        font-weight: bold;
-        padding: 0 5px;
+    &-title {
+      font-weight: bold;
+      padding: 0.5rem;
+      display: flex;
+      gap: 2rem;
+      background-color: $grey;
+      border-bottom: solid 0.5px grey;
+      &-infos {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
-    &-order {
-      width: 20%;
-    }
-    &-goto {
-      width: 5%;
-    }
-    &-btn-container {
-      width: 50%;
-      text-align: right;
-      button {
-        margin-left: 5px;
+    &-toolbar {
+      padding: 0.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      background-color: $grey;
+      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+      &-search {
+        width: 100%;
+        input {
+          width: 100%;
+          font-size: $size-base;
+        }
+      }
+      &-order {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        &-navigation {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+      &-btns {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        row-gap: 0.5rem;
+        justify-content: center;
       }
     }
-  }
-  &__order {
-    display: flex;
-    justify-content: flex-start;
-    width: 30%;
-  }
-  &__radio-item {
-    display: flex;
-    align-items: center;
   }
   &__content {
     max-height: 0;
@@ -72,16 +63,166 @@
     overflow-y: scroll;
     padding-top: 0;
     &--active {
-      // max-height: 150vh;
-      max-height: 87%;
-      padding-top: 5px;
+      max-height: 65%;
+      padding-top: 0.25rem;
     }
   }
+  &__card {
+    margin: 0.25rem;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    print-color-adjust: exact;
+    &--print {
+      font-size: $size-sm;
+    }
+    &-header {
+      padding: 0.5rem;
+      background-color: $blue;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      &-row {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.25rem;
+      }
+      &-author,
+      &-subject {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        p {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      &-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        row-gap: 0.5rem;
+      }
+      &-subject {
+        display: flex;
+        align-items: center;
+        label {
+          font-weight: bold;
+          margin-right: 5px;
+        }
+        input {
+          min-width: 500px;
+        }
+      }
+      &-version {
+        display: flex;
+        align-items: center;
+      }
+      &--folded {
+        &-title {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+          &-author,
+          &-subject {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            p {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+    &-body {
+      padding: 1rem;
+      text-align: justify;
+      overflow-wrap: break-word;
+      width: 100%;
+      position: relative;
+      &-container {
+        max-height: 0;
+        transition: 0.3s;
+        overflow-y: scroll;
+        white-space: pre-wrap;
+        &--active {
+          max-height: 1000px;
+          white-space: pre-wrap;
+        }
+        p {
+          width: 100%;
+          overflow-wrap: break-word;
+        }
+        textarea {
+          padding: 0.5rem;
+          display: block;
+          margin: 0 auto;
+          width: 98%;
+          overflow-y: scroll;
+        }
+      }
+    }
+    &-sign {
+      text-align: end;
+      font-size: $size-xxs;
+      font-style: italic;
+      margin-bottom: 0.25rem;
+    }
+  }
+  &__attachments {
+    display: flex;
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+  &__attachment-card {
+    border: solid 0.5px $grey;
+    width: 30%;
+    margin: 10px 5px 0;
+  }
+  &__attachment-thumbnail {
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    iframe {
+      border: none;
+      cursor: pointer;
+    }
+  }
+  &__attachment-footer {
+    background: rgb(154, 154, 154);
+    padding: 5px;
+    font-size: 0.7rem;
+    display: flex;
+    flex-direction: column;
+  }
+  &__attachment-footer-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      font-size: 0.7rem;
+    }
+  }
+  &__attachment-footer-btn {
+    button {
+      width: 100%;
+      font-size: 0.65rem;
+    }
+  }
+
   &__form {
     margin: 4px;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: $box-shadow-default;
+    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     &-err {
       padding: 10px 20px;
       font-size: 0.9rem;
@@ -94,7 +235,7 @@
     }
   }
   &__form-header {
-    background: $pink;
+    background: $green;
     padding: 10px;
   }
   &__form-row {
@@ -142,160 +283,7 @@
       margin-left: 5px;
     }
   }
-  &__card {
-    background-color: $white;
-    margin: 4px;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: $box-shadow-default;
-    print-color-adjust: exact;
-    &--print {
-      font-size: 0.8rem;
-    }
-  }
-  &__card-header {
-    padding: 5px 10px;
-    background-color: $blue;
-    &-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-    &--folded {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &-title {
-        align-items: center;
-        display: flex;
-        width: 98%;
-      }
-      &-triangle {
-        width: 2%;
-        text-align: end;
-      }
-    }
-  }
-  &__card-author {
-    display: flex;
-    align-items: center;
-    width: 50%;
-    input,
-    p {
-      padding: 5px;
-      margin: 0;
-    }
-  }
-  &__card-version {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 20%;
-    select {
-      margin-left: 5px;
-      width: 50px;
-    }
-  }
-  &__card-triangle {
-    width: 2%;
-    text-align: end;
-  }
-  &__card-subject {
-    display: flex;
-    align-items: center;
-    width: 80%;
-    label {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-    input {
-      min-width: 500px;
-    }
-  }
 
-  &__card-btns {
-    width: 48%;
-    text-align: end;
-    button {
-      margin-left: 5px;
-    }
-  }
-
-  &__card-body {
-    padding: 20px;
-    text-align: justify;
-    overflow-wrap: break-word;
-    width: 100%;
-    position: relative;
-    p {
-      width: 100%;
-      overflow-wrap: break-word;
-    }
-    textarea {
-      padding: 10px;
-      display: block;
-      margin: 0 auto;
-      width: 98%;
-      overflow-y: scroll;
-    }
-  }
-  &__card-body-container {
-    max-height: 0;
-    transition: 0.3s;
-    overflow-y: scroll;
-    white-space: pre-wrap;
-    &--active {
-      max-height: 1000px;
-      white-space: pre-wrap;
-    }
-  }
-  &__card-sign {
-    text-align: end;
-    font-size: 0.6rem;
-    font-style: italic;
-    margin-bottom: 5px;
-  }
-  &__attachments {
-    display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-  }
-  &__attachment-card {
-    border: solid 0.5px grey;
-    width: 20%;
-    margin: 10px 5px 0;
-  }
-  &__attachment-thumbnail {
-    height: 80px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    iframe {
-      border: none;
-      cursor: pointer;
-    }
-  }
-  &__attachment-footer {
-    background: rgb(154, 154, 154);
-    padding: 5px;
-    font-size: 0.7rem;
-    display: flex;
-    flex-direction: column;
-  }
-  &__attachment-footer-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    p {
-      font-size: 0.7rem;
-    }
-  }
-  &_attachment-footer-btn {
-    button {
-      font-size: 0.65rem;
-    }
-  }
   &__print-page {
     padding: 40px;
     print-color-adjust: exact;
@@ -308,7 +296,7 @@
     overflow-y: scroll;
     &-card {
       border-radius: 6px;
-      box-shadow: $box-shadow-default;
+      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
       padding: 10px;
       margin: 10px;
       label {

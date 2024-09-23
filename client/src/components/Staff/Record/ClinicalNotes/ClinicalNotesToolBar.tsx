@@ -186,30 +186,31 @@ const ClinicalNotesToolBar = ({
   };
 
   return (
-    <div className="clinical-notes__toolbar">
-      <div className="clinical-notes__toolbar-search">
+    <div className="clinical-notes__header-toolbar">
+      <div className="clinical-notes__header-toolbar-search">
         <Input
           value={search}
           onChange={handleSearch}
           id="search"
-          placeholder="By content, author..."
-          label="Search"
+          placeholder="Search by content, author..."
         />
       </div>
-      <div className="clinical-notes__toolbar-order">
-        <OrderPicker
-          handleChangeOrder={handleChangeOrder}
-          addVisible={addVisible}
-          order={order}
-        />
+      <div className="clinical-notes__header-toolbar-order">
+        <div className="clinical-notes__header-toolbar-order-arrow">
+          <OrderPicker
+            handleChangeOrder={handleChangeOrder}
+            addVisible={addVisible}
+            order={order}
+          />
+        </div>
+        <div className="clinical-notes__header-toolbar-order-navigation">
+          <ClinicalNotesNavigation
+            handleGoToTop={handleGoToTop}
+            handleGoToEnd={handleGoToEnd}
+          />
+        </div>
       </div>
-      <div className="clinical-notes__toolbar-goto">
-        <ClinicalNotesNavigation
-          handleGoToTop={handleGoToTop}
-          handleGoToEnd={handleGoToEnd}
-        />
-      </div>
-      <div className="clinical-notes__toolbar-btn-container">
+      <div className="clinical-notes__header-toolbar-btns">
         <Button
           onClick={handleClickFold}
           label={contentsVisible ? "Fold" : "Unfold"}

@@ -123,7 +123,7 @@ const ClinicalNoteAttachmentCard = ({
               )}
             </div>
             {addable && (
-              <div className="clinical-notes-attachment__footer-btn">
+              <div className="clinical-notes__attachment-footer-btn">
                 <Button
                   onClick={handleAddToReports}
                   label="Add to patient reports"

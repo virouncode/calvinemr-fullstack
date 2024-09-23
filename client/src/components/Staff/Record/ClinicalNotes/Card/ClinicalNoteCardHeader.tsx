@@ -19,7 +19,6 @@ import EditButton from "../../../../UI/Buttons/EditButton";
 import LinkButton from "../../../../UI/Buttons/LinkButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
-import TriangleIcon from "../../../../UI/Icons/TriangleIcon";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 axios.defaults.withCredentials = true;
@@ -140,7 +139,7 @@ const ClinicalNoteCardHeader = ({
       onClick={handleClinicalHeaderClick}
     >
       <div className="clinical-notes__card-header-row">
-        <div className="clinical-notes__card-author">
+        <div className="clinical-notes__card-header-author">
           <Checkbox
             onChange={handleCheck}
             checked={isChecked(clinicalNote.id) || selectAll}
@@ -152,7 +151,7 @@ const ClinicalNoteCardHeader = ({
             {` ${timestampToDateTimeStrTZ(clinicalNote.date_created)}`}
           </p>
         </div>
-        <div className="clinical-notes__card-btns">
+        <div className="clinical-notes__card-header-btns">
           {!editVisible ? (
             <>
               {isRewriting && <CircularProgressSmall />}
@@ -210,12 +209,12 @@ const ClinicalNoteCardHeader = ({
             </>
           )}
         </div>
-        <div className="clinical-notes__card-triangle">
+        {/* <div className="clinical-notes__card-triangle">
           <TriangleIcon color="black" rotation={90} />
-        </div>
+        </div> */}
       </div>
       <div className="clinical-notes__card-header-row">
-        <div className="clinical-notes__card-subject">
+        <div className="clinical-notes__card-header-subject">
           <InputTextToggle
             value={tempFormDatas.subject}
             onChange={handleChange}
@@ -229,7 +228,7 @@ const ClinicalNoteCardHeader = ({
           />
         </div>
         {!editVisible && versions && (
-          <div className="clinical-notes__card-version">
+          <div className="clinical-notes__card-header-version">
             <label>
               <strong style={{ marginRight: "5px" }}>Version: </strong>
             </label>
