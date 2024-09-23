@@ -383,6 +383,9 @@
       width: 55%;
       justify-content: flex-end;
     }
+    &__attachment-card {
+      width: 20%;
+    }
   }
 }
 @media (min-width: 1024px) {
