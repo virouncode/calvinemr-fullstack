@@ -3,12 +3,12 @@ import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import PatientRecord from "../../components/Staff/Record/Sections/PatientRecord";
+import PatientRecordMobile from "../../components/Staff/Record/Sections/PatientRecordMobile";
 import ErrorParagraph from "../../components/UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../components/UI/Paragraphs/LoadingParagraph";
 import { usePatient } from "../../hooks/reactquery/queries/patientsQueries";
 import useTitle from "../../hooks/useTitle";
 import { toPatientName } from "../../utils/names/toPatientName";
-import PatientRecordMobile from "../../components/Staff/Record/Sections/PatientRecordMobile";
 
 const StaffPatientRecordPage = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const StaffPatientRecordPage = () => {
   } = usePatient(parseInt(id as string));
   useTitle("Patient Medical Record");
 
-  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+  const isTabletOrMobile = useMediaQuery("(max-width: 1280px)");
 
   if (isPending)
     return (

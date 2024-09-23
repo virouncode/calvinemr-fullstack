@@ -395,14 +395,14 @@ const ClinicalNoteForm = ({
             <MicrophoneIcon
               onClick={handleStopSpeech}
               color="red"
-              top={10}
+              top={15}
               right={30}
             />
           ) : (
             <MicrophoneIcon
               onClick={handleStartSpeech}
               color="black"
-              top={10}
+              top={15}
               right={30}
             />
           )}

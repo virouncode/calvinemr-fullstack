@@ -228,7 +228,7 @@
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     &-header {
       padding: 0.5rem;
-      background: $pink;
+      background: $pink2;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -268,6 +268,7 @@
         resize: none;
         overflow-y: scroll;
         padding: 0.5rem;
+        padding-right: 2rem;
         font-family: $font1, sans-serif;
         width: 95%;
         border: none;
@@ -353,62 +354,45 @@
   }
 }
 
-.new-template,
-.edit-template {
-  margin-top: 40px;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin: 0 auto 20px;
-  }
-  &-title {
-    font-size: 0.9rem;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  &-name {
-    font-size: 0.9rem;
-    width: 100%;
-    margin-bottom: 10px;
-    input {
-      width: 300px;
-    }
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-  }
-  &-body {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-    textarea {
-      height: 330px;
-      width: 100%;
-    }
-  }
-  &-btns {
-    width: 100%;
-    text-align: center;
-    button {
-      margin-right: 5px;
-    }
-  }
-}
-
 @media print {
   .clinical-notes__print-page-btn {
     display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .clinical-notes {
+    &__header-toolbar {
+      &-order {
+        justify-content: flex-start;
+        gap: 1rem;
+        width: 30%;
+      }
+      &-btns {
+        width: 65%;
+        justify-content: flex-end;
+      }
+    }
+    &__card-header-row {
+      flex-direction: row;
+    }
+    &__card-header-author {
+      width: 45%;
+    }
+    &__card-header-btns {
+      width: 55%;
+      justify-content: flex-end;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .clinical-notes {
+    &__header-toolbar {
+      &-search {
+        input {
+          font-size: $size-sm;
+        }
+      }
+    }
   }
 }

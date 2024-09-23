@@ -7,6 +7,8 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { DemographicsType, SettingsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
+import FolderTreeIcon from "../../../UI/Icons/FolderTreeIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ClinicalNotes from "../ClinicalNotes/ClinicalNotes";
 import ExportChart from "../ExportChart/ExportChart";
@@ -36,6 +38,7 @@ const PatientRecordMobile = ({
   const [messagesAuthorized, setMessagesAuthorized] = useState(
     user.settings.authorized_messages_patients_ids.includes(patientId)
   );
+  const [topicsVisible, setTopicsVisible] = useState(false);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -76,26 +79,18 @@ const PatientRecordMobile = ({
   const handleClickExport = () => {
     setExportVisible(true);
   };
-  const handleClickAllFold = () => {
-    if (allContentsVisible) {
-      setAllContentsVisible(false);
-      setLeftContentsVisible(false);
-      setRightContentsVisible(false);
-      setNotesContentsVisible(false);
-      setNotesVisible(false);
+
+  const handleClickFold = () => {
+    if (topicsVisible) {
+      setLeftContentsVisible((v) => !v);
+      setRightContentsVisible((v) => !v);
     } else {
-      setAllContentsVisible(true);
-      setLeftContentsVisible(true);
-      setRightContentsVisible(true);
-      setNotesContentsVisible(true);
-      setNotesVisible(true);
+      setNotesVisible((v) => !v);
     }
   };
-  const handleClickLeftFold = () => {
-    setLeftContentsVisible((v) => !v);
-  };
-  const handleClickRightFold = () => {
-    setRightContentsVisible((v) => !v);
+
+  const handleClickFolderTree = () => {
+    setTopicsVisible((v) => !v);
   };
 
   if (
@@ -107,59 +102,41 @@ const PatientRecordMobile = ({
 
   return (
     <>
-      <div className="patient-record-mobile__actions">
-        {/* <div className="patient-record-mobile__btn-container">
+      <div className="patient-record-mobile__header">
+        <div className="patient-record-mobile__header-title">PATIENT EMR</div>
+        <div className="patient-record-mobile__header-btns">
+          <Button onClick={handleClickExport} label="Export chart" />
           <Button
-            onClick={handleClickLeftFold}
-            label={leftContentsVisible ? "Fold" : "Unfold"}
+            onClick={handleClickFold}
+            label={
+              topicsVisible
+                ? leftContentsVisible
+                  ? "Fold"
+                  : "Unfold"
+                : notesVisible
+                ? "Fold"
+                : "Unfold"
+            }
           />
-        </div> */}
-        {/* <div className="patient-record-mobile__btn-container patient-record-mobile__btn-container--center">
-          <div style={{ textAlign: "end" }}>
-            <Button
-              onClick={handleClickAllFold}
-              label={allContentsVisible ? "Fold All" : "Unfold All"}
-            />
-            <Button
-              onClick={handleClickExport}
-              disabled={exportVisible}
-              label="Export chart"
-            />
-          </div>
-          <div style={{ textAlign: "end", marginRight: "10px" }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  size="small"
-                  checked={messagesAuthorized}
-                  onChange={handleChange}
-                />
-              }
-              label="Authorize messages"
-              labelPlacement="start"
-            />
-          </div>
-        </div> */}
-        {/* <div className="patient-record-mobile__btn-container">
-          <Button
-            onClick={handleClickRightFold}
-            label={rightContentsVisible ? "Fold" : "Unfold"}
-          />
-        </div> */}
+
+          <FolderTreeIcon onClick={handleClickFolderTree} ml={5} />
+        </div>
       </div>
       <div className="patient-record-mobile__content">
-        <div className="patient-record-mobile__topics">
-          <PatientMenuLeft
-            demographicsInfos={demographicsInfos}
-            patientId={patientId}
-            contentsVisible={leftContentsVisible}
-          />
-          <PatientMenuRight
-            demographicsInfos={demographicsInfos}
-            patientId={patientId}
-            contentsVisible={rightContentsVisible}
-          />
-        </div>
+        {topicsVisible && (
+          <div className="patient-record-mobile__topics">
+            <PatientMenuLeft
+              demographicsInfos={demographicsInfos}
+              patientId={patientId}
+              contentsVisible={leftContentsVisible}
+            />
+            <PatientMenuRight
+              demographicsInfos={demographicsInfos}
+              patientId={patientId}
+              contentsVisible={rightContentsVisible}
+            />
+          </div>
+        )}
         <ClinicalNotes
           demographicsInfos={demographicsInfos}
           notesVisible={notesVisible}

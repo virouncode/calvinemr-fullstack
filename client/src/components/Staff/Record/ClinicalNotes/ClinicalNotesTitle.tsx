@@ -12,7 +12,6 @@ import {
 } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import TriangleButton from "../../../UI/Buttons/TriangleButton";
 import EnvelopeIcon from "../../../UI/Icons/EnvelopeIcon";
 import PhoneIcon from "../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -82,13 +81,13 @@ const ClinicalNotesTitle = ({
 
   return (
     <div className="clinical-notes__header-title" onClick={handleTitleClick}>
-      <div className="clinical-notes__header-title-btn">
+      {/* <div className="clinical-notes__header-title-btn">
         <TriangleButton
           className={notesVisible ? "triangle triangle--active" : "triangle"}
           color="#21201e"
           triangleRef={triangleRef}
         />
-      </div>
+      </div> */}
       <div className="clinical-notes__header-title-infos">
         <span>
           {toPatientName(demographicsInfos)},{" "}
