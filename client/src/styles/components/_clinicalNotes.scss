@@ -113,7 +113,8 @@
           margin-right: 5px;
         }
         input {
-          min-width: 500px;
+          width: 100%;
+          font-size: $size-base;
         }
       }
       &-version {
@@ -166,6 +167,7 @@
           margin: 0 auto;
           width: 98%;
           overflow-y: scroll;
+          font-size: $size-base;
         }
       }
     }
