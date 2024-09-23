@@ -1,10 +1,10 @@
 * {
   margin: 0;
-  // line-height: calc(1em + 0.5rem);
 }
 
 html {
-  overscroll-behavior: none;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
   height: 100%;
   width: 100%;
 }

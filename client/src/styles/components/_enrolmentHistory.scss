@@ -1,8 +1,9 @@
 .enrolment-history {
   &__container {
-    margin-top: 50px;
+    margin-top: 40px;
   }
   &__item {
-    padding:5px;
+    padding: 0.5rem;
+    font-size: $size-base;
   }
 }

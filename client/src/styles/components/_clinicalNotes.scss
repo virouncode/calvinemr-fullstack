@@ -11,7 +11,9 @@
       display: flex;
       gap: 2rem;
       background-color: $grey;
-      border-bottom: solid 0.5px grey;
+      border-top: solid 1px $grey;
+      border-right: solid 1px $grey;
+      border-left: solid 1px $grey;
       &-infos {
         display: flex;
         flex-direction: column;
@@ -25,7 +27,9 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      background-color: $grey;
+      background-color: $white;
+      border-right: solid 1px $grey;
+      border-left: solid 1px $grey;
       box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
       &-search {
         width: 100%;
@@ -61,22 +65,21 @@
     transition: 0.3s;
     overflow-y: scroll;
     padding-top: 0;
-    border-radius: 0 0 6px 6px;
     border: solid 1px $grey;
-
     &--active {
       max-height: 100%;
-      padding: 0.25rem;
+      padding: 0.5rem;
     }
   }
   &__card {
-    margin: 0.25rem;
     border-radius: 6px;
     overflow: hidden;
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     print-color-adjust: exact;
+    margin-bottom: 0.5rem;
     &--print {
       font-size: $size-sm;
+      margin: 0.5rem 2rem;
     }
     &-header {
       padding: 0.5rem;
@@ -303,11 +306,33 @@
       justify-content: center;
     }
   }
-
-  &__print-page {
-    padding: 40px;
+  &__print {
+    padding: 1rem;
     print-color-adjust: exact;
-    font-family: $font1;
+    &-btn {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      width: 50%;
+      button {
+        font-size: $size-2xl;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 3px;
+        background-color: $pink;
+        color: $white;
+        padding: 1rem;
+        &:hover {
+          background-color: $pink2;
+        }
+      }
+    }
+    &-infos {
+      font-size: $size-sm;
+      font-style: italic;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
   }
   &__overview {
     margin-top: 40px;
@@ -373,7 +398,7 @@
 }
 
 @media print {
-  .clinical-notes__print-page-btn {
+  .clinical-notes__print-btn {
     display: none !important;
   }
 }
@@ -432,6 +457,16 @@
       text-align: end;
       flex: 1;
       justify-content: flex-end;
+    }
+    &__card-header--folded {
+      &-title {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        &-subject {
+          justify-content: flex-end;
+        }
+      }
     }
     &__attachment-card {
       width: 20%;

@@ -44,7 +44,6 @@ const FakeWindow = ({
   };
 
   useEffect(() => {
-    // Make the element the frontmost one
     const elements = document.querySelectorAll(".window");
     let maxZIndex = 0;
     elements.forEach((el) => {
