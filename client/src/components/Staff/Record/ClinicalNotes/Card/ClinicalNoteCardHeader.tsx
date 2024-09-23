@@ -241,7 +241,7 @@ const ClinicalNoteCardHeader = ({
           </div>
         )}
         {editVisible && (
-          <div className="clinical-notes__form-template">
+          <div className="clinical-notes__card-header-template">
             <label style={{ textDecoration: "underline", cursor: "pointer" }}>
               <strong onClick={handleClickTemplate}>Use template</strong>
             </label>

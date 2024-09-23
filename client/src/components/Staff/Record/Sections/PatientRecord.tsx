@@ -116,31 +116,28 @@ const PatientRecord = ({
             label={leftContentsVisible ? "Fold" : "Unfold"}
           />
         </div>
-        <div className="patient-record__btn-container patient-record__btn-container--center">
-          <div style={{ textAlign: "end" }}>
-            <Button
-              onClick={handleClickAllFold}
-              label={allContentsVisible ? "Fold All" : "Unfold All"}
-            />
-            <Button
-              onClick={handleClickExport}
-              disabled={exportVisible}
-              label="Export chart"
-            />
-          </div>
-          <div style={{ textAlign: "end", marginRight: "10px" }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  size="small"
-                  checked={messagesAuthorized}
-                  onChange={handleChange}
-                />
-              }
-              label="Authorize messages"
-              labelPlacement="start"
-            />
-          </div>
+        <div className="patient-record__btn-container">
+          <Button
+            onClick={handleClickAllFold}
+            label={allContentsVisible ? "Fold All" : "Unfold All"}
+          />
+          <Button
+            onClick={handleClickExport}
+            disabled={exportVisible}
+            label="Export chart"
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={messagesAuthorized}
+                onChange={handleChange}
+              />
+            }
+            label="Authorize messages"
+            labelPlacement="start"
+          />
         </div>
         <div className="patient-record__btn-container">
           <Button

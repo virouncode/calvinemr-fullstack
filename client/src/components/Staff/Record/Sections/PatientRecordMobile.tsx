@@ -1,3 +1,4 @@
+import { FormControlLabel, Switch } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../api/xanoCRUD/xanoPut";
@@ -8,6 +9,7 @@ import { DemographicsType, SettingsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import Button from "../../../UI/Buttons/Button";
+import ClinicalNotesIcon from "../../../UI/Icons/ClinicalNotesIcon";
 import FolderTreeIcon from "../../../UI/Icons/FolderTreeIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ClinicalNotes from "../ClinicalNotes/ClinicalNotes";
@@ -90,7 +92,10 @@ const PatientRecordMobile = ({
   };
 
   const handleClickFolderTree = () => {
-    setTopicsVisible((v) => !v);
+    setTopicsVisible(true);
+  };
+  const handleClickClinicalNotes = () => {
+    setTopicsVisible(false);
   };
 
   if (
@@ -103,23 +108,43 @@ const PatientRecordMobile = ({
   return (
     <>
       <div className="patient-record-mobile__header">
-        <div className="patient-record-mobile__header-title">PATIENT EMR</div>
-        <div className="patient-record-mobile__header-btns">
-          <Button onClick={handleClickExport} label="Export chart" />
-          <Button
-            onClick={handleClickFold}
-            label={
-              topicsVisible
-                ? leftContentsVisible
+        <div className="patient-record-mobile__header-row">
+          <div className="patient-record-mobile__header-title">
+            {topicsVisible ? "CATEGORIES" : "CLINICAL NOTES"}
+          </div>
+          <div className="patient-record-mobile__header-btns">
+            <Button onClick={handleClickExport} label="Export chart" />
+            <Button
+              onClick={handleClickFold}
+              label={
+                topicsVisible
+                  ? leftContentsVisible
+                    ? "Fold"
+                    : "Unfold"
+                  : notesVisible
                   ? "Fold"
                   : "Unfold"
-                : notesVisible
-                ? "Fold"
-                : "Unfold"
+              }
+            />
+            {topicsVisible ? (
+              <ClinicalNotesIcon onClick={handleClickClinicalNotes} ml={5} />
+            ) : (
+              <FolderTreeIcon onClick={handleClickFolderTree} ml={5} />
+            )}
+          </div>
+        </div>
+        <div className="patient-record-mobile__header-row patient-record-mobile__header-row--authorize">
+          <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={messagesAuthorized}
+                onChange={handleChange}
+              />
             }
+            label="Authorize messages"
+            labelPlacement="start"
           />
-
-          <FolderTreeIcon onClick={handleClickFolderTree} ml={5} />
         </div>
       </div>
       <div className="patient-record-mobile__content">

@@ -5,9 +5,9 @@
   display: flex;
   flex-direction: column;
   &__content {
-    margin: 0 auto;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 20% 60% 20%;
     align-items: flex-start;
@@ -16,24 +16,20 @@
   }
   &__actions {
     display: grid;
-    height: 5%;
     grid-template-columns: 20% 60% 20%;
-    width: 97%;
-    margin: 0 auto;
+    width: 100%;
+    padding: 0 0 0.5rem;
   }
   &__btn-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
-    &--center {
-      display: grid;
-      grid-template-columns: 60.5% 39.5%;
-      .MuiFormControlLabel-label {
-        font-size: 0.8rem;
-      }
-      button {
-        margin-right: 5px;
-      }
+    align-items: center;
+    gap: 0.5rem;
+    .MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementStart.css-1f2kvjf-MuiFormControlLabel-root {
+      margin: 0;
+    }
+    .MuiFormControlLabel-label {
+      font-size: $size-sm;
     }
   }
   &__menu {
@@ -42,23 +38,34 @@
     border-top: solid 0.5px $grey;
     border-bottom: solid 0.5px $grey;
     background-color: $white;
+    height: 100%;
+    overflow-y: scroll;
   }
 }
-
 .patient-record-mobile {
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0.5rem;
     background-color: $blue;
     border-radius: 6px 6px 0 0;
     font-weight: bold;
+    &-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .MuiFormControlLabel-label {
+        font-size: $size-sm;
+        font-family: $font1;
+      }
+      .MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementStart.css-1f2kvjf-MuiFormControlLabel-root {
+        margin: 0;
+      }
+    }
     &-btns {
       display: flex;
       gap: 0.25rem;
       align-items: center;
       justify-content: flex-end;
+      min-width: 190px;
     }
   }
   &__content {
@@ -66,19 +73,7 @@
     position: relative;
     border-radius: 0 0 6px 6px;
     overflow-y: scroll;
-    overflow-x: hidden;
     padding-bottom: 0.5rem;
-    .clinical-notes {
-      height: 100%;
-      overflow: hidden;
-      &__header {
-        height: auto;
-      }
-      &__content--active {
-        flex: 1;
-        overflow-y: scroll;
-      }
-    }
   }
   &__topics {
     display: flex;

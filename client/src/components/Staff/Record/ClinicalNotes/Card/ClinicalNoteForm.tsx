@@ -381,10 +381,8 @@ const ClinicalNoteForm = ({
                 autoFocus={true}
               />
             </div>
-            <div>
-              <label>
-                <strong>Attach files </strong>
-              </label>
+            <div className="clinical-notes__form-header-attach">
+              <label>Attach files</label>
               <PaperclipIcon onClick={handleAttach} />
             </div>
           </div>

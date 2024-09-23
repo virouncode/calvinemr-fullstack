@@ -78,7 +78,7 @@
 }
 .main-login {
   flex: 1;
-  background: url("@/assets/img/medicine2.jpg") center/cover;
+  background-color: $white;
 }
 
 .wrapper {
@@ -90,7 +90,7 @@
 .main {
   flex: 1;
   overflow-y: scroll;
-  background: url("@/assets/img/medicine2.jpg") no-repeat center center/cover;
+  background-color: $white;
 }
 
 // /*xs (tablets start)*/
