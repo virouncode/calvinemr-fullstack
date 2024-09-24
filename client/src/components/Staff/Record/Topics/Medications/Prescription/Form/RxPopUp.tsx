@@ -50,6 +50,7 @@ const RxPopUp = ({
   const [calvinAIVisible, setCalvinAIVisible] = useState(false);
   const [prescriptionStamp, setPrescriptionStamp] = useState("");
   const uniqueId = uuidv4();
+
   //Qureries
   const { data: sites, isPending, error } = useSites();
 
@@ -75,19 +76,19 @@ const RxPopUp = ({
 
   if (isPending)
     return (
-      <div style={{ marginBottom: "40px" }}>
+      <div className="prescription">
         <LoadingParagraph />
       </div>
     );
   if (error)
     return (
-      <div style={{ marginBottom: "40px" }}>
+      <div className="prescription">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
 
   return (
-    <>
+    <div className="prescription">
       <PrescriptionOptions
         handleAsk={handleAsk}
         handlePreview={handlePreview}
@@ -187,7 +188,7 @@ ${
           />
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

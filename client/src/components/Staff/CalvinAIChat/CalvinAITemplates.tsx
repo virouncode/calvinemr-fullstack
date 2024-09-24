@@ -57,7 +57,7 @@ const CalvinAITemplates = ({
 
   if (error) {
     return (
-      <div className="calvinai__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );

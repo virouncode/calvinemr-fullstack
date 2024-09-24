@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -5,6 +6,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import { useFetchAllPages } from "../../../../../hooks/reactquery/useFetchAllPages";
@@ -70,6 +72,7 @@ const MedicationsPopUp = ({
   const [errMsgPost, setErrMsgPost] = useState("");
   const [presVisible, setPresVisible] = useState(false);
   const [medFormVisible, setMedFormVisible] = useState(false);
+  const largeScreen = useMediaQuery("(min-width: 1280px)");
   //Queries
   const {
     data: allergies,
@@ -102,6 +105,12 @@ const MedicationsPopUp = ({
   };
   const handleNewRX = () => {
     setErrMsgPost("");
+    if (!largeScreen) {
+      toast.warning("This feature is not available on small screens", {
+        containerId: "A",
+      });
+      return;
+    }
     setPresVisible((v) => !v);
   };
   const handleNewMed = () => {
@@ -128,7 +137,7 @@ const MedicationsPopUp = ({
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="medications">
       <h1 className="medications__title">Patient medications & treatments</h1>
       <div className="medications__allergies">
         <ExclamationTriangleIcon /> <label>Patient allergies: </label>
@@ -194,9 +203,9 @@ const MedicationsPopUp = ({
       {presVisible && (
         <FakeWindow
           title={`NEW PRESCRIPTION to ${toPatientName(demographicsInfos)}`}
-          width={1450}
+          width={window.innerWidth}
           height={790}
-          x={(window.innerWidth - 1450) / 2}
+          x={0}
           y={(window.innerHeight - 790) / 2}
           color="#931621"
           setPopUpVisible={setPresVisible}
@@ -236,7 +245,7 @@ const MedicationsPopUp = ({
           />
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

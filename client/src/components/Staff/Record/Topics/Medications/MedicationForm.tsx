@@ -701,7 +701,7 @@ const MedicationForm = ({
         <AllergiesList allergies={allergies} />
       </div>
       <div className="medications-form__container">
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Drug identification number"
             name="DrugIdentificationNumber"
@@ -710,7 +710,7 @@ const MedicationForm = ({
             id="med-template-drug-number"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Drug name*"
             name="DrugName"
@@ -719,7 +719,7 @@ const MedicationForm = ({
             id="med-template-drug-name"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Strength*"
             name="Strength"
@@ -728,7 +728,7 @@ const MedicationForm = ({
             id="med-template-strength"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={strengthUnitCT}
             value={formDatas.Strength?.UnitOfMeasure}
@@ -736,7 +736,7 @@ const MedicationForm = ({
             label="Strength unit of measure*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={formCT}
             value={formDatas.Form}
@@ -744,7 +744,7 @@ const MedicationForm = ({
             label="Form*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Dosage*"
             name="Dosage"
@@ -753,7 +753,7 @@ const MedicationForm = ({
             id="med-template-dosage"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={dosageUnitCT}
             value={formDatas.DosageUnitOfMeasure}
@@ -761,7 +761,7 @@ const MedicationForm = ({
             label="Dosage unit of measure*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={routeCT}
             value={formDatas.Route}
@@ -769,7 +769,7 @@ const MedicationForm = ({
             label="Route*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={frequencyCT}
             value={formDatas.Frequency}
@@ -777,7 +777,7 @@ const MedicationForm = ({
             label="Frequency*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row medications-form__row--duration">
           <DurationPickerLong
             label="Duration"
             durationYears={formDatas.duration?.Y}
@@ -787,7 +787,7 @@ const MedicationForm = ({
             handleDurationPickerChange={handleDurationPickerChange}
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Quantity"
             name="Quantity"
@@ -796,7 +796,7 @@ const MedicationForm = ({
             id="med-template-quantity"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row medications-form__row--duration">
           <DurationPickerLong
             label="Refill duration"
             durationYears={formDatas.refill_duration?.Y}
@@ -806,7 +806,7 @@ const MedicationForm = ({
             handleDurationPickerChange={handleRefillDurationPickerChange}
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Refill quantity"
             name="RefillQuantity"
@@ -815,7 +815,7 @@ const MedicationForm = ({
             id="med-template-refill-quantity"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Number of refills"
             name="NumberOfRefills"
@@ -824,7 +824,7 @@ const MedicationForm = ({
             id="med-template-nbr-refills"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericList
             name="LongTermMedication"
             list={ynIndicatorsimpleCT}
@@ -834,7 +834,7 @@ const MedicationForm = ({
             label="Long-term medication*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericList
             name="SubstitutionNotAllowed"
             list={ynIndicatorsimpleCT}
@@ -844,17 +844,17 @@ const MedicationForm = ({
             label="Substitution allowed*"
           />
         </div>
-        <div className="med-templates__form-row med-templates__form-row--text">
+        <div className="medications-form__row medications-form__row--text">
           <label htmlFor="med-template-notes">Notes</label>
           <textarea
-            className="med-templates__form-notes"
+            className="medications-form-notes"
             value={formDatas.Notes}
             onChange={handleChange}
             name="Notes"
             id="med-template-notes"
           />
         </div>
-        <div className="med-templates__form-row med-templates__form-row--text">
+        <div className="medications-form__row medications-form__row--text">
           <Tooltip
             title="This is auto-generated, however you can edit the instructions in free text, but it is your responsibility to ensure that they do not contradict the rest of the form."
             placement="top-start"
@@ -863,7 +863,7 @@ const MedicationForm = ({
             <label htmlFor="med-template-instructions">Instructions*</label>
           </Tooltip>
           <textarea
-            className="med-templates__form-instructions"
+            className="medications-form-instructions"
             value={formDatas.PrescriptionInstructions}
             onChange={handleChange}
             name="PrescriptionInstructions"

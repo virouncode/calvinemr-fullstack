@@ -203,9 +203,9 @@ const PatientTopic = ({
         {topic === "PAST HEALTH" && popUpVisible && (
           <FakeWindow
             title={`PAST HEALTH of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -268,9 +268,9 @@ const PatientTopic = ({
         {topic === "FAMILY HISTORY" && popUpVisible && (
           <FakeWindow
             title={`FAMILY HISTORY of ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -398,9 +398,9 @@ const PatientTopic = ({
         {topic === "ALERTS & SPECIAL NEEDS" && popUpVisible && (
           <FakeWindow
             title={`ALERTS & SPECIAL NEEDS about ${patientName}`}
-            width={1100}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1100) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -458,9 +458,9 @@ const PatientTopic = ({
         {topic === "RISK FACTORS" && popUpVisible && (
           <FakeWindow
             title={`RISK FACTORS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -521,9 +521,9 @@ const PatientTopic = ({
         {topic === "MEDICATIONS & TREATMENTS" && popUpVisible && (
           <FakeWindow
             title={`MEDICATIONS & TREATMENTS for ${patientName}`}
-            width={1400}
+            width={window.innerWidth}
             height={620}
-            x={(window.innerWidth - 1400) / 2}
+            x={0}
             y={(window.innerHeight - 620) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}

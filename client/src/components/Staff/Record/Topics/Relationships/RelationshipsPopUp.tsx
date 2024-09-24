@@ -107,7 +107,7 @@ const RelationshipsPopUp = ({
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="relationships">
       <h1 className="relationships__title">Patient relationships</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
@@ -173,7 +173,7 @@ const RelationshipsPopUp = ({
           <CloseButton onClick={handleClose} />
         </div>
       </>
-    </>
+    </div>
   );
 };
 

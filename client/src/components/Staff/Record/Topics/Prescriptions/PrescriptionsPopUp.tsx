@@ -21,10 +21,10 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import PrescriptionItem from "./PrescriptionItem";
-import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type PrescriptionsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<PrescriptionType>> | undefined;
@@ -78,25 +78,25 @@ const PrescriptionsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="prescriptions">
         <h1 className="prescriptions__title">Patient prescriptions</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="prescriptions">
         <h1 className="prescriptions__title">Patient prescriptions</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="prescriptions">
       <h1 className="prescriptions__title">Patient prescriptions</h1>
       <>
         <div className="prescriptions__table-container" ref={divRef}>
@@ -217,7 +217,7 @@ const PrescriptionsPopUp = ({
           </FakeWindow>
         )}
       </>
-    </>
+    </div>
   );
 };
 

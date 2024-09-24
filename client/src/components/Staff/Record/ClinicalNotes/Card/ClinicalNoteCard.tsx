@@ -404,16 +404,18 @@ const ClinicalNoteCard = ({
             handleStartSpeech={handleStartSpeech}
             handleStopSpeech={handleStopSpeech}
           />
-          <ClinicalNoteAttachments
-            attachments={(
-              clinicalNote.attachments_ids as {
-                attachment: ClinicalNoteAttachmentType;
-              }[]
-            ).map(({ attachment }) => attachment)}
-            deletable={false}
-            patientId={patientId}
-            date={clinicalNote.date_created}
-          />
+          {clinicalNote.attachments_ids.length > 0 && (
+            <ClinicalNoteAttachments
+              attachments={(
+                clinicalNote.attachments_ids as {
+                  attachment: ClinicalNoteAttachmentType;
+                }[]
+              ).map(({ attachment }) => attachment)}
+              deletable={false}
+              patientId={patientId}
+              date={clinicalNote.date_created}
+            />
+          )}
           {!editVisible && (
             <div className="clinical-notes__card-sign">
               <p style={{ padding: "0 10px" }}>

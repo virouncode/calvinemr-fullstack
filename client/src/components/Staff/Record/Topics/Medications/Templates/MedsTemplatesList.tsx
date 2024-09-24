@@ -58,7 +58,7 @@ const MedsTemplatesList = ({
   handleSelectTemplate,
 }: MedsTemplatesListProps) => {
   const [newVisible, setNewVisible] = useState(false);
-  const { ulRef, lastItemRef } = useIntersection(
+  const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPageTemplates,
     fetchNextPageTemplates,
     isFetchingTemplates
@@ -70,7 +70,7 @@ const MedsTemplatesList = ({
 
   if (errorTemplates)
     return (
-      <div className="med-templates__list">
+      <div className="templates">
         <ErrorParagraph errorMsg={errorTemplates.message} />
       </div>
     );
@@ -78,15 +78,15 @@ const MedsTemplatesList = ({
   const medsTemplatesDatas = medsTemplates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="med-templates__list">
-      <div className="medications-form__title">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleNew}
           disabled={progress}
           label="Add a new template"
         />
       </div>
-      <div className="med-templates__search">
+      <div className="templates__search">
         <Input
           label="Search"
           placeholder="Drug name, author name..."
@@ -97,7 +97,7 @@ const MedsTemplatesList = ({
           width={300}
         />
       </div>
-      <div className="med-templates__allergies">
+      <div className="templates__allergies">
         <ExclamationTriangleIcon /> Patient Allergies :{" "}
         {allergies && allergies.length > 0
           ? allergies
@@ -105,31 +105,33 @@ const MedsTemplatesList = ({
               .join(", ")
           : "No allergies"}
       </div>
-      <ul ref={ulRef}>
-        {isPendingTemplates ? (
-          <LoadingParagraph />
-        ) : medsTemplatesDatas && medsTemplatesDatas.length > 0 ? (
-          medsTemplatesDatas.map((med, index) =>
-            index === medsTemplatesDatas.length - 1 ? (
-              <MedTemplateItem
-                med={med}
-                key={med.id}
-                handleSelectTemplate={handleSelectTemplate}
-                lastItemRef={lastItemRef}
-              />
-            ) : (
-              <MedTemplateItem
-                med={med}
-                key={med.id}
-                handleSelectTemplate={handleSelectTemplate}
-              />
+      <div className="templates__list" ref={divRef}>
+        <ul>
+          {isPendingTemplates ? (
+            <LoadingParagraph />
+          ) : medsTemplatesDatas && medsTemplatesDatas.length > 0 ? (
+            medsTemplatesDatas.map((med, index) =>
+              index === medsTemplatesDatas.length - 1 ? (
+                <MedTemplateItem
+                  med={med}
+                  key={med.id}
+                  handleSelectTemplate={handleSelectTemplate}
+                  lastItemRef={lastItemRef}
+                />
+              ) : (
+                <MedTemplateItem
+                  med={med}
+                  key={med.id}
+                  handleSelectTemplate={handleSelectTemplate}
+                />
+              )
             )
-          )
-        ) : (
-          !isFetchingNextPageTemplates && <EmptyLi text="No results found" />
-        )}
-        {isFetchingNextPageTemplates && <LoadingLi />}
-      </ul>
+          ) : (
+            !isFetchingNextPageTemplates && <EmptyLi text="No results found" />
+          )}
+          {isFetchingNextPageTemplates && <LoadingLi />}
+        </ul>
+      </div>
       {newVisible && (
         <FakeWindow
           title="NEW MEDICATION TEMPLATE"

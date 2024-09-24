@@ -62,7 +62,7 @@
   }
   &__content {
     max-height: 0;
-    transition: 0.3s;
+    transition: 0.2s;
     overflow-y: scroll;
     padding-top: 0;
     border: solid 1px $grey;
@@ -160,7 +160,7 @@
       position: relative;
       &-container {
         max-height: 0;
-        transition: 0.3s;
+        transition: 0.2s;
         overflow-y: scroll;
         white-space: pre-wrap;
         &--active {
@@ -170,6 +170,8 @@
         p {
           width: 100%;
           overflow-wrap: break-word;
+          max-width: 80ch;
+          margin: 0 auto;
         }
         textarea {
           padding: 0.5rem;
@@ -178,6 +180,7 @@
           width: 98%;
           overflow-y: scroll;
           font-size: $size-base;
+          max-width: 80ch;
         }
       }
     }
@@ -186,6 +189,9 @@
       font-size: $size-xxs;
       font-style: italic;
       margin-bottom: 0.25rem;
+      p {
+        max-width: none;
+      }
     }
   }
   &__attachments {
@@ -292,10 +298,12 @@
         padding-right: 2rem;
         font-family: $font1, sans-serif;
         width: 98%;
+        max-width: 80ch;
         border: none;
         border-radius: 3px;
         height: 300px;
         margin: 0 auto;
+        position: relative;
       }
     }
     &-btns {

@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
 }
 
 html {
@@ -186,4 +187,8 @@ li {
 }
 select:disabled {
   z-index: -1;
+}
+
+.rw-input {
+  padding: 0.5rem;
 }

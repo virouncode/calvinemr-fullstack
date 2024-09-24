@@ -106,7 +106,7 @@ const PastHealthPopUp = ({
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="pasthealth">
       <h1 className="pasthealth__title">Patient past health</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pasthealth__table-container" ref={divRef}>
@@ -171,7 +171,7 @@ const PastHealthPopUp = ({
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 
