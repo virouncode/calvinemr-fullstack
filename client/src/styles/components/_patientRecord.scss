@@ -48,6 +48,7 @@
     background-color: $blue;
     border-radius: 6px 6px 0 0;
     font-weight: bold;
+    z-index: 99;
     &-row {
       display: flex;
       justify-content: space-between;
@@ -74,6 +75,7 @@
     border-radius: 0 0 6px 6px;
     overflow-y: scroll;
     padding-bottom: 0.5rem;
+    z-index: 100;
   }
   &__topics {
     display: flex;
