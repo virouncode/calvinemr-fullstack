@@ -13,7 +13,7 @@ const AutoLockTimeSelect = ({
 }: AutoLockTimeSelectProps) => {
   return (
     <>
-      {label && <label style={{ marginRight: "10px" }}>{label}</label>}
+      {label && <label>{label}</label>}
       <select
         value={autolockTime}
         onChange={onChange}
