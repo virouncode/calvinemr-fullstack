@@ -1,7 +1,7 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 4;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,84 +81,3 @@
     width: 16%;
   }
 }
-// /*2xl*/
-// @media (min-width: 1536px) {
-// }
-
-// .header {
-//   position: sticky;
-//   top: 0;
-//   height: 60px;
-//   width: 100%;
-//   z-index: 10;
-//   padding: 10px 15px;
-//   background: $blue2;
-//   display: grid;
-//   grid-template-columns: 18% 64% 18%;
-//   justify-content: space-between;
-//   align-items: center;
-//   &--patient {
-//     grid-template-columns: 15% 70% 15%;
-//   }
-//   &--admin {
-//     grid-template-columns: 15% 70% 15%;
-//   }
-//   &--login {
-//     grid-template-columns: 25% 75%;
-//     background: none;
-//     backdrop-filter: blur(20px);
-//   }
-//   &__logo {
-//     height: 40px;
-//     width: 130px;
-//     background: url("@/assets/img/logoRectTest.png") center/cover;
-//     cursor: pointer;
-//   }
-//   &__nav {
-//     ul {
-//       display: flex;
-//       justify-content: space-between;
-//       font-size: 0.8rem;
-//     }
-//     &--patient {
-//       ul {
-//         justify-content: flex-end;
-//       }
-//     }
-//     &--admin {
-//       ul {
-//         justify-content: flex-end;
-//       }
-//     }
-//   }
-//   &__link {
-//     // color:$white;
-//     color: $black;
-//     font-weight: bold;
-//     cursor: pointer;
-//     &:hover {
-//       // color:#f3f3f3;
-//       color: $black;
-//     }
-//     &--active {
-//       // border: solid 1px $white;
-//       border: solid 1px $black;
-//       padding: 5px 10px;
-//       border-radius: 40px;
-//     }
-//     &--patient {
-//       margin-right: 40px;
-//     }
-//     &--admin {
-//       margin-right: 30px;
-//     }
-//   }
-//   &__title {
-//     font-family: $font1;
-//     text-align: right;
-//     font-size: 1rem;
-//     text-align: end;
-//     // color:#FEFEFE;
-//     color: $black;
-//   }
-// }

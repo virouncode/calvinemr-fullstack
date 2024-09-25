@@ -2,12 +2,12 @@
   border: 0.5px solid $grey;
   background-color: #fefefe;
   border-radius: 8px;
-  z-index: 100;
+  position: fixed;
+  z-index: 1;
   overflow: hidden;
   box-shadow: $box-shadow-default;
   overflow: hidden;
   font-size: $size-sm;
-  position: fixed;
 }
 
 .window-title {

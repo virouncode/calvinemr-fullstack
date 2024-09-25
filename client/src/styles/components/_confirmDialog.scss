@@ -7,8 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // background: rgba(0,0,0,0.2);
-    z-index: 100000;
+    z-index: 1000000;
   }
   &-dialog {
     border-radius: 6px;
