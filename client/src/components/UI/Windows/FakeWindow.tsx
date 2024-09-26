@@ -144,10 +144,11 @@ const FakeWindow = ({
       ref={windowRef}
       className="window"
       style={{
-        left: windowPosition.x,
-        top: windowPosition.y,
+        left: windowPosition.x < 0 ? 0 : windowPosition.x,
+        top: windowPosition.y < 0 ? 0 : windowPosition.y,
         width: windowSize.width,
         height: windowSize.height,
+        maxHeight: window.innerHeight,
       }}
     >
       <div

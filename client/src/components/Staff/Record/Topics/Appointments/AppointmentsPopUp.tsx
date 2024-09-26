@@ -102,27 +102,27 @@ const AppointmentsPopUp = ({
 
   if (isPending || isPendingSites) {
     return (
-      <>
+      <div className="appointments">
         <h1 className="appointments__title">Patient appointments</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error || errorSites) {
     return (
-      <>
+      <div className="appointments">
         <h1 className="appointments__title">Patient appointments</h1>
         <ErrorParagraph
           errorMsg={error?.message || errorSites?.message || ""}
         />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="appointments">
       <h1 className="appointments__title">Patient appointments</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="appointments__table-container" ref={divRef}>
@@ -194,7 +194,7 @@ const AppointmentsPopUp = ({
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 

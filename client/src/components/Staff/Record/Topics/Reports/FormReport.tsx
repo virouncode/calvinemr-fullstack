@@ -63,7 +63,7 @@ const FormReport = ({
       className="reports__form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
-      <form className="reports__content" onSubmit={handleSubmit}>
+      <form className="reports__form-content" onSubmit={handleSubmit}>
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
         <div className="reports__form-btn-container">
           <SubmitButton
@@ -75,7 +75,7 @@ const FormReport = ({
             disabled={progress || isLoadingFile}
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <label htmlFor="report-sent-received">Sent or Received*</label>
           <select
             value={sentOrReceived}
@@ -86,7 +86,7 @@ const FormReport = ({
             <option value="Sent">Sent</option>
           </select>
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <Input
             label="Report Name*"
             name="name"
@@ -96,7 +96,7 @@ const FormReport = ({
             autoFocus={true}
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <GenericList
             label="Format*"
             name="Format"
@@ -106,13 +106,13 @@ const FormReport = ({
             placeHolder="Choose format..."
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <label>File extension</label>
           <p>{formDatas.FileExtensionAndVersion}</p>
         </div>
         {formDatas.Format === "Binary" ? (
           !initialAttachment && ( //If there is an initial attachment don't show the input
-            <div className="reports__row">
+            <div className="reports__form-row">
               <label>Content</label>
               <input
                 name="Content"
@@ -124,7 +124,7 @@ const FormReport = ({
             </div>
           )
         ) : (
-          <div className="reports__row reports__row--text">
+          <div className="reports__form-row reports__form-row--text">
             <label htmlFor="report-content">Content</label>
             <textarea
               name="Content"
@@ -134,7 +134,7 @@ const FormReport = ({
             />
           </div>
         )}
-        <div className="reports__row">
+        <div className="reports__form-row">
           <GenericList
             label="Class*"
             name="Class"
@@ -144,7 +144,7 @@ const FormReport = ({
             placeHolder="Choose..."
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <Input
             label="Sub class"
             name="SubClass"
@@ -153,7 +153,7 @@ const FormReport = ({
             id="report-subclass"
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <InputDate
             label="Date of document"
             name="EventDateTime"
@@ -163,7 +163,7 @@ const FormReport = ({
           />
         </div>
         {sentOrReceived === "Received" && (
-          <div className="reports__row">
+          <div className="reports__form-row">
             <InputDate
               label="Date received"
               name="ReceivedDateTime"
@@ -174,7 +174,7 @@ const FormReport = ({
           </div>
         )}
         {sentOrReceived === "Sent" && (
-          <div className="reports__row">
+          <div className="reports__form-row">
             <InputDate
               label="Date sent"
               name="DateTimeSent"
@@ -184,7 +184,7 @@ const FormReport = ({
             />
           </div>
         )}
-        <div className="reports__row">
+        <div className="reports__form-row">
           <Input
             label="Author"
             name="AuthorFreeText"
@@ -194,44 +194,45 @@ const FormReport = ({
           />
         </div>
         {sentOrReceived === "Received" && (
-          <div className="reports__row reports__row--special">
+          <div className="reports__form-row reports__form-row--special">
             <label>Reviewed by</label>
             <div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <Input
                   label="First name"
                   name="FirstName"
-                  value={formDatas.ReportReviewed?.[0].Name?.FirstName ?? ""}
+                  value={formDatas.ReportReviewed?.[0]?.Name?.FirstName ?? ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-first-name"
                 />
               </div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <Input
                   label="Last name"
                   name="LastName"
-                  value={formDatas.ReportReviewed?.[0].Name?.LastName ?? ""}
+                  value={formDatas.ReportReviewed?.[0]?.Name?.LastName ?? ""}
                   onChange={handleReviewedName}
                   id="report-reviewed-last-name"
                 />
               </div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <Input
                   label="OHIP#"
                   name="ReviewingOHIPPhysicianId"
                   value={
-                    formDatas.ReportReviewed?.[0].ReviewingOHIPPhysicianId ?? ""
+                    formDatas.ReportReviewed?.[0]?.ReviewingOHIPPhysicianId ??
+                    ""
                   }
                   onChange={handleReviewedOHIP}
                   id="report-reviewed-ohip"
                 />
               </div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <InputDate
                   label="Date reviewed"
                   name="DateTimeReportReviewed"
                   value={timestampToDateISOTZ(
-                    formDatas.ReportReviewed?.[0].DateTimeReportReviewed
+                    formDatas.ReportReviewed?.[0]?.DateTimeReportReviewed
                   )}
                   onChange={handleReviewedDate}
                   id="report-reviewed-date"
@@ -240,7 +241,7 @@ const FormReport = ({
             </div>
           </div>
         )}
-        <div className="reports__row reports__row--text">
+        <div className="reports__form-row reports__form-row--text">
           <label htmlFor="report-notes">Notes</label>
           <textarea
             name="Notes"
@@ -250,10 +251,10 @@ const FormReport = ({
           />
         </div>
         {sentOrReceived === "Sent" && (
-          <div className="reports__row reports__row--special">
+          <div className="reports__form-row reports__form-row--special">
             <label>Recipient</label>
             <div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <Input
                   label="First name"
                   name="FirstName"
@@ -262,7 +263,7 @@ const FormReport = ({
                   id="report-recipient-first-name"
                 />
               </div>
-              <div className="reports__subrow">
+              <div className="reports__form-subrow">
                 <Input
                   label="Last name"
                   name="LastName"
@@ -276,7 +277,7 @@ const FormReport = ({
         )}
       </form>
       {formDatas.File && (
-        <div className="reports__preview">
+        <div className="reports__form-preview">
           {isLoadingFile && <LoadingParagraph />}
           <ReportViewer file={formDatas.File} />
         </div>

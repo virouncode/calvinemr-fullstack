@@ -12,11 +12,11 @@ import CancelButton from "../../../../UI/Buttons/CancelButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
-import Input from "../../../../UI/Inputs/Input";
 import InputEmailToggle from "../../../../UI/Inputs/InputEmailToggle";
 import InputTelToggle from "../../../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
+import PostalZipSelectInput from "../../../../UI/Lists/PostalZipSelectInput";
 import SignCellMultipleTypes from "../../../../UI/Tables/SignCellMultipleTypes";
 
 type FamilyDoctorListItemProps = {
@@ -321,32 +321,24 @@ const FamilyDoctorListItem = ({
             editVisible={editVisible}
           />
         </td>
-        <td className="td--postal">
+        <td>
           {editVisible ? (
-            <>
-              <select
-                style={{ width: "60px", marginRight: "10px" }}
-                name="postalOrZip"
-                id="postalOrZip"
-                value={postalOrZip}
-                onChange={handleChangePostalOrZip}
-              >
-                <option value="postal">Postal</option>
-                <option value="zip">Zip</option>
-              </select>
-              <Input
-                name="postalZipCode"
-                value={
-                  postalOrZip === "postal"
-                    ? itemInfos.postalCode
-                    : itemInfos.zipCode
-                }
-                onChange={handleChange}
-                placeholder={
-                  postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
-                }
-              />
-            </>
+            <PostalZipSelectInput
+              onChangeSelect={handleChangePostalOrZip}
+              onChangeInput={handleChange}
+              postalOrZip={postalOrZip}
+              label={false}
+              value={
+                postalOrZip === "postal"
+                  ? itemInfos.postalCode
+                  : itemInfos.zipCode
+              }
+              id="postalZipCode"
+              placeholder={
+                postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
+              }
+              name="postalZipCode"
+            />
           ) : postalOrZip === "postal" ? (
             <p>{itemInfos.postalCode}</p>
           ) : (

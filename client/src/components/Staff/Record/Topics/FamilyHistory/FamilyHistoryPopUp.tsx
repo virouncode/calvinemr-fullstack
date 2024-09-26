@@ -94,18 +94,18 @@ const FamilyHistoryPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="famhistory">
         <h1 className="famhistory__title">Patient family history</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="famhistory">
         <h1 className="famhistory__title">Patient family history</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 

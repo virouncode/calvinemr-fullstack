@@ -7,12 +7,7 @@ type AllDaySelectProps = {
 };
 const AllDaySelect = ({ value, onChange, name }: AllDaySelectProps) => {
   return (
-    <select
-      name={name}
-      value={value}
-      onChange={onChange}
-      style={{ width: "50px" }}
-    >
+    <select name={name} value={value} onChange={onChange}>
       <option value="true">Yes</option>
       <option value="false">No</option>
     </select>

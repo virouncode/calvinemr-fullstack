@@ -89,18 +89,18 @@ const PastHealthPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="pasthealth">
         <h1 className="pasthealth__title">Patient past health</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="pasthealth">
         <h1 className="pasthealth__title">Patient past health</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
   const datas = topicDatas?.pages.flatMap((page) => page.items);

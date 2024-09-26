@@ -36,14 +36,18 @@ const CareElementsWeight = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Weight (kg):</label>
-      <div className="care-elements__row-value">{lastDatas.Weight?.Weight}</div>
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
+        Weight (kg):
+      </label>
+      <div className="care-elements__card-content-row-value">
+        {lastDatas.Weight?.Weight}
+      </div>
       {lastDatas.Weight?.Weight && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
-              <ClockIcon onClick={() => handleClickHistory("WEIGHT")} mr={5} />
+              <ClockIcon onClick={() => handleClickHistory("WEIGHT")} mr={15} />
             </span>
           </Tooltip>
           <Tooltip title="Edit history">

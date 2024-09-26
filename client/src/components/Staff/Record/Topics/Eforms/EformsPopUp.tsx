@@ -1,6 +1,4 @@
-import { PDFDocument } from "pdf-lib";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
 import { useMediaQuery } from "@mui/material";
 import {
@@ -10,7 +8,6 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React from "react";
-import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
@@ -20,7 +17,6 @@ import {
   XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
@@ -30,12 +26,12 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import Eform from "./Eform";
 import EformEditPdfViewer from "./EformEditPdfViewer";
 import EformItem from "./EformItem";
-import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type EformsPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<EformType>> | undefined;
@@ -107,155 +103,86 @@ const EformsPopUp = ({
     setPopUpVisible(false);
   };
 
-  const handleAddToRecord = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
-    input.onchange = (event) => {
-      // getting a hold of the file reference
-      const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
-      const file = e.target.files?.[0];
-      if (!file) return;
-      if (file.size > 25000000) {
-        toast.error("The file is over 25Mb, please choose another one", {
-          containerId: "A",
-        });
-        return;
-      }
-      setIsLoadingFile(true);
-      // setting up the reader`
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      // here we tell the reader what to do when it's done reading...
-      reader.onload = async (e) => {
-        const content = e.target?.result;
-        const response = await xanoPost("/upload/attachment", "staff", {
-          content,
-        });
-        //flatten the pdf
-        const formUrl = `${import.meta.env.VITE_XANO_BASE_URL}${response.path}`;
-        const formPdfBytes = await fetch(formUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const pdfDoc = await PDFDocument.load(formPdfBytes);
-        const form = pdfDoc.getForm();
-        form.flatten();
-        const pdfBytes = await pdfDoc.save();
-        //read the new flattened pdf
-        const reader2 = new FileReader();
-        reader2.readAsDataURL(
-          new Blob([pdfBytes], { type: "application/pdf" })
-        );
-        // here we tell the reader what to do when it's done reading...
-        reader2.onload = async (e) => {
-          const content = e.target?.result;
-
-          const response2 = await xanoPost("/upload/attachment", "staff", {
-            content,
-          });
-          const topicToPost: Partial<EformType> = {
-            patient_id: patientId,
-            name: file.name,
-            file: response2,
-            date_created: nowTZTimestamp(),
-            created_by_id: user.id,
-          };
-          topicPost.mutate(topicToPost, {
-            onSuccess: () => {
-              setIsLoadingFile(false);
-              setAddVisible(false);
-            },
-            onError: () => {
-              setIsLoadingFile(false);
-            },
-          });
-        };
-      };
-    };
-    input.click();
-  };
-
   if (isPending) {
     return (
-      <>
+      <div className="eforms">
         <h1 className="eforms__title">Patient e-forms</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="eforms">
         <h1 className="eforms__title">Patient e-forms</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="eforms">
       <h1 className="eforms__title">Patient e-forms</h1>
-      <>
-        <div className="eforms__table-container" ref={divRef}>
-          <table className="eforms__table">
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Name</th>
-                <th>Updated By</th>
-                <th>Updated On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {datas && datas.length > 0
-                ? datas.map((item, index) =>
-                    index === datas.length - 1 ? (
-                      <EformItem
-                        item={item}
-                        key={item.id}
-                        lastItemRef={lastItemRef}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                        setFaxVisible={setFaxVisible}
-                        setFileToFax={setFileToFax}
-                        setNewMessageExternalVisible={
-                          setNewMessageExternalVisible
-                        }
-                        setAttachmentsToSend={setAttachmentsToSend}
-                        setEformToEdit={setEformToEdit}
-                        setEditVisible={setEditVisible}
-                      />
-                    ) : (
-                      <EformItem
-                        item={item}
-                        key={item.id}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                        setFaxVisible={setFaxVisible}
-                        setFileToFax={setFileToFax}
-                        setNewMessageExternalVisible={
-                          setNewMessageExternalVisible
-                        }
-                        setAttachmentsToSend={setAttachmentsToSend}
-                        setEformToEdit={setEformToEdit}
-                        setEditVisible={setEditVisible}
-                      />
-                    )
+      <div className="eforms__table-container" ref={divRef}>
+        <table className="eforms__table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Name</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {datas && datas.length > 0
+              ? datas.map((item, index) =>
+                  index === datas.length - 1 ? (
+                    <EformItem
+                      item={item}
+                      key={item.id}
+                      lastItemRef={lastItemRef}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                      setFaxVisible={setFaxVisible}
+                      setFileToFax={setFileToFax}
+                      setNewMessageExternalVisible={
+                        setNewMessageExternalVisible
+                      }
+                      setAttachmentsToSend={setAttachmentsToSend}
+                      setEformToEdit={setEformToEdit}
+                      setEditVisible={setEditVisible}
+                    />
+                  ) : (
+                    <EformItem
+                      item={item}
+                      key={item.id}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                      setFaxVisible={setFaxVisible}
+                      setFileToFax={setFileToFax}
+                      setNewMessageExternalVisible={
+                        setNewMessageExternalVisible
+                      }
+                      setAttachmentsToSend={setAttachmentsToSend}
+                      setEformToEdit={setEformToEdit}
+                      setEditVisible={setEditVisible}
+                    />
                   )
-                : !isFetchingNextPage && (
-                    <EmptyRow colSpan={4} text="No e-forms" />
-                  )}
-              {isFetchingNextPage && <LoadingRow colSpan={4} />}
-            </tbody>
-          </table>
-        </div>
-        <div className="eforms__btn-container">
-          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
-          <CloseButton onClick={handleClose} disabled={isLoadingFile} />
-        </div>
-      </>
+                )
+              : !isFetchingNextPage && (
+                  <EmptyRow colSpan={4} text="No e-forms" />
+                )}
+            {isFetchingNextPage && <LoadingRow colSpan={4} />}
+          </tbody>
+        </table>
+      </div>
+      <div className="eforms__btn-container">
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} disabled={isLoadingFile} />
+      </div>
+
       {addVisible && (
         <FakeWindow
           title={`NEW E-FORM for ${toPatientName(demographicsInfos)}`}
@@ -361,7 +288,7 @@ const EformsPopUp = ({
           )}
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

@@ -88,30 +88,30 @@ const ImmunizationsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="immunizations">
         <h1 className="immunizations__title">
           Patient immunizations
           <CloseButton onClick={handleClose} />
         </h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="immunizations">
         <h1 className="immunizations__title">
           Patient immunizations <CloseButton onClick={handleClose} />
         </h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="immunizations">
       <h1 className="immunizations__title">
         Patient immunizations
         <CloseButton onClick={handleClose} />
@@ -159,7 +159,7 @@ const ImmunizationsPopUp = ({
         fetchNextPage={fetchNextPage}
         isFetching={isFetching}
       />
-    </>
+    </div>
   );
 };
 

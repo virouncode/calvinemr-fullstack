@@ -397,160 +397,141 @@ const CareElementsListAdd = ({
   };
   return (
     <>
-      <div className="care-elements__row">
+      <div className="care-elements__card-content-btn">
         <Button onClick={handleAddTopic} label="Add item" />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Date:</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <InputDate
-            onChange={handleDateChange}
-            value={timestampToDateISOTZ(addDate)}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Date:</label>
+
+        <InputDate
+          onChange={handleDateChange}
+          value={timestampToDateISOTZ(addDate)}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Smoking:</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <GenericList
-            list={ynIndicatorsimpleCT}
-            name="SmokingStatus"
-            handleChange={handleChange}
-            value={addFormDatas.SmokingStatus?.Status ?? ""}
-            noneOption={false}
-            placeHolder="Choose status..."
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Smoking:</label>
+
+        <GenericList
+          list={ynIndicatorsimpleCT}
+          name="SmokingStatus"
+          handleChange={handleChange}
+          value={addFormDatas.SmokingStatus?.Status ?? ""}
+          noneOption={false}
+          placeHolder="Choose status..."
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">
-          Smoking Packs (per day):
-        </label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="SmokingPacks"
-            onChange={handleChange}
-            value={addFormDatas.SmokingPacks?.PerDay ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Smoking Packs (per day):</label>
+
+        <Input
+          name="SmokingPacks"
+          onChange={handleChange}
+          value={addFormDatas.SmokingPacks?.PerDay ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Weight (kg):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="Weight"
-            onChange={handleChange}
-            value={addFormDatas.Weight?.Weight ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Weight (kg):</label>
+        <Input
+          name="Weight"
+          onChange={handleChange}
+          value={addFormDatas.Weight?.Weight ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Weight (lbs):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="WeightLbs"
-            onChange={handleChange}
-            value={addFormDatas.WeightLbs?.Weight ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Weight (lbs):</label>
+
+        <Input
+          name="WeightLbs"
+          onChange={handleChange}
+          value={addFormDatas.WeightLbs?.Weight ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Height (cm):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="Height"
-            onChange={handleChange}
-            value={addFormDatas.Height?.Height ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Height (cm):</label>
+
+        <Input
+          name="Height"
+          onChange={handleChange}
+          value={addFormDatas.Height?.Height ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Height (feet):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="HeightFeet"
-            onChange={handleChange}
-            value={addFormDatas.HeightFeet?.Height ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Height (feet):</label>
+
+        <Input
+          name="HeightFeet"
+          onChange={handleChange}
+          value={addFormDatas.HeightFeet?.Height ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">
-          Body mass index (kg/m2):
-        </label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="BMI"
-            value={addFormDatas.bodyMassIndex?.BMI ?? ""}
-            readOnly
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Body mass index (kg/m2):</label>
+
+        <Input
+          name="BMI"
+          value={addFormDatas.bodyMassIndex?.BMI ?? ""}
+          readOnly
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">
-          Body surface area (m2):
-        </label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="BSA"
-            value={addFormDatas.bodySurfaceArea?.BSA ?? ""}
-            readOnly
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Body surface area (m2):</label>
+
+        <Input
+          name="BSA"
+          value={addFormDatas.bodySurfaceArea?.BSA ?? ""}
+          readOnly
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">
-          Waist circumference (cm):
-        </label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="Waist"
-            onChange={handleChange}
-            value={addFormDatas.WaistCircumference?.WaistCircumference ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Waist circumference (cm):</label>
+
+        <Input
+          name="Waist"
+          onChange={handleChange}
+          value={addFormDatas.WaistCircumference?.WaistCircumference ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Systolic (mmHg):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="SystolicBP"
-            onChange={handleChange}
-            value={addFormDatas.BloodPressure?.SystolicBP ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Systolic (mmHg):</label>
+
+        <Input
+          name="SystolicBP"
+          onChange={handleChange}
+          value={addFormDatas.BloodPressure?.SystolicBP ?? ""}
+        />
       </div>
-      <div className="care-elements__row">
-        <label className="care-elements__row-label">Diastolic (mmHg):</label>
-        <div className="care-elements__row-value care-elements__row-value--add">
-          <Input
-            name="DiastolicBP"
-            onChange={handleChange}
-            value={addFormDatas.BloodPressure?.DiastolicBP ?? ""}
-          />
-        </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Diastolic (mmHg):</label>
+
+        <Input
+          name="DiastolicBP"
+          onChange={handleChange}
+          value={addFormDatas.BloodPressure?.DiastolicBP ?? ""}
+        />
       </div>
       {addFormAdditionalDatas.map((addAdditionalData) => (
-        <div className="care-elements__row" key={addAdditionalData.Name}>
-          <label className="care-elements__row-label">
+        <div
+          className="care-elements__card-content-row-add"
+          key={addAdditionalData.Name}
+        >
+          <label>
             {addAdditionalData.Name} ({addAdditionalData.Unit}):
           </label>
-          <div className="care-elements__row-value care-elements__row-value--add">
-            <Input
-              name={addAdditionalData.Name}
-              onChange={handleAdditionalChange}
-              value={addAdditionalData.Data?.Value ?? ""}
-            />
-          </div>
+
+          <Input
+            name={addAdditionalData.Name}
+            onChange={handleAdditionalChange}
+            value={addAdditionalData.Data?.Value ?? ""}
+          />
         </div>
       ))}
       {addTopic && (
         <FakeWindow
-          title={`ADD A NEW CARE ELEMENT TOPIC`}
+          title={`ADD A NEW CARE ELEMENT ITEM`}
           width={400}
-          height={170}
+          height={250}
           x={(window.innerWidth - 400) / 2}
-          y={(window.innerHeight - 170) / 2}
+          y={(window.innerHeight - 250) / 2}
           color="#577399"
           setPopUpVisible={setAddTopic}
         >

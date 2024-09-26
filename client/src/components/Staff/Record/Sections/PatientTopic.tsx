@@ -6,6 +6,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import {
   useTopicDelete,
   useTopicPost,
@@ -118,6 +119,7 @@ const PatientTopic = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+  const isLargeScreen = useMediaQuery("(min-width: 1280px)");
   //Queries
   const {
     data: topicDatas,
@@ -137,6 +139,12 @@ const PatientTopic = ({
   //HANDLERS
   const handlePopUpClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation();
+    if (!isLargeScreen && topic === "IMMUNIZATIONS") {
+      toast.warning("This feature is only available on large screen", {
+        containerId: "A",
+      });
+      return;
+    }
     setPopUpVisible((v) => !v);
   };
   const handleClickHeader = () => {
@@ -622,10 +630,10 @@ const PatientTopic = ({
         {topic === "PHARMACIES" && popUpVisible && (
           <FakeWindow
             title={`PREFERRED PHARMACY of ${patientName}`}
-            width={1400}
-            height={600}
-            x={(window.innerWidth - 1400) / 2}
-            y={(window.innerHeight - 600) / 2}
+            width={window.innerWidth}
+            height={700}
+            x={0}
+            y={(window.innerHeight - 700) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -813,9 +821,9 @@ const PatientTopic = ({
         {topic === "LETTERS/REFERRALS" && popUpVisible && (
           <FakeWindow
             title={`LETTERS/REFERRALS for ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -879,10 +887,10 @@ const PatientTopic = ({
         {topic === "PERSONAL HISTORY" && popUpVisible && (
           <FakeWindow
             title={`PERSONAL HISTORY of ${patientName}`}
-            width={600}
-            height={500}
-            x={(window.innerWidth - 600) / 2}
-            y={(window.innerHeight - 500) / 2}
+            width={400}
+            height={750}
+            x={(window.innerWidth - 400) / 2}
+            y={(window.innerHeight - 750) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -932,9 +940,9 @@ const PatientTopic = ({
           <FakeWindow
             title={`CARE ELEMENTS of ${patientName}`}
             width={500}
-            height={580}
+            height={750}
             x={(window.innerWidth - 500) / 2}
-            y={(window.innerHeight - 580) / 2}
+            y={(window.innerHeight - 750) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -984,9 +992,9 @@ const PatientTopic = ({
         {topic === "PROBLEM LIST" && popUpVisible && (
           <FakeWindow
             title={`PROBLEM LIST of ${patientName}`}
-            width={1250}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1250) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1178,9 +1186,9 @@ const PatientTopic = ({
         {topic === "ALLERGIES & ADVERSE REACTIONS" && popUpVisible && (
           <FakeWindow
             title={`ALLERGIES & ADVERSE REACTIONS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1232,7 +1240,7 @@ const PatientTopic = ({
         {topic === "IMMUNIZATIONS" && popUpVisible && (
           <FakeWindow
             title={`IMMUNIZATIONS of ${patientName}`}
-            width={1460}
+            width={window.innerWidth}
             height={800}
             x={0}
             y={0}
@@ -1298,9 +1306,9 @@ const PatientTopic = ({
         {topic === "APPOINTMENTS" && popUpVisible && (
           <FakeWindow
             title={`APPOINTMENTS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}

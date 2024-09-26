@@ -57,6 +57,7 @@ const AgeCalculatorPopUp = ({ patientDob }: AgeCalculatorPopUpProps) => {
 
   return (
     <div className="age-calculator">
+      <h1 className="age-calculator__title">Age Calculator</h1>
       <form className="age-calculator__form">
         <div className="age-calculator__form-row">
           <InputNumber

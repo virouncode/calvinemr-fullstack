@@ -104,10 +104,7 @@ const PharmaciesList = ({
     <>
       <div className="pharmacies-list__title">
         Pharmacies directory
-        <Button
-          onClick={handleAddNewClick}
-          label="Add a new Pharmacy to directory"
-        />
+        <Button onClick={handleAddNewClick} label="Add" />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div

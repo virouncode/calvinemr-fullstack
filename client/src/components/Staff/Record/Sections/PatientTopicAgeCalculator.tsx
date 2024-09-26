@@ -43,9 +43,9 @@ const PatientTopicAgeCalculator = ({
         <FakeWindow
           title={`AGE CALCULATOR for ${patientName}`}
           width={350}
-          height={150}
+          height={200}
           x={(window.innerWidth - 350) / 2}
-          y={(window.innerHeight - 150) / 2}
+          y={(window.innerHeight - 200) / 2}
           color={backgroundColor}
           setPopUpVisible={setPopUpVisible}
         >

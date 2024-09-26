@@ -6,6 +6,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
@@ -23,13 +24,13 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../../Messaging/Internal/NewMessage";
 import NewMessageMobile from "../../../Messaging/Internal/NewMessageMobile";
 import LetterForm from "./Form/LetterForm";
 import LetterItem from "./LetterItem";
-import NewFaxMobile from "../../../Fax/NewFaxMobile";
 
 type LettersPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<LetterType>> | undefined;
@@ -74,6 +75,7 @@ const LettersPopUp = ({
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+  const largeScreen = useMediaQuery("(min-width: 1280px)");
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(
@@ -108,107 +110,113 @@ const LettersPopUp = ({
   };
   const handleAdd = () => {
     setErrMsgPost("");
+    if (!largeScreen) {
+      toast.warning("This feature is not available on small screens", {
+        containerId: "A",
+      });
+      return;
+    }
     editCounter.current += 1;
     setAddVisible((v) => !v);
   };
 
   if (isPending) {
     return (
-      <>
+      <div className="letters">
         <h1 className="letters__title">Patient letters</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="letters">
         <h1 className="letters__title">Patient letters</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="letters">
       <h1 className="letters__title">Patient letters</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <>
-        <div className="letters__table-container" ref={divRef}>
-          <table className="letters__table">
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Name</th>
-                <th>File</th>
-                <th>Description</th>
-                <th>Updated By</th>
-                <th>Updated On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {datas && datas.length > 0
-                ? datas.map((item, index) =>
-                    index === datas.length - 1 ? (
-                      <LetterItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        lastItemRef={lastItemRef}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                        setFaxVisible={setFaxVisible}
-                        setFileToFax={setFileToFax}
-                        setNewMessageInternalVisible={
-                          setNewMessageInternalVisible
-                        }
-                        setNewMessageExternalVisible={
-                          setNewMessageExternalVisible
-                        }
-                        setAttachmentsToSend={setAttachmentsToSend}
-                      />
-                    ) : (
-                      <LetterItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                        setFaxVisible={setFaxVisible}
-                        setFileToFax={setFileToFax}
-                        setNewMessageInternalVisible={
-                          setNewMessageInternalVisible
-                        }
-                        setNewMessageExternalVisible={
-                          setNewMessageExternalVisible
-                        }
-                        setAttachmentsToSend={setAttachmentsToSend}
-                      />
-                    )
+
+      <div className="letters__table-container" ref={divRef}>
+        <table className="letters__table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Name</th>
+              <th>File</th>
+              <th>Description</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {datas && datas.length > 0
+              ? datas.map((item, index) =>
+                  index === datas.length - 1 ? (
+                    <LetterItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      lastItemRef={lastItemRef}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                      setFaxVisible={setFaxVisible}
+                      setFileToFax={setFileToFax}
+                      setNewMessageInternalVisible={
+                        setNewMessageInternalVisible
+                      }
+                      setNewMessageExternalVisible={
+                        setNewMessageExternalVisible
+                      }
+                      setAttachmentsToSend={setAttachmentsToSend}
+                    />
+                  ) : (
+                    <LetterItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                      setFaxVisible={setFaxVisible}
+                      setFileToFax={setFileToFax}
+                      setNewMessageInternalVisible={
+                        setNewMessageInternalVisible
+                      }
+                      setNewMessageExternalVisible={
+                        setNewMessageExternalVisible
+                      }
+                      setAttachmentsToSend={setAttachmentsToSend}
+                    />
                   )
-                : !isFetchingNextPage &&
-                  !addVisible && <EmptyRow colSpan={6} text="No letters" />}
-              {isFetchingNextPage && <LoadingRow colSpan={6} />}
-            </tbody>
-          </table>
-        </div>
-        <div className="letters__btn-container">
-          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
-          <CloseButton onClick={handleClose} />
-        </div>
-      </>
+                )
+              : !isFetchingNextPage &&
+                !addVisible && <EmptyRow colSpan={6} text="No letters" />}
+            {isFetchingNextPage && <LoadingRow colSpan={6} />}
+          </tbody>
+        </table>
+      </div>
+      <div className="letters__btn-container">
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
+      </div>
+
       {addVisible && (
         <FakeWindow
           title={`NEW LETTER/REFERRAL for ${patientName}`}
-          width={1300}
+          width={window.innerWidth}
           height={750}
-          x={(window.innerWidth - 1300) / 2}
+          x={0}
           y={(window.innerHeight - 750) / 2}
           color={"#848484"}
           setPopUpVisible={setPopUpVisible}
@@ -319,7 +327,7 @@ const LettersPopUp = ({
           )}
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

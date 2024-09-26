@@ -347,7 +347,7 @@ select:disabled {
   height: 100%;
 }
 .credentials-section-title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -376,7 +376,7 @@ select:disabled {
   height: 100%;
 }
 .patient-appointments-section-title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -392,7 +392,7 @@ select:disabled {
   padding: 20px 0;
 }
 .patient-record-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -403,7 +403,7 @@ select:disabled {
   padding: 20px 0;
 }
 .patient-messages-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -414,7 +414,7 @@ select:disabled {
   padding: 20px 0;
 }
 .accounts-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -425,7 +425,7 @@ select:disabled {
   padding: 20px 0;
 }
 .migration-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -436,7 +436,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .dashboard-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -447,7 +447,7 @@ select:disabled {
   padding: 20px 0;
 }
 .clinic-section__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -2895,7 +2895,7 @@ select:disabled {
   align-items: center;
 }
 .demographics-card__header h1 {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   font-weight: bold;
 }
 .demographics-card__btns {
@@ -2999,7 +2999,7 @@ select:disabled {
 }
 
 .pasthealth__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3080,7 +3080,7 @@ select:disabled {
 }
 
 .famhistory__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3161,7 +3161,7 @@ select:disabled {
 }
 
 .risk__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3235,7 +3235,7 @@ select:disabled {
 }
 
 .medications__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3488,7 +3488,7 @@ select:disabled {
 }
 
 .pharmacies__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3637,7 +3637,7 @@ select:disabled {
 }
 
 .doctors__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -3968,7 +3968,7 @@ select:disabled {
 }
 
 .reminders__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4042,7 +4042,7 @@ select:disabled {
 }
 
 .pregnancies__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4118,7 +4118,7 @@ select:disabled {
 }
 
 .allergies__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4194,7 +4194,7 @@ select:disabled {
 }
 
 .alerts__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4280,7 +4280,7 @@ select:disabled {
   text-align: center;
 }
 .recimmunizations__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 50px;
   margin-bottom: 10px;
   padding: 10px;
@@ -4430,7 +4430,7 @@ select:disabled {
   text-align: left;
 }
 .immunizations__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 40px;
   margin-bottom: 20px;
   text-align: center;
@@ -4518,7 +4518,7 @@ select:disabled {
 }
 
 .reports__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4657,7 +4657,7 @@ select:disabled {
 }
 
 .appointments__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4739,7 +4739,7 @@ select:disabled {
 }
 
 .problemlist__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -4970,7 +4970,7 @@ select:disabled {
 }
 .prescription__body-title {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
   margin: 20px 0;
 }
@@ -8257,7 +8257,7 @@ select:disabled {
 }
 
 .relationships__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -8472,7 +8472,7 @@ select:disabled {
 }
 
 .eforms__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -9705,7 +9705,7 @@ select:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: $size-xl;
 }
 .window-title-close--disabled {
   cursor: auto;
@@ -9797,7 +9797,7 @@ select:disabled {
 .patient-ai-agreement h1 {
   margin-top: 40px;
   margin-bottom: 10px;
-  font-size: 1.2rem;
+  font-size: $size-xl;
   text-align: center;
 }
 .patient-ai-agreement h2 {
@@ -10855,7 +10855,7 @@ select:disabled {
   align-items: center;
 }
 .personalhistory-card__header h1 {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   font-weight: bold;
 }
 .personalhistory-card__btns {
@@ -11490,7 +11490,7 @@ select:disabled {
 }
 
 .prescriptions__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -11633,7 +11633,7 @@ select:disabled {
 }
 
 .letters__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;
@@ -13443,7 +13443,7 @@ select:disabled {
 }
 
 .cycles__title {
-  font-size: 1.2rem;
+  font-size: $size-xl;
   margin-top: 60px;
   margin-bottom: 30px;
   text-align: center;

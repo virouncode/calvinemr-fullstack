@@ -16,20 +16,20 @@ const CareElementsBMI = ({
   handleClickHistory,
 }: CareElementsBMIProps) => {
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
         Body mass index (kg/m2):
       </label>
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastDatas.bodyMassIndex?.BMI}
       </div>
       {lastDatas.bodyMassIndex?.BMI && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("BODY MASS INDEX")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

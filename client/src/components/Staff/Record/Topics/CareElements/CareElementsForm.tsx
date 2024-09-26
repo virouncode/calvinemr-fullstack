@@ -377,7 +377,7 @@ const CareElementsForm = ({
     setDate(value);
   };
   return (
-    <>
+    <div className="care-elements">
       <h1 className="care-elements__title">Patient care elements</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div
@@ -523,7 +523,7 @@ const CareElementsForm = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

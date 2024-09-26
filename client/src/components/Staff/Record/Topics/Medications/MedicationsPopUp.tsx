@@ -119,18 +119,18 @@ const MedicationsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="medications">
         <h1 className="medications__title">Patient Medications & Treatments</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="medications">
         <h1 className="medications__title">Patient Medications & Treatments</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 

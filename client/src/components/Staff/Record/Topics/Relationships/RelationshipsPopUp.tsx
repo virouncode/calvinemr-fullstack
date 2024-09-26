@@ -89,18 +89,18 @@ const RelationshipsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="relationships">
         <h1 className="relationships__title">Patient relationships</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="relationships">
         <h1 className="relationships__title">Patient relationships</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 

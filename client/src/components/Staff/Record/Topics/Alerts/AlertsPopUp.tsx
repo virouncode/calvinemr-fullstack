@@ -84,18 +84,18 @@ const AlertsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="alerts">
         <h1 className="alerts__title">Alerts and special needs</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="alerts">
         <h1 className="alerts__title">Alerts and special needs</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 

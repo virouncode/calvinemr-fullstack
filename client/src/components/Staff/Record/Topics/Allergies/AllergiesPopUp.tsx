@@ -84,29 +84,29 @@ const AllergiesPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="allergies">
         <h1 className="allergies__title">
           Patient allergies & adverse reactions
         </h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="allergies">
         <h1 className="allergies__title">
           Patient allergies & adverse reactions
         </h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="allergies">
       <h1 className="allergies__title">
         Patient allergies & adverse reactions
       </h1>
@@ -175,7 +175,7 @@ const AllergiesPopUp = ({
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 

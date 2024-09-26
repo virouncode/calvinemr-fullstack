@@ -86,7 +86,7 @@ const PharmaciesPopUp = ({
   };
 
   return (
-    <>
+    <div className="pharmacies">
       <h1 className="pharmacies__title">Patient preferred pharmacy</h1>
       {preferredPharmacy ? (
         <PharmacyCard pharmacy={preferredPharmacy} />
@@ -120,7 +120,7 @@ const PharmaciesPopUp = ({
           isFetching={isFetching}
         />
       )}
-    </>
+    </div>
   );
 };
 

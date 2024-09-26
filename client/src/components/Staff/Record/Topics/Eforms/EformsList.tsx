@@ -13,12 +13,8 @@ const EformsList = ({
   eformsBlank,
 }: EformsListProps) => {
   return (
-    <select
-      onChange={handleFormChange}
-      style={{ marginLeft: "10px" }}
-      value={formSelectedId}
-    >
-      <option value="" disabled>
+    <select onChange={handleFormChange} value={formSelectedId}>
+      <option value={0} disabled>
         Choose an e-form...
       </option>
       {eformsBlank.map((eform) => (

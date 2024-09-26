@@ -36,20 +36,20 @@ const CareElementsPacks = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
         Smoking Packs (per day):
       </label>
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastDatas.SmokingPacks?.PerDay}
       </div>
       {lastDatas.SmokingPacks?.PerDay && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("SMOKING PACKS PER DAY")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

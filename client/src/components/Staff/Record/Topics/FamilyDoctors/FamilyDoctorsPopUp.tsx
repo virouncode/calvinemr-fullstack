@@ -93,23 +93,23 @@ const FamilyDoctorsPopUp = ({
 
   if (isPendingPatientDoctors) {
     return (
-      <>
+      <div className="doctors">
         <h1 className="doctors__title">Patient family doctors & specialists</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (errorPatientDoctors) {
     return (
-      <>
+      <div className="doctors">
         <h1 className="doctors__title">Patient family doctors & specialists</h1>
         <ErrorParagraph errorMsg={errorPatientDoctors.message} />
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="doctors">
       <h1 className="doctors__title">Patient family doctors & specialists</h1>
       <PatientClinicDoctorsList
         patientId={patientId}
@@ -133,7 +133,7 @@ const FamilyDoctorsPopUp = ({
       <div className="doctors__btn-container">
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 

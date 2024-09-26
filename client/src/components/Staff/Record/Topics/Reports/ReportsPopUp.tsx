@@ -135,22 +135,22 @@ const ReportsPopUp = ({
 
   if (isPendingReportsReceived || isPendingReportsSent) {
     return (
-      <>
+      <div className="reports">
         <h1 className="reports__title">Patient reports</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (errorReportsReceived || errorReportsSent) {
     return (
-      <>
+      <div className="reports">
         <h1 className="reports__title">Patient reports</h1>
         <ErrorParagraph
           errorMsg={
             errorReportsReceived?.message || errorReportsSent?.message || ""
           }
         />
-      </>
+      </div>
     );
   }
 
@@ -160,7 +160,7 @@ const ReportsPopUp = ({
   const datasReportsSent = reportsSent?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="reports">
       <h1 className="reports__title">Patient reports</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <h2 className="reports__title reports__title--subtitle">Received</h2>
@@ -386,7 +386,7 @@ const ReportsPopUp = ({
           )}
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 
