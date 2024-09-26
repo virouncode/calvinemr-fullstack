@@ -168,6 +168,7 @@ const BillingTable = ({
               ) / 100}{" "}
               $
             </td>
+            <td colSpan={2}></td>
           </tr>
         </tfoot>
       </table>

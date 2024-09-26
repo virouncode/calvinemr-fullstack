@@ -81,7 +81,7 @@ const MessageExternalTemplateEdit = ({
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
           autoFocus={true}
         />
       </div>

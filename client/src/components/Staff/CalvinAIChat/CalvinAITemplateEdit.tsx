@@ -55,26 +55,26 @@ const CalvinAITemplateEdit = ({
   };
   return (
     editedTemplate && (
-      <div className="edit-template">
+      <div className="calvinai-template__form">
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-        <div className="edit-template-name">
+        <div className="calvinai-template__form-name">
           <Input
             value={editedTemplate.name}
             onChange={handleChange}
             name="name"
             id="template-ai-name"
-            label="Template name:"
+            placeholder="Template name*"
             autoFocus={true}
           />
         </div>
-        <div className="edit-template-body">
+        <div className="calvinai-template__form-content">
           <textarea
             name="prompt"
             value={editedTemplate.prompt}
             onChange={handleChange}
           />
         </div>
-        <div className="edit-template-btns">
+        <div className="calvinai-template__form-btns">
           <SaveButton onClick={handleSave} />
           <CancelButton onClick={handleCancel} />
         </div>

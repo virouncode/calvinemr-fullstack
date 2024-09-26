@@ -115,7 +115,6 @@ const ClinicalNotesTemplates = ({
           y={(window.innerHeight - 500) / 2}
           color="#93b5e9"
           setPopUpVisible={setNewTemplateVisible}
-          closeCross={false}
         >
           <ClinicalNotesTemplateForm
             setNewTemplateVisible={setNewTemplateVisible}

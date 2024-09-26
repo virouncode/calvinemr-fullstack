@@ -76,7 +76,7 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
           autoFocus={true}
         />
       </div>
@@ -91,7 +91,7 @@ const TodoTemplateForm = ({ setNewTemplateVisible }: TodoTemplateFormProps) => {
             />
           </div>
           <div className="message-template__form-message-body">
-            <textarea value={body} onChange={handleChange} autoFocus></textarea>
+            <textarea value={body} onChange={handleChange} />
           </div>
           <div className="message-template__form-message-btns">
             <SaveButton onClick={handleSave} disabled={progress} />

@@ -91,7 +91,7 @@ const MessageTemplateFormMobile = ({
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
         />
       </div>
       <div className="message-template__form-content message-template__form-content--mobile">

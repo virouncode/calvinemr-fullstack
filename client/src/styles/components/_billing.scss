@@ -143,19 +143,20 @@
       min-width: 200px;
     }
   }
-  &__item,
-  &__item-footer {
+  tfoot {
+    z-index: 2;
+  }
+  &__item {
     border-bottom: solid 1px $grey;
     td {
       text-align: center;
-      padding: 10px;
+      padding: 0.5rem;
       word-break: break-word;
-      button {
-        font-size: $size-xs;
-      }
     }
-    input {
+    input,
+    select {
       width: 100%;
+      font-size: $size-base;
     }
     input[type="submit"] {
       width: auto;
@@ -166,8 +167,10 @@
     &-btn-container {
       display: flex;
       justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
       button {
-        margin-left: 5px;
+        font-size: $size-xs;
       }
     }
   }
@@ -182,16 +185,6 @@
   margin-top: 40px;
   padding: 0 20px;
   height: 93%;
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
   &-btn-container {
     text-align: center;
     margin-bottom: 20px;
@@ -274,5 +267,16 @@
   }
   .billing-table {
     font-size: $size-sm;
+    &__item {
+      input,
+      select {
+        font-size: $size-sm;
+      }
+      &-btn-container {
+        button {
+          font-size: $size-sm;
+        }
+      }
+    }
   }
 }

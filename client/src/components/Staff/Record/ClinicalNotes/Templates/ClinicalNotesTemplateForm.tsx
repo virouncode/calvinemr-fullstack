@@ -66,9 +66,8 @@ const ClinicalNotesTemplateForm = ({
           onChange={handleChange}
           name="name"
           id="clinical-template-name"
-          label="Template name:"
+          placeholder="Template name*"
           autoFocus={true}
-          placeholder="New template name"
         />
       </div>
       <div className="clinical-note-template__form-body">

@@ -64,7 +64,7 @@ const ClinicalNotesTemplateEdit = ({
           onChange={handleChange}
           name="name"
           id="clinical-template-name"
-          label="Template name:"
+          placeholder="Template name*"
           autoFocus={true}
         />
       </div>

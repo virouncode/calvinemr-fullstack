@@ -32,7 +32,7 @@ const MicrophoneIcon = ({
         right: `${right}px`,
         position: "absolute",
         color: color,
-        zIndex: "1000",
+        zIndex: "1",
       }}
     />
   );

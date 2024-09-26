@@ -89,7 +89,7 @@ const MessageTemplateEdit = ({
           value={name}
           onChange={handleChangeName}
           id="message-template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
           autoFocus={true}
         />
       </div>

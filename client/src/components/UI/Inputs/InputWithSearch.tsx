@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React from "react";
 import MagnifyingGlassIcon from "../Icons/MagnifyingGlassIcon";
 
@@ -24,6 +25,7 @@ const InputWithSearch = ({
   logo = true,
   width,
 }: InputWithSearchProps) => {
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   return (
     <>
       {label && <label htmlFor={id}>{label}</label>}
@@ -36,7 +38,14 @@ const InputWithSearch = ({
         id="provider_ohip_billing_nbr"
         style={{ width: width ? `${width}px` : "" }}
       />
-      {logo && <MagnifyingGlassIcon right={5} top={33} onClick={onClick} />}
+
+      {logo && (
+        <MagnifyingGlassIcon
+          right={5}
+          top={isTabletOrMobile ? 32 : 28}
+          onClick={onClick}
+        />
+      )}
     </>
   );
 };

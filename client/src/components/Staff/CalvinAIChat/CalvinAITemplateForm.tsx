@@ -66,8 +66,7 @@ const CalvinAITemplateForm = ({
           onChange={handleChange}
           name="name"
           id="template-ai-name"
-          label="Template name:"
-          placeholder="New template name"
+          placeholder="Template name*"
           autoFocus={true}
         />
       </div>
