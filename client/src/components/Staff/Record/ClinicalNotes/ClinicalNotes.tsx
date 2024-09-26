@@ -178,9 +178,9 @@ const ClinicalNotes = ({
       {overviewVisible && (
         <FakeWindow
           title={`CLINICAL NOTES OVERVIEW`}
-          width={1400}
+          width={1024}
           height={600}
-          x={(window.innerWidth - 1400) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 600) / 2}
           color="#93b5e9"
           setPopUpVisible={setOverviewVisible}

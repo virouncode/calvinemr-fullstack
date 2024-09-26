@@ -459,9 +459,9 @@ const ClinicalNoteCard = ({
         {versionsVisible && (
           <FakeWindow
             title={`CLINICAL NOTE VERSIONS`}
-            width={1000}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1000) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color="#93b5e9"
             setPopUpVisible={setVersionsVisible}

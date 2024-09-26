@@ -243,7 +243,7 @@
     box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
     &-header {
       padding: 0.5rem;
-      background: $pink2;
+      background: $pink;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -361,12 +361,25 @@
         p {
           white-space: pre-wrap;
           margin-left: 40px;
+          max-width: 80ch;
         }
       }
     }
   }
   &__versions {
     margin-top: 40px;
+    .clinical-notes__card {
+      &-header-row {
+        justify-content: space-between;
+      }
+      &-body {
+        p {
+          white-space: pre-wrap;
+          max-width: 80ch;
+          margin: 0 auto;
+        }
+      }
+    }
   }
   &__templates {
     margin-top: 40px;

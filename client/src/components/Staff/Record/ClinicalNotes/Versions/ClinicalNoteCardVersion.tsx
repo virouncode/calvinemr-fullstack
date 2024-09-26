@@ -18,11 +18,11 @@ const ClinicalNoteCardVersion = ({ version }: ClinicalNoteCardVersionProps) => {
     <div className="clinical-notes__card">
       <div className="clinical-notes__card-header">
         <div className="clinical-notes__card-header-row">
-          <p style={{ margin: "0", padding: "0" }}>
+          <p>
             <strong>From: </strong>
             {staffIdToTitleAndName(staffInfos, version.created_by_id)}
           </p>
-          <p style={{ margin: "0", fontSize: "0.7rem", padding: "0" }}>
+          <p>
             Signed on{" "}
             {`${timestampToDateTimeSecondsStrTZ(
               version.date_updated || version.date_created
@@ -44,18 +44,8 @@ const ClinicalNoteCardVersion = ({ version }: ClinicalNoteCardVersionProps) => {
           </div>
         </div>
       </div>
-      <div>
-        <p style={{ whiteSpace: "pre-wrap", padding: "20px" }}>
-          {version.MyClinicalNotesContent}
-        </p>
-        {/* <ClinicalNoteAttachments
-            attachments={version.attachments_ids.map(
-              ({ attachment }) => attachment
-            )}
-            deletable={false}
-            addable={false}
-          /> */}
-        <div></div>
+      <div className="clinical-notes__card-body">
+        <p>{version.MyClinicalNotesContent}</p>
       </div>
     </div>
   );
