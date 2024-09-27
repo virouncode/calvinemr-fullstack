@@ -148,7 +148,7 @@ const PatientRecordMobile = ({
         </div>
       </div>
       <div className="patient-record-mobile__content">
-        {topicsVisible && (
+        {topicsVisible ? (
           <div className="patient-record-mobile__topics">
             <PatientMenuLeft
               demographicsInfos={demographicsInfos}
@@ -161,15 +161,16 @@ const PatientRecordMobile = ({
               contentsVisible={rightContentsVisible}
             />
           </div>
+        ) : (
+          <ClinicalNotes
+            demographicsInfos={demographicsInfos}
+            notesVisible={notesVisible}
+            setNotesVisible={setNotesVisible}
+            contentsVisible={notesContentsVisible}
+            setContentsVisible={setNotesContentsVisible}
+            patientId={patientId}
+          />
         )}
-        <ClinicalNotes
-          demographicsInfos={demographicsInfos}
-          notesVisible={notesVisible}
-          setNotesVisible={setNotesVisible}
-          contentsVisible={notesContentsVisible}
-          setContentsVisible={setNotesContentsVisible}
-          patientId={patientId}
-        />
       </div>
       {exportVisible && (
         <FakeWindow
