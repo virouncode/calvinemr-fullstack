@@ -410,7 +410,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Smoking:</label>
-
         <GenericList
           list={ynIndicatorsimpleCT}
           name="SmokingStatus"

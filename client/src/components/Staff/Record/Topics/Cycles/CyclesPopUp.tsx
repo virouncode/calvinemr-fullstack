@@ -165,9 +165,9 @@ const CyclesPopUp = ({
       {addVisible && (
         <FakeWindow
           title="ADD A NEW CYCLE MONITORING"
-          width={1400}
+          width={window.innerWidth}
           height={800}
-          x={(window.innerWidth - 1400) / 2}
+          x={0}
           y={(window.innerHeight - 800) / 2}
           color="#2B8C99"
           setPopUpVisible={setAddVisible}
@@ -209,7 +209,7 @@ const CyclesPopUp = ({
             menubar: "no",
             status: "no",
             directories: "no",
-            width: 832,
+            width: 870,
             height: 1060,
             left: 320,
             top: 200,

@@ -53,13 +53,24 @@
         width: 100%;
         font-size: $size-base;
       }
+      .rw-popup-container {
+        width: 200%;
+      }
+      .rw-widget-picker .rw-widget-container {
+        width: 100%;
+      }
+      .rw-list-option {
+        font-size: $size-base;
+      }
     }
-
     &-btn-container {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 0.25rem;
+      button {
+        font-size: $size-xs;
+      }
     }
   }
 }
@@ -71,6 +82,9 @@
       td {
         input,
         select {
+          font-size: $size-sm;
+        }
+        .rw-list-option {
           font-size: $size-sm;
         }
       }

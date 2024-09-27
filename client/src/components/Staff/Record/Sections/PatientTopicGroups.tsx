@@ -29,10 +29,14 @@ const PatientTopicGroups = ({
   const handleClickHeader = () => {
     if (triangleRef.current)
       triangleRef.current.classList.toggle("triangle--active");
-    if (containerRef.current)
+    if (containerRef.current) {
       containerRef.current.classList.toggle(
         `patient-record__topic-container--active`
       );
+      containerRef.current.classList.toggle(
+        `patient-record__topic-container--bottom`
+      );
+    }
   };
 
   return (

@@ -154,10 +154,7 @@ const PatientTopic = ({
       containerRef.current.classList.toggle(
         `patient-record__topic-container--active`
       );
-    if (
-      (topic === "LETTERS/REFERRALS" || topic === "TO-DOS ABOUT PATIENT") &&
-      containerRef.current
-    ) {
+    if (topic === "TO-DOS ABOUT PATIENT" && containerRef.current) {
       containerRef.current.classList.toggle(
         `patient-record__topic-container--bottom`
       );

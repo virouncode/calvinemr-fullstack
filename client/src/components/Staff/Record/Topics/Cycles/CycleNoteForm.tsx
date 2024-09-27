@@ -5,6 +5,7 @@ import {
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDate from "../../../../UI/Inputs/InputDate";
 
 type CycleNoteFormProps = {
@@ -20,12 +21,18 @@ const CycleNoteForm = ({
   item,
   setErrMsg,
 }: CycleNoteFormProps) => {
-  const handleRemove = () => {
+  const handleRemove = async () => {
     setErrMsg("");
-    setFormDatas({
-      ...formDatas,
-      notes: formDatas.notes?.filter((note) => note.temp_id !== item.temp_id),
-    });
+    if (
+      await confirmAlert({
+        content: "Do you really want to remove this event note ?",
+      })
+    ) {
+      setFormDatas({
+        ...formDatas,
+        notes: formDatas.notes?.filter((note) => note.temp_id !== item.temp_id),
+      });
+    }
   };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
