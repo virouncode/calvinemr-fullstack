@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
-import {
-  FaxInboxType,
-  FaxOutboxType,
-  FaxToDeleteType,
-} from "../../../types/api";
+import { FaxInboxType, FaxOutboxType } from "../../../types/api";
 import { timestampToDateStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
@@ -89,25 +85,6 @@ const FaxThumbnailMobile = ({
     return faxesSelectedIds.includes(id);
   };
 
-  const handleDeleteFax = async () => {
-    if (
-      await confirmAlert({
-        content:
-          "Do you really want to delete this fax (this action is irreversible)?",
-      })
-    ) {
-      const faxToDelete: FaxToDeleteType = {
-        faxFileName: fax.FileName,
-        direction: section === "Received faxes" ? "IN" : "OUT",
-      };
-      faxDelete.mutate(faxToDelete, {
-        onSuccess: () => {
-          setFaxesSelectedIds([]);
-        },
-      });
-    }
-  };
-
   const handleAddFaxNumber = async (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
@@ -140,14 +117,14 @@ const FaxThumbnailMobile = ({
           : "fax__thumbnail-mobile"
       }
     >
-      <div className="fax__thumbnail-link" onClick={handleFaxClick}>
+      <div className="fax__thumbnail-link">
         <Checkbox
           id={fax.FileName}
           onChange={handleCheckFax}
           checked={isFaxSelected(fax.FileName)}
           className="fax__thumbnail-checkbox"
         />
-        <div className="fax__thumbnail-author">
+        <div className="fax__thumbnail-author" onClick={handleFaxClick}>
           {section === "Received faxes"
             ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
@@ -155,7 +132,7 @@ const FaxThumbnailMobile = ({
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>
-      <div className="fax__thumbnail-date">
+      <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
       {addFaxNumberVisible && (

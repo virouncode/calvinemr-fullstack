@@ -141,14 +141,14 @@ const FaxThumbnail = ({
           : "fax__thumbnail"
       }
     >
-      <div className="fax__thumbnail-link" onClick={handleFaxClick}>
+      <div className="fax__thumbnail-link">
         <Checkbox
           id={fax.FileName}
           onChange={handleCheckFax}
           checked={isFaxSelected(fax.FileName)}
           className="fax__thumbnail-checkbox"
         />
-        <div className="fax__thumbnail-author">
+        <div className="fax__thumbnail-author" onClick={handleFaxClick}>
           {section === "Received faxes"
             ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
@@ -156,8 +156,10 @@ const FaxThumbnail = ({
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>
-      <div className="fax__thumbnail-pages">{fax.Pages}</div>
-      <div className="fax__thumbnail-date">
+      <div className="fax__thumbnail-pages" onClick={handleFaxClick}>
+        {fax.Pages}
+      </div>
+      <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateTimeStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
       <div className="fax__thumbnail-logos">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Id } from "react-toastify";
 import useTitleContext from "../../../hooks/context/useTitleContext";
@@ -22,8 +22,10 @@ const PatientLayout = ({
   //Hooks
   const { title } = useTitleContext();
   const [creditsVisible, setCreditsVisible] = useState(false);
-
   const onConfirm = () => setCreditsVisible(false);
+
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <div className="wrapper">
       <PatientHeader setCreditsVisible={setCreditsVisible} />
