@@ -22,13 +22,13 @@ import PrintButton from "../../../UI/Buttons/PrintButton";
 import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewFax from "../../Fax/NewFax";
+import NewFaxMobile from "../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import ExportClinicalNotes from "./ExportClinicalNotes";
 import ExportDemographics from "./ExportDemographics";
 import ExportFamilyDoctors from "./ExportFamilyDoctors";
 import ExportTopic from "./ExportTopic";
-import NewFaxMobile from "../../Fax/NewFaxMobile";
 
 type ExportChartPreviewProps = {
   recordsSelected: TopicExportType[];
@@ -546,8 +546,11 @@ const ExportChartPreview = ({
         <CloseButton onClick={handleClose} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
-      <div>
-        <div ref={textContentRef} style={{ padding: "5px 0", width: "816px" }}>
+      <div className="export-chart__preview-content">
+        <div
+          ref={textContentRef}
+          style={{ padding: "5px 0", width: "816px", margin: "0 auto" }}
+        >
           <ExportDemographics demographicsInfos={demographicsInfos} />
           {recordsSelected.includes("CLINICAL NOTES") && (
             <ExportClinicalNotes patientId={patientId} />
@@ -575,7 +578,10 @@ const ExportChartPreview = ({
               )
             )}
         </div>
-        <div ref={pdfContentRef}>
+        <div
+          ref={pdfContentRef}
+          style={{ padding: "5px 0", width: "816px", margin: "0 auto" }}
+        >
           {recordsSelected
             .filter(
               (topic) =>

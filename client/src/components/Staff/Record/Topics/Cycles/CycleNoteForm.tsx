@@ -46,7 +46,10 @@ const CycleNoteForm = ({
   };
   return (
     <tr className="cycles-form__events-item">
-      <td style={{ width: "10%" }}>
+      <td
+        style={{ width: "10%" }}
+        className="cycles-form__events-item-btn-container"
+      >
         <Button onClick={handleRemove} label="Remove" />
       </td>
       <td style={{ width: "10%" }}>
@@ -54,7 +57,6 @@ const CycleNoteForm = ({
           name="date"
           value={timestampToDateISOTZ(item.date)}
           onChange={handleChange}
-          width={110}
         />
       </td>
       <td style={{ width: "80%" }}>

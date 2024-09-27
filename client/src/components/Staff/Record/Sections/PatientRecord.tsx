@@ -170,9 +170,9 @@ const PatientRecord = ({
         <FakeWindow
           title={`EXPORT ${toPatientName(demographicsInfos)}'s MEDICAL RECORD`}
           width={600}
-          height={500}
+          height={600}
           x={(window.innerWidth - 600) / 2}
-          y={(window.innerHeight - 500) / 2}
+          y={(window.innerHeight - 600) / 2}
           color="#94bae8"
           setPopUpVisible={setExportVisible}
         >

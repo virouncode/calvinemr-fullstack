@@ -94,25 +94,25 @@ const CyclesPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="cycles">
         <h1 className="cycles__title">Cycle monitoring</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="cycles">
         <h1 className="cycles__title">Cycle monitoring</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="cycles">
       <h1 className="cycles__title">Cycle monitoring</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="cycles__table-container" ref={divRef}>
@@ -184,9 +184,9 @@ const CyclesPopUp = ({
       {show && cycleToShow && (
         <FakeWindow
           title={`ART CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
-          width={1400}
+          width={window.innerWidth}
           height={800}
-          x={(window.innerWidth - 1400) / 2}
+          x={0}
           y={(window.innerHeight - 800) / 2}
           color="#2B8C99"
           setPopUpVisible={setShow}
@@ -219,7 +219,7 @@ const CyclesPopUp = ({
           <CyclePrint cycle={cycleToShow} patientInfos={demographicsInfos} />
         </NewWindow>
       )}
-    </>
+    </div>
   );
 };
 

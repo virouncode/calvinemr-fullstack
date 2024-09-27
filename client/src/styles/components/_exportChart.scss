@@ -1,38 +1,39 @@
 .export-chart {
-  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
   &__title {
     font-weight: bold;
     padding: 0;
-    font-size: 0.9rem;
+    font-size: $size-base;
   }
   &__records {
-    margin-top: 10px;
     margin-left: 20px;
     &-item {
       display: flex;
       align-items: center;
+      margin-bottom: 0.25rem;
+      font-size: $size-base;
       input[type="checkbox"] {
         margin-right: 5px;
       }
     }
   }
   &__btn-container {
-    margin-top: 20px;
     display: flex;
     justify-content: center;
-    button {
-      margin-right: 5px;
-    }
+    gap: 0.25rem;
+    align-items: center;
   }
 }
 .export-chart__preview {
-  margin: 100px auto 10px;
+  margin: 0 auto 10px;
   // width:21cm;
   width: 22cm;
   &-options {
-    position: absolute;
-    top: 40px;
-    left: 0;
     background-color: $white;
     text-align: center;
     width: 100%;
@@ -56,4 +57,12 @@
 }
 .export__content {
   padding: 10px;
+}
+
+@media (min-width: 1024px) {
+  .export-chart {
+    &__records-item {
+      font-size: $size-sm;
+    }
+  }
 }

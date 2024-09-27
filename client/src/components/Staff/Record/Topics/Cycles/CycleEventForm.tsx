@@ -101,7 +101,7 @@ const CycleEventForm = ({
   };
   return (
     <tr className="cycles-form__events-item">
-      <td>
+      <td className="cycles-form__events-item-btn-container">
         <Button onClick={handleRemove} label="Remove" />
       </td>
       <td>
@@ -109,7 +109,6 @@ const CycleEventForm = ({
           name="date"
           value={timestampToDateISOTZ(item.date)}
           onChange={handleChange}
-          width={110}
         />
       </td>
       <td>
