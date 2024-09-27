@@ -1,11 +1,10 @@
 .personalhistory {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  padding-bottom: 0.5rem;
+  height: 100%;
   gap: 1rem;
-  margin-top: 50px;
   overflow-y: scroll;
+  padding: 0.5rem;
 }
 .personalhistory-card {
   width: 95%;
@@ -50,9 +49,6 @@
     display: flex;
     justify-content: center;
     gap: 0.25rem;
-    button {
-      font-size: $size-xs;
-    }
   }
   &__sign {
     padding: 0.5rem;

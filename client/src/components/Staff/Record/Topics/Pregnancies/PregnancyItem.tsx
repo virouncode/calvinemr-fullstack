@@ -132,12 +132,12 @@ const PregnancyItem = ({
   return (
     itemInfos && (
       <tr
-        className="pregnancies-item"
+        className="pregnancies__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
         ref={lastItemRef}
       >
         <td>
-          <div className="pregnancies-item__btn-container">
+          <div className="pregnancies__item-btn-container">
             {!editVisible ? (
               <>
                 <EditButton onClick={handleEditClick} disabled={progress} />
@@ -167,7 +167,6 @@ const PregnancyItem = ({
             value={timestampToDateISOTZ(itemInfos.date_of_event)}
             onChange={handleChange}
             editVisible={editVisible}
-            width={120}
           />
         </td>
         <td>

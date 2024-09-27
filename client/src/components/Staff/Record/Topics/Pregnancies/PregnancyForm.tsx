@@ -112,11 +112,11 @@ const PregnancyForm = ({
 
   return (
     <tr
-      className="pregnancies-form"
+      className="pregnancies__form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
       <td>
-        <div className="pregnancies-form__btn-container">
+        <div className="pregnancies__form-btn-container">
           <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
@@ -132,7 +132,6 @@ const PregnancyForm = ({
           name="date_of_event"
           value={timestampToDateISOTZ(formDatas.date_of_event)}
           onChange={handleChange}
-          width={120}
         />
       </td>
       <td>
@@ -140,7 +139,6 @@ const PregnancyForm = ({
           name="premises"
           value={formDatas.premises ?? ""}
           onChange={handleChange}
-          width={100}
         />
       </td>
       <td>
@@ -175,7 +173,6 @@ const PregnancyForm = ({
           name="notes"
           value={formDatas.notes ?? ""}
           onChange={handleChange}
-          width={100}
         />
       </td>
       <td>

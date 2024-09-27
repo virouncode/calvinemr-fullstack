@@ -165,7 +165,7 @@ const CalvinAIMedsChat = ({ initialMessage }: CalvinAIMedsChatProps) => {
 
   const handleStartSpeech = () => {
     if (!isChromeBrowser())
-      toast.info("We recommend using Chrome for better speech recognition", {
+      toast.info("We recommend using Chrome for speech recognition", {
         containerId: "A",
       });
     if (recognition) {
@@ -182,14 +182,14 @@ const CalvinAIMedsChat = ({ initialMessage }: CalvinAIMedsChatProps) => {
   };
   return (
     <>
-      <div className="calvinai-chat calvinai-chat--meds">
+      <div className="calvinai__chat calvinai__chat--meds">
         <CalvinAIChatContent
           messages={messages}
           msgEndRef={msgEndRef}
           contentRef={contentRef}
           isLoading={isLoading}
         />
-        <div className="calvinai-chat__stop-btn">
+        <div className="calvinai__chat-btns">
           <span
             onClick={() => setTemplatesVisible((v) => !v)}
             style={{

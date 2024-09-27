@@ -9,6 +9,7 @@ import { LetterTemplateType } from "../../../../../../types/api";
 import Button from "../../../../../UI/Buttons/Button";
 import Input from "../../../../../UI/Inputs/Input";
 import LoadingLi from "../../../../../UI/Lists/LoadingLi";
+import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import LetterTemplateForm from "./LetterTemplateForm";
 import LetterTemplateItem from "./LetterTemplateItem";
@@ -45,18 +46,26 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
     setSearch(value);
   };
 
+  if (error) {
+    return (
+      <div className="templates">
+        <ErrorParagraph errorMsg={error.message} />
+      </div>
+    );
+  }
+
   const templatesDatas = templates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="letters__templates">
-      <div className="letters__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           disabled={newTemplateVisible}
           label="Add a new template"
         />
       </div>
-      <div className="letters__templates-search">
+      <div className="templates__search">
         <Input
           label="Search"
           width={300}
@@ -66,11 +75,9 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
           placeholder="Template name, author name,..."
         />
       </div>
-      <div className="letters__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
-          {error ? (
-            <li className="letters__templates__err">{error.message}</li>
-          ) : isPending ? (
+          {isPending ? (
             <LoadingLi />
           ) : templatesDatas && templatesDatas.length > 0 ? (
             templatesDatas.map((template, index) =>

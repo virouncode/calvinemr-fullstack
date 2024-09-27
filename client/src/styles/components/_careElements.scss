@@ -1,11 +1,10 @@
 .care-elements {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  margin-top: 50px;
-  padding-bottom: 0.5rem;
+  height: 100%;
   gap: 1rem;
   overflow-y: scroll;
+  padding: 0.5rem;
   &__title {
     font-size: $size-xl;
     text-align: center;
@@ -78,7 +77,6 @@
     }
   }
   &__add-topic-form {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -173,7 +171,7 @@
   //   margin-top: 20px;
   // }
   &__edit {
-    margin: 40px auto 0;
+    margin: 0 auto;
     max-width: 700px;
     &-list {
       padding: 0.5rem 1rem;

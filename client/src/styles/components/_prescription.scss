@@ -1,11 +1,10 @@
 .prescription {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  margin-top: 50px;
-  padding-bottom: 0.5rem;
+  height: 100%;
   gap: 1rem;
   overflow: hidden;
+  padding: 0.5rem;
   &__actions {
     display: flex;
     align-items: center;
@@ -13,16 +12,7 @@
     justify-content: center;
     gap: 0.5rem;
     row-gap: 0.5rem;
-    padding: 0.5rem;
   }
-  // &__container {
-  //   height: 680px;
-  //   overflow-y: scroll;
-  //   border-bottom: solid 1px $grey;
-  //   border-top: solid 1px $grey;
-  //   border-radius: 6px;
-  //   box-shadow: $box-shadow-default;
-  // }
   &__form {
     flex: 1;
     display: flex;
@@ -46,15 +36,13 @@
   &__page {
     border: solid 1px $grey;
     border-radius: 6px;
-    // width: 21cm;
-    // height: 29.7cm;
     width: 22cm;
     height: 28cm;
     padding: 50px 60px;
     display: flex;
     flex-direction: column;
     &--preview {
-      margin-bottom: 20px;
+      margin: 0 auto;
     }
   }
   &__medications {
@@ -154,16 +142,21 @@
     }
   }
   &__preview {
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100%;
+    gap: 1rem;
+    overflow: hidden;
+    padding: 0.5rem;
     &-pages {
       height: 680px;
       overflow-y: scroll;
     }
     &-options {
-      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+      align-items: center;
     }
   }
 }

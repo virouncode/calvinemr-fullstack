@@ -30,6 +30,9 @@
   padding: 1rem;
   box-shadow: $box-shadow-default;
   height: 100%;
+  &--meds {
+    width: 100%;
+  }
 }
 .calvinai__chat-content {
   overflow: scroll;
@@ -106,13 +109,6 @@
     }
   }
 }
-
-.calvinai__chat--meds {
-  width: 98%;
-  height: 93%;
-  margin: 40px auto 0;
-}
-
 .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
   height: 100%;
   padding: 0;
@@ -144,6 +140,9 @@
   }
   .calvinai__chat {
     width: 65%;
+    &--meds {
+      width: 100%;
+    }
   }
   .calvinai__chat-templates {
     display: flex;

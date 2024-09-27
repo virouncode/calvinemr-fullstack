@@ -6,7 +6,7 @@ import {
   DemographicsType,
 } from "../../../../../types/api";
 import { AIMessageType, PromptTextType } from "../../../../../types/app";
-import Button from "../../../../UI/Buttons/Button";
+import SaveButton from "../../../../UI/Buttons/SaveButton";
 import AddAIAttachments from "./AddAIAttachments";
 import AddAIReports from "./AddAIReports";
 
@@ -178,11 +178,13 @@ const CalvinAIClinicalPrompt = ({
             setPromptText={setPromptText}
           />
         </div>
-        <Button
-          onClick={handleSubmit}
-          disabled={isLoadingAttachmentText || isLoadingReportText}
-          label="Submit to CalvinAI"
-        />
+        <div className="calvinai-prompt__btns">
+          <SaveButton
+            onClick={handleSubmit}
+            disabled={isLoadingAttachmentText || isLoadingReportText}
+            label="Submit to CalvinAI"
+          />
+        </div>
       </div>
     </div>
   );

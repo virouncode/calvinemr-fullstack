@@ -1,11 +1,10 @@
 .reminders {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  margin-top: 50px;
-  padding-bottom: 0.5rem;
+  height: 100%;
   gap: 1rem;
   overflow: hidden;
+  padding: 0.5rem;
   &__title {
     font-size: $size-xl;
     text-align: center;

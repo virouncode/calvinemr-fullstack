@@ -1057,9 +1057,9 @@ const PatientTopic = ({
         {topic === "PREGNANCIES" && popUpVisible && (
           <FakeWindow
             title={`PREGNANCIES of ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}

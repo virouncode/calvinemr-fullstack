@@ -38,12 +38,15 @@ export const toDatasToPlot = (historyTopic: string, historyDatas: unknown) => {
       break;
     case "WEIGHT LBS":
       datasToPlot = (
-        historyDatas as { Weight: string; WeightUnit: "lbs"; Date: number }[]
+        historyDatas as { Weight: string; WeightUnit: "kg"; Date: number }[]
       ).map((data) => {
         return {
           ...data,
-          Weight: data.Weight ? kgToLbs(parseFloat(data.Weight).toString()) : 0,
+          Weight: data.Weight
+            ? parseFloat(kgToLbs(parseFloat(data.Weight).toString()))
+            : 0,
           Date: new Date(data.Date),
+          WeightUnit: "lbs",
         };
       });
       break;
@@ -60,14 +63,15 @@ export const toDatasToPlot = (historyTopic: string, historyDatas: unknown) => {
       break;
     case "HEIGHT FEET":
       datasToPlot = (
-        historyDatas as { Height: string; HeightUnit: "feet"; Date: number }[]
+        historyDatas as { Height: string; HeightUnit: "cm"; Date: number }[]
       ).map((data) => {
         return {
           ...data,
           Height: data.Height
-            ? cmToFeet(parseFloat(data.Height).toString())
+            ? parseFloat(cmToFeet(parseFloat(data.Height).toString()))
             : 0,
           Date: new Date(data.Date),
+          HeightUnit: "feet",
         };
       });
       break;

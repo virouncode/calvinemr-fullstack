@@ -88,9 +88,9 @@ const PatientClinicDoctorsList = ({
         {addVisible && (
           <FakeWindow
             title="ADD A NEW CLINIC DOCTOR TO PATIENT"
-            width={1400}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1400) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color="#21201E"
             setPopUpVisible={setAddVisible}

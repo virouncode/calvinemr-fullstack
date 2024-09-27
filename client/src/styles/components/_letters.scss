@@ -1,11 +1,10 @@
 .letters {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  margin-top: 50px;
-  padding-bottom: 0.5rem;
+  height: 100%;
   gap: 1rem;
   overflow: hidden;
+  padding: 0.5rem;
   &__title {
     font-size: $size-xl;
     text-align: center;
@@ -71,16 +70,16 @@
   &__form {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
+    gap: 2rem;
     align-items: flex-start;
+    width: 95%;
+    margin: 0 auto;
   }
   &__container {
     height: 680px;
     overflow-y: scroll;
   }
   &__page {
-    // width: 21cm;
-    // height: 29.7cm;
     width: 22cm;
     height: 28cm;
     padding: 50px 60px;
@@ -186,7 +185,7 @@
   }
   &__options {
     padding: 10px;
-    width: 33%;
+    flex: 1;
     border: solid 1px $grey;
     box-shadow: $box-shadow-default;
     border-radius: 6px;
@@ -196,13 +195,14 @@
     &-date {
       display: flex;
       align-items: center;
-      margin-top: 10px;
+      margin-bottom: 0.5rem;
       label {
         font-weight: bold;
-        width: 100px;
+        width: 150px;
       }
-      input {
-        width: 240px;
+      input,
+      select {
+        width: 100%;
       }
     }
     &-item {
@@ -269,138 +269,6 @@
     margin: 20px 0;
     &-title {
       margin-bottom: 5px;
-    }
-  }
-}
-
-.letters__templates {
-  margin-top: 40px;
-  padding: 0 20px;
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &-btn-container {
-    text-align: center;
-    margin-bottom: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &-list {
-    height: 470px;
-    border: solid 0.5px $grey;
-    border-radius: 6px;
-    overflow-y: scroll;
-    padding: 10px;
-    &-item {
-      margin-bottom: 5px;
-      span {
-        cursor: pointer;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-  &-search {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    input {
-      width: 200px;
-    }
-  }
-}
-.letters__template-form {
-  padding: 50px 10px 0;
-  height: 100%;
-  &-name {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    label {
-      margin-right: 10px;
-      font-weight: bold;
-      width: 150px;
-    }
-    input {
-      width: 500px;
-    }
-  }
-  &-description,
-  &-site {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    label {
-      margin-right: 10px;
-      font-weight: bold;
-      width: 150px;
-    }
-    input {
-      width: 500px;
-    }
-  }
-  &-subheader {
-    position: relative;
-    height: 20%;
-    margin-top: 30px;
-  }
-  &-recipient {
-    display: flex;
-    margin-left: auto;
-    width: 50%;
-    text-align: end;
-    margin-bottom: 20px;
-    textarea {
-      white-space: pre-wrap;
-      width: 70%;
-    }
-    label {
-      padding-top: 5px;
-      margin-right: 10px;
-      width: 30%;
-      font-weight: bold;
-    }
-  }
-  &-subject {
-    display: flex;
-    align-items: center;
-    label {
-      margin-right: 10px;
-      font-weight: bold;
-    }
-    input {
-      width: 500px;
-    }
-  }
-  &-body {
-    height: 50%;
-    padding: 20px 0;
-    margin-top: 20px;
-    textarea {
-      width: 100%;
-      height: 100%;
-      font-size: 0.85rem;
-      white-space: pre-wrap;
-    }
-  }
-  &-btns {
-    text-align: center;
-    button {
-      margin-right: 5px;
     }
   }
 }

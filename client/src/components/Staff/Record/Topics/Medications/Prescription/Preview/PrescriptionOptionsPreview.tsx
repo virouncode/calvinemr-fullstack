@@ -29,7 +29,7 @@ const PrescriptionOptionsPreview = ({
     setPreviewVisible(false);
   };
   return (
-    <div className="letter__options-actions">
+    <>
       <SaveButton onClick={handleSave} disabled={progress || !!prescription} />
       <Button
         onClick={handlePrint}
@@ -51,7 +51,7 @@ const PrescriptionOptionsPreview = ({
       />
       <Button onClick={handleBack} disabled={progress} label="Back" />
       {progress && <CircularProgressMedium />}
-    </div>
+    </>
   );
 };
 
