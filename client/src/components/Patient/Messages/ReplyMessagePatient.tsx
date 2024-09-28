@@ -16,9 +16,10 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
+import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
-import PaperclipIcon from "../../UI/Icons/PaperclipIcon";
+import Input from "../../UI/Inputs/Input";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 
 type ReplyMessagePatientProps = {
@@ -167,32 +168,36 @@ const ReplyMessagePatient = ({
   };
 
   return (
-    <div className="reply-message__form">
-      <div className="reply-message__title">
-        <p>
-          <strong>To: </strong>
-          {staffIdToTitleAndName(staffInfos, message.from_staff_id)}
-        </p>
+    <div className="reply-message">
+      <div className="reply-message__recipients">
+        <Input
+          label="To:"
+          id="to"
+          value={staffIdToTitleAndName(staffInfos, message.from_staff_id)}
+          placeholder="Recipient(s)"
+          readOnly={true}
+        />
       </div>
       <div className="reply-message__subject">
-        <strong>Subject:</strong>
-        {previousMsgs.length
-          ? `\u00A0Re: ${message.subject.slice(
-              message.subject.indexOf(":") + 1
-            )}`
-          : `\u00A0Re: ${message.subject}`}
+        <Input
+          value={
+            previousMsgs.length
+              ? `\u00A0Re: ${message.subject.slice(
+                  message.subject.indexOf(":") + 1
+                )}`
+              : `\u00A0Re: ${message.subject}`
+          }
+          id="subject"
+          label="Subject:"
+          placeholder="Subject"
+          readOnly={true}
+        />
       </div>
       <div className="reply-message__attach">
-        <strong>Attach files</strong>
-        <PaperclipIcon onClick={handleAttach} />
-        {attachments.map((attachment) => (
-          <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
-            {attachment.alias},
-          </span>
-        ))}
+        <AttachFilesButton onClick={handleAttach} attachments={attachments} />
       </div>
       <div className="reply-message__body">
-        <textarea value={body} onChange={handleChange}></textarea>
+        <textarea value={body} onChange={handleChange} autoFocus />
         <div className="reply-message__history">
           <MessageExternal message={message} key={message.id} index={0} />
           {previousMsgs.map((message, index) => (
@@ -203,13 +208,15 @@ const ReplyMessagePatient = ({
             />
           ))}
         </div>
-        <MessagesAttachments
-          attachments={attachments}
-          handleRemoveAttachment={handleRemoveAttachment}
-          deletable={true}
-          cardWidth="17%"
-          addable={false}
-        />
+        {attachments.length > 0 && (
+          <MessagesAttachments
+            attachments={attachments}
+            handleRemoveAttachment={handleRemoveAttachment}
+            deletable={true}
+            cardWidth="17%"
+            addable={false}
+          />
+        )}
       </div>
       <div className="reply-message__btns">
         <SaveButton

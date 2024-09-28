@@ -8,6 +8,7 @@ import ToastCalvin from "../../UI/Toast/ToastCalvin";
 import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
 import PatientHeader from "../Headers/PatientHeader";
+import PatientMobileNav from "../Navigation/PatientMobileNav";
 import Subheader from "../Subheader/Subheader";
 
 type PatientLayoutProps = {
@@ -26,15 +27,28 @@ const PatientLayout = ({
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
+  const handleClickBars = () => {
+    if (mobileNavRef.current) {
+      mobileNavRef.current.classList.add("mobile-nav__container--active");
+    }
+  };
   return (
-    <div className="wrapper">
-      <PatientHeader setCreditsVisible={setCreditsVisible} />
+    <div className="wrapper container">
+      <PatientMobileNav
+        mobileNavRef={mobileNavRef}
+        toastExpiredID={toastExpiredID}
+        tokenLimitVerifierID={tokenLimitVerifierID}
+      />
+      <PatientHeader
+        setCreditsVisible={setCreditsVisible}
+        handleClickBars={handleClickBars}
+      />
       <Subheader
         title={title}
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-      <main>
+      <main className="main">
         {/* all the children of the Layout component */}
         <Outlet />
         <ConfirmGlobal />

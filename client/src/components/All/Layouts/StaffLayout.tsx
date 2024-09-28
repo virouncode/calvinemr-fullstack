@@ -32,7 +32,6 @@ const StaffLayout = ({
   const [notepadVisible, setNotepadVisible] = useState(false);
   useAutoLockScreen(setLockedScreen);
   useLocalStorageLock(setLockedScreen);
-
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickBars = () => {
@@ -51,7 +50,6 @@ const StaffLayout = ({
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-
       <StaffHeader
         setCreditsVisible={setCreditsVisible}
         setLockedScreen={setLockedScreen}

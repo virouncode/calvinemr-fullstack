@@ -31,11 +31,11 @@ const MessagesPatientLeftBar = ({
   };
   const isActive = (id: string) =>
     section === id
-      ? "messages-content__category messages-content__category--active"
-      : "messages-content__category";
+      ? "messages__content-category messages__content-category--active"
+      : "messages__content-category";
 
   return (
-    <div className="messages-content__leftbar">
+    <div className="messages__content-leftbar">
       <ul>
         <li
           className={isActive("Received messages")}

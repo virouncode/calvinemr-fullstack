@@ -30,11 +30,14 @@
 }
 
 @media (min-width: 1024px) {
-  .header__logo {
-    width: 20%;
+  .header {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    &--patient {
+      grid-template-columns: 40% 60%;
+    }
   }
   .header__nav {
-    width: 80%;
     display: block;
     ul {
       display: flex;
@@ -65,18 +68,20 @@
 }
 // /*xl*/
 @media (min-width: 1280px) {
+  .header {
+    display: grid;
+    grid-template-columns: 16% 68% 16%;
+    &--patient {
+      grid-template-columns: 25% 50% 25%;
+    }
+  }
   .header__title {
     display: inline;
     font-size: $size-base;
-    width: 16%;
   }
   .header__nav {
-    width: 68%;
     ul {
       font-size: $size-sm;
     }
-  }
-  .header__logo {
-    width: 16%;
   }
 }

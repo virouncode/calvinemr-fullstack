@@ -7,6 +7,9 @@
   &--external {
     grid-template-columns: 3fr 1fr;
   }
+  &--patient {
+    grid-template-columns: 1fr 3fr;
+  }
   .new-message__contacts {
     border: solid 0.5px $grey;
     border-radius: 6px;

@@ -172,21 +172,19 @@ const MessagesPatientToolBar = ({
       }
     }
   };
-
-  // const handleClickSearch = (e) => {};
   const handleClickPrint = () => {
     setPrintVisible(true);
   };
 
   return (
-    <div className="messages-toolbar">
-      <p className="messages-toolbar__title">Messaging</p>
+    <div className="messages__toolbar">
+      <p className="messages__toolbar-title">Messaging</p>
       <Input
         value={search}
         onChange={handleChange}
         placeholder="Search in messages..."
       />
-      <div className="messages-toolbar__btns">
+      <div className="messages__toolbar-btns">
         <Button onClick={handleClickNew} label="New" />
         {section === "Deleted messages" && msgsSelectedIds.length !== 0 && (
           <Button onClick={handleClickUndelete} label="Undelete" />

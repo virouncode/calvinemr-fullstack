@@ -26,12 +26,10 @@ const StaffHeader = ({
       >
         <img src={logo} alt="CalvinEMR-logo" />
       </div>
-
       <StaffHeaderNav
         setLockedScreen={setLockedScreen}
         setNotepadVisible={setNotepadVisible}
       />
-
       <div className="header__bars">
         <BarsIcon onClick={handleClickBars} />
       </div>

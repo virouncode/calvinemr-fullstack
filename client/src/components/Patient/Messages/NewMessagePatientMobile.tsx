@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -22,11 +22,13 @@ import Input from "../../UI/Inputs/Input";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import PatientStaffContacts from "./PatientStaffContacts";
 
-type NewMessagePatientProps = {
+type NewMessagePatientMobileProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
+const NewMessagePatientMobile = ({
+  setNewVisible,
+}: NewMessagePatientMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
@@ -37,6 +39,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   const [body, setBody] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
+  const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const messagePost = useMessageExternalPost();
 
@@ -167,16 +170,27 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
     input.click();
   };
 
+  const handleClickRecipients = () => {
+    if (recipientsRef.current) {
+      recipientsRef.current.style.transform = "translateX(0)";
+    }
+  };
+
   return (
-    <div className="new-message new-message--patient">
-      <div className="new-message__contacts">
+    <div className="new-message-mobile">
+      <div className="new-message-mobile__contacts" ref={recipientsRef}>
         <PatientStaffContacts
           isContactChecked={isContactChecked}
           handleCheckContact={handleCheckContact}
+          closeCross={true}
+          recipientsRef={recipientsRef}
         />
       </div>
-      <div className="new-message__form">
-        <div className="new-message__form-recipients">
+      <div className="new-message-mobile__form">
+        <div
+          className="new-message__form-recipients"
+          onClick={handleClickRecipients}
+        >
           <Input
             value={
               recipientId ? staffIdToTitleAndName(staffInfos, recipientId) : ""
@@ -225,4 +239,4 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   );
 };
 
-export default NewMessagePatient;
+export default NewMessagePatientMobile;

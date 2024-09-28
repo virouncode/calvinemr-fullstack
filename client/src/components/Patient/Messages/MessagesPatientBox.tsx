@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -11,6 +12,7 @@ import FakeWindow from "../../UI/Windows/FakeWindow";
 import MessagePatientDetail from "./MessagePatientDetail";
 import MessagesPatientOverview from "./MessagesPatientOverview";
 import NewMessagePatient from "./NewMessagePatient";
+import NewMessagePatientMobile from "./NewMessagePatientMobile";
 
 type MessagesPatientBoxProps = {
   section: string;
@@ -60,10 +62,11 @@ const MessagesPatientBox = ({
     fetchNextPage,
     isFetching
   );
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   if (isPending)
     return (
-      <div className="messages-content__box">
+      <div className="messages__content-box">
         <LoadingParagraph />
       </div>
     );
@@ -71,7 +74,7 @@ const MessagesPatientBox = ({
   return (
     messages && (
       <>
-        <div className="messages-content__box" ref={divRef}>
+        <div className="messages__content-box" ref={divRef}>
           {currentMsgId === 0 ? (
             <MessagesPatientOverview
               messages={messages}
@@ -107,7 +110,11 @@ const MessagesPatientBox = ({
             color={"#94bae8"}
             setPopUpVisible={setNewVisible}
           >
-            <NewMessagePatient setNewVisible={setNewVisible} />
+            {isTabletOrMobile ? (
+              <NewMessagePatientMobile setNewVisible={setNewVisible} />
+            ) : (
+              <NewMessagePatient setNewVisible={setNewVisible} />
+            )}
           </FakeWindow>
         )}
       </>

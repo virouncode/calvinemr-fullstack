@@ -262,6 +262,9 @@
           &--todo {
             grid-template-columns: 2% 48% 46% 4%;
           }
+          &--patient {
+            grid-template-columns: 2% 90% 4% 4%;
+          }
           .message__detail-toolbar-subject {
             overflow: hidden;
             white-space: nowrap;

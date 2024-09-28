@@ -13,7 +13,7 @@ const PatientMessagesPage = () => {
           <title>Messages</title>
         </Helmet>
       </HelmetProvider>
-      <section className="patient-messages-section">
+      <section className="messages">
         <MessagesPatient />
       </section>
     </>

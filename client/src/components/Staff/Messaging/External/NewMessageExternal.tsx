@@ -368,13 +368,15 @@ const NewMessageExternal = ({
             ref={textareaRef}
             autoFocus
           />
-          <MessagesAttachments
-            attachments={attachments}
-            deletable={true}
-            addable={false}
-            handleRemoveAttachment={handleRemoveAttachment}
-            cardWidth="30%"
-          />
+          {attachments.length > 0 && (
+            <MessagesAttachments
+              attachments={attachments}
+              deletable={true}
+              addable={false}
+              handleRemoveAttachment={handleRemoveAttachment}
+              cardWidth="30%"
+            />
+          )}
         </div>
         <div className="new-message__form-btns">
           <SaveButton
