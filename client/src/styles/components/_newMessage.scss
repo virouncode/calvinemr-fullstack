@@ -1,0 +1,523 @@
+.new-message {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  padding: 0 0.5rem;
+  column-gap: 1rem;
+  height: 100%;
+  &--external {
+    grid-template-columns: 3fr 1fr;
+  }
+  &--patient {
+    grid-template-columns: 1fr 3fr;
+  }
+  .new-message__contacts {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-sm;
+    padding: 0.5rem;
+    .contacts {
+      .contacts__title {
+        font-weight: bold;
+        font-size: $size-base;
+      }
+      .contacts__list {
+        overflow-y: scroll;
+        .contacts__list-category {
+          margin-top: 1rem;
+          ul {
+            margin-top: 0.5rem;
+            margin-left: 2rem;
+          }
+          .contacts__list-category-overview {
+            display: flex;
+            align-items: center;
+            font-size: $size-sm;
+            label {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+  .new-message__form {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-sm;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    .new-message__form-recipients {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+    .new-message__form-subject {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        outline: none;
+        flex: 1;
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+        overflow-x: scroll;
+      }
+    }
+    .new-message__form-patient {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        outline: none;
+        flex: 1;
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .new-message__form-attach {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      font-size: $size-sm;
+      label {
+        font-weight: bold;
+      }
+    }
+    .new-message__form-importance {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      font-size: $size-sm;
+      label {
+        font-weight: bold;
+      }
+      &-check {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .new-message__form-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: scroll;
+      textarea {
+        font-size: $size-sm;
+        border-bottom: solid 0.5px $grey;
+        outline: none;
+        padding: 0.5rem;
+        width: 100%;
+        min-height: 100%;
+      }
+      .message__attachments {
+        display: flex;
+        padding: 1rem;
+        flex-wrap: wrap;
+        .message__attachment-card {
+          border: solid 0.5px $grey;
+          padding: 0.5rem 0.25rem 0;
+          .message__attachment-card-thumbnail {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            iframe {
+              border: none;
+              cursor: pointer;
+            }
+          }
+          .message__attachment-card-footer {
+            background: $grey;
+            padding: 0.25rem;
+            font-size: $size-xs;
+            display: flex;
+            flex-direction: column;
+          }
+          .message__attachment-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+              font-size: $size-xs;
+              margin-bottom: 0.25rem;
+            }
+          }
+          .message__attachment-card-btn {
+            text-align: center;
+            button {
+              font-size: $size-xs;
+              max-width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .new-message__form-btns {
+      border-top: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.25rem;
+      padding: 0.5rem;
+    }
+    .new-message__form-duedate {
+      border-bottom: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+        margin-right: 1em;
+      }
+      input {
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+        width: 120px;
+      }
+    }
+    .new-message__form-templates {
+      border-bottom: solid 0.3px $grey;
+      min-height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .new-message__patients {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-sm;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    .patients {
+      .patients__title {
+        font-weight: bold;
+        font-size: $size-base;
+        margin-bottom: 1rem;
+      }
+      .patients__search-input {
+        margin-bottom: 10px;
+        input {
+          width: 100%;
+        }
+      }
+      .patients__list {
+        border: solid 0.5px $grey;
+        border-radius: 6px;
+        padding: 0.5rem;
+        height: 450px;
+        flex: 1;
+        overflow-y: scroll;
+        font-size: $size-sm;
+      }
+      .patients__list-item {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.new-message-mobile {
+  padding: 0 0.5rem;
+  height: 100%;
+  position: relative;
+  .new-message-mobile__contacts {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-base;
+    padding: 0.5rem;
+    position: absolute;
+    top: 0;
+    transform: translateX(-200%);
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+    background-color: $white;
+    height: 100%;
+    width: 70%;
+    .contacts {
+      .contacts__title {
+        font-weight: bold;
+        font-size: $size-base;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .contacts__list {
+        overflow-y: scroll;
+        .contacts__list-category {
+          margin-top: 1rem;
+          ul {
+            margin-top: 0.5rem;
+            margin-left: 2rem;
+          }
+          .contacts__list-category-overview {
+            display: flex;
+            align-items: center;
+            font-size: $size-base;
+            label {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+  .new-message-mobile__form {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-base;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+    .new-message__form-recipients {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        width: 97%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+    .new-message__form-subject {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        outline: none;
+        width: 95%;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
+        overflow-x: scroll;
+      }
+    }
+    .new-message__form-patient {
+      border-bottom: solid 0.5px $grey;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+      }
+      input {
+        outline: none;
+        width: 60%;
+        font-size: $size-base;
+        padding: 0.25rem 0.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .new-message__form-attach {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      font-size: $size-base;
+      label {
+        font-weight: bold;
+      }
+    }
+    .new-message__form-importance {
+      border-bottom: solid 0.5px $grey;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      font-size: $size-base;
+      label {
+        font-weight: bold;
+      }
+      &-check {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .new-message__form-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: scroll;
+      textarea {
+        font-size: $size-base;
+        border-bottom: solid 0.5px $grey;
+        outline: none;
+        padding: 0.5rem;
+        width: 100%;
+        min-height: 100%;
+      }
+      .message__attachments {
+        display: flex;
+        padding: 15px;
+        flex-wrap: wrap;
+        .message__attachment-card {
+          border: solid 0.5px $grey;
+          margin: 0.5rem 0.25rem 0;
+          .message__attachment-card-thumbnail {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            iframe {
+              border: none;
+              cursor: pointer;
+            }
+          }
+          .message__attachment-card-footer {
+            background: $grey;
+            padding: 0.25rem;
+            font-size: $size-xs;
+            display: flex;
+            flex-direction: column;
+          }
+          .message__attachment-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+              font-size: $size-xs;
+              margin-bottom: 0.25rem;
+            }
+          }
+          .message__attachment-card-btn {
+            text-align: center;
+            button {
+              font-size: $size-xs;
+              max-width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .new-message__form-btns {
+      border-top: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.25rem;
+      padding: 0.5rem;
+    }
+    .new-message__form-duedate {
+      border-bottom: solid 0.5px $grey;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      label {
+        font-weight: bold;
+        margin-right: 1em;
+      }
+      input {
+        font-size: $size-sm;
+        padding: 0.25rem 0.5rem;
+        width: 120px;
+      }
+    }
+    .new-message__form-templates {
+      border-bottom: solid 0.3px $grey;
+      min-height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .new-message-mobile__patients {
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    font-size: $size-sm;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: $white;
+    transform: translateX(-200%);
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+    width: 70%;
+    .patients {
+      .patients__title {
+        font-weight: bold;
+        font-size: $size-base;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .patients__search-input {
+        margin-bottom: 10px;
+        input {
+          width: 100%;
+          font-size: $size-base;
+        }
+      }
+      .patients__list {
+        border: solid 0.5px $grey;
+        border-radius: 6px;
+        padding: 0.5rem;
+        height: 400px;
+        flex: 1;
+        overflow-y: scroll;
+        font-size: $size-sm;
+      }
+    }
+  }
+}

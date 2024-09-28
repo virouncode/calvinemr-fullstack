@@ -30,7 +30,7 @@ const FakeWindow = ({
 }: FakeWindowProps) => {
   const isDragging = useRef(false);
   const isResizing = useRef(false);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useRef<HTMLDivElement | null>(null);
   const [windowPosition, setWindowPosition] = useState({ x, y });
   const [windowSize, setWindowSize] = useState({ width, height });
 
@@ -44,7 +44,6 @@ const FakeWindow = ({
   };
 
   useEffect(() => {
-    // Make the element the frontmost one
     const elements = document.querySelectorAll(".window");
     let maxZIndex = 0;
     elements.forEach((el) => {
@@ -145,12 +144,11 @@ const FakeWindow = ({
       ref={windowRef}
       className="window"
       style={{
-        position: "fixed",
-        left: windowPosition.x,
-        top: windowPosition.y,
+        left: windowPosition.x < 0 ? 0 : windowPosition.x,
+        top: windowPosition.y < 0 ? 0 : windowPosition.y,
         width: windowSize.width,
         height: windowSize.height,
-        fontFamily: "Lato, sans-serif",
+        maxHeight: window.innerHeight,
       }}
     >
       <div

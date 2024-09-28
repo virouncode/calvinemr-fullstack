@@ -19,17 +19,23 @@ const InvitationTemplatesRadio = ({
     return templateSelected === templateName;
   };
   return (
-    <div className="invitation__row">
-      {label && <label>Choose a template</label>}
-      <div className="invitation__radio">
-        {templates.map((template) => (
-          <InvitationTemplateRadioItem
-            key={template.name}
-            templateName={template.name}
-            handleTemplateChange={handleTemplateChange}
-            isTemplateSelected={isTemplateSelected}
-          />
-        ))}
+    <div className="event-form__invitation-templates">
+      {label && (
+        <label className="event-form__invitation-templates-title">
+          Choose a template
+        </label>
+      )}
+      <div className="event-form__invitation-templates-radio">
+        <ul>
+          {templates.map((template) => (
+            <InvitationTemplateRadioItem
+              key={template.name}
+              templateName={template.name}
+              handleTemplateChange={handleTemplateChange}
+              isTemplateSelected={isTemplateSelected}
+            />
+          ))}
+        </ul>
       </div>
     </div>
   );

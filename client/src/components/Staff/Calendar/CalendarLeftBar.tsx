@@ -28,7 +28,7 @@ const CalendarLeftBar = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   return (
-    <div className="calendar__left-bar">
+    <aside className="calendar__left-bar">
       <Shortcutpickr handleShortcutpickrChange={handleShortcutpickrChange} />
       <CalendarFilter
         sites={sites}
@@ -38,7 +38,7 @@ const CalendarLeftBar = ({
         setHostsIds={setHostsIds}
         remainingStaff={getRemainingStaff(user.id, staffInfos)}
       />
-    </div>
+    </aside>
   );
 };
 

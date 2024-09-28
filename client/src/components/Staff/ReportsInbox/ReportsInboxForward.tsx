@@ -19,7 +19,7 @@ const ReportsInboxForward = ({
   reportToForward,
 }: ReportsInboxForwardProps) => {
   const { staffInfos } = useStaffInfosContext();
-  const categoryInfos = splitStaffInfos(staffInfos);
+  const categoryInfos = splitStaffInfos(staffInfos, true);
   const { user } = useUserContext() as { user: UserStaffType };
   const [assignedId, setAssignedId] = useState(0);
   const [progress, setProgress] = useState(false);
@@ -57,19 +57,20 @@ const ReportsInboxForward = ({
   };
 
   return (
-    <div className="practicians-forward">
-      <div className="practicians-forward__title">
+    <div className="reportsinbox__forward">
+      <div className="reportsinbox__forward-title">
         <label>Forward document to practitioner</label>
-        <div className="practicians-forward__btn">
+        <div className="reportsinbox__forward-btns">
           <Button
             onClick={handleForwardDocument}
             disabled={!assignedId || progress}
             label="Forward"
+            className="save-btn"
           />
           <CancelButton onClick={handleCancelForward} disabled={progress} />
         </div>
       </div>
-      <div className="practicians-forward__list">
+      <div className="reportsinbox__forward-list">
         {categoryInfos
           .filter((category) => category.infos.length !== 0)
           .map((category) => (

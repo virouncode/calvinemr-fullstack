@@ -48,7 +48,7 @@ const AppointmentsSlots = ({
   return (
     availability &&
     appointmentsInRange && (
-      <div className="new-appointments__content">
+      <>
         {appointmentsProposals ? (
           appointmentsProposals.length ? (
             appointmentsProposals.map((appointment) => (
@@ -66,7 +66,7 @@ const AppointmentsSlots = ({
         ) : (
           <CircularProgressMedium />
         )}
-      </div>
+      </>
     )
   );
 };

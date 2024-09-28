@@ -67,36 +67,34 @@ const FaxTemplateForm = ({ setNewTemplateVisible }: FaxTemplateFormProps) => {
   };
 
   return (
-    <>
-      <div className="new-fax__template-name">
+    <div className="fax-template__form">
+      <div className="fax-template__form-name">
         <Input
           value={name}
           onChange={handleChangeName}
           id="template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
           autoFocus={true}
         />
       </div>
-      <div className="new-fax new-fax--template">
-        <div className="new-fax__form new-fax__form--template">
-          <div className="fax__subject">
-            <Input
-              value={subject}
-              onChange={handleChangeSubject}
-              id="subject"
-              label="Subject:"
-            />
-          </div>
-          <div className="new-fax__body">
-            <textarea value={body} onChange={handleChange} />
-          </div>
-          <div className="new-fax__btns">
-            <SaveButton onClick={handleSave} disabled={progress} />
-            <CancelButton onClick={handleCancel} disabled={progress} />
-          </div>
+      <div className="fax-template__form-content">
+        <div className="fax-template__form-subject">
+          <Input
+            value={subject}
+            onChange={handleChangeSubject}
+            id="subject"
+            label="Subject:"
+          />
+        </div>
+        <div className="fax-template__form-body">
+          <textarea value={body} onChange={handleChange} />
+        </div>
+        <div className="fax-template__form-btns">
+          <SaveButton onClick={handleSave} disabled={progress} />
+          <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,351 +1,926 @@
-// comma : .class1, .class2 apply to class1 and class 2
-//space : .class1 .class2 apply to class 2 that is inside class 1
-//no space : .class1.class2 apply to element that has both classes
-.calendar {
-  z-index: 1;
-  margin: 10px auto 0;
-  width: 97%;
-  height: 94%;
-  display: flex;
-  justify-content: space-between;
-  overflow-y: scroll;
-  &__print-day {
-    position: absolute;
-    left: 13%;
-    top: 12px;
-  }
-  &__options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 97%;
-    height: 5%;
-    margin: 0 auto;
-    border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    border: solid 1px $grey;
-    background: $white;
-    padding: 0 5px;
-  }
-  &__options-menu {
-    display: flex;
-    align-items: center;
-  }
-  &__options-title {
-    @include childCenter;
-    border-radius: 6px 4px 0 0;
-    font-size: 0.85rem;
-    height: 50px;
-    color: $black;
-    background: $blue;
-  }
-  &__left-bar {
-    width: 14%;
-    height: 78vh;
-    overflow-y: scroll;
-    .calendar__shortcutpickr {
-      border: solid 1px $grey;
-      overflow: hidden;
-      border-radius: 6px;
-      box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-      .flatpickr {
-        &-calendar.animate.inline {
-          top: 0;
-        }
-        &-month {
-          width: 100%;
-        }
-        &-prev-month,
-        &-next-month {
-          display: flex;
-          align-items: center;
-        }
-        &-monthDropdown-months {
-          font-size: 0.85rem;
-          width: 60%;
-        }
-        &-current-month {
-          display: flex;
-          justify-content: space-between;
-          padding: 10px;
-          .numInputWrapper {
-            font-size: 0.85rem;
-          }
-        }
-        &-weekdaycontainer {
-          display: flex;
-          justify-content: space-between;
-        }
-        &-innerContainer,
-        &-rContainer,
-        &-weekdays,
-        &-days {
-          font-size: 0.8rem;
-        }
-        &-innerContainer {
-          border: none;
-        }
-        &-day {
-          font-size: 0.7rem;
-          height: 10%;
-          line-height: 30px;
-        }
-        &-days {
-          width: 100%;
-          border-radius: 0 0 6px 6px;
-          border: none;
-        }
-      }
-      .dayContainer {
-        min-width: 100%;
-      }
-    }
-  }
-  &__display {
-    width: 85%;
-    position: relative;
-    background: $white;
-    border: solid 1px $grey;
-    border-radius: 6px;
-    padding: 10px;
-    height: 99%;
-    overflow-y: scroll;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    //fullcalendar
-    .fc .fc-timegrid-col.fc-day-today {
-      background: rgb(243, 243, 243);
-    }
-    .fc .fc-daygrid-day.fc-day-today {
-      background: rgb(243, 243, 243);
-    }
-    .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
-      .fc-header-toolbar.fc-toolbar {
-        .fc-toolbar-chunk {
-          width: 33%;
-          &:nth-child(2) {
-            text-align: center;
-          }
-          &:nth-child(3) {
-            text-align: end;
-          }
-          .fc-toolbar-title {
-            font-size: 1rem;
-          }
-          .fc-button-group {
-            width: 60%;
-          }
-          .fc-button.fc-button-primary {
-            width: 17%;
-            border-radius: 2px;
-            border: 0.5px solid #a4a3a3;
-            background: $white;
-            color: grey;
-            font-size: 0.8rem;
-            line-height: 1.3;
-            text-align: center;
-            user-select: none;
-            box-shadow: none;
-            margin-left: 0;
-            &:hover {
-              background: $grey;
-              color: rgb(70, 70, 70);
-            }
-            &:disabled {
-              background: $grey;
-              color: rgb(70, 70, 70);
-              border: none;
-              opacity: 1;
-            }
-          }
-          .fc-button.fc-button-primary.fc-button-active {
-            background: $grey;
-            color: rgb(70, 70, 70);
-            border: none;
-          }
-          .fc-prev-button.fc-button.fc-button-primary,
-          .fc-next-button.fc-button.fc-button-primary {
-            width: 8%;
-            .fc-icon {
-              font-size: 0.8rem;
-            }
-          }
-        }
-      }
-      .fc-view-harness.fc-view-harness-active {
-        margin-top: 5px;
-        font-size: 0.75rem;
-        .fc-scrollgrid.fc-scrollgrid-liquid {
-          .fc-event {
-            &-main {
-              overflow: hidden;
-            }
-          }
-        }
-      }
-      .fc-daygrid-event {
-        position: relative;
-        font-size: 0.7rem;
-        max-height: 15px;
-        overflow: hidden;
-      }
-    }
-  }
-  &__patient-link {
-    // color:$white;
-    cursor: pointer;
-    &--list {
-      color: $black;
-    }
-    &:hover {
-      text-decoration: underline !important;
-    }
-  }
-  &__timezone {
-    padding: 5px;
-    label {
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-right: 8px;
-    }
-    span {
-      font-size: 0.75rem;
-    }
-  }
-}
-
-.flatpickr {
-  &-calendar.open {
-    font-family: $font1;
-  }
-  .numInputWrapper {
-    font-size: 0.85rem;
-  }
-  &-calendar {
-    max-width: 100%;
-    //max-width:200px
-  }
-  &-input {
-    display: none;
-  }
-  &-monthDropdown-months {
-    font-size: 0.85rem !important;
-    width: 60%;
-    color: $black !important;
-  }
-  &-prev-month {
-    display: flex;
-    align-items: center;
-    padding: 10px 10px 0 10px;
-  }
-
-  &-next-month {
-    display: flex;
-    align-items: center;
-    padding: 0px 10px 10px 10px;
-    color: $black !important;
-  }
-  &-current-month {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    input {
-      outline: none;
-    }
-    .numInputWrapper {
-      color: $black !important;
-    }
-  }
-  &-months {
-    width: 100%;
-    font-size: 0.7rem;
-  }
-  &-innerContainer,
-  &-rContainer,
-  &-weekdays,
-  &-days {
-    width: 100%;
-  }
-  &-weekdays,
-  &-weekday {
-    background-color: $blue !important;
-  }
-  &-day {
-    font-size: 0.7rem !important;
-    height: 10% !important;
-    line-height: 30px !important;
-    width: 14% !important;
-  }
-  &-days {
-    width: 100% !important;
-  }
-  &-time {
-    input {
-      font-size: 0.7rem;
-      outline: none;
-    }
-    .flatpickr-am-pm {
-      font-size: 0.7rem;
-    }
-  }
-  &-weekdaycontainer {
-    display: flex;
-    justify-content: space-between;
-  }
-  &-innerContainer,
-  &-rContainer,
-  &-weekdays,
-  &-days {
-    font-size: 0.8rem;
-  }
-  &-day {
-    font-size: 0.7rem;
-    height: 30px;
-    line-height: 30px;
-  }
-  &-month,
-  &-monthDropdown-months {
-    background-color: $blue !important;
-  }
-}
-.dayContainer {
-  min-width: 100% !important;
-}
-
-.form-control {
-  &:read-only {
-    outline: solid 1px $black;
-  }
-}
-.daysheet {
-  font-family: $font1;
-  print-color-adjust: exact;
-  &__event-card {
-    font-size: 0.85rem;
-    // padding:20px;
-    border: solid 0.5px $grey;
-    border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    margin: 10px;
-    &-header {
-      background: $blue;
-      padding: 10px;
-      border-radius: 6px 6px 0 0;
-    }
-    &-content {
-      padding: 10px 20px;
-    }
-  }
-  &__date {
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-  }
-  &__btn-container {
-    text-align: center;
-  }
-}
 @media print {
-  .daysheet__btn-container {
+  .calendar__daysheet-btn {
     display: none !important;
   }
+}
+
+.calendar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.calendar__options {
+  border: solid 1px $grey;
+  border-radius: 6px;
+  box-shadow: $box-shadow-default;
+  font-size: $size-sm;
+  width: 98%;
+  margin: 0.5rem auto 0;
+  padding: 0 0.5rem;
+  display: none;
+  background-color: $white;
+}
+.calendar__options-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.calendar__options-timezone {
+  display: none;
+  label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+}
+.calendar__layout {
+  width: 98%;
+  margin: 0.5rem auto 0;
+  overflow-y: scroll;
+  flex: 1;
+}
+.calendar__print-btn {
+  font-size: $size-sm;
+  position: absolute;
+  display: inline-block;
+  text-decoration: none;
+  background-color: $grey;
+  color: $black;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  box-shadow: $box-shadow-default;
+  transition: transform 0.2s;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  top: 40px;
+  &:hover {
+    background: $grey2;
+  }
+  &:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+  &--calendarview {
+    left: 50%;
+    transform: translate(-50%);
+    &:active {
+      transform: translate(-50%, 1px);
+    }
+  }
+  &--timelineview {
+    left: auto;
+    right: 0.5rem;
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+.calendar__slot-select,
+.calendar__day-select,
+.calendar__availability {
+  padding: 0.25rem;
+  label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+  select {
+    font-size: $size-sm;
+  }
+}
+.calendar__left-bar {
+  width: 14%;
+  height: 99%;
+  display: none;
+}
+.calendar__select-site {
+  position: absolute;
+  top: 36px;
+  label {
+    margin-right: 0.5rem;
+  }
+}
+.calendar__shortcutpickr {
+  border: solid 1px $grey;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: $box-shadow-default;
+  .flatpickr {
+    &-calendar.animate.inline {
+      top: 0;
+    }
+    &-calendar {
+      max-width: 100%;
+    }
+    &-input {
+      display: none;
+    }
+    &-month {
+      width: 100%;
+      background-color: $blue;
+    }
+    &-current-month {
+      .numInputWrapper {
+        color: $black;
+      }
+    }
+    &-prev-month,
+    &-next-month {
+      display: flex;
+      align-items: center;
+      fill: black;
+      svg {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    &-monthDropdown-months {
+      font-size: $size-sm;
+      color: $black;
+      width: 60%;
+      background-color: $blue;
+    }
+    &-current-month {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+      .numInputWrapper {
+        display: flex;
+        align-items: center;
+        font-size: $size-sm;
+      }
+    }
+    &-weekdaycontainer {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-innerContainer,
+    &-rContainer,
+    &-days {
+      font-size: $size-sm;
+      width: 100%;
+    }
+    &-weekdays,
+    &-weekday {
+      font-size: $size-xxs;
+      background-color: $blue;
+    }
+    &-innerContainer {
+      border: none;
+    }
+    &-day {
+      font-size: $size-xs;
+      height: 10%;
+      line-height: 1.25rem;
+    }
+    &-day.selected {
+      background: $blue;
+      color: $white;
+      border: none;
+    }
+    &-days {
+      width: 100%;
+      border-radius: 0 0 6px 6px;
+      border: none;
+    }
+  }
+  .dayContainer {
+    min-width: 100%;
+  }
+}
+
+.calendar__display {
+  position: relative;
+  border: solid 1px $grey;
+  border-radius: 6px;
+  padding: 0.75rem;
+  height: 99%;
+  overflow-y: scroll;
+  box-shadow: $box-shadow-default;
+  background-color: $white;
+  .fc {
+    height: 100%;
+    font-size: $size-xs;
+  }
+  .fc-icon.fc-icon-chevron-right,
+  .fc-icon.fc-icon-chevron-left {
+    font-size: $size-xs;
+  }
+  .fc-daygrid-week-number {
+    display: none;
+  }
+  .fc-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .fc-toolbar-title {
+    font-size: $size-base;
+  }
+  .fc-timegrid-col.fc-day-today {
+    background: rgb(243, 243, 243);
+  }
+  .fc-daygrid-day.fc-day-today {
+    background: rgb(243, 243, 243);
+  }
+  .fc-daygrid-event {
+    max-height: 15px;
+    overflow: hidden;
+  }
+  .fc-timegrid-event .fc-event-main {
+    overflow: hidden;
+  }
+  .fc-toolbar-chunk {
+    &:nth-child(1) {
+      margin-bottom: 2.5rem;
+    }
+    &:nth-child(2) {
+      // width: 60%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &:nth-child(3) {
+      // width: 20%;
+      align-self: flex-start;
+    }
+  }
+  .fc-button.fc-button-primary {
+    width: 60px;
+    border-radius: 2px;
+    border: 0.5px solid #a4a3a3;
+    background: $white;
+    color: grey;
+    font-size: $size-sm;
+    user-select: none;
+    margin: 0;
+    box-shadow: none;
+    outline: none;
+    &:hover {
+      background: $grey;
+      color: rgb(70, 70, 70);
+    }
+    &:disabled {
+      background: $grey;
+      color: rgb(70, 70, 70);
+      border: none;
+      opacity: 1;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .fc-prev-button.fc-button.fc-button-primary,
+  .fc-next-button.fc-button.fc-button-primary {
+    width: auto;
+    padding: 0.4em 0.65em;
+  }
+  .fc-button.fc-button-primary.fc-button-active {
+    background: $pink;
+    color: $white;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .fc-today-button.fc-button.fc-button-primary:disabled {
+    background: $pink;
+    color: $white;
+    border: none;
+    box-shadow: none;
+  }
+  .fc-button.fc-button-primary:disabled
+    .fc-view-harness.fc-view-harness-active {
+    .fc-scrollgrid.fc-scrollgrid-liquid {
+      .fc-event {
+        &-main {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  .fc-col-header-cell.fc-resource {
+    word-break: break-all;
+  }
+}
+
+.calendar__toggle {
+  position: absolute;
+  top: 119px;
+  right: 1rem;
+  display: flex;
+  &--timeline {
+    top: 87px;
+  }
+}
+.calendar__toggle-option {
+  border-radius: 2px;
+  border: 0.5px solid #a4a3a3;
+  background: $white;
+  color: grey;
+  line-height: 1.5;
+  text-align: center;
+  user-select: none;
+  box-shadow: none;
+  margin-left: 0;
+  font-size: $size-sm;
+  cursor: pointer;
+  width: 70px;
+  padding: 0.4em 0.65em;
+  &:hover {
+    background: $grey;
+    color: rgb(70, 70, 70);
+  }
+  &--active {
+    background: $pink;
+    color: $white;
+    border: none;
+    &:hover {
+      background: $pink;
+      color: $white;
+      border: none;
+    }
+  }
+}
+
+.calendar__filter {
+  margin-top: 0.5rem;
+  box-shadow: $box-shadow-default;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: bold;
+  overflow-y: scroll;
+  flex: 1;
+  border: solid 1px $grey;
+  background-color: $white;
+}
+.calendar__filter-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  border-radius: 4px 4px 0 0;
+  font-size: $size-sm;
+  height: 3rem;
+  color: $black;
+  background: $blue;
+  width: 100%;
+}
+.calendar__site-checkboxes {
+  padding: 0.25rem 0.5rem;
+  &-title {
+    display: flex;
+    align-items: center;
+    font-size: $size-sm;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  &-item {
+    display: flex;
+    align-items: center;
+    font-size: $size-xs;
+    font-weight: normal;
+    margin-left: 0.75rem;
+    margin-bottom: 0.125rem;
+  }
+}
+.calendar__staff-checkboxes {
+  padding: 0.25rem 0.5rem;
+  &-category {
+    padding: 0;
+    margin-bottom: 0.5rem;
+  }
+  &-title {
+    display: flex;
+    align-items: center;
+    font-size: $size-sm;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  &-item {
+    display: flex;
+    align-items: center;
+    font-size: $size-xs;
+    font-weight: normal;
+    margin-left: 0.75rem;
+    margin-bottom: 0.125rem;
+  }
+}
+.calendar__event-element-day {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.125rem;
+  gap: 0.25rem;
+  overflow: hidden;
+  &-time {
+    width: 15%;
+  }
+  &-guests-infos {
+    width: 85%;
+  }
+  &-btns {
+    display: none;
+    text-align: end;
+  }
+}
+
+.calendar__event-element {
+  overflow: hidden;
+  &-time {
+    display: none;
+  }
+  &-reason {
+    width: 100%;
+  }
+  &-purpose {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  &-row {
+    display: flex;
+  }
+  &-btns {
+    display: none;
+    text-align: end;
+  }
+}
+
+.calendar__event-element-list {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  &-infos {
+    width: 100%;
+  }
+  &-btns {
+    display: none;
+    text-align: end;
+  }
+}
+.calendar__patient-link {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.gear-icon {
+  position: absolute;
+  top: 0.75rem;
+}
+.calendar__mobile-options {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: $white;
+  padding: 0.5rem;
+}
+.calendar__mobile-options-header {
+  margin-bottom: 1rem;
+}
+.calendar__mobile-options-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.calendar__availability-editor-form {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .calendar__availability-editor-heads {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .calendar__availability-editor-row {
+    display: grid;
+    grid-template-columns: 8% 40% 40% 12%;
+    align-items: center;
+    gap: 0.5rem;
+    .calendar__availability-editor-day {
+      font-weight: bold;
+    }
+    .calendar__availability-editor-head {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .calendar__availability-editor-time {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      .time-picker {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        select {
+          width: auto;
+        }
+      }
+    }
+    .calendar__availability-editor-unavailable {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .calendar__availability-editor-duration {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    label {
+      font-weight: bold;
+    }
+    .durationpicker__select {
+      display: flex;
+      gap: 1rem;
+      label {
+        font-weight: normal;
+        margin-right: 0.5rem;
+      }
+      select {
+        width: auto;
+      }
+    }
+  }
+  .calendar__availability-editor-btns {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+}
+.calendar__daysheet {
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  .calendar__daysheet-btn {
+    margin: 0 auto 1rem;
+    width: 50%;
+    button {
+      font-size: $size-2xl;
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 3px;
+      background-color: $pink;
+      color: $white;
+      padding: 1rem;
+    }
+  }
+  .calendar__daysheet-date {
+    font-size: $size-base;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  .calendar__daysheet-event-card {
+    width: 90%;
+    margin: 0.5rem auto;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    print-color-adjust: exact;
+    .calendar__daysheet-event-card-header {
+      padding: 0.5rem;
+      background-color: $blue;
+      font-size: $size-base;
+      overflow: hidden;
+    }
+    .calendar__daysheet-event-card-content {
+      padding: 0.5rem;
+      font-size: $size-sm;
+      overflow: hidden;
+    }
+  }
+}
+
+@media (min-width: 425px) {
+  .calendar__event-element-day {
+    &-time {
+      width: 15%;
+    }
+    &-guests-infos {
+      width: 75%;
+    }
+    &-btns {
+      width: 10%;
+      text-align: end;
+    }
+  }
+}
+
+@media (min-width: 475px) {
+  .calendar__event-element-list {
+    &-infos {
+      width: 85%;
+    }
+    &-btns {
+      width: 15%;
+    }
+  }
+}
+/*sm*/
+@media (min-width: 640px) {
+  .calendar__options {
+    display: block;
+  }
+  .gear-icon {
+    display: none;
+  }
+  .calendar__event-element-day {
+    &-time {
+      width: 10%;
+    }
+    &-guests-infos {
+      width: 80%;
+    }
+    &-btns {
+      width: 10%;
+      text-align: end;
+    }
+  }
+  .calendar__event-element-list {
+    &-infos {
+      width: 90%;
+    }
+    &-btns {
+      width: 10%;
+    }
+  }
+}
+
+/*md*/
+@media (min-width: 768px) {
+  .calendar__event-element-day {
+    font-size: $size-xs;
+    &-time {
+      width: 12%;
+    }
+    &-guests-infos {
+      width: 83%;
+    }
+    &-btns {
+      width: 5%;
+      text-align: end;
+    }
+  }
+
+  .calendar__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calendar__slot-select,
+  .calendar__day-select {
+    margin-right: 2rem;
+  }
+}
+/*lg*/
+@media (min-width: 1024px) {
+  .calendar__options-timezone {
+    display: block;
+  }
+  .calendar__left-bar {
+    display: flex;
+    flex-direction: column;
+  }
+  .calendar__layout {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    flex: 1;
+  }
+  .calendar__display {
+    width: 85%;
+    .fc-toolbar-chunk {
+      &:nth-child(2) {
+        justify-content: center;
+      }
+    }
+    .fc .fc-toolbar.fc-header-toolbar {
+      flex-direction: row;
+      .fc-toolbar-chunk {
+        &:nth-child(1) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .calendar__toggle {
+    top: 12px;
+    right: 15.4%;
+  }
+  .calendar__print-btn--calendarview,
+  .calendar__print-btn--timelineview {
+    left: 18%;
+    right: auto;
+    top: 15px;
+    transform: none;
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+  .calendar__event-element-day {
+    &-time {
+      width: 10%;
+    }
+    &-guests-infos {
+      width: 85%;
+    }
+    &-btns {
+      display: block;
+      width: 5%;
+      text-align: end;
+    }
+  }
+  .calendar__event-element {
+    &-reason {
+      width: 100%;
+      display: flex;
+    }
+    &-purpose {
+      width: 70%;
+    }
+    &-btns {
+      display: block;
+      width: 30%;
+      text-align: end;
+    }
+  }
+  .calendar__event-element-list {
+    &-infos {
+      width: 95%;
+    }
+    &-btns {
+      display: block;
+      width: 5%;
+    }
+  }
+  .calendar__print-btn--timeline {
+    right: auto;
+  }
+  .calendar__select-site {
+    top: 11px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+/*xl*/
+@media (min-width: 1280px) {
+  .calendar__display {
+    .fc-toolbar-title {
+      font-size: $size-base;
+    }
+    .fc-button.fc-button-primary {
+      width: 70px;
+    }
+  }
+  .calendar__options {
+    font-size: $size-sm;
+  }
+  .calendar__print-btn {
+    top: 16px;
+  }
+  .calendar__shortcutpickr {
+    .flatpickr {
+      &-prev-month,
+      &-next-month {
+        svg {
+          width: 10px;
+          height: 10px;
+        }
+      }
+      &-current-month {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        .numInputWrapper {
+          display: flex;
+          align-items: center;
+          font-size: $size-sm;
+        }
+      }
+      &-innerContainer,
+      &-rContainer,
+      &-days {
+        font-size: $size-sm;
+      }
+      &-weekday {
+        font-size: $size-xs;
+      }
+      &-day {
+        height: 10%;
+        line-height: 25px;
+        font-size: $size-xs;
+      }
+    }
+  }
+  .calendar__filter-title {
+    font-size: $size-sm;
+  }
+  .calendar__site-checkboxes {
+    &-title {
+      font-size: $size-sm;
+    }
+  }
+  .calendar__staff-checkboxes {
+    &-title {
+      font-size: $size-sm;
+    }
+  }
+  .calendar__event-element-day {
+    &-time {
+      width: 8%;
+    }
+    &-guests-infos {
+      width: 87%;
+    }
+    &-btns {
+      width: 5%;
+      text-align: end;
+    }
+  }
+  .calendar__event-element {
+    font-size: $size-xs;
+    &-time {
+      display: block;
+      width: 50%;
+    }
+    &-reason {
+      width: 50%;
+    }
+    &-btns {
+      width: 70%;
+    }
+  }
+}
+@media (min-width: 1536px) {
+  .calendar__toggle {
+    right: 17.5%;
+  }
+  .calendar__event-element {
+    &-time {
+      width: 40%;
+    }
+    &-reason {
+      width: 60%;
+    }
+    &-btns {
+      width: 40%;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .calendar__availability-editor-form {
+    font-size: $size-base;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    .calendar__availability-editor-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      &:nth-child(1) {
+        display: none;
+      }
+      .calendar__availability-editor-time {
+        flex-direction: column;
+        gap: 0.25rem;
+        .time-picker {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          select {
+            width: auto;
+          }
+        }
+      }
+    }
+    .calendar__availability-editor-duration {
+      flex-direction: column;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+  }
+}
+
+.fc-license-message {
+  z-index: -1 !important;
 }

@@ -26,7 +26,7 @@ const InputWithSearchInTable = ({
         onChange={onChange}
         readOnly={readOnly}
       />
-      {logo && <MagnifyingGlassIcon right={12} top={17} onClick={onClick} />}
+      {logo && <MagnifyingGlassIcon right={12} top={19} onClick={onClick} />}
     </>
   );
 };

@@ -1,31 +1,26 @@
 .pregnancies {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
   &__title {
-    font-size: 1.2rem;
-    margin-top: 60px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
+    font-size: $size-xl;
     text-align: center;
   }
   &__table-container {
-    height: 400px;
+    flex: 1;
     overflow: scroll;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
+    position: relative;
   }
   &__table {
     table-layout: fixed;
     min-width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: $size-xs;
     thead {
       position: sticky;
       top: 0;
@@ -34,38 +29,74 @@
     }
     th {
       min-width: 70px;
-      padding: 10px;
+      padding: 0.5rem;
       cursor: pointer;
     }
   }
   &__btn-container {
-    margin-top: 20px;
-    text-align: center;
-    button {
-      margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  &__item,
+  &__form {
+    border-bottom: solid 1px $grey;
+    td {
+      text-align: center;
+      padding: 0.5rem;
+      min-width: 110px;
+      max-width: 380px;
+      word-break: break-word;
+      input,
+      select {
+        width: 100%;
+        font-size: $size-base;
+      }
+      .rw-popup-container {
+        width: 200%;
+      }
+      .rw-widget-picker .rw-widget-container {
+        width: 100%;
+      }
+      .rw-list-option {
+        font-size: $size-base;
+      }
+    }
+    &-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
+      button {
+        font-size: $size-xs;
+      }
     }
   }
 }
-.pregnancies-item,
-.pregnancies-form {
-  border-bottom: solid 1px $grey;
-  td {
-    text-align: center;
-    padding: 10px;
-    min-width: 110px;
-    max-width: 380px;
-    p {
-      overflow-wrap: break-word;
+
+@media (min-width: 1024px) {
+  .pregnancies {
+    &__item,
+    &__form {
+      td {
+        input,
+        select {
+          font-size: $size-sm;
+        }
+        .rw-list-option {
+          font-size: $size-sm;
+        }
+      }
     }
-  }
-  select {
-    width: 180px;
-  }
-  &__btn-container {
-    display: flex;
-    justify-content: center;
-    button {
-      margin-left: 5px;
+    &__table {
+      font-size: $size-sm;
+    }
+    &__item-btn-container,
+    &__form-btn-container {
+      button {
+        font-size: $size-sm;
+      }
     }
   }
 }

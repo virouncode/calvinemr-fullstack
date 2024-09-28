@@ -31,8 +31,8 @@ const StaffContactsCategory = ({
     setListVisible((v) => !v);
   };
   return (
-    <>
-      <div className="contacts__category-overview">
+    <div className="contacts__list-category">
+      <div className="contacts__list-category-overview">
         {!listVisible ? (
           <SquarePlusIcon onClick={handleClick} mr={5} />
         ) : (
@@ -53,7 +53,7 @@ const StaffContactsCategory = ({
           categoryName={categoryName}
         />
       )}
-    </>
+    </div>
   );
 };
 

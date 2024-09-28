@@ -351,8 +351,8 @@ const ReportInboxFormSecretary = ({
           />
         </div>
       </form>
-
       <div className="reportsinbox__form-preview">
+        <div className="reportsinbox__form-preview-title">Preview</div>
         {isLoadingFile && <LoadingParagraph />}
         {formDatas.File && <ReportViewer file={formDatas.File} />}
       </div>

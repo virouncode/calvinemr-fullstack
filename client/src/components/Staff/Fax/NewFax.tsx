@@ -222,7 +222,7 @@ const NewFax = ({
         />
       </div>
       <div className="new-fax__form">
-        <div className="new-fax__recipients">
+        <div className="new-fax__form-recipients">
           <Input
             value={toFaxNumber}
             onChange={handleChangeToFaxNumber}
@@ -231,7 +231,7 @@ const NewFax = ({
             placeholder="Please enter a 10-digit fax number or select a contact..."
           />
         </div>
-        <div className="new-fax__subject">
+        <div className="new-fax__form-subject">
           <Input
             value={subject}
             onChange={handleChangeSubject}
@@ -240,13 +240,13 @@ const NewFax = ({
             placeholder="Subject"
           />
         </div>
-        <div className="new-fax__attach">
+        <div className="new-fax__form-attach">
           <AttachFilesButton
             onClick={handleAttach}
             attachments={attachment ? [attachment] : []}
           />
         </div>
-        <div className="new-fax__importance">
+        <div className="new-fax__form-templates">
           <div>
             <strong
               onClick={() => setTemplatesVisible((v) => !v)}
@@ -256,7 +256,7 @@ const NewFax = ({
             </strong>
           </div>
         </div>
-        <div className="new-fax__body">
+        <div className="new-fax__form-body">
           <textarea
             value={body}
             onChange={handleChange}
@@ -276,7 +276,7 @@ const NewFax = ({
             />
           )}
         </div>
-        <div className="new-fax__btns">
+        <div className="new-fax__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={progress || isLoadingFile}

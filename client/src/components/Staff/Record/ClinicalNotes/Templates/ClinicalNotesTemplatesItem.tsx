@@ -54,7 +54,7 @@ const ClinicalNotesTemplatesItem = ({
   };
 
   return (
-    <li className="clinical-notes__templates-list-item" ref={lastItemRef}>
+    <li className="templates__list-item" ref={lastItemRef}>
       <span onClick={() => handleSelectTemplate(template)}>
         {template.name}{" "}
         {template.author_id
@@ -62,13 +62,13 @@ const ClinicalNotesTemplatesItem = ({
           ${staffIdToTitleAndName(staffInfos, template.author_id)})`
           : ""}
       </span>
+      <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
       {user.id === template.author_id && (
         <>
-          <PenIcon ml={5} onClick={() => handleEdit(template.id)} />
-          <TrashIcon ml={5} onClick={handleDelete} />
+          <PenIcon ml={15} onClick={() => handleEdit(template.id)} />
+          <TrashIcon ml={15} onClick={handleDelete} />
         </>
       )}
-      <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
     </li>
   );
 };

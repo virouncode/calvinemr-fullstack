@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  justify-content: center;
+  height: 95%;
+  width: 100%;
+  gap: 1rem;
   &__image {
     border-radius: 6px;
     overflow: hidden;
@@ -14,7 +17,6 @@
     }
   }
   &__btn-container {
-    margin-top: 10px;
     button {
       margin-right: 5px;
     }

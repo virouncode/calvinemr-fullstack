@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useClinicContext from "../../../../../../hooks/context/useClinicContext";
 import { useSpeechRecognition } from "../../../../../../hooks/useSpeechRecognition";
 import {
@@ -7,6 +8,7 @@ import {
   SiteType,
   StaffType,
 } from "../../../../../../types/api";
+import { isChromeBrowser } from "../../../../../../utils/browsers/isChromeBrowser";
 import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import PatientChartHealthSearch from "../../../../Billing/PatientChartHealthSearch";
@@ -64,6 +66,10 @@ const LetterPage = ({
   };
 
   const handleStartSpeech = () => {
+    if (!isChromeBrowser())
+      toast.info("We recommend using Chrome for better speech recognition", {
+        containerId: "A",
+      });
     if (recognition) {
       setIsListening(true);
       recognition.start();

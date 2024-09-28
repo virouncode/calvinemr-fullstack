@@ -75,39 +75,41 @@ const OtherFaxForm = ({
   };
 
   return (
-    <div className="other-fax__form">
-      <div className="other-fax__form-row">
-        <Input
-          value={formDatas.name}
-          onChange={handleChange}
-          name="name"
-          label="Name:"
-          autoFocus={true}
-        />
+    <>
+      <div className="other-fax__form">
+        <div className="other-fax__form-row">
+          <Input
+            value={formDatas.name}
+            onChange={handleChange}
+            name="name"
+            label="Name:"
+            autoFocus={true}
+          />
+        </div>
+        <div className="other-fax__form-row">
+          <Input
+            value={formDatas.category}
+            onChange={handleChange}
+            name="category"
+            label="Category:"
+          />
+        </div>
+        <div className="other-fax__form-row">
+          <InputTel
+            value={formDatas.fax}
+            onChange={handleChange}
+            name="fax"
+            label="Fax:"
+            placeholder="xxx-xxx-xxxx"
+          />
+        </div>
       </div>
-      <div className="other-fax__form-row">
-        <Input
-          value={formDatas.category}
-          onChange={handleChange}
-          name="category"
-          label="Category:"
-        />
-      </div>
-      <div className="other-fax__form-row">
-        <InputTel
-          value={formDatas.fax}
-          onChange={handleChange}
-          name="fax"
-          label="Fax:"
-          placeholder="xxx-xxx-xxxx"
-        />
-      </div>
-      <div className="other-fax__form-btns">
+      <div className="contact-fax__form-btns">
         <SaveButton onClick={handleSubmit} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
-    </div>
+    </>
   );
 };
 

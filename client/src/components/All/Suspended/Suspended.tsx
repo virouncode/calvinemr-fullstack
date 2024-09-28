@@ -5,12 +5,12 @@ const Suspended = () => {
   //Hooks
   const navigate = useNavigate();
   return (
-    <div className="suspended-container">
-      <h2 className="suspended-container-title">
+    <div className="suspended__container">
+      <h2 className="suspended__title">
         Sorry, your account has been suspended
       </h2>
       <p>Please contact your administrator</p>
-      <NavLink to="/" className="suspended-container-link">
+      <NavLink to="/" className="suspended__link">
         Return to the login page
       </NavLink>
     </div>

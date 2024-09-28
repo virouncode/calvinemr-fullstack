@@ -171,11 +171,11 @@ const CredentialsFormPatient = () => {
   };
 
   return successMsg ? (
-    <div className="credentials-success">{successMsg}</div>
+    <div className="credentials__success">{successMsg}</div>
   ) : (
     <>
       <form
-        className="credentials-form"
+        className="credentials__form"
         onSubmit={handleSubmit}
         style={{ border: errMsg && "solid 1px red" }}
       >

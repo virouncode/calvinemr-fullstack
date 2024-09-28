@@ -79,48 +79,44 @@ const LabLinkPersonalForm = ({
   };
   return (
     <div
-      className="lablinks__form"
+      className="lablinks__personal-form"
       style={{ border: errMsgPost && "solid 1px red" }}
     >
-      <div className="lablinks__form-inputs">
-        <div className="lablinks__form-row">
-          <div className="lablinks__form-item">
-            <Input
-              label="Name"
-              value={name}
-              onChange={handleNameChange}
-              id="lablink-name"
-            />
-          </div>
-          <div className="lablinks__form-item">
-            <Input
-              label="URL"
-              value={url}
-              onChange={handleURLChange}
-              id="lablink-url"
-            />
-          </div>
+      <div className="lablinks__personal-form-inputs">
+        <div className="lablinks__personal-form-item">
+          <Input
+            label="Name"
+            value={name}
+            onChange={handleNameChange}
+            id="lablink-name"
+          />
         </div>
-        <div className="lablinks__form-row">
-          <div className="lablinks__form-item">
-            <Input
-              label="Login"
-              value={login}
-              onChange={handleLoginChange}
-              id="lablink-login"
-            />
-          </div>
-          <div className="lablinks__form-item">
-            <Input
-              label="Password"
-              value={pwd}
-              onChange={handlePwdChange}
-              id="lablink-pwd"
-            />
-          </div>
+        <div className="lablinks__personal-form-item">
+          <Input
+            label="URL"
+            value={url}
+            onChange={handleURLChange}
+            id="lablink-url"
+          />
+        </div>
+        <div className="lablinks__personal-form-item">
+          <Input
+            label="Login"
+            value={login}
+            onChange={handleLoginChange}
+            id="lablink-login"
+          />
+        </div>
+        <div className="lablinks__personal-form-item">
+          <Input
+            label="Password"
+            value={pwd}
+            onChange={handlePwdChange}
+            id="lablink-pwd"
+          />
         </div>
       </div>
-      <div className="lablinks__form-btns">
+      <div className="lablinks__personal-form-btns">
         <SaveButton onClick={handleSave} />
         <CancelButton onClick={handleCancel} />
       </div>

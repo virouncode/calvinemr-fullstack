@@ -17,10 +17,7 @@ const PatientsGroupItem = ({ patient, index }: PatientsGroupItemProps) => {
   };
   return (
     patient && (
-      <li
-        className="patients-groups__card-list-item"
-        onClick={handleClickPatient}
-      >
+      <li className="groups__card-list-item" onClick={handleClickPatient}>
         {index + 1}. {toPatientName(patient.patient_infos)}
       </li>
     )

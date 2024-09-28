@@ -17,10 +17,10 @@ type GuestsSearchFormProps = {
 
 const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
   return (
-    <div className="search-bar">
-      <p className="search-bar-title">Search by</p>
-      <div className="search-bar-row">
-        <div className="search-bar-item">
+    <div className="guests-search">
+      <p className="guests-search__title">Search by</p>
+      <div className="guests-search__grid">
+        <div className="guests-search__item">
           <Input
             value={search.name}
             onChange={handleSearch}
@@ -29,7 +29,7 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
             label="Name"
           />
         </div>
-        <div className="search-bar-item">
+        <div className="guests-search__item">
           <InputEmail
             value={search.email}
             onChange={handleSearch}
@@ -38,9 +38,8 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
             label="Email"
           />
         </div>
-      </div>
-      <div className="search-bar-row">
-        <div className="search-bar-item">
+
+        <div className="guests-search__item">
           <InputTel
             value={search.phone}
             onChange={handleSearch}
@@ -50,7 +49,7 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
             placeholder="xxx-xxx-xxxx"
           />
         </div>
-        <div className="search-bar-item">
+        <div className="guests-search__item">
           <Input
             value={search.birth}
             onChange={handleSearch}
@@ -60,9 +59,7 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
             placeholder="yyyy-mm-dd"
           />
         </div>
-      </div>
-      <div className="search-bar-row">
-        <div className="search-bar-item">
+        <div className="guests-search__item">
           <Input
             value={search.chart}
             onChange={handleSearch}
@@ -71,7 +68,7 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
             label="Chart#"
           />
         </div>
-        <div className="search-bar-item">
+        <div className="guests-search__item">
           <Input
             value={search.health}
             onChange={handleSearch}

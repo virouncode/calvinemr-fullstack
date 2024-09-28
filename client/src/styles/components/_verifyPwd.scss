@@ -1,59 +1,40 @@
 .verify-pwd {
-  font-size: 0.9rem;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: center;
-  width: 30%;
-  margin: 0 auto;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   background-color: $white;
-  &-title {
-    width: 55%;
-    margin: 0 auto;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  max-width: 350px;
+  &__title {
     text-align: center;
-    margin-top: 20px;
     font-weight: bold;
   }
-  &-form {
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
+  &__form {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
-    // align-items: center;
-    label {
-      font-size: 0.85rem;
-      font-weight: bold;
-      width: 150px;
-    }
+    gap: 1rem;
     &-row {
-      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      label {
+        font-size: $size-base;
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+      }
+      input {
+        font-size: $size-base;
+        width: 100%;
+      }
+    }
+    &-btns {
       display: flex;
       align-items: center;
-      input {
-        width: 250px;
-      }
-      &--submit {
-        margin-top: 10px;
-        margin-bottom: 0;
-        justify-content: center;
-        button {
-          margin-left: 5px;
-        }
-      }
+      justify-content: center;
+      gap: 0.25rem;
     }
-  }
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto 10px;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
   }
 }

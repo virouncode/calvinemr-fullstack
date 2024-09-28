@@ -473,7 +473,7 @@ const CareElementsList = ({
   };
 
   return (
-    <>
+    <div className="care-elements">
       <h1 className="care-elements__title">Patient care elements</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div
@@ -484,7 +484,7 @@ const CareElementsList = ({
           <span>
             {addVisible ? "Add new care elements" : "Last information"}
           </span>
-          <div className="care-elements__btn-container">
+          <div className="care-elements__card-btn-container">
             {!addVisible ? (
               <>
                 <Button onClick={handleAdd} disabled={progress} label="Add" />
@@ -556,7 +556,7 @@ const CareElementsList = ({
           />
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

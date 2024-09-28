@@ -8,23 +8,17 @@ import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { edocSchema } from "../../../validation/reference/edocValidation";
 import CancelButton from "../../UI/Buttons/CancelButton";
-import SubmitButton from "../../UI/Buttons/SubmitButton";
+import SaveButton from "../../UI/Buttons/SaveButton";
 import ReportViewer from "../../UI/Documents/ReportViewer";
 import Input from "../../UI/Inputs/Input";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
 type EdocFormProps = {
-  errMsgPost: string;
-  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EdocForm = ({
-  errMsgPost,
-  setErrMsgPost,
-  setAddVisible,
-}: EdocFormProps) => {
+const EdocForm = ({ setAddVisible }: EdocFormProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -35,10 +29,10 @@ const EdocForm = ({
     notes: "",
     name: "",
   });
+  const [errMsgPost, setErrMsgPost] = useState("");
   const edocPost = useEdocPost();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setErrMsgPost("");
     //Formatting
     const datasToPost: EdocFormType = {
@@ -74,6 +68,7 @@ const EdocForm = ({
   ) => {
     const value = e.target.value;
     const name = e.target.name;
+    setErrMsgPost("");
     setFormDatas({ ...formDatas, [name]: value });
   };
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,17 +111,18 @@ const EdocForm = ({
     };
   };
   return (
-    <div
-      className="reference-edocs__form"
-      style={{ border: errMsgPost && "solid 1.5px red" }}
-    >
-      <form className="reference-edocs__content" onSubmit={handleSubmit}>
+    <div className="reference__edocs-form">
+      <div className="reference__edocs-form-content">
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-        <div className="reference-edocs__form-btn-container">
-          <SubmitButton label="Save" disabled={isLoadingFile || progress} />
+        <div className="reference__edocs-form-btn-container">
+          <SaveButton
+            label="Save"
+            disabled={isLoadingFile || progress}
+            onClick={handleSubmit}
+          />
           <CancelButton onClick={handleCancel} />
         </div>
-        <div className="reference-edocs__row">
+        <div className="reference__edocs-form-row">
           <Input
             label="Name"
             value={formDatas.name}
@@ -135,7 +131,7 @@ const EdocForm = ({
             id="name"
           />
         </div>
-        <div className="reference-edocs__row">
+        <div className="reference__edocs-form-row">
           <label>File</label>
           <input
             name="Content"
@@ -145,7 +141,7 @@ const EdocForm = ({
             // .jpeg, .jpg, .png, .gif, .tif, , .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx"
           />
         </div>
-        <div className="reference-edocs__row reference-edocs__row--text">
+        <div className="reference__edocs-form-row">
           <label htmlFor="notes">Notes</label>
           <textarea
             name="notes"
@@ -155,9 +151,9 @@ const EdocForm = ({
             id="notes"
           />
         </div>
-      </form>
+      </div>
       {formDatas.file && (
-        <div className="reference-edocs__preview">
+        <div className="reference__edocs-form-preview">
           {isLoadingFile && <LoadingParagraph />}
           <ReportViewer file={formDatas.file} />
         </div>

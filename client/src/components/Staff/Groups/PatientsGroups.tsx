@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientsGroups } from "../../../hooks/reactquery/queries/patientsGroupsQueries";
@@ -8,6 +9,7 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import NewMessageExternal from "../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../Messaging/External/NewMessageExternalMobile";
 import PatientsClinicGroupCard from "./PatientsClinicGroupCard";
 import PatientsGroupForm from "./PatientsGroupForm";
 
@@ -25,6 +27,7 @@ const PatientsGroups = () => {
       phone: string;
     }[]
   >([]);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const { data: groups, isPending, error } = usePatientsGroups(user.id);
 
@@ -36,8 +39,8 @@ const PatientsGroups = () => {
   if (error) return <ErrorParagraph errorMsg={error.message} />;
 
   return (
-    <div className="patients-groups">
-      <div className="patients-groups__title">
+    <>
+      <div className="groups__title">
         <span style={{ marginRight: "10px" }}>My groups</span>
         <Button
           onClick={handleAdd}
@@ -45,13 +48,12 @@ const PatientsGroups = () => {
           disabled={addGroupVisible}
         />
       </div>
-      <div className="patients-groups__content">
+      <div className="groups__content">
         {groups && groups.length > 0 ? (
           groups.map((group) => (
             <PatientsClinicGroupCard
               group={group}
               key={group.id}
-              global={false}
               setInitialRecipients={setInitialRecipients}
               setNewMessageExternalVisible={setNewMessageExternalVisible}
             />
@@ -79,20 +81,27 @@ const PatientsGroups = () => {
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color={"#94bae8"}
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialRecipients={initialRecipients}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialRecipients={initialRecipients}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialRecipients={initialRecipients}
+            />
+          )}
         </FakeWindow>
       )}
-    </div>
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import MyAccountPatient from "../../components/Patient/MyAccount/MyAccountPatien
 import useTitle from "../../hooks/useTitle";
 
 const PatientMyAccountPage = () => {
-  useTitle("My personal information");
+  useTitle("My account");
   return (
     <>
       <HelmetProvider>
@@ -12,7 +12,7 @@ const PatientMyAccountPage = () => {
           <title>My account</title>
         </Helmet>
       </HelmetProvider>
-      <section className="patient-account-section">
+      <section className="patient-account">
         <MyAccountPatient />
       </section>
     </>

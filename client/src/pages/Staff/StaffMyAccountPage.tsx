@@ -4,7 +4,7 @@ import MyAccountStaff from "../../components/Staff/MyAccount/MyAccountStaff";
 import useTitle from "../../hooks/useTitle";
 
 const StaffMyAccountPage = () => {
-  useTitle("My personal information");
+  useTitle("My account");
   return (
     <>
       <HelmetProvider>
@@ -12,7 +12,7 @@ const StaffMyAccountPage = () => {
           <title>My account</title>
         </Helmet>
       </HelmetProvider>
-      <section className="myaccount-section">
+      <section className="myaccount">
         <MyAccountStaff />
       </section>
     </>

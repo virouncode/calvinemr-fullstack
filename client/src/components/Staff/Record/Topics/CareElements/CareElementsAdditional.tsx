@@ -39,22 +39,22 @@ const CareElementsAdditional = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
         {lastAdditionalData.Name} ({lastAdditionalData.Unit}):
       </label>
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastAdditionalData.Data?.Value}
       </div>
       {lastAdditionalData.Data?.Value && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() =>
                   handleClickAdditionalHistory(lastAdditionalData.Name)
                 }
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

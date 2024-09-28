@@ -53,7 +53,7 @@ const ClinicalNotesTemplates = ({
 
   if (error) {
     return (
-      <div className="clinical-notes__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -62,11 +62,11 @@ const ClinicalNotesTemplates = ({
   const templatesDatas = templates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="clinical-notes__templates">
-      <div className="clinical-notes__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
-      <div className="clinical-notes__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -77,7 +77,7 @@ const ClinicalNotesTemplates = ({
           placeholder="Template name, author name"
         />
       </div>
-      <div className="clinical-notes__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -115,7 +115,6 @@ const ClinicalNotesTemplates = ({
           y={(window.innerHeight - 500) / 2}
           color="#93b5e9"
           setPopUpVisible={setNewTemplateVisible}
-          closeCross={false}
         >
           <ClinicalNotesTemplateForm
             setNewTemplateVisible={setNewTemplateVisible}

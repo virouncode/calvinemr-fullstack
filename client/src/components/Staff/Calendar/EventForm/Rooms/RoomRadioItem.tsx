@@ -17,7 +17,7 @@ const RoomRadioItem = ({
   isRoomSelected,
 }: RoomRadioItemProps) => {
   return (
-    <div className="event-form__item event-form__item--radio">
+    <li className="event-form__rooms-radio-item">
       <Radio
         id={roomId}
         name="room_id"
@@ -26,7 +26,7 @@ const RoomRadioItem = ({
         onChange={handleRoomChange}
         label={`${roomName}` + `${isRoomOccupied(roomId) ? " (Occupied)" : ""}`}
       />
-    </div>
+    </li>
   );
 };
 

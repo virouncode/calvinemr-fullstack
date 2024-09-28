@@ -89,86 +89,84 @@ const RemindersPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="reminders">
         <h1 className="reminders__title">Reminders</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="reminders">
         <h1 className="reminders__title">Reminders</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="reminders">
       <h1 className="reminders__title">Reminders</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <>
-        <div className="reminders__table-container" ref={divRef}>
-          <table className="reminders__table">
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Reminder</th>
-                <th>Updated By</th>
-                <th>Updated On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {addVisible && (
-                <ReminderForm
-                  editCounter={editCounter}
-                  setAddVisible={setAddVisible}
-                  patientId={patientId}
-                  setErrMsgPost={setErrMsgPost}
-                  errMsgPost={errMsgPost}
-                  topicPost={topicPost}
-                />
-              )}
-              {datas && datas.length > 0
-                ? datas.map((item, index) =>
-                    index === datas.length - 1 ? (
-                      <ReminderItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        lastItemRef={lastItemRef}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                      />
-                    ) : (
-                      <ReminderItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                      />
-                    )
+      <div className="reminders__table-container" ref={divRef}>
+        <table className="reminders__table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Reminder</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {addVisible && (
+              <ReminderForm
+                editCounter={editCounter}
+                setAddVisible={setAddVisible}
+                patientId={patientId}
+                setErrMsgPost={setErrMsgPost}
+                errMsgPost={errMsgPost}
+                topicPost={topicPost}
+              />
+            )}
+            {datas && datas.length > 0
+              ? datas.map((item, index) =>
+                  index === datas.length - 1 ? (
+                    <ReminderItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      lastItemRef={lastItemRef}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
+                  ) : (
+                    <ReminderItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
                   )
-                : !isFetchingNextPage &&
-                  !addVisible && <EmptyRow colSpan={4} text="No reminders" />}
-              {isFetchingNextPage && <LoadingRow colSpan={4} />}
-            </tbody>
-          </table>
-        </div>
-        <div className="reminders__btn-container">
-          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
-          <CloseButton onClick={handleClose} />
-        </div>
-      </>
-    </>
+                )
+              : !isFetchingNextPage &&
+                !addVisible && <EmptyRow colSpan={4} text="No reminders" />}
+            {isFetchingNextPage && <LoadingRow colSpan={4} />}
+          </tbody>
+        </table>
+      </div>
+      <div className="reminders__btn-container">
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
+      </div>
+    </div>
   );
 };
 

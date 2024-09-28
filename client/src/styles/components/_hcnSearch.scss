@@ -1,55 +1,70 @@
-.hcn {
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
+.hcn__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  gap: 1rem;
+  .hcn__search {
+    input {
+      font-size: $size-base;
+      width: 100%;
+    }
+  }
+  .hcn__results {
+    flex: 1;
+    overflow-y: scroll;
+    border: solid 0.5px $grey;
     border-radius: 6px;
-    text-align: center;
-  }
-  &__container {
-    margin-top: 50px;
+    box-shadow: $box-shadow-default;
+    .hcn__results-item {
+      font-size: $size-xs;
+      padding: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-start;
+      border-bottom: solid 1px $grey;
+      &:hover {
+        text-decoration: underline;
+      }
+      &--headers {
+        font-size: $size-sm;
+        position: sticky;
+        top: 0;
+        background-color: $blue;
+        border-bottom: none;
+        .hcn__results-code {
+          font-weight: bold;
+          width: 33%;
+          text-align: center;
+        }
+        .hcn__results-name {
+          font-weight: bold;
+          width: 33%;
+          text-align: center;
+        }
+      }
+      .hcn__results-code {
+        width: 33%;
+        text-align: center;
+      }
+      .hcn__results-name {
+        width: 33%;
+      }
+    }
   }
 }
-.hcn-search {
-  padding-left: 20px;
-  label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-}
-.hcn-results {
-  padding: 10px;
-  padding: 0 20px;
-  height: 480px;
-  border: solid 0.5px $grey;
-  overflow-y: scroll;
-  position: relative;
-  border-radius: 6px;
-  margin-top: 20px;
-  &__item {
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-start;
-    &:hover {
-      text-decoration: underline;
+@media (min-width: 1024px) {
+  .hcn__container {
+    .hcn__search {
+      input {
+        font-size: $size-sm;
+      }
     }
-    &--headers {
-      padding: 10px 0 5px;
-      position: sticky;
-      top: 0;
-      background-color: $white;
+    .hcn__results {
+      .hcn__results-item {
+        font-size: $size-sm;
+      }
     }
-  }
-  &__code {
-    font-weight: bold;
-    display: inline-block;
-    width: 30%;
-    margin-right: 50px;
-  }
-  &__name {
-    width: 40%;
   }
 }

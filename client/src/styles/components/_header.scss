@@ -1,77 +1,89 @@
 .header {
   position: sticky;
   top: 0;
-  height: 60px;
-  width: 100%;
-  z-index: 10;
-  padding: 10px 15px;
-  background: $blue2;
-  display: grid;
-  grid-template-columns: 18% 64% 18%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  &--patient {
-    grid-template-columns: 15% 70% 15%;
-  }
-  &--admin {
-    grid-template-columns: 15% 70% 15%;
-  }
+  padding: 0.5rem 0.75rem;
+  background-color: $blue2;
   &--login {
-    grid-template-columns: 25% 75%;
-    background: none;
-    backdrop-filter: blur(20px);
+    background-color: transparent;
+  }
+  &__title {
+    text-align: end;
+    display: none;
   }
   &__logo {
-    height: 40px;
-    width: 130px;
-    background: url("@/assets/img/logoRectTest.png") center/cover;
-    cursor: pointer;
+    img {
+      width: 120px;
+    }
   }
   &__nav {
+    display: none;
+  }
+  &__bars {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    &--patient {
+      grid-template-columns: 40% 60%;
+    }
+  }
+  .header__nav {
+    display: block;
     ul {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
-    }
-    &--patient {
-      ul {
-        justify-content: flex-end;
-      }
-    }
-    &--admin {
-      ul {
-        justify-content: flex-end;
+      font-size: $size-sm;
+      li {
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+          color: $black;
+        }
       }
     }
   }
-  &__link {
-    // color:$white;
+  .header__link {
     color: $black;
     font-weight: bold;
     cursor: pointer;
-    &:hover {
-      // color:#f3f3f3;
-      color: $black;
-    }
     &--active {
-      // border: solid 1px $white;
       border: solid 1px $black;
-      padding: 5px 10px;
+      padding: 0.25rem 0.75rem;
       border-radius: 40px;
     }
+  }
+  .header__bars {
+    display: none;
+  }
+}
+// /*xl*/
+@media (min-width: 1280px) {
+  .header {
+    display: grid;
+    grid-template-columns: 16% 68% 16%;
     &--patient {
-      margin-right: 40px;
+      grid-template-columns: 25% 50% 25%;
     }
-    &--admin {
-      margin-right: 30px;
+    &--login {
+      grid-template-columns: 16% 84%;
     }
   }
-  &__title {
-    font-family: $font1;
-    text-align: right;
-    font-size: 1rem;
-    text-align: end;
-    // color:#FEFEFE;
-    color: $black;
+  .header__title {
+    display: inline;
+    font-size: $size-base;
+  }
+  .header__nav {
+    ul {
+      font-size: $size-sm;
+    }
   }
 }

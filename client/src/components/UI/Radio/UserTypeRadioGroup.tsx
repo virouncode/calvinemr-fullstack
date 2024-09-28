@@ -12,7 +12,7 @@ const UserTypeRadioGroup = ({
 }: UserTypeRadioGroupProps) => {
   return (
     <>
-      <div className="email-form-row-radio-item">
+      <div className="reset__email-row-radio-item">
         <Radio
           id="staff"
           name="user-type"
@@ -22,7 +22,7 @@ const UserTypeRadioGroup = ({
           label="Staff"
         />
       </div>
-      <div className="email-form-row-radio-item">
+      <div className="reset__email-row-radio-item">
         <Radio
           id="patient"
           name="user-type"
@@ -32,7 +32,7 @@ const UserTypeRadioGroup = ({
           label="Patient"
         />
       </div>
-      <div className="email-form-row-radio-item">
+      <div className="reset__email-row-radio-item">
         <Radio
           id="admin"
           name="user-type"

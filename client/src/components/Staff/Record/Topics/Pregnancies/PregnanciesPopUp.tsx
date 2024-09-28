@@ -90,25 +90,25 @@ const PregnanciesPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="pregnancies">
         <h1 className="pregnancies__title">Patient pregnancies</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="pregnancies">
         <h1 className="pregnancies__title">Patient pregnancies</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="pregnancies">
       <h1 className="pregnancies__title">Patient pregnancies</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="pregnancies__table-container" ref={divRef}>
@@ -171,7 +171,7 @@ const PregnanciesPopUp = ({
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 

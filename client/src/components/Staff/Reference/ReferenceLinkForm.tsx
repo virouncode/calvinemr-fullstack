@@ -73,12 +73,12 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
   };
   return (
     <form
-      className="reference-links__form"
+      className="reference__links-form"
       onSubmit={handleSubmit}
       style={{ border: errMsg && "solid 1px red" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="reference-links__form-row">
+      <div className="reference__links-form-row">
         <Input
           label="Name"
           value={newLink.name}
@@ -87,7 +87,7 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
           autoFocus
         />
       </div>
-      <div className="reference-links__form-row">
+      <div className="reference__links-form-row">
         <Input
           label="URL"
           value={newLink.url}
@@ -95,7 +95,7 @@ const ReferenceLinkForm = ({ links, setAddVisible }: LinkFormProps) => {
           onChange={handleChange}
         />
       </div>
-      <div className="reference-links__form-btns">
+      <div className="reference__links-form-btns">
         <SubmitButton label="Save" disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>

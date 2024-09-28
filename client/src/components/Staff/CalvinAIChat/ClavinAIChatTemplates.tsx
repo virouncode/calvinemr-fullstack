@@ -55,7 +55,7 @@ const CalvinAIChatTemplates = ({
 
   if (error) {
     return (
-      <div className="calvinai-chat__templates">
+      <div className="calvinai__chat-templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -64,11 +64,11 @@ const CalvinAIChatTemplates = ({
   const templatesDatas = templates?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="calvinai-chat__templates">
-      <div className="calvinai-chat__templates-btn-container">
+    <div className="calvinai__chat-templates">
+      <div className="templates__btn-container">
         <Button onClick={handleAddNew} label="Add a new template" />
       </div>
-      <div className="calvinai-chat__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -79,7 +79,7 @@ const CalvinAIChatTemplates = ({
           width={300}
         />
       </div>
-      <div className="calvinai-chat__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -117,7 +117,6 @@ const CalvinAIChatTemplates = ({
           y={(window.innerHeight - 500) / 2}
           color="#93b5e9"
           setPopUpVisible={setNewTemplateVisible}
-          closeCross={false}
         >
           <CalvinAITemplateForm setNewTemplateVisible={setNewTemplateVisible} />
         </FakeWindow>

@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -5,6 +6,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import {
   useTopicDelete,
   useTopicPost,
@@ -41,8 +43,11 @@ import {
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../Messaging/Internal/NewMessage";
+import NewMessageMobile from "../../Messaging/Internal/NewMessageMobile";
 import NewTodo from "../../Messaging/Internal/NewTodo";
+import NewTodoMobile from "../../Messaging/Internal/NewTodoMobile";
 import AlertsDropDown from "../Topics/Alerts/AlertsDropDown";
 import AlertsPopUp from "../Topics/Alerts/AlertsPopUp";
 import AllergiesDropDown from "../Topics/Allergies/AllergiesDropDown";
@@ -113,6 +118,8 @@ const PatientTopic = ({
   const [popUpVisible, setPopUpVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+  const isLargeScreen = useMediaQuery("(min-width: 1280px)");
   //Queries
   const {
     data: topicDatas,
@@ -132,6 +139,12 @@ const PatientTopic = ({
   //HANDLERS
   const handlePopUpClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation();
+    if (!isLargeScreen && topic === "IMMUNIZATIONS") {
+      toast.warning("This feature is only available on large screen", {
+        containerId: "A",
+      });
+      return;
+    }
     setPopUpVisible((v) => !v);
   };
   const handleClickHeader = () => {
@@ -141,10 +154,7 @@ const PatientTopic = ({
       containerRef.current.classList.toggle(
         `patient-record__topic-container--active`
       );
-    if (
-      (topic === "LETTERS/REFERRALS" || topic === "TO-DOS ABOUT PATIENT") &&
-      containerRef.current
-    ) {
+    if (topic === "TO-DOS ABOUT PATIENT" && containerRef.current) {
       containerRef.current.classList.toggle(
         `patient-record__topic-container--bottom`
       );
@@ -198,9 +208,9 @@ const PatientTopic = ({
         {topic === "PAST HEALTH" && popUpVisible && (
           <FakeWindow
             title={`PAST HEALTH of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -263,9 +273,9 @@ const PatientTopic = ({
         {topic === "FAMILY HISTORY" && popUpVisible && (
           <FakeWindow
             title={`FAMILY HISTORY of ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -393,9 +403,9 @@ const PatientTopic = ({
         {topic === "ALERTS & SPECIAL NEEDS" && popUpVisible && (
           <FakeWindow
             title={`ALERTS & SPECIAL NEEDS about ${patientName}`}
-            width={1100}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1100) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -453,9 +463,9 @@ const PatientTopic = ({
         {topic === "RISK FACTORS" && popUpVisible && (
           <FakeWindow
             title={`RISK FACTORS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -516,9 +526,9 @@ const PatientTopic = ({
         {topic === "MEDICATIONS & TREATMENTS" && popUpVisible && (
           <FakeWindow
             title={`MEDICATIONS & TREATMENTS for ${patientName}`}
-            width={1400}
+            width={window.innerWidth}
             height={620}
-            x={(window.innerWidth - 1400) / 2}
+            x={0}
             y={(window.innerHeight - 620) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -617,10 +627,10 @@ const PatientTopic = ({
         {topic === "PHARMACIES" && popUpVisible && (
           <FakeWindow
             title={`PREFERRED PHARMACY of ${patientName}`}
-            width={1400}
-            height={600}
-            x={(window.innerWidth - 1400) / 2}
-            y={(window.innerHeight - 600) / 2}
+            width={window.innerWidth}
+            height={700}
+            x={0}
+            y={(window.innerHeight - 700) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -808,9 +818,9 @@ const PatientTopic = ({
         {topic === "LETTERS/REFERRALS" && popUpVisible && (
           <FakeWindow
             title={`LETTERS/REFERRALS for ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -874,10 +884,10 @@ const PatientTopic = ({
         {topic === "PERSONAL HISTORY" && popUpVisible && (
           <FakeWindow
             title={`PERSONAL HISTORY of ${patientName}`}
-            width={600}
-            height={500}
-            x={(window.innerWidth - 600) / 2}
-            y={(window.innerHeight - 500) / 2}
+            width={400}
+            height={750}
+            x={(window.innerWidth - 400) / 2}
+            y={(window.innerHeight - 750) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -927,9 +937,9 @@ const PatientTopic = ({
           <FakeWindow
             title={`CARE ELEMENTS of ${patientName}`}
             width={500}
-            height={580}
+            height={750}
             x={(window.innerWidth - 500) / 2}
-            y={(window.innerHeight - 580) / 2}
+            y={(window.innerHeight - 750) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
@@ -979,9 +989,9 @@ const PatientTopic = ({
         {topic === "PROBLEM LIST" && popUpVisible && (
           <FakeWindow
             title={`PROBLEM LIST of ${patientName}`}
-            width={1250}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1250) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1044,9 +1054,9 @@ const PatientTopic = ({
         {topic === "PREGNANCIES" && popUpVisible && (
           <FakeWindow
             title={`PREGNANCIES of ${patientName}`}
-            width={1200}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1200) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1113,9 +1123,9 @@ const PatientTopic = ({
         {topic === "CYCLES" && popUpVisible && (
           <FakeWindow
             title={`CYCLES of ${patientName}`}
-            width={1100}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1100) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1173,9 +1183,9 @@ const PatientTopic = ({
         {topic === "ALLERGIES & ADVERSE REACTIONS" && popUpVisible && (
           <FakeWindow
             title={`ALLERGIES & ADVERSE REACTIONS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1227,7 +1237,7 @@ const PatientTopic = ({
         {topic === "IMMUNIZATIONS" && popUpVisible && (
           <FakeWindow
             title={`IMMUNIZATIONS of ${patientName}`}
-            width={1460}
+            width={window.innerWidth}
             height={800}
             x={0}
             y={0}
@@ -1293,9 +1303,9 @@ const PatientTopic = ({
         {topic === "APPOINTMENTS" && popUpVisible && (
           <FakeWindow
             title={`APPOINTMENTS of ${patientName}`}
-            width={1300}
+            width={window.innerWidth}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={0}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
@@ -1359,20 +1369,30 @@ const PatientTopic = ({
         {topic === "MESSAGES ABOUT PATIENT" && popUpVisible && (
           <FakeWindow
             title="NEW MESSAGE"
-            width={1300}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewMessage
-              setNewVisible={setPopUpVisible}
-              initialPatient={{
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-              }}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageMobile
+                setNewVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            ) : (
+              <NewMessage
+                setNewVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            )}
           </FakeWindow>
         )}
         {/*******************/}
@@ -1392,26 +1412,43 @@ const PatientTopic = ({
           <FakeWindow
             title="NEW EXTERNAL MESSAGE"
             width={1000}
-            height={600}
+            height={630}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            y={(window.innerHeight - 630) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewMessageExternal
-              setNewVisible={setPopUpVisible}
-              initialRecipients={[
-                {
-                  id: patientId,
-                  name: toPatientName(demographicsInfos),
-                  email: demographicsInfos?.Email ?? "",
-                  phone:
-                    demographicsInfos?.PhoneNumber.find(
-                      ({ _phoneNumberType }) => _phoneNumberType === "C"
-                    )?.phoneNumber ?? "",
-                },
-              ]}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageExternalMobile
+                setNewVisible={setPopUpVisible}
+                initialRecipients={[
+                  {
+                    id: patientId,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos?.Email ?? "",
+                    phone:
+                      demographicsInfos?.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber ?? "",
+                  },
+                ]}
+              />
+            ) : (
+              <NewMessageExternal
+                setNewVisible={setPopUpVisible}
+                initialRecipients={[
+                  {
+                    id: patientId,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos?.Email ?? "",
+                    phone:
+                      demographicsInfos?.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber ?? "",
+                  },
+                ]}
+              />
+            )}
           </FakeWindow>
         )}
         {/*******************/}
@@ -1430,20 +1467,30 @@ const PatientTopic = ({
         {topic === "TO-DOS ABOUT PATIENT" && popUpVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1300}
+            width={1024}
             height={620}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 620) / 2}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
-            <NewTodo
-              setNewTodoVisible={setPopUpVisible}
-              initialPatient={{
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-              }}
-            />
+            {isTabletOrMobile ? (
+              <NewTodoMobile
+                setNewTodoVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            ) : (
+              <NewTodo
+                setNewTodoVisible={setPopUpVisible}
+                initialPatient={{
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                }}
+              />
+            )}
           </FakeWindow>
         )}
       </div>

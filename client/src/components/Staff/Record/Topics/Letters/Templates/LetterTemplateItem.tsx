@@ -60,11 +60,7 @@ const LetterTemplateItem = ({
 
   return (
     <>
-      <li
-        className="letters__templates-list-item"
-        key={template.id}
-        ref={lastItemRef}
-      >
+      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id
@@ -73,13 +69,13 @@ const LetterTemplateItem = ({
             : ""}
         </span>
         <>
+          <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
           {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
+            <PenIcon ml={15} onClick={handleEditClick} />
           )}
           {template.author_id === user.id && (
-            <TrashIcon onClick={handleDelete} ml={5} />
+            <TrashIcon onClick={handleDelete} ml={15} />
           )}
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
         </>
       </li>
       {editTemplateVisible && (

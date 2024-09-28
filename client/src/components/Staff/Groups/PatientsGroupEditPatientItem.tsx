@@ -23,14 +23,14 @@ const PatientsGroupEditPatientItem = ({
   return (
     patient && (
       <Reorder.Item dragListener={false} dragControls={controls} value={item}>
-        <div className="patients-groups__card-list-item patients-groups__card-list-item--edit">
+        <div className="groups__card-list-item groups__card-list-item--edit">
           <div>
             {order.indexOf(patient.patient_infos.patient_id) + 1}.{" "}
             {toPatientName(patient.patient_infos)}
           </div>
           <div>
             <TrashIcon onClick={() => handleRemovePatient(item)} />
-            <CrossArrowIcon ml={5} onPointerDown={(e) => controls.start(e)} />
+            <CrossArrowIcon ml={10} onPointerDown={(e) => controls.start(e)} />
           </div>
         </div>
       </Reorder.Item>

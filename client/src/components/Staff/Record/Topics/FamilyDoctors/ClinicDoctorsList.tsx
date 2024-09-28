@@ -14,7 +14,7 @@ const ClinicDoctorsList = ({ patientId, sites }: ClinicDoctorsListProps) => {
   const doctors = staffInfos.filter(({ title }) => title === "Doctor");
 
   return (
-    <>
+    <div className="doctors-list">
       <div className="doctors-list__title">Clinic Doctors directory</div>
       <div className="doctors-list__table-container">
         <table className="doctors-list__table">
@@ -53,7 +53,7 @@ const ClinicDoctorsList = ({ patientId, sites }: ClinicDoctorsListProps) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

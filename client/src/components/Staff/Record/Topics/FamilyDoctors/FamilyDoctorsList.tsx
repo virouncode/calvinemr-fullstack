@@ -85,7 +85,7 @@ const FamilyDoctorsList = ({
   const doctorsDatas = doctors?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="doctors-list">
       <div className="doctors-list__title">
         External Doctors directory (as of [date])
         <Button onClick={handleAdd} label="Add" />
@@ -155,7 +155,7 @@ const FamilyDoctorsList = ({
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

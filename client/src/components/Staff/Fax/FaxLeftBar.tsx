@@ -35,11 +35,11 @@ const FaxLeftBar = ({
   };
   const isActiveClass = (sectionName: string) =>
     section === sectionName
-      ? "messages-content__category messages-content__category--active"
-      : "messages-content__category";
+      ? "fax__content-category fax__content-category--active"
+      : "fax__content-category";
 
   return (
-    <div className="messages-content__leftbar">
+    <div className="fax__content-leftbar">
       <ul>
         <li
           className={isActiveClass("Received faxes")}

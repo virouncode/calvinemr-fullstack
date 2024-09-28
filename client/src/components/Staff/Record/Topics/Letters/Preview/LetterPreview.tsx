@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
@@ -22,11 +23,14 @@ import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../Fax/NewFax";
 import NewMessageExternal from "../../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../../../Messaging/Internal/NewMessage";
+import NewMessageMobile from "../../../../Messaging/Internal/NewMessageMobile";
 import LetterAdditionalPages from "./LetterAdditionalPages";
 import LetterOptionsPreview from "./LetterOptionsPreview";
 import LetterPagePreview from "./LetterPagePreview";
 import LetterRecordInfosPagePreview from "./LetterRecordInfosPagePreview";
+import NewFaxMobile from "../../../../Fax/NewFaxMobile";
 
 type LetterPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -89,6 +93,7 @@ const LetterPreview = ({
 
   const [letter, setLetter] = useState<AttachmentType | null>(null);
   const [faxVisible, setFaxVisible] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   useLetterMultipage(bodyRef, body, setMainBody, setAdditionalBodies, setPages);
 
@@ -519,67 +524,106 @@ const LetterPreview = ({
       {newMessageVisible && (
         <FakeWindow
           title="NEW MESSAGE"
-          width={1300}
+          width={1024}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 630) / 2}
           color={"#848484"}
           setPopUpVisible={setNewMessageVisible}
         >
-          <NewMessage
-            setNewVisible={setNewMessageVisible}
-            initialAttachments={attachmentsToSend}
-            initialPatient={{
-              id: demographicsInfos.patient_id,
-              name: toPatientName(demographicsInfos),
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageMobile
+              setNewVisible={setNewMessageVisible}
+              initialAttachments={attachmentsToSend}
+              initialPatient={{
+                id: demographicsInfos.patient_id,
+                name: toPatientName(demographicsInfos),
+              }}
+            />
+          ) : (
+            <NewMessage
+              setNewVisible={setNewMessageVisible}
+              initialAttachments={attachmentsToSend}
+              initialPatient={{
+                id: demographicsInfos.patient_id,
+                name: toPatientName(demographicsInfos),
+              }}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#848484"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialRecipients={[
-              {
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
       {faxVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax
-            setNewVisible={setFaxVisible}
-            initialAttachment={{
-              alias: `${name.replaceAll(" ", "")}.pdf`,
-              file: letter,
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `${name.replaceAll(" ", "")}.pdf`,
+                file: letter,
+              }}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `${name.replaceAll(" ", "")}.pdf`,
+                file: letter,
+              }}
+            />
+          )}
         </FakeWindow>
       )}
     </>

@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import html2canvas from "html2canvas";
 import { uniqueId } from "lodash";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
@@ -21,7 +22,9 @@ import PrintButton from "../../../UI/Buttons/PrintButton";
 import CircularProgressSmall from "../../../UI/Progress/CircularProgressSmall";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import NewFax from "../../Fax/NewFax";
+import NewFaxMobile from "../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import ExportClinicalNotes from "./ExportClinicalNotes";
 import ExportDemographics from "./ExportDemographics";
 import ExportFamilyDoctors from "./ExportFamilyDoctors";
@@ -60,6 +63,7 @@ const ExportChartPreview = ({
   const prescriptionsFilesRef = useRef<AttachmentType[]>([]);
   const eformsFilesRef = useRef<AttachmentType[]>([]);
   const lettersFilesRef = useRef<AttachmentType[]>([]);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   const handleGeneratePDF = async () => {
     if (!textContentRef.current) return;
@@ -542,8 +546,11 @@ const ExportChartPreview = ({
         <CloseButton onClick={handleClose} disabled={progress} />
         {progress && <CircularProgressSmall />}
       </div>
-      <div>
-        <div ref={textContentRef} style={{ padding: "5px 0", width: "816px" }}>
+      <div className="export-chart__preview-content">
+        <div
+          ref={textContentRef}
+          style={{ padding: "5px 0", width: "816px", margin: "0 auto" }}
+        >
           <ExportDemographics demographicsInfos={demographicsInfos} />
           {recordsSelected.includes("CLINICAL NOTES") && (
             <ExportClinicalNotes patientId={patientId} />
@@ -571,7 +578,10 @@ const ExportChartPreview = ({
               )
             )}
         </div>
-        <div ref={pdfContentRef}>
+        <div
+          ref={pdfContentRef}
+          style={{ padding: "5px 0", width: "816px", margin: "0 auto" }}
+        >
           {recordsSelected
             .filter(
               (topic) =>
@@ -598,41 +608,69 @@ const ExportChartPreview = ({
       {faxVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#94bae8"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#94BAE8"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialRecipients={[
-              {
-                id: patientId,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: patientId,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
     </div>

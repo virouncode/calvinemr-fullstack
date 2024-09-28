@@ -23,7 +23,7 @@ const FormCredentials = ({
 }: FormCredentialsProps) => {
   return (
     <>
-      <div className="credentials-form-row">
+      <div className="credentials__form-row">
         <Input
           label="New email"
           id="email"
@@ -32,19 +32,20 @@ const FormCredentials = ({
           value={credentials.email}
         />
       </div>
-      <div className="credentials-form-row">
+      <div className="credentials__form-row">
         <InputPassword
           label="New password"
           id="password"
           onChange={handlePasswordChange}
           name="password"
           value={credentials.password}
+          autoFocus={true}
         />
       </div>
-      <div className="credentials-form-row">
+      <div className="credentials__form-row">
         <PasswordValidator passwordValidity={passwordValidity} />
       </div>
-      <div className="credentials-form-row">
+      <div className="credentials__form-row">
         <InputPassword
           label="Confirm new password"
           id="confirm-password"
@@ -53,7 +54,7 @@ const FormCredentials = ({
           value={credentials.confirmPassword}
         />
       </div>
-      <div className="credentials-form-row">
+      <div className="credentials__form-row">
         <InputPassword
           label="New PIN"
           id="pin"
@@ -62,7 +63,7 @@ const FormCredentials = ({
           value={credentials.pin}
         />
       </div>
-      <div className="credentials-form-row-submit">
+      <div className="credentials__form-btns">
         <SubmitButton />
         <CancelButton onClick={handleCancel} />
       </div>

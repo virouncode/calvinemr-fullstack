@@ -53,7 +53,7 @@ import InputTelExtToggle from "../../../../UI/Inputs/InputTelExtToggle";
 import InputTelToggle from "../../../../UI/Inputs/InputTelToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../../../UI/Lists/GenericListToggle";
-import PostalZipSelect from "../../../../UI/Lists/PostalZipSelect";
+import PostalZipSelectInput from "../../../../UI/Lists/PostalZipSelectInput";
 import StaffList from "../../../../UI/Lists/StaffList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -490,10 +490,14 @@ const DemographicsPopUp = ({
             )}
           </div>
         </div>
-
         {errMsgPost && editVisible && <ErrorParagraph errorMsg={errMsgPost} />}
-
         <form className="demographics-card__form">
+          <DemographicsAvatar
+            avatar={formDatas?.avatar ?? null}
+            editVisible={editVisible}
+            setWebcamVisible={setWebcamVisible}
+            handleAvatarChange={handleAvatarChange}
+          />
           <div className="demographics-card__content">
             <div className="demographics-card__content-row">
               <GenericListToggle
@@ -679,20 +683,18 @@ const DemographicsPopUp = ({
             <div className="demographics-card__content-row">
               {editVisible ? (
                 <>
-                  <PostalZipSelect
-                    onChange={handleChangePostalOrZip}
+                  <PostalZipSelectInput
+                    onChangeSelect={handleChangePostalOrZip}
                     postalOrZip={postalOrZip}
-                  />
-                  <Input
                     value={
                       postalOrZip === "postal"
                         ? formDatas?.postalCode ?? ""
                         : formDatas?.zipCode ?? ""
                     }
-                    onChange={handleChange}
+                    onChangeInput={handleChange}
                     name="postalCode"
                     id="postalZipCode"
-                    width={68}
+                    inputWidth={68}
                     placeholder={
                       postalOrZip === "postal"
                         ? "A1A 1A1"
@@ -708,59 +710,71 @@ const DemographicsPopUp = ({
                 </p>
               )}
             </div>
-            <div className="demographics-card__content-row">
-              <InputTelToggle
-                label="Cell Phone*:"
-                value={formDatas?.cellphone ?? ""}
-                onChange={handleChange}
-                name="cellphone"
-                id="cellphone"
-                placeholder="xxx-xxx-xxxx"
-                editVisible={editVisible}
-              />
-              <InputTelExtToggle
-                id="cellphoneExt"
-                name="cellphoneExt"
-                value={formDatas?.cellphoneExt ?? ""}
-                onChange={handleChange}
-                editVisible={editVisible}
-              />
+            <div className="demographics-card__content-row demographics-card__content-row--tel">
+              <div className="demographics-card__content-row-item-number">
+                <InputTelToggle
+                  label="Cell Phone*:"
+                  value={formDatas?.cellphone ?? ""}
+                  onChange={handleChange}
+                  name="cellphone"
+                  id="cellphone"
+                  placeholder="xxx-xxx-xxxx"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="demographics-card__content-row-item-extension">
+                <InputTelExtToggle
+                  id="cellphoneExt"
+                  name="cellphoneExt"
+                  value={formDatas?.cellphoneExt ?? ""}
+                  onChange={handleChange}
+                  editVisible={editVisible}
+                />
+              </div>
             </div>
-            <div className="demographics-card__content-row">
-              <InputTelToggle
-                label="Home Phone:"
-                value={formDatas?.homephone ?? ""}
-                onChange={handleChange}
-                name="homephone"
-                id="homephone"
-                placeholder="xxx-xxx-xxxx"
-                editVisible={editVisible}
-              />
-              <InputTelExtToggle
-                id="homephoneExt"
-                name="homephoneExt"
-                value={formDatas?.homephoneExt ?? ""}
-                onChange={handleChange}
-                editVisible={editVisible}
-              />
+            <div className="demographics-card__content-row demographics-card__content-row--tel">
+              <div className="demographics-card__content-row-item-number">
+                <InputTelToggle
+                  label="Home Phone:"
+                  value={formDatas?.homephone ?? ""}
+                  onChange={handleChange}
+                  name="homephone"
+                  id="homephone"
+                  placeholder="xxx-xxx-xxxx"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="demographics-card__content-row-item-extension">
+                <InputTelExtToggle
+                  id="homephoneExt"
+                  name="homephoneExt"
+                  value={formDatas?.homephoneExt ?? ""}
+                  onChange={handleChange}
+                  editVisible={editVisible}
+                />
+              </div>
             </div>
-            <div className="demographics-card__content-row">
-              <InputTelToggle
-                label="Work Phone:"
-                value={formDatas?.workphone ?? ""}
-                onChange={handleChange}
-                name="workphone"
-                id="workphone"
-                placeholder="xxx-xxx-xxxx"
-                editVisible={editVisible}
-              />
-              <InputTelExtToggle
-                id="workphoneExt"
-                name="workphoneExt"
-                value={formDatas?.workphoneExt ?? ""}
-                onChange={handleChange}
-                editVisible={editVisible}
-              />
+            <div className="demographics-card__content-row demographics-card__content-row--tel">
+              <div className="demographics-card__content-row-item-number">
+                <InputTelToggle
+                  label="Work Phone:"
+                  value={formDatas?.workphone ?? ""}
+                  onChange={handleChange}
+                  name="workphone"
+                  id="workphone"
+                  placeholder="xxx-xxx-xxxx"
+                  editVisible={editVisible}
+                />
+              </div>
+              <div className="demographics-card__content-row-item-extension">
+                <InputTelExtToggle
+                  id="workphoneExt"
+                  name="workphoneExt"
+                  value={formDatas?.workphoneExt ?? ""}
+                  onChange={handleChange}
+                  editVisible={editVisible}
+                />
+              </div>
             </div>
             <div className="demographics-card__content-row">
               <GenericListToggle
@@ -802,20 +816,22 @@ const DemographicsPopUp = ({
             <div className="demographics-card__content-row">
               <label>Enrolled to physician: </label>
               {enrolmentCaption(lastEnrolment)}
-              <Tooltip title="Add new enrolment" placement="top-start" arrow>
-                <span>
-                  <SquarePlusIcon onClick={handleClickNewEnrolment} ml={5} />
-                </span>
-              </Tooltip>
-              <Tooltip
-                title="See enrolment history"
-                placement="top-start"
-                arrow
-              >
-                <span>
-                  <ClockIcon onClick={handleClickHistory} ml={5} />
-                </span>
-              </Tooltip>
+              <div>
+                <Tooltip title="Add new enrolment" placement="top-start" arrow>
+                  <span>
+                    <SquarePlusIcon onClick={handleClickNewEnrolment} ml={5} />
+                  </span>
+                </Tooltip>
+                <Tooltip
+                  title="See enrolment history"
+                  placement="top-start"
+                  arrow
+                >
+                  <span>
+                    <ClockIcon onClick={handleClickHistory} ml={15} />
+                  </span>
+                </Tooltip>
+              </div>
             </div>
             <div className="demographics-card__content-row">
               <label>Enrollment status: </label>
@@ -842,37 +858,45 @@ const DemographicsPopUp = ({
             {editVisible ? (
               <fieldset>
                 <legend>Primary Physician</legend>
-                <div className="demographics-card__row-special">
-                  <Input
-                    value={formDatas?.pPhysicianFirstName ?? ""}
-                    onChange={handleChange}
-                    name="pPhysicianFirstName"
-                    id="primary-first-name"
-                    label="First Name:"
-                  />
-                  <Input
-                    value={formDatas?.pPhysicianLastName ?? ""}
-                    onChange={handleChange}
-                    name="pPhysicianLastName"
-                    id="primary-last-name"
-                    label="Last Name:"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.pPhysicianFirstName ?? ""}
+                      onChange={handleChange}
+                      name="pPhysicianFirstName"
+                      id="primary-first-name"
+                      label="First Name:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.pPhysicianLastName ?? ""}
+                      onChange={handleChange}
+                      name="pPhysicianLastName"
+                      id="primary-last-name"
+                      label="Last Name:"
+                    />
+                  </div>
                 </div>
-                <div className="demographics-card__row-special">
-                  <Input
-                    value={formDatas?.pPhysicianOHIP ?? ""}
-                    onChange={handleChange}
-                    name="pPhysicianOHIP"
-                    id="primary-ohip"
-                    label="OHIP#:"
-                  />
-                  <Input
-                    value={formDatas?.pPhysicianCPSO ?? ""}
-                    onChange={handleChange}
-                    name="pPhysicianCPSO"
-                    id="primary-cpso"
-                    label="CPSO:"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.pPhysicianOHIP ?? ""}
+                      onChange={handleChange}
+                      name="pPhysicianOHIP"
+                      id="primary-ohip"
+                      label="OHIP#:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.pPhysicianCPSO ?? ""}
+                      onChange={handleChange}
+                      name="pPhysicianCPSO"
+                      id="primary-cpso"
+                      label="CPSO:"
+                    />
+                  </div>
                 </div>
               </fieldset>
             ) : (
@@ -884,21 +908,25 @@ const DemographicsPopUp = ({
             {editVisible ? (
               <fieldset>
                 <legend>Referred Physician</legend>
-                <div className="demographics-card__row-special">
-                  <Input
-                    value={formDatas?.rPhysicianFirstName ?? ""}
-                    onChange={handleChange}
-                    name="rPhysicianFirstName"
-                    id="referred-first-name"
-                    label="First Name:"
-                  />
-                  <Input
-                    value={formDatas?.rPhysicianLastName ?? ""}
-                    onChange={handleChange}
-                    name="rPhysicianLastName"
-                    id="referred-last-name"
-                    label="Last Name:"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.rPhysicianFirstName ?? ""}
+                      onChange={handleChange}
+                      name="rPhysicianFirstName"
+                      id="referred-first-name"
+                      label="First Name:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.rPhysicianLastName ?? ""}
+                      onChange={handleChange}
+                      name="rPhysicianLastName"
+                      id="referred-last-name"
+                      label="Last Name:"
+                    />
+                  </div>
                 </div>
               </fieldset>
             ) : (
@@ -911,21 +939,25 @@ const DemographicsPopUp = ({
             {editVisible ? (
               <fieldset>
                 <legend>Family Physician</legend>
-                <div className="demographics-card__row-special">
-                  <Input
-                    value={formDatas?.fPhysicianFirstName ?? ""}
-                    onChange={handleChange}
-                    name="fPhysicianFirstName"
-                    id="family-first-name"
-                    label="First Name:"
-                  />
-                  <Input
-                    value={formDatas?.fPhysicianLastName ?? ""}
-                    onChange={handleChange}
-                    name="fPhysicianLastName"
-                    id="family-last-name"
-                    label="Last Name:"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.fPhysicianFirstName ?? ""}
+                      onChange={handleChange}
+                      name="fPhysicianFirstName"
+                      id="family-first-name"
+                      label="First Name:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.fPhysicianLastName ?? ""}
+                      onChange={handleChange}
+                      name="fPhysicianLastName"
+                      id="family-last-name"
+                      label="Last Name:"
+                    />
+                  </div>
                 </div>
               </fieldset>
             ) : (
@@ -938,45 +970,55 @@ const DemographicsPopUp = ({
             {editVisible ? (
               <fieldset>
                 <legend>Emergency Contact</legend>
-                <div className="demographics-card__row-special">
-                  <Input
-                    value={formDatas?.emergencyFirstName ?? ""}
-                    onChange={handleChange}
-                    name="emergencyFirstName"
-                    id="emergency-first-name"
-                    label="First Name:"
-                  />
-                  <Input
-                    value={formDatas?.emergencyMiddleName ?? ""}
-                    onChange={handleChange}
-                    name="emergencyMiddleName"
-                    id="emergency-middle-name"
-                    label="Middle Name:"
-                  />
-                  <Input
-                    value={formDatas?.emergencyLastName ?? ""}
-                    onChange={handleChange}
-                    name="emergencyLastName"
-                    id="emergency-last-name"
-                    label="Last Name:"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.emergencyFirstName ?? ""}
+                      onChange={handleChange}
+                      name="emergencyFirstName"
+                      id="emergency-first-name"
+                      label="First Name:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.emergencyMiddleName ?? ""}
+                      onChange={handleChange}
+                      name="emergencyMiddleName"
+                      id="emergency-middle-name"
+                      label="Middle Name:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <Input
+                      value={formDatas?.emergencyLastName ?? ""}
+                      onChange={handleChange}
+                      name="emergencyLastName"
+                      id="emergency-last-name"
+                      label="Last Name:"
+                    />
+                  </div>
                 </div>
-                <div className="demographics-card__row-special">
-                  <InputEmail
-                    value={formDatas?.emergencyEmail ?? ""}
-                    onChange={handleChange}
-                    name="emergencyEmail"
-                    id="emergency-email"
-                    label="Email:"
-                  />
-                  <InputTel
-                    value={formDatas?.emergencyPhone ?? ""}
-                    onChange={handleChange}
-                    name="emergencyPhone"
-                    id="emergency-phone"
-                    label="Phone:"
-                    placeholder="xxx-xxx-xxxx"
-                  />
+                <div className="demographics-card__content-row-special">
+                  <div className="demographics-card__content-row-special-item">
+                    <InputEmail
+                      value={formDatas?.emergencyEmail ?? ""}
+                      onChange={handleChange}
+                      name="emergencyEmail"
+                      id="emergency-email"
+                      label="Email:"
+                    />
+                  </div>
+                  <div className="demographics-card__content-row-special-item">
+                    <InputTel
+                      value={formDatas?.emergencyPhone ?? ""}
+                      onChange={handleChange}
+                      name="emergencyPhone"
+                      id="emergency-phone"
+                      label="Phone:"
+                      placeholder="xxx-xxx-xxxx"
+                    />
+                  </div>
                 </div>
               </fieldset>
             ) : (
@@ -986,12 +1028,6 @@ const DemographicsPopUp = ({
               </div>
             )}
           </div>
-          <DemographicsAvatar
-            avatar={formDatas?.avatar ?? null}
-            editVisible={editVisible}
-            setWebcamVisible={setWebcamVisible}
-            handleAvatarChange={handleAvatarChange}
-          />
         </form>
         <p className="demographics-card__sign">
           {isUpdated(demographicsInfos) ? (
@@ -1022,10 +1058,10 @@ const DemographicsPopUp = ({
       {newEnrolmentVisible && (
         <FakeWindow
           title={`NEW ENROLMENT`}
-          width={500}
-          height={400}
-          x={(window.innerWidth - 500) / 2}
-          y={(window.innerHeight - 400) / 2}
+          width={350}
+          height={650}
+          x={(window.innerWidth - 350) / 2}
+          y={(window.innerHeight - 650) / 2}
           color="#495867"
           setPopUpVisible={setNewEnrolmentVisible}
         >
@@ -1058,9 +1094,9 @@ const DemographicsPopUp = ({
         <FakeWindow
           title="TAKE A PICTURE WITH YOUR WEBCAM"
           width={480}
-          height={500}
+          height={530}
           x={(window.innerWidth - 480) / 2}
-          y={(window.innerHeight - 500) / 2}
+          y={(window.innerHeight - 530) / 2}
           color="#94bae8"
           setPopUpVisible={setWebcamVisible}
         >

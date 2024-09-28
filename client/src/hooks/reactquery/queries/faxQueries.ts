@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
-
 axios.defaults.withCredentials = true;
 
 const fetchFaxesInbox = async (

@@ -8,7 +8,7 @@ import InputEmail from "../../UI/Inputs/InputEmail";
 import InputImgFile from "../../UI/Inputs/InputImgFile";
 import InputTel from "../../UI/Inputs/InputTel";
 import GenericList from "../../UI/Lists/GenericList";
-import PostalZipSelect from "../../UI/Lists/PostalZipSelect";
+import PostalZipSelectInput from "../../UI/Lists/PostalZipSelectInput";
 import SiteStatusSelect from "../../UI/Lists/SiteStatusSelect";
 import RoomsForm from "./RoomsForm";
 
@@ -86,20 +86,18 @@ const FormSite = ({
             />
           </div>
           <div className="site-form__row">
-            <PostalZipSelect
-              onChange={handleChangePostalOrZip}
+            <PostalZipSelectInput
+              onChangeSelect={handleChangePostalOrZip}
               postalOrZip={postalOrZip}
-            />
-            <Input
               value={
                 postalOrZip === "postal"
                   ? formDatas?.postal_code ?? ""
                   : formDatas?.zip_code ?? ""
               }
-              onChange={handleChange}
+              onChangeInput={handleChange}
               name="postalZipCode"
               id="postalZipCode"
-              width={102}
+              inputWidth={102}
               placeholder={
                 postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
               }

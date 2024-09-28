@@ -122,16 +122,16 @@ const PamphletForm = ({
   };
   return (
     <div
-      className="reference-edocs__form"
+      className="reference__edocs-form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
-      <form className="reference-edocs__content" onSubmit={handleSubmit}>
+      <form className="reference__edocs-form-content" onSubmit={handleSubmit}>
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-        <div className="reference-edocs__form-btn-container">
+        <div className="reference__edocs-form-btn-container">
           <SubmitButton label="Save" disabled={isLoadingFile || progress} />
           <CancelButton onClick={handleCancel} />
         </div>
-        <div className="reference-edocs__row">
+        <div className="reference__edocs-form-row">
           <Input
             label="Name"
             value={formDatas?.name ?? ""}
@@ -140,7 +140,7 @@ const PamphletForm = ({
             id="name"
           />
         </div>
-        <div className="reference-edocs__row">
+        <div className="reference__edocs-form-row">
           <label>File</label>
           <input
             name="Content"
@@ -150,7 +150,7 @@ const PamphletForm = ({
             // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx"
           />
         </div>
-        <div className="reference-edocs__row reference-edocs__row--text">
+        <div className="reference__edocs-form-row reference__edocs__row--text">
           <label htmlFor="notes">Notes</label>
           <textarea
             name="notes"
@@ -162,7 +162,7 @@ const PamphletForm = ({
         </div>
       </form>
       {formDatas.file && (
-        <div className="reference-edocs__preview">
+        <div className="reference__edocs-form-preview">
           <ReportViewer file={formDatas.file} />
         </div>
       )}

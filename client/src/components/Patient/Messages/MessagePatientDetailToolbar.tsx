@@ -18,14 +18,14 @@ const MessagePatientDetailToolbar = ({
   handleDeleteMsg,
 }: MessagePatientDetailToolbarProps) => {
   return (
-    <div className="message-detail__toolbar">
+    <div className="message__detail-toolbar message__detail-toolbar--patient">
       <ArrowLeftIcon onClick={handleClickBack} mr={20} />
-      <div className="message-detail__toolbar-subject message-detail__toolbar-subject--patient">
+      <div className="message__detail-toolbar-subject">
         {message.high_importance && <ExclamationIcon mr={5} />}
         {message.subject}
       </div>
-
-      <div className="message-detail__toolbar-logos">
+      <div className="message__detail-toolbar-patient"></div>
+      <div className="message__detail-toolbar-logos">
         {section !== "Deleted messages" && (
           <TrashIcon onClick={handleDeleteMsg} />
         )}

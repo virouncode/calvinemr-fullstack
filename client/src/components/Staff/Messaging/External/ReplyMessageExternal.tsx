@@ -21,12 +21,12 @@ import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
+import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
-
 axios.defaults.withCredentials = true;
 
 type ReplyMessageExternalProps = {
@@ -267,20 +267,30 @@ Powered by Calvin EMR`,
   };
 
   return (
-    <div className="reply-message__form">
-      <div className="reply-message__title">
-        <p>
-          <strong>To: </strong>
-          {toPatientName(message.from_patient_infos)}
-        </p>
+    <div className="reply-message">
+      <div className="reply-message__recipients">
+        <Input
+          label="To:"
+          id="to"
+          placeholder="Recipient(s)"
+          value={toPatientName(message.from_patient_infos)}
+          readOnly={true}
+        />
       </div>
       <div className="reply-message__subject">
-        <strong>Subject:</strong>
-        {previousMsgs.length
-          ? `\u00A0Re: ${message.subject.slice(
-              message.subject.indexOf(":") + 1
-            )}`
-          : `\u00A0Re: ${message.subject}`}
+        <Input
+          value={
+            previousMsgs.length
+              ? `\u00A0Re: ${message.subject.slice(
+                  message.subject.indexOf(":") + 1
+                )}`
+              : `\u00A0Re: ${message.subject}`
+          }
+          id="subject"
+          label="Subject:"
+          placeholder="Subject"
+          readOnly={true}
+        />
       </div>
       <div className="reply-message__attach">
         <AttachFilesButton onClick={handleAttach} attachments={attachments} />
@@ -294,8 +304,6 @@ Powered by Calvin EMR`,
             checked={important}
             label="High importance"
           />
-          import MessagesExternalTemplates from
-          './Templates/MessagesExternalTemplates';
         </div>
         <div>
           <strong
@@ -323,13 +331,15 @@ Powered by Calvin EMR`,
             />
           ))}
         </div>
-        <MessagesAttachments
-          attachments={attachments}
-          handleRemoveAttachment={handleRemoveAttachment}
-          deletable={true}
-          cardWidth="17%"
-          addable={false}
-        />
+        {attachments.length > 0 && (
+          <MessagesAttachments
+            attachments={attachments}
+            handleRemoveAttachment={handleRemoveAttachment}
+            deletable={true}
+            cardWidth="17%"
+            addable={false}
+          />
+        )}
       </div>
       <div className="reply-message__btns">
         <SaveButton

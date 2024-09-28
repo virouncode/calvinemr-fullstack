@@ -13,6 +13,7 @@ import Input from "../../../../UI/Inputs/Input";
 import InputEmail from "../../../../UI/Inputs/InputEmail";
 import InputTel from "../../../../UI/Inputs/InputTel";
 import GenericList from "../../../../UI/Lists/GenericList";
+import PostalZipSelectInput from "../../../../UI/Lists/PostalZipSelectInput";
 import FormSignCell from "../../../../UI/Tables/FormSignCell";
 
 type PharmacyFormProps = {
@@ -141,11 +142,11 @@ const PharmacyForm = ({
 
   return (
     <tr
-      className="pharmacies__form"
+      className="pharmacies-list__form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
       <td>
-        <div className="pharmacies__form-btn-container">
+        <div className="pharmacies-list__form-btn-container">
           <SaveButton onClick={handleSubmit} disabled={progress} />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>
@@ -169,26 +170,20 @@ const PharmacyForm = ({
           placeHolder="Choose a province/state..."
         />
       </td>
-      <td className="td--postal">
-        <select
-          style={{ width: "60px", marginRight: "10px" }}
-          name="postalOrZip"
-          id="postalOrZip"
-          value={postalOrZip}
-          onChange={handleChangePostalOrZip}
-        >
-          <option value="postal">Postal</option>
-          <option value="zip">Zip</option>
-        </select>
-        <Input
-          name="postalZipCode"
+      <td>
+        <PostalZipSelectInput
+          onChangeSelect={handleChangePostalOrZip}
+          onChangeInput={handleChange}
+          postalOrZip={postalOrZip}
+          label={false}
           value={
             postalOrZip === "postal" ? formDatas.postalCode : formDatas.zipCode
           }
-          onChange={handleChange}
+          id="postalZipCode"
           placeholder={
             postalOrZip === "postal" ? "A1A 1A1" : "12345 or 12345-6789"
           }
+          name="postalZipCode"
         />
       </td>
       <td>

@@ -4,7 +4,6 @@ import { ClinicalNoteType } from "../../../../../types/api";
 import { timestampToDateTimeStrTZ } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
-import TriangleIcon from "../../../../UI/Icons/TriangleIcon";
 
 type ClinicalNoteCardHeaderFoldedProps = {
   tempFormDatas: ClinicalNoteType;
@@ -33,25 +32,28 @@ const ClinicalNoteCardHeaderFolded = ({
       onClick={handleClinicalHeaderClick}
     >
       <div className="clinical-notes__card-header--folded-title">
-        <Checkbox
-          onChange={handleCheck}
-          checked={isChecked(clinicalNote.id) || selectAll}
-          onClick={(event) => event.stopPropagation()}
-        />
-        <p>
-          <label>
+        <div className="clinical-notes__card-header--folded-title-author">
+          <Checkbox
+            onChange={handleCheck}
+            checked={isChecked(clinicalNote.id) || selectAll}
+            onClick={(event) => event.stopPropagation()}
+          />
+          <p>
             <strong>From: </strong>
-          </label>
-          {staffIdToTitleAndName(staffInfos, tempFormDatas.created_by_id)}
-          {` ${timestampToDateTimeStrTZ(tempFormDatas.date_created)}`}
-          {" / "}
-          <strong>Subject: </strong>
-          {tempFormDatas.subject}
-        </p>
+            {staffIdToTitleAndName(staffInfos, tempFormDatas.created_by_id)}
+            {` ${timestampToDateTimeStrTZ(tempFormDatas.date_created)}`}
+          </p>
+        </div>
+        <div className="clinical-notes__card-header--folded-title-subject">
+          <p>
+            <strong>Subject: </strong>
+            {tempFormDatas.subject}
+          </p>
+        </div>
       </div>
-      <div className="clinical-notes__card-header--folded-triangle">
+      {/* <div className="clinical-notes__card-header--folded-triangle">
         <TriangleIcon color="black" rotation={180} />
-      </div>
+      </div> */}
     </div>
   );
 };

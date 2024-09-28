@@ -63,8 +63,8 @@ const Billing = () => {
   const billings = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="billing">
-      <div className="billing__btn-container">
+    <>
+      <div className="billing__btn">
         {user.title !== "Secretary" && (
           <Button
             onClick={handleAdd}
@@ -103,7 +103,7 @@ const Billing = () => {
         sites={sites}
         addVisible={addVisible}
       />
-    </div>
+    </>
   );
 };
 

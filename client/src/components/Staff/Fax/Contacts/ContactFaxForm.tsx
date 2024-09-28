@@ -24,38 +24,38 @@ const ContactFaxForm = ({
   };
 
   return (
-    <div className="contact-form">
-      <div className="contact-form-radios">
-        <label className="contact-form-radios__label">Add contact to:</label>
-        <div className="contact-form-radios__list">
-          <div className="contact-form-radios__item">
+    <div className="contact-fax__form">
+      <div className="contact-fax__form-radios">
+        <label>Add contact to:</label>
+        <div className="contact-fax__form-radios-list">
+          <div className="contact-fax__form-radios-item">
             <Radio
               id="doctors"
               value="doctors"
               checked={contactType === "doctors"}
               onChange={handleChange}
               label="Doctors directory"
-              name="fax-contact-type"
+              name="fax-contact-fax__type"
             />
           </div>
-          <div className="contact-form-radios__item">
+          <div className="contact-fax__form-radios-item">
             <Radio
               id="pharmacies"
               value="pharmacies"
               checked={contactType === "pharmacies"}
               onChange={handleChange}
               label="Pharmacies directory"
-              name="fax-contact-type"
+              name="fax-contact-fax__type"
             />
           </div>
-          <div className="contact-form-radios__item">
+          <div className="contact-fax__form-radios-item">
             <Radio
               id="others"
               value="others"
               checked={contactType === "others"}
               onChange={handleChange}
               label="Others directory"
-              name="fax-contact-type"
+              name="fax-contact-fax__type"
             />
           </div>
         </div>

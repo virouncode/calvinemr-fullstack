@@ -1,99 +1,99 @@
-.myaccount-section {
-  &__container {
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    border-radius: 6px;
-    background: $white;
-    padding: 20px;
-    width: 55%;
-    margin: 0 auto;
+.myaccount {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+.myaccount__container {
+  box-shadow: $box-shadow-default;
+  border-radius: 6px;
+  border: solid 1px $grey;
+  background: $white;
+  padding: 1rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.myaccount__success {
+  padding: 0.5rem 1rem;
+  font-size: $size-sm;
+  width: 90%;
+  margin: 0.5rem auto;
+  color: forestgreen;
+  background-color: rgba(34, 139, 34, 0.4);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.myaccount__form {
+  font-size: $size-base;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.myaccount__column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.myaccount__item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  label {
+    font-size: $size-base;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
   }
-  &__success {
-    padding: 10px 20px;
-    width: 100%;
-    font-size: 0.9rem;
-    margin: 0 auto;
-    border-radius: 6px;
-    text-align: center;
-    color: forestgreen;
-    background-color: rgba(34, 139, 34, 0.4);
-    margin-bottom: 10px;
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  &__btns {
-    text-align: center;
-    margin-top: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &__form {
-    font-size: 0.85rem;
-    display: flex;
-    justify-content: space-between;
-  }
-  &__column {
-    width: 45%;
-  }
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    &--admin {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      label {
-        font-size: 0.85rem;
-        font-weight: bold;
-        min-width: 90px;
-      }
-    }
-    p {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    label {
-      font-size: 0.85rem;
-      font-weight: bold;
-      min-width: 170px;
-    }
-    input {
-      width: 100%;
-    }
-    select {
-      width: 100%;
-    }
-    &-row-submit {
-      text-align: end;
-      margin-top: 20px;
-      input[type="submit"] {
-        width: 100px;
-      }
-    }
-  }
-  &__image {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
+  p {
     overflow: hidden;
-    input[type="file"] {
-      width: 100%;
-      padding: 0;
-      &::-webkit-file-upload-button {
-        cursor: pointer;
-      }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: $size-base;
+  }
+  input,
+  select {
+    width: 100%;
+    font-size: $size-base;
+  }
+}
+.myaccount__btns {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .myaccount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .myaccount__container {
+    max-width: 820px;
+  }
+  .myaccount__form {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .myaccount__column {
+    width: 50%;
+  }
+}
+@media (min-width: 1024px) {
+  .myaccount__item {
+    label,
+    input,
+    select,
+    p {
+      font-size: $size-sm;
+    }
+  }
+  .myaccount__btns {
+    button {
+      font-size: $size-sm;
     }
   }
 }

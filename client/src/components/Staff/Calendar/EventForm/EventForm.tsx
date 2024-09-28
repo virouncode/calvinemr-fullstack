@@ -165,6 +165,7 @@ const EventForm = ({
   };
 
   const handleUntilChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) return;
     const untilDate = DateTime.fromISO(e.target.value, {
       zone: "America/Toronto",
     }).set({ hour: 23, minute: 59, second: 59 });
@@ -1029,7 +1030,7 @@ const EventForm = ({
   };
 
   return (
-    <div className="event-form__container">
+    <>
       {!invitationVisible ? (
         <form
           className={
@@ -1040,11 +1041,7 @@ const EventForm = ({
           }
           onSubmit={handleSubmit}
         >
-          {errMsgPost && (
-            <div className="event-form__row">
-              <ErrorParagraph errorMsg={errMsgPost} />
-            </div>
-          )}
+          {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
           <EventFormHostRow
             formDatas={formDatas}
             handleHostChange={handleHostChange}
@@ -1140,7 +1137,7 @@ const EventForm = ({
           isFirstEvent={isFirstEvent}
         />
       )}
-    </div>
+    </>
   );
 };
 

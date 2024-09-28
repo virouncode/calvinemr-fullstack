@@ -14,9 +14,9 @@ const Fax = ({ faxURL }: FaxProps) => {
     socket?.emit("message", { key: ["faxes outbox"] });
   }, [socket]);
   return (
-    <div>
-      <iframe src={dataUrl} width="100%" height="600px" title="test" />
-    </div>
+    <>
+      <iframe src={dataUrl} width="100%" height="100%" title="test" />
+    </>
   );
 };
 

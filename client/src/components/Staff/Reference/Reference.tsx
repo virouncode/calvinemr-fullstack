@@ -5,11 +5,11 @@ import ReferenceLinks from "./ReferenceLinks";
 
 const Reference = () => {
   return (
-    <div className="reference">
+    <>
       <ReferenceLinks />
       <Edocs />
       <Pamphlets />
-    </div>
+    </>
   );
 };
 

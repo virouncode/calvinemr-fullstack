@@ -58,27 +58,26 @@ const CalvinAITemplateForm = ({
     });
   };
   return (
-    <div className="new-template">
+    <div className="calvinai-template__form">
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="new-template-name">
+      <div className="calvinai-template__form-name">
         <Input
           value={newTemplate.name ?? ""}
           onChange={handleChange}
           name="name"
           id="template-ai-name"
-          label="Template name:"
-          placeholder="New template name"
+          placeholder="Template name*"
           autoFocus={true}
         />
       </div>
-      <div className="new-template-body">
+      <div className="calvinai-template__form-content">
         <textarea
           name="prompt"
           value={newTemplate.prompt}
           onChange={handleChange}
         />
       </div>
-      <div className="new-template-btns">
+      <div className="calvinai-template__form-btns">
         <SaveButton onClick={handleSave} />
         <CancelButton onClick={handleCancel} />
       </div>

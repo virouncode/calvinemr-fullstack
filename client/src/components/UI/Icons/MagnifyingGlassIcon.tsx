@@ -1,5 +1,6 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMediaQuery } from "@mui/material";
 import React from "react";
 
 type MagnifyingGlassIconProps = {
@@ -18,6 +19,7 @@ const MagnifyingGlassIcon = ({
   right = 0,
   clickable = true,
 }: MagnifyingGlassIconProps) => {
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   return (
     <FontAwesomeIcon
       icon={faMagnifyingGlass}
@@ -29,6 +31,7 @@ const MagnifyingGlassIcon = ({
         right: `${right}px`,
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
+        fontSize: isTabletOrMobile ? "1rem" : "0.85rem",
       }}
     />
   );

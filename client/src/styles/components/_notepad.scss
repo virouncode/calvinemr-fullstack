@@ -2,18 +2,30 @@
   margin-top: 40px;
   height: 92%;
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
   &__notes {
-    height: 95%;
+    flex: 1;
     width: 100%;
     overflow-y: scroll;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     white-space: pre-wrap;
+    font-size: $size-base;
+    padding: 0.5rem;
   }
   &__btns {
-    text-align: center;
-    button {
-      margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .notepad {
+    .notepad__notes {
+      font-size: $size-sm;
     }
   }
 }

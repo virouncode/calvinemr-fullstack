@@ -30,7 +30,7 @@ const MessagesAttachments = ({
 }: MessageAttachmentsProps) => {
   return (
     attachments && (
-      <div className="message-attachments">
+      <div className="message__attachments">
         {attachments.map((attachment) => (
           <MessageAttachmentCard
             handleRemoveAttachment={handleRemoveAttachment}

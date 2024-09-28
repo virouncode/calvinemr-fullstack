@@ -13,8 +13,8 @@ const ClinicalNotesNavigation = ({
 }: ClinicalNotesNavigationProps) => {
   return (
     <>
-      <GoToTopIcon ml={5} mr={2} onClick={handleGoToTop} />
-      <GoToBottomIcon mr={2} onClick={handleGoToEnd} />
+      <GoToTopIcon onClick={handleGoToTop} />
+      <GoToBottomIcon onClick={handleGoToEnd} />
     </>
   );
 };

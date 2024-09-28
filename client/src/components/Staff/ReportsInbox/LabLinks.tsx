@@ -8,6 +8,7 @@ import { LabLinkCredentialsType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LabLinkItem from "./LabLinkItem";
 import LabLinksPersonal from "./LabLinksPersonal";
 
@@ -24,9 +25,9 @@ const LabLinks = () => {
 
   return (
     <div className="lablinks">
-      {error && <p className="lablinks__err">{error.message}</p>}
+      {error && <ErrorParagraph errorMsg={error.message} />}
       {errorCredentials && (
-        <p className="lablinks__err">{errorCredentials.message}</p>
+        <ErrorParagraph errorMsg={errorCredentials.message} />
       )}
       <ul className="lablinks__list">
         {labLinks && labLinks.length > 0 ? (

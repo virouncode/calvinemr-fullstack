@@ -213,9 +213,9 @@ const LetterForm = ({
           title={`NEW LETTER/REFERRAL for ${toPatientName(
             demographicsInfos
           )} PREVIEW`}
-          width={1300}
+          width={innerWidth}
           height={750}
-          x={(window.innerWidth - 1300) / 2}
+          x={0}
           y={(window.innerHeight - 750) / 2}
           color={"#848484"}
           setPopUpVisible={setPreviewVisible}

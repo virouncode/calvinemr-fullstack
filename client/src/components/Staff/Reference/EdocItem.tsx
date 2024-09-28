@@ -20,22 +20,16 @@ import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 
 type ReferenceEdocItemProps = {
   item: EdocType;
-  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  errMsgPost: string;
   lastItemRef?: (node: Element | null) => void;
 };
 
-const EdocItem = ({
-  item,
-  setErrMsgPost,
-  errMsgPost,
-  lastItemRef,
-}: ReferenceEdocItemProps) => {
+const EdocItem = ({ item, lastItemRef }: ReferenceEdocItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<EdocType>(item);
+  const [errMsgPost, setErrMsgPost] = useState("");
   const edocPut = useEdocPut();
   const edocDelete = useEdocDelete();
 
@@ -105,12 +99,12 @@ const EdocItem = ({
   return (
     item && (
       <tr
-        className="reference-edocs__item"
+        className="reference__edocs-item"
         style={{ border: errMsgPost && "solid 1.5px red" }}
         ref={lastItemRef}
       >
         <td>
-          <div className="reference-edocs__item-btn-container">
+          <div className="reference__edocs-item-btn-container">
             {editVisible ? (
               <>
                 <SaveButton
@@ -145,7 +139,7 @@ const EdocItem = ({
           />
         </td>
         <td
-          className="reference-edocs__item-link"
+          className="reference__edocs-item-link"
           onClick={() => showDocument(item.file?.url, item.file?.mime)}
         >
           {item.file?.name}

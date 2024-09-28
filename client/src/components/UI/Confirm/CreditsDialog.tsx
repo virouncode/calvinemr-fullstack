@@ -56,7 +56,7 @@ const CreditsDialog = ({ onConfirm, isPopUp, props }: CreditsDialogProps) => {
           >
             <p>{props.content ?? "Do you really want to do this action ?"}</p>
           </div>
-          <p className="confirm-dialog-btn-container confirm-dialog-btn-container--credits">
+          <p className="confirm-dialog-btn-container">
             <Button onClick={onConfirm} label={props.yes} />
           </p>
         </div>

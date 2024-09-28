@@ -12,7 +12,7 @@ const StaffReferencePage = () => {
           <title>Reference</title>
         </Helmet>
       </HelmetProvider>
-      <section className="reference-section">
+      <section className="reference">
         <Reference />
       </section>
     </>

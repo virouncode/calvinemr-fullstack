@@ -63,6 +63,7 @@ import EventElement from "./EventElement";
 import EventElementListWeek from "./EventElementListWeek";
 import EventElementTimegrid from "./EventElementTimegrid";
 import CalendarOptions from "./Options/CalendarOptions";
+import CalendarOptionsMobile from "./Options/CalendarOptionsMobile";
 
 //MY COMPONENT
 const Calendar = () => {
@@ -80,6 +81,8 @@ const Calendar = () => {
   const [timelineSiteId, setTimelineSiteId] = useState(user.site_id); //Selected Timeline Site
   const [editAvailability, setEditAvailability] = useState(false);
   const [printDayVisible, setPrintDayVisible] = useState(false);
+  const [mobileCalendarOptionsVisible, setMobileCalendarOptionsVisible] =
+    useState(false);
   const [hostsIds, setHostsIds] = useState(
     user.title === "Secretary"
       ? [
@@ -244,12 +247,6 @@ const Calendar = () => {
     const view = info.view.type; //the view i clicked on
 
     //CALENDAR
-    //change current event
-    currentEvent.current = eventImplToEventInput(event);
-    currentElement.current = element;
-    lastCurrentId.current = event.id;
-    element.style.border = "solid 1px red";
-    !timelineVisible && setCurrentView(view);
     //If the event event i clicked on is not the same as the current event or the start date is different (for recurring events)
     if (
       currentEvent.current &&
@@ -259,7 +256,12 @@ const Calendar = () => {
     )
       //remove red border on former current element
       (currentElement.current as HTMLElement).style.border = "none";
-
+    //change current event
+    currentEvent.current = eventImplToEventInput(event);
+    currentElement.current = element;
+    lastCurrentId.current = event.id;
+    element.style.border = "solid 1px red";
+    !timelineVisible && setCurrentView(view);
     //XANO
     //If the event is recurring
     if (event.extendedProps.recurrence !== "Once") {
@@ -1462,7 +1464,15 @@ const Calendar = () => {
         setEditAvailability={setEditAvailability}
         isPending={appointments.isPending}
       />
-      <div className="calendar">
+      {mobileCalendarOptionsVisible && (
+        <CalendarOptionsMobile
+          editAvailability={editAvailability}
+          setEditAvailability={setEditAvailability}
+          isPending={appointments.isPending}
+          setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
+        />
+      )}
+      <div className="calendar__layout">
         <CalendarLeftBar
           handleShortcutpickrChange={handleShortcutpickrChange}
           sites={sites as SiteType[]}
@@ -1508,6 +1518,7 @@ const Calendar = () => {
           sitesIds={sitesIds}
           setSitesIds={setSitesIds}
           isFirstEvent={isFirstEvent}
+          setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
         />
       </div>
       {confirmDlgRecChangeVisible && (

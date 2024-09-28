@@ -84,25 +84,25 @@ const AlertsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="alerts">
         <h1 className="alerts__title">Alerts and special needs</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="alerts">
         <h1 className="alerts__title">Alerts and special needs</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="alerts">
       <h1 className="alerts__title">Alerts and special needs</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
@@ -166,7 +166,7 @@ const AlertsPopUp = ({
           <CloseButton onClick={handleClose} />
         </div>
       </>
-    </>
+    </div>
   );
 };
 

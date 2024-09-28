@@ -156,7 +156,7 @@ const ForwardTodo = ({
         />
       </div>
       <div className="forward-message__form">
-        <div className="forward-message__recipients">
+        <div className="forward-message__form-recipients">
           <Input
             label="To:"
             id="to"
@@ -168,17 +168,17 @@ const ForwardTodo = ({
             readOnly={true}
           />
         </div>
-        <div className="forward-message__subject">
+        <div className="forward-message__form-subject">
           <strong>Subject:</strong>
           {`\u00A0Fwd: ${todo.subject}`}
         </div>
         {patientName && (
-          <div className="forward-message__patient">
+          <div className="forward-message__form-patient">
             <strong>About patient:{"\u00A0"}</strong>
             {patientName}
           </div>
         )}
-        <div className="new-message__duedate">
+        <div className="forward-message__form-duedate">
           <InputDate
             value={dueDate}
             onChange={handleChangeDueDate}
@@ -186,8 +186,8 @@ const ForwardTodo = ({
             label="Due date"
           />
         </div>
-        <div className="new-message__importance">
-          <div className="new-message__importance-check">
+        <div className="forward-message__form-importance">
+          <div className="forward-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -206,7 +206,7 @@ const ForwardTodo = ({
             </strong>
           </div>
         </div>
-        <div className="forward-message__body">
+        <div className="forward-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
@@ -222,7 +222,7 @@ const ForwardTodo = ({
             addable={false}
           />
         </div>
-        <div className="forward-message__btns">
+        <div className="forward-message__form-btns">
           <SaveButton onClick={handleSend} disabled={progress} label="Send" />
           <CancelButton onClick={handleCancel} disabled={progress} />
         </div>

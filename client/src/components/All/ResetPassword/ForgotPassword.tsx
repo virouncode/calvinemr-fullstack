@@ -16,15 +16,15 @@ const ForgotPassword = () => {
   const [resetOk, setResetOk] = useState(false);
 
   return (
-    <div className="reset-container">
+    <div className="reset__container">
       {validTempPwd ? (
-        <h2 className="reset-container-title">Reset Password</h2>
+        <h2 className="reset__title">Reset Password</h2>
       ) : requestSent ? (
-        <h2 className="reset-container-title">Temporary Password</h2>
+        <h2 className="reset__title">Temporary Password</h2>
       ) : (
-        <h2 className="reset-container-title">Email Verification</h2>
+        <h2 className="reset__title">Email Verification</h2>
       )}
-      {successMsg && <p className="reset-container-success">{successMsg}</p>}
+      {successMsg && <p className="reset__success">{successMsg}</p>}
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {!requestSent && !validTempPwd && (
         <EmailForm

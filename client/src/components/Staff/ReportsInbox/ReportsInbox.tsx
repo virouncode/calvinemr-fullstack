@@ -55,15 +55,15 @@ const ReportsInbox = () => {
   const reportsDatas = reports.pages.flatMap((page) => page.items);
   return (
     <>
-      <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
       {user.access_level === "staff" && user.title === "Doctor" && (
         <div
-          className="reportsinbox__lablinks"
+          className="reportsinbox__results"
           onClick={() => setLabLinksVisible(true)}
         >
           External Results
         </div>
       )}
+      <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="reportsinbox__table-container" ref={divRef}>
         <table className="reportsinbox__table">
@@ -72,7 +72,7 @@ const ReportsInbox = () => {
               <th>Action</th>
               <th>Name</th>
               <th>Format</th>
-              <th>File extension and version</th>
+              <th>File extension</th>
               <th>File</th>
               <th>Class</th>
               <th>Sub Class</th>

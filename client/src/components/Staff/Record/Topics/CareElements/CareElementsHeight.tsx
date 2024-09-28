@@ -36,17 +36,19 @@ const CareElementsHeight = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Height (cm):</label>
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
+        Height (cm):
+      </label>
 
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastDatas.bodyMassIndex?.BMI}
       </div>
       {lastDatas.Height?.Height && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
-              <ClockIcon onClick={() => handleClickHistory("HEIGHT")} mr={5} />
+              <ClockIcon onClick={() => handleClickHistory("HEIGHT")} mr={15} />
             </span>
           </Tooltip>
           <Tooltip title="Edit history">

@@ -4,6 +4,7 @@ import useIntersection from "../../../hooks/useIntersection";
 import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
+import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 
 type DiagnosisSearchProps = {
   handleClickDiagnosis: (itemCode: number) => void;
@@ -32,44 +33,54 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
     setSearch(e.target.value);
   };
 
+  if (error)
+    return (
+      <div className="diagnosis__container">
+        <ErrorParagraph errorMsg={error.message} />
+      </div>
+    );
+
   const diagnosis = data?.pages.flatMap((page) => page.items);
 
   return (
     <div className="diagnosis__container">
-      <div className="diagnosis-search">
+      <div className="diagnosis__search">
         <Input
           value={search}
           onChange={handleSearch}
           id="diagnosis-search"
-          label="Search"
           autoFocus={true}
-          width={300}
+          placeholder="Search by Diagnosis name..."
         />
       </div>
-      {error && <p className="diagnosis__err">{error.message}</p>}
-      <ul className="diagnosis-results" ref={ulRef}>
-        {!error && diagnosis && diagnosis.length > 0
+      <ul className="diagnosis__results" ref={ulRef}>
+        <li className="diagnosis__results-item diagnosis__results-item--headers">
+          <span className="diagnosis__results-code">Code</span>
+          <span className="diagnosis__results-diagnosis">Diagnosis</span>
+        </li>
+
+        {diagnosis && diagnosis.length > 0
           ? diagnosis.map((item, index) =>
               index === diagnosis.length - 1 ? (
                 <li
-                  className="diagnosis-results__item"
+                  className="diagnosis__results-item"
                   key={item.id}
                   onClick={() => handleClickDiagnosis(item.code)}
                   ref={lastItemRef}
                 >
-                  <span className="diagnosis-results__code">{item.code}</span>{" "}
-                  <span className="diagnosis-results__name">
+                  <span className="diagnosis__results-code">{item.code}</span>
+                  <span className="diagnosis__results-diagnosis">
                     {item.diagnosis}, {item.category}
                   </span>
                 </li>
               ) : (
                 <li
-                  className="diagnosis-results__item"
+                  className="diagnosis__results-item"
                   key={item.id}
                   onClick={() => handleClickDiagnosis(item.code)}
                 >
-                  <span className="diagnosis-results__code">{item.code}</span>{" "}
-                  <span className="diagnosis-results__name">
+                  <span className="diagnosis__results-code">{item.code}</span>
+                  <span className="diagnosis__results-diagnosis">
                     {item.diagnosis}, {item.category}
                   </span>
                 </li>
@@ -77,6 +88,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
             )
           : !isFetchingNextPage &&
             !isPending && <EmptyLi text="No corresponding diagnosis" />}
+
         {(isFetchingNextPage || isPending) && <LoadingLi />}
       </ul>
     </div>

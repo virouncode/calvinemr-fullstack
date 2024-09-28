@@ -11,7 +11,7 @@
   padding: 20px;
 }
 .dashboard-card {
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   border: solid 1px $grey;
   border-radius: 6px;
   background-color: $white;

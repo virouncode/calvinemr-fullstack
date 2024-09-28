@@ -111,7 +111,7 @@ const MessagePatientDetail = ({
           handleClickBack={handleClickBack}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div className="message-detail__content">
+        <div className="message__detail-content">
           <MessageExternal message={message} key={message.id} index={0} />
           {previousMsgs &&
             previousMsgs.length > 0 &&
@@ -125,7 +125,6 @@ const MessagePatientDetail = ({
           <MessagesExternalAttachments
             attachments={attachments}
             deletable={false}
-            cardWidth="15%"
             addable={false}
             message={message}
           />
@@ -162,7 +161,7 @@ const MessagePatientDetail = ({
           />
         )}
         {section !== "Deleted messages" && !replyVisible && (
-          <div className="message-detail__btns">
+          <div className="message__detail-btns">
             {section !== "Sent messages" && (
               <Button onClick={handleClickReply} label="Reply" />
             )}

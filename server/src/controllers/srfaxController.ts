@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
+axios.defaults.withCredentials = true;
 
 // Helper function to download and encode the file to base64
 const downloadAndEncodeFile = async (url: string): Promise<string> => {

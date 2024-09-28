@@ -7,7 +7,7 @@ type DotsButtonProps = {
 
 const DotsButton = ({ onClick, className }: DotsButtonProps) => {
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button type="button" onClick={onClick} className={`${className} btn`}>
       ...
     </button>
   );

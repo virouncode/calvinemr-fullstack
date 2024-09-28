@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -15,6 +16,7 @@ import PenIcon from "../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateEdit from "./MessageTemplateEdit";
+import MessageTemplateEditMobile from "./MessageTemplateEditMobile";
 
 type MessageTemplateItemProps = {
   template: MessageTemplateType;
@@ -31,6 +33,7 @@ const MessageTemplateItem = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const messageTemplatePost = useMessagesTemplatePost();
   const messageTemplateDelete = useMessagesTemplateDelete();
@@ -64,11 +67,7 @@ const MessageTemplateItem = ({
 
   return (
     <>
-      <li
-        className="messages__templates-list-item"
-        key={template.id}
-        ref={lastItemRef}
-      >
+      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id
@@ -77,29 +76,36 @@ const MessageTemplateItem = ({
             : ""}
         </span>
         <>
+          <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
           {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
+            <PenIcon ml={15} onClick={handleEditClick} />
           )}
           {template.author_id === user.id && (
-            <TrashIcon onClick={handleDelete} />
+            <TrashIcon ml={15} onClick={handleDelete} />
           )}
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
         </>
       </li>
       {editTemplateVisible && (
         <FakeWindow
           title="EDIT MESSAGE TEMPLATE"
           width={900}
-          height={550}
+          height={630}
           x={(window.innerWidth - 900) / 2}
-          y={(window.innerHeight - 550) / 2}
+          y={(window.innerHeight - 630) / 2}
           color="#93B5E9"
           setPopUpVisible={setEditTemplateVisible}
         >
-          <MessageTemplateEdit
-            setEditTemplateVisible={setEditTemplateVisible}
-            template={template}
-          />
+          {isTabletOrMobile ? (
+            <MessageTemplateEditMobile
+              setEditTemplateVisible={setEditTemplateVisible}
+              template={template}
+            />
+          ) : (
+            <MessageTemplateEdit
+              setEditTemplateVisible={setEditTemplateVisible}
+              template={template}
+            />
+          )}
         </FakeWindow>
       )}
     </>

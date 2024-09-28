@@ -1,0 +1,112 @@
+.login {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__title {
+  color: $blue2;
+  font-size: $size-4xl;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 95%;
+}
+
+.login__form {
+  width: 70%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+.login__err-placeholder {
+  height: 51px;
+}
+.login__instructions {
+  text-align: center;
+  font-size: $size-lg;
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+.login__form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  label {
+    font-weight: bold;
+    font-size: $size-lg;
+    margin-bottom: 0.25rem;
+  }
+  input {
+    font-size: $size-lg;
+    width: 100%;
+  }
+}
+.login__btn-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
+  button {
+    flex: 1;
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+}
+.login__forgot {
+  text-align: end;
+  font-size: $size-sm;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.eye-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 35px;
+  font-size: $size-base;
+}
+
+@media (min-width: 640px) {
+  .login__title {
+    max-width: 75%;
+  }
+}
+/*md*/
+@media (min-width: 1024px) {
+  .login__title {
+    font-size: $size-5xl;
+  }
+  .login__form-row {
+    label {
+      font-size: $size-base;
+    }
+    input {
+      font-size: $size-base;
+    }
+  }
+  .login__instructions {
+    font-size: $size-base;
+  }
+  .login__btn-container {
+    button {
+      font-size: $size-sm;
+    }
+  }
+  .eye-icon {
+    top: 33px;
+    font-size: $size-sm;
+  }
+  .login__forgot {
+    font-size: $size-xs;
+  }
+}

@@ -42,8 +42,8 @@ const ReferenceLinkItem = ({
       <a href={link.url} target="_blank" rel="noreferrer">
         {link.name}
       </a>
-      <PenIcon ml={5} onClick={handleEdit} />
-      <TrashIcon ml={5} onClick={handleRemoveLink}></TrashIcon>
+      <PenIcon ml={10} onClick={handleEdit} />
+      <TrashIcon ml={15} onClick={handleRemoveLink}></TrashIcon>
       {editVisible && (
         <ReferenceLinkEdit link={link} setEditVisible={setEditVisible} />
       )}

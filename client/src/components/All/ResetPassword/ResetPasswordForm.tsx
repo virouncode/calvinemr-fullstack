@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import xanoPostReset from "../../../api/xanoCRUD/xanoPostReset";
 import { PasswordValidityType } from "../../../types/app";
+import CancelButton from "../../UI/Buttons/CancelButton";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import InputPassword from "../../UI/Inputs/InputPassword";
 import PasswordValidator from "../../UI/Inputs/PasswordValidator";
@@ -119,41 +120,46 @@ const ResetPasswordForm = ({
     setErrMsg("");
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="reset-password-form">
-      <div className="reset-password-form-row">
+    <form onSubmit={handleSubmit} className="reset__form">
+      <div className="reset__row">
         <InputPassword
           value={pwd}
           onChange={handlePasswordChange}
           name="new-password"
           id="new-password"
-          label="Enter a new password:"
+          label="New password"
           autoFocus={true}
         />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <PasswordValidator passwordValidity={passwordValidity} />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <InputPassword
           value={confirmPwd}
           onChange={handleConfirmPasswordChange}
           name="confirm-password"
           id="confirm-password"
-          label="Confirm new password:"
+          label="Confirm new password"
         />
       </div>
-      <div className="reset-password-form-row">
+      <div className="reset__row">
         <InputPassword
           value={pin}
           onChange={handlePINChange}
           name="pin"
           id="pin"
-          label="Enter a new PIN:"
+          label="New PIN"
         />
       </div>
-      <div className="reset-password-form-row-btn">
+      <div className="reset__row-btns">
         <SubmitButton />
+        <CancelButton onClick={handleCancel} />
       </div>
     </form>
   );

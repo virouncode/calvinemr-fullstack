@@ -25,8 +25,8 @@ const PatientStaffContactsCategory = ({
   };
 
   return (
-    <>
-      <div className="contacts__category-overview">
+    <div className="contacts__list-category">
+      <div className="contacts__list-category-overview">
         {!listVisible ? (
           <SquarePlusIcon onClick={handleClick} mr={5} />
         ) : (
@@ -42,7 +42,7 @@ const PatientStaffContactsCategory = ({
           categoryName={categoryName}
         />
       )}
-    </>
+    </div>
   );
 };
 

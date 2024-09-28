@@ -18,7 +18,7 @@ const ReportsInboxPracticiansListForward = ({
 }: ReportsInboxPracticiansListForwardProps) => {
   const { user } = useUserContext() as { user: StaffType };
   return (
-    <ul className="practicians-forward__category-list">
+    <ul className="reportsinbox__forward-category-list">
       {categoryInfos
         .filter(({ id }) => id !== user.id)
         .map((info) => (

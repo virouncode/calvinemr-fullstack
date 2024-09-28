@@ -29,7 +29,7 @@ const MessageAttachmentCard = ({
   handleRemoveAttachment,
   attachment,
   deletable,
-  cardWidth = "30%",
+  cardWidth,
   addable = true,
   hasRelatedPatient = true,
   patientName,
@@ -52,8 +52,11 @@ const MessageAttachmentCard = ({
 
   return (
     <>
-      <div className="message-attachment__card" style={{ width: cardWidth }}>
-        <div className="message-attachment__thumbnail">
+      <div
+        className="message__attachment-card"
+        style={{ width: cardWidth ?? "" }}
+      >
+        <div className="message__attachment-card-thumbnail">
           {attachment.file?.mime.includes("image") ? (
             <img
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
@@ -114,8 +117,8 @@ const MessageAttachmentCard = ({
             </div>
           )}
         </div>
-        <div className="message-attachment__footer">
-          <div className="message-attachment__title">
+        <div className="message__attachment-card-footer">
+          <div className="message__attachment-card-title">
             <p
               style={{
                 overflow: "hidden",
@@ -137,7 +140,7 @@ const MessageAttachmentCard = ({
             )}
           </div>
           {addable && (
-            <div className="message-attachment__btn">
+            <div className="message__attachment-card-btn">
               <Button
                 onClick={handleAddToReports}
                 label="Add to patient reports"

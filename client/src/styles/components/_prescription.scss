@@ -1,30 +1,26 @@
 .prescription {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
   &__actions {
-    width: 90%;
-    margin: 40px auto 0;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
-    label {
-      margin-right: 10px;
-    }
-    button {
-      margin-right: 10px;
-    }
-  }
-  &__container {
-    height: 680px;
-    overflow-y: scroll;
-    border-bottom: solid 1px $grey;
-    border-top: solid 1px $grey;
-    border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    gap: 0.5rem;
+    row-gap: 0.5rem;
   }
   &__form {
+    flex: 1;
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    align-items: flex-start;
+    padding: 0 1rem;
+    overflow-y: scroll;
+    gap: 1rem;
     &--preview {
       margin-top: 40px;
     }
@@ -40,19 +36,22 @@
   &__page {
     border: solid 1px $grey;
     border-radius: 6px;
-    // width: 21cm;
-    // height: 29.7cm;
     width: 22cm;
     height: 28cm;
     padding: 50px 60px;
     display: flex;
     flex-direction: column;
     &--preview {
-      margin-bottom: 20px;
+      margin: 0 auto;
     }
   }
   &__medications {
-    width: 38%;
+    flex: 1;
+    height: 100%;
+    .medications-form {
+      margin-top: 0;
+      height: 100%;
+    }
   }
   &__header {
     display: flex;
@@ -91,7 +90,7 @@
     height: 63%;
     &-title {
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: $size-xl;
       text-align: center;
       margin: 20px 0;
     }
@@ -146,16 +145,21 @@
     }
   }
   &__preview {
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100%;
+    gap: 1rem;
+    overflow: hidden;
+    padding: 0.5rem;
     &-pages {
       height: 680px;
       overflow-y: scroll;
     }
     &-options {
-      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+      align-items: center;
     }
   }
 }

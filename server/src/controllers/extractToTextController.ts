@@ -1,6 +1,7 @@
 import { DocumentProcessorServiceClient } from "@google-cloud/documentai/build/src/v1"; // Adjust the path based on your setup
 import axios from "axios";
 import { Request, Response } from "express";
+axios.defaults.withCredentials = true;
 
 const projectId = process.env.DOCUMENTAI_PROJECT_ID!;
 const location = "us"; // Format is 'us' or 'eu'

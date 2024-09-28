@@ -16,20 +16,20 @@ const CareElementsBSA = ({
   handleClickHistory,
 }: CareElementsBSAProps) => {
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
         Body surface area (m2):
       </label>
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastDatas.bodySurfaceArea?.BSA}
       </div>
       {lastDatas.bodySurfaceArea?.BSA && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("BODY SURFACE AREA")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

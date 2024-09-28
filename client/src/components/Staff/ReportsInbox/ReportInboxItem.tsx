@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -39,7 +40,9 @@ import LoadingRow from "../../UI/Tables/LoadingRow";
 import SignCell from "../../UI/Tables/SignCell";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import NewMessage from "../Messaging/Internal/NewMessage";
+import NewMessageMobile from "../Messaging/Internal/NewMessageMobile";
 import NewTodo from "../Messaging/Internal/NewTodo";
+import NewTodoMobile from "../Messaging/Internal/NewTodoMobile";
 
 type ReportInboxItemProps = {
   item: ReportType;
@@ -73,6 +76,7 @@ const ReportInboxItem = ({
   const [patientNextAppointment, setPatientNextAppointment] = useState<
     AppointmentType | undefined
   >();
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data: patientAppointments,
@@ -348,43 +352,67 @@ const ReportInboxItem = ({
       {messageVisible && (
         <FakeWindow
           title="NEW MESSAGE"
-          width={1300}
+          width={1024}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 630) / 2}
           color={"#94bae8"}
           setPopUpVisible={setMessageVisible}
         >
-          <NewMessage
-            setNewVisible={setMessageVisible}
-            initialAttachments={attachments}
-            initialPatient={{
-              id: item.patient_id,
-              name: toPatientName(item.patient_infos),
-            }}
-            initialBody={initialBody}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageMobile
+              setNewVisible={setMessageVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          ) : (
+            <NewMessage
+              setNewVisible={setMessageVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          )}
         </FakeWindow>
       )}
       {todoVisible && (
         <FakeWindow
           title="NEW TO-DO"
-          width={1300}
+          width={1024}
           height={620}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 620) / 2}
           color={"#94bae8"}
           setPopUpVisible={setTodoVisible}
         >
-          <NewTodo
-            setNewTodoVisible={setTodoVisible}
-            initialAttachments={attachments}
-            initialPatient={{
-              id: item.patient_id,
-              name: toPatientName(item.patient_infos),
-            }}
-            initialBody={initialBody}
-          />
+          {isTabletOrMobile ? (
+            <NewTodoMobile
+              setNewTodoVisible={setTodoVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          ) : (
+            <NewTodo
+              setNewTodoVisible={setTodoVisible}
+              initialAttachments={attachments}
+              initialPatient={{
+                id: item.patient_id,
+                name: toPatientName(item.patient_infos),
+              }}
+              initialBody={initialBody}
+            />
+          )}
         </FakeWindow>
       )}
     </>

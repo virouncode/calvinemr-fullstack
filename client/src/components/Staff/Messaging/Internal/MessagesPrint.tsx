@@ -24,30 +24,30 @@ const MessagesPrint = ({
   attachments,
   section,
 }: MessagesPrintPUProps) => {
-  const CONTAINER_STYLE = {
-    fontFamily: "Arial, sans-serif",
-  };
   const handleClickPrint = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.nativeEvent.view?.print();
   };
   return (
-    <div className="messages-print__container" style={CONTAINER_STYLE}>
-      <div className="messages-print__section">
-        <div className="messages-print__title">
-          <p className="messages-print__subject">
+    <div className="message__print">
+      <div className="message__print-btn">
+        <Button onClick={handleClickPrint} label="Print" />
+      </div>
+      <div className="message__print-container">
+        <div className="message__print-title">
+          <p className="message__print-subject">
             <strong>Subject:{"\u00A0"}</strong>
             {message.subject}
           </p>
           {message.related_patient_id ? (
-            <p className="messages-print__patient">
-              <strong>Patient:{"\u00A0"}</strong>
+            <p className="message__print-patient">
+              <strong>Related Patient:{"\u00A0"}</strong>
               {toPatientName(message.patient_infos)}
             </p>
           ) : null}
         </div>
-        <div className="messages-print__content">
+        <div className="message__detail-content">
           <Message
             message={message}
             key={message.id}
@@ -78,9 +78,6 @@ const MessagesPrint = ({
             cardWidth="20%"
             addable={false}
           />
-        </div>
-        <div className="messages-print__btn">
-          <Button onClick={handleClickPrint} label="Print" />
         </div>
       </div>
     </div>

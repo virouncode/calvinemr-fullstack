@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import PatientSearch from "../../components/Staff/Record/Search/PatientSearch";
+import PatientsDirectory from "../../components/Staff/Record/Search/PatientsDirectory";
 import useTitle from "../../hooks/useTitle";
 
 const StaffSearchPatientPage = () => {
@@ -12,8 +12,8 @@ const StaffSearchPatientPage = () => {
           <title>Patients</title>
         </Helmet>
       </HelmetProvider>
-      <section className="search-patient-section">
-        <PatientSearch />
+      <section className="search-patient">
+        <PatientsDirectory />
       </section>
     </>
   );

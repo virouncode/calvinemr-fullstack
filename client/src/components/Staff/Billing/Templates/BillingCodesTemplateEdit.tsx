@@ -23,32 +23,38 @@ const BillingCodesTemplateEdit = ({
 }: BillingCodesTemplateEditProps) => {
   return (
     <li
-      className="billing-codes__templates-list-item billing-codes__templates-list-item--edit"
+      className="billing-codes-template__form"
       style={{ border: errMsgPost && "solid 1px red" }}
       ref={lastItemRef}
     >
-      <Input
-        value={formDatas.name}
-        onChange={handleChange}
-        name="name"
-        id="template-billing-name"
-        label="Name"
-        autoFocus={true}
-      />
-      <Input
-        placeholder="A001,B423,F404,..."
-        value={
-          formDatas.billing_codes.length > 0
-            ? formDatas.billing_codes.join(",")
-            : ""
-        }
-        onChange={handleChange}
-        name="billing_codes"
-        id="template-billing-code"
-        label="Billing code(s)"
-      />
-      <SaveButton onClick={handleSave} />
-      <CancelButton onClick={handleCancel} />
+      <div className="billing-codes-template__form-item">
+        <Input
+          value={formDatas.name}
+          onChange={handleChange}
+          name="name"
+          id="template-billing-name"
+          label="Name"
+          autoFocus={true}
+        />
+      </div>
+      <div className="billing-codes-template__form-item">
+        <Input
+          placeholder="A001,B423,F404,..."
+          value={
+            formDatas.billing_codes.length > 0
+              ? formDatas.billing_codes.join(",")
+              : ""
+          }
+          onChange={handleChange}
+          name="billing_codes"
+          id="template-billing-code"
+          label="Billing code(s)"
+        />
+      </div>
+      <div className="billing-codes-template__form-btns">
+        <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel} />
+      </div>
     </li>
   );
 };

@@ -614,11 +614,7 @@ const MedicationFormWithoutRX = ({
   };
 
   return (
-    <form
-      className="medications-form"
-      onSubmit={handleSubmit}
-      style={{ marginTop: "40px", height: "730px" }}
-    >
+    <form className="medications-form" onSubmit={handleSubmit}>
       <div className="medications-form__btn-container">
         <SubmitButton label="Save" disabled={progressTemplates} />
         <SaveButton
@@ -637,14 +633,14 @@ const MedicationFormWithoutRX = ({
         <AllergiesList allergies={allergies} />
       </div>
       <div className="medications-form__container medications-form__container--norx">
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <InputDate
             label="Start Date"
             value={timestampToDateISOTZ(formDatas.StartDate)}
             onChange={handleStartChange}
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Drug identification number"
             name="DrugIdentificationNumber"
@@ -653,7 +649,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-drug-number"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Drug name*"
             name="DrugName"
@@ -662,7 +658,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-drug-name"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Strength*"
             name="Strength"
@@ -671,7 +667,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-strength"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={strengthUnitCT}
             value={formDatas.Strength.UnitOfMeasure}
@@ -679,7 +675,7 @@ const MedicationFormWithoutRX = ({
             label="Strength unit of measure*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={formCT}
             value={formDatas.Form}
@@ -687,7 +683,7 @@ const MedicationFormWithoutRX = ({
             label="Form*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Dosage*"
             name="Dosage"
@@ -696,7 +692,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-dosage"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={dosageUnitCT}
             value={formDatas.DosageUnitOfMeasure}
@@ -704,7 +700,7 @@ const MedicationFormWithoutRX = ({
             label="Dosage unit of measure*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={routeCT}
             value={formDatas.Route}
@@ -712,7 +708,7 @@ const MedicationFormWithoutRX = ({
             label="Route*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericCombo
             list={frequencyCT}
             value={formDatas.Frequency}
@@ -720,7 +716,7 @@ const MedicationFormWithoutRX = ({
             label="Frequency*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row medications-form__row--duration">
           <DurationPickerLong
             label="Duration"
             durationYears={formDatas.duration.Y}
@@ -730,7 +726,7 @@ const MedicationFormWithoutRX = ({
             handleDurationPickerChange={handleDurationPickerChange}
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Quantity"
             name="Quantity"
@@ -739,7 +735,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-quantity"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row medications-form__row--duration">
           <DurationPickerLong
             label="Refill duration"
             durationYears={formDatas.refill_duration.Y}
@@ -749,7 +745,7 @@ const MedicationFormWithoutRX = ({
             handleDurationPickerChange={handleRefillDurationPickerChange}
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Refill quantity"
             name="RefillQuantity"
@@ -758,7 +754,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-refill-quantity"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <Input
             label="Number of refills"
             name="NumberOfRefills"
@@ -767,7 +763,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-nbr-refills"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericList
             name="LongTermMedication"
             list={ynIndicatorsimpleCT}
@@ -777,7 +773,7 @@ const MedicationFormWithoutRX = ({
             label="Long-term medication*"
           />
         </div>
-        <div className="med-templates__form-row">
+        <div className="medications-form__row">
           <GenericList
             name="SubstitutionNotAllowed"
             list={ynIndicatorsimpleCT}
@@ -787,7 +783,7 @@ const MedicationFormWithoutRX = ({
             label="Substitution allowed*"
           />
         </div>
-        <div className="med-templates__form-row med-templates__form-row--text">
+        <div className="medications-form__row medications-form__row--text">
           <label htmlFor="med-template-notes">Notes</label>
           <textarea
             className="med-templates__form-notes"
@@ -797,7 +793,7 @@ const MedicationFormWithoutRX = ({
             id="med-template-notes"
           />
         </div>
-        <div className="med-templates__form-row med-templates__form-row--text">
+        <div className="medications-form__row medications-form__row--text">
           <Tooltip
             title="This is auto-generated, however you can edit the instructions in free text, but it is your responsibility to ensure that they do not contradict the rest of the form."
             placement="top-start"

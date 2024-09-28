@@ -1,6 +1,7 @@
 import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
+axios.defaults.withCredentials = true;
 
 export const axiosXanoAdmin = axios.create({
   baseURL: process.env.XANO_ADMIN_URL,

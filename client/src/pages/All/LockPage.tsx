@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Id } from "react-toastify";
-import UnlockForm from "../../components/All/Unlock/UnlockForm";
+import LockForm from "../../components/All/Lock/LockForm";
 
 type LockPageProps = {
   setLockedScreen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,20 +25,20 @@ const LockPage = ({
     };
   }, []);
   return (
-    <div>
+    <>
       <HelmetProvider>
         <Helmet>
           <title>Calvin EMR: App locked</title>
         </Helmet>
       </HelmetProvider>
-      <section className="lock-section">
-        <UnlockForm
+      <section className="lock">
+        <LockForm
           setLockedScreen={setLockedScreen}
           toastExpiredID={toastExpiredID}
           tokenLimitVerifierID={tokenLimitVerifierID}
         />
       </section>
-    </div>
+    </>
   );
 };
 

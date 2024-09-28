@@ -226,15 +226,15 @@ const MessagesToolBar = ({
   };
 
   return (
-    <div className="messages-toolbar">
-      <p className="messages-toolbar__title">Messaging</p>
+    <div className="messages__toolbar">
+      <p className="messages__toolbar-title">Messaging</p>
       <Input
         placeholder="Search in messages"
         value={search}
         onChange={handleChange}
         id="search"
       />
-      <div className="messages-toolbar__btns">
+      <div className="messages__toolbar-btns">
         <Button
           onClick={handleClickNew}
           disabled={

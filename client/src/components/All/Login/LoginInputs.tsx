@@ -26,7 +26,7 @@ const LoginInputs = ({
 }: LoginInputsProps) => {
   return (
     <>
-      <div className="login-form__row">
+      <div className="login__form-row">
         <InputEmail
           id="email"
           name="email"
@@ -36,7 +36,7 @@ const LoginInputs = ({
           label="Email"
         />
       </div>
-      <div className="login-form__row" style={{ position: "relative" }}>
+      <div className="login__form-row" style={{ position: "relative" }}>
         {passwordVisible ? (
           <>
             <Input
@@ -61,7 +61,7 @@ const LoginInputs = ({
           </>
         )}
       </div>
-      <div className="login-form__row" style={{ position: "relative" }}>
+      <div className="login__form-row" style={{ position: "relative" }}>
         {pinVisible ? (
           <>
             <Input

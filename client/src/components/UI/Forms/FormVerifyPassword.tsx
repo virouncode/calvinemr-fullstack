@@ -20,16 +20,17 @@ const FormVerifyPassword = ({
 }: FormVerifyPasswordProps) => {
   return (
     <>
-      <div className="verify-pwd-form-row">
+      <div className="verify-pwd__form-row">
         <InputPassword
           value={password}
           onChange={handlePwdChange}
           name="password"
           id="password"
           label="Password"
+          autoFocus={true}
         />
       </div>
-      <div className="verify-pwd-form-row">
+      <div className="verify-pwd__form-row">
         <InputPassword
           value={pin}
           onChange={handlePinChange}
@@ -38,7 +39,7 @@ const FormVerifyPassword = ({
           label="PIN"
         />
       </div>
-      <div className="verify-pwd-form-row verify-pwd-form-row--submit">
+      <div className="verify-pwd__form-btns">
         <SubmitButton />
         <CancelButton onClick={handleCancel} />
       </div>

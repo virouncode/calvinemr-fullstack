@@ -17,12 +17,12 @@ const DaySheet = ({ events, rangeStart, rangeEnd }: DaySheetProps) => {
   };
   return (
     events && (
-      <div className="daysheet">
-        <div className="daysheet__date">
-          {timestampToHumanDateYearTZ(rangeStart)}
-        </div>
-        <div className="daysheet__btn-container">
+      <div className="calendar__daysheet">
+        <div className="calendar__daysheet-btn">
           <Button onClick={handlePrint} label="Print" />
+        </div>
+        <div className="calendar__daysheet-date">
+          {timestampToHumanDateYearTZ(rangeStart)}
         </div>
         {getTodaysEvents(events, rangeStart, rangeEnd)
           .sort((a, b) => (a.start as number) - (b.start as number))

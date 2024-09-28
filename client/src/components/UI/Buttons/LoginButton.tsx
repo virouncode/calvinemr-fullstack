@@ -3,9 +3,7 @@ import CircularProgressSmallBlack from "../Progress/CircularProgressSmallBlack";
 
 type LoginButtonProps = {
   label: string;
-  onClick: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => Promise<void>;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
   loading?: boolean;
 };
@@ -19,7 +17,7 @@ const LoginButton = ({
   return (
     <button
       type="button"
-      className="login-btn"
+      className="btn save-btn"
       onClick={onClick}
       disabled={disabled}
     >

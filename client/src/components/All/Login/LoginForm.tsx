@@ -18,10 +18,9 @@ import {
 } from "../../../types/api";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import { loginSchema } from "../../../validation/login/loginValidation";
-import LoginButton from "../../UI/Buttons/LoginButton";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import LoginBtnContainer from "./LoginBtnContainer";
 import LoginInputs from "./LoginInputs";
-import LoginTitle from "./LoginTitle";
 
 const LOGIN_URL = "/auth/login";
 const USERINFO_URL = "/auth/me";
@@ -389,50 +388,35 @@ const LoginForm = () => {
     navigate("/reset-password");
   };
   return (
-    <div className="login-newcard">
-      <LoginTitle />
-      <form className="login-form">
-        {err ? (
-          <ErrorParagraph errorMsg={err} />
-        ) : (
-          <p className="login__err" style={{ visibility: "hidden" }}>
-            Placeholder
-          </p>
-        )}
-        <LoginInputs
-          formDatas={formDatas}
-          handleChange={handleChange}
-          passwordVisible={passwordVisible}
-          pinVisible={pinVisible}
-          handleTogglePwd={handleTogglePwd}
-          handleTogglePin={handleTogglePin}
-        />
-        <div className="login-form__btn-label">Sign In as</div>
-        <div className="login-form__btn-container">
-          <LoginButton
-            onClick={handleSubmitStaff}
-            disabled={loadingStaff || loadingPatient || loadingAdmin}
-            label="Staff"
-            loading={loadingStaff}
-          />
-          <LoginButton
-            onClick={handleSubmitPatient}
-            disabled={loadingStaff || loadingPatient || loadingAdmin}
-            label="Patient"
-            loading={loadingPatient}
-          />
-          <LoginButton
-            onClick={handleSubmitAdmin}
-            disabled={loadingStaff || loadingPatient || loadingAdmin}
-            label="Admin"
-            loading={loadingAdmin}
-          />
-        </div>
-        <p className="login-forgot">
-          <span onClick={handleClickForgot}>I forgot my password/pin</span>
+    <form className="login__form">
+      {err ? (
+        <ErrorParagraph errorMsg={err} />
+      ) : (
+        <p className="login__err-placeholder" style={{ visibility: "hidden" }}>
+          Placeholder
         </p>
-      </form>
-    </div>
+      )}
+      <LoginInputs
+        formDatas={formDatas}
+        handleChange={handleChange}
+        passwordVisible={passwordVisible}
+        pinVisible={pinVisible}
+        handleTogglePwd={handleTogglePwd}
+        handleTogglePin={handleTogglePin}
+      />
+      <div className="login__instructions">Sign In As</div>
+      <LoginBtnContainer
+        loadingAdmin={loadingAdmin}
+        loadingPatient={loadingPatient}
+        loadingStaff={loadingStaff}
+        handleSubmitAdmin={handleSubmitAdmin}
+        handleSubmitPatient={handleSubmitPatient}
+        handleSubmitStaff={handleSubmitStaff}
+      />
+      <p className="login__forgot" onClick={handleClickForgot}>
+        I forgot my password/pin
+      </p>
+    </form>
   );
 };
 

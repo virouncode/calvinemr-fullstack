@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { usePatients } from "../../../../../hooks/reactquery/queries/patientsQueries";
 import { DemographicsType, StaffType } from "../../../../../types/api";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import GuestsSearchForm from "./GuestsSearchForm";
 import GuestsSearchResults from "./GuestsSearchResults";
 
@@ -46,9 +44,6 @@ const GuestsSearch = ({
     setSearch({ ...search, [name]: value });
   };
 
-  if (isPending) return <LoadingParagraph />;
-  if (error) return <ErrorParagraph errorMsg={error.message} />;
-
   return (
     <>
       <GuestsSearchForm search={search} handleSearch={handleSearch} />
@@ -63,6 +58,8 @@ const GuestsSearch = ({
         isFetching={isFetching}
         search={search}
         patientsIdsToExclude={patientsIdsToExclude}
+        isPending={isPending}
+        error={error}
       />
     </>
   );

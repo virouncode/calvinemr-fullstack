@@ -1,121 +1,177 @@
-.reset-container {
-  padding: 20px;
-  width: 40%;
-  margin: 0 auto 0;
+.reset {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reset__container {
+  padding: 1rem;
+  margin: 0 auto;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   background: $white;
-  &-title {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+  border: solid 1px $grey;
+  width: 90%;
+  max-width: 310px;
+}
+.reset__title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: $size-2xl;
+  color: $blue2;
+}
+.reset__success {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: $size-base;
+  margin: 0 auto 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  color: forestgreen;
+  background-color: rgba(34, 139, 34, 0.4);
+}
+.reset__email-row-radio {
+  display: flex;
+  justify-content: center;
+  font-size: $size-base;
+  margin: 0 auto 2rem;
+  gap: 1rem;
+}
+.reset__email-row-radio-item {
+  display: flex;
+  align-items: center;
+  label {
+    font-size: $size-base;
+    font-weight: bold;
+    margin-left: 0.25rem;
   }
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto 10px;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
+}
+.reset__email-row {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 2rem;
+  width: 80%;
+  label {
+    font-size: $size-lg;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
   }
-  &-success {
-    padding: 10px 20px;
+  input[type="email"] {
+    flex: 1;
     width: 100%;
-    font-size: 0.9rem;
-    margin: 0 auto 10px;
-    border-radius: 6px;
-    text-align: center;
-    color: forestgreen;
-    background-color: rgba(34, 139, 34, 0.4);
+    font-size: $size-base;
   }
-  .email-form-row-radio {
-    display: flex;
-    justify-content: space-between;
-    width: 45%;
-    font-size: 0.85rem;
-    margin: 0 auto 30px;
-    &-item {
-      display: flex;
-      align-items: center;
-      label {
-        font-weight: bold;
-      }
-      input[type="radio"] {
-        margin-right: 5px;
-      }
+}
+.reset__email-row-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
+  margin: 0 auto;
+  button {
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+}
+.reset__temp-password-instructions {
+  font-size: $size-base;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.reset__temp-password-row {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto 2rem;
+  input[type="password"] {
+    width: 100%;
+    font-size: $size-base;
+  }
+}
+.reset__temp-password-row-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 90%;
+  margin: 1rem auto 0;
+  button {
+    flex: 1;
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+}
+.reset__form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+}
+.reset__row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  label {
+    font-size: $size-base;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  input[type="password"] {
+    width: 100%;
+    font-size: $size-base;
+  }
+  ul {
+    width: 100%;
+    margin-left: auto;
+    li {
+      font-size: $size-xs;
     }
   }
-  .email-form-row {
-    font-size: 0.85rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
+}
+.reset__row-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 2rem auto 0;
+  button {
+    font-size: $size-base;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reset__title {
+    font-size: $size-xl;
+  }
+  .reset__email-row {
     label {
-      font-weight: bold;
+      font-size: $size-base;
     }
-    input[type="email"] {
-      width: 200px;
-    }
+  }
+  .reset__email-row-btns {
     button {
-      margin-left: 5px;
+      font-size: $size-sm;
     }
   }
-  .temp-password-form {
-    p {
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-      text-align: center;
-      width: 100%;
-    }
-    &-row {
-      display: flex;
-      justify-content: space-between;
-      width: 70%;
-      margin: 0 auto;
-      input[type="password"] {
-        width: 250px;
-      }
+  .reset__temp-password-instructions {
+    font-size: $size-sm;
+
+    .reset__temp-password-row-btns {
       button {
-        margin-left: 5px;
+        font-size: $size-sm;
       }
     }
-  }
-  .reset-password-form {
-    font-size: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    &-row {
-      width: 70%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      align-items: center;
-      label {
-        font-weight: bold;
-        width: 45%;
+    .reset__row-btns {
+      button {
+        font-size: $size-sm;
       }
-      input {
-        width: 55%;
-      }
-      ul {
-        width: 55%;
-        margin-left: auto;
-        li {
-          font-size: 0.7rem;
-        }
-      }
-    }
-    &-row-btn {
-      width: 100%;
-      text-align: center;
-      margin-top: 20px;
     }
   }
 }

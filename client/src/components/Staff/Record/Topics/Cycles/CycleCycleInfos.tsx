@@ -83,10 +83,7 @@ const CycleCycleInfos = ({
     >
       <legend>CYCLE</legend>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div
-          className="cycles-form__cycle-infos-content"
-          style={{ width: "83%" }}
-        >
+        <div className="cycles-form__cycle-infos-content">
           <div
             className="cycles-form__cycle-infos-row"
             style={{ marginTop: "0" }}
@@ -192,7 +189,7 @@ const CycleCycleInfos = ({
             </div>
           </div>
         </div>
-        <div className="cycles-form__cycle-infos-item" style={{ width: "17%" }}>
+        <div className="cycles-form__cycle-infos-item" style={{ flex: "1" }}>
           <label htmlFor="cycle_notes">Notes</label>
           <textarea
             value={formDatas.cycle_notes}

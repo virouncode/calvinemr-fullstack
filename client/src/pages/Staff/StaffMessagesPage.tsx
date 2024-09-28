@@ -24,7 +24,7 @@ const StaffMessagesPage = () => {
           <title>Messages</title>
         </Helmet>
       </HelmetProvider>
-      <section className="messages-section">
+      <section className="messages">
         <MessagingToggle
           isTypeChecked={isTypeChecked}
           handleMsgTypeChange={handleMsgTypeChange}

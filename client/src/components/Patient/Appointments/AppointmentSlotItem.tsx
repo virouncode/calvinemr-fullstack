@@ -29,17 +29,18 @@ const AppointmentSlotItem = ({
   const isAppointmentSelected = (id: number) => appointmentSelected?.id === id;
 
   return (
-    <div key={appointment.id} className="new-appointments__content-item">
-      <Checkbox
-        checked={isAppointmentSelected(appointment.id)}
-        onChange={handleCheck}
-        mr={10}
-      />
-      <div className="new-appointments__content-item-date">
+    <div key={appointment.id} className="patient-appointments__new-item">
+      <div className="patient-appointments__new-item-date">
+        <Checkbox
+          checked={isAppointmentSelected(appointment.id)}
+          onChange={handleCheck}
+          mr={10}
+        />
         <NewAppointmentDate appointment={appointment} />
       </div>
-      <p>Reason : {appointment?.reason}</p>
-      <p>{staffIdToTitleAndName(staffInfos, appointment.host_id)}</p>
+      <div className="patient-appointments__new-item-host">
+        With {staffIdToTitleAndName(staffInfos, appointment.host_id)}
+      </div>
     </div>
   );
 };

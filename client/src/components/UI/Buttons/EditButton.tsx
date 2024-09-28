@@ -7,7 +7,7 @@ type EditButtonProps = {
 
 const EditButton = ({ onClick, disabled = false }: EditButtonProps) => {
   return (
-    <button type="button" onClick={onClick} disabled={disabled}>
+    <button type="button" onClick={onClick} disabled={disabled} className="btn">
       Edit
     </button>
   );

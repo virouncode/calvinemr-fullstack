@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -15,7 +16,9 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageDetail from "./MessageDetail";
 import MessagesOverview from "./MessagesOverview";
 import NewMessage from "./NewMessage";
+import NewMessageMobile from "./NewMessageMobile";
 import NewTodo from "./NewTodo";
+import NewTodoMobile from "./NewTodoMobile";
 
 type MessagesBoxProps = {
   section: string;
@@ -69,10 +72,11 @@ const MessagesBox = ({
     fetchNextPage,
     isFetching
   );
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   if (isPending)
     return (
-      <div className="messages-content__box">
+      <div className="messages__content-box">
         <LoadingParagraph />
       </div>
     );
@@ -80,7 +84,7 @@ const MessagesBox = ({
   return (
     messages && (
       <>
-        <div className="messages-content__box" ref={divRef}>
+        <div className="messages__content-box" ref={divRef}>
           {currentMsgId === 0 ? (
             <MessagesOverview
               messages={messages}
@@ -109,27 +113,35 @@ const MessagesBox = ({
         {newVisible && (
           <FakeWindow
             title="NEW MESSAGE"
-            width={1300}
+            width={1024}
             height={630}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 630) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewVisible}
           >
-            <NewMessage setNewVisible={setNewVisible} />
+            {isTabletOrMobile ? (
+              <NewMessageMobile setNewVisible={setNewVisible} />
+            ) : (
+              <NewMessage setNewVisible={setNewVisible} />
+            )}
           </FakeWindow>
         )}
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1300}
+            width={1024}
             height={620}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >
-            <NewTodo setNewTodoVisible={setNewTodoVisible} />
+            {isTabletOrMobile ? (
+              <NewTodoMobile setNewTodoVisible={setNewTodoVisible} />
+            ) : (
+              <NewTodo setNewTodoVisible={setNewTodoVisible} />
+            )}
           </FakeWindow>
         )}
       </>

@@ -23,8 +23,8 @@ const ReportsInboxPracticianCategoryForward = ({
   };
 
   return (
-    <>
-      <div className="practicians-forward__category-overview">
+    <div className="reportsinbox__forward-category">
+      <div className="reportsinbox__forward-category-overview">
         {!listVisible ? (
           <SquarePlusIcon onClick={handleClick} />
         ) : (
@@ -40,7 +40,7 @@ const ReportsInboxPracticianCategoryForward = ({
           categoryName={categoryName}
         />
       )}
-    </>
+    </div>
   );
 };
 

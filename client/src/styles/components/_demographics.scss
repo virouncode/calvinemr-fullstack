@@ -1,76 +1,131 @@
 .demographics-card {
-  font-size: 0.8rem;
   width: 95%;
-  margin: 60px auto;
+  margin: 1rem auto;
   border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   &__header {
+    padding: 0.5rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
     background: $blue;
     border-radius: 6px 6px 0 0;
-    padding: 10px;
-    align-items: center;
     h1 {
-      font-size: 1.2rem;
+      font-size: $size-xl;
       font-weight: bold;
     }
   }
   &__btns {
     text-align: center;
-    width: 18%;
-    button {
-      margin-left: 5px;
-    }
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.25rem;
   }
   &__form {
-    margin: 20px;
+    margin: 1rem;
     position: relative;
   }
   &__content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     &-row {
       display: flex;
-      margin-bottom: 10px;
-      align-items: center;
+      flex-direction: column;
+      margin-bottom: 0.5rem;
+      font-size: $size-base;
+      .postalzip-select-input {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        select {
+          width: auto;
+        }
+        input {
+          flex: 1;
+        }
+      }
+      &--tel {
+        flex-direction: row;
+        gap: 0.5rem;
+        input {
+          width: auto;
+        }
+        .demographics-card__content-row-item-number {
+          display: flex;
+          flex-direction: column;
+          width: 80%;
+        }
+        .demographics-card__content-row-item-extension {
+          display: flex;
+          flex-direction: column;
+          width: 20%;
+        }
+      }
+    }
+    fieldset {
+      font-size: $size-base;
     }
     label {
       font-weight: bold;
-      display: inline-block;
-      min-width: 170px;
+      margin-bottom: 0.25em;
     }
     input,
     select {
-      width: 160px;
+      width: 100%;
+      font-size: $size-base;
     }
     fieldset {
       border: solid 1px $grey;
       border-radius: 6px;
-      padding: 5px;
-      margin-top: 10px;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: $size-base;
       legend {
         font-weight: bold;
-        padding: 0 4px;
+        padding: 0 0.25rem;
+      }
+    }
+    &-row-special {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-left: 1rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      &-item {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 150px;
       }
     }
   }
   &__image {
-    position: absolute;
     display: flex;
     flex-direction: column;
     top: 0;
     right: 0;
-    width: 30%;
+    width: 100%;
+    margin-bottom: 1rem;
     &-preview {
       display: flex;
       align-items: flex-end;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
     }
     &-preview-square {
       width: 200px;
       height: 200px;
       border-radius: 6px;
-      margin-right: 15px;
+      margin-right: 1rem;
       overflow: hidden;
       img {
         width: 100%;
@@ -84,36 +139,45 @@
       }
     }
   }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 98%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
   &__sign {
     text-align: right;
-    font-size: 0.6rem;
+    font-size: $size-xs;
+    padding: 0.25rem;
   }
-  &__row-special {
-    display: flex;
-    margin-left: 20px;
-    align-items: center;
-    margin-bottom: 10px;
-    label {
-      font-weight: bold;
-      display: inline-block;
-      width: 100px;
-      min-width: auto;
+}
+
+@media (min-width: 640px) {
+  .demographics-card {
+    &__content {
+      width: 40%;
+      &-row {
+        input,
+        select {
+          width: 100%;
+        }
+      }
     }
-    input,
-    select,
-    input[type="date"] {
-      width: 130px;
-      margin-right: 10px;
+    &__image {
+      position: absolute;
+      margin-bottom: 1rem;
+      width: 30%;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .demographics-card {
+    &__content {
+      input,
+      select {
+        font-size: $size-sm;
+      }
+      &-row {
+        font-size: $size-sm;
+      }
+      fieldset {
+        font-size: $size-sm;
+      }
     }
   }
 }

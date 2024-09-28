@@ -17,7 +17,7 @@ const WeekPicker = ({
   rangeStart,
 }: WeekPickerProps) => {
   return (
-    <div className="new-appointments__content-weekpicker">
+    <div className="patient-appointments__new-weekpicker">
       <button
         type="button"
         onClick={handleClickPrevious}

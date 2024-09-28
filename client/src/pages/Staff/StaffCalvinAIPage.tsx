@@ -15,7 +15,7 @@ const StaffCalvinAIPage = () => {
           <title>CalvinAI Chat</title>
         </Helmet>
       </HelmetProvider>
-      <section className="calvinai-section">
+      <section className="calvinai">
         <CalvinAIChat />
       </section>
     </>

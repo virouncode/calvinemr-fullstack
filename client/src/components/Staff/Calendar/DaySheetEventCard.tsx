@@ -9,11 +9,11 @@ type DaySheetEventCardProps = {
 
 const DaySheetEventCard = ({ event }: DaySheetEventCardProps) => {
   return (
-    <div className="daysheet__event-card">
-      <div className="daysheet__event-card-header">
+    <div className="calendar__daysheet-event-card">
+      <div className="calendar__daysheet-event-card-header">
         <DaySheetEventCardHeader event={event} />
       </div>
-      <div className="daysheet__event-card-content">
+      <div className="calendar__daysheet-event-card-content">
         <DaySheetEventCardGuests event={event} />
         <div>
           <strong>Host: </strong>

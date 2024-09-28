@@ -1,8 +1,10 @@
+import { useMediaQuery } from "@mui/material";
 import React from "react";
 import { MessageExternalType } from "../../../types/api";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import MessagePatientThumbnail from "./MessagePatientThumbnail";
+import MessagePatientThumbnailMobile from "./MessagePatientThumbnailMobile";
 import MessagesPatientOverviewToolbar from "./MessagesPatientOverviewToolbar";
 
 type MessagesPatientOverviewProps = {
@@ -40,20 +42,43 @@ const MessagesPatientOverview = ({
         return "";
     }
   };
+  const isTabletOrMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <>
       <MessagesPatientOverviewToolbar section={section} />
       {messages && messages.length > 0
         ? messages.map((item, index) =>
             index === messages.length - 1 ? (
-              <MessagePatientThumbnail
+              isTabletOrMobile ? (
+                <MessagePatientThumbnailMobile
+                  key={item.id}
+                  message={item}
+                  setCurrentMsgId={setCurrentMsgId}
+                  setMsgsSelectedIds={setMsgsSelectedIds}
+                  msgsSelectedIds={msgsSelectedIds}
+                  section={section}
+                  lastItemRef={lastItemRef}
+                />
+              ) : (
+                <MessagePatientThumbnail
+                  key={item.id}
+                  message={item}
+                  setCurrentMsgId={setCurrentMsgId}
+                  setMsgsSelectedIds={setMsgsSelectedIds}
+                  msgsSelectedIds={msgsSelectedIds}
+                  section={section}
+                  lastItemRef={lastItemRef}
+                />
+              )
+            ) : isTabletOrMobile ? (
+              <MessagePatientThumbnailMobile
                 key={item.id}
                 message={item}
                 setCurrentMsgId={setCurrentMsgId}
                 setMsgsSelectedIds={setMsgsSelectedIds}
                 msgsSelectedIds={msgsSelectedIds}
                 section={section}
-                lastItemRef={lastItemRef}
               />
             ) : (
               <MessagePatientThumbnail

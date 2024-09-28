@@ -83,25 +83,25 @@ const MessageTemplateEdit = ({
   };
 
   return (
-    <>
-      <div className="new-message__template-name">
+    <div className="message-template__form">
+      <div className="message-template__form-name">
         <Input
           value={name}
           onChange={handleChangeName}
           id="message-template-name"
-          label="Template Name*"
+          placeholder="Template Name*"
           autoFocus={true}
         />
       </div>
-      <div className="new-message new-message--template">
-        <div className="new-message__contacts new-message__contacts--template">
+      <div className="message-template__form-content">
+        <div className="message-template__form-contacts">
           <StaffContacts
             recipientsIds={recipientsIds}
             setRecipientsIds={setRecipientsIds}
           />
         </div>
-        <div className="new-message__form new-message__form--template">
-          <div className="new-message__recipients">
+        <div className="message-template__form-message">
+          <div className="message-template__form-message-recipients">
             <Input
               label="To:"
               id="to"
@@ -113,7 +113,7 @@ const MessageTemplateEdit = ({
               readOnly={true}
             />
           </div>
-          <div className="new-message__subject">
+          <div className="message-template__form-message-subject">
             <Input
               value={subject}
               onChange={handleChangeSubject}
@@ -121,16 +121,16 @@ const MessageTemplateEdit = ({
               label="Subject:"
             />
           </div>
-          <div className="new-message__body">
+          <div className="message-template__form-message-body">
             <textarea value={body} onChange={handleChange}></textarea>
           </div>
-          <div className="new-message__btns">
+          <div className="message-template__form-message-btns">
             <SaveButton onClick={handleSave} disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

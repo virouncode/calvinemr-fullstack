@@ -1,0 +1,128 @@
+.search-patient {
+  padding: 1rem;
+  width: 98%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.search-patient__form {
+  font-size: $size-base;
+  margin: 0 auto 1rem;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  column-gap: 2rem;
+  row-gap: 0.5rem;
+  width: 100%;
+  background-color: $white;
+  padding: 1rem;
+  border-radius: 6px;
+  border: solid 1px $grey;
+  box-shadow: $box-shadow-default;
+  input {
+    width: auto;
+    font-size: $size-base;
+  }
+}
+.search-patient__item {
+  display: flex;
+  flex-direction: column;
+  label {
+    margin-bottom: 0.25em;
+    font-weight: bold;
+    display: inline-block;
+    width: 100px;
+  }
+}
+.search-patient__count {
+  font-weight: bold;
+  font-size: $size-sm;
+  margin-bottom: 0.5rem;
+}
+.search-patient__table-container {
+  // flex: 1;
+  height: 300px;
+  overflow-y: scroll;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: $box-shadow-default;
+  background-color: $white;
+}
+.search-patient__table {
+  table-layout: fixed;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: $size-xs;
+  thead {
+    position: sticky;
+    top: 0;
+    background-color: $blue;
+    border-radius: 6px;
+    th {
+      padding: 0.75rem;
+      cursor: pointer;
+      min-width: 150px;
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3) {
+        min-width: 110px;
+      }
+
+      &:nth-child(5) {
+        min-width: 10px;
+      }
+      &:nth-child(13),
+      &:nth-child(14),
+      &:nth-child(15) {
+        min-width: 130px;
+      }
+    }
+  }
+  tbody {
+    tr {
+      border-bottom: solid 1px $grey;
+      .record-link {
+        text-decoration: underline;
+        font-weight: bold;
+        &:hover {
+          color: $blue;
+        }
+      }
+      td {
+        padding: 0.75rem;
+        overflow: hidden;
+        text-align: center;
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+/*lg*/
+@media (min-width: 475px) {
+  .search-patient {
+    height: 100%;
+  }
+  .search-patient__table-container {
+    flex: 1;
+    height: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .search-patient__form {
+    font-size: $size-sm;
+    input {
+      font-size: $size-sm;
+    }
+  }
+  .search-patient__table {
+    font-size: $size-sm;
+  }
+  .search-patient__count {
+    font-size: $size-sm;
+  }
+}

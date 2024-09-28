@@ -273,17 +273,17 @@ const MessageThumbnail = ({
         section !== "To-dos"
           ? (message as MessageType).to_staff_ids?.includes(user.id) &&
             !(message as MessageType).read_by_staff_ids?.includes(user.id)
-            ? "message-thumbnail message-thumbnail--unread"
-            : "message-thumbnail"
+            ? "message__thumbnail message__thumbnail--unread"
+            : "message__thumbnail"
           : !(message as TodoType).read
-          ? "message-thumbnail message-thumbnail--unread"
-          : "message-thumbnail"
+          ? "message__thumbnail message__thumbnail--todo message__thumbnail--unread"
+          : "message__thumbnail message__thumbnail--todo"
       }
       ref={lastItemRef}
     >
       {/*========== FROM =============*/}
 
-      <div className="message-thumbnail__from">
+      <div className="message__thumbnail-from">
         <Checkbox
           id={message.id.toString()}
           onChange={handleCheckMsg}
@@ -291,7 +291,7 @@ const MessageThumbnail = ({
         />
         <div
           onClick={handleMsgClick}
-          className="message-thumbnail__from-author"
+          className="message__thumbnail-from-author"
         >
           {section === "To-dos"
             ? staffIdToTitleAndName(
@@ -314,17 +314,21 @@ const MessageThumbnail = ({
       <div
         className={
           section === "To-dos"
-            ? "message-thumbnail__subject message-thumbnail__subject--todo"
-            : "message-thumbnail__subject"
+            ? "message__thumbnail-subject message__thumbnail-subject--todo"
+            : "message__thumbnail-subject"
         }
         onClick={handleMsgClick}
       >
-        {message.high_importance && <ExclamationIcon mr={5} />}
+        {message.high_importance && (
+          <div className="message__thumbnail-subject-exclamation">
+            <ExclamationIcon mr={5} />
+          </div>
+        )}
         <div
           className={
             section === "To-dos"
-              ? "message-thumbnail__subject-text message-thumbnail__subject-text--todo"
-              : "message-thumbnail__subject-text"
+              ? "message__thumbnail-subject-text message__thumbnail-subject-text--todo"
+              : "message__thumbnail-subject-text"
           }
           style={{
             textDecoration:
@@ -335,11 +339,14 @@ const MessageThumbnail = ({
         >
           {message.subject} - {message.body}
         </div>
+
         {message.attachments_ids.length !== 0 && (
-          <PaperclipIcon ml={5} clickable={false} />
+          <div className="message__thumbnail-subject-paperclip">
+            <PaperclipIcon ml={5} clickable={false} />
+          </div>
         )}
         {section === "To-dos" && (
-          <div className="message-thumbnail__subject-btn">
+          <div className="message__thumbnail-subject-btn">
             {(message as TodoType).done ? (
               <UndoneButton onClick={handleUndone} />
             ) : (
@@ -350,22 +357,22 @@ const MessageThumbnail = ({
       </div>
 
       {/*========== RELATED PATIENT =============*/}
-      <div className="message-thumbnail__patient" onClick={handleClickPatient}>
+      <div className="message__thumbnail-patient" onClick={handleClickPatient}>
         {toPatientName(message.patient_infos)}
       </div>
       {/*========== DATE =============*/}
       <div
         className={
           section !== "To-dos"
-            ? "message-thumbnail__date"
-            : "message-thumbnail__date message-thumbnail__date--todo"
+            ? "message__thumbnail-date"
+            : "message__thumbnail-date message__thumbnail-date--todo"
         }
       >
         {timestampToDateTimeStrTZ(message.date_created)}
       </div>
       {section === "To-dos" && (
         <div
-          className="message-thumbnail__duedate"
+          className="message__thumbnail-duedate"
           style={{
             color: (message as TodoType).due_date
               ? nowTZTimestamp() > ((message as TodoType).due_date as number)
@@ -381,8 +388,8 @@ const MessageThumbnail = ({
       <div
         className={
           section !== "To-dos"
-            ? "message-thumbnail__logos"
-            : "message-thumbnail__logos message-thumbnail__logos--todo"
+            ? "message__thumbnail-logos"
+            : "message__thumbnail-logos message__thumbnail-logos--todo"
         }
       >
         {section === "To-dos" && <PenIcon mr={5} onClick={handleEdit} />}
@@ -394,9 +401,9 @@ const MessageThumbnail = ({
         <FakeWindow
           title="EDIT TO-DO"
           width={1000}
-          height={600}
+          height={630}
           x={(window.innerWidth - 1000) / 2}
-          y={(window.innerHeight - 600) / 2}
+          y={(window.innerHeight - 630) / 2}
           color={"#94bae8"}
           setPopUpVisible={setEditTodoVisible}
         >

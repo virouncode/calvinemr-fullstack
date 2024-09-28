@@ -64,11 +64,7 @@ const MessageExternalTemplateItem = ({
 
   return (
     <>
-      <li
-        className="messages__templates-list-item"
-        key={template.id}
-        ref={lastItemRef}
-      >
+      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id
@@ -77,21 +73,21 @@ const MessageExternalTemplateItem = ({
             : ""}
         </span>
         <>
+          <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
           {template.author_id === user.id && (
-            <PenIcon ml={5} onClick={handleEditClick} />
+            <PenIcon ml={15} onClick={handleEditClick} />
           )}
           {template.author_id === user.id && (
-            <TrashIcon ml={5} onClick={handleDelete} />
+            <TrashIcon ml={15} onClick={handleDelete} />
           )}
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
         </>
       </li>
       {editTemplateVisible && (
         <FakeWindow
           title="EDIT MESSAGE EXTERNAL TEMPLATE"
-          width={900}
+          width={700}
           height={550}
-          x={(window.innerWidth - 900) / 2}
+          x={(window.innerWidth - 700) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#93B5E9"
           setPopUpVisible={setEditTemplateVisible}

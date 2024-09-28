@@ -176,12 +176,12 @@ const RelationshipItem = ({
     itemInfos && (
       <>
         <tr
-          className="relationships-item"
+          className="relationships__item"
           style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
           ref={lastItemRef}
         >
           <td>
-            <div className="relationships-item__btn-container">
+            <div className="relationships__item-btn-container">
               {!editVisible ? (
                 <>
                   <EditButton onClick={handleEditClick} disabled={progress} />
@@ -199,7 +199,7 @@ const RelationshipItem = ({
             </div>
           </td>
           <td>
-            <div className="relationships-item__relationship">
+            <div className="relationships__item-relationship">
               {editVisible ? (
                 <RelationshipList
                   value={itemInfos.relationship}

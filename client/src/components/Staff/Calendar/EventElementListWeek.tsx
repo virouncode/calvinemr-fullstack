@@ -43,8 +43,8 @@ const EventElementListWeek = ({
   const { staffInfos } = useStaffInfosContext();
   return (
     <div
+      className="calendar__event-element-list"
       style={{
-        height: "100%",
         backgroundImage:
           event.extendedProps.status === "Cancelled"
             ? `repeating-linear-gradient(
@@ -57,25 +57,77 @@ const EventElementListWeek = ({
             : undefined,
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <p
-          style={{
-            padding: "0",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "clip",
-          }}
-        >
+      <div className="calendar__event-element-list-infos">
+        <div>
           <strong>
             {event.extendedProps.purpose?.toUpperCase() ?? "APPOINTMENT"}
           </strong>
-        </p>
+        </div>
+        <div>
+          <span>
+            {patientsGuestsIds.length > 0 &&
+              patientsGuestsIds.map(
+                (patient_guest) =>
+                  patient_guest && (
+                    <span
+                      className="calendar__patient-link calendar__patient-link--list"
+                      onClick={(e) =>
+                        handlePatientClick(
+                          e,
+                          patient_guest.patient_infos.patient_id
+                        )
+                      }
+                      key={patient_guest.patient_infos.patient_id}
+                    >
+                      <strong>
+                        {toPatientName(
+                          patient_guest.patient_infos
+                        ).toUpperCase()}
+                      </strong>
+                      {" / "}
+                    </span>
+                  )
+              )}
+            {staffGuestsIds.length > 0 &&
+              staffGuestsIds.map(
+                (staff_guest, index) =>
+                  staff_guest && (
+                    <span key={staff_guest.staff_infos.id}>
+                      <strong>
+                        {staffIdToTitleAndName(
+                          staffInfos,
+                          staff_guest.staff_infos.id
+                        ).toUpperCase()}
+                      </strong>
+                      {index !== staffGuestsIds.length - 1 ? " / " : ""}
+                    </span>
+                  )
+              )}
+          </span>
+        </div>
+        <div>
+          <strong>Host: </strong>
+          {event.extendedProps.hostName}
+        </div>
+        <div>
+          <strong>Site: </strong>
+          {event.extendedProps.siteName}
+        </div>
+        <div>
+          <strong>Room: </strong>
+          {event.extendedProps.rommTitle}
+        </div>
+        <div>
+          <strong>{event.extendedProps.status?.toUpperCase()}</strong>
+        </div>
+        {event.extendedProps.notes && (
+          <div>
+            <strong>Notes: </strong>
+            {event.extendedProps.notes}
+          </div>
+        )}
+      </div>
+      <div className="calendar__event-element-list-btns">
         {(event.extendedProps.host === user.id ||
           user.title === "Secretary") && (
           <div>
@@ -88,67 +140,6 @@ const EventElementListWeek = ({
           </div>
         )}
       </div>
-      <div>
-        <span>
-          {patientsGuestsIds.length > 0 &&
-            patientsGuestsIds.map(
-              (patient_guest) =>
-                patient_guest && (
-                  <span
-                    className="calendar__patient-link calendar__patient-link--list"
-                    onClick={(e) =>
-                      handlePatientClick(
-                        e,
-                        patient_guest.patient_infos.patient_id
-                      )
-                    }
-                    key={patient_guest.patient_infos.patient_id}
-                  >
-                    <strong>
-                      {toPatientName(patient_guest.patient_infos).toUpperCase()}
-                    </strong>
-                    {" / "}
-                  </span>
-                )
-            )}
-          {staffGuestsIds.length > 0 &&
-            staffGuestsIds.map(
-              (staff_guest, index) =>
-                staff_guest && (
-                  <span key={staff_guest.staff_infos.id}>
-                    <strong>
-                      {staffIdToTitleAndName(
-                        staffInfos,
-                        staff_guest.staff_infos.id
-                      ).toUpperCase()}
-                    </strong>
-                    {index !== staffGuestsIds.length - 1 ? " / " : ""}
-                  </span>
-                )
-            )}
-        </span>
-      </div>
-      <div>
-        <strong>Host: </strong>
-        {event.extendedProps.hostName}
-      </div>
-      <div>
-        <strong>Site: </strong>
-        {event.extendedProps.siteName}
-      </div>
-      <div>
-        <strong>Room: </strong>
-        {event.extendedProps.rommTitle}
-      </div>
-      <div>
-        <strong>{event.extendedProps.status?.toUpperCase()}</strong>
-      </div>
-      {event.extendedProps.notes && (
-        <div>
-          <strong>Notes: </strong>
-          {event.extendedProps.notes}
-        </div>
-      )}
     </div>
   );
 };

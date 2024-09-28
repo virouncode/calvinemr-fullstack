@@ -16,7 +16,7 @@ import {
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
-import PrintButton from "../../../../UI/Buttons/PrintButton";
+import Button from "../../../../UI/Buttons/Button";
 import EnvelopeIcon from "../../../../UI/Icons/EnvelopeIcon";
 import PhoneIcon from "../../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -79,33 +79,22 @@ const ClinicalNotesPrint = ({
     : clinicalNotes.filter(({ id }) => checkedNotesIds.includes(id));
 
   return (
-    <div className="clinical-notes__print-page">
-      <p style={{ textAlign: "center", marginBottom: "10px" }}>
-        <PrintButton
-          onClick={handlePrint}
-          className="clinical-notes__print-page-btn"
-        />
-      </p>
-      <p
-        style={{
-          fontSize: "0.85rem",
-          fontFamily: "Arial",
-          marginLeft: "5px",
-        }}
-      >
-        <em>
-          {toPatientName(demographicsInfos)},{" "}
-          {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
-          {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
-          {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart Nbr:{" "}
-          {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
-          {demographicsInfos.Email}, <PhoneIcon />{" "}
-          {
-            demographicsInfos.PhoneNumber?.find(
-              ({ _phoneNumberType }) => _phoneNumberType === "C"
-            )?.phoneNumber
-          }
-        </em>
+    <div className="clinical-notes__print">
+      <div className="clinical-notes__print-btn">
+        <Button onClick={handlePrint} label="Print" />
+      </div>
+      <p className="clinical-notes__print-infos">
+        {toPatientName(demographicsInfos)},{" "}
+        {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
+        {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
+        {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart Nbr:{" "}
+        {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
+        {demographicsInfos.Email}, <PhoneIcon />{" "}
+        {
+          demographicsInfos.PhoneNumber?.find(
+            ({ _phoneNumberType }) => _phoneNumberType === "C"
+          )?.phoneNumber
+        }
       </p>
       {clinicalNotesToPrint.map((clinicalNote) => (
         <ClinicalNoteCardPrint

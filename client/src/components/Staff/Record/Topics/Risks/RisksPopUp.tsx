@@ -90,25 +90,25 @@ const RisksPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="risk">
         <h1 className="risk__title">Patient risk factors & prevention</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="risk">
         <h1 className="risk__title">Patient risk factors & prevention</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="risk">
       <h1 className="risk__title">Patient risk factors & prevention</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
@@ -177,7 +177,7 @@ const RisksPopUp = ({
           <CloseButton onClick={handleClose} />
         </div>
       </>
-    </>
+    </div>
   );
 };
 

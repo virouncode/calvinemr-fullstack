@@ -1,23 +1,16 @@
-.subheader-section {
+.subheader {
   position: sticky;
-  top: 60px;
+  top: 55px;
   width: 100%;
-  z-index: 100;
-  padding: 10px 15px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 10px 0.935rem;
+  box-shadow: $box-shadow-default;
   background: rgb(243, 243, 243);
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  justify-content: space-between;
-  align-items: center;
   height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &__left {
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
+    display: none;
   }
   &__clinic {
     font-weight: normal;
@@ -38,15 +31,36 @@
     }
   }
   &__title {
-    font-size: 1.2rem;
+    font-size: $size-base;
     text-align: center;
     font-weight: bold;
     text-align: center;
   }
   &__right {
-    font-size: 0.8rem;
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .subheader {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .subheader__left {
+    display: flex;
+    align-items: center;
+    font-size: $size-sm;
+  }
+  .subheader__right {
+    display: block;
+    font-size: $size-sm;
     font-style: italic;
     text-align: end;
     padding: 0;
+  }
+  .subheader__title {
+    font-size: $size-lg;
   }
 }

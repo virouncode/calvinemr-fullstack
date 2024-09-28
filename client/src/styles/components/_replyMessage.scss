@@ -1,0 +1,210 @@
+.reply-message {
+  min-height: 250px;
+  border: solid 0.5px $grey;
+  border-radius: 6px;
+  margin: 1rem auto;
+  width: 90%;
+  overflow-y: scroll;
+  .reply-message__recipients {
+    border-bottom: solid 0.5px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
+      font-size: $size-base;
+    }
+    input {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: $size-base;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+  .reply-message__subject {
+    border-bottom: solid 0.5px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
+      font-size: $size-base;
+    }
+    input {
+      flex: 1;
+      padding: 0.25rem 0.5rem;
+      overflow-x: scroll;
+      font-size: $size-base;
+    }
+  }
+  .reply-message__patient {
+    border-bottom: solid 0.5px $grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    label {
+      font-weight: bold;
+      font-size: $size-base;
+    }
+    input {
+      outline: none;
+      flex: 1;
+      font-size: $size-base;
+      padding: 0.25rem 0.5rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  .reply-message__attach {
+    border-bottom: solid 0.5px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+    font-size: $size-base;
+    label {
+      font-weight: bold;
+    }
+  }
+  .reply-message__importance {
+    border-bottom: solid 0.5px $grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    font-size: $size-base;
+    label {
+      font-weight: bold;
+    }
+    &-check {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .reply-message__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    textarea {
+      font-size: $size-base;
+      outline: none;
+      padding: 0.5rem;
+      width: 100%;
+      min-height: 200px;
+    }
+    .message__attachments {
+      display: flex;
+      padding: 1rem;
+      flex-wrap: wrap;
+      .message__attachment-card {
+        border: solid 0.5px $grey;
+        padding: 0.5rem 0.25rem 0;
+        .message__attachment-card-thumbnail {
+          height: 80px;
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          iframe {
+            border: none;
+            cursor: pointer;
+          }
+        }
+        .message__attachment-card-footer {
+          background: $grey;
+          padding: 0.25rem;
+          font-size: $size-xs;
+          display: flex;
+          flex-direction: column;
+        }
+        .message__attachment-card-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          p {
+            font-size: $size-xs;
+            margin-bottom: 0.25rem;
+          }
+        }
+        .message__attachment-card-btn {
+          text-align: center;
+          button {
+            font-size: $size-xs;
+            max-width: 100%;
+          }
+        }
+      }
+    }
+    .reply-message__history {
+      display: flex;
+      flex-direction: column;
+      .message {
+        padding: 1rem;
+        border-bottom: solid 0.5px $grey;
+      }
+      .message__title {
+        display: flex;
+        justify-content: space-between;
+        font-size: $size-sm;
+        .message__author {
+          font-weight: bold;
+        }
+        .message__date {
+          text-align: right;
+        }
+      }
+      .message__subtitle {
+        font-size: $size-xs;
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .message__body {
+        padding: 1rem 1rem 0;
+        font-size: $size-sm;
+        white-space: pre-wrap;
+      }
+    }
+  }
+
+  .reply-message__btns {
+    border-top: solid 0.5px $grey;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reply-message {
+    .reply-message__recipients,
+    .reply-message__subject,
+    .reply-message__patient {
+      label,
+      input {
+        font-size: $size-sm;
+      }
+    }
+    .reply-message__body {
+      textarea {
+        font-size: $size-sm;
+      }
+    }
+    .reply-message__attach {
+      font-size: $size-sm;
+    }
+    .reply-message__importance {
+      font-size: $size-sm;
+    }
+  }
+}

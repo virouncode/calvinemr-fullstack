@@ -31,7 +31,7 @@ const MessagesPatient = () => {
 
   if (error)
     return (
-      <div className="messages-container">
+      <div className="messages__container">
         <ErrorParagraph errorMsg={error.message} />E
       </div>
     );
@@ -44,7 +44,7 @@ const MessagesPatient = () => {
   );
 
   return (
-    <div className="messages-container messages-container--patient">
+    <div className="messages__container">
       <MessagesPatientToolBar
         search={search}
         setSearch={setSearch}
@@ -58,7 +58,7 @@ const MessagesPatient = () => {
         selectAllVisible={selectAllVisible}
         setSelectAllVisible={setSelectAllVisible}
       />
-      <div className="messages-content">
+      <div className="messages__content">
         <MessagesPatientLeftBar
           section={section}
           setSection={setSection}

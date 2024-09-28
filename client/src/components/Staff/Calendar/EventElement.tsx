@@ -43,9 +43,8 @@ const EventElement = ({
   const { staffInfos } = useStaffInfosContext();
   return (
     <div
+      className="calendar__event-element"
       style={{
-        fontSize: "0.7rem",
-        height: "100%",
         backgroundImage:
           event.extendedProps.status === "Cancelled"
             ? `repeating-linear-gradient(
@@ -58,42 +57,32 @@ const EventElement = ({
             : undefined,
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0 2px",
-        }}
-      >
-        <p
-          style={{
-            padding: "0",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          {event.allDay ? "All Day" : info.timeText} -{" "}
-          {event.extendedProps.purpose ?? "Appointment"}
-        </p>
-        {(event.extendedProps.host === user.id ||
-          user.title === "Secretary") && (
-          <div style={{ display: "flex" }}>
-            <CloneIcon
-              ml={5}
-              mr={5}
-              onClick={(e) => handleCopyEvent(e, info)}
-            />
-            <TrashIcon
-              onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
-                handleDeleteEvent(e, info)
-              }
-            />
+      <div className="calendar__event-element-row">
+        <div className="calendar__event-element-time">
+          {event.allDay ? "All Day" : info.timeText}
+        </div>
+        <div className="calendar__event-element-reason">
+          <div className="calendar__event-element-purpose">
+            {event.extendedProps.purpose ?? "Appointment"}
           </div>
-        )}
+          {(event.extendedProps.host === user.id ||
+            user.title === "Secretary") && (
+            <div className="calendar__event-element-btns">
+              <CloneIcon
+                ml={5}
+                mr={5}
+                onClick={(e) => handleCopyEvent(e, info)}
+              />
+              <TrashIcon
+                onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
+                  handleDeleteEvent(e, info)
+                }
+              />
+            </div>
+          )}
+        </div>
       </div>
-      <div>
+      <div className="calendar__event-element-guests">
         <span>
           {patientsGuestsIds.length > 0 &&
             patientsGuestsIds.map(
@@ -133,20 +122,22 @@ const EventElement = ({
             )}
         </span>
       </div>
-      <div>
-        <strong>Host: </strong>
-        {event.extendedProps.hostName}
-      </div>
-      <div>
-        <strong>Site: </strong>
-        {event.extendedProps.siteName}
-      </div>
-      <div>
-        <strong>Room: </strong>
-        {event.extendedProps.roomTitle}
-      </div>
-      <div>
-        <strong>{event.extendedProps.status?.toUpperCase()}</strong>
+      <div className="calendar__event-element-infos">
+        <div>
+          <strong>Host: </strong>
+          {event.extendedProps.hostName}
+        </div>
+        <div>
+          <strong>Site: </strong>
+          {event.extendedProps.siteName}
+        </div>
+        <div>
+          <strong>Room: </strong>
+          {event.extendedProps.roomTitle}
+        </div>
+        <div>
+          <strong>{event.extendedProps.status?.toUpperCase()}</strong>
+        </div>
       </div>
     </div>
   );

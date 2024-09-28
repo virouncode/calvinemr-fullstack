@@ -36,19 +36,21 @@ const CareElementsSystolic = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Systolic (mmHg):</label>
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
+        Systolic (mmHg):
+      </label>
 
-      <div className="care-elements__row-value">
+      <div className="care-elements__card-content-row-value">
         {lastDatas.BloodPressure?.SystolicBP}
       </div>
       {lastDatas.BloodPressure?.SystolicBP && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("BLOOD PRESSURE")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

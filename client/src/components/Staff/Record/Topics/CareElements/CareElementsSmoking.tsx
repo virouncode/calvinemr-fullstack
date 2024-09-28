@@ -41,18 +41,18 @@ const CareElementsSmoking = ({
   };
 
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Smoking:</label>
-      <div className="care-elements__row-value">
+    <div className="care-elements__card-content-row">
+      <label>Smoking:</label>
+      <div className="care-elements__card-content-row-value">
         {toCodeTableName(ynIndicatorsimpleCT, lastDatas.SmokingStatus?.Status)}
       </div>
       {lastDatas.SmokingStatus?.Status && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("SMOKING STATUS")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

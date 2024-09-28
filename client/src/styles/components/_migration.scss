@@ -2,7 +2,7 @@
   padding: 5px 10px;
   border-radius: 6px;
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   font-size: 0.9rem;
   text-align: center;
   display: flex;
@@ -23,7 +23,7 @@
   width: 80%;
   margin: 30px auto 0;
   border: solid 1px $grey;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   justify-content: space-between;
   border-radius: 6px;
   padding: 20px;

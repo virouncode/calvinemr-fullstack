@@ -17,18 +17,8 @@ const InputTelExtToggle = ({
 }: InputTelExtToggleProps) => {
   return editVisible ? (
     <>
-      <label
-        htmlFor={id}
-        style={{
-          marginLeft: "30px",
-          marginRight: "10px",
-          minWidth: "auto",
-        }}
-      >
-        Ext
-      </label>
+      <label htmlFor={id}>Ext</label>
       <input
-        style={{ width: "15%" }}
         type="text"
         value={value}
         onChange={onChange}

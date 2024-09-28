@@ -41,12 +41,12 @@ const Edocs = () => {
   const edocs = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="reference-edocs">
-      <div className="reference-edocs__title">
+    <div className="reference__edocs">
+      <div className="reference__edocs-title">
         <h3>E-docs</h3>
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
       </div>
-      <div className="reference-edocs__search">
+      <div className="reference__edocs-search">
         <Input
           label="Search"
           value={search}
@@ -54,11 +54,11 @@ const Edocs = () => {
           id="search-edocs"
         />
       </div>
-      <div className="reference-edocs__results">
+      <div className="reference__edocs-results">
         {error && <ErrorParagraph errorMsg={error.message} />}
         <>
-          <div className="reference-edocs__table-container" ref={divRef}>
-            <table className="reference-edocs__table">
+          <div className="reference__edocs-table-container" ref={divRef}>
+            <table className="reference__edocs-table">
               <thead>
                 <tr>
                   <th>Action</th>
@@ -76,17 +76,10 @@ const Edocs = () => {
                         <EdocItem
                           item={item}
                           key={item.id}
-                          setErrMsgPost={setErrMsgPost}
-                          errMsgPost={errMsgPost}
                           lastItemRef={lastItemRef}
                         />
                       ) : (
-                        <EdocItem
-                          item={item}
-                          key={item.id}
-                          setErrMsgPost={setErrMsgPost}
-                          errMsgPost={errMsgPost}
-                        />
+                        <EdocItem item={item} key={item.id} />
                       )
                     )
                   : !isFetchingNextPage &&
@@ -102,18 +95,14 @@ const Edocs = () => {
       {addVisible && (
         <FakeWindow
           title="ADD A NEW E-DOC"
-          width={1000}
+          width={1024}
           height={550}
-          x={(window.innerWidth - 1000) / 2}
+          x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#94bae8"
           setPopUpVisible={setAddVisible}
         >
-          <EdocForm
-            setAddVisible={setAddVisible}
-            setErrMsgPost={setErrMsgPost}
-            errMsgPost={errMsgPost}
-          />
+          <EdocForm setAddVisible={setAddVisible} />
         </FakeWindow>
       )}
     </div>

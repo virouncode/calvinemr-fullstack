@@ -20,7 +20,7 @@ import { SiteType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
-import Button from "../../UI/Buttons/Button";
+import GearIcon from "../../UI/Icons/GearIcon";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import CalendarView from "./CalendarView";
@@ -66,6 +66,9 @@ type CalendarDisplayProps = {
   sitesIds: number[];
   setSitesIds: React.Dispatch<React.SetStateAction<number[]>>;
   isFirstEvent: boolean;
+  setMobileCalendarOptionsVisible: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 };
 
 const CalendarDisplay = ({
@@ -105,6 +108,7 @@ const CalendarDisplay = ({
   sitesIds,
   setSitesIds,
   isFirstEvent,
+  setMobileCalendarOptionsVisible,
 }: CalendarDisplayProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -112,7 +116,7 @@ const CalendarDisplay = ({
   return (
     <div className="calendar__display">
       {timelineVisible && (
-        <div className="calendar-section__select-site">
+        <div className="calendar__select-site">
           <SiteSelect
             handleSiteChange={(e) =>
               setTimelineSiteId(parseInt(e.target.value))
@@ -127,13 +131,19 @@ const CalendarDisplay = ({
         setTimelineVisible={setTimelineVisible}
         timelineVisible={timelineVisible}
       />
+      <GearIcon onClick={() => setMobileCalendarOptionsVisible((v) => !v)} />
       {(currentView === "timeGrid" || timelineVisible) && (
-        <Button
+        <button
           onClick={handlePrintDay}
           disabled={events?.length === 0}
-          className="calendar__print-day"
-          label={"Print day sheet"}
-        />
+          className={
+            timelineVisible
+              ? "calendar__print-btn calendar__print-btn--timelineview"
+              : "calendar__print-btn calendar__print-btn--calendarview"
+          }
+        >
+          Print day sheet
+        </button>
       )}
       {printDayVisible && (
         <NewWindow
@@ -200,10 +210,10 @@ const CalendarDisplay = ({
       {formVisible && (
         <FakeWindow
           title={`APPOINTMENT DETAILS`}
-          width={1050}
-          height={790}
-          x={(window.innerWidth - 1050) / 2}
-          y={(window.innerHeight - 790) / 2}
+          width={1024}
+          height={window.innerHeight}
+          x={(window.innerWidth - 1024) / 2}
+          y={0}
           color={formColor}
           setPopUpVisible={setFormVisible}
           closeCross={false}

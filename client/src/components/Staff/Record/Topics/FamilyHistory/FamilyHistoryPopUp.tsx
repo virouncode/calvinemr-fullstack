@@ -94,94 +94,92 @@ const FamilyHistoryPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="famhistory">
         <h1 className="famhistory__title">Patient family history</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="famhistory">
         <h1 className="famhistory__title">Patient family history</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="famhistory">
       <h1 className="famhistory__title">Patient family history</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <>
-        <div className="famhistory__table-container" ref={divRef}>
-          <table className="famhistory__table">
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Description</th>
-                <th>Relative affected</th>
-                <th>Start date</th>
-                <th>Age at onset</th>
-                <th>Life stage</th>
-                <th>Treatment</th>
-                <th>Notes</th>
-                <th>Updated By</th>
-                <th>Updated On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {addVisible && (
-                <FamilyHistoryForm
-                  editCounter={editCounter}
-                  setAddVisible={setAddVisible}
-                  patientId={patientId}
-                  setErrMsgPost={setErrMsgPost}
-                  errMsgPost={errMsgPost}
-                  topicPost={topicPost}
-                />
-              )}
-              {datas && datas.length > 0
-                ? datas.map((item, index) =>
-                    index === datas.length - 1 ? (
-                      <FamilyHistoryItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        lastItemRef={lastItemRef}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                      />
-                    ) : (
-                      <FamilyHistoryItem
-                        item={item}
-                        key={item.id}
-                        editCounter={editCounter}
-                        setErrMsgPost={setErrMsgPost}
-                        errMsgPost={errMsgPost}
-                        topicPut={topicPut}
-                        topicDelete={topicDelete}
-                      />
-                    )
+      <div className="famhistory__table-container" ref={divRef}>
+        <table className="famhistory__table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Description</th>
+              <th>Relative affected</th>
+              <th>Start date</th>
+              <th>Age at onset</th>
+              <th>Life stage</th>
+              <th>Treatment</th>
+              <th>Notes</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {addVisible && (
+              <FamilyHistoryForm
+                editCounter={editCounter}
+                setAddVisible={setAddVisible}
+                patientId={patientId}
+                setErrMsgPost={setErrMsgPost}
+                errMsgPost={errMsgPost}
+                topicPost={topicPost}
+              />
+            )}
+            {datas && datas.length > 0
+              ? datas.map((item, index) =>
+                  index === datas.length - 1 ? (
+                    <FamilyHistoryItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      lastItemRef={lastItemRef}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
+                  ) : (
+                    <FamilyHistoryItem
+                      item={item}
+                      key={item.id}
+                      editCounter={editCounter}
+                      setErrMsgPost={setErrMsgPost}
+                      errMsgPost={errMsgPost}
+                      topicPut={topicPut}
+                      topicDelete={topicDelete}
+                    />
                   )
-                : !isFetchingNextPage &&
-                  !addVisible && (
-                    <EmptyRow colSpan={10} text="No family history" />
-                  )}
-              {isFetchingNextPage && <LoadingRow colSpan={10} />}
-            </tbody>
-          </table>
-        </div>
-        <div className="famhistory__btn-container">
-          <Button onClick={handleAdd} disabled={addVisible} label="Add" />
-          <CloseButton onClick={handleClose} />
-        </div>
-      </>
-    </>
+                )
+              : !isFetchingNextPage &&
+                !addVisible && (
+                  <EmptyRow colSpan={10} text="No family history" />
+                )}
+            {isFetchingNextPage && <LoadingRow colSpan={10} />}
+          </tbody>
+        </table>
+      </div>
+      <div className="famhistory__btn-container">
+        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        <CloseButton onClick={handleClose} />
+      </div>
+    </div>
   );
 };
 

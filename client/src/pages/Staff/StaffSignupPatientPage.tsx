@@ -4,7 +4,7 @@ import SignupPatientForm from "../../components/Staff/Signup/SignupPatientForm";
 import useTitle from "../../hooks/useTitle";
 
 const StaffSignupPatientPage = () => {
-  useTitle("Create a new patient account");
+  useTitle("New patient account");
   return (
     <>
       <HelmetProvider>
@@ -12,7 +12,7 @@ const StaffSignupPatientPage = () => {
           <title>New Patient</title>
         </Helmet>
       </HelmetProvider>
-      <section className="signup-section">
+      <section className="signup-patient">
         <SignupPatientForm />
       </section>
     </>

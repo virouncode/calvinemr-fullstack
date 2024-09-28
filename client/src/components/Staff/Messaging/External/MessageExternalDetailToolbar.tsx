@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { DemographicsType, MessageExternalType } from "../../../../types/api";
@@ -27,46 +28,48 @@ const MessageExternalDetailToolbar = ({
   //Hooks
   const navigate = useNavigate();
   return (
-    <div className="message-detail__toolbar">
+    <div className="message__detail-toolbar">
       <ArrowLeftIcon onClick={handleClickBack} mr={20} />
-      <div className="message-detail__toolbar-subject">
+      <div className="message__detail-toolbar-subject">
         {message.high_importance && <ExclamationIcon mr={5} />}
         {message.subject}
       </div>
-      <div className="message-detail__toolbar-patient">
-        <div className="message-detail__toolbar-patient-text">
-          {message.from_patient_id ? (
-            <div
-              className="message-detail__toolbar-patient-link"
-              onClick={() =>
-                navigate(`/staff/patient-record/${message.from_patient_id}`)
-              }
+      <div className="message__detail-toolbar-patient">
+        {message.from_patient_id ? (
+          <div
+            className="message__detail-toolbar-patient-link"
+            onClick={() =>
+              navigate(`/staff/patient-record/${message.from_patient_id}`)
+            }
+          >
+            {toPatientName(message.from_patient_infos)}
+          </div>
+        ) : (
+          (
+            message.to_patients_ids as {
+              to_patient_infos: DemographicsType;
+            }[]
+          ).map(({ to_patient_infos }, index) => (
+            <Tooltip
+              title={toPatientName(to_patient_infos)}
+              key={to_patient_infos.patient_id}
             >
-              {toPatientName(message.from_patient_infos)}
-            </div>
-          ) : (
-            (
-              message.to_patients_ids as {
-                to_patient_infos: DemographicsType;
-              }[]
-            ).map(({ to_patient_infos }, index) => (
               <div
-                className="message-detail__toolbar-patient-link"
+                className="message__detail-toolbar-patient-link"
                 onClick={() =>
                   navigate(
                     `/staff/patient-record/${to_patient_infos.patient_id}`
                   )
                 }
-                key={to_patient_infos.patient_id}
               >
                 {toPatientName(to_patient_infos)}
                 {index !== message.to_patients_ids.length - 1 && " /"}
               </div>
-            ))
-          )}
-        </div>
+            </Tooltip>
+          ))
+        )}
         {section !== "Deleted messages" && (
-          <div className="message-detail__toolbar-patient-btn">
+          <div className="message__detail-toolbar-patient-btn">
             <Button
               onClick={handleAddToClinicalNotes}
               disabled={posting}
@@ -75,7 +78,7 @@ const MessageExternalDetailToolbar = ({
           </div>
         )}
       </div>
-      <div className="message-detail__toolbar-logos">
+      <div className="message__detail-toolbar-logos">
         {section !== "Deleted messages" && (
           <TrashIcon onClick={handleDeleteMsg} />
         )}

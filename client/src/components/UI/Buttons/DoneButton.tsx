@@ -16,6 +16,7 @@ const DoneButton = ({ onClick, disabled = false }: DoneButtonProps) => {
         fontSize: "0.7rem",
         boxShadow: "none",
       }}
+      className="btn"
     >
       Done
     </button>

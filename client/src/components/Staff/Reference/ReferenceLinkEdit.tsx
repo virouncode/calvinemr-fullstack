@@ -70,12 +70,12 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
   };
   return (
     <form
-      className="reference-links__form reference-links__form--edit"
+      className="reference__links-form"
       onSubmit={handleSubmit}
       style={{ border: errMsg && "1px solid red" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="reference-links__form-row">
+      <div className="reference__links-form-row">
         <Input
           label="Name"
           value={editedLink.name}
@@ -84,7 +84,7 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
           autoFocus
         />
       </div>
-      <div className="reference-links__form-row">
+      <div className="reference__links-form-row">
         <Input
           label="URL"
           value={editedLink.url}
@@ -92,7 +92,7 @@ const ReferenceLinkEdit = ({ link, setEditVisible }: LinkEditProps) => {
           onChange={handleChange}
         />
       </div>
-      <div className="reference-links__form-btns">
+      <div className="reference__links-form-btns">
         <SubmitButton label="Save" disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>

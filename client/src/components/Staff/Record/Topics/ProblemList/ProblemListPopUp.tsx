@@ -88,25 +88,25 @@ const ProblemListPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="problemlist">
         <h1 className="problemlist__title">Patient problem list</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="problemlist">
         <h1 className="problemlist__title">Patient problem list</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="problemlist">
       <h1 className="problemlist__title">Patient problem list</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="problemlist__table-container" ref={divRef}>
@@ -171,7 +171,7 @@ const ProblemListPopUp = ({
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} />
       </div>
-    </>
+    </div>
   );
 };
 

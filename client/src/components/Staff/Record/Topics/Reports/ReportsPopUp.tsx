@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -26,7 +27,9 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import ReportForm from "./ReportForm";
 import ReportItemReceived from "./ReportItemReceived";
 import ReportItemSent from "./ReportItemSent";
@@ -93,6 +96,7 @@ const ReportsPopUp = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState<
     Partial<MessageAttachmentType>[] | undefined
   >();
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const reportPost = useReportPost();
   const reportPut = useReportPut(patientId);
@@ -131,22 +135,22 @@ const ReportsPopUp = ({
 
   if (isPendingReportsReceived || isPendingReportsSent) {
     return (
-      <>
+      <div className="reports">
         <h1 className="reports__title">Patient reports</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (errorReportsReceived || errorReportsSent) {
     return (
-      <>
+      <div className="reports">
         <h1 className="reports__title">Patient reports</h1>
         <ErrorParagraph
           errorMsg={
             errorReportsReceived?.message || errorReportsSent?.message || ""
           }
         />
-      </>
+      </div>
     );
   }
 
@@ -156,7 +160,7 @@ const ReportsPopUp = ({
   const datasReportsSent = reportsSent?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="reports">
       <h1 className="reports__title">Patient reports</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <h2 className="reports__title reports__title--subtitle">Received</h2>
@@ -167,7 +171,7 @@ const ReportsPopUp = ({
               <th>Action</th>
               <th>Name</th>
               <th>Format</th>
-              <th>File extension and version</th>
+              <th>File extension</th>
               <th>File</th>
               <th>Class</th>
               <th>Subclass</th>
@@ -233,7 +237,7 @@ const ReportsPopUp = ({
               <th>Action</th>
               <th>Name</th>
               <th>Format</th>
-              <th>File extension and version</th>
+              <th>File extension</th>
               <th>File</th>
               <th>Class</th>
               <th>Subclass</th>
@@ -317,44 +321,72 @@ const ReportsPopUp = ({
       {faxVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#E3AFCD"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax setNewVisible={setFaxVisible} initialAttachment={fileToFax} />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={fileToFax}
+            />
+          )}
         </FakeWindow>
       )}
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#E3AFCD"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentsToSend}
-            initialRecipients={[
-              {
-                id: demographicsInfos.patient_id,
-                name: toPatientName(demographicsInfos),
-                email: demographicsInfos.Email,
-                phone:
-                  demographicsInfos.PhoneNumber.find(
-                    ({ _phoneNumberType }) => _phoneNumberType === "C"
-                  )?.phoneNumber || "",
-              },
-            ]}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentsToSend}
+              initialRecipients={[
+                {
+                  id: demographicsInfos.patient_id,
+                  name: toPatientName(demographicsInfos),
+                  email: demographicsInfos.Email,
+                  phone:
+                    demographicsInfos.PhoneNumber.find(
+                      ({ _phoneNumberType }) => _phoneNumberType === "C"
+                    )?.phoneNumber || "",
+                },
+              ]}
+            />
+          )}
         </FakeWindow>
       )}
-    </>
+    </div>
   );
 };
 

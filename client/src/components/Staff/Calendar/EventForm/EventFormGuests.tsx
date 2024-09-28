@@ -67,9 +67,9 @@ const EventFormGuests = ({
   };
 
   return (
-    <div className="event-form__row event-form__row--guest">
-      <div className="event-form__item event-form__item--guestlist">
-        <label>Patients/Guests: </label>
+    <div className="event-form__guests">
+      <div className="event-form__guests-list">
+        <label>Patients/Guests</label>
         <GuestsList
           formDatas={formDatas}
           handleRemoveStaffGuest={handleRemoveStaffGuest}
@@ -77,7 +77,7 @@ const EventFormGuests = ({
         />
       </div>
       {editable && (
-        <div className="event-form__item event-form__item--guestsearch">
+        <div className="event-form__guests-search">
           <GuestsSearch
             hostId={hostId}
             staff_guests_ids={

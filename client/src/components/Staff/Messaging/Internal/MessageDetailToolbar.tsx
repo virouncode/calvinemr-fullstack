@@ -34,32 +34,30 @@ const MessageDetailToolbar = ({
     navigate(`/staff/patient-record/${message.related_patient_id}`);
   };
   return (
-    <div className="message-detail__toolbar">
+    <div
+      className={
+        section === "To-dos"
+          ? "message__detail-toolbar message__detail-toolbar--todo"
+          : "message__detail-toolbar"
+      }
+    >
       <ArrowLeftIcon onClick={handleClickBack} mr={20} />
-      <div className="message-detail__toolbar-subject">
+      <div className="message__detail-toolbar-subject">
         {message.high_importance && <ExclamationIcon mr={5} />}
         {message.subject}
       </div>
-      <div
-        className={
-          section === "To-dos"
-            ? "message-detail__toolbar-patient message-detail__toolbar-patient--todo"
-            : "message-detail__toolbar-patient"
-        }
-      >
+      <div className="message__detail-toolbar-patient">
         {message.related_patient_id ? (
           <>
-            <div className="message-detail__toolbar-patient-text">
-              <strong>Related patient:</strong>
-              <div
-                className="message-detail__toolbar-patient-link"
-                onClick={handleClickPatient}
-              >
-                {toPatientName(message.patient_infos)}
-              </div>
+            <div
+              className="message__detail-toolbar-patient-link"
+              onClick={handleClickPatient}
+            >
+              <strong>Related patient: </strong>
+              {toPatientName(message.patient_infos)}
             </div>
             {section !== "To-dos" && section !== "Deleted messages" && (
-              <div className="message-detail__toolbar-patient-btn">
+              <div className="message__detail-toolbar-patient-btn">
                 <Button
                   onClick={handleAddToClinicalNotes}
                   disabled={posting}
@@ -70,13 +68,7 @@ const MessageDetailToolbar = ({
           </>
         ) : null}
       </div>
-      <div
-        className={
-          section === "To-dos"
-            ? "message-detail__toolbar-logos message-detail__toolbar-logos--todo"
-            : "message-detail__toolbar-logos"
-        }
-      >
+      <div className="message__detail-toolbar-logos">
         {section === "To-dos" && <PenIcon mr={5} onClick={handleEdit} />}
         {section !== "Deleted messages" && (
           <TrashIcon onClick={handleDeleteMsg} />

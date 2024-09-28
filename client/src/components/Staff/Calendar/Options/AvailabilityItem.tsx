@@ -44,9 +44,11 @@ const AvailabilityItem = ({
   unavailable,
 }: AvailabilityItemProps) => {
   return (
-    <div className="availability__row">
-      <div className="availability__column--day">{firstLetterUpper(day)}</div>
-      <div className="availability__column--time">
+    <div className="calendar__availability-editor-row">
+      <div className="calendar__availability-editor-day">
+        {firstLetterUpper(day)}
+      </div>
+      <div className="calendar__availability-editor-time">
         <TimePickerAvailability
           day={day}
           handleChange={handleStartMorningChange}
@@ -65,7 +67,7 @@ const AvailabilityItem = ({
           timeValueAMPM={scheduleMorning[1].ampm}
         />
       </div>
-      <div className="availability__column--time">
+      <div className="calendar__availability-editor-time">
         <TimePickerAvailability
           day={day}
           handleChange={handleStartAfternoonChange}
@@ -84,7 +86,7 @@ const AvailabilityItem = ({
           timeValueAMPM={scheduleAfternoon[1].ampm}
         />
       </div>
-      <div className="availability__column--checkbox">
+      <div className="calendar__availability-editor-unavailable">
         <Checkbox
           id={`notavailable-${day}`}
           onChange={(e) => handleCheck(e, day)}

@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { splitStaffInfos } from "../../../utils/appointments/splitStaffInfos";
 import { categoryToTitle } from "../../../utils/names/categoryToTitle";
+import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
 import StaffContactsCategory from "./StaffContactsCategory";
 
 type StaffContactsProps = {
   unfoldedCategory?: string;
   recipientsIds: number[];
   setRecipientsIds: React.Dispatch<React.SetStateAction<number[]>>;
+  closeCross?: boolean;
+  recipientsRef?: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 const StaffContacts = ({
   unfoldedCategory = "",
   recipientsIds,
   setRecipientsIds,
+  closeCross,
+  recipientsRef,
 }: StaffContactsProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
@@ -74,9 +79,19 @@ const StaffContacts = ({
     }
   };
 
+  const handleClose = () => {
+    if (recipientsRef?.current)
+      recipientsRef.current.style.transform = "translateX(-200%)";
+  };
+
   return (
     <div className="contacts">
-      <div className="contacts__title">Recipients</div>
+      <div className="contacts__title">
+        Recipients{" "}
+        {closeCross && (
+          <XmarkRectangleIcon color=" #3d375a" onClick={handleClose} />
+        )}
+      </div>
       <div className="contacts__list">
         {categoriesInfos
           .filter((category) => category.infos.length !== 0)

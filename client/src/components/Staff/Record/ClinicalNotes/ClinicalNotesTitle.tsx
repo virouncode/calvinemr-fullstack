@@ -12,7 +12,6 @@ import {
 } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
-import TriangleButton from "../../../UI/Buttons/TriangleButton";
 import EnvelopeIcon from "../../../UI/Icons/EnvelopeIcon";
 import PhoneIcon from "../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -65,13 +64,13 @@ const ClinicalNotesTitle = ({
 
   if (isPending || isFetchingNextPage)
     return (
-      <div className="clinical-notes__title">
+      <div className="clinical-notes__header-title">
         <LoadingParagraph />
       </div>
     );
   if (error)
     return (
-      <div className="clinical-notes__title">
+      <div className="clinical-notes__header-title">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -81,36 +80,39 @@ const ClinicalNotesTitle = ({
   )[0];
 
   return (
-    <div className="clinical-notes__title" onClick={handleTitleClick}>
-      <div>
+    <div className="clinical-notes__header-title" onClick={handleTitleClick}>
+      {/* <div className="clinical-notes__header-title-btn">
         <TriangleButton
           className={notesVisible ? "triangle triangle--active" : "triangle"}
           color="#21201e"
           triangleRef={triangleRef}
         />
-      </div>
-
-      <span>
-        {toPatientName(demographicsInfos)},{" "}
-        {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
-        {getAgeTZ(demographicsInfos.DateOfBirth)}, born{" "}
-        {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
-        {demographicsInfos.ChartNumber}, <EnvelopeIcon />{" "}
+      </div> */}
+      <div className="clinical-notes__header-title-infos">
+        <span>
+          {toPatientName(demographicsInfos)},{" "}
+          {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
+          {getAgeTZ(demographicsInfos.DateOfBirth)}
+        </span>
+        <span>
+          Born {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
+          {demographicsInfos.ChartNumber}
+        </span>
         <span
           style={{ cursor: "pointer", textDecoration: "underline" }}
           onClick={handleClickMail}
         >
-          {demographicsInfos.Email}
+          <EnvelopeIcon /> {demographicsInfos.Email}
         </span>
-        , <PhoneIcon />{" "}
-        {
-          demographicsInfos.PhoneNumber?.find(
-            ({ _phoneNumberType }) => _phoneNumberType === "C"
-          )?.phoneNumber
-        }
-        <br />
         <span>
-          {" "}
+          <PhoneIcon />{" "}
+          {
+            demographicsInfos.PhoneNumber?.find(
+              ({ _phoneNumberType }) => _phoneNumberType === "C"
+            )?.phoneNumber
+          }
+        </span>
+        <span>
           Next appointment:{" "}
           {patientNextAppointment
             ? `${timestampToHumanDateTimeTZ(
@@ -121,19 +123,21 @@ const ClinicalNotesTitle = ({
               )}`
             : "no appointment scheduled"}
         </span>
-        {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
-          <>
-            {" "}
-            / <span style={{ color: "red" }}> Patient Inactive</span>
-          </>
-        )}
-        {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
-          <>
-            {" "}
-            / <span style={{ color: "red" }}> Patient Deceased</span>
-          </>
-        )}
-      </span>
+        <span>
+          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
+            <>
+              {" "}
+              / <span style={{ color: "red" }}> Patient Inactive</span>
+            </>
+          )}
+          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
+            <>
+              {" "}
+              / <span style={{ color: "red" }}> Patient Deceased</span>
+            </>
+          )}
+        </span>
+      </div>
     </div>
   );
 };

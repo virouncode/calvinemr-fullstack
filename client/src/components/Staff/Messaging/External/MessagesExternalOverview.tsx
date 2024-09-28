@@ -1,8 +1,10 @@
+import { useMediaQuery } from "@mui/material";
 import React from "react";
 import { MessageExternalType } from "../../../../types/api";
 import EmptyParagraph from "../../../UI/Paragraphs/EmptyParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import MessageExternalThumbnail from "./MessageExternalThumbnail";
+import MessageExternalThumbnailMobile from "./MessageExternalThumbnailMobile";
 import MessagesExternalOverviewToolbar from "./MessagesExternalOverviewToolbar";
 
 type MessagesExternalOverviewProps = {
@@ -44,13 +46,37 @@ const MessagesExternalOverview = ({
         return "";
     }
   };
+  const isTabletOrMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <>
       <MessagesExternalOverviewToolbar section={section} />
       {messages && messages.length > 0
         ? messages.map((item, index) =>
             index === messages.length - 1 ? (
-              <MessageExternalThumbnail
+              isTabletOrMobile ? (
+                <MessageExternalThumbnailMobile
+                  key={item.id}
+                  message={item}
+                  setCurrentMsgId={setCurrentMsgId}
+                  setMsgsSelectedIds={setMsgsSelectedIds}
+                  msgsSelectedIds={msgsSelectedIds}
+                  section={section}
+                  lastItemRef={lastItemRef}
+                />
+              ) : (
+                <MessageExternalThumbnail
+                  key={item.id}
+                  message={item}
+                  setCurrentMsgId={setCurrentMsgId}
+                  setMsgsSelectedIds={setMsgsSelectedIds}
+                  msgsSelectedIds={msgsSelectedIds}
+                  section={section}
+                  lastItemRef={lastItemRef}
+                />
+              )
+            ) : isTabletOrMobile ? (
+              <MessageExternalThumbnailMobile
                 key={item.id}
                 message={item}
                 setCurrentMsgId={setCurrentMsgId}

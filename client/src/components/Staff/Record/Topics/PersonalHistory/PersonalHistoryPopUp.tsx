@@ -203,33 +203,33 @@ const PersonalHistoryPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="personalhistory">
         <h1>Patient personal history</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="personalhistory">
         <h1>Patient personal history</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="personalhistory">
       <div className="personalhistory-card">
         <div className="personalhistory-card__header">
           <h1>Patient personal history</h1>
         </div>
         {formDatas ? (
           <>
-            <form className="personalhistory-form">
+            <form className="personalhistory-card__content">
               {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Occupations:"
                   value={formDatas.occupations}
@@ -239,7 +239,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Income:"
                   value={formDatas.income}
@@ -249,7 +249,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Religion:"
                   value={formDatas.religion}
@@ -259,7 +259,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Sexual orientation:"
                   value={formDatas.sexual_orientation}
@@ -269,7 +269,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Special diet:"
                   value={formDatas.special_diet}
@@ -279,7 +279,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Smoking:"
                   value={formDatas.smoking}
@@ -289,7 +289,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Alcohol:"
                   value={formDatas.alcohol}
@@ -299,7 +299,7 @@ const PersonalHistoryPopUp = ({
                   editVisible={editVisible}
                 />
               </div>
-              <div className="personalhistory-form__row">
+              <div className="personalhistory-card__row">
                 <InputTextToggle
                   label="Recreational drugs:"
                   value={formDatas.recreational_drugs}
@@ -364,7 +364,7 @@ const PersonalHistoryPopUp = ({
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

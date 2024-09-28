@@ -42,8 +42,8 @@ const ReferenceLinks = () => {
   const links = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="reference-links">
-      <div className="reference-links__column">
+    <div className="reference__links">
+      <div className="reference__links-column">
         <h3>Ontario</h3>
         <ul>
           <li>
@@ -227,7 +227,7 @@ const ReferenceLinks = () => {
         </ul>
       </div>
 
-      <div className="reference-links__column">
+      <div className="reference__links-column">
         <h3>USA</h3>
         <ul>
           <li>
@@ -352,12 +352,12 @@ const ReferenceLinks = () => {
           </li>
         </ul>
       </div>
-      <div className="reference-links__column">
-        <div className="reference-links__personal-title">
+      <div className="reference__links-column">
+        <div className="reference__links-personal-title">
           <h3>Personal Links</h3>
           <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         </div>
-        <div className="reference-links__personal-search">
+        <div className="reference__links-personal-search">
           <Input label="Search" value={search} onChange={handleSearch} />
         </div>
         {addVisible && data && (
@@ -367,7 +367,7 @@ const ReferenceLinks = () => {
           />
         )}
         {error && <ErrorParagraph errorMsg={error.message} />}
-        <ul className="reference-links__personal-links" ref={ulRef}>
+        <ul className="reference__links-personal-links" ref={ulRef}>
           {data && (links?.length ?? 0) > 0
             ? links?.map((link, index) =>
                 index === links.length - 1 ? (

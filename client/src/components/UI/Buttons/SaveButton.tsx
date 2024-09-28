@@ -18,7 +18,7 @@ const SaveButton = ({
   return (
     <button
       type="button"
-      className="save-btn"
+      className="btn save-btn"
       onClick={onClick}
       disabled={disabled}
     >

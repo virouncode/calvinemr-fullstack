@@ -16,6 +16,7 @@ const UndoneButton = ({ onClick, disabled = false }: UndoneButtonProps) => {
         fontSize: "0.7rem",
         boxShadow: "none",
       }}
+      className="btn"
     >
       Undone
     </button>

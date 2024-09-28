@@ -52,7 +52,7 @@ const ConfirmDialog = ({
               {props.title ?? "Confirmation"}
             </h2>
           </div>
-          <p style={{ fontSize: "0.85rem", padding: "10px", margin: "0" }}>
+          <p className="confirm-dialog-text">
             {props.content ?? "Do you really want to do this action ?"}
           </p>
           <p className="confirm-dialog-btn-container">

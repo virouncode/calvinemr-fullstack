@@ -26,24 +26,24 @@ const CalvinAIInput = ({
   handleStartSpeech,
 }: CalvinAIInputProps) => {
   return (
-    <div className="calvinai-chat__input">
+    <div className="calvinai__chat-input">
       {isListening ? (
         <MicrophoneIcon
           onClick={handleStopSpeech}
           color="red"
-          top={15}
-          right={30}
+          top={10}
+          right={20}
         />
       ) : (
         <MicrophoneIcon
           onClick={handleStartSpeech}
-          top={15}
-          right={30}
+          top={10}
+          right={20}
           color="black"
         />
       )}
       <textarea
-        className="calvinai-chat__textarea"
+        className="calvinai__chat-textarea"
         placeholder="Type a message..."
         onChange={handleChangeInput}
         value={value}
@@ -54,7 +54,7 @@ const CalvinAIInput = ({
         <TypingDots text="" />
       ) : (
         <Button
-          className="calvinai-chat__send-btn"
+          className="calvinai__chat-send-btn"
           variant="contained"
           color="primary"
           onClick={handleAskGPT}

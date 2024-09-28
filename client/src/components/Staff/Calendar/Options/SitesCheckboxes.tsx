@@ -46,8 +46,8 @@ const SitesCheckboxes = ({
 
   return (
     sites && (
-      <ul className="site-checkboxes">
-        <li className="site-checkboxes__title">
+      <ul className="calendar__site-checkboxes">
+        <li className="calendar__site-checkboxes-title">
           <Checkbox
             id="sites"
             onChange={handleCheckAllSitesIds}
@@ -59,7 +59,7 @@ const SitesCheckboxes = ({
           sites
             .filter(({ site_status }) => site_status !== "Closed")
             .map((site) => (
-              <li key={site.id} className="site-checkboxes__item">
+              <li key={site.id} className="calendar__site-checkboxes-item">
                 <Checkbox
                   id={`site-${site.id}`} //to not confound with staff id
                   onChange={(e) => handleCheckSiteId(e, site.id as number)}

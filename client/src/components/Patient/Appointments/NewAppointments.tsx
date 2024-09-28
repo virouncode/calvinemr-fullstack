@@ -158,9 +158,11 @@ Cellphone: ${
       ?.account_status === "Closed"
   ) {
     return (
-      <div className="new-appointments">
-        <div className="new-appointments__title">Request a new appointment</div>
-        <div className="assigned-practicians-list">
+      <div className="patient-appointments__new">
+        <div className="patient-appointments__new-title">
+          Requestnew appointment
+        </div>
+        <div className="patient-appointments__new-practician">
           <label>With: </label>
           {staffIdToTitleAndName(
             staffInfos,
@@ -168,7 +170,7 @@ Cellphone: ${
             true
           )}
         </div>
-        <p className="new-appointments__disclaimer">
+        <p className="patient-appointments__new-disclaimer">
           Your assigned practitioner is no longer working at the clinic. Please
           contact the clinic to be assigned a new practitioner
         </p>
@@ -177,17 +179,11 @@ Cellphone: ${
   }
 
   return (
-    <div className="new-appointments">
-      <div className="new-appointments__title">Request a new appointment</div>
-      <div className="assigned-practicians-list">
-        <label>With: </label>
-        {staffIdToTitleAndName(
-          staffInfos,
-          user.demographics.assigned_staff_id,
-          true
-        )}
+    <div className="patient-appointments__new">
+      <div className="patient-appointments__new-title">
+        Request new appointment
       </div>
-      <p className="new-appointments__disclaimer">
+      <p className="patient-appointments__new-disclaimer">
         These time slots are automatically generated based on the availability
         of your practitioner. If you require different time options, please
         contact the clinic directly.
@@ -197,43 +193,33 @@ Cellphone: ${
           errorMsg={error?.message || errorAvailability?.message || ""}
         />
       )}
-      {isPending || isPendingAvailability ? (
-        <LoadingParagraph />
-      ) : (
-        !error &&
-        !errorAvailability &&
-        availability.id && (
-          <AppointmentsSlots
-            availability={availability}
-            appointmentsInRange={getAppointmentsInRange(
-              staffAppointmentsInRange,
-              rangeStart,
-              rangeEnd
-            )}
-            practicianSelectedId={user.demographics.assigned_staff_id}
-            staffInfos={staffInfos}
-            rangeStart={rangeStart}
-            setAppointmentSelected={setAppointmentSelected}
-            appointmentSelected={appointmentSelected}
-          />
-        )
-      )}
-      <>
-        <WeekPicker
-          handleClickNext={handleClickNext}
-          handleClickPrevious={handleClickPrevious}
-          rangeStart={rangeStart}
-        />
-        <div className="new-appointments__submit">
-          <SaveButton
-            onClick={handleSubmit}
-            disabled={_.isEmpty(appointmentSelected)}
-            label="Submit"
-          />
-        </div>
-      </>
+      <div className="patient-appointments__new-content">
+        {isPending || isPendingAvailability ? (
+          <div style={{ height: "100%" }}>
+            <LoadingParagraph />
+          </div>
+        ) : (
+          !error &&
+          !errorAvailability &&
+          availability.id && (
+            <AppointmentsSlots
+              availability={availability}
+              appointmentsInRange={getAppointmentsInRange(
+                staffAppointmentsInRange,
+                rangeStart,
+                rangeEnd
+              )}
+              practicianSelectedId={user.demographics.assigned_staff_id}
+              staffInfos={staffInfos}
+              rangeStart={rangeStart}
+              setAppointmentSelected={setAppointmentSelected}
+              appointmentSelected={appointmentSelected}
+            />
+          )
+        )}
+      </div>
       {requestSent && (
-        <p className="new-appointments__confirm">
+        <p className="patient-appointments__new-success">
           Your request has been sent,{" "}
           <strong>
             Please wait for a secretary to confirm your appointment with{" "}
@@ -244,6 +230,18 @@ Cellphone: ${
           </strong>
         </p>
       )}
+      <WeekPicker
+        handleClickNext={handleClickNext}
+        handleClickPrevious={handleClickPrevious}
+        rangeStart={rangeStart}
+      />
+      <div className="patient-appointments__new-btn">
+        <SaveButton
+          onClick={handleSubmit}
+          disabled={_.isEmpty(appointmentSelected)}
+          label="Submit"
+        />
+      </div>
     </div>
   );
 };

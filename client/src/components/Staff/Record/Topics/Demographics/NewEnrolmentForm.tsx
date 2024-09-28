@@ -23,6 +23,7 @@ import SubmitButton from "../../../../UI/Buttons/SubmitButton";
 import Input from "../../../../UI/Inputs/Input";
 import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 
 type NewEnrolmentFormProps = {
   setNewEnrolmentVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -147,8 +148,6 @@ const NewEnrolmentForm = ({
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
     };
-
-    //Submission
     //Submission
     patientPut.mutate(datasToPut, {
       onSuccess: () => {
@@ -169,86 +168,82 @@ const NewEnrolmentForm = ({
   };
 
   return (
-    <div className="new-enrolment__form">
-      <form onSubmit={handleSubmit}>
-        {err && <p className="new-enrolment__err">{err}</p>}
-        <div className="new-enrolment__form-physician">
-          <label>Enrolled to physician: </label>
-          <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <Input
-              value={newEnrolment?.EnrolledToPhysician?.Name?.FirstName || ""}
-              onChange={handleChange}
-              name="EnrolledToPhysicianFirstName"
-              id="enrolment-first-name"
-              label="First Name*:"
-            />
-          </div>
-          <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <Input
-              value={newEnrolment?.EnrolledToPhysician?.Name?.LastName || ""}
-              onChange={handleChange}
-              name="EnrolledToPhysicianLastName"
-              id="enrolment-last-name"
-              label="Last Name*:"
-            />
-          </div>
-          <div className="new-enrolment__form-row new-enrolment__form-row--special">
-            <Input
-              value={newEnrolment?.EnrolledToPhysician?.OHIPPhysicianId || ""}
-              onChange={handleChange}
-              name="EnrolledToPhysicianOHIP"
-              id="enrolment-ohip"
-              label="OHIP#:"
-            />
-          </div>
-        </div>
-        <div className="new-enrolment__form-row">
-          <GenericList
-            name="EnrollmentStatus"
-            list={enrollmentStatusCT}
-            value={newEnrolment?.EnrollmentStatus}
-            handleChange={handleChange}
-            placeHolder="Choose a status..."
-            noneOption={true}
-            label="Enrolment status*:"
-          />
-        </div>
-        <div className="new-enrolment__form-row">
-          <InputDate
-            value={timestampToDateISOTZ(newEnrolment?.EnrollmentDate)}
+    <form onSubmit={handleSubmit} className="new-enrolment__form">
+      {err && <ErrorParagraph errorMsg={err} />}
+      <div className="new-enrolment__form-physician">
+        <label>Enrolled to physician: </label>
+        <div className="new-enrolment__form-row new-enrolment__form-row--special">
+          <Input
+            value={newEnrolment?.EnrolledToPhysician?.Name?.FirstName || ""}
             onChange={handleChange}
-            name="EnrollmentDate"
-            id="enrolment-date"
-            label="Enrolment date*:"
+            name="EnrolledToPhysicianFirstName"
+            id="enrolment-first-name"
+            label="First Name*:"
           />
         </div>
-        <div className="new-enrolment__form-row">
-          <InputDate
-            value={timestampToDateISOTZ(
-              newEnrolment?.EnrollmentTerminationDate
-            )}
+        <div className="new-enrolment__form-row new-enrolment__form-row--special">
+          <Input
+            value={newEnrolment?.EnrolledToPhysician?.Name?.LastName || ""}
             onChange={handleChange}
-            name="EnrollmentTerminationDate"
-            id="enrolment-termination-date"
-            label="Termination date:"
+            name="EnrolledToPhysicianLastName"
+            id="enrolment-last-name"
+            label="Last Name*:"
           />
         </div>
-        <div className="new-enrolment__form-row">
-          <GenericList
-            list={terminationReasonCT}
-            value={newEnrolment?.TerminationReason}
-            handleChange={handleChange}
-            name="TerminationReason"
-            label="Termination reason:"
-            placeHolder="Choose a reason..."
+        <div className="new-enrolment__form-row new-enrolment__form-row--special">
+          <Input
+            value={newEnrolment?.EnrolledToPhysician?.OHIPPhysicianId || ""}
+            onChange={handleChange}
+            name="EnrolledToPhysicianOHIP"
+            id="enrolment-ohip"
+            label="OHIP#:"
           />
         </div>
-        <div className="new-enrolment__btn-container">
-          <SubmitButton label="Save" />
-          <CancelButton onClick={handleCancel} />
-        </div>
-      </form>
-    </div>
+      </div>
+      <div className="new-enrolment__form-row">
+        <GenericList
+          name="EnrollmentStatus"
+          list={enrollmentStatusCT}
+          value={newEnrolment?.EnrollmentStatus}
+          handleChange={handleChange}
+          placeHolder="Choose a status..."
+          noneOption={true}
+          label="Enrolment status*:"
+        />
+      </div>
+      <div className="new-enrolment__form-row">
+        <InputDate
+          value={timestampToDateISOTZ(newEnrolment?.EnrollmentDate)}
+          onChange={handleChange}
+          name="EnrollmentDate"
+          id="enrolment-date"
+          label="Enrolment date*:"
+        />
+      </div>
+      <div className="new-enrolment__form-row">
+        <InputDate
+          value={timestampToDateISOTZ(newEnrolment?.EnrollmentTerminationDate)}
+          onChange={handleChange}
+          name="EnrollmentTerminationDate"
+          id="enrolment-termination-date"
+          label="Termination date:"
+        />
+      </div>
+      <div className="new-enrolment__form-row">
+        <GenericList
+          list={terminationReasonCT}
+          value={newEnrolment?.TerminationReason}
+          handleChange={handleChange}
+          name="TerminationReason"
+          label="Termination reason:"
+          placeHolder="Choose a reason..."
+        />
+      </div>
+      <div className="new-enrolment__btn-container">
+        <SubmitButton label="Save" />
+        <CancelButton onClick={handleCancel} />
+      </div>
+    </form>
   );
 };
 

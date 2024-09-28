@@ -1,48 +1,71 @@
-.diagnosis {
-  &__err {
-    padding : 10px 20px;
-    font-size: 0.9rem;
-    width : 100%;
-    margin:10px auto;
-    color : red;
-    background-color:rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &__container {
-    margin-top: 50px;
-    height:500px;
-    overflow-y: scroll;
-    position: relative;
-  }
-}
-.diagnosis-search {
-  position: sticky;
-  top: 0;
-  padding: 10px 20px 20px;
-  background: $white;
-  label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-}
-.diagnosis-results {
-  padding:0 20px 20px;
-  &__item {
-    cursor:pointer;
-    display: flex;
-    justify-content: flex-start;
-    &:hover {
-      text-decoration: underline;
+.diagnosis__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  gap: 1rem;
+  .diagnosis__search {
+    input {
+      font-size: $size-base;
+      width: 100%;
     }
   }
-  &__code {
-    font-weight: bold;
-    display: inline-block;
-    width:6%;
+  .diagnosis__results {
+    flex: 1;
+    overflow-y: scroll;
+    border: solid 0.5px $grey;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    .diagnosis__results-item {
+      font-size: $size-xs;
+      padding: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-start;
+      border-bottom: solid 1px $grey;
+      &:hover {
+        text-decoration: underline;
+      }
+      &--headers {
+        font-size: $size-sm;
+        position: sticky;
+        top: 0;
+        background-color: $blue;
+        border-bottom: none;
+        .diagnosis__results-code {
+          font-weight: bold;
+          width: 15%;
+          text-align: center;
+        }
+        .diagnosis__results-diagnosis {
+          font-weight: bold;
+          width: 85%;
+          text-align: center;
+        }
+      }
+      .diagnosis__results-code {
+        width: 15%;
+        text-align: center;
+      }
+      .diagnosis__results-diagnosis {
+        width: 85%;
+      }
+    }
   }
-  &__name {
-    width:94%;
-  }
+}
 
+@media (min-width: 1024px) {
+  .diagnosis__container {
+    .diagnosis__search {
+      input {
+        font-size: $size-sm;
+      }
+    }
+    .diagnosis__results {
+      .diagnosis__results-item {
+        font-size: $size-sm;
+      }
+    }
+  }
 }

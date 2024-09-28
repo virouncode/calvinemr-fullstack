@@ -16,10 +16,11 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
-import PaperclipIcon from "../../../UI/Icons/PaperclipIcon";
+import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternal from "../External/MessageExternal";
@@ -217,40 +218,51 @@ const ReplyMessage = ({
   };
 
   return (
-    <div className="reply-message__form">
-      <div className="reply-message__title">
-        <p>
-          <strong>To: </strong>
-          {allPersons
-            ? [...new Set([...message.to_staff_ids, message.from_id])]
-                .filter((staffId) => staffId !== user.id)
-                .map((staffId) => staffIdToTitleAndName(staffInfos, staffId))
-                .join(" / ")
-            : staffIdToTitleAndName(staffInfos, message.from_id)}
-        </p>
+    <div className="reply-message">
+      <div className="reply-message__recipients">
+        <Input
+          label="To:"
+          id="to"
+          placeholder="Recipient(s)"
+          value={
+            allPersons
+              ? [...new Set([...message.to_staff_ids, message.from_id])]
+                  .filter((staffId) => staffId !== user.id)
+                  .map((staffId) => staffIdToTitleAndName(staffInfos, staffId))
+                  .join(" / ")
+              : staffIdToTitleAndName(staffInfos, message.from_id)
+          }
+          readOnly={true}
+        />
       </div>
       <div className="reply-message__subject">
-        <strong>Subject:</strong>
-        {previousMsgs?.length
-          ? `\u00A0Re: ${message.subject.slice(
-              message.subject.indexOf(":") + 1
-            )}`
-          : `\u00A0Re: ${message.subject}`}
+        <Input
+          value={
+            previousMsgs?.length
+              ? `\u00A0Re: ${message.subject.slice(
+                  message.subject.indexOf(":") + 1
+                )}`
+              : `\u00A0Re: ${message.subject}`
+          }
+          id="subject"
+          label="Subject:"
+          placeholder="Subject"
+          readOnly={true}
+        />
       </div>
-
       {patientName && (
         <div className="reply-message__patient">
-          <strong>About patient:</strong> {"\u00A0" + patientName}
+          <Input
+            id="relatedPatient"
+            label="About Patient:"
+            placeholder="Patient"
+            value={"\u00A0" + patientName}
+            readOnly={true}
+          />
         </div>
       )}
       <div className="reply-message__attach">
-        <strong>Attach files</strong>
-        <PaperclipIcon onClick={handleAttach} />
-        {attachments.map((attachment) => (
-          <span key={attachment.file?.name} style={{ marginLeft: "5px" }}>
-            {attachment.alias},
-          </span>
-        ))}
+        <AttachFilesButton onClick={handleAttach} attachments={attachments} />
       </div>
       <div className="reply-message__importance">
         <div className="reply-message__importance-check">
@@ -261,7 +273,6 @@ const ReplyMessage = ({
             checked={important}
             label="High importance"
           />
-          import MessagesTemplates from './Templates/MessagesTemplates';
         </div>
         <div>
           <strong
@@ -276,7 +287,6 @@ const ReplyMessage = ({
         <textarea
           value={body}
           onChange={handleChange}
-          id="body-area"
           ref={textareaRef}
           autoFocus
         />
@@ -305,13 +315,15 @@ const ReplyMessage = ({
               )
             )}
         </div>
-        <MessagesAttachments
-          attachments={attachments}
-          handleRemoveAttachment={handleRemoveAttachment}
-          deletable={true}
-          cardWidth="17%"
-          addable={false}
-        />
+        {attachments.length > 0 && (
+          <MessagesAttachments
+            attachments={attachments}
+            handleRemoveAttachment={handleRemoveAttachment}
+            deletable={true}
+            cardWidth="30%"
+            addable={false}
+          />
+        )}
       </div>
       <div className="reply-message__btns">
         <SaveButton

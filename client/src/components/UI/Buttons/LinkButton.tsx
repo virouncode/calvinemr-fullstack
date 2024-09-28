@@ -14,7 +14,7 @@ const LinkButton = ({
   url,
 }: LinkButtonProps) => {
   return (
-    <button type="button" onClick={onClick} disabled={disabled}>
+    <button type="button" onClick={onClick} disabled={disabled} className="btn">
       <a href={url} rel="noreferrer">
         {label}
       </a>

@@ -5,12 +5,12 @@ const Missing = () => {
   //Hooks
   const navigate = useNavigate();
   return (
-    <div className="missing-container">
-      <h2 className="missing-container-title">Page not found</h2>
-      <NavLink to="/" className="missing-container-link">
+    <div className="missing__container">
+      <h2 className="missing__title">Page not found</h2>
+      <NavLink to="/" className="missing__link">
         Return to the login page
       </NavLink>
-      <div className="missing-container-link" onClick={() => navigate(-1)}>
+      <div className="missing__link" onClick={() => navigate(-1)}>
         Go back
       </div>
     </div>

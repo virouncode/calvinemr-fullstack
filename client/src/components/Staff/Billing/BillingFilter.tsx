@@ -120,10 +120,9 @@ const BillingFilter = ({
   };
 
   return (
-    <div className="billing-filter">
-      <div className="billing-filter__row">
-        <div className="billing-filter__title">Filter</div>
-        <div className="billing-filter__item">
+    <div className="billing__filter">
+      <div className="billing__filter-row-dates">
+        <div className="billing__filter-item">
           <InputDate
             value={timestampToDateISOTZ(rangeStart)}
             onChange={handleDateChange}
@@ -133,7 +132,7 @@ const BillingFilter = ({
             disabled={all}
           />
         </div>
-        <div className="billing-filter__item">
+        <div className="billing__filter-item">
           <InputDate
             value={timestampToDateISOTZ(rangeEnd)}
             onChange={handleDateChange}
@@ -143,7 +142,7 @@ const BillingFilter = ({
             disabled={all}
           />
         </div>
-        <div className="billing-filter__item">
+        <div className="billing__filter-item">
           <Checkbox
             id="all"
             name="all"
@@ -152,18 +151,18 @@ const BillingFilter = ({
             label="All"
           />
         </div>
-        <div className="billing-filter__btn-container">
-          <a href="https://cab.md/Signin.aspx" target="_blank">
-            Cab MD
-          </a>
-          <ExportCSVButton
-            billings={billings}
-            rangeStart={rangeStart}
-            rangeEnd={rangeEnd}
-            all={all}
-            headers={csvHeaders}
-          />
-        </div>
+      </div>
+      <div className="billing__filter-row-btns">
+        <a href="https://cab.md/Signin.aspx" target="_blank">
+          Cab MD
+        </a>
+        <ExportCSVButton
+          billings={billings}
+          rangeStart={rangeStart}
+          rangeEnd={rangeEnd}
+          all={all}
+          headers={csvHeaders}
+        />
       </div>
     </div>
   );

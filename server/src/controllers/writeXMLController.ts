@@ -5,6 +5,7 @@ import fsPromises from "fs/promises";
 import { DateTime } from "luxon";
 import os from "os";
 import path from "path";
+axios.defaults.withCredentials = true;
 
 // Error handling function to handle different types of errors
 const handleError = (err: unknown): string => {

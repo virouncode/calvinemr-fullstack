@@ -1,6 +1,5 @@
 import axios from "axios";
 import { AxiosXanoConfigType } from "../../types/app";
-
 axios.defaults.withCredentials = true;
 
 const xanoPut = async (

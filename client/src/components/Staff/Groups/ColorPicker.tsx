@@ -34,11 +34,13 @@ const ColorPicker = ({ handleClickColor, choosenColor }: ColorPickerProps) => {
         <div
           key={color}
           id={color}
-          className="colors-palette__item"
+          className={
+            choosenColor === color
+              ? "colors-palette__item--choosen"
+              : "colors-palette__item"
+          }
           style={{
             backgroundColor: `${color}`,
-            width: color === choosenColor ? "20px" : "10px",
-            height: color === choosenColor ? "20px" : "10px",
           }}
           onClick={() => handleClickColor(color)}
         ></div>

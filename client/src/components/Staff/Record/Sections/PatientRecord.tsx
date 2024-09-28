@@ -116,31 +116,28 @@ const PatientRecord = ({
             label={leftContentsVisible ? "Fold" : "Unfold"}
           />
         </div>
-        <div className="patient-record__btn-container patient-record__btn-container--center">
-          <div style={{ textAlign: "end" }}>
-            <Button
-              onClick={handleClickAllFold}
-              label={allContentsVisible ? "Fold All" : "Unfold All"}
-            />
-            <Button
-              onClick={handleClickExport}
-              disabled={exportVisible}
-              label="Export chart"
-            />
-          </div>
-          <div style={{ textAlign: "end", marginRight: "10px" }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  size="small"
-                  checked={messagesAuthorized}
-                  onChange={handleChange}
-                />
-              }
-              label="Authorize messages"
-              labelPlacement="start"
-            />
-          </div>
+        <div className="patient-record__btn-container">
+          <Button
+            onClick={handleClickAllFold}
+            label={allContentsVisible ? "Fold All" : "Unfold All"}
+          />
+          <Button
+            onClick={handleClickExport}
+            disabled={exportVisible}
+            label="Export chart"
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={messagesAuthorized}
+                onChange={handleChange}
+              />
+            }
+            label="Authorize messages"
+            labelPlacement="start"
+          />
         </div>
         <div className="patient-record__btn-container">
           <Button
@@ -173,9 +170,9 @@ const PatientRecord = ({
         <FakeWindow
           title={`EXPORT ${toPatientName(demographicsInfos)}'s MEDICAL RECORD`}
           width={600}
-          height={500}
+          height={600}
           x={(window.innerWidth - 600) / 2}
-          y={(window.innerHeight - 500) / 2}
+          y={(window.innerHeight - 600) / 2}
           color="#94bae8"
           setPopUpVisible={setExportVisible}
         >

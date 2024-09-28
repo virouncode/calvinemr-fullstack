@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
   useClinicalNoteLogPost,
@@ -13,6 +14,7 @@ import {
   ClinicalNoteType,
   DemographicsType,
 } from "../../../../../types/api";
+import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
 import {
   nowTZTimestamp,
   timestampToDateTimeSecondsStrTZ,
@@ -324,6 +326,10 @@ const ClinicalNoteCard = ({
   };
 
   const handleStartSpeech = () => {
+    if (!isChromeBrowser())
+      toast.info("We recommend using Chrome for better speech recognition", {
+        containerId: "A",
+      });
     if (recognition) {
       setErrMsg("");
       setIsListening(true);
@@ -398,16 +404,18 @@ const ClinicalNoteCard = ({
             handleStartSpeech={handleStartSpeech}
             handleStopSpeech={handleStopSpeech}
           />
-          <ClinicalNoteAttachments
-            attachments={(
-              clinicalNote.attachments_ids as {
-                attachment: ClinicalNoteAttachmentType;
-              }[]
-            ).map(({ attachment }) => attachment)}
-            deletable={false}
-            patientId={patientId}
-            date={clinicalNote.date_created}
-          />
+          {clinicalNote.attachments_ids.length > 0 && (
+            <ClinicalNoteAttachments
+              attachments={(
+                clinicalNote.attachments_ids as {
+                  attachment: ClinicalNoteAttachmentType;
+                }[]
+              ).map(({ attachment }) => attachment)}
+              deletable={false}
+              patientId={patientId}
+              date={clinicalNote.date_created}
+            />
+          )}
           {!editVisible && (
             <div className="clinical-notes__card-sign">
               <p style={{ padding: "0 10px" }}>
@@ -451,9 +459,9 @@ const ClinicalNoteCard = ({
         {versionsVisible && (
           <FakeWindow
             title={`CLINICAL NOTE VERSIONS`}
-            width={1000}
+            width={1024}
             height={600}
-            x={(window.innerWidth - 1000) / 2}
+            x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
             color="#93b5e9"
             setPopUpVisible={setVersionsVisible}

@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -20,7 +21,9 @@ import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import LoadingRow from "../../../../UI/Tables/LoadingRow";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../Fax/NewFax";
+import NewFaxMobile from "../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExternalMobile";
 import PrescriptionItem from "./PrescriptionItem";
 
 type PrescriptionsPopUpProps = {
@@ -67,6 +70,7 @@ const PrescriptionsPopUp = ({
   const [attachmentsToSend, setAttachmentsToSend] = useState<
     Partial<MessageAttachmentType>[] | undefined
   >();
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   const handleClose = async () => {
     setPopUpVisible(false);
@@ -74,25 +78,25 @@ const PrescriptionsPopUp = ({
 
   if (isPending) {
     return (
-      <>
+      <div className="prescriptions">
         <h1 className="prescriptions__title">Patient prescriptions</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="prescriptions">
         <h1 className="prescriptions__title">Patient prescriptions</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
 
   return (
-    <>
+    <div className="prescriptions">
       <h1 className="prescriptions__title">Patient prescriptions</h1>
       <>
         <div className="prescriptions__table-container" ref={divRef}>
@@ -147,48 +151,73 @@ const PrescriptionsPopUp = ({
         {faxVisible && (
           <FakeWindow
             title="NEW FAX"
-            width={1300}
+            width={1000}
             height={700}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1000) / 2}
             y={(window.innerHeight - 700) / 2}
             color="#E3AFCD"
             setPopUpVisible={setFaxVisible}
           >
-            <NewFax
-              setNewVisible={setFaxVisible}
-              initialAttachment={fileToFax}
-            />
+            {isTabletOrMobile ? (
+              <NewFaxMobile
+                setNewVisible={setFaxVisible}
+                initialAttachment={fileToFax}
+              />
+            ) : (
+              <NewFax
+                setNewVisible={setFaxVisible}
+                initialAttachment={fileToFax}
+              />
+            )}
           </FakeWindow>
         )}
         {newMessageExternalVisible && (
           <FakeWindow
             title="NEW EXTERNAL MESSAGE"
-            width={1300}
+            width={1000}
             height={630}
-            x={(window.innerWidth - 1300) / 2}
+            x={(window.innerWidth - 1000) / 2}
             y={(window.innerHeight - 630) / 2}
             color="#E3AFCD"
             setPopUpVisible={setNewMessageExternalVisible}
           >
-            <NewMessageExternal
-              setNewVisible={setNewMessageExternalVisible}
-              initialAttachments={attachmentsToSend}
-              initialRecipients={[
-                {
-                  id: demographicsInfos.patient_id,
-                  name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
-                  phone:
-                    demographicsInfos.PhoneNumber.find(
-                      ({ _phoneNumberType }) => _phoneNumberType === "C"
-                    )?.phoneNumber || "",
-                },
-              ]}
-            />
+            {isTabletOrMobile ? (
+              <NewMessageExternalMobile
+                setNewVisible={setNewMessageExternalVisible}
+                initialAttachments={attachmentsToSend}
+                initialRecipients={[
+                  {
+                    id: demographicsInfos.patient_id,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos.Email,
+                    phone:
+                      demographicsInfos.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber || "",
+                  },
+                ]}
+              />
+            ) : (
+              <NewMessageExternal
+                setNewVisible={setNewMessageExternalVisible}
+                initialAttachments={attachmentsToSend}
+                initialRecipients={[
+                  {
+                    id: demographicsInfos.patient_id,
+                    name: toPatientName(demographicsInfos),
+                    email: demographicsInfos.Email,
+                    phone:
+                      demographicsInfos.PhoneNumber.find(
+                        ({ _phoneNumberType }) => _phoneNumberType === "C"
+                      )?.phoneNumber || "",
+                  },
+                ]}
+              />
+            )}
           </FakeWindow>
         )}
       </>
-    </>
+    </div>
   );
 };
 

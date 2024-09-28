@@ -14,7 +14,7 @@ const FaxAttachmentCard = ({
   handleRemoveAttachment,
   attachment,
   deletable,
-  cardWidth = "20%",
+  cardWidth = "30%",
 }: FaxAttachmentCardProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
@@ -24,9 +24,9 @@ const FaxAttachmentCard = ({
   };
 
   return (
-    <>
-      <div className="fax-attachment__card" style={{ width: cardWidth }}>
-        <div className="fax-attachment__thumbnail">
+    <div className="fax__attachments">
+      <div className="fax__attachment-card" style={{ width: cardWidth }}>
+        <div className="fax__attachment-card-thumbnail">
           {attachment.file?.mime?.includes("image") ? (
             <img
               src={`${import.meta.env.VITE_XANO_BASE_URL}${
@@ -87,8 +87,8 @@ const FaxAttachmentCard = ({
             </div>
           )}
         </div>
-        <div className="fax-attachment__footer">
-          <div className="fax-attachment__title">
+        <div className="fax__attachment-card-footer">
+          <div className="fax__attachment-card-title">
             <p
               style={{
                 overflow: "hidden",
@@ -164,7 +164,7 @@ const FaxAttachmentCard = ({
           )}
         </NewWindow>
       )}
-    </>
+    </div>
   );
 };
 

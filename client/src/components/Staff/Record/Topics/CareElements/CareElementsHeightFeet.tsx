@@ -37,18 +37,20 @@ const CareElementsHeightFeet = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Height (feet):</label>
-      <div className="care-elements__row-value">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
+        Height (feet):
+      </label>
+      <div className="care-elements__card-content-row-value">
         {cmToFeet(lastDatas.Height?.Height)}
       </div>
       {lastDatas.Height?.Height && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("HEIGHT FEET")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>
@@ -62,9 +64,9 @@ const CareElementsHeightFeet = ({
       {editVisible && (
         <FakeWindow
           title="EDIT HEIGHT(feet) HISTORY"
-          width={400}
+          width={450}
           height={550}
-          x={(window.innerWidth - 400) / 2}
+          x={(window.innerWidth - 450) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#577399"
           setPopUpVisible={setEditVisible}

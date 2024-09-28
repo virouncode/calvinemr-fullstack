@@ -37,18 +37,20 @@ const CareElementsWeightLbs = ({
     setEditVisible(true);
   };
   return (
-    <div className="care-elements__row">
-      <label className="care-elements__row-label">Weight (lbs):</label>
-      <div className="care-elements__row-value">
+    <div className="care-elements__card-content-row">
+      <label className="care-elements__card-content-row-label">
+        Weight (lbs):
+      </label>
+      <div className="care-elements__card-content-row-value">
         {kgToLbs(lastDatas.Weight?.Weight)}
       </div>
       {lastDatas.Weight?.Weight && (
-        <div className="care-elements__row-btns">
+        <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
               <ClockIcon
                 onClick={() => handleClickHistory("WEIGHT LBS")}
-                mr={5}
+                mr={15}
               />
             </span>
           </Tooltip>

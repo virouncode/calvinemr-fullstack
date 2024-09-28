@@ -1,25 +1,27 @@
 .calvinai-prompt {
-  margin: 50px 0;
   height: 100%;
+  padding: 0.5rem 0;
+  overflow-y: scroll;
   label {
     display: block;
     width: 95%;
     margin: 10px auto;
     font-weight: bold;
+    font-size: $size-base;
   }
   &__title {
-    margin-bottom: 20px;
-    font-size: 1rem;
-    padding: 5px 10px;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    font-size: $size-lg;
   }
   textarea {
     width: 95%;
-    padding: 10px;
-    margin: 0 auto 5px;
+    margin: 0 auto 1.5rem;
     display: block;
     resize: none;
     overflow: scroll;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
+    font-size: $size-base;
   }
   &__intro-textarea {
     height: 40px;
@@ -37,29 +39,29 @@
   &__footer {
     width: 95%;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
     margin: 0 auto;
-    padding: 20px 0;
+    gap: 1rem;
   }
   &__add {
-    width: 75%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 0.5rem;
   }
   &__attachments,
   &__reports {
     border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
+    flex: 1;
     height: 200px;
     padding: 10px;
     border-radius: 6px;
-    width: 49%;
+    min-width: 200px;
     &-title {
-      padding: 0;
       font-weight: bold;
       margin-bottom: 10px;
-      font-size: 0.9rem;
+      font-size: $size-base;
     }
     ul {
       overflow-y: scroll;
@@ -68,28 +70,31 @@
   }
   &__attachment-item,
   &__report-item {
-    margin-left: 10px;
+    margin-left: 0.5rem;
     display: flex;
     align-items: center;
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
     label {
       font-weight: normal;
       margin: 0;
+      font-size: $size-base;
     }
+  }
+  &__btns {
+    display: flex;
+    justify-content: center;
   }
 }
 
 .calvinai-discussion {
-  width: 90%;
-  height: 94%;
-  margin: 40px auto 0;
+  width: 95%;
+  padding: 0.5rem;
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   &__content {
     overflow: scroll;
-    font-size: 0.85rem;
+    font-size: $size-sm;
     border-bottom: solid 1px $grey;
     height: 80%;
   }
@@ -111,32 +116,11 @@
       background-color: $blue2;
     }
   }
-  &__input {
-    height: 15%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 6px;
-    border: solid 1px $grey;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-    padding: 5px 0;
-    padding-left: 10px;
-    padding-right: 20px;
-  }
-  &__textarea {
-    width: 90%;
-    overflow: scroll;
-    textarea {
-      font-family: $font1;
-      font-size: 0.85rem;
-      padding: 0;
-    }
-  }
   &__card {
-    padding: 20px;
+    padding: 1rem;
     border: solid 1px $grey;
     border-radius: 6px;
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+    box-shadow: $box-shadow-default;
     margin-bottom: 10px;
     &-content {
       display: flex;
@@ -149,56 +133,42 @@
     }
   }
   &__img-bot {
-    width: 8%;
+    width: 7%;
     height: auto;
   }
   &__img-user {
-    width: 8%;
+    width: 7%;
     height: auto;
   }
   &__message {
     padding: 0 10px;
     white-space: pre-wrap;
-    width: 90%;
+    width: 92%;
+    font-size: $size-sm;
   }
 }
 
-.calvinai {
-  &__templates {
-    margin-top: 40px;
-    padding: 0 20px;
-    height: 93%;
-    &-btn-container {
-      text-align: center;
-      margin-bottom: 20px;
-      button {
-        margin-left: 5px;
+@media (min-width: 1024px) {
+  .calvinai-prompt {
+    label {
+      font-size: $size-sm;
+    }
+    &__title {
+      font-size: $size-base;
+    }
+    textarea {
+      font-size: $size-sm;
+    }
+    &__attachments,
+    &__reports {
+      &-title {
+        font-size: $size-sm;
       }
     }
-    &-list {
-      height: 85%;
-      border: solid 0.5px $grey;
-      border-radius: 6px;
-      overflow-y: scroll;
-      padding: 10px;
-      &-item {
-        cursor: pointer;
-        margin-bottom: 5px;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-    &-search {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
+    &__attachment-item,
+    &__report-item {
       label {
-        font-weight: bold;
-        margin-right: 10px;
-      }
-      input {
-        width: 200px;
+        font-size: $size-sm;
       }
     }
   }

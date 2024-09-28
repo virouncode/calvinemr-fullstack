@@ -47,12 +47,12 @@ const TempPwdForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="temp-password-form">
-      <p>
+    <form onSubmit={handleSubmit}>
+      <p className="reset__temp-password-instructions">
         Please enter the temporary password we have sent at (
         {emailInput.toLowerCase()}):
       </p>
-      <div className="temp-password-form-row">
+      <div className="reset__temp-password-row">
         <InputPassword
           value={tempPwd}
           onChange={handleChange}
@@ -60,10 +60,10 @@ const TempPwdForm = ({
           id="tempPwd"
           autoFocus={true}
         />
-        <div className="temp-password-form-row-btns">
-          <SubmitButton />
-          <CancelButton onClick={handleCancel} />
-        </div>
+      </div>
+      <div className="reset__temp-password-row-btns">
+        <SubmitButton />
+        <CancelButton onClick={handleCancel} />
       </div>
     </form>
   );

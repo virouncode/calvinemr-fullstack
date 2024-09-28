@@ -117,17 +117,17 @@ const RelationshipForm = ({
   return (
     <>
       <tr
-        className="relationships-form"
+        className="relationships__form"
         style={{ border: errMsgPost && "solid 1.5px red" }}
       >
         <td>
-          <div className="relationships-form__btn-container">
+          <div className="relationships__form-btn-container">
             <SaveButton onClick={handleSubmit} disabled={progress} />
             <CancelButton onClick={handleCancel} disabled={progress} />
           </div>
         </td>
         <td>
-          <div className="relationships-form__relationship">
+          <div className="relationships__form-relationship">
             <RelationshipList
               value={formDatas.relationship ?? ""}
               handleChange={handleRelationshipChange}

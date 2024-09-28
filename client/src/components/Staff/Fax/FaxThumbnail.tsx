@@ -136,19 +136,19 @@ const FaxThumbnail = ({
       className={
         section === "Received faxes"
           ? (fax as FaxInboxType).ViewedStatus === "Y"
-            ? "fax-thumbnail"
-            : "fax-thumbnail fax-thumbnail--unread"
-          : "fax-thumbnail"
+            ? "fax__thumbnail"
+            : "fax__thumbnail fax__thumbnail--unread"
+          : "fax__thumbnail"
       }
     >
-      <Checkbox
-        id={fax.FileName}
-        onChange={handleCheckFax}
-        checked={isFaxSelected(fax.FileName)}
-        className="fax-thumbnail__checkbox"
-      />
-      <div onClick={handleFaxClick} className="fax-thumbnail__link">
-        <div className="fax-thumbnail__author">
+      <div className="fax__thumbnail-link">
+        <Checkbox
+          id={fax.FileName}
+          onChange={handleCheckFax}
+          checked={isFaxSelected(fax.FileName)}
+          className="fax__thumbnail-checkbox"
+        />
+        <div className="fax__thumbnail-author" onClick={handleFaxClick}>
           {section === "Received faxes"
             ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
@@ -156,20 +156,22 @@ const FaxThumbnail = ({
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>
-      <div className="fax-thumbnail__pages">{fax.Pages}</div>
-      <div className="fax-thumbnail__date">
+      <div className="fax__thumbnail-pages" onClick={handleFaxClick}>
+        {fax.Pages}
+      </div>
+      <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateTimeStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
-      <div className="fax-thumbnail__logos">
+      <div className="fax__thumbnail-logos">
         <TrashIcon onClick={handleDeleteFax} />
       </div>
       {addFaxNumberVisible && (
         <FakeWindow
           title="ADD CONTACT TO DIRECTORY"
           width={700}
-          height={480}
+          height={570}
           x={(window.innerWidth - 700) / 2}
-          y={(window.innerHeight - 480) / 2}
+          y={(window.innerHeight - 570) / 2}
           color="#94bae8"
           setPopUpVisible={setAddFaxNumberVisible}
         >

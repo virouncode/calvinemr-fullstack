@@ -233,7 +233,7 @@ const ForwardMessageExternal = ({
         />
       </div>
       <div className="forward-message__form">
-        <div className="forward-message__recipients">
+        <div className="forward-message__form-recipients">
           <Input
             value={staffInfos
               .filter(({ id }) => recipientsIds.includes(id))
@@ -245,7 +245,7 @@ const ForwardMessageExternal = ({
             readOnly={true}
           />
         </div>
-        <div className="forward-message__subject">
+        <div className="forward-message__form-subject">
           <strong>Subject:</strong>
           {previousMsgs.length
             ? `\u00A0Fwd: ${message.subject.slice(
@@ -254,15 +254,15 @@ const ForwardMessageExternal = ({
             : `\u00A0Fwd: ${message.subject}`}
         </div>
         {patientName && (
-          <div className="forward-message__patient">
+          <div className="forward-message__form-patient">
             <strong>About patient: {"\u00A0"}</strong> {patientName}
           </div>
         )}
-        <div className="forward-message__attach">
+        <div className="forward-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="forward-message__importance">
-          <div className="forward-message__importance-check">
+        <div className="forward-message__form-importance">
+          <div className="forward-message__form-importance-check">
             <Checkbox
               id="importance"
               name="high_importance"
@@ -270,9 +270,6 @@ const ForwardMessageExternal = ({
               checked={important}
               label="High importance"
             />
-            import MessagesExternalTemplates from import MessagesTemplates from
-            '../Internal/MessagesTemplates';
-            './Templates/MessagesExternalTemplates';
           </div>
           <div>
             <strong
@@ -283,14 +280,14 @@ const ForwardMessageExternal = ({
             </strong>
           </div>
         </div>
-        <div className="forward-message__body">
+        <div className="forward-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
             ref={textareaRef}
             autoFocus
           />
-          <div className="forward-message__history">
+          <div className="forward-message__form-history">
             <MessageExternal message={message} key={message.id} index={0} />
             {previousMsgs.map((message, index) => (
               <MessageExternal
@@ -308,7 +305,7 @@ const ForwardMessageExternal = ({
             addable={false}
           />
         </div>
-        <div className="forward-message__btns">
+        <div className="forward-message__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}

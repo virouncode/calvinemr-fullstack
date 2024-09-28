@@ -48,7 +48,7 @@ const MessagesExternalTemplates = ({
 
   if (error) {
     return (
-      <div className="messages__templates">
+      <div className="templates">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -56,15 +56,15 @@ const MessagesExternalTemplates = ({
   const messagesTemplates = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="messages__templates">
-      <div className="messages__templates-btn-container">
+    <div className="templates">
+      <div className="templates__btn-container">
         <Button
           onClick={handleAddNew}
           disabled={newTemplateVisible}
           label="Add a new template"
         />
       </div>
-      <div className="messages__templates-search">
+      <div className="templates__search">
         <Input
           value={search}
           onChange={handleSearch}
@@ -75,7 +75,7 @@ const MessagesExternalTemplates = ({
           width={300}
         />
       </div>
-      <div className="messages__templates-list" ref={divRef}>
+      <div className="templates__list" ref={divRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -104,9 +104,9 @@ const MessagesExternalTemplates = ({
         {newTemplateVisible && (
           <FakeWindow
             title="NEW EXTERNAL MESSAGE TEMPLATE"
-            width={900}
+            width={700}
             height={550}
-            x={(window.innerWidth - 900) / 2}
+            x={(window.innerWidth - 700) / 2}
             y={(window.innerHeight - 550) / 2}
             color="#93B5E9"
             setPopUpVisible={setNewTemplateVisible}

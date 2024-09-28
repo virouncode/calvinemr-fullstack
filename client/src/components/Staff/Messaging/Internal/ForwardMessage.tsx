@@ -226,7 +226,7 @@ const ForwardMessage = ({
         />
       </div>
       <div className="forward-message__form">
-        <div className="forward-message__recipients">
+        <div className="forward-message__form-recipients">
           <Input
             id="to"
             label="To:"
@@ -238,7 +238,7 @@ const ForwardMessage = ({
             readOnly={true}
           />
         </div>
-        <div className="forward-message__subject">
+        <div className="forward-message__form-subject">
           <strong>Subject:</strong>
           {previousMsgs.length
             ? `\u00A0Fwd: ${message.subject.slice(
@@ -247,15 +247,15 @@ const ForwardMessage = ({
             : `\u00A0Fwd: ${message.subject}`}
         </div>
         {patientName && (
-          <div className="forward-message__patient">
+          <div className="forward-message__form-patient">
             <strong>About patient: {"\u00A0"}</strong> {patientName}
           </div>
         )}
-        <div className="forward-message__attach">
+        <div className="forward-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="forward-message__importance">
-          <div className="forward-message__importance-check">
+        <div className="forward-message__form-importance">
+          <div className="forward-message__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -263,7 +263,6 @@ const ForwardMessage = ({
               checked={important}
               label="High importance"
             />
-            import MessagesTemplates from './Templates/MessagesTemplates';
           </div>
           <div>
             <strong
@@ -274,14 +273,14 @@ const ForwardMessage = ({
             </strong>
           </div>
         </div>
-        <div className="forward-message__body">
+        <div className="forward-message__form-body">
           <textarea
             value={body}
             onChange={handleChange}
             ref={textareaRef}
             autoFocus
           />
-          <div className="forward-message__history">
+          <div className="forward-message__form-history">
             <Message
               message={message}
               key={message.id}
@@ -313,7 +312,7 @@ const ForwardMessage = ({
             addable={false}
           />
         </div>
-        <div className="forward-message__btns">
+        <div className="forward-message__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}

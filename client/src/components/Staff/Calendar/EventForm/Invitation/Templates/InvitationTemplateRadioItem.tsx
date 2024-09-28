@@ -1,5 +1,6 @@
 import React from "react";
 import Radio from "../../../../../UI/Radio/Radio";
+import { onChange } from "react-toastify/dist/core/store";
 
 type InvitationTemplateRadioItemProps = {
   templateName: string;
@@ -13,7 +14,7 @@ const InvitationTemplateRadioItem = ({
   isTemplateSelected,
 }: InvitationTemplateRadioItemProps) => {
   return (
-    <div className="invitation__radio-item">
+    <li className="event-form__invitation-templates-radio-item">
       <Radio
         id={templateName}
         name="initation-template"
@@ -22,7 +23,7 @@ const InvitationTemplateRadioItem = ({
         onChange={handleTemplateChange}
         label={templateName}
       />
-    </div>
+    </li>
   );
 };
 

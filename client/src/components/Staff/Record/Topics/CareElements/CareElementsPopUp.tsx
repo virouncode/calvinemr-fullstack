@@ -38,18 +38,18 @@ const CareElementsPopUp = ({
 }: CareElementsPopUpProps) => {
   if (isPending) {
     return (
-      <>
+      <div className="care-elements">
         <h1 className="care-elements__title">Patient care elements</h1>
         <LoadingParagraph />
-      </>
+      </div>
     );
   }
   if (error) {
     return (
-      <>
+      <div className="care-elements">
         <h1 className="care-elements__title">Patient care elements</h1>
         <ErrorParagraph errorMsg={error.message} />
-      </>
+      </div>
     );
   }
 

@@ -224,22 +224,21 @@ const BillingForm = ({
 
   return (
     <form
-      className="billing-form"
+      className="billing__form"
       onSubmit={handleSubmit}
       style={{ border: errMsgPost && "solid 1px red" }}
     >
-      <div className="billing-form__row">
-        <div className="billing-form__item">
+      <div className="billing__form-content">
+        <div className="billing__form-item">
           <InputDate
             value={formDatas.dateStr}
             onChange={handleChange}
             name="dateStr"
             id="date"
             label="Date*"
-            width={150}
           />
         </div>
-        <div className="billing-form__item" style={{ position: "relative" }}>
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="provider_ohip_billing_nbr"
             name="provider_ohip_billing_nbr"
@@ -251,7 +250,7 @@ const BillingForm = ({
             logo={userType === "admin"}
           />
         </div>
-        <div className="billing-form__item" style={{ position: "relative" }}>
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="referrer_ohip_billing_nbr"
             name="referrer_ohip_billing_nbr"
@@ -261,9 +260,8 @@ const BillingForm = ({
             label="Referring MD OHIP#"
           />
         </div>
-      </div>
-      <div className="billing-form__row">
-        <div className="billing-form__item" style={{ position: "relative" }}>
+
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="patient_hcn"
             name="patient_hcn"
@@ -274,7 +272,7 @@ const BillingForm = ({
             label="Patient Health Card#"
           />
         </div>
-        <div className="billing-form__item" style={{ position: "relative" }}>
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="diagnosis_code"
             name="diagnosis_code"
@@ -284,16 +282,15 @@ const BillingForm = ({
             label="Diagnosis code*"
           />
         </div>
-        <div className="billing-form__item" style={{ position: "relative" }}>
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <BillingCodesTextarea
             value={formDatas.billing_codes}
             onChange={handleChange}
             onClick={() => setBillingCodesTemplatesVisible(true)}
           />
         </div>
-      </div>
-      <div className="billing-form__row">
-        <div className="billing-form__item" style={{ position: "relative" }}>
+
+        <div className="billing__form-item" style={{ position: "relative" }}>
           <InputWithSearch
             id="patient_id"
             name="patient_id"
@@ -303,7 +300,7 @@ const BillingForm = ({
             label="Patient Name*"
           />
         </div>
-        <div className="billing-form__item">
+        <div className="billing__form-item">
           <SiteSelect
             handleSiteChange={handleSiteChange}
             sites={sites}
@@ -312,7 +309,7 @@ const BillingForm = ({
           />
         </div>
       </div>
-      <div className="billing-form__btns">
+      <div className="billing__form-btns">
         <SubmitButton disabled={progress} label="Save" />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>

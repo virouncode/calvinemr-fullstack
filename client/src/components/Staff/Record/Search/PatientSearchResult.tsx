@@ -36,11 +36,11 @@ const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
   return (
     patients && (
       <>
-        <div className="patient-result__summary">
-          Number of patients: {patients.pages[0].itemsTotal}
+        <div className="search-patient__count">
+          <em>Number of patients: {patients.pages[0].itemsTotal}</em>
         </div>
-        <div className="patient-result__table-container" ref={divRef}>
-          <table className="patient-result__table">
+        <div className="search-patient__table-container" ref={divRef}>
+          <table className="search-patient__table">
             <thead>
               <tr>
                 <th>Last Name</th>

@@ -55,12 +55,6 @@ $pink2: #e63a6e;
   justify-content: center;
   align-items: center;
 }
-@mixin alignChidren($space) {
-  display: flex;
-  justify-content: $space;
-  align-items: center;
-}
-
 //RESETS
 * {
   margin: 0;
@@ -108,7 +102,7 @@ input[type="submit"] {
   // background: rgb(156,185,228);
   // background: linear-gradient(139deg, $blue 0%, $blue2 100%);
   // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   color: $white;
   background: $pink;
   border: none;
@@ -132,7 +126,7 @@ input[type="submit"] {
 }
 
 button {
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   color: $black;
   border: none;
   outline: none;

@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
@@ -41,12 +42,15 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternal from "../External/MessageExternal";
 import EditTodo from "./EditTodo";
 import ForwardMessage from "./ForwardMessage";
+import ForwardMessageMobile from "./ForwardMessageMobile";
 import ForwardTodo from "./ForwardTodo";
+import ForwardTodoMobile from "./ForwardTodoMobile";
 import Message from "./Message";
 import MessageDetailToolbar from "./MessageDetailToolbar";
 import MessagesAttachments from "./MessagesAttachments";
 import MessagesPrint from "./MessagesPrint";
 import NewTodo from "./NewTodo";
+import NewTodoMobile from "./NewTodoMobile";
 import ReplyMessage from "./ReplyMessage";
 
 type MessageDetailProps = {
@@ -80,6 +84,7 @@ const MessageDetail = ({
   const attachments = (
     message.attachments_ids as { attachment: MessageAttachmentType }[]
   ).map(({ attachment }) => attachment);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
     data: previousMsgs,
@@ -258,7 +263,7 @@ const MessageDetail = ({
           handleEdit={handleEdit}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div ref={messageContentRef} className="message-detail__content">
+        <div ref={messageContentRef} className="message__detail-content">
           <Message
             message={message}
             key={message.id}
@@ -290,13 +295,34 @@ const MessageDetail = ({
           <MessagesAttachments
             attachments={attachments}
             deletable={false}
-            cardWidth="15%"
             addable={true}
             hasRelatedPatient={message.related_patient_id ? true : false}
             patientName={toPatientName(message.patient_infos)}
             message={message}
           />
         </div>
+        {section !== "Deleted messages" &&
+          section !== "To-dos" &&
+          !replyVisible &&
+          !forwardVisible &&
+          !newTodoVisible && (
+            <div className="message__detail-btns">
+              {section !== "Sent messages" && (
+                <Button onClick={handleClickReply} label="Reply" />
+              )}
+              {(message as MessageType).to_staff_ids.length >= 2 &&
+                section !== "Sent messages" && (
+                  <Button onClick={handleClickReplyAll} label="Reply all" />
+                )}
+              <Button onClick={handleClickForward} label="Forward" />
+              <Button onClick={handleClickTodo} label="Todo" />
+            </div>
+          )}
+        {section === "To-dos" && (
+          <div className="message__detail-btns">
+            <Button onClick={handleClickForwardTodo} label="Forward To-do" />
+          </div>
+        )}
         {printVisible && (
           <NewWindow
             title={`Message(s) / Subject: ${message.subject} ${
@@ -336,28 +362,6 @@ const MessageDetail = ({
             section={section}
           />
         )}
-        {section !== "Deleted messages" &&
-          section !== "To-dos" &&
-          !replyVisible &&
-          !forwardVisible &&
-          !newTodoVisible && (
-            <div className="message-detail__btns">
-              {section !== "Sent messages" && (
-                <Button onClick={handleClickReply} label="Reply" />
-              )}
-              {(message as MessageType).to_staff_ids.length >= 2 &&
-                section !== "Sent messages" && (
-                  <Button onClick={handleClickReplyAll} label="Reply all" />
-                )}
-              <Button onClick={handleClickForward} label="Forward" />
-              <Button onClick={handleClickTodo} label="Todo" />
-            </div>
-          )}
-        {section === "To-dos" && (
-          <div className="message-detail__btns">
-            <Button onClick={handleClickForwardTodo} label="Forward To-do" />
-          </div>
-        )}
         {forwardVisible && (
           <FakeWindow
             title="FORWARD MESSAGE"
@@ -368,24 +372,36 @@ const MessageDetail = ({
             color={"#94bae8"}
             setPopUpVisible={setForwardVisible}
           >
-            <ForwardMessage
-              setForwardVisible={setForwardVisible}
-              message={message as MessageType}
-              previousMsgs={
-                previousMsgs as (MessageType | MessageExternalType)[]
-              }
-              patientName={toPatientName(message.patient_infos)}
-              section={section}
-            />
+            {isTabletOrMobile ? (
+              <ForwardMessageMobile
+                setForwardVisible={setForwardVisible}
+                message={message as MessageType}
+                previousMsgs={
+                  previousMsgs as (MessageType | MessageExternalType)[]
+                }
+                patientName={toPatientName(message.patient_infos)}
+                section={section}
+              />
+            ) : (
+              <ForwardMessage
+                setForwardVisible={setForwardVisible}
+                message={message as MessageType}
+                previousMsgs={
+                  previousMsgs as (MessageType | MessageExternalType)[]
+                }
+                patientName={toPatientName(message.patient_infos)}
+                section={section}
+              />
+            )}
           </FakeWindow>
         )}
         {editTodoVisible && (
           <FakeWindow
             title="EDIT TO-DO"
             width={1000}
-            height={600}
+            height={630}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            y={(window.innerHeight - 630) / 2}
             color={"#94bae8"}
             setPopUpVisible={setEditTodoVisible}
           >
@@ -405,34 +421,56 @@ const MessageDetail = ({
             color={"#94bae8"}
             setPopUpVisible={setForwardTodoVisible}
           >
-            <ForwardTodo
-              setForwardTodoVisible={setForwardTodoVisible}
-              todo={message as TodoType}
-              patientName={toPatientName(message.patient_infos)}
-              setCurrentMsgId={setCurrentMsgId}
-              section={section}
-            />
+            {isTabletOrMobile ? (
+              <ForwardTodoMobile
+                setForwardTodoVisible={setForwardTodoVisible}
+                todo={message as TodoType}
+                patientName={toPatientName(message.patient_infos)}
+                setCurrentMsgId={setCurrentMsgId}
+                section={section}
+              />
+            ) : (
+              <ForwardTodo
+                setForwardTodoVisible={setForwardTodoVisible}
+                todo={message as TodoType}
+                patientName={toPatientName(message.patient_infos)}
+                setCurrentMsgId={setCurrentMsgId}
+                section={section}
+              />
+            )}
           </FakeWindow>
         )}
         {newTodoVisible && (
           <FakeWindow
             title="NEW TO-DO"
-            width={1000}
-            height={600}
-            x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 600) / 2}
+            width={1024}
+            height={620}
+            x={(window.innerWidth - 1024) / 2}
+            y={(window.innerHeight - 620) / 2}
             color={"#94bae8"}
             setPopUpVisible={setNewTodoVisible}
           >
-            <NewTodo
-              setNewTodoVisible={setNewTodoVisible}
-              initialPatient={{
-                id: message.related_patient_id || 0,
-                name: toPatientName(message.patient_infos),
-              }}
-              initialAttachments={attachments}
-              initialBody={message.body}
-            />
+            {isTabletOrMobile ? (
+              <NewTodoMobile
+                setNewTodoVisible={setNewTodoVisible}
+                initialPatient={{
+                  id: message.related_patient_id || 0,
+                  name: toPatientName(message.patient_infos),
+                }}
+                initialAttachments={attachments}
+                initialBody={message.body}
+              />
+            ) : (
+              <NewTodo
+                setNewTodoVisible={setNewTodoVisible}
+                initialPatient={{
+                  id: message.related_patient_id || 0,
+                  name: toPatientName(message.patient_infos),
+                }}
+                initialAttachments={attachments}
+                initialBody={message.body}
+              />
+            )}
           </FakeWindow>
         )}
       </>

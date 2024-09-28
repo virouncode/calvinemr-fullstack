@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { UseMutationResult } from "@tanstack/react-query";
 import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
@@ -33,9 +34,11 @@ import { confirmAlert } from "../../../../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../../Fax/NewFax";
 import NewMessageExternal from "../../../../../Messaging/External/NewMessageExternal";
+import NewMessageExternalMobile from "../../../../../Messaging/External/NewMessageExternalMobile";
 import PrescriptionAdditionalPages from "./PrescriptionAdditionalPages";
 import PrescriptionOptionsPreview from "./PrescriptionOptionsPreview";
 import PrescriptionPagePreview from "./PrescriptionPagePreview";
+import NewFaxMobile from "../../../../../Fax/NewFaxMobile";
 
 type PrescriptionPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -87,6 +90,7 @@ const PrescriptionPreview = ({
   const printRef = useRef<HTMLDivElement | null>(null);
   const printAdditionalRefs = useRef<HTMLDivElement[]>([]);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //Queries
   const clinicalNotePost = useClinicalNotePost();
@@ -360,36 +364,53 @@ const PrescriptionPreview = ({
       {newMessageExternalVisible && (
         <FakeWindow
           title="NEW EXTERNAL MESSAGE"
-          width={1300}
+          width={1000}
           height={630}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 630) / 2}
           color="#931621"
           setPopUpVisible={setNewMessageExternalVisible}
         >
-          <NewMessageExternal
-            setNewVisible={setNewMessageExternalVisible}
-            initialAttachments={attachmentToSend}
-          />
+          {isTabletOrMobile ? (
+            <NewMessageExternalMobile
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentToSend}
+            />
+          ) : (
+            <NewMessageExternal
+              setNewVisible={setNewMessageExternalVisible}
+              initialAttachments={attachmentToSend}
+            />
+          )}
         </FakeWindow>
       )}
       {faxVisible && (
         <FakeWindow
           title="NEW FAX"
-          width={1300}
+          width={1000}
           height={700}
-          x={(window.innerWidth - 1300) / 2}
+          x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
           color={"#931621"}
           setPopUpVisible={setFaxVisible}
         >
-          <NewFax
-            setNewVisible={setFaxVisible}
-            initialAttachment={{
-              alias: `Prescription_${prescriptionStamp}.pdf`,
-              file: prescription,
-            }}
-          />
+          {isTabletOrMobile ? (
+            <NewFaxMobile
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `Prescription_${prescriptionStamp}.pdf`,
+                file: prescription,
+              }}
+            />
+          ) : (
+            <NewFax
+              setNewVisible={setFaxVisible}
+              initialAttachment={{
+                alias: `Prescription_${prescriptionStamp}.pdf`,
+                file: prescription,
+              }}
+            />
+          )}
         </FakeWindow>
       )}
     </div>

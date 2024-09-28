@@ -1,1068 +1,573 @@
-.messages-container {
-  height: 93%;
-  border-radius: 6px;
-  width: 98%;
-  margin: 0 auto;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  &--patient {
-    height: 100%;
-  }
-}
-.messages-toggle {
-  padding: 5px 10px;
-  border-radius: 6px;
-  border: solid 1px $grey;
-  font-size: 0.9rem;
-  text-align: center;
+.messages {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
   display: flex;
-  justify-content: space-between;
-  width: 220px;
-  align-items: center;
-  margin: 0 auto 20px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  &__radio {
-    display: flex;
-    align-items: center;
-    label {
-      margin-left: 5px;
-    }
-  }
-}
-.messages-toolbar {
+  flex-direction: column;
   margin: 0 auto;
-  padding: 0 10px;
-  height: 7%;
-  position: sticky;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: $blue;
-  border-radius: 6px 4px 0 0;
-  &__title {
-    width: 10%;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 0;
-  }
-  input {
-    width: 60%;
-    font-size: 0.9rem;
-  }
-  &__btns {
-    width: 25%;
-    display: flex;
-    justify-content: flex-end;
-    button {
-      margin-right: 5px;
-    }
-  }
-}
-.messages-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 0 auto;
-  height: 93%;
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
+  overflow-y: scroll;
+  .messages__toggle {
+    font-size: $size-base;
+    padding: 0.25rem 0.5rem;
+    width: 250px;
     border-radius: 6px;
+    border: solid 1px $grey;
     text-align: center;
-  }
-  &__leftbar {
-    width: 13%;
-    height: 100%;
-    background: rgb(238, 238, 238);
-    overflow: scroll;
-    border-radius: 0 0 0 6px;
-    ul {
-      font-size: 0.9rem;
-    }
-  }
-  &__category {
-    padding: 4px 10px;
-    width: 100%;
-    cursor: pointer;
-    &:hover {
-      background: $green;
-    }
-    &--active {
-      font-weight: bold;
-      background: $green;
-    }
-  }
-  &__box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: $box-shadow-default;
     background-color: $white;
-    width: 87%;
-    height: 100%;
-    overflow: scroll;
-    position: relative;
-    border-radius: 0 0 6px 0;
-  }
-}
-.messages-overview {
-  &__toolbar {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: solid 0.5px $grey;
-    font-size: 0.85rem;
-    padding: 5px;
-    font-weight: bold;
-  }
-  &__from {
-    text-align: center;
-    width: 25%;
-  }
-  &__subject {
-    text-align: center;
-    width: 45%;
-    &--todo {
-      width: 30%;
-    }
-    &--external {
-      width: 60%;
-    }
-  }
-  &__patient {
-    text-align: center;
-    width: 15%;
-  }
-  &__date {
-    text-align: center;
-    width: 13%;
-  }
-  &__duedate {
-    text-align: center;
-    width: 13%;
-  }
-  &__fakediv {
-    width: 2%;
-    &--todo {
-      width: 4%;
-    }
-  }
-}
-.message-thumbnail {
-  font-size: 0.8rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 35px;
-  border-bottom: solid 0.5px $grey;
-  padding: 0 5px;
-  &:hover {
-    box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  }
-  &--unread {
-    font-weight: bold;
-  }
-  &__from {
-    width: 25%;
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    &-checkbox {
-      margin-right: 5px;
-    }
-    &-author {
-      width: 95%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding-right: 10px;
-      cursor: pointer;
-    }
-  }
-  &__subject {
-    width: 45%;
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    &--external {
-      width: 60%;
-    }
-    &--todo {
-      width: 30%;
-    }
-    &-checkbox {
-      margin-right: 5px;
-    }
-    &-btn {
-      width: 10%;
-    }
-    &-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 95%;
-      &--todo {
-        max-width: 73%;
-      }
-    }
-    &-exclamation {
-      color: red;
-      margin-right: 5px;
-    }
-    &-attachment {
-      width: 5%;
-      margin-left: 5px;
-    }
-  }
-  &__patient {
-    width: 15%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  &__duedate {
-    width: 13%;
-    text-align: center;
-  }
-  &__date {
-    width: 13%;
-    text-align: center;
-  }
-  &__logos {
-    width: 2%;
-    text-align: center;
-    &--todo {
-      width: 4%;
-    }
-  }
-  // &__checkbox {
-  //   width: 2%;
-  // }
-  &__link {
-    width: 66%;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    &--external {
-      width: 81%;
-    }
-    &--todo {
-      width: 53%;
-      justify-content: flex-start;
-    }
-  }
-}
-.message-detail {
-  &__content {
-    margin-top: 0;
-  }
-  &__content-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin: 0 auto 20px;
-  }
-  &__toolbar {
-    padding: 5px;
-    background: $white;
-    border-bottom: solid 0.5px $grey;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    width: auto;
-    font-size: 0.85rem;
-    &-arrow {
-      width: 2%;
-    }
-    &-subject {
-      width: 48%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      &--todo {
-        width: 69%;
-      }
-      &--patient {
-        width: 96%;
-      }
-    }
-    &-patient {
-      width: 48%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      text-align: center;
-      font-size: 0.8rem;
+    .messages__toggle-radio {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 2px 0;
-      &--todo {
-        width: 46%;
-      }
-      &-text {
-        display: flex;
-        width: 60%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-align: left;
-      }
-      &-btn {
-        width: 40%;
-      }
-      &-link {
-        cursor: pointer;
+      label {
         margin-left: 5px;
-        &:hover {
-          text-decoration: underline;
+      }
+    }
+  }
+  .messages__container {
+    flex: 1;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    .messages__toolbar {
+      padding: 0.5rem;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      display: grid;
+      grid-template-columns: 13% 60% 27%;
+      align-items: center;
+      justify-content: space-between;
+      background: $blue;
+      border-radius: 6px 6px 0 0;
+      .messages__toolbar-title {
+        font-size: $size-xl;
+        font-weight: bold;
+        padding: 0;
+      }
+      input {
+        width: 100%;
+        font-size: $size-sm;
+        margin-left: -0.25rem;
+      }
+      .messages__toolbar-btns {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        justify-content: flex-end;
+      }
+    }
+    .messages__content {
+      display: grid;
+      grid-template-columns: 13% 87%;
+      flex: 1;
+      width: 100%;
+      overflow-y: scroll;
+      .messages__content-leftbar {
+        overflow: scroll;
+        border-radius: 0 0 0 6px;
+        background: $greylight;
+        ul {
+          font-size: $size-sm;
+        }
+        .messages__content-category {
+          padding: 0.25rem 0.5rem;
+          cursor: pointer;
+          &:hover:not(.messages__content-category--active) {
+            background: $grey;
+          }
+          &--active {
+            font-weight: bold;
+            background: $pink2;
+            color: $white;
+          }
+        }
+      }
+      .messages__content-box {
+        height: 100%;
+        overflow: scroll;
+        position: relative;
+        background-color: $white;
+        .messages__overview-toolbar {
+          display: grid;
+          grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv
+          align-items: center;
+          border-bottom: solid 0.5px $grey;
+          font-size: $size-sm;
+          padding: 0.5rem;
+          font-weight: bold;
+          position: sticky;
+          top: 0;
+          background-color: $white;
+          &--todo {
+            grid-template-columns: 25% 30% 15% 13% 13% 4%; //From, Todo, Patient,Date, DueDate, Fakediv
+          }
+          &--external {
+            grid-template-columns: 25% 60% 13% 2%; //From, Subject, Date, FakeDiv
+          }
+          .messages__overview-from,
+          .messages__overview-subject,
+          .messages__overview-patient,
+          .messages__overview-date,
+          .messages__overview-duedate {
+            text-align: center;
+          }
+        }
+        .message__thumbnail {
+          font-size: $size-sm;
+          display: grid;
+          padding: 0.5rem;
+          border-bottom: solid 0.5px $grey;
+          align-items: center;
+          grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv
+          &:hover {
+            box-shadow: $box-shadow-default;
+          }
+          &--unread {
+            font-weight: bold;
+          }
+          &--todo {
+            grid-template-columns: 25% 30% 15% 13% 13% 4%; //From, Todo, Patient,Date, DueDate, Fakediv
+          }
+          &--external {
+            grid-template-columns: 25% 58% 15% 2%; //From, Subject, Date, FakeDiv
+          }
+          .message__thumbnail-from {
+            display: flex;
+            align-items: center;
+            padding-right: 0.5rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            .message__thumbnail-from-checkbox {
+              width: 5%;
+            }
+            .message__thumbnail-from-author {
+              flex: 1;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+          .message__thumbnail-subject {
+            display: flex;
+            align-items: center;
+            padding: 0 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            .message__thumbnail-subject-exclamation {
+              width: 5%;
+            }
+            .message__thumbnail-subject-text {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              flex: 1;
+            }
+            .message__thumbnail-subject-paperclip {
+              width: 5%;
+            }
+            .message__thumbnail-subject-btn {
+              width: 20%;
+            }
+          }
+          .message__thumbnail-patient {
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 0.25rem;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          .message__thumbnail-date,
+          .message__thumbnail-logos,
+          .message__thumbnail-duedate {
+            text-align: center;
+          }
+          .message__thumbnail-logos {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+          }
+        }
+        .message__thumbnail-mobile {
+          display: flex;
+          flex-direction: column;
+          font-size: $size-sm;
+          gap: 0.25rem;
+          padding: 0.5rem;
+          border-bottom: solid 0.5px $grey;
+          height: 85px;
+          .message__thumbnail-mobile-title {
+            display: grid;
+            grid-template-columns: 75% 25%;
+            align-items: center;
+            column-gap: 0.25rem;
+            .message__thumbnail-mobile-title-from {
+              display: flex;
+              font-weight: bold;
+              align-items: center;
+              .message__thumbnail-mobile-title-from-author {
+                flex: 1;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
+            .message__thumbnail-mobile-title-date {
+              text-align: end;
+            }
+          }
+          .message__thumbnail-mobile-subject {
+            display: flex;
+            align-items: center;
+            .message__thumbnail-mobile-subject-text {
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              color: $grey2;
+              flex: 1;
+            }
+          }
+          .message__thumbnail-mobile-body {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+          }
+        }
+        .message__detail-toolbar {
+          font-size: $size-sm;
+          padding: 0.25rem;
+          border-bottom: solid 0.5px $grey;
+          display: grid;
+          grid-template-columns: 2% 48% 48% 2%; //Arrow, Subject, Patient, Logos
+          align-items: center;
+          position: sticky;
+          justify-content: space-between;
+          top: 0;
+          z-index: 1;
+          width: auto;
+          background-color: $white;
+          &--todo {
+            grid-template-columns: 2% 48% 46% 4%;
+          }
+          &--patient {
+            grid-template-columns: 2% 90% 4% 4%;
+          }
+          .message__detail-toolbar-subject {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .message__detail-toolbar-patient {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .message__detail-toolbar-patient-link {
+              flex-shrink: 1;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .message__detail-toolbar-patient-btn {
+              width: 200px;
+              flex-shrink: 0;
+            }
+          }
+          .message__detail-toolbar-logos {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+          }
+        }
+        .message__detail-content {
+          .message {
+            padding: 1rem;
+            border-bottom: solid 0.5px $grey;
+          }
+          .message__title {
+            display: flex;
+            justify-content: space-between;
+            font-size: $size-sm;
+            .message__author {
+              font-weight: bold;
+            }
+            .message__date {
+              text-align: right;
+            }
+          }
+          .message__subtitle {
+            font-size: $size-xs;
+            width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .message__body {
+            padding: 1rem 1rem 0;
+            font-size: $size-sm;
+            white-space: pre-wrap;
+          }
+          .message__attachments {
+            display: flex;
+            padding: 1rem;
+            flex-wrap: wrap;
+            .message__attachment-card {
+              border: solid 0.5px $grey;
+              margin: 0.5rem 0.25rem 0;
+              width: 15%;
+              .message__attachment-card-thumbnail {
+                height: 80px;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+                iframe {
+                  border: none;
+                  cursor: pointer;
+                }
+              }
+              .message__attachment-card-footer {
+                background: $grey;
+                padding: 0.25rem;
+                font-size: $size-xs;
+                display: flex;
+                flex-direction: column;
+              }
+              .message__attachment-card-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                p {
+                  font-size: $size-xs;
+                  margin-bottom: 0.25rem;
+                }
+              }
+              .message__attachment-card-btn {
+                text-align: center;
+                button {
+                  font-size: $size-xs;
+                  max-width: 100%;
+                }
+              }
+            }
+          }
+        }
+        .message__detail-btns {
+          padding: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
         }
       }
     }
-    &-logos {
-      width: 2%;
-      text-align: center;
-      cursor: pointer;
-      &--todo {
-        width: 4%;
+  }
+}
+
+.message__print {
+  padding: 1rem 2rem;
+  .message__print-btn {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    width: 50%;
+    button {
+      font-size: $size-2xl;
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 3px;
+      background-color: $pink;
+      color: $white;
+      padding: 1rem;
+      &:hover {
+        background-color: $pink2;
       }
     }
   }
-
-  &__patient-link {
-    text-decoration: underline;
-  }
-  &__options {
-    width: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &__btns {
-    padding: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-}
-.messages-print {
-  &__container {
-    padding: 40px;
-  }
-  &__section {
+  .message__print-container {
     print-color-adjust: exact;
     border-radius: 6px;
     border: solid 0.3px $grey;
     overflow: hidden;
-  }
-  &__subject,
-  &__patient {
-    border-bottom: solid 0.3px $grey;
-    font-size: 0.8rem;
-    background-color: $blue;
-    padding: 10px;
-  }
-  &__btn {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-  }
-}
-.message {
-  padding: 20px;
-  border-bottom: solid 0.5px rgb(204, 204, 204);
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-  }
-  &__author {
-    font-weight: bold;
-  }
-  &__date {
-    width: 28%;
-    text-align: right;
-  }
-  &__subject {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    input {
-      outline: none;
-      width: 92%;
+    box-shadow: $box-shadow-default;
+    .message__print-subject,
+    .message__print-patient {
+      font-size: $size-sm;
+      border-bottom: solid 0.3px $grey;
+      background-color: $blue;
+      padding: 0.5rem;
     }
   }
-  &__subtitle {
-    font-size: 0.6rem;
-  }
-  &__body {
-    padding: 20px 20px 0;
-    font-size: 0.8rem;
-    white-space: pre-wrap;
-  }
-}
-.message-attachments {
-  display: flex;
-  padding: 15px;
-  flex-wrap: wrap;
-}
-.message-attachment {
-  &__card {
-    border: solid 0.5px $grey;
-    width: 30%;
-    margin: 10px 5px 0;
-  }
-  &__thumbnail {
-    height: 80px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    iframe {
-      border: none;
-      cursor: pointer;
+
+  .message__detail-content {
+    .message {
+      padding: 1rem;
+      border-bottom: solid 0.5px $grey;
     }
-  }
-  &__footer {
-    background: rgb(154, 154, 154);
-    padding: 5px;
-    font-size: 0.7rem;
-    display: flex;
-    flex-direction: column;
-  }
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    p {
-      margin-top: 0;
-      font-size: 0.7rem;
+    .message__title {
+      display: flex;
+      justify-content: space-between;
+      font-size: $size-sm;
+      .message__author {
+        font-weight: bold;
+      }
+      .message__date {
+        text-align: right;
+      }
     }
-  }
-  &__btn {
-    button {
-      font-size: 0.65rem;
-    }
-  }
-}
-.new-message {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0 5px;
-  margin-top: 30px;
-  &--template {
-    margin-top: 0;
-  }
-  &__template-name {
-    margin-left: 10px;
-    margin-top: 50px;
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    input {
-      width: 500px;
-    }
-  }
-  &__contacts {
-    width: 19%;
-    border: solid 0.3px $grey;
-    border-radius: 6px;
-    margin: 20px auto;
-    font-size: 0.8rem;
-    padding: 5px 10px;
-    &--patient {
-      width: 20%;
-    }
-    &--template {
-      width: 25%;
-    }
-  }
-  &__form {
-    min-height: 250px;
-    border: solid 0.3px $grey;
-    border-radius: 6px;
-    padding: 0 10px;
-    margin: 20px auto;
-    width: 60%;
-    font-size: 0.8rem;
-    &--patient {
-      width: 75%;
-    }
-    &--todo {
-      width: 90%;
-    }
-    &--template {
+    .message__subtitle {
+      font-size: $size-xs;
       width: 70%;
-    }
-    &--template-external {
-      width: 90%;
-    }
-  }
-  &__recipients {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    label {
-      font-weight: bold;
-    }
-    input {
-      outline: none;
-      width: 90%;
-      text-align: left;
       overflow: hidden;
-      white-space: nowrap;
       text-overflow: ellipsis;
-      font-size: 0.8rem;
-    }
-  }
-  &__subject {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    label {
-      font-weight: bold;
-    }
-    input {
-      outline: none;
-      width: 92%;
-      font-size: 0.8rem;
-    }
-  }
-  &__patient {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    label {
-      font-weight: bold;
-    }
-    input {
-      outline: none;
-      width: 80%;
-      text-align: left;
-      overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis;
-      font-size: 0.8rem;
     }
-  }
-  &__attach {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
+    .message__body {
+      padding: 1rem 1rem 0;
+      font-size: $size-sm;
+      white-space: pre-wrap;
     }
-    i {
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  }
-  &__importance {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    &-check {
+    .message__attachments {
       display: flex;
-      align-items: center;
-    }
-  }
-  &__duedate {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-  }
-  &__templates {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  &__body {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    textarea {
-      border: none;
-      outline: none;
-      padding: 10px 0;
-      width: 100%;
-      min-height: 300px;
-    }
-  }
-  &__btns {
-    border-top: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    button {
-      margin-right: 5px;
-    }
-  }
-  &__patients {
-    width: 19%;
-    border: solid 0.3px $grey;
-    height: 500px;
-    border-radius: 6px;
-    margin: 20px auto;
-    font-size: 0.8rem;
-    padding: 5px 10px;
-    &--todo {
-      width: 30%;
-    }
-    &--template-external {
-      width: 25%;
-    }
-  }
-}
-.reply-message {
-  &__form {
-    min-height: 250px;
-    border: solid 0.3px $grey;
-    border-radius: 6px;
-    padding: 0 10px;
-    margin: 20px auto;
-    width: 90%;
-    font-size: 0.8rem;
-  }
-  &__title {
-    display: flex;
-    align-items: center;
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    p {
-      margin: 0;
-      font-size: 0.8rem;
-    }
-  }
-  &__subject {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    input {
-      outline: none;
-      width: 92%;
-      font-size: 0.8rem;
-    }
-  }
-  &__patient {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    input {
-      outline: none;
-      width: 92%;
-      font-size: 0.8rem;
-    }
-  }
-  &__body {
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    textarea {
-      border: none;
-      outline: none;
-      padding: 10px 0;
-      width: 100%;
-      min-height: 200px;
-    }
-  }
-  &__history {
-    display: flex;
-    flex-direction: column;
-  }
-  &__btns {
-    border-top: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &__attach {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    i {
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  }
-  &__importance {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    &-check {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-.forward-message {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0 5px;
-  margin-top: 30px;
-  &__contacts {
-    width: 20%;
-    border: solid 0.3px $grey;
-    border-radius: 6px;
-    margin: 20px auto;
-    font-size: 0.8rem;
-    padding: 5px 10px;
-  }
-  &__form {
-    min-height: 250px;
-    border: solid 0.3px $grey;
-    border-radius: 6px;
-    padding: 0 10px;
-    margin: 20px auto;
-    width: 75%;
-    font-size: 0.8rem;
-  }
-  &__recipients {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    label {
-      font-weight: bold;
-    }
-    input {
-      outline: none;
-      width: 90%;
-      text-align: left;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      font-size: 0.8rem;
-    }
-  }
-  &__subject {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    input {
-      font-size: 0.8rem;
-    }
-  }
-  &__patient {
-    border-bottom: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    input {
-      font-size: 0.8rem;
-    }
-  }
-  &__body {
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    textarea {
-      border: none;
-      outline: none;
-      padding: 10px 0;
-      width: 100%;
-      min-height: 300px;
-    }
-  }
-  &__history {
-    display: flex;
-    flex-direction: column;
-  }
-  &__btns {
-    border-top: solid 0.3px $grey;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &__attach {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    i {
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  }
-  &__importance {
-    border-bottom: solid 0.3px $grey;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 0.8rem;
-    label {
-      font-weight: bold;
-    }
-    &-check {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-.contacts {
-  &__title {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  &__category-overview {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    i {
-      margin-right: 5px;
-    }
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-  }
-}
-.contacts-list {
-  padding: 5px 0 0 30px;
-  &__item {
-    display: flex;
-    align-items: center;
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-  }
-}
-.patients {
-  .patients {
-    &__title {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    &__search-input {
-      margin-bottom: 10px;
-      input {
-        width: 100%;
+      padding: 1rem;
+      flex-wrap: wrap;
+      .message__attachment-card {
+        border: solid 0.5px $grey;
+        margin: 0.5rem 0.25rem 0;
+        .message__attachment-card-thumbnail {
+          height: 80px;
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          iframe {
+            border: none;
+            cursor: pointer;
+          }
+        }
+        .message__attachment-card-footer {
+          background: $grey;
+          padding: 0.25rem;
+          font-size: $size-xs;
+          display: flex;
+          flex-direction: column;
+        }
+        .message__attachment-card-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          p {
+            font-size: $size-xs;
+            margin-bottom: 0.25rem;
+          }
+        }
+        .message__attachment-card-btn {
+          text-align: center;
+          button {
+            font-size: $size-xs;
+            max-width: 100%;
+          }
+        }
       }
-    }
-    &__list {
-      height: 430px;
-      overflow-y: scroll;
-    }
-    &__list-item {
-      display: flex;
-      align-items: center;
-      input[type="checkbox"] {
-        width: auto;
-        margin-right: 5px;
-      }
-    }
-    &__list-err {
-      padding: 10px 20px;
-      font-size: 0.9rem;
-      width: 100%;
-      margin: 10px auto;
-      color: red;
-      background-color: rgba(255, 0, 0, 0.403);
-      border-radius: 6px;
-      text-align: center;
     }
   }
 }
 
 @media print {
-  .messages-print__btn {
+  .message__print-btn {
     display: none !important;
   }
 }
 
-.todos {
-  &__box {
-    background-color: $white;
-    width: 90%;
-    height: 100%;
-    overflow: scroll;
-    position: relative;
-    border-radius: 0 0 6px 0;
-    p {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-  }
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin: 0 auto 20px;
-  }
-  &__item {
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 35px;
-    border-bottom: solid 0.5px $grey;
-    padding: 0 5px;
-  }
-  &__item-content {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    input[type="checkbox"] {
-      margin-right: 10px;
-    }
-    input[type="text"] {
-      width: 95%;
-    }
-  }
-  &__btn-container {
-    button {
-      margin-right: 5px;
-    }
-  }
-}
-.messages__templates {
-  margin-top: 40px;
-  padding: 0 20px;
-  height: 93%;
-  &-err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-  }
-  &-btn-container {
-    text-align: center;
-    margin-bottom: 20px;
-    button {
-      margin-left: 5px;
-    }
-  }
-  &-list {
-    height: 85%;
-    border: solid 0.5px $grey;
-    border-radius: 6px;
-    overflow-y: scroll;
-    padding: 10px;
-    &-item {
-      margin-bottom: 5px;
-      span {
-        cursor: pointer;
-        &:hover {
-          text-decoration: underline;
+@media (max-width: 1024px) {
+  .messages {
+    .messages__container {
+      .messages__toolbar {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 0.5rem;
+        gap: 0.5rem;
+        input {
+          font-size: $size-base;
+        }
+        .messages__toolbar-title {
+          display: none;
+        }
+        .messages__toolbar-btns {
+          margin-right: 0;
         }
       }
-    }
-  }
-  &-search {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    input {
-      width: 200px;
+      .messages__content {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        .messages__content-leftbar {
+          border-radius: 0;
+          height: auto;
+        }
+        .messages__content-box {
+          flex: 1;
+          .messages__overview-toolbar {
+            display: none;
+          }
+          .message__detail-toolbar {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            row-gap: 0.25rem;
+            padding: 0.5rem;
+            .message__detail-toolbar-subject {
+              grid-column: span 3;
+              text-align: end;
+            }
+            .message__detail-toolbar-patient {
+              grid-column: span 3;
+              .message__detail-toolbar-patient-btn {
+                display: none;
+              }
+            }
+            .message__detail-toolbar-logos {
+              gap: 1rem;
+              justify-content: flex-end;
+            }
+          }
+          .message__detail-content {
+            .message {
+              padding: 0.5rem;
+              .message__title {
+                flex-direction: column;
+                .message__date {
+                  text-align: left;
+                }
+              }
+              .message__author {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+            }
+            .message__attachments {
+              .message__attachment-card {
+                width: 30%;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

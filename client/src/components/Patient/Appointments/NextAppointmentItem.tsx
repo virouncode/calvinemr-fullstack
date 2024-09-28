@@ -19,8 +19,8 @@ const NextAppointmentItem = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
-    <li key={appointment.id} className="appointments-patient__item">
-      <div className="appointments-patient__date" style={{ width: "50%" }}>
+    <li key={appointment.id} className="patient-appointments__next-item">
+      <div className="patient-appointments__next-item-date">
         <Checkbox
           id={appointment.id.toString()}
           onChange={handleCheck}
@@ -28,11 +28,13 @@ const NextAppointmentItem = ({
         />
         <NextAppointmentDate appointment={appointment} />
       </div>
-      <div style={{ width: "25%", textAlign: "center" }}>
-        Reason : {appointment.AppointmentPurpose}
-      </div>
-      <div style={{ width: "25%", textAlign: "center" }}>
-        {staffIdToTitleAndName(staffInfos, appointment.host_id)}
+      <div className="patient-appointments__next-item-infos">
+        <div className="patient-appointments__next-item-host">
+          With {staffIdToTitleAndName(staffInfos, appointment.host_id)}
+        </div>
+        <div className="patient-appointments__next-item-reason">
+          Reason : {appointment.AppointmentPurpose}
+        </div>
       </div>
     </li>
   );

@@ -46,11 +46,7 @@ const BillingTable = ({
   );
 
   return (
-    <div
-      className="billing-table__container"
-      ref={divRef}
-      style={{ height: addVisible ? "56%" : "" }}
-    >
+    <div className="billing-table__container" ref={divRef}>
       <table className="billing-table">
         <thead>
           <tr>
@@ -172,6 +168,7 @@ const BillingTable = ({
               ) / 100}{" "}
               $
             </td>
+            <td colSpan={2}></td>
           </tr>
         </tfoot>
       </table>

@@ -2,19 +2,19 @@
   border: 0.5px solid $grey;
   background-color: #fefefe;
   border-radius: 8px;
-  z-index: 100;
+  position: fixed;
+  z-index: 5;
   overflow: hidden;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  box-shadow: $box-shadow-default;
   overflow: hidden;
-  font-size: 0.85rem;
+  font-size: $size-sm;
 }
 
 .window-title {
   border-radius: 8px 8px 0 0;
-  position: fixed;
   height: 40px;
   color: $white;
-  padding: 10px;
+  padding: 0.7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: $size-xl;
     &--disabled {
       cursor: auto;
       pointer-events: none;
@@ -47,8 +47,20 @@
 }
 
 .window-content {
-  padding: 10px;
+  padding: 0.5rem;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 40px);
   overflow: scroll;
+}
+
+@media (max-width: 1024px) {
+  .window {
+    width: 100% !important;
+    height: calc(100% - 100px) !important;
+    top: 100px !important;
+    left: 0 !important;
+  }
+  .window-title {
+    width: 100% !important;
+  }
 }

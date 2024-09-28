@@ -56,26 +56,26 @@ const ClinicalNotesTemplateEdit = ({
     });
   };
   return (
-    <div className="edit-template">
+    <div className="clinical-note-template__form">
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="edit-template-name">
+      <div className="clinical-note-template__form-name">
         <Input
           value={editedTemplate.name}
           onChange={handleChange}
           name="name"
           id="clinical-template-name"
-          label="Template name:"
+          placeholder="Template name*"
           autoFocus={true}
         />
       </div>
-      <div className="edit-template-body">
+      <div className="clinical-note-template__form-body">
         <textarea
           name="body"
           value={editedTemplate.body}
           onChange={handleChange}
         />
       </div>
-      <div className="edit-template-btns">
+      <div className="clinical-note-template__form-btns">
         <SaveButton onClick={handleSave} />
         <CancelButton onClick={handleCancel} />
       </div>

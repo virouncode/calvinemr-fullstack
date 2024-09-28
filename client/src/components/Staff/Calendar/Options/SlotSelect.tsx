@@ -44,7 +44,7 @@ const SlotSelect = () => {
   };
   return (
     <div className="calendar__slot-select">
-      <label htmlFor="duration">Time Slot Duration</label>
+      <label htmlFor="duration">Slot Duration</label>
       <select
         id="duration"
         name="duration"

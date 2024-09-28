@@ -1,52 +1,206 @@
 .patient-pharmacies {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow-y: scroll;
+  padding: 1rem;
   &__content {
     width: 97%;
     margin: 10px auto;
   }
   &__preferred {
-    label,
-    p {
-      font-size: 0.85rem;
-    }
+    display: flex;
+    flex-direction: column;
     &-title {
       text-align: center;
-      font-size: 1rem;
+      font-size: $size-base;
       font-weight: bold;
       margin-bottom: 20px;
     }
     &-empty {
       text-align: center;
-      font-size: 0.85rem;
+      font-size: size-sm;
+    }
+    .pharmacies__card {
+      max-width: 100%;
+      margin: 0 auto;
+      border: solid 1px $grey;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      box-shadow: $box-shadow-default;
+      font-size: $size-sm;
+      &-row {
+        display: flex;
+        align-items: center;
+        margin: 5px auto;
+        label {
+          font-weight: bold;
+          min-width: 120px;
+        }
+        p {
+          flex: 1;
+          word-break: break-all;
+        }
+      }
     }
   }
   &__directory {
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem;
     &-title {
       text-align: center;
-      font-size: 1rem;
+      font-size: $size-base;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
     }
     &-label {
       text-align: center;
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
     }
     &-search {
       &-form {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        row-gap: 1rem;
+        column-gap: 1rem;
         align-items: center;
         justify-content: space-between;
-        width: 90%;
+        width: 95%;
         margin: 0 auto;
       }
       &-item {
+        display: flex;
+        flex-direction: column;
         label {
-          font-size: 0.85rem;
+          font-size: $size-base;
           font-weight: bold;
-          margin-right: 10px;
+          margin-bottom: 0.25rem;
+        }
+        input {
+          width: 100%;
+          font-size: $size-base;
+        }
+      }
+    }
+  }
+  .pharmacies-list {
+    &__title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: $size-base;
+      font-weight: bold;
+      button {
+        margin-left: 0.5rem;
+      }
+    }
+    &__table-container {
+      flex: 1;
+      overflow: scroll;
+      border-radius: 6px;
+      box-shadow: $box-shadow-default;
+      min-height: 300px;
+    }
+    &__table {
+      table-layout: fixed;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: $size-xs;
+      thead {
+        position: sticky;
+        top: 0;
+        background: $blue;
+        border-radius: 6px;
+      }
+      th {
+        min-width: 120px;
+        padding: 0.5rem;
+        cursor: pointer;
+        &:nth-child(6) {
+          min-width: 200px;
+        }
+      }
+    }
+    &__item,
+    &__form {
+      border-bottom: solid 1px $grey;
+      td {
+        text-align: center;
+        padding: 10px;
+        word-break: break-word;
+        input,
+        select {
+          width: 100%;
+          font-size: $size-base;
+        }
+        input[type="submit"] {
+          width: auto;
+        }
+      }
+      .postalzip-select-input {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        select {
+          width: 45%;
+        }
+        input {
+          flex: 1;
+        }
+      }
+      &-btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+        button {
+          font-size: $size-xs;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .patient-pharmacies {
+    &__directory {
+      flex: 1;
+      overflow: hidden;
+      &-search {
+        &-item {
+          label {
+            font-size: $size-sm;
+          }
+          input {
+            font-size: $size-sm;
+          }
+        }
+      }
+    }
+    .pharmacies-list {
+      &__table-container {
+        flex: 1;
+        min-height: 0;
+      }
+      &__table {
+        font-size: $size-sm;
+      }
+      &__item,
+      &__form {
+        td {
+          input,
+          select {
+            font-size: $size-sm;
+          }
+        }
+        &-btn-container {
+          button {
+            font-size: $size-sm;
+          }
         }
       }
     }

@@ -169,14 +169,14 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
 
   return (
     <div className="new-message new-message--patient">
-      <div className="new-message__contacts new-message__contacts--patient">
+      <div className="new-message__contacts">
         <PatientStaffContacts
           isContactChecked={isContactChecked}
           handleCheckContact={handleCheckContact}
         />
       </div>
-      <div className="new-message__form new-message__form--patient">
-        <div className="new-message__recipients new-message__recipients--patient">
+      <div className="new-message__form">
+        <div className="new-message__form-recipients">
           <Input
             value={
               recipientId ? staffIdToTitleAndName(staffInfos, recipientId) : ""
@@ -187,7 +187,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
             placeholder="Recipient"
           />
         </div>
-        <div className="new-message__subject new-message__subject--patient">
+        <div className="new-message__form-subject">
           <Input
             value={subject}
             id="subject"
@@ -196,19 +196,22 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
             placeholder="Subject"
           />
         </div>
-        <div className="new-message__attach new-message__attach--patient">
+        <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="new-message__body new-message__body--patient">
+        <div className="new-message__form-body">
           <textarea value={body} onChange={handleChange} autoFocus />
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-          />
+          {attachments.length > 0 && (
+            <MessagesAttachments
+              attachments={attachments}
+              handleRemoveAttachment={handleRemoveAttachment}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
-        <div className="new-message__btns new-message__btns--patient">
+        <div className="new-message__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}

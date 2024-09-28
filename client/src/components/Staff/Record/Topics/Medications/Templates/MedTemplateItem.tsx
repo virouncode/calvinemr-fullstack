@@ -61,27 +61,27 @@ const MedTemplateItem = ({
 
   return (
     <>
-      <li className="med-templates__item" ref={lastItemRef}>
+      <li className="templates__list-item" ref={lastItemRef}>
         <Tooltip title={"Add to RX"} placement="top-start" arrow>
           <span
             onClick={() => handleSelectTemplate(med)}
             style={{ whiteSpace: "pre" }}
           >
-            - {med.PrescriptionInstructions}{" "}
+            {med.PrescriptionInstructions}{" "}
             {med.author_id
               ? `(${staffIdToTitleAndName(staffInfos, med.author_id)})`
               : ""}
           </span>
         </Tooltip>
-        {med.author_id === user.id && <PenIcon ml={5} onClick={handleEdit} />}
         <Tooltip title="Duplicate" placement="top-start" arrow>
           <span>
-            <CloneIcon ml={5} onClick={handleDuplicate} />
+            <CloneIcon ml={10} onClick={handleDuplicate} />
           </span>
         </Tooltip>
+        {med.author_id === user.id && <PenIcon ml={15} onClick={handleEdit} />}
         {med.author_id === user.id && (
           <span>
-            <TrashIcon ml={5} onClick={() => handleDelete(med.id)} />
+            <TrashIcon ml={15} onClick={() => handleDelete(med.id)} />
           </span>
         )}
       </li>

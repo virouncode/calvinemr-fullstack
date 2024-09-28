@@ -18,6 +18,7 @@ const SquarePlusIcon = ({ onClick, ml = 0, mr = 0 }: SquarePlusIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="squareplus-icon"
     />
   );
 };

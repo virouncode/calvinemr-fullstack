@@ -12,7 +12,7 @@ const PatientPamphletsPage = () => {
           <title>Pamphlets</title>
         </Helmet>
       </HelmetProvider>
-      <section className="patient-pamphlets-section">
+      <section className="patient-pamphlets">
         <PatientPamphlets />
       </section>
     </>
