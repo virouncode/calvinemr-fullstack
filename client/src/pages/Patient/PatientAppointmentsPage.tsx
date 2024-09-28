@@ -12,10 +12,8 @@ const PatientAppointmentsPage = () => {
           <title>Appointments</title>
         </Helmet>
       </HelmetProvider>
-      <section className="patient-appointments-section">
-        <div className="patient-appointments-section-content">
-          <PatientAppointments />
-        </div>
+      <section className="patient-appointments">
+        <PatientAppointments />
       </section>
     </>
   );

@@ -7,7 +7,6 @@
   padding: 0.5rem 0.75rem;
   background-color: $blue2;
   &--login {
-    backdrop-filter: blur(20px);
     background-color: transparent;
   }
   &__title {
@@ -73,6 +72,9 @@
     grid-template-columns: 16% 68% 16%;
     &--patient {
       grid-template-columns: 25% 50% 25%;
+    }
+    &--login {
+      grid-template-columns: 16% 84%;
     }
   }
   .header__title {

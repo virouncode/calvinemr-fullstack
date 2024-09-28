@@ -1,32 +1,19 @@
 .patient-account {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
   &__container {
     box-shadow: $box-shadow-default;
     border-radius: 6px;
     background: $white;
     padding: 20px;
-    width: 75%;
+    width: 95%;
+    max-width: 1200px;
     margin: 0 auto;
-  }
-  &__confirm {
-    padding: 10px 20px;
-    width: 70%;
-    font-size: 0.9rem;
-    margin: 0 auto 20px;
-    border-radius: 6px;
-    text-align: center;
-    color: forestgreen;
-    background-color: rgba(34, 139, 34, 0.4);
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 70%;
-    margin: 0 auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
-    margin: 0 auto 20px;
+    border: solid 1px $grey;
   }
   &__btns {
     margin-top: 20px;
@@ -42,12 +29,10 @@
       grid-template-columns: 17% 35% 35%;
       justify-content: space-between;
       &-column {
-        // width:30%;
         &-image {
           display: flex;
           flex-direction: column;
-          width: 200px;
-          height: 200px;
+          width: 100%;
           border-radius: 6px;
           overflow: hidden;
           margin-right: 10px;
@@ -93,6 +78,29 @@
       margin-left: 10px;
       padding: 5px;
       font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .patient-account {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    &__form-content {
+      display: flex;
+      flex-direction: column;
+      &-column-image {
+        width: 20%;
+        min-width: 100px;
+        margin-bottom: 1.5rem;
+      }
+      &-row {
+        font-size: $size-base;
+        label {
+          font-size: $size-base;
+        }
+      }
     }
   }
 }

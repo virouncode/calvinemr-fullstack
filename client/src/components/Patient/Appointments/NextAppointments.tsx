@@ -102,9 +102,9 @@ Cellphone: ${
   };
 
   return (
-    <div className="appointments-patient">
-      <div className="appointments-patient__title">Next Appointments</div>
-      <div className="appointments-patient__content">
+    <div className="patient-appointments__next">
+      <div className="patient-appointments__next-title">Next Appointments</div>
+      <div className="patient-appointments__next-content">
         <ul>
           {nextAppointments && nextAppointments.length > 0 ? (
             nextAppointments.map((appointment) => (
@@ -121,7 +121,7 @@ Cellphone: ${
         </ul>
       </div>
       {requestSent && (
-        <p className="new-appointments__confirm">
+        <p className="patient-appointments__next-success">
           Your request has been sent,{" "}
           <strong>
             Please wait for a secretary to confirm your appointment cancelation
@@ -129,7 +129,7 @@ Cellphone: ${
         </p>
       )}
       {!requestSent && (
-        <div className="appointments-patient__btn">
+        <div className="patient-appointments__next-btn">
           <SaveButton
             label="Cancel Appointment"
             onClick={handleDeleteAppointment}

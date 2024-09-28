@@ -32,54 +32,47 @@ const PatientPamphlets = () => {
   const pamphlets = data?.pages.flatMap((page) => page.items);
 
   return (
-    <div className="patient-pamphlets">
+    <>
       <div className="patient-pamphlets__search">
         <Input
           value={search}
           onChange={handleSearch}
           id="search-pamphlets"
-          label="Search"
-          width={300}
+          placeholder="Search"
         />
       </div>
-      <div className="patient-pamphlets__results">
-        {error && <ErrorParagraph errorMsg={error.message} />}
-        <>
-          <div className="patient-pamphlets__table-container" ref={divRef}>
-            <table className="patient-pamphlets__table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>File</th>
-                  <th>Notes</th>
-                  <th>Created by</th>
-                  <th>Created on</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data && pamphlets && pamphlets?.length > 0
-                  ? pamphlets.map((item, index) =>
-                      index === pamphlets.length - 1 ? (
-                        <PatientPamphletItem
-                          item={item}
-                          key={item.id}
-                          lastItemRef={lastItemRef}
-                        />
-                      ) : (
-                        <PatientPamphletItem item={item} key={item.id} />
-                      )
-                    )
-                  : !isFetchingNextPage &&
-                    !isPending && <EmptyRow colSpan={6} text="No pamphlets" />}
-                {(isPending || isFetchingNextPage) && (
-                  <LoadingRow colSpan={6} />
-                )}
-              </tbody>
-            </table>
-          </div>
-        </>
+      {error && <ErrorParagraph errorMsg={error.message} />}
+      <div className="patient-pamphlets__table-container" ref={divRef}>
+        <table className="patient-pamphlets__table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>File</th>
+              <th>Notes</th>
+              <th>Created by</th>
+              <th>Created on</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data && pamphlets && pamphlets?.length > 0
+              ? pamphlets.map((item, index) =>
+                  index === pamphlets.length - 1 ? (
+                    <PatientPamphletItem
+                      item={item}
+                      key={item.id}
+                      lastItemRef={lastItemRef}
+                    />
+                  ) : (
+                    <PatientPamphletItem item={item} key={item.id} />
+                  )
+                )
+              : !isFetchingNextPage &&
+                !isPending && <EmptyRow colSpan={6} text="No pamphlets" />}
+            {(isPending || isFetchingNextPage) && <LoadingRow colSpan={6} />}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </>
   );
 };
 

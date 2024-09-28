@@ -22,14 +22,14 @@ const PatientAppointments = () => {
 
   if (isPending)
     return (
-      <div className="past-next-appointments">
+      <div className="patient-appointments__past-next">
         <LoadingParagraph />
       </div>
     );
 
   if (error)
     return (
-      <div className="past-next-appointments">
+      <div className="patient-appointments__past-next">
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
@@ -39,7 +39,7 @@ const PatientAppointments = () => {
 
   return (
     <>
-      <div className="past-next-appointments">
+      <div className="patient-appointments__past-next">
         <PastAppointments pastAppointments={pastAppointments} />
         <NextAppointments nextAppointments={nextAppointments} />
       </div>

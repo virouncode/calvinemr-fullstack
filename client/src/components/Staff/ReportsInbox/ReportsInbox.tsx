@@ -64,7 +64,6 @@ const ReportsInbox = () => {
         </div>
       )}
       <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
-
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="reportsinbox__table-container" ref={divRef}>
         <table className="reportsinbox__table">

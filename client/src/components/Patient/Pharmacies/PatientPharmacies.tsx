@@ -34,7 +34,7 @@ const PatientPharmacies = () => {
   const editCounter = useRef(0);
 
   return (
-    <div className="patient-pharmacies__content">
+    <>
       <div className="patient-pharmacies__preferred">
         <div className="patient-pharmacies__preferred-title">
           My preferred pharmacy
@@ -67,7 +67,7 @@ const PatientPharmacies = () => {
           isFetching={isFetching}
         />
       </div>
-    </div>
+    </>
   );
 };
 

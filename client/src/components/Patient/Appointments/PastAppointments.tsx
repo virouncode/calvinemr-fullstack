@@ -9,9 +9,9 @@ type PastAppointmentsProps = {
 
 const PastAppointments = ({ pastAppointments }: PastAppointmentsProps) => {
   return (
-    <div className="appointments-patient appointments-patient--past">
-      <div className="appointments-patient__title">Past Appointments</div>
-      <div className="appointments-patient__content">
+    <div className="patient-appointments__past">
+      <div className="patient-appointments__past-title">Past Appointments</div>
+      <div className="patient-appointments__past-content">
         <ul>
           {pastAppointments && pastAppointments.length > 0 ? (
             pastAppointments.map((appointment) => (

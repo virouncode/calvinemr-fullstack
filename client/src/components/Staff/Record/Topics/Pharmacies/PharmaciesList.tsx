@@ -107,17 +107,7 @@ const PharmaciesList = ({
         <Button onClick={handleAddNewClick} label="Add" />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div
-        className="pharmacies-list__table-container"
-        ref={divRef}
-        style={{
-          height:
-            user.access_level === "patient" &&
-            user.demographics.PreferredPharmacy
-              ? "240px"
-              : "",
-        }}
-      >
+      <div className="pharmacies-list__table-container" ref={divRef}>
         <table className="pharmacies-list__table">
           <thead>
             <tr>
