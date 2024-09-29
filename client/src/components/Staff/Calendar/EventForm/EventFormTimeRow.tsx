@@ -51,6 +51,8 @@ const EventFormTimeRow = ({
         locale="en-CA"
         handleChange={handleStartChange}
         label="Start"
+        readOnlyDate={formDatas.all_day}
+        readOnlyTime={formDatas.all_day}
       />
       <DateTimePicker
         value={formDatas.end}
@@ -62,6 +64,8 @@ const EventFormTimeRow = ({
         locale="en-CA"
         handleChange={handleEndChange}
         label="End"
+        readOnlyDate={formDatas.all_day}
+        readOnlyTime={formDatas.all_day}
       />
       <DurationPicker
         durationHours={

@@ -168,9 +168,8 @@
           white-space: pre-wrap;
         }
         p {
-          width: 100%;
+          width: 98%;
           overflow-wrap: break-word;
-          max-width: 80ch;
           margin: 0 auto;
         }
         textarea {
@@ -180,7 +179,6 @@
           width: 98%;
           overflow-y: scroll;
           font-size: $size-base;
-          max-width: 80ch;
         }
       }
     }
@@ -298,7 +296,6 @@
         padding-right: 2rem;
         font-family: $font1, sans-serif;
         width: 98%;
-        max-width: 80ch;
         border: none;
         border-radius: 3px;
         height: 300px;
@@ -360,7 +357,6 @@
         p {
           white-space: pre-wrap;
           margin-left: 40px;
-          max-width: 80ch;
         }
       }
     }
@@ -373,7 +369,6 @@
       &-body {
         p {
           white-space: pre-wrap;
-          max-width: 80ch;
           margin: 0 auto;
         }
       }

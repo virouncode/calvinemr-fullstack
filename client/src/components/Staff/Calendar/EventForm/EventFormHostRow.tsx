@@ -61,6 +61,7 @@ const EventFormHostRow = ({
           id="until"
           min={timestampToDateISOTZ(formDatas.start)}
           label="Until"
+          disabled={formDatas.recurrence === "Once"}
         />
       </div>
     </div>

@@ -187,6 +187,7 @@ const EventForm = ({
       until: "",
     };
     const value = e.target.value;
+
     switch (value) {
       case "Every day":
         newRrule = {

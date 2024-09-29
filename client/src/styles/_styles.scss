@@ -151,6 +151,9 @@ input {
   &::placeholder {
     color: $grey2;
   }
+  &:disabled {
+    color: $grey2;
+  }
 }
 
 input[type="text"],
