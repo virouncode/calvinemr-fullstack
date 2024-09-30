@@ -132,8 +132,22 @@ export const parseToEvent = (
       appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
     resourceId: rooms?.find(({ id }) => id === appointment.room_id)
       ?.id as string,
-    rrule: appointment.rrule?.freq ? appointment.rrule : undefined,
-    exrule: appointment.exrule?.length ? appointment.exrule : [],
+    rrule: appointment.rrule?.freq
+      ? {
+          ...appointment.rrule,
+          dtstart: appointment.rrule?.dtstart.slice(0, 19),
+          until: appointment.rrule?.until
+            ? appointment.rrule.until.slice(0, 19)
+            : "",
+        }
+      : undefined,
+    exrule: appointment.exrule?.length
+      ? appointment.exrule.map((exrule) => ({
+          ...exrule,
+          dtstart: exrule?.dtstart ? exrule.dtstart.slice(0, 19) : "",
+          until: exrule?.until ? exrule.until.slice(0, 19) : "",
+        }))
+      : [],
     duration: appointment.Duration * 60000,
     extendedProps: {
       host: appointment.host_id,
@@ -172,8 +186,22 @@ export const parseToEvent = (
       providerLastName: appointment.Provider?.Name?.LastName,
       providerOHIP: appointment.Provider?.OHIPPhysicianId,
       recurrence: appointment.recurrence,
-      rrule: appointment.rrule?.freq ? appointment.rrule : undefined,
-      exrule: appointment.exrule?.length ? appointment.exrule : [],
+      rrule: appointment.rrule?.freq
+        ? {
+            ...appointment.rrule,
+            dtstart: appointment.rrule?.dtstart.slice(0, 19),
+            until: appointment.rrule?.until
+              ? appointment.rrule.until.slice(0, 19)
+              : "",
+          }
+        : undefined,
+      exrule: appointment.exrule?.length
+        ? appointment.exrule.map((exrule) => ({
+            ...exrule,
+            dtstart: exrule?.dtstart ? exrule.dtstart.slice(0, 19) : "",
+            until: exrule?.until ? exrule.until.slice(0, 19) : "",
+          }))
+        : [],
     },
   };
   return event;

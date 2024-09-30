@@ -117,6 +117,7 @@ const Invitation = ({
         patientInfos.PhoneNumber.find((phone) => phone._phoneNumberType === "C")
           ?.phoneNumber ?? ""
       );
+
       try {
         await axios.post(`/api/mailgun`, {
           to: patientInfos.Email, //to be changed to patientInfos.Email
@@ -152,7 +153,7 @@ const Invitation = ({
       }
       try {
         await axios({
-          url: "/twilio",
+          url: "/api/twilio",
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -57,6 +57,21 @@ const CalendarView = ({
   selectable,
   currentView,
 }: CalendarViewProps) => {
+  // rrulePlugin.recurringTypes[0].expand = function (errd, fr, de) {
+  //   return errd.rruleSet
+  //     .between(de.toDate(fr.start), de.toDate(fr.end), true)
+  //     .map((d: Date) => {
+  //       return new Date(
+  //         Date.UTC(
+  //           d.getFullYear(),
+  //           d.getMonth(),
+  //           d.getDate(),
+  //           d.getHours(),
+  //           d.getMinutes()
+  //         )
+  //       );
+  //     });
+  // };
   return (
     <FullCalendar
       longPressDelay={200}
