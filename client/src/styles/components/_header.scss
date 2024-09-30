@@ -78,8 +78,13 @@
     }
   }
   .header__title {
-    display: inline;
+    display: flex;
     font-size: $size-base;
+    justify-content: flex-end;
+
+    img {
+      width: 300px;
+    }
   }
   .header__nav {
     ul {
