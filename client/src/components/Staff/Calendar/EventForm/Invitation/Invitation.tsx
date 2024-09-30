@@ -88,8 +88,8 @@ const Invitation = ({
     }
 
     if (
-      templateSelected === "Video appointment" &&
-      !staffInfos.find(({ id }) => id === user.id)?.video_link
+      templateSelected === "Video appointment - MD is ready" &&
+      !staffInfos.find(({ id }) => id === hostId)?.video_link
     ) {
       toast.error(
         "You can't send a video appointment invitation without a video call link, please see My Account section",
@@ -134,7 +134,7 @@ const Invitation = ({
             allDay,
             start,
             end,
-            staffInfos.find(({ id }) => id === user.id)?.video_link ?? "",
+            staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
             intro,
             message
           ),
@@ -172,7 +172,7 @@ const Invitation = ({
               allDay,
               start,
               end,
-              staffInfos.find(({ id }) => id === user.id)?.video_link ?? "",
+              staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
               intro,
               message
             ),

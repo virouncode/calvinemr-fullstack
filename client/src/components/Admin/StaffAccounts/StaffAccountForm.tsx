@@ -189,8 +189,14 @@ const StaffAccountForm = ({ setAddVisible, sites }: StaffAccountFormProps) => {
             {
               name: "Video appointment",
               intro: `This email/text message is to remind you about your upcoming VIDEO appointment.\n`,
-              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is online. DO NOT COME TO THE CLINIC.\n\nPlease login 5 minutes before your appointment by clicking the following link:\n[video_call_link]\n\n`,
+              infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: This appointment is online. DO NOT COME TO THE CLINIC.\nThe link will be emailed and sent to you once the physician is ready for you.\nThe VIDEO appointment can be done from a computer (preferred), tablet or cellphone. Please download the Microsoft Teams application in advance\n\n`,
               message: `You will be directed to the virtual waiting room. The physician will let you in the meeting once available.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\n`,
+            },
+            {
+              name: "Video appointment - MD is ready",
+              intro: `This email/text message is to inform you that the physician is now ready for the VIDEO appointment.\n`,
+              infos: `Please login immediately by clicking the following link: [video_call_link]\n\n`,
+              message: `The VIDEO appointment can be done from a computer (preferred), tablet or cellphone, with the Microsoft Teams application.\nNo secret code is needed for the video call.\nMake sure to open your camera and unmute the microphone once you login.\n\n`,
             },
             {
               name: "Phone appointment",

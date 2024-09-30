@@ -22,11 +22,11 @@ const InvitationInfos = ({
 
   return (
     <div className="event-form__invitation-infos">
-      {templateSelected === "Video appointment" ? (
+      {templateSelected === "Video appointment - MD is ready" ? (
         <label>
           Appointment Infos (read only,{" "}
           <span style={{ color: "red" }}>
-            please make sure you provided a video call link, see My Account
+            please make sure the host provided a video call link, see My Account
             section
           </span>
           )
