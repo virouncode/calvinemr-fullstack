@@ -135,7 +135,7 @@ export const parseToEvent = (
     rrule: appointment.rrule?.freq
       ? {
           ...appointment.rrule,
-          dtstart: appointment.rrule?.dtstart.slice(0, 19),
+          dtstart: appointment.rrule?.dtstart.slice(0, 19), //remove the timezone info from the string
           until: appointment.rrule?.until
             ? appointment.rrule.until.slice(0, 19)
             : "",

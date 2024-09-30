@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
 import { useFetchAllPages } from "../../../../hooks/reactquery/useFetchAllPages";
@@ -10,8 +11,10 @@ import {
   timestampToDateISOTZ,
   timestampToHumanDateTimeTZ,
 } from "../../../../utils/dates/formatDates";
+import { copyTextToClipboard } from "../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import CopyIcon from "../../../UI/Icons/CopyIcon";
 import EnvelopeIcon from "../../../UI/Icons/EnvelopeIcon";
 import PhoneIcon from "../../../UI/Icons/PhoneIcon";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -62,6 +65,25 @@ const ClinicalNotesTitle = ({
     setNewMessageVisible(true);
   };
 
+  const handleCopyPhoneNumber = async (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    try {
+      await copyTextToClipboard(
+        demographicsInfos.PhoneNumber?.find(
+          ({ _phoneNumberType }) => _phoneNumberType === "C"
+        )?.phoneNumber ?? ""
+      );
+      toast.success("Copied !", { containerId: "A" });
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Unable to copy phone number: ${err.message}`, {
+          containerId: "A",
+        });
+    }
+  };
+
   if (isPending || isFetchingNextPage)
     return (
       <div className="clinical-notes__header-title">
@@ -102,15 +124,16 @@ const ClinicalNotesTitle = ({
           style={{ cursor: "pointer", textDecoration: "underline" }}
           onClick={handleClickMail}
         >
-          <EnvelopeIcon /> {demographicsInfos.Email}
+          <EnvelopeIcon mr={2} /> {demographicsInfos.Email}
         </span>
         <span>
-          <PhoneIcon />{" "}
+          <PhoneIcon mr={2} />
           {
             demographicsInfos.PhoneNumber?.find(
               ({ _phoneNumberType }) => _phoneNumberType === "C"
             )?.phoneNumber
           }
+          <CopyIcon onClick={handleCopyPhoneNumber} ml={5} />
         </span>
         <span>
           Next appointment:{" "}

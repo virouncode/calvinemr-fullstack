@@ -522,3 +522,15 @@
     }
   }
 }
+@media (min-width: 1280px) {
+  .clinical-notes {
+    &__header {
+      &-title-infos {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        column-gap: 1rem;
+      }
+    }
+  }
+}

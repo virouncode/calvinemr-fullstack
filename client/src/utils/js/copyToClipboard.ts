@@ -24,6 +24,6 @@ export const copyCalvinAIMsgToClipboard = async (
     await navigator.clipboard.writeText(bodyRef.current.innerText);
 };
 
-export const copyCredentialToClipboard = async (str: string) => {
+export const copyTextToClipboard = async (str: string) => {
   await navigator.clipboard.writeText(str);
 };

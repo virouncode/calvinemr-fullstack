@@ -8,7 +8,7 @@ import {
 import { LabLinkCredentialsType, LabLinkType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
-import { copyCredentialToClipboard } from "../../../utils/js/copyToClipboard";
+import { copyTextToClipboard } from "../../../utils/js/copyToClipboard";
 import CopyIcon from "../../UI/Icons/CopyIcon";
 import PenIcon from "../../UI/Icons/PenIcon";
 import SaveIcon from "../../UI/Icons/SaveIcon";
@@ -47,7 +47,7 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
   };
   const handleCopyLogin = async () => {
     try {
-      await copyCredentialToClipboard(login);
+      await copyTextToClipboard(login);
       toast.success("Copied !", { containerId: "A" });
     } catch {
       toast.error("Unable to copy login", { containerId: "A" });
@@ -55,7 +55,7 @@ const LabLinkItem = ({ link, credentials }: LabLinkItemProps) => {
   };
   const handleCopyPwd = async () => {
     try {
-      await copyCredentialToClipboard(pwd);
+      await copyTextToClipboard(pwd);
       toast.success("Copied !", { containerId: "A" });
     } catch {
       toast.error("Unable to copy password", { containerId: "A" });
