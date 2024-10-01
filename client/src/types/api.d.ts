@@ -660,6 +660,8 @@ export type DemographicsType = {
   PreferredPharmacy: number;
   ai_consent: boolean;
   ai_consent_read: boolean;
+  authorized_messages_md: number[];
+  unauthorized_messages_practicians: number[];
   //Add-ons
   preferred_pharmacy?: PharmacyType;
   patient_care_elements?: CareElementType;
@@ -1654,7 +1656,6 @@ export type SettingsType = {
   clinical_notes_order: string;
   date_created: number;
   autolock_time_min: number;
-  authorized_messages_patients_ids: number[];
 };
 
 export type SiteType = {

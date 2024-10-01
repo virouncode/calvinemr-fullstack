@@ -8,6 +8,8 @@ type InvitationsHistoryProps = {
 };
 
 const InvitationsHistory = ({ invitationsSent }: InvitationsHistoryProps) => {
+  console.log("invitationsSent", invitationsSent);
+
   const invitations = invitationsSent.sort((a, b) => b.date - a.date);
   return (
     <div className="invitations-history">

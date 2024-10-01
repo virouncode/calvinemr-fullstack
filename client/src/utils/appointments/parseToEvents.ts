@@ -119,6 +119,8 @@ export const parseToEvent = (
   rooms: RoomType[],
   staffInfos: StaffType[]
 ) => {
+  console.log("appointment.invitations_sent", appointment.invitations_sent);
+
   const event: EventInput = {
     id: (appointment.id ?? -1).toString(),
     start: appointment.start,

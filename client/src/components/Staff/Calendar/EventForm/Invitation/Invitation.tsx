@@ -253,8 +253,6 @@ const Invitation = ({
         invitationSent,
       ],
     };
-    console.log(appointmentToPut);
-
     appointmentPut.mutate(appointmentToPut);
     setInvitationVisible(false);
   };

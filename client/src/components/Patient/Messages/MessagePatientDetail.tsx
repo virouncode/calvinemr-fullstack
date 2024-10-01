@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NewWindow from "react-new-window";
 import { toast } from "react-toastify";
+import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPut } from "../../../hooks/reactquery/mutations/messagesMutations";
 import {
@@ -34,6 +35,7 @@ const MessagePatientDetail = ({
 }: MessagePatientDetailProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
+  const { staffInfos } = useStaffInfosContext();
   const [replyVisible, setReplyVisible] = useState(false);
   const previousMsgs: MessageExternalType[] = message
     ? (
@@ -99,7 +101,33 @@ const MessagePatientDetail = ({
   };
 
   const handleClickReply = () => {
-    setReplyVisible(true);
+    const fromStaffInfos = staffInfos.find(
+      ({ id }) => id === message.from_staff_id
+    );
+    console.log("fromStaffInfos", fromStaffInfos);
+    console.log("user", user);
+
+    if (
+      fromStaffInfos?.title === "Secretary" ||
+      (fromStaffInfos?.title === "Doctor" &&
+        user.demographics.authorized_messages_md.includes(
+          message.from_staff_id
+        )) ||
+      (fromStaffInfos?.title !== "Doctor" &&
+        !user.demographics.unauthorized_messages_practicians.includes(
+          message.from_staff_id
+        ))
+    ) {
+      setReplyVisible(true);
+    } else {
+      toast.warning(
+        "You are not authorized to reply to this message, please contact the sender",
+        {
+          containerId: "A",
+          autoClose: 3000,
+        }
+      );
+    }
   };
 
   return (

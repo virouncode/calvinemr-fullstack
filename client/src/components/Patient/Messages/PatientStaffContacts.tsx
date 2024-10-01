@@ -1,8 +1,10 @@
 import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import { splitStaffInfos } from "../../../utils/appointments/splitStaffInfos";
-import PatientStaffContactsCategory from "./PatientStaffContactsCategory";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { UserPatientType } from "../../../types/app";
+import { splitStaffInfosForPatient } from "../../../utils/appointments/splitStaffInfos";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
+import PatientStaffContactsCategory from "./PatientStaffContactsCategory";
 
 type PatientStaffContactsProps = {
   isContactChecked: (id: number) => boolean;
@@ -18,8 +20,15 @@ const PatientStaffContacts = ({
   recipientsRef,
 }: PatientStaffContactsProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserPatientType };
+  console.log(user);
+
   const { staffInfos } = useStaffInfosContext();
-  const categoryInfos = splitStaffInfos(staffInfos);
+  const categoryInfos = splitStaffInfosForPatient(
+    staffInfos,
+    user.demographics.authorized_messages_md,
+    user.demographics.unauthorized_messages_practicians
+  );
   const handleClose = () => {
     if (recipientsRef?.current)
       recipientsRef.current.style.transform = "translateX(-200%)";

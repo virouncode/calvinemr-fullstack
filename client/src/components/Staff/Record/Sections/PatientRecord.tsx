@@ -1,11 +1,11 @@
 import { FormControlLabel, Switch } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import xanoPut from "../../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
-import { DemographicsType, SettingsType } from "../../../../types/api";
+import { usePatientPut } from "../../../../hooks/reactquery/mutations/patientsMutations";
+import { DemographicsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import Button from "../../../UI/Buttons/Button";
@@ -36,43 +36,42 @@ const PatientRecord = ({
   const [notesContentsVisible, setNotesContentsVisible] = useState(true);
   const [exportVisible, setExportVisible] = useState(false);
   const [messagesAuthorized, setMessagesAuthorized] = useState(
-    user.settings.authorized_messages_patients_ids.includes(patientId)
+    (user.title === "Doctor" &&
+      demographicsInfos.authorized_messages_md.includes(user.id)) ||
+      (user.title !== "Doctor" &&
+        !demographicsInfos.unauthorized_messages_practicians.includes(user.id))
   );
+  //Queries
+  const patientPut = usePatientPut(patientId);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setMessagesAuthorized(checked);
-    try {
-      const datasToPut: SettingsType = {
-        ...user.settings,
-        authorized_messages_patients_ids: checked
-          ? [...user.settings.authorized_messages_patients_ids, patientId]
-          : user.settings.authorized_messages_patients_ids.filter(
-              (id) => id !== patientId
-            ),
-      };
-      const response = await xanoPut(
-        `/settings/${user.settings.id}`,
-        "staff",
-        datasToPut
-      );
-      socket?.emit("message", {
-        route: "USER",
-        action: "update",
-        content: {
-          id: user.id,
-          data: {
-            ...user,
-            settings: response,
-          },
-        },
-      });
-    } catch (err) {
-      if (err instanceof Error)
+    const patientToPut: DemographicsType = {
+      ...demographicsInfos,
+      authorized_messages_md:
+        user.title === "Doctor"
+          ? checked
+            ? [...demographicsInfos.authorized_messages_md, user.id]
+            : demographicsInfos.authorized_messages_md.filter(
+                (id) => id !== user.id
+              )
+          : [...demographicsInfos.authorized_messages_md],
+      unauthorized_messages_practicians:
+        user.title === "Doctor"
+          ? [...demographicsInfos.unauthorized_messages_practicians]
+          : checked
+          ? demographicsInfos.unauthorized_messages_practicians.filter(
+              (id) => id !== user.id
+            )
+          : [...demographicsInfos.unauthorized_messages_practicians, user.id],
+    };
+    patientPut.mutate(patientToPut, {
+      onError: (err) =>
         toast.error(`Error: unable to save preference: ${err.message}`, {
           containerId: "A",
-        });
-    }
+        }),
+    });
   };
 
   const handleClickExport = () => {
@@ -126,18 +125,19 @@ const PatientRecord = ({
             disabled={exportVisible}
             label="Export chart"
           />
-
-          <FormControlLabel
-            control={
-              <Switch
-                size="small"
-                checked={messagesAuthorized}
-                onChange={handleChange}
-              />
-            }
-            label="Authorize messages"
-            labelPlacement="start"
-          />
+          {user.title !== "Secretary" && (
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  checked={messagesAuthorized}
+                  onChange={handleChange}
+                />
+              }
+              label="Authorize messages"
+              labelPlacement="start"
+            />
+          )}
         </div>
         <div className="patient-record__btn-container">
           <Button
