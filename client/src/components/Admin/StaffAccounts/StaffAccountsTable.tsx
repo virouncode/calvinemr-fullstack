@@ -20,8 +20,8 @@ const StaffAccountsTable = ({
   const filteredStaffInfos = filterStaffInfos(staffInfos, search);
 
   return (
-    <div className="staff-result">
-      <table>
+    <div className="staff-accounts__table-container">
+      <table className="staff-accounts__table">
         <thead>
           <tr>
             <th>Action</th>

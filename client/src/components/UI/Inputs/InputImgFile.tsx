@@ -17,6 +17,8 @@ const InputImgFile = ({
   alt,
   width,
 }: InputImgFileProps) => {
+  console.log("img", img);
+
   return (
     <>
       {isLoadingFile ? (

@@ -32,7 +32,7 @@ const StaffAccountItem = ({
       }}
     >
       <td>
-        <div className="staff-result__item-btn-container">
+        <div className="staff-accounts__item-btn-container">
           <EditButton onClick={handleEdit} />
         </div>
       </td>

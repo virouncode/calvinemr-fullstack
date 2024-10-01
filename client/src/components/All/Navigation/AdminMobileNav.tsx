@@ -51,6 +51,7 @@ const AdminMobileNav = ({
     if (mobileNavRef.current)
       mobileNavRef.current.classList.remove("mobile-nav__container--active");
   };
+
   const handleLogout = () => {
     setAuth(null);
     setUser(null);
@@ -84,37 +85,37 @@ const AdminMobileNav = ({
       </div>
       <nav className="mobile-nav">
         <ul>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/dashboard" className="mobile-nav__link">
               Dashboard
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/staff-accounts" className="mobile-nav__link">
               Staff Accounts
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/clinic" className="mobile-nav__link">
               Clinic infos
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/billing" className="mobile-nav__link">
               Billings
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/migration" className="mobile-nav__link">
               Migration
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/my-account" className="mobile-nav__link">
               My Account
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleClose}>
             <Tooltip title="Lock Screen">
               <span>
                 <LockIcon mr={15} onClick={handleLock} />

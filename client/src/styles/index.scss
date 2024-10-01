@@ -1,11 +1,10 @@
 // @import "./settings";
 @import "./modern-normalize.scss";
 @import "./styles.scss";
-@import "./pages/accountsPage";
 @import "./pages/migrationPage";
-@import "./pages/dashboardPage";
 @import "./pages/clinicPage";
 
+@import "./components/staffAccounts";
 @import "./components/header";
 @import "./components/mobileNav";
 @import "./components/calendar";
@@ -13,8 +12,6 @@
 @import "./components/eventForm";
 @import "./components/subheader";
 @import "./components/toggleView";
-@import "./components/staffSearchForm";
-@import "./components/staffSearchResult";
 @import "./components/patientAppointments";
 @import "./components/patientRecord";
 @import "./components/patientMenu";

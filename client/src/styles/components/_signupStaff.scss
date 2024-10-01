@@ -1,75 +1,48 @@
 .signup-staff {
   &__success {
-    padding: 10px 20px;
-    width: 80%;
-    font-size: 0.9rem;
-    margin: 10px auto;
-    border-radius: 6px;
-    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    width: 90%;
+    margin: 0.5rem auto;
     color: forestgreen;
     background-color: rgba(34, 139, 34, 0.4);
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 80%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
     border-radius: 6px;
     text-align: center;
   }
   &__container {
-    padding: 20px;
-    width: 95%;
-    margin: 50px auto 0;
+    padding: 1rem;
     box-shadow: $box-shadow-default;
     border: solid 1px $grey;
     border-radius: 6px;
-    background: $white;
+    margin: 0 auto;
+    background-color: $white;
   }
   &__form {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
     justify-content: space-between;
   }
   &__column {
-    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
   }
   &__row {
+    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 10px;
     label {
-      font-size: 0.85rem;
+      font-size: $size-base;
       font-weight: bold;
-      width: 45%;
+      margin-bottom: 0.25rem;
     }
-    input {
-      width: 55%;
-    }
-    input[type="file"] {
-      width: 55%;
-      padding: 0;
-      &::-webkit-file-upload-button {
-        cursor: pointer;
-      }
-    }
+    input,
     select {
-      width: 55%;
-    }
-    ul {
-      width: 55%;
-      margin-left: auto;
-      li {
-        font-size: 0.7rem;
-      }
-    }
-  }
-  &__submit {
-    text-align: center;
-    margin-top: 20px;
-    button {
-      margin-right: 5px;
+      font-size: $size-base;
+      width: 100%;
     }
   }
   &__image {
@@ -77,13 +50,46 @@
     flex-direction: column;
     align-items: flex-end;
     width: 100%;
-    overflow: hidden;
+    gap: 0.5rem;
+    img {
+      max-width: 200px;
+    }
     input[type="file"] {
-      width: 100%;
       padding: 0;
+      width: auto;
       &::-webkit-file-upload-button {
         cursor: pointer;
       }
+    }
+  }
+  &__btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .signup-staff__form {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .signup-staff__column {
+    width: 50%;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .signup-staff__row {
+    label,
+    input,
+    select,
+    input[type="file"] {
+      font-size: $size-sm;
     }
   }
 }

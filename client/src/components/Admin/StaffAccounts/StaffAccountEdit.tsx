@@ -164,18 +164,18 @@ const StaffAccountEdit = ({
 
   return (
     <div
-      className="staff-account__container"
-      style={{ border: errMsg && editVisible ? "solid 1.5px red" : "" }}
+      className="signup-staff__container"
+      style={{ border: errMsg && "solid 1.5px red" }}
     >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {formDatas && (
-        <div className="staff-account__form">
-          <div className="staff-account__column">
-            <div className="staff-account__row">
+        <div className="signup-staff__form">
+          <div className="signup-staff__column">
+            <div className="signup-staff__row">
               <label>Email*: </label>
               <p>{formDatas.email}</p>
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.first_name}
                 onChange={handleChange}
@@ -184,7 +184,7 @@ const StaffAccountEdit = ({
                 label="First Name*: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.middle_name}
                 onChange={handleChange}
@@ -193,7 +193,7 @@ const StaffAccountEdit = ({
                 label="Middle Name: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.last_name}
                 onChange={handleChange}
@@ -202,7 +202,7 @@ const StaffAccountEdit = ({
                 label="Last Name*: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <SiteSelect
                 handleSiteChange={handleSiteChange}
                 sites={sites}
@@ -210,7 +210,7 @@ const StaffAccountEdit = ({
                 label="Site*: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <GenderSelect
                 id="gender"
                 name="gender"
@@ -219,7 +219,7 @@ const StaffAccountEdit = ({
                 label="Gender*: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <OccupationsSelect
                 id="occupation"
                 name="title"
@@ -228,7 +228,7 @@ const StaffAccountEdit = ({
                 label="Occupation*: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <label htmlFor="status">Account status*: </label>
               <select
                 required
@@ -246,8 +246,8 @@ const StaffAccountEdit = ({
               </select>
             </div>
           </div>
-          <div className="staff-account__column">
-            <div className="staff-account__row">
+          <div className="signup-staff__column">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.speciality}
                 onChange={handleChange}
@@ -256,7 +256,7 @@ const StaffAccountEdit = ({
                 label="Speciality: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.subspeciality}
                 onChange={handleChange}
@@ -265,7 +265,7 @@ const StaffAccountEdit = ({
                 label="Sub speciality: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.licence_nbr}
                 onChange={handleChange}
@@ -274,7 +274,7 @@ const StaffAccountEdit = ({
                 label="Licence#: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.ohip_billing_nbr}
                 onChange={handleChange}
@@ -283,7 +283,7 @@ const StaffAccountEdit = ({
                 label="OHIP#: "
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <InputTel
                 value={formDatas.cell_phone}
                 onChange={handleChange}
@@ -293,7 +293,7 @@ const StaffAccountEdit = ({
                 placeholder="xxx-xxx-xxxx"
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <InputTel
                 value={formDatas.backup_phone}
                 onChange={handleChange}
@@ -303,7 +303,7 @@ const StaffAccountEdit = ({
                 placeholder="xxx-xxx-xxxx"
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <Input
                 value={formDatas.video_link}
                 onChange={handleChange}
@@ -313,13 +313,13 @@ const StaffAccountEdit = ({
                 placeholder="https://my-video-link.com"
               />
             </div>
-            <div className="staff-account__row">
+            <div className="signup-staff__row">
               <label>E-sign: </label>
-              <div className="staff-account__image">
+              <div className="signup-staff__image">
                 <InputImgFile
                   isLoadingFile={isLoadingFile}
                   onChange={handleSignChange}
-                  img={formDatas.sign}
+                  img={formDatas.sign ?? null}
                   alt="staff-sign"
                   width={150}
                 />
@@ -328,7 +328,7 @@ const StaffAccountEdit = ({
           </div>
         </div>
       )}
-      <div className="staff-account__btns">
+      <div className="signup-staff__btns">
         <SaveButton onClick={handleSave} disabled={isLoadingFile || progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>

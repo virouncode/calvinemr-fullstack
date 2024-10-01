@@ -74,13 +74,13 @@
     }
   }
   label {
-    font-size: 1rem;
+    font-size: $size-base;
     font-weight: bold;
     margin-bottom: 0.25rem;
   }
   input,
   select {
-    font-size: 1rem;
+    font-size: $size-base;
     width: 100%;
   }
 }
@@ -142,7 +142,7 @@ input[type="file"] {
     input,
     select,
     input[type="file"] {
-      font-size: 0.875rem;
+      font-size: $size-sm;
     }
   }
 }

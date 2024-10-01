@@ -31,12 +31,12 @@ import SiteSelect from "../../UI/Lists/SiteSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 axios.defaults.withCredentials = true;
 
-type StaffAccountFormProps = {
+type SignupStaffFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   sites: SiteType[];
 };
 
-const StaffAccountForm = ({ setAddVisible, sites }: StaffAccountFormProps) => {
+const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
@@ -494,7 +494,7 @@ const StaffAccountForm = ({ setAddVisible, sites }: StaffAccountFormProps) => {
           </div>
         </div>
       </form>
-      <div className="signup-staff__submit">
+      <div className="signup-staff__btns">
         <SaveButton
           onClick={handleSubmit}
           disabled={progress}
@@ -506,4 +506,4 @@ const StaffAccountForm = ({ setAddVisible, sites }: StaffAccountFormProps) => {
   );
 };
 
-export default StaffAccountForm;
+export default SignupStaffForm;

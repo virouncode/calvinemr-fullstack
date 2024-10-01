@@ -7,8 +7,8 @@ import Button from "../../UI/Buttons/Button";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../UI/Windows/FakeWindow";
+import SignupStaffForm from "./SignupStaffForm";
 import StaffAccountEdit from "./StaffAccountEdit";
-import StaffAccountForm from "./StaffAccountForm";
 import StaffAccountSearch from "./StaffAccountSearch";
 import StaffAccountsTable from "./StaffAccountsTable";
 
@@ -55,8 +55,11 @@ const StaffAccounts = () => {
           setSearch={setSearch}
           sites={sites}
         />
-        <div className="staff-result__btn-container">
+        <div className="staff-accounts__btn">
           <Button onClick={handleAddNew} label="New staff account" />
+        </div>
+        <div className="staff-accounts__count">
+          <em>Number of staff: {staffInfos.length}</em>
         </div>
         <StaffAccountsTable
           search={search}
@@ -71,9 +74,9 @@ const StaffAccounts = () => {
               false
             ).toUpperCase()} Account`}
             width={1000}
-            height={550}
+            height={750}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 550) / 2}
+            y={(window.innerHeight - 750) / 2}
             color="#94bae8"
             setPopUpVisible={setEditVisible}
           >
@@ -91,13 +94,13 @@ const StaffAccounts = () => {
           <FakeWindow
             title="ADD A NEW USER ACCOUNT"
             width={1000}
-            height={550}
+            height={750}
             x={(window.innerWidth - 1000) / 2}
-            y={(window.innerHeight - 550) / 2}
+            y={(window.innerHeight - 750) / 2}
             color="#94bae8"
             setPopUpVisible={setAddVisible}
           >
-            <StaffAccountForm setAddVisible={setAddVisible} sites={sites} />
+            <SignupStaffForm setAddVisible={setAddVisible} sites={sites} />
           </FakeWindow>
         )}
       </>
