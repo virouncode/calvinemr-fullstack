@@ -149,11 +149,11 @@ const CredentialsFormAdmin = () => {
   };
 
   return successMsg ? (
-    <p className="credentials-success">{successMsg}</p>
+    <p className="credentials__success">{successMsg}</p>
   ) : (
     <>
       <form
-        className="credentials-form"
+        className="credentials__form"
         onSubmit={handleSubmit}
         style={{ border: errMsg && "solid 1px red" }}
       >

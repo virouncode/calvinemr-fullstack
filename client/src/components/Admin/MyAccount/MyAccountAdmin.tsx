@@ -102,40 +102,37 @@ const MyAccountAdmin = () => {
   };
 
   return (
-    <div className="myaccount-section__container" style={{ width: "30%" }}>
-      {errMsg && <ErrorParagraph errorMsg={errMsg} />}{" "}
-      {successMsg && <p className="myaccount-section__success">{successMsg}</p>}
+    <div className="myaccount__container myaccount__container--admin">
+      {errMsg && <ErrorParagraph errorMsg={errMsg} />}
       {formDatas && (
-        <div className="myaccount-section__form">
-          <div style={{ margin: "0 auto" }}>
-            <div className="myaccount-section__row--admin">
-              <label>Email*: </label>
-              <p>{formDatas.email}</p>
-            </div>
-            <div className="myaccount-section__row--admin">
-              <InputTextToggle
-                value={formDatas.first_name}
-                onChange={handleChange}
-                name="first_name"
-                id="first_name"
-                editVisible={editVisible}
-                label="First Name*: "
-              />
-            </div>
-            <div className="myaccount-section__row--admin">
-              <InputTextToggle
-                value={formDatas.last_name}
-                onChange={handleChange}
-                name="last_name"
-                id="last_name"
-                editVisible={editVisible}
-                label="Last Name*: "
-              />
-            </div>
+        <div className="myaccount__form myaccount__form--admin">
+          <div className="myaccount__item myaccount__item--admin">
+            <label>Email*: </label>
+            <p>{formDatas.email}</p>
+          </div>
+          <div className="myaccount__item myaccount__item--admin">
+            <InputTextToggle
+              value={formDatas.first_name}
+              onChange={handleChange}
+              name="first_name"
+              id="first_name"
+              editVisible={editVisible}
+              label="First Name*: "
+            />
+          </div>
+          <div className="myaccount__item myaccount__item--admin">
+            <InputTextToggle
+              value={formDatas.last_name}
+              onChange={handleChange}
+              name="last_name"
+              id="last_name"
+              editVisible={editVisible}
+              label="Last Name*: "
+            />
           </div>
         </div>
       )}
-      <div className="myaccount-section__btns">
+      <div className="myaccount__btns">
         {editVisible ? (
           <>
             <SaveButton onClick={handleSave} disabled={progress} />

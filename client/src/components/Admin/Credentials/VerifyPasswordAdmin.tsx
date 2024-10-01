@@ -48,8 +48,8 @@ const VerifyPasswordAdmin = ({ setVerified }: VerifyPasswordAdminProps) => {
   };
   return (
     <div className="verify-pwd" style={{ border: errMsg && "solid 1px red" }}>
-      <div className="verify-pwd-title">Please enter your password</div>
-      <form className="verify-pwd-form" onSubmit={handleSubmit}>
+      <div className="verify-pwd__title">Please enter your password</div>
+      <form className="verify-pwd__form" onSubmit={handleSubmit}>
         {errMsg && <ErrorParagraph errorMsg={errMsg} />}
         <FormVerifyPassword
           password={password}

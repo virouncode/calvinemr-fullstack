@@ -139,7 +139,8 @@
   .clinic__global-infos {
     &-item {
       input,
-      label {
+      label,
+      p {
         font-size: $size-sm;
       }
     }

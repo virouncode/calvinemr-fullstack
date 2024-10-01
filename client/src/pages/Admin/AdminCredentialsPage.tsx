@@ -14,7 +14,7 @@ const AdminCredentialsPage = () => {
           <title>Credentials</title>
         </Helmet>
       </HelmetProvider>
-      <section className="credentials-section">
+      <section className="credentials">
         {!verified ? (
           <VerifyPasswordAdmin setVerified={setVerified} />
         ) : (

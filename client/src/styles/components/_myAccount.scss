@@ -12,6 +12,9 @@
   padding: 1rem;
   margin: 0 auto;
   width: 100%;
+  &--admin {
+    max-width: 400px;
+  }
 }
 .myaccount__success {
   padding: 0.5rem 1rem;
@@ -56,6 +59,11 @@
     width: 100%;
     font-size: $size-base;
   }
+  &--admin {
+    input {
+      max-width: 400px;
+    }
+  }
 }
 .myaccount__btns {
   margin-top: 1rem;
@@ -73,10 +81,17 @@
   }
   .myaccount__container {
     max-width: 820px;
+    &--admin {
+      max-width: 400px;
+    }
   }
   .myaccount__form {
     flex-direction: row;
     gap: 2rem;
+    &--admin {
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
   .myaccount__column {
     width: 50%;
