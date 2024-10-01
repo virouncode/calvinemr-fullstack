@@ -236,8 +236,6 @@ const Invitation = ({
         setProgress(false);
       }
     }
-    console.log("invitationsSent");
-    console.log("currentEvent.current", currentEvent.current);
 
     const invitationSent: InvitationSentType = {
       date: nowTZTimestamp(),
