@@ -140,7 +140,7 @@ const PatientTopic = ({
   const handlePopUpClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation();
     if (!isLargeScreen && topic === "IMMUNIZATIONS") {
-      toast.warning("This feature is only available on large screen", {
+      toast.warning("This feature is not available on small screen", {
         containerId: "A",
       });
       return;

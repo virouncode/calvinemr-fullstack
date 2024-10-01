@@ -1,4 +1,4 @@
-import { FormControlLabel, Switch } from "@mui/material";
+import { FormControlLabel, Switch, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../api/xanoCRUD/xanoPut";
@@ -41,6 +41,7 @@ const PatientRecordMobile = ({
     user.settings.authorized_messages_patients_ids.includes(patientId)
   );
   const [topicsVisible, setTopicsVisible] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -79,6 +80,12 @@ const PatientRecordMobile = ({
   };
 
   const handleClickExport = () => {
+    if (isTabletOrMobile) {
+      toast.warning("This feature is not available on small screens", {
+        containerId: "A",
+      });
+      return;
+    }
     setExportVisible(true);
   };
 
@@ -176,9 +183,9 @@ const PatientRecordMobile = ({
         <FakeWindow
           title={`EXPORT ${toPatientName(demographicsInfos)}'s MEDICAL RECORD`}
           width={600}
-          height={500}
+          height={600}
           x={(window.innerWidth - 600) / 2}
-          y={(window.innerHeight - 500) / 2}
+          y={(window.innerHeight - 600) / 2}
           color="#94bae8"
           setPopUpVisible={setExportVisible}
         >
