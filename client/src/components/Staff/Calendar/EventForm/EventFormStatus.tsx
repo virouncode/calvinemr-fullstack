@@ -1,4 +1,5 @@
 import React from "react";
+import { AppointmentType } from "../../../../types/api";
 import StatusRadioItem from "./Status/StatusRadioItem";
 
 type EventFormStatusProps = {
@@ -6,6 +7,7 @@ type EventFormStatusProps = {
   selectedStatus: string;
   statuses: string[];
   label?: boolean;
+  formDatas: AppointmentType;
 };
 
 const EventFormStatus = ({
@@ -13,6 +15,7 @@ const EventFormStatus = ({
   selectedStatus,
   statuses,
   label = true,
+  formDatas,
 }: EventFormStatusProps) => {
   const isStatusSelected = (status: string) => selectedStatus === status;
 
@@ -29,6 +32,7 @@ const EventFormStatus = ({
               status={status}
               handleStatusChange={handleStatusChange}
               isStatusSelected={isStatusSelected}
+              formDatas={formDatas}
             />
           ))}
         </ul>

@@ -102,9 +102,15 @@ export type AppointmentType = {
   rrule: RruleType;
   exrule: ExruleType;
   recurrence: string;
+  invitations_sent: InvitationSentType[];
   //add-ons
   site_infos?: SiteType;
   host_infos?: StaffType;
+};
+
+export type InvitationSentType = {
+  date: number;
+  guests_names: string[];
 };
 
 export type AppointmentFormType = {

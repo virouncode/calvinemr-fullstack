@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { InvitationSentType } from "../../../../../types/api";
 import Input from "../../../../UI/Inputs/Input";
 import InputEmail from "../../../../UI/Inputs/InputEmail";
 import InputTel from "../../../../UI/Inputs/InputTel";
+import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import InvitationsHistory from "./InvitationsHistory";
 
 type GuestsSearchFormProps = {
   search: {
@@ -13,12 +16,20 @@ type GuestsSearchFormProps = {
     health: string;
   };
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  invitationsSent: InvitationSentType[];
 };
 
-const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
+const GuestsSearchForm = ({
+  search,
+  handleSearch,
+  invitationsSent,
+}: GuestsSearchFormProps) => {
+  const [invitationsSentVisible, setInvitationsSentVisible] = useState(false);
+  const handleShowInvitations = () => {
+    setInvitationsSentVisible(true);
+  };
   return (
     <div className="guests-search">
-      <p className="guests-search__title">Search by</p>
       <div className="guests-search__grid">
         <div className="guests-search__item">
           <Input
@@ -78,6 +89,23 @@ const GuestsSearchForm = ({ search, handleSearch }: GuestsSearchFormProps) => {
           />
         </div>
       </div>
+      <p className="guests-search__invitations" onClick={handleShowInvitations}>
+        Invitations sent
+      </p>
+      {invitationsSentVisible && (
+        <FakeWindow
+          title="INVITATIONS SENT"
+          width={500}
+          height={500}
+          x={(window.innerWidth - 500) / 2}
+          y={(window.innerHeight - 500) / 2}
+          color="#93b5e9"
+          setPopUpVisible={setInvitationsSentVisible}
+          textColor="#3d375a"
+        >
+          <InvitationsHistory invitationsSent={invitationsSent} />
+        </FakeWindow>
+      )}
     </div>
   );
 };

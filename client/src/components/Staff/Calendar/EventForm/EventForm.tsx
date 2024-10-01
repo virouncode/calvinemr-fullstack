@@ -542,10 +542,16 @@ const EventForm = ({
     setInvitationVisible(true);
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setErrMsgPost("");
-    setFormVisible(false);
-    setCalendarSelectable(true);
+    if (
+      await confirmAlert({
+        content: "Do you really want to close (all changes will be lost) ?",
+      })
+    ) {
+      setFormVisible(false);
+      setCalendarSelectable(true);
+    }
   };
 
   const handleDeleteEvent = async () => {
@@ -734,6 +740,7 @@ const EventForm = ({
       recurrence: formDatas.recurrence,
       rrule: formDatas.rrule,
       exrule: formDatas.exrule,
+      invitations_sent: formDatas.invitations_sent,
     };
     //Validation
     try {
@@ -1085,6 +1092,7 @@ const EventForm = ({
             handleStatusChange={handleStatusChange}
             statuses={statuses}
             selectedStatus={formDatas.AppointmentStatus}
+            formDatas={formDatas}
           />
           <EventFormNotes
             formDatas={formDatas}
@@ -1117,6 +1125,7 @@ const EventForm = ({
           sites={sites}
           siteId={formDatas.site_id}
           allDay={formDatas.all_day}
+          currentEvent={currentEvent}
         />
       )}
       {confirmDlgRecChangeVisible && (

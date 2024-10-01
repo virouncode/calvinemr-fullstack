@@ -86,6 +86,7 @@ const EventFormGuests = ({
             handleAddPatientGuest={handleAddPatientGuest}
             handleAddStaffGuest={handleAddStaffGuest}
             patientsIdsToExclude={patientsIdsToExclude}
+            invitationsSent={formDatas.invitations_sent}
           />
         </div>
       )}

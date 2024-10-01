@@ -202,6 +202,7 @@ export const parseToEvent = (
             until: exrule?.until ? exrule.until.slice(0, 19) : "",
           }))
         : [],
+      invitations_sent: appointment.invitations_sent,
     },
   };
   return event;

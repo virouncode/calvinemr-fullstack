@@ -684,6 +684,7 @@ const Calendar = () => {
       rrule: event.extendedProps.rrule,
       exrule: event.extendedProps.exrule,
       room_id: event.extendedProps.roomId,
+      invitations_sent: event.extendedProps.invitations_sent,
     };
 
     if (!timelineVisible) {
@@ -845,6 +846,7 @@ const Calendar = () => {
         recurrence: event.extendedProps.recurrence,
         rrule: event.extendedProps.rrule,
         exrule: event.extendedProps.exrule,
+        invitations_sent: event.extendedProps.invitations_sent,
       };
       appointmentPut.mutate(appointmentToPut);
     } else {

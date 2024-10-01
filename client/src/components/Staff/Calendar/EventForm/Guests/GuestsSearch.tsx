@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { usePatients } from "../../../../../hooks/reactquery/queries/patientsQueries";
-import { DemographicsType, StaffType } from "../../../../../types/api";
+import {
+  DemographicsType,
+  InvitationSentType,
+  StaffType,
+} from "../../../../../types/api";
 import GuestsSearchForm from "./GuestsSearchForm";
 import GuestsSearchResults from "./GuestsSearchResults";
 
@@ -10,6 +14,7 @@ type GuestsSearchProps = {
   handleAddPatientGuest: (patient: DemographicsType) => void;
   staff_guests_ids: { staff_infos: StaffType }[];
   patientsIdsToExclude: number[];
+  invitationsSent: InvitationSentType[];
 };
 
 const GuestsSearch = ({
@@ -18,6 +23,7 @@ const GuestsSearch = ({
   handleAddPatientGuest,
   staff_guests_ids,
   patientsIdsToExclude,
+  invitationsSent,
 }: GuestsSearchProps) => {
   //Hooks
   const [search, setSearch] = useState({
@@ -46,7 +52,11 @@ const GuestsSearch = ({
 
   return (
     <>
-      <GuestsSearchForm search={search} handleSearch={handleSearch} />
+      <GuestsSearchForm
+        search={search}
+        handleSearch={handleSearch}
+        invitationsSent={invitationsSent}
+      />
       <GuestsSearchResults
         patients={patients}
         hostId={hostId}

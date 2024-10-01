@@ -1,21 +1,27 @@
+import { EventInput } from "@fullcalendar/core";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useClinicContext from "../../../../../hooks/context/useClinicContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { useAppointmentPut } from "../../../../../hooks/reactquery/mutations/appointmentsMutations";
 import {
+  AppointmentType,
   DemographicsType,
+  InvitationSentType,
   InvitationTemplateType,
   SettingsType,
   SiteType,
   StaffType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
+import { parseToAppointment } from "../../../../../utils/appointments/parseToAppointment";
 import { toEmailInvitationText } from "../../../../../utils/appointments/toEmailInvitationText";
 import { toEmailToStaffInvitationText } from "../../../../../utils/appointments/toEmailToStaffInvitationText";
 import { toSMSInvitationText } from "../../../../../utils/appointments/toSMSInvitationText";
 import {
+  nowTZTimestamp,
   timestampToHumanDateTZ,
   timestampToHumanDateTimeTZ,
 } from "../../../../../utils/dates/formatDates";
@@ -42,6 +48,7 @@ type InvitationProps = {
   sites: SiteType[];
   siteId: number;
   allDay: boolean;
+  currentEvent: React.MutableRefObject<EventInput | null>;
 };
 
 const Invitation = ({
@@ -55,6 +62,7 @@ const Invitation = ({
   sites,
   siteId,
   allDay,
+  currentEvent,
 }: InvitationProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -74,6 +82,8 @@ const Invitation = ({
   );
   const [siteSelectedId, setSiteSelectedId] = useState(siteId ?? 0);
   const [progress, setProgress] = useState(false);
+  //Queries
+  const appointmentPut = useAppointmentPut();
 
   //HANDLERS
   const handleSend = async () => {
@@ -226,6 +236,28 @@ const Invitation = ({
         setProgress(false);
       }
     }
+    console.log("invitationsSent");
+    console.log("currentEvent.current", currentEvent.current);
+
+    const invitationSent: InvitationSentType = {
+      date: nowTZTimestamp(),
+      guests_names: [
+        ...patientsGuestsInfos.map((patient) => toPatientName(patient)),
+        ...staffGuestsInfos.map((staff) =>
+          staffIdToTitleAndName(staffInfos, staff.id)
+        ),
+      ],
+    };
+    const appointmentToPut: AppointmentType = {
+      ...parseToAppointment(currentEvent.current as EventInput),
+      invitations_sent: [
+        ...(currentEvent.current?.extendedProps?.invitations_sent ?? []),
+        invitationSent,
+      ],
+    };
+    console.log(appointmentToPut);
+
+    appointmentPut.mutate(appointmentToPut);
     setInvitationVisible(false);
   };
   const handleSendAndSave = async () => {
