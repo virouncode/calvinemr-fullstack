@@ -1,6 +1,6 @@
 .subheader {
   position: sticky;
-  top: 55px;
+  top: 53px;
   width: 100%;
   padding: 10px 0.935rem;
   box-shadow: $box-shadow-default;
@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
   &__left {
     display: none;
   }

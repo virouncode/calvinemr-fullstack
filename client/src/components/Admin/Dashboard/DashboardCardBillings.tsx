@@ -24,9 +24,9 @@ const DashboardCardBillings = () => {
   const [rangeEndBillings, setRangeEndBillings] = useState(
     getEndOfTheMonthTZ()
   );
-  const [siteSelectedIdDiagnoses, setSiteSelectedIdDiagnoses] = useState(0);
+  const [siteSelectedIdDiagnoses, setSiteSelectedIdDiagnoses] = useState(-1);
   const [siteSelectedIdBillingCodes, setSiteSelectedIdBillingCodes] =
-    useState(0);
+    useState(-1);
   //Queries
   const {
     data: sites,
@@ -100,24 +100,23 @@ const DashboardCardBillings = () => {
           onChangeStart={handleChangeStart}
           onChangeEnd={handleChangeEnd}
         />
-        {billings.length > 0 ? (
-          <div>
-            <label>Total revenues: </label>
-            {billings.reduce(
-              (acc, current) =>
-                acc +
-                (current.billing_infos?.anaesthetist_fee ?? 0) +
-                (current.billing_infos?.assistant_fee ?? 0) +
-                (current.billing_infos?.non_anaesthetist_fee ?? 0) +
-                (current.billing_infos?.provider_fee ?? 0) +
-                (current.billing_infos?.specialist_fee ?? 0),
-              0
-            ) / 1000}
-            {" $"}
-          </div>
-        ) : (
-          <div>No revenues</div>
-        )}
+        <div className="dashboard-card__filter-total">
+          <label>Total revenues: </label>
+          {billings.length > 0
+            ? `${
+                billings.reduce(
+                  (acc, current) =>
+                    acc +
+                    (current.billing_infos?.anaesthetist_fee ?? 0) +
+                    (current.billing_infos?.assistant_fee ?? 0) +
+                    (current.billing_infos?.non_anaesthetist_fee ?? 0) +
+                    (current.billing_infos?.provider_fee ?? 0) +
+                    (current.billing_infos?.specialist_fee ?? 0),
+                  0
+                ) / 1000
+              } $`
+            : "0 $"}
+        </div>
       </div>
       {billings && billings.length > 0 ? (
         <div className="dashboard-card__content">
@@ -135,10 +134,7 @@ const DashboardCardBillings = () => {
             siteSelectedId={siteSelectedIdBillingCodes}
             top10Infos={top10BillingCodes}
           />
-          <div
-            className="dashboard-card__chart"
-            style={{ width: "100%", marginTop: "20px" }}
-          >
+          <div className="dashboard-card__chart">
             <p className="dashboard-card__chart-title">Revenues</p>
             {revenues.length > 0 ? (
               <BarChart
@@ -162,7 +158,7 @@ const DashboardCardBillings = () => {
                   },
                 ]}
                 width={500}
-                height={350}
+                height={400}
                 slotProps={{
                   legend: {
                     direction: "row",
@@ -172,6 +168,7 @@ const DashboardCardBillings = () => {
                     },
                     labelStyle: {
                       fontSize: 12,
+                      marginBottom: 20,
                     },
                     itemMarkWidth: 10,
                     itemMarkHeight: 10,

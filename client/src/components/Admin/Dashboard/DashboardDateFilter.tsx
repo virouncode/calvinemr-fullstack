@@ -16,21 +16,25 @@ const DashboardDateFilter = ({
   onChangeEnd,
 }: DashboardDateFilterProps) => {
   return (
-    <div>
-      <InputDate
-        value={timestampToDateISOTZ(rangeStart)}
-        onChange={onChangeStart}
-        name="from"
-        id="from"
-        label="From"
-      />
-      <InputDate
-        value={timestampToDateISOTZ(rangeEnd)}
-        onChange={onChangeEnd}
-        name="to"
-        id="to"
-        label="To"
-      />
+    <div className="dashboard-card__filter-dates">
+      <div className="dashboard-card__filter-dates-item">
+        <InputDate
+          value={timestampToDateISOTZ(rangeStart)}
+          onChange={onChangeStart}
+          name="from"
+          id="from"
+          label="From"
+        />
+      </div>
+      <div className="dashboard-card__filter-dates-item">
+        <InputDate
+          value={timestampToDateISOTZ(rangeEnd)}
+          onChange={onChangeEnd}
+          name="to"
+          id="to"
+          label="To"
+        />
+      </div>
     </div>
   );
 };

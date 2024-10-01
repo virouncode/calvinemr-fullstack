@@ -13,9 +13,10 @@ export const getTop10BillingCodes = (
     frequency: number;
   }[] = [];
 
-  const billingsForSite = siteSelectedId
-    ? billings.filter(({ site_id }) => site_id === siteSelectedId)
-    : billings;
+  const billingsForSite =
+    siteSelectedId === -1
+      ? billings
+      : billings.filter(({ site_id }) => site_id === siteSelectedId);
   if (billingsForSite.length > 0) {
     const billingCodesForSite = billingsForSite.map(
       ({ billing_infos }) => billing_infos?.billing_code
@@ -28,6 +29,7 @@ export const getTop10BillingCodes = (
   } else {
     top10BillingCodesForSite = [];
   }
+  console.log("top10BillingCodesForSite", top10BillingCodesForSite);
 
   return top10BillingCodesForSite;
 };

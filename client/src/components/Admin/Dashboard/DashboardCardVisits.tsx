@@ -74,16 +74,15 @@ const DashboardCardVisits = () => {
           onChangeStart={handleChangeStart}
           onChangeEnd={handleChangeEnd}
         />
-        {visitsPerGender.length > 0 ? (
-          <div>
-            <label>Total visits: </label>
-            {visitsPerGender.slice(-1)[0].male +
+
+        <div className="dashboard-card__filter-total">
+          <label>Total visits: </label>
+          {visitsPerGender.length > 0
+            ? visitsPerGender.slice(-1)[0].male +
               visitsPerGender.slice(-1)[0].female +
-              visitsPerGender.slice(-1)[0].other}
-          </div>
-        ) : (
-          <div>No visits</div>
-        )}
+              visitsPerGender.slice(-1)[0].other
+            : "0"}
+        </div>
       </div>
       {visits && visits.length > 0 ? (
         <div className="dashboard-card__content">
@@ -109,7 +108,7 @@ const DashboardCardVisits = () => {
                   },
                 ]}
                 width={500}
-                height={350}
+                height={400}
                 slotProps={{
                   legend: {
                     direction: "row",
@@ -155,7 +154,7 @@ const DashboardCardVisits = () => {
                   },
                 ]}
                 width={500}
-                height={350}
+                height={400}
                 slotProps={{
                   legend: {
                     direction: "row",

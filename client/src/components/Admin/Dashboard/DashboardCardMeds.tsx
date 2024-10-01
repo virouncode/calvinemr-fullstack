@@ -16,7 +16,7 @@ import DashboardDateFilter from "./DashboardDateFilter";
 
 const DashboardCardMeds = () => {
   //Hooks
-  const [siteSelectedIdMeds, setSiteSelectedIdMeds] = useState(0);
+  const [siteSelectedIdMeds, setSiteSelectedIdMeds] = useState(-1);
   const [rangeStartMeds, setRangeStartMeds] = useState(getStartOfTheMonthTZ());
   const [rangeEndMeds, setRangeEndMeds] = useState(getEndOfTheMonthTZ());
   //Queries

@@ -12,9 +12,10 @@ export const getTop10Meds = (
     [key: string]: number | string;
     frequency: number;
   }[] = [];
-  const medsForSite = siteSelectedIdMeds
-    ? medications.filter(({ site_id }) => site_id === siteSelectedIdMeds)
-    : medications;
+  const medsForSite =
+    siteSelectedIdMeds === -1
+      ? medications
+      : medications.filter(({ site_id }) => site_id === siteSelectedIdMeds);
   if (medsForSite.length > 0) {
     const medsNamesForSite = medsForSite.map((med) => med.DrugName);
     top10MedsForSite = topKFrequent(medsNamesForSite, 10, "medication");

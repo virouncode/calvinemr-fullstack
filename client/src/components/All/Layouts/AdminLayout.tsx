@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Id } from "react-toastify";
 import useTitleContext from "../../../hooks/context/useTitleContext";
@@ -11,6 +11,7 @@ import ToastCalvin from "../../UI/Toast/ToastCalvin";
 import ToastExpired from "../../UI/Toast/ToastExpired";
 import ToastInactivity from "../../UI/Toast/ToastInactivity";
 import AdminHeader from "../Headers/AdminHeader";
+import AdminMobileNav from "../Navigation/AdminMobileNav";
 import Subheader from "../Subheader/Subheader";
 
 type AdminLayoutProps = {
@@ -29,20 +30,34 @@ const AdminLayout = ({
   useAutoLockScreen(setLockedScreen);
   useLocalStorageLock(setLockedScreen);
 
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickBars = () => {
+    if (mobileNavRef.current) {
+      mobileNavRef.current.classList.add("mobile-nav__container--active");
+    }
+  };
   const onConfirm = () => setCreditsVisible(false);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper container">
+      <AdminMobileNav
+        setLockedScreen={setLockedScreen}
+        mobileNavRef={mobileNavRef}
+        toastExpiredID={toastExpiredID}
+        tokenLimitVerifierID={tokenLimitVerifierID}
+      />
       <AdminHeader
         setCreditsVisible={setCreditsVisible}
         setLockedScreen={setLockedScreen}
+        handleClickBars={handleClickBars}
       />
       <Subheader
         title={title}
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-      <main>
+      <main className="main">
         {/* all the children of the Layout component */}
         <Outlet />
         <ConfirmGlobal />

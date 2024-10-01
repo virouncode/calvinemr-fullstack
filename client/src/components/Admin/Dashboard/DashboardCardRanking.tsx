@@ -22,31 +22,31 @@ const DashboardCardRanking = ({
   return (
     <div className="dashboard-card__ranking">
       <p className="dashboard-card__ranking-title">{title}</p>
-      <SiteSelect
-        handleSiteChange={handleSiteChange}
-        sites={sites}
-        value={siteSelectedId}
-        all={true}
-        label="Site"
-      />
+      <div className="dashboard-card__ranking-site">
+        <SiteSelect
+          handleSiteChange={handleSiteChange}
+          sites={sites}
+          value={siteSelectedId}
+          all={true}
+          label="Site"
+        />
+      </div>
+
       {top10Infos && top10Infos.length > 0 ? (
         <ul className="dashboard-card__ranking-content">
           {top10Infos.map((item, index: number) => (
             <li key={item.id} className="dashboard-card__ranking-item">
-              <span
-                className="dashboard-card__ranking-item-nbr"
-                style={{ width: "20px" }}
-              >
+              <div className="dashboard-card__ranking-item-nbr">
                 {index + 1}:
-              </span>{" "}
-              <span>
+              </div>{" "}
+              <div className="dashboard-card__ranking-item-text">
                 {title.includes("diagnoses")
                   ? item.diagnosis
-                  : title.includes("billings")
+                  : title.includes("billing")
                   ? item.billing_code
                   : item.medication}{" "}
                 ({item.frequency})
-              </span>
+              </div>
             </li>
           ))}
         </ul>

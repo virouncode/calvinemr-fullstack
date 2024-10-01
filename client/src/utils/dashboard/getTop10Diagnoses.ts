@@ -6,15 +6,18 @@ export const getTop10Diagnosis = (
   sites: SiteType[],
   siteSelectedId: number
 ) => {
+  console.log("siteSelectedId", siteSelectedId);
+
   if (!sites.length || !billings.length) return [];
   let top10DiagnosisForSite: {
     id: number;
     [key: string]: number | string;
     frequency: number;
   }[] = [];
-  const billingsForSite = siteSelectedId
-    ? billings.filter(({ site_id }) => site_id === siteSelectedId)
-    : billings;
+  const billingsForSite =
+    siteSelectedId === -1
+      ? billings
+      : billings.filter(({ site_id }) => site_id === siteSelectedId);
   if (billingsForSite.length > 0) {
     const diagnosisForSite = billingsForSite.map(
       ({ diagnosis_name }) => diagnosis_name?.diagnosis
@@ -27,5 +30,6 @@ export const getTop10Diagnosis = (
   } else {
     top10DiagnosisForSite = [];
   }
+  console.log("top10DiagnosisForSite", top10DiagnosisForSite);
   return top10DiagnosisForSite;
 };

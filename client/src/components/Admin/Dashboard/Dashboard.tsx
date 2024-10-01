@@ -7,7 +7,7 @@ import DashboardCardVisits from "./DashboardCardVisits";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard">
+    <>
       <div className="dashboard-row">
         <DashboardCardVisits />
       </div>
@@ -25,7 +25,7 @@ const Dashboard = () => {
       <div className="dashboard-row">
         <DashboardCardMeds />
       </div>
-    </div>
+    </>
   );
 };
 

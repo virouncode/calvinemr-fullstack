@@ -12,7 +12,7 @@ const AdminDashboardPage = () => {
           <title>Dashboard</title>
         </Helmet>
       </HelmetProvider>
-      <section className="dashboard-section">
+      <section className="dashboard">
         <Dashboard />
       </section>
     </>

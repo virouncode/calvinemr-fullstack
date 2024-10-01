@@ -85,7 +85,7 @@ const DashboardCardPatients = () => {
                 },
               ]}
               width={500}
-              height={350}
+              height={400}
               slotProps={{
                 legend: {
                   direction: "row",
@@ -132,7 +132,7 @@ const DashboardCardPatients = () => {
                 },
               ]}
               width={500}
-              height={350}
+              height={400}
               slotProps={{
                 legend: {
                   direction: "row",
