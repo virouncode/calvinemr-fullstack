@@ -24,7 +24,7 @@
   flex-direction: column;
 }
 .login__err-placeholder {
-  height: 51px;
+  height: 1rem;
 }
 .login__instructions {
   text-align: center;
@@ -79,6 +79,9 @@
 @media (min-width: 640px) {
   .login__title {
     max-width: 75%;
+  }
+  .login__err-placeholder {
+    height: 51px;
   }
 }
 /*md*/
