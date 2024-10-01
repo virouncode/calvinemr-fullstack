@@ -11,8 +11,8 @@ const MigrationToggle = ({
   handleMigrationTypeChanged,
 }: MigrationToggleProps) => {
   return (
-    <div className="migration-toggle">
-      <div className="migration-toggle__radio">
+    <div className="migration__toggle">
+      <div className="migration__toggle-radio">
         <Radio
           value="Export"
           name="migration-type"
@@ -22,7 +22,7 @@ const MigrationToggle = ({
           label="Export XML"
         />
       </div>
-      <div className="messages-toggle__radio">
+      <div className="migration__toggle-radio">
         <Radio
           value="Import"
           name="migration-type"

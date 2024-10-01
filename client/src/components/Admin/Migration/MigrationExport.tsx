@@ -176,10 +176,10 @@ const MigrationExport = () => {
   };
 
   return (
-    <div className="migration-export">
-      <div className="migration-export__form">
-        <div className="migration-export__patients">
-          <p className="migration-export__patients-title">Patients</p>
+    <div className="migration__export">
+      <div className="migration__export-form">
+        <div className="migration__export-patients">
+          <p className="migration__export-patients-title">Patients</p>
           <MigrationPatientSearchForm
             search={search}
             handleSearch={handleSearch}
@@ -193,8 +193,8 @@ const MigrationExport = () => {
             search={search}
           />
         </div>
-        <div className="migration-export__records">
-          <p className="migration-export__records-title">Records</p>
+        <div className="migration__export-records">
+          <p className="migration__export-records-title">Records</p>
           <MigrationRecordsList
             isRecordIdChecked={isRecordIdChecked}
             handleCheckRecordId={handleCheckRecordId}
@@ -204,7 +204,7 @@ const MigrationExport = () => {
           />
         </div>
       </div>
-      <div className="migration-export__btn">
+      <div className="migration__export-btn">
         <SaveButton onClick={handleExport} disabled={progress} label="Export" />
         {progress && <CircularProgressMedium />}
       </div>

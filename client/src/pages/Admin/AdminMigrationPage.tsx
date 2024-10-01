@@ -12,7 +12,7 @@ const AdminMigrationPage = () => {
           <title>Migration</title>
         </Helmet>
       </HelmetProvider>
-      <section className="migration-section">
+      <section className="migration">
         <Migration />
       </section>
     </>

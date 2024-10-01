@@ -55,8 +55,8 @@ const MigrationPatientsList = ({
   );
 
   return (
-    <ul className="migration-export__patients-list" ref={ulRef}>
-      <li className="patients__list-item">
+    <ul className="migration__export-patients-list" ref={ulRef}>
+      <li className="migration__export-patients-list-item">
         <Checkbox
           id="all-patients"
           name="all-patients"

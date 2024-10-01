@@ -20,7 +20,7 @@ const MigrationRecordItem = ({
   isLoading,
 }: MigrationRecordItemProps) => {
   return (
-    <li className="migration-export__records-list-item">
+    <li className="migration__export-records-list-item">
       <Checkbox
         id={label}
         onChange={(e) => handleCheckRecord(e, recordId)}

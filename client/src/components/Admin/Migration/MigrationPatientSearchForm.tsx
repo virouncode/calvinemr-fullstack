@@ -14,9 +14,9 @@ const MigrationPatientSearchForm = ({
   handleSearch,
 }: MigrationPatientSearchFormProps) => {
   return (
-    <div className="migration-export__patient-search">
-      <form className="migration-export__patient-search__form">
-        <div className="migration-export__patient-search__item">
+    <div className="migration__export-patients-search">
+      <form className="migration__export-patients-search-form">
+        <div className="migration__export-patients-search-item">
           <Input
             value={search.name}
             onChange={handleSearch}
@@ -25,6 +25,8 @@ const MigrationPatientSearchForm = ({
             label="Name"
             autoFocus={true}
           />
+        </div>
+        <div className="migration__export-patients-search-item">
           <InputEmail
             value={search.email}
             onChange={handleSearch}
@@ -32,6 +34,8 @@ const MigrationPatientSearchForm = ({
             id="email"
             label="Email"
           />
+        </div>
+        <div className="migration__export-patients-search-item">
           <InputTel
             value={search.phone}
             onChange={handleSearch}
@@ -41,7 +45,7 @@ const MigrationPatientSearchForm = ({
             placeholder="xxx-xxx-xxxx"
           />
         </div>
-        <div className="migration-export__patient-search__item">
+        <div className="migration__export-patients-search-item">
           <Input
             value={search.birth}
             onChange={handleSearch}
@@ -50,6 +54,8 @@ const MigrationPatientSearchForm = ({
             label="Date of birth"
             placeholder="yyyy-mm-dd"
           />
+        </div>
+        <div className="migration__export-patients-search-item">
           <Input
             value={search.chart}
             onChange={handleSearch}
@@ -57,6 +63,8 @@ const MigrationPatientSearchForm = ({
             id="chart"
             label="Chart#"
           />
+        </div>
+        <div className="migration__export-patients-search-item">
           <Input
             value={search.health}
             onChange={handleSearch}

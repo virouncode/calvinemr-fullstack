@@ -23,7 +23,7 @@ const PatientsListItem = ({
   lastItemRef,
 }: PatientsListItemProps) => {
   return (
-    <li className="patients__list-item" ref={lastItemRef}>
+    <li className="migration__export-patients-list-item" ref={lastItemRef}>
       <Checkbox
         id={info.patient_id.toString()}
         name={patientName}

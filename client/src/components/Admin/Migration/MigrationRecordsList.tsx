@@ -22,8 +22,8 @@ const MigrationRecordsList = ({
   isLoading,
 }: MigrationRecordsListProps) => {
   return (
-    <ul className="migration-export__records-list">
-      <li className="migration-export__records-list-item">
+    <ul className="migration__export-records-list">
+      <li className="migration__export-records-list-item">
         <Checkbox
           id="all-records"
           name="all-records"
