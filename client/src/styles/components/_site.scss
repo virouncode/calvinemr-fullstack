@@ -1,81 +1,145 @@
+.site-form__container {
+  width: 100%;
+  padding: 1rem;
+  border: solid 1px $grey;
+  border-radius: 6px;
+}
 .site-form {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
   &__column {
-    width: 50%;
-  }
-  &__container {
-    margin: 50px auto 0;
-    width: 97%;
-    border: solid 1px $grey;
-    border-radius: 6px;
-    padding: 20px;
-  }
-  &__err {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 80%;
-    margin: 10px auto;
-    color: red;
-    background-color: rgba(255, 0, 0, 0.403);
-    border-radius: 6px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   &__row {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: column;
     label {
-      font-size: 0.85rem;
+      font-size: $size-base;
       font-weight: bold;
-      width: 45%;
+      margin-bottom: 0.25rem;
     }
     input,
     select {
-      width: 180px;
+      width: 100%;
+      font-size: $size-base;
     }
-    input[type="file"] {
-      width: 180px;
-      padding: 0;
-      &::-webkit-file-upload-button {
-        cursor: pointer;
+    .postalzip-select-input {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      select {
+        width: auto;
       }
-    }
-    &--special {
-      align-items: flex-start;
+      input {
+        flex: 1;
+      }
     }
   }
   &__row-image {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    width: 150px;
+    width: 100%;
+    gap: 0.5rem;
+    img {
+      max-width: 200px;
+    }
+    input[type="file"] {
+      padding: 0;
+      width: 100%;
+      &::-webkit-file-upload-button {
+        cursor: pointer;
+      }
+    }
   }
   &__rooms {
+    margin-bottom: 2rem;
     label {
-      margin-right: 50px;
+      font-size: $size-base;
       font-weight: bold;
+    }
+    button {
+      margin-left: 1rem;
     }
   }
   &__room-item {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
     &-id {
+      display: flex;
+      align-items: center;
       width: 20%;
+      gap: 0.5rem;
+      label {
+        font-size: $size-base;
+        font-weight: bold;
+      }
+      p {
+        font-size: $size-base;
+      }
     }
-    label {
-      font-weight: bold;
-      margin-right: 10px;
-      width: 50px;
-      padding: 0;
+    &-input {
+      display: flex;
+      align-items: center;
+      width: 80%;
+      gap: 0.5rem;
+      label {
+        font-size: $size-base;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        max-width: 300px;
+        font-size: $size-base;
+      }
     }
   }
   &__btn-container {
-    text-align: center;
-    margin-top: 15px;
-    button {
-      margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-form {
+    flex-direction: row;
+    gap: 2rem;
+    &__column {
+      width: 50%;
+    }
+    &__row {
+      label,
+      input,
+      select {
+        font-size: $size-sm;
+      }
+    }
+    &__rooms {
+      label {
+        font-size: $size-sm;
+      }
+    }
+    &__room-item {
+      &-id {
+        label,
+        p {
+          font-size: $size-sm;
+        }
+      }
+      &-input {
+        label {
+          font-size: $size-sm;
+        }
+        input {
+          font-size: $size-sm;
+        }
+      }
     }
   }
 }

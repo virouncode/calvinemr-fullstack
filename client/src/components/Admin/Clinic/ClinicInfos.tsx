@@ -116,74 +116,87 @@ const ClinicInfos = () => {
   return (
     <>
       <div className="clinic__global-infos">
-        <span className="clinic__global-infos-title">Global clinic infos</span>
-        <InputEmailToggle
-          value={formDatas?.email}
-          onChange={handleChange}
-          name="email"
-          id="email"
-          editVisible={editClinicVisible}
-          label="Email: "
-        />
-        <InputTextToggleLink
-          value={formDatas?.website}
-          onChange={handleChange}
-          name="website"
-          id="website"
-          editVisible={editClinicVisible}
-          label="Website: "
-          placeholder="https://www.my-clinic.com"
-        />
-        <div className="clinic__global-infos-btn-container">
-          {editClinicVisible ? (
-            <>
-              <SaveButton onClick={handleSaveClinic} />
-              <CancelButton onClick={handleCancelClinic} />
-            </>
-          ) : (
-            <EditButton onClick={handleEditClinic} />
-          )}
+        <div className="clinic__global-infos-title">
+          <div className="clinic__global-infos-label">Clinic infos</div>
+          <div className="clinic__global-infos-btn-container">
+            {editClinicVisible ? (
+              <>
+                <SaveButton onClick={handleSaveClinic} />
+                <CancelButton onClick={handleCancelClinic} />
+              </>
+            ) : (
+              <EditButton onClick={handleEditClinic} />
+            )}
+          </div>
+        </div>
+        <div className="clinic__global-infos-form">
+          <div className="clinic__global-infos-item">
+            <InputEmailToggle
+              value={formDatas?.email}
+              onChange={handleChange}
+              name="email"
+              id="email"
+              editVisible={editClinicVisible}
+              label="Email: "
+            />
+          </div>
+          <div className="clinic__global-infos-item">
+            <InputTextToggleLink
+              value={formDatas?.website}
+              onChange={handleChange}
+              name="website"
+              id="website"
+              editVisible={editClinicVisible}
+              label="Website: "
+              placeholder="https://www.my-clinic.com"
+            />
+          </div>
         </div>
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="clinic__subtitle">
-        <span>Sites</span>
-        <Button label="New site" onClick={handleAddNew} />
+      <div className="clinic__sites">
+        <div className="clinic__sites-title">
+          <div className="clinic__sites-label">Sites</div>
+          <div className="clinic__sites-btn-container">
+            <Button label="New site" onClick={handleAddNew} />
+          </div>
+        </div>
+        <SitesTable sites={sites} handleEditClick={handleEditClick} />
+        {addVisible && (
+          <FakeWindow
+            title="ADD A NEW SITE"
+            width={1000}
+            height={800}
+            x={(window.innerWidth - 1000) / 2}
+            y={(window.innerHeight - 800) / 2}
+            color="#94bae8"
+            setPopUpVisible={setAddVisible}
+          >
+            <SiteForm setAddVisible={setAddVisible} />
+          </FakeWindow>
+        )}
+        {editVisible && (
+          <FakeWindow
+            title={`EDIT ${
+              sites
+                .find(({ id }) => id === selectedSiteId)
+                ?.name.toUpperCase() ?? ""
+            } Site`}
+            width={1000}
+            height={600}
+            x={(window.innerWidth - 1000) / 2}
+            y={(window.innerHeight - 600) / 2}
+            color="#94bae8"
+            setPopUpVisible={setEditVisible}
+          >
+            <SiteEdit
+              site={sites.find(({ id }) => id === selectedSiteId) as SiteType}
+              setEditVisible={setEditVisible}
+              editVisible={editVisible}
+            />
+          </FakeWindow>
+        )}
       </div>
-      <SitesTable sites={sites} handleEditClick={handleEditClick} />
-      {addVisible && (
-        <FakeWindow
-          title="ADD A NEW SITE"
-          width={1000}
-          height={570}
-          x={(window.innerWidth - 1000) / 2}
-          y={(window.innerHeight - 570) / 2}
-          color="#94bae8"
-          setPopUpVisible={setAddVisible}
-        >
-          <SiteForm setAddVisible={setAddVisible} />
-        </FakeWindow>
-      )}
-      {editVisible && (
-        <FakeWindow
-          title={`EDIT ${
-            sites.find(({ id }) => id === selectedSiteId)?.name.toUpperCase() ??
-            ""
-          } Site`}
-          width={1000}
-          height={600}
-          x={(window.innerWidth - 1000) / 2}
-          y={(window.innerHeight - 600) / 2}
-          color="#94bae8"
-          setPopUpVisible={setEditVisible}
-        >
-          <SiteEdit
-            site={sites.find(({ id }) => id === selectedSiteId) as SiteType}
-            setEditVisible={setEditVisible}
-            editVisible={editVisible}
-          />
-        </FakeWindow>
-      )}
     </>
   );
 };

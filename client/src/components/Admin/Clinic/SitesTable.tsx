@@ -14,8 +14,8 @@ type SitesTableProps = {
 const SitesTable = ({ sites, handleEditClick }: SitesTableProps) => {
   return (
     <>
-      <div className="sites__table-container">
-        <table>
+      <div className="clinic__sites-table-container">
+        <table className="clinic__sites-table">
           <thead>
             <tr>
               <th>Action</th>

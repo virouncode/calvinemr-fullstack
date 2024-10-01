@@ -138,7 +138,7 @@ const FormSite = ({
               onChange={handleChange}
             />
           </div>
-          <div className="site-form__row site-form__row--special">
+          <div className="site-form__row">
             <label>Site logo: </label>
             <div className="site-form__row-image">
               <InputImgFile

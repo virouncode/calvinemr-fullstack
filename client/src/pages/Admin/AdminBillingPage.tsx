@@ -12,7 +12,7 @@ const AdminBillingPage = () => {
           <title>Billing</title>
         </Helmet>
       </HelmetProvider>
-      <section className="billing-section">
+      <section className="billing">
         <Billing />
       </section>
     </>

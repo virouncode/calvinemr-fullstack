@@ -12,7 +12,7 @@ const AdminClinicPage = () => {
           <title>Manage clinic</title>
         </Helmet>
       </HelmetProvider>
-      <section className="clinic-section">
+      <section className="clinic">
         <ClinicInfos />
       </section>
     </>
