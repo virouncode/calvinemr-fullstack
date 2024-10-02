@@ -8,6 +8,7 @@ type InputImgFileProps = {
   img: AttachmentType | null;
   alt: string;
   width: number;
+  placeholderText: string;
 };
 
 const InputImgFile = ({
@@ -16,6 +17,7 @@ const InputImgFile = ({
   img,
   alt,
   width,
+  placeholderText,
 }: InputImgFileProps) => {
   console.log("img", img);
 
@@ -31,7 +33,7 @@ const InputImgFile = ({
         />
       ) : (
         <img
-          src="https://placehold.co/200x100/png?font=roboto&text=Logo"
+          src={`https://placehold.co/200x100/png?font=roboto&text=${placeholderText}`}
           alt="logo-placeholder"
         />
       )}

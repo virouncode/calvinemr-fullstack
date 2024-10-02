@@ -1,4 +1,4 @@
-import { FormControlLabel, Switch, useMediaQuery } from "@mui/material";
+import { FormControlLabel, Switch } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
@@ -44,7 +44,6 @@ const PatientRecordMobile = ({
         !demographicsInfos.unauthorized_messages_practicians.includes(user.id))
   );
   const [topicsVisible, setTopicsVisible] = useState(false);
-  const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const patientPut = usePatientPut(patientId);
 
@@ -79,9 +78,10 @@ const PatientRecordMobile = ({
   };
 
   const handleClickExport = () => {
-    if (isTabletOrMobile) {
-      toast.warning("This feature is not available on small screens", {
+    if (window.matchMedia("(pointer: coarse)")) {
+      toast.warning("This feature is not available on mobile devices", {
         containerId: "A",
+        autoClose: 3000,
       });
       return;
     }

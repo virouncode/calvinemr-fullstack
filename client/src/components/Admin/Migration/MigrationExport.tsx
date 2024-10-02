@@ -112,7 +112,7 @@ const MigrationExport = () => {
 
   const handleExport = async () => {
     if (window.matchMedia("(pointer: coarse)")) {
-      toast.warning("This feature is not avalable on mobile devices", {
+      toast.warning("This feature is not available on mobile devices", {
         containerId: "A",
         autoClose: 3000,
       });

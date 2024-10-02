@@ -322,6 +322,7 @@ const StaffAccountEdit = ({
                   img={formDatas.sign ?? null}
                   alt="staff-sign"
                   width={150}
+                  placeholderText="Sign"
                 />
               </div>
             </div>

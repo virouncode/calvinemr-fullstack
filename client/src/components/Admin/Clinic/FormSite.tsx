@@ -147,6 +147,7 @@ const FormSite = ({
                 img={formDatas?.logo ?? null}
                 alt="site-logo"
                 width={150}
+                placeholderText="Logo"
               />
             </div>
           </div>
