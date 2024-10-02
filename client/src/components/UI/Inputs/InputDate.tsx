@@ -28,7 +28,7 @@ const InputDate = ({
       <input
         type="date"
         value={value}
-        onInput={onChange}
+        onChange={onChange}
         name={name}
         id={id}
         style={{ width: width ? `${width}px` : "" }}
@@ -37,6 +37,7 @@ const InputDate = ({
         max={max}
         autoComplete="off"
         placeholder="Select a date"
+        defaultValue=""
       />
     </>
   );
