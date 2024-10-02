@@ -28,7 +28,7 @@ const InputDate = ({
       <input
         type="date"
         value={value}
-        onChange={onChange}
+        onInput={onChange}
         name={name}
         id={id}
         style={{ width: width ? `${width}px` : "" }}
