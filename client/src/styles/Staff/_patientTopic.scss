@@ -1,6 +1,6 @@
 .patient-record {
   &__topic-header {
-    font-size: 0.8rem;
+    font-size: $size-sm;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@
   }
   &__topic-container {
     max-height: 0;
-    font-size: 0.8rem;
+    font-size: $size-sm;
     transition: 0.3s;
     border: 0px solid $black;
     background: $white;

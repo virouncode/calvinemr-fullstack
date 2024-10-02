@@ -98,16 +98,17 @@
     border-bottom: solid 1px $grey;
     height: 80%;
   }
-  &__stop-btn {
+  &__btns {
     height: 5%;
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    button {
-      font-size: 0.8rem;
-      padding: 5px 10px;
-      margin-right: 5px;
+    gap: 0.25rem;
+    span {
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: bold;
     }
   }
   &__send-btn {
@@ -129,7 +130,10 @@
       margin-bottom: 20px;
     }
     &-btns {
-      text-align: end;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.25rem;
     }
   }
   &__img-bot {

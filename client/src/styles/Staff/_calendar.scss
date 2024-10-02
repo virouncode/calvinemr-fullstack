@@ -491,6 +491,10 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+.calendar__availability {
+  display: flex;
+  align-items: center;
+}
 .calendar__availability-editor-form {
   padding: 1rem;
   width: 100%;

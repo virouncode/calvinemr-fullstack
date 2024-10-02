@@ -66,7 +66,7 @@
     }
   }
   &__doctor-infos {
-    font-size: 0.85rem;
+    font-size: $size-sm;
     width: 50%;
     padding: 5px 10px;
   }
@@ -78,12 +78,12 @@
     align-items: flex-start;
   }
   &__date {
-    font-size: 0.85rem;
+    font-size: $size-sm;
     margin-left: auto;
     text-align: end;
   }
   &__patient-infos {
-    font-size: 0.85rem;
+    font-size: $size-sm;
     padding: 5px 10px;
   }
   &__body {
@@ -110,7 +110,7 @@
         border: solid 1px $grey;
         border-radius: 6px;
         outline: none;
-        font-size: 0.85rem;
+        font-size: $size-sm;
         &:focus {
           outline: none;
         }

@@ -36,7 +36,7 @@ const ConfirmDialogRecurringDelete = ({
             </div>
             <h2 style={{ fontSize: "1rem" }}>{"Confirmation"}</h2>
           </div>
-          <p style={{ fontSize: "0.85rem", padding: "10px", margin: "0" }}>
+          <p style={{ fontSize: "$size-sm", padding: "10px", margin: "0" }}>
             <strong>You're deleting a repeating event</strong>
 
             <br />

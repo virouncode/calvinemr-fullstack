@@ -1093,70 +1093,6 @@ select:disabled {
     font-size: 0.85rem;
   }
 }
-.sites__err {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  width: 100%;
-  margin: 10px auto;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-}
-
-.sites__table-container {
-  width: 98%;
-  height: 88%;
-  margin: 0 auto;
-  overflow: scroll;
-  border-radius: 6px;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  position: relative;
-}
-.sites__table-container table {
-  table-layout: fixed;
-  min-width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.sites__table-container table thead {
-  position: sticky;
-  top: 0;
-  background: #93b5e9;
-  border-radius: 6px;
-}
-.sites__table-container table thead th {
-  min-width: 120px;
-  padding: 10px;
-  cursor: pointer;
-}
-.sites__table-container table thead th:nth-child(1) {
-  min-width: 80px;
-}
-.sites__table-container table thead th:nth-child(9) {
-  min-width: 170px;
-}
-.sites__table-container table thead th:nth-child(11) {
-  min-width: 220px;
-}
-.sites__table-container table tbody tr {
-  border-bottom: solid 1px #cecdcd;
-}
-.sites__table-container table tbody tr td {
-  text-align: center;
-  padding: 10px;
-  word-break: break-word;
-}
-
-.site-item__btn-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.site-item__btn-container button {
-  margin-left: 5px;
-}
-
 .staff-accounts {
   width: 100%;
   padding: 1rem;
@@ -1986,13 +1922,13 @@ select:disabled {
 }
 .subheader__clinic {
   font-weight: normal;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-right: 5px;
 }
 .subheader__weather {
   display: flex;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .subheader__weather-logo {
   width: 25px;
@@ -2114,81 +2050,8 @@ select:disabled {
   gap: 0.25rem;
 }
 
-.new-appointments {
-  background-color: #fefefe;
-  width: 100%;
-  border: solid 1px #cecdcd;
-  border-radius: 6px;
-  padding: 10px;
-  font-size: 0.85rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-}
-.new-appointments__title {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  border-bottom: solid 0.5px #cecdcd;
-  font-weight: bold;
-}
-.new-appointments__disclaimer {
-  font-style: italic;
-  margin-bottom: 20px;
-}
-.new-appointments__content {
-  height: 200px;
-  overflow: scroll;
-  padding: 0 10px;
-}
-.new-appointments__content-item {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 5px 0;
-}
-.new-appointments__content-item input[type=checkbox] {
-  margin-right: 10px;
-}
-.new-appointments__content-item p {
-  font-size: 0.85rem;
-  width: 25%;
-}
-.new-appointments__content-item-date {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-}
-.new-appointments__content-item-date p {
-  font-size: 0.85rem;
-  width: 50%;
-}
-.new-appointments__content-weekpicker {
-  text-align: center;
-  margin-top: 10px;
-}
-.new-appointments__content-weekpicker label {
-  padding: 10px;
-}
-.new-appointments__submit {
-  text-align: center;
-  margin-top: 20px;
-}
-.new-appointments__confirm {
-  padding: 10px 20px;
-  width: 80%;
-  font-size: 0.9rem;
-  margin: 10px auto;
-  border-radius: 6px;
-  text-align: center;
-  color: forestgreen;
-  background-color: rgba(34, 139, 34, 0.4);
-}
-.new-appointments .assigned-practicians-list {
-  margin-bottom: 20px;
-}
-
 .patient-ai-agreement {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   padding: 20px;
 }
 .patient-ai-agreement h1 {
@@ -3857,6 +3720,11 @@ select:disabled {
   gap: 0.5rem;
 }
 
+.calendar__availability {
+  display: flex;
+  align-items: center;
+}
+
 .calendar__availability-editor-form {
   padding: 1rem;
   width: 100%;
@@ -4350,17 +4218,18 @@ select:disabled {
   border-bottom: solid 1px #cecdcd;
   height: 80%;
 }
-.calvinai-discussion__stop-btn {
+.calvinai-discussion__btns {
   height: 5%;
   margin-left: auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 0.25rem;
 }
-.calvinai-discussion__stop-btn button {
-  font-size: 0.8rem;
-  padding: 5px 10px;
-  margin-right: 5px;
+.calvinai-discussion__btns span {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
 }
 .calvinai-discussion__send-btn {
   background-color: #93b5e9;
@@ -4382,7 +4251,10 @@ select:disabled {
   margin-bottom: 20px;
 }
 .calvinai-discussion__card-btns {
-  text-align: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
 }
 .calvinai-discussion__img-bot {
   width: 7%;
@@ -5539,8 +5411,8 @@ select:disabled {
 }
 .cycles-form__patient-infos-row-subtitle, .cycles-form__cycle-infos-row-subtitle, .cycles-form__sperm-infos-row-subtitle, .cycles-form__tests-infos-row-subtitle {
   font-weight: bold;
-  margin-left: 20px;
-  margin-right: 40px;
+  margin-left: 1rem;
+  margin-right: 2rem;
   font-style: italic;
   width: 80px;
   font-size: 1rem;
@@ -5666,7 +5538,7 @@ select:disabled {
 .cycle-print__card {
   width: 22cm;
   height: 28cm;
-  padding: 20px;
+  padding: 1rem;
   margin: 0 auto;
   border-bottom: solid 1px #cecdcd;
   margin-bottom: 70px;
@@ -5687,7 +5559,7 @@ select:disabled {
   font-weight: bold;
 }
 .cycle-print__patient-content {
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
 }
 .cycle-print__patient-item {
   font-size: 0.85rem;
@@ -5704,11 +5576,11 @@ select:disabled {
   padding: 5px;
 }
 .cycle-print__sperm-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 .cycle-print__sperm-content {
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
 }
 .cycle-print__sperm-item {
   font-size: 0.85rem;
@@ -5726,11 +5598,11 @@ select:disabled {
   width: 100%;
 }
 .cycle-print__cycle-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 .cycle-print__cycle-content {
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
 }
 .cycle-print__cycle-item {
   font-size: 0.85rem;
@@ -5752,11 +5624,11 @@ select:disabled {
   padding: 5px;
 }
 .cycle-print__tests-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 .cycle-print__tests-content {
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
 }
 .cycle-print__tests-item {
   font-size: 0.85rem;
@@ -5780,7 +5652,7 @@ select:disabled {
   position: relative;
 }
 .cycle-print__events-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -5794,7 +5666,7 @@ select:disabled {
 .cycle-print__events-table {
   table-layout: fixed;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   min-width: 100%;
 }
 .cycle-print__events-table thead {
@@ -5831,11 +5703,11 @@ select:disabled {
   padding: 5px;
 }
 .cycle-print__notes-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 .cycle-print__notes-content {
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
 }
 .cycle-print__notes-item {
   font-size: 0.85rem;
@@ -7359,35 +7231,35 @@ select:disabled {
        column-gap: 1rem;
   height: 100%;
 }
-.forward-message .forward-message__contacts {
+.forward-message__contacts {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
 }
-.forward-message .forward-message__contacts .contacts .contacts__title {
+.forward-message__contacts .contacts .contacts__title {
   font-weight: bold;
   font-size: 1rem;
 }
-.forward-message .forward-message__contacts .contacts .contacts__list {
+.forward-message__contacts .contacts .contacts__list {
   overflow-y: scroll;
 }
-.forward-message .forward-message__contacts .contacts .contacts__list .contacts__list-category {
+.forward-message__contacts .contacts .contacts__list .contacts__list-category {
   margin-top: 1rem;
 }
-.forward-message .forward-message__contacts .contacts .contacts__list .contacts__list-category ul {
+.forward-message__contacts .contacts .contacts__list .contacts__list-category ul {
   margin-top: 0.5rem;
   margin-left: 2rem;
 }
-.forward-message .forward-message__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview {
+.forward-message__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview {
   display: flex;
   align-items: center;
   font-size: 0.85rem;
 }
-.forward-message .forward-message__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview label {
+.forward-message__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview label {
   font-weight: bold;
 }
-.forward-message .forward-message__form {
+.forward-message__form {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -7395,17 +7267,17 @@ select:disabled {
   flex-direction: column;
   overflow-y: scroll;
 }
-.forward-message .forward-message__form .forward-message__form-recipients {
+.forward-message__form-recipients {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-recipients label {
+.forward-message__form-recipients label {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-recipients input {
+.forward-message__form-recipients input {
   width: 97%;
   overflow: hidden;
   white-space: nowrap;
@@ -7413,34 +7285,34 @@ select:disabled {
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-subject {
+.forward-message__form-subject {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-subject label {
+.forward-message__form-subject label {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-subject input {
+.forward-message__form-subject input {
   outline: none;
   width: 95%;
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
   overflow-x: scroll;
 }
-.forward-message .forward-message__form .forward-message__form-patient {
+.forward-message__form-patient {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-patient label {
+.forward-message__form-patient label {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-patient input {
+.forward-message__form-patient input {
   outline: none;
   width: 80%;
   font-size: 0.85rem;
@@ -7449,7 +7321,7 @@ select:disabled {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.forward-message .forward-message__form .forward-message__form-attach {
+.forward-message__form-attach {
   border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
@@ -7458,25 +7330,25 @@ select:disabled {
   padding: 0.5rem;
   font-size: 0.85rem;
 }
-.forward-message .forward-message__form .forward-message__form-attach label {
+.forward-message__form-attach label {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-duedate {
+.forward-message__form-duedate {
   border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-duedate label {
+.forward-message__form-duedate label {
   font-weight: bold;
   margin-right: 1em;
 }
-.forward-message .forward-message__form .forward-message__form-duedate input {
+.forward-message__form-duedate input {
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
   width: 120px;
 }
-.forward-message .forward-message__form .forward-message__form-importance {
+.forward-message__form-importance {
   border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
@@ -7485,96 +7357,96 @@ select:disabled {
   padding: 0.5rem;
   font-size: 0.85rem;
 }
-.forward-message .forward-message__form .forward-message__form-importance label {
+.forward-message__form-importance label {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-importance-check {
+.forward-message__form-importance-check {
   display: flex;
   align-items: center;
 }
-.forward-message .forward-message__form .forward-message__form-body {
+.forward-message__form-body {
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow-y: scroll;
 }
-.forward-message .forward-message__form .forward-message__form-body textarea {
+.forward-message__form-body textarea {
   font-size: 0.85rem;
   outline: none;
   padding: 0.5rem;
   width: 100%;
   min-height: 100%;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message {
+.forward-message__form-body .forward-message__form-history .message {
   padding: 1rem;
   border-bottom: solid 0.5px #cecdcd;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message .message__title {
+.forward-message__form-body .forward-message__form-history .message .message__title {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message .message__title .message__author {
+.forward-message__form-body .forward-message__form-history .message .message__title .message__author {
   font-weight: bold;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message .message__title .message__date {
+.forward-message__form-body .forward-message__form-history .message .message__title .message__date {
   text-align: right;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message .message__subtitle {
+.forward-message__form-body .forward-message__form-history .message .message__subtitle {
   font-size: 0.7rem;
   width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.forward-message .forward-message__form .forward-message__form-body .forward-message__form-history .message .message__body {
+.forward-message__form-body .forward-message__form-history .message .message__body {
   padding: 1rem 1rem 0;
   font-size: 0.85rem;
   white-space: pre-wrap;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments {
+.forward-message__form-body .message__attachments {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card {
+.forward-message__form-body .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
   margin: 0.5rem 0.25rem 0;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
   border: none;
   cursor: pointer;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
   background: #cecdcd;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
   flex-direction: column;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
   font-size: 0.7rem;
   margin-bottom: 0.25rem;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
   text-align: center;
 }
-.forward-message .forward-message__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
+.forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
   font-size: 0.7rem;
   max-width: 100%;
 }
-.forward-message .forward-message__form .forward-message__form-btns {
+.forward-message__form__form-btns {
   border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
@@ -7582,16 +7454,7 @@ select:disabled {
   gap: 0.25rem;
   padding: 0.5rem;
 }
-.forward-message .forward-message__form .forward-message__form-templates {
-  border-bottom: solid 0.3px #cecdcd;
-  min-height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.forward-message .forward-message__patients {
+.forward-message__patients {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -7599,18 +7462,18 @@ select:disabled {
   display: flex;
   flex-direction: column;
 }
-.forward-message .forward-message__patients .patients .patients__title {
+.forward-message__patients .patients .patients__title {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 1rem;
 }
-.forward-message .forward-message__patients .patients .patients__search-input {
+.forward-message__patients .patients .patients__search-input {
   margin-bottom: 10px;
 }
-.forward-message .forward-message__patients .patients .patients__search-input input {
+.forward-message__patients .patients .patients__search-input input {
   width: 100%;
 }
-.forward-message .forward-message__patients .patients .patients__list {
+.forward-message__patients .patients .patients__list {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.5rem;
@@ -7619,7 +7482,7 @@ select:disabled {
   overflow-y: scroll;
   font-size: 0.85rem;
 }
-.forward-message .forward-message__patients .patients .patients__list-item {
+.forward-message__patients .patients .patients__list-item {
   display: flex;
   align-items: center;
 }
@@ -7629,7 +7492,7 @@ select:disabled {
   height: 100%;
   position: relative;
 }
-.forward-message-mobile .forward-message-mobile__contacts {
+.forward-message-mobile__contacts {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
@@ -7643,32 +7506,32 @@ select:disabled {
   height: 100%;
   width: 70%;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__title {
+.forward-message-mobile__contacts .contacts .contacts__title {
   font-weight: bold;
   font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__list {
+.forward-message-mobile__contacts .contacts .contacts__list {
   overflow-y: scroll;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category {
+.forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category {
   margin-top: 1rem;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category ul {
+.forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category ul {
   margin-top: 0.5rem;
   margin-left: 2rem;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview {
+.forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview {
   display: flex;
   align-items: center;
   font-size: 1rem;
 }
-.forward-message-mobile .forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview label {
+.forward-message-mobile__contacts .contacts .contacts__list .contacts__list-category .contacts__list-category-overview label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form {
+.forward-message-mobile__form {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
@@ -7677,17 +7540,17 @@ select:disabled {
   height: 100%;
   overflow-y: scroll;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-recipients {
+.forward-message-mobile__form-recipients {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-recipients label {
+.forward-message-mobile__form-recipients label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-recipients input {
+.forward-message-mobile__form-recipients input {
   width: 97%;
   overflow: hidden;
   white-space: nowrap;
@@ -7695,34 +7558,34 @@ select:disabled {
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-subject {
+.forward-message-mobile__form-subject {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-subject label {
+.forward-message-mobile__form-subject label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-subject input {
+.forward-message-mobile__form-subject input {
   outline: none;
   width: 95%;
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
   overflow-x: scroll;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-patient {
+.forward-message-mobile__form-patient {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-patient label {
+.forward-message-mobile__form-patient label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-patient input {
+.forward-message-mobile__form-patient input {
   outline: none;
   width: 60%;
   font-size: 1rem;
@@ -7731,7 +7594,7 @@ select:disabled {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-attach {
+.forward-message-mobile__form-attach {
   border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
@@ -7740,25 +7603,25 @@ select:disabled {
   padding: 0.5rem;
   font-size: 1rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-attach label {
+.forward-message-mobile__form-attach label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-duedate {
+.forward-message-mobile__form-duedate {
   border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-duedate label {
+.forward-message-mobile__form-duedate label {
   font-weight: bold;
   margin-right: 1em;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-duedate input {
+.forward-message-mobile__form-duedate input {
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
   width: 120px;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-importance {
+.forward-message-mobile__form-importance {
   border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
@@ -7767,20 +7630,20 @@ select:disabled {
   padding: 0.5rem;
   font-size: 1rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-importance label {
+.forward-message-mobile__form-importance label {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-importance-check {
+.forward-message-mobile__form-importance-check {
   display: flex;
   align-items: center;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body {
+.forward-message-mobile__form-body {
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow-y: scroll;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body textarea {
+.forward-message-mobile__form-body textarea {
   font-size: 1rem;
   border-bottom: solid 0.5px #cecdcd;
   outline: none;
@@ -7788,76 +7651,76 @@ select:disabled {
   width: 100%;
   min-height: 100%;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message {
+.forward-message-mobile__form-body .forward-message__form-history .message {
   padding: 1rem;
   border-bottom: solid 0.5px #cecdcd;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message .message__title {
+.forward-message-mobile__form-body .forward-message__form-history .message .message__title {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message .message__title .message__author {
+.forward-message-mobile__form-body .forward-message__form-history .message .message__title .message__author {
   font-weight: bold;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message .message__title .message__date {
+.forward-message-mobile__form-body .forward-message__form-history .message .message__title .message__date {
   text-align: right;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message .message__subtitle {
+.forward-message-mobile__form-body .forward-message__form-history .message .message__subtitle {
   font-size: 0.7rem;
   width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .forward-message__form-history .message .message__body {
+.forward-message-mobile__form-body .forward-message__form-history .message .message__body {
   padding: 1rem 1rem 0;
   font-size: 0.85rem;
   white-space: pre-wrap;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments {
+.forward-message-mobile__form-body .message__attachments {
   display: flex;
   padding: 15px;
   flex-wrap: wrap;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
   margin: 0.5rem 0.25rem 0;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
   border: none;
   cursor: pointer;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
   background: #cecdcd;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
   flex-direction: column;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
   font-size: 0.7rem;
   margin-bottom: 0.25rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
   text-align: center;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
+.forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
   font-size: 0.7rem;
   max-width: 100%;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-btns {
+.forward-message-mobile__form-btns {
   border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
@@ -7865,16 +7728,7 @@ select:disabled {
   gap: 0.25rem;
   padding: 0.5rem;
 }
-.forward-message-mobile .forward-message-mobile__form .forward-message__form-templates {
-  border-bottom: solid 0.5px #cecdcd;
-  min-height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.forward-message-mobile .forward-message-mobile__patients {
+.forward-message-mobile__patients {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -7890,13 +7744,13 @@ select:disabled {
   transition: transform 0.3s ease-in-out;
   width: 70%;
 }
-.forward-message-mobile .forward-message-mobile__patients .patients .patients__search-input input {
+.forward-message-mobile__patients .patients .patients__search-input input {
   font-size: 1rem;
 }
-.forward-message-mobile .forward-message-mobile__patients .patients .patients__list {
+.forward-message-mobile__patients .patients .patients__list {
   height: 400px;
 }
-.forward-message-mobile .forward-message-mobile__patients .patients .patients__title {
+.forward-message-mobile__patients .patients .patients__title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8433,7 +8287,7 @@ select:disabled {
   table-layout: fixed;
   min-width: 100%;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .immunizations__table thead {
   position: sticky;
@@ -8848,7 +8702,7 @@ select:disabled {
   height: 5%;
   display: flex;
   justify-content: flex-end;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   padding: 0 10px;
 }
 .letter__sign label {
@@ -9154,8 +9008,7 @@ select:disabled {
   margin-left: 5px;
 }
 .medications-detail__container {
-  margin-top: 50px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
   padding: 30px 40px;
@@ -9249,111 +9102,6 @@ select:disabled {
     font-size: 0.85rem;
   }
 }
-.med-templates__search {
-  margin: 10px 0;
-}
-.med-templates__search input {
-  width: 300px;
-}
-.med-templates__search label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-.med-templates__form {
-  width: 90%;
-  margin: 50px auto 20px;
-}
-.med-templates__form-row {
-  padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-.med-templates__form-row label {
-  font-weight: bold;
-  min-width: 180px;
-}
-.med-templates__form-row input {
-  width: 150px;
-}
-.med-templates__form-row--text {
-  align-items: flex-start;
-}
-.med-templates__form-notes {
-  width: 60%;
-  height: 50px;
-  white-space: pre-wrap;
-}
-.med-templates__form-instructions {
-  width: 60%;
-  height: 100px;
-  white-space: pre-wrap;
-}
-.med-templates__form-btn-container {
-  text-align: center;
-  margin-top: 15px;
-}
-.med-templates__form-btn-container button {
-  margin-left: 5px;
-}
-.med-templates__form-err {
-  padding: 10px 20px;
-  font-size: 0.8rem;
-  width: 90%;
-  margin: 0 auto 10px;
-  color: red;
-  background-color: rgba(255, 0, 0, 0.403);
-  border-radius: 6px;
-  text-align: center;
-}
-.med-templates__form-container {
-  padding: 10px;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;
-}
-.med-templates__list {
-  height: 350px;
-  padding: 10px 20px;
-  margin-top: 40px;
-}
-.med-templates__list ul {
-  height: 440px;
-  border: solid 1px #cecdcd;
-  border-radius: 6px;
-  overflow: scroll;
-  padding: 10px 20px;
-  max-width: 100%;
-}
-.med-templates__list button {
-  margin-left: 5px;
-}
-.med-templates__allergies {
-  color: red;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.med-templates__item {
-  margin-bottom: 5px;
-}
-.med-templates__item span {
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-.med-templates__item span:hover {
-  text-decoration: underline;
-}
-.med-templates__item i {
-  cursor: pointer;
-}
-
-.meds-results {
-  border: solid 1px #cecdcd;
-  border-radius: 6px;
-  margin-top: 1px;
-  height: 500px;
-  overflow: scroll;
-}
-
 .messages {
   width: 100%;
   height: 100%;
@@ -10660,15 +10408,6 @@ select:disabled {
   padding: 0.25rem 0.5rem;
   width: 120px;
 }
-.new-message .new-message__form .new-message__form-templates {
-  border-bottom: solid 0.3px #cecdcd;
-  min-height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  cursor: pointer;
-}
 .new-message .new-message__patients {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
@@ -10915,15 +10654,6 @@ select:disabled {
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
   width: 120px;
-}
-.new-message-mobile .new-message-mobile__form .new-message__form-templates {
-  border-bottom: solid 0.3px #cecdcd;
-  min-height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  cursor: pointer;
 }
 .new-message-mobile .new-message-mobile__patients {
   border: solid 0.5px #cecdcd;
@@ -11208,7 +10938,7 @@ select:disabled {
 }
 
 .patient-record__topic-header {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11227,7 +10957,7 @@ select:disabled {
 }
 .patient-record__topic-container {
   max-height: 0;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   transition: 0.3s;
   border: 0px solid #3d375a;
   background: #fefefe;
@@ -14059,34 +13789,6 @@ input[type=file]::-webkit-file-upload-button {
     font-size: 0.85rem;
   }
 }
-.calendar-section__toggle-view {
-  width: 13%;
-  position: absolute;
-  right: 15%;
-  top: 10px;
-}
-.calendar-section__option {
-  color: grey;
-  display: inline-block;
-  width: 70px;
-  text-align: center;
-  font-size: 0.8rem;
-  padding: 6px 10px;
-  border: solid 0.8px #A7A6A6;
-  border-radius: 2px;
-  background: #fefefe;
-  cursor: pointer;
-}
-.calendar-section__option:hover {
-  background: #cecdcd;
-  color: rgb(70, 70, 70);
-}
-.calendar-section__option--active {
-  background: #cecdcd;
-  color: rgb(70, 70, 70);
-  border: none;
-}
-
 .webcam {
   display: flex;
   flex-direction: column;

@@ -50,13 +50,13 @@ const Availability = ({
       <>
         <div className="calendar__availability">
           <label>Availability</label>
-          <span style={{ width: "0.8rem", display: "inline-block" }}>
+          <div>
             {isPending ? (
               <CircularProgressSmall />
             ) : (
               <PenIcon onClick={handleEdit}></PenIcon>
             )}
-          </span>
+          </div>
         </div>
         {editAvailability && (
           <FakeWindow

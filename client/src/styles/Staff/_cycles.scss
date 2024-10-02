@@ -122,8 +122,8 @@
         margin-left: 1rem;
         &-subtitle {
           font-weight: bold;
-          margin-left: 20px;
-          margin-right: 40px;
+          margin-left: 1rem;
+          margin-right: 2rem;
           font-style: italic;
           width: 80px;
           font-size: $size-base;
@@ -255,7 +255,7 @@
   &__card {
     width: 22cm;
     height: 28cm;
-    padding: 20px;
+    padding: 1rem;
     margin: 0 auto;
     border-bottom: solid 1px $grey;
     margin-bottom: 70px;
@@ -275,7 +275,7 @@
       font-weight: bold;
     }
     &-content {
-      padding: 10px 30px;
+      padding: 0.5rem 2rem;
     }
     &-item {
       font-size: $size-sm;
@@ -292,11 +292,11 @@
     border-radius: 6px;
     padding: 5px;
     &-title {
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
     }
     &-content {
-      padding: 10px 30px;
+      padding: 0.5rem 2rem;
     }
     &-item {
       font-size: $size-sm;
@@ -314,11 +314,11 @@
     padding: 5px;
     width: 100%;
     &-title {
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
     }
     &-content {
-      padding: 10px 30px;
+      padding: 0.5rem 2rem;
     }
     &-item {
       font-size: $size-sm;
@@ -340,11 +340,11 @@
     border-radius: 6px;
     padding: 5px;
     &-title {
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
     }
     &-content {
-      padding: 10px 30px;
+      padding: 0.5rem 2rem;
     }
     &-item {
       font-size: $size-sm;
@@ -368,7 +368,7 @@
       position: relative;
     }
     &-title {
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -382,7 +382,7 @@
     &-table {
       table-layout: fixed;
       border-collapse: collapse;
-      font-size: 0.8rem;
+      font-size: $size-sm;
       min-width: 100%;
       thead {
         position: sticky;
@@ -420,11 +420,11 @@
     border-radius: 6px;
     padding: 5px;
     &-title {
-      font-size: 0.9rem;
+      font-size: $size-base;
       font-weight: bold;
     }
     &-content {
-      padding: 10px 30px;
+      padding: 0.5rem 2rem;
     }
     &-item {
       font-size: $size-sm;

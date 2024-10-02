@@ -23,7 +23,7 @@
     }
   }
   &__form {
-    font-size: 0.85rem;
+    font-size: $size-sm;
     &-content {
       display: grid;
       grid-template-columns: 17% 35% 35%;
@@ -66,7 +66,7 @@
         margin-top: 20px;
       }
       label {
-        font-size: 0.85rem;
+        font-size: $size-sm;
         font-weight: bold;
       }
       input,

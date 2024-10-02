@@ -4,7 +4,7 @@
   padding: 0 0.5rem;
   column-gap: 1rem;
   height: 100%;
-  .forward-message__contacts {
+  &__contacts {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-sm;
@@ -34,14 +34,14 @@
       }
     }
   }
-  .forward-message__form {
+  &__form {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-sm;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    .forward-message__form-recipients {
+    &-recipients {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -59,7 +59,7 @@
         padding: 0.25rem 0.5rem;
       }
     }
-    .forward-message__form-subject {
+    &-subject {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -76,7 +76,7 @@
         overflow-x: scroll;
       }
     }
-    .forward-message__form-patient {
+    &-patient {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -95,7 +95,7 @@
         text-overflow: ellipsis;
       }
     }
-    .forward-message__form-attach {
+    &-attach {
       border-bottom: solid 0.5px $grey;
       min-height: 30px;
       display: flex;
@@ -107,7 +107,7 @@
         font-weight: bold;
       }
     }
-    .forward-message__form-duedate {
+    &-duedate {
       border-bottom: solid 0.5px $grey;
       display: flex;
       align-items: center;
@@ -122,7 +122,7 @@
         width: 120px;
       }
     }
-    .forward-message__form-importance {
+    &-importance {
       border-bottom: solid 0.5px $grey;
       min-height: 30px;
       display: flex;
@@ -138,7 +138,7 @@
         align-items: center;
       }
     }
-    .forward-message__form-body {
+    &-body {
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -222,7 +222,7 @@
         }
       }
     }
-    .forward-message__form-btns {
+    &__form-btns {
       border-top: solid 0.5px $grey;
       display: flex;
       align-items: center;
@@ -230,18 +230,8 @@
       gap: 0.25rem;
       padding: 0.5rem;
     }
-
-    .forward-message__form-templates {
-      border-bottom: solid 0.3px $grey;
-      min-height: 30px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      font-size: 0.8rem;
-      text-decoration: underline;
-      cursor: pointer;
-    }
   }
-  .forward-message__patients {
+  &__patients {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-sm;
@@ -280,7 +270,7 @@
   padding: 0 0.5rem;
   height: 100%;
   position: relative;
-  .forward-message-mobile__contacts {
+  &__contacts {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-base;
@@ -321,7 +311,7 @@
       }
     }
   }
-  .forward-message-mobile__form {
+  &__form {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-base;
@@ -329,7 +319,7 @@
     flex-direction: column;
     height: 100%;
     overflow-y: scroll;
-    .forward-message__form-recipients {
+    &-recipients {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -347,7 +337,7 @@
         padding: 0.25rem 0.5rem;
       }
     }
-    .forward-message__form-subject {
+    &-subject {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -364,7 +354,7 @@
         overflow-x: scroll;
       }
     }
-    .forward-message__form-patient {
+    &-patient {
       border-bottom: solid 0.5px $grey;
       height: 30px;
       display: flex;
@@ -383,7 +373,7 @@
         text-overflow: ellipsis;
       }
     }
-    .forward-message__form-attach {
+    &-attach {
       border-bottom: solid 0.5px $grey;
       min-height: 30px;
       display: flex;
@@ -395,7 +385,7 @@
         font-weight: bold;
       }
     }
-    .forward-message__form-duedate {
+    &-duedate {
       border-bottom: solid 0.5px $grey;
       display: flex;
       align-items: center;
@@ -410,7 +400,7 @@
         width: 120px;
       }
     }
-    .forward-message__form-importance {
+    &-importance {
       border-bottom: solid 0.5px $grey;
       min-height: 30px;
       display: flex;
@@ -426,7 +416,7 @@
         align-items: center;
       }
     }
-    .forward-message__form-body {
+    &-body {
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -511,7 +501,7 @@
         }
       }
     }
-    .forward-message__form-btns {
+    &-btns {
       border-top: solid 0.5px $grey;
       display: flex;
       align-items: center;
@@ -519,17 +509,8 @@
       gap: 0.25rem;
       padding: 0.5rem;
     }
-    .forward-message__form-templates {
-      border-bottom: solid 0.5px $grey;
-      min-height: 30px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      font-size: 0.8rem;
-      text-decoration: underline;
-      cursor: pointer;
-    }
   }
-  .forward-message-mobile__patients {
+  &__patients {
     border: solid 0.5px $grey;
     border-radius: 6px;
     font-size: $size-sm;

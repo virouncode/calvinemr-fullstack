@@ -47,7 +47,7 @@ const CreditsDialog = ({ onConfirm, isPopUp, props }: CreditsDialogProps) => {
           </div>
           <div
             style={{
-              fontSize: "0.85rem",
+              fontSize: "$size-sm",
               padding: "10px",
               margin: "0",
               whiteSpace: "pre-wrap",

@@ -167,17 +167,8 @@ const CalvinAIClinicalDiscussion = ({
           setAIRewritedText={setAIRewritedText}
           setAIVisible={setAIVisible}
         />
-        <div className="calvinai-discussion__stop-btn">
-          <span
-            onClick={() => setTemplatesVisible((v) => !v)}
-            style={{
-              textDecoration: "underline",
-              cursor: "pointer",
-              fontWeight: "bold",
-              marginRight: "10px",
-              fontSize: "0.8rem",
-            }}
-          >
+        <div className="calvinai-discussion__btns">
+          <span onClick={() => setTemplatesVisible((v) => !v)}>
             Use template
           </span>
           <Button

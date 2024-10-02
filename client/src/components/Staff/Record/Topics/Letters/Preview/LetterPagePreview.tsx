@@ -53,7 +53,7 @@ const LetterPagePreview = ({
             style={{
               width: "100%",
               height: "440px",
-              fontSize: "0.85rem",
+              fontSize: "$size-sm",
               whiteSpace: "pre-wrap",
               textAlign: "justify",
               padding: "5px 10px",

@@ -15,13 +15,13 @@
   }
   &__clinic {
     font-weight: normal;
-    font-size: 0.8rem;
+    font-size: $size-sm;
     margin-right: 5px;
   }
   &__weather {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: $size-sm;
     &-logo {
       width: 25px;
       height: 25px;

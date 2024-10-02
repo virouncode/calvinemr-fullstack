@@ -5,7 +5,7 @@ const LoadingParagraph = () => {
   return (
     <p className="loading-paragraph">
       Loading...
-      <CircularProgress size="0.8rem" />
+      <CircularProgress size="0.85rem" />
     </p>
   );
 };

@@ -190,16 +190,7 @@ const CalvinAIMedsChat = ({ initialMessage }: CalvinAIMedsChatProps) => {
           isLoading={isLoading}
         />
         <div className="calvinai__chat-btns">
-          <span
-            onClick={() => setTemplatesVisible((v) => !v)}
-            style={{
-              textDecoration: "underline",
-              cursor: "pointer",
-              fontWeight: "bold",
-              marginRight: "10px",
-              fontSize: "0.8rem",
-            }}
-          >
+          <span onClick={() => setTemplatesVisible((v) => !v)}>
             Use template
           </span>
           <Button

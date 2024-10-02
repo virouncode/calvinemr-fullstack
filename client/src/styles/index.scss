@@ -10,7 +10,6 @@
 @import "./Admin/migration.scss";
 @import "./Admin/signupStaff.scss";
 @import "./Admin/site.scss";
-@import "./Admin/sitesTable.scss";
 @import "./Admin/staffAccounts.scss";
 
 //All
@@ -28,7 +27,6 @@
 @import "./All/verifyPwd.scss";
 
 //Patient
-@import "./Patient/newAppointments.scss";
 @import "./Patient/patientAIAgreement.scss";
 @import "./Patient/patientAppointments.scss";
 @import "./Patient/patientMyAccount.scss";
@@ -68,7 +66,6 @@
 @import "./Staff/labResults.scss";
 @import "./Staff/letters.scss";
 @import "./Staff/medications.scss";
-@import "./Staff/medTemplates.scss";
 @import "./Staff/messages.scss";
 @import "./Staff/myAccount.scss";
 @import "./Staff/newEnrolment.scss";
@@ -98,7 +95,6 @@
 @import "./Staff/signupPatient.scss";
 @import "./Staff/staffAIAgreement.scss";
 @import "./Staff/templates.scss";
-@import "./Staff/toggleView.scss";
 @import "./Staff/webcam.scss";
 
 //UI

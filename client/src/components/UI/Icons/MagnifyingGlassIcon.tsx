@@ -31,7 +31,7 @@ const MagnifyingGlassIcon = ({
         right: `${right}px`,
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
-        fontSize: isTabletOrMobile ? "1rem" : "0.85rem",
+        fontSize: isTabletOrMobile ? "1rem" : "$size-sm",
       }}
     />
   );
