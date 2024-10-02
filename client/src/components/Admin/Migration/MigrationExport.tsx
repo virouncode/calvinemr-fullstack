@@ -111,6 +111,13 @@ const MigrationExport = () => {
   };
 
   const handleExport = async () => {
+    if (window.matchMedia("(pointer: coarse)")) {
+      toast.warning("This feature is not avalable on mobile devices", {
+        containerId: "A",
+        autoClose: 3000,
+      });
+      return;
+    }
     if (checkedPatients.length === 0) {
       alert("Please choose at least 1 patient !");
       return;

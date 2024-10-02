@@ -59,7 +59,7 @@ const EventFormHostRow = ({
           }
           onChange={handleUntilChange}
           id="until"
-          min={timestampToDateISOTZ(formDatas.start)}
+          min={timestampToDateISOTZ(formDatas.end)}
           label="Until"
           disabled={formDatas.recurrence === "Once"}
         />

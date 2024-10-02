@@ -112,13 +112,11 @@ const Calendar = () => {
   const [currentView, setCurrentView] = useState("timeGrid");
   const lastCurrentId = useRef("");
   const eventCounter = useRef(0); //for keyboard shortcuts
-  //for recurring events
-  const [isFirstEvent, setIsFirstEvent] = useState(false);
+  const [isFirstEvent, setIsFirstEvent] = useState(false); //for recurring events
   const [confirmDlgRecChangeVisible, setConfirmDlgRecChangeVisible] =
     useState(false);
   const [confirmDlgRecDeleteVisible, setConfirmDlgRecDeleteVisible] =
     useState(false);
-  //navigation
   const navigate = useNavigate();
   //================================= Queries ========================================//
   const { data: sites } = useSites();
@@ -279,11 +277,11 @@ const Calendar = () => {
       } else {
         setIsFirstEvent(false);
       }
-      //open dialog for recurring events
+      //open confirm dialog for recurring events
       setConfirmDlgRecDeleteVisible(true);
       return;
     }
-    //Delete the event
+    //if the event is not recurring
     else if (
       await confirmAlert({
         content: "Do you really want to remove this event ?",
@@ -307,11 +305,9 @@ const Calendar = () => {
     const event = info.event;
 
     //CALENDAR
-    //remove red border on current element
     if (currentElement.current) {
       currentElement.current.style.border = "none";
     }
-
     //XANO
     const startDate = DateTime.fromJSDate(event.start as Date, {
       zone: "America/Toronto",
