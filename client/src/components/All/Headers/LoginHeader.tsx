@@ -5,8 +5,6 @@ type LoginHeaderProps = {
   setCreditsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const LoginHeader = ({ setCreditsVisible }: LoginHeaderProps) => {
-  console.log(import.meta.env.VITE_LOGIN_BACKGROUND_COLOR);
-
   return (
     <header
       className="header header--login"

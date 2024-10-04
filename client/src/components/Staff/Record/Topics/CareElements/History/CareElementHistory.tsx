@@ -30,8 +30,6 @@ const CareElementHistory = ({
       year: "2-digit",
     });
   const yFormatter = (value: number) => `${value} ${historyUnit}`;
-  console.log("datasToPlot", datasToPlot);
-
   return (
     <div className="care-elements__history-container">
       {historyDatas.length > 1 ? (

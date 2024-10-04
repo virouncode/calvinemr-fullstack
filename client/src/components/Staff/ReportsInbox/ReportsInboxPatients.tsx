@@ -22,15 +22,20 @@ const ReportsInboxPatients = ({
     setSearch(value);
   };
   return (
-    <div className="reportsinbox__patients">
-      <Input value={search} onChange={handleSearch} placeholder="Search..." />
-      <div className="reportsinbox__patients-list">
-        <PatientsList
-          isPatientChecked={isPatientChecked}
-          handleCheckPatient={handleCheckPatient}
-          search={search}
+    <div className="reports__patients">
+      <div className="reports__patients-search">
+        <Input
+          value={search}
+          onChange={handleSearch}
+          placeholder="Search..."
+          label="Related Patient"
         />
       </div>
+      <PatientsList
+        isPatientChecked={isPatientChecked}
+        handleCheckPatient={handleCheckPatient}
+        search={search}
+      />
     </div>
   );
 };

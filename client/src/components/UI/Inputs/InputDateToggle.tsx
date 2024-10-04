@@ -41,7 +41,6 @@ const InputDateToggle = ({
           max={max}
           autoComplete="off"
           placeholder="Select a date"
-          defaultValue=""
         />
       ) : (
         <p>{value}</p>

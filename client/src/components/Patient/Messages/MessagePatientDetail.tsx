@@ -104,9 +104,6 @@ const MessagePatientDetail = ({
     const fromStaffInfos = staffInfos.find(
       ({ id }) => id === message.from_staff_id
     );
-    console.log("fromStaffInfos", fromStaffInfos);
-    console.log("user", user);
-
     if (
       fromStaffInfos?.title === "Secretary" ||
       (fromStaffInfos?.title === "Doctor" &&

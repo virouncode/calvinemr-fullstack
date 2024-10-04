@@ -7,7 +7,6 @@ const ReportsInboxSecretary = () => {
   return (
     <>
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <h2 className="reportsinbox__subtitle">Add a report</h2>
       <ReportInboxFormSecretary errMsg={errMsg} setErrMsg={setErrMsg} />
     </>
   );

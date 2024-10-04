@@ -69,7 +69,7 @@
           }
         }
       }
-      &-list {
+      .patients__list {
         border: solid 1px $grey;
         border-radius: 6px;
         padding: 0.5rem 1rem;
@@ -82,6 +82,13 @@
         &-item {
           display: flex;
           align-items: center;
+          input[type="checkbox"] {
+            width: auto;
+          }
+          label {
+            font-weight: normal;
+            margin-bottom: 0;
+          }
         }
       }
     }

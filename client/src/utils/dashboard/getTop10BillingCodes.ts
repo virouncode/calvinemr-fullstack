@@ -29,7 +29,5 @@ export const getTop10BillingCodes = (
   } else {
     top10BillingCodesForSite = [];
   }
-  console.log("top10BillingCodesForSite", top10BillingCodesForSite);
-
   return top10BillingCodesForSite;
 };

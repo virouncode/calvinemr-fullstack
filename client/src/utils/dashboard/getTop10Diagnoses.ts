@@ -6,8 +6,6 @@ export const getTop10Diagnosis = (
   sites: SiteType[],
   siteSelectedId: number
 ) => {
-  console.log("siteSelectedId", siteSelectedId);
-
   if (!sites.length || !billings.length) return [];
   let top10DiagnosisForSite: {
     id: number;
@@ -30,6 +28,5 @@ export const getTop10Diagnosis = (
   } else {
     top10DiagnosisForSite = [];
   }
-  console.log("top10DiagnosisForSite", top10DiagnosisForSite);
   return top10DiagnosisForSite;
 };

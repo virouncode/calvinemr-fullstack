@@ -233,14 +233,14 @@ const ReportInboxFormSecretary = ({
 
   return (
     <div
-      className="reportsinbox__form"
+      className="reports__form"
       style={{ border: errMsg && "solid 1.5px red" }}
     >
-      <form className="reportsinbox__form-content" onSubmit={handleSubmit}>
-        <div className="reportsinbox__form-row reportsinbox__form-row--btns">
+      <form className="reports__form-content" onSubmit={handleSubmit}>
+        <div className="reports__form-row reports__form-row--btns">
           <SubmitButton label="Post" disabled={isLoadingFile || progress} />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Report Name"
             name="name"
@@ -249,14 +249,13 @@ const ReportInboxFormSecretary = ({
             id="inbox-name"
           />
         </div>
-        <div className="reportsinbox__form-row reportsinbox__form-row--patients">
-          <label>Related patient</label>
+        <div className="reports__form-row">
           <ReportsInboxPatients
             isPatientChecked={isPatientChecked}
             handleCheckPatient={handleCheckPatient}
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <GenericList
             label="Format"
             name="Format"
@@ -266,12 +265,12 @@ const ReportInboxFormSecretary = ({
             placeHolder="Choose format..."
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <label>File extension</label>
           <p>{formDatas.FileExtensionAndVersion}</p>
         </div>
         {formDatas.Format === "Binary" ? (
-          <div className="reportsinbox__form-row">
+          <div className="reports__form-row">
             <label>Content</label>
             <input
               name="Content"
@@ -284,7 +283,7 @@ const ReportInboxFormSecretary = ({
             />
           </div>
         ) : (
-          <div className="reportsinbox__form-row reportsinbox__form-row--text">
+          <div className="reports__form-row reports__form-row--text">
             <label htmlFor="inbox-content">Content</label>
             <textarea
               name="Content"
@@ -294,7 +293,7 @@ const ReportInboxFormSecretary = ({
             />
           </div>
         )}
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <GenericList
             label="Class"
             name="Class"
@@ -304,7 +303,7 @@ const ReportInboxFormSecretary = ({
             placeHolder="Choose..."
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Sub class"
             name="SubClass"
@@ -313,7 +312,7 @@ const ReportInboxFormSecretary = ({
             id="inbox-subclass"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <InputDate
             label="Date of document"
             name="EventDateTime"
@@ -322,7 +321,7 @@ const ReportInboxFormSecretary = ({
             id="inbox-date"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <InputDate
             label="Date received"
             name="ReceivedDateTime"
@@ -331,7 +330,7 @@ const ReportInboxFormSecretary = ({
             id="inbox-date-received"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Author"
             name="AuthorFreeText"
@@ -340,7 +339,7 @@ const ReportInboxFormSecretary = ({
             id="inbox-author"
           />
         </div>
-        <div className="reportsinbox__form-row reportsinbox__form-row--text">
+        <div className="reports__form-row reports__form-row--text">
           <label htmlFor="inbox-notes">Notes</label>
           <textarea
             name="Notes"
@@ -351,8 +350,7 @@ const ReportInboxFormSecretary = ({
           />
         </div>
       </form>
-      <div className="reportsinbox__form-preview">
-        <div className="reportsinbox__form-preview-title">Preview</div>
+      <div className="reports__form-preview">
         {isLoadingFile && <LoadingParagraph />}
         {formDatas.File && <ReportViewer file={formDatas.File} />}
       </div>

@@ -21,8 +21,6 @@ const PatientStaffContacts = ({
 }: PatientStaffContactsProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
-  console.log(user);
-
   const { staffInfos } = useStaffInfosContext();
   const categoryInfos = splitStaffInfosForPatient(
     staffInfos,

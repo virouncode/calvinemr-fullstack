@@ -8,8 +8,6 @@ export const onMessageUser = (
   userId: number
 ) => {
   if (message.route !== "USER") return;
-  console.log("message", message);
-
   if (userAccessLevel === user.access_level && message.content.id === userId) {
     switch (message.action) {
       case "update":
