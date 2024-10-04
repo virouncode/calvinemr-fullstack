@@ -18,19 +18,21 @@ const Subheader = ({
 }: SubheaderProps) => {
   //=================== STATES =======================//
   return (
-    <section className="subheader">
-      <div className="subheader__left">
-        <SubheaderClinic />
-        <WeatherLogo />
-      </div>
-      <div className="subheader__center">
-        <SubheaderTitle title={title} />
-      </div>
-      <SubheaderWelcome
-        toastExpiredID={toastExpiredID}
-        tokenLimitVerifierID={tokenLimitVerifierID}
-      />
-    </section>
+    <div className="subheader__container">
+      <section className="subheader">
+        <div className="subheader__left">
+          <SubheaderClinic />
+          <WeatherLogo />
+        </div>
+        <div className="subheader__center">
+          <SubheaderTitle title={title} />
+        </div>
+        <SubheaderWelcome
+          toastExpiredID={toastExpiredID}
+          tokenLimitVerifierID={tokenLimitVerifierID}
+        />
+      </section>
+    </div>
   );
 };
 

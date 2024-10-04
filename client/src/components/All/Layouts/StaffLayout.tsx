@@ -50,14 +50,12 @@ const StaffLayout = ({
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-      <div className="header__container">
-        <StaffHeader
-          setCreditsVisible={setCreditsVisible}
-          setLockedScreen={setLockedScreen}
-          setNotepadVisible={setNotepadVisible}
-          handleClickBars={handleClickBars}
-        />
-      </div>
+      <StaffHeader
+        setCreditsVisible={setCreditsVisible}
+        setLockedScreen={setLockedScreen}
+        setNotepadVisible={setNotepadVisible}
+        handleClickBars={handleClickBars}
+      />
       <Subheader
         title={title}
         toastExpiredID={toastExpiredID}

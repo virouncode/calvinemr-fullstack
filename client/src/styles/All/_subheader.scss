@@ -1,15 +1,20 @@
+.subheader__container {
+  background: $grey;
+  box-shadow: $box-shadow-default;
+  margin-bottom: 1rem;
+}
 .subheader {
   position: sticky;
   top: 53px;
   width: 100%;
   padding: 10px 0.935rem;
-  box-shadow: $box-shadow-default;
   background: $grey;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  max-width: 1536px;
+  margin: 0 auto;
   &__left {
     display: none;
   }

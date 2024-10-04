@@ -79,6 +79,7 @@
   flex: 1;
   background-color: $white;
   max-width: 1536px;
+  margin: 0 auto;
 }
 .wrapper {
   height: 100%;
@@ -91,6 +92,8 @@
   overflow-y: scroll;
   background-color: $white;
   max-width: 1536px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .icon {

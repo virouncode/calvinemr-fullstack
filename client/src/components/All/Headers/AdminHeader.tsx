@@ -15,19 +15,21 @@ const AdminHeader = ({
   handleClickBars,
 }: AdminHeaderProps) => {
   return (
-    <header className="header">
-      <div
-        className="header__logo"
-        onClick={() => setCreditsVisible((p) => !p)}
-      >
-        <img src={logo} alt="CalvinEMR-logo" />
-      </div>
-      <AdminHeaderNav setLockedScreen={setLockedScreen} />
-      <div className="header__bars">
-        <BarsIcon onClick={handleClickBars} />
-      </div>
-      <h1 className="header__title">Electronic Medical Records</h1>
-    </header>
+    <div className="header__container">
+      <header className="header">
+        <div
+          className="header__logo"
+          onClick={() => setCreditsVisible((p) => !p)}
+        >
+          <img src={logo} alt="CalvinEMR-logo" />
+        </div>
+        <AdminHeaderNav setLockedScreen={setLockedScreen} />
+        <div className="header__bars">
+          <BarsIcon onClick={handleClickBars} />
+        </div>
+        <h1 className="header__title">Electronic Medical Records</h1>
+      </header>
+    </div>
   );
 };
 
