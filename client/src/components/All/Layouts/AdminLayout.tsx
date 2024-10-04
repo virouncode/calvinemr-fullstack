@@ -47,11 +47,13 @@ const AdminLayout = ({
         toastExpiredID={toastExpiredID}
         tokenLimitVerifierID={tokenLimitVerifierID}
       />
-      <AdminHeader
-        setCreditsVisible={setCreditsVisible}
-        setLockedScreen={setLockedScreen}
-        handleClickBars={handleClickBars}
-      />
+      <div className="header__container">
+        <AdminHeader
+          setCreditsVisible={setCreditsVisible}
+          setLockedScreen={setLockedScreen}
+          handleClickBars={handleClickBars}
+        />
+      </div>
       <Subheader
         title={title}
         toastExpiredID={toastExpiredID}

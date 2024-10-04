@@ -108,6 +108,7 @@
   .flatpickr {
     &-calendar.animate.inline {
       top: 0;
+      width: 100%;
     }
     &-calendar {
       max-width: 100%;

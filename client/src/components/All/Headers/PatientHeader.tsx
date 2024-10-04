@@ -24,7 +24,9 @@ const PatientHeader = ({
       >
         <img src={logo} alt="CalvinEMR-logo" />
       </div>
-      <PatientHeaderNav />
+      <div className="header__container">
+        <PatientHeaderNav />
+      </div>
       <div className="header__bars">
         <BarsIcon onClick={handleClickBars} />
       </div>
