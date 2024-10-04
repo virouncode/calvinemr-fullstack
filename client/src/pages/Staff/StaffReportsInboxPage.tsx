@@ -16,13 +16,16 @@ const StaffReportsInboxPage = () => {
           <title>Inbox</title>
         </Helmet>
       </HelmetProvider>
-      <section className="reportsinbox">
-        {user.title === "Secretary" ? (
+
+      {user.title === "Secretary" ? (
+        <section className="reportsinbox reportsinbox--secretary">
           <ReportsInboxSecretary />
-        ) : (
+        </section>
+      ) : (
+        <section className="reportsinbox">
           <ReportsInbox />
-        )}
-      </section>
+        </section>
+      )}
     </>
   );
 };

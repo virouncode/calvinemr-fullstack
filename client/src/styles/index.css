@@ -310,7 +310,7 @@ input[type=file] {
 
 select {
   cursor: pointer;
-  padding: 0.4rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 3px;
   outline: solid 1px #cecdcd;
@@ -10704,8 +10704,7 @@ select:disabled {
 }
 
 .notepad {
-  margin-top: 40px;
-  height: 92%;
+  height: 100%;
   width: 100%;
   padding: 0.5rem;
   display: flex;
@@ -12669,6 +12668,8 @@ select:disabled {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+}
+.reportsinbox--secretary {
   max-width: 1300px;
 }
 
