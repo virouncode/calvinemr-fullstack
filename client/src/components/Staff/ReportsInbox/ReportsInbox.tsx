@@ -127,7 +127,7 @@ const ReportsInbox = () => {
           height={500}
           x={(window.innerWidth - 600) / 2}
           y={(window.innerHeight - 500) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setForwardVisible}
         >
           <ReportsInboxForward
@@ -147,7 +147,7 @@ const ReportsInbox = () => {
           height={600}
           x={(window.innerWidth - 900) / 2}
           y={(window.innerHeight - 600) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setLabLinksVisible}
         >
           <LabLinks />

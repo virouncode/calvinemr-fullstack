@@ -1,16 +1,14 @@
 //COLORS
 $white: #fefefe;
 $black: #3d375a;
-$grey: #cecdcd;
-$grey2: #a3a3a3;
-$greylight: #eeeeee;
-$blue: #93b5e9;
-$blue2: #6492d8;
+$grey: #efeff1;
+$grey2: #cecdcd;
+$blue: #8fb4fb;
 $darkblue: #327ae6;
 $orange: #e6aa32;
 $green: #5ebac7;
 $pink: #f53f77;
-$pink2: #e63a6e;
+$pink2: #ea3a6f;
 
 //SHADOWS
 $box-shadow-default: rgba(149, 157, 165, 0.8) 0px 3px 4px;
@@ -55,18 +53,7 @@ $size-10xl: 10rem;
   font-style: italic;
 }
 
-@font-face {
-  font-family: "Rubik";
-  src: url(../assets/fonts/Rubik-Regular.ttf);
-  font-weight: normal;
-}
-@font-face {
-  font-family: "Rubik";
-  src: url(../assets/fonts/Rubik-Bold.ttf);
-  font-weight: bold;
-}
 $font1: Lato, sans-serif;
-$font2: Rubik, sans-serif;
 
 //TAGS
 * {
@@ -108,7 +95,7 @@ textarea {
   padding: 0.25rem 0.5rem;
   border: none;
   border-radius: 3px;
-  outline: solid 1px $grey;
+  outline: solid 1px $grey2;
   resize: none;
   font-size: $size-sm;
   color: $black;
@@ -124,7 +111,7 @@ input {
   padding: 0.5rem;
   border: none;
   border-radius: 3px;
-  outline: solid 1px $grey;
+  outline: solid 1px $grey2;
   font-size: $size-sm;
   color: $black;
   text-overflow: ellipsis;
@@ -160,7 +147,7 @@ select {
   padding: 0.5rem;
   border: none;
   border-radius: 3px;
-  outline: solid 1px $grey;
+  outline: solid 1px $grey2;
   font-size: $size-sm;
   &:focus {
     outline: solid 2px $blue;

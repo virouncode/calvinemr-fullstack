@@ -25,7 +25,7 @@
   flex-direction: column;
   background-color: $white;
   gap: 0.25rem;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   border-radius: 6px;
   padding: 1rem;
   box-shadow: $box-shadow-default;
@@ -37,11 +37,11 @@
 .calvinai__chat-content {
   overflow: scroll;
   font-size: $size-sm;
-  border-bottom: solid 1px $grey;
+  border-bottom: solid 1px $grey2;
   height: 80%;
   .calvinai__chat-card {
     padding: 1rem;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     box-shadow: $box-shadow-default;
     margin-bottom: 10px;
@@ -87,13 +87,13 @@
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   padding: 5px 20px 5px 10px;
   .calvinai__chat-send-btn {
     background-color: $blue;
     &:hover {
-      background-color: $blue2;
+      background-color: $blue;
     }
   }
   .calvinai__chat-textarea {
@@ -150,7 +150,7 @@
     gap: 1rem;
     width: 35%;
     padding: 1rem;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     box-shadow: $box-shadow-default;
     font-size: $size-sm;

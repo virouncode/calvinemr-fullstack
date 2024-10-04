@@ -36,7 +36,7 @@
     }
   }
   &__item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     td {
       text-align: center;
       padding: 0.5rem;
@@ -65,7 +65,7 @@
       font-size: $size-sm;
     }
     &__item {
-      border-bottom: solid 1px $grey;
+      border-bottom: solid 1px $grey2;
       td {
         input {
           font-size: $size-sm;

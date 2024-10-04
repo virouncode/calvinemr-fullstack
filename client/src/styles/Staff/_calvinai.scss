@@ -51,7 +51,7 @@
   }
   &__attachments,
   &__reports {
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     box-shadow: $box-shadow-default;
     flex: 1;
     height: 200px;
@@ -95,7 +95,7 @@
   &__content {
     overflow: scroll;
     font-size: $size-sm;
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     height: 80%;
   }
   &__btns {
@@ -114,12 +114,12 @@
   &__send-btn {
     background-color: $blue;
     &:hover {
-      background-color: $blue2;
+      background-color: $blue;
     }
   }
   &__card {
     padding: 1rem;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     box-shadow: $box-shadow-default;
     margin-bottom: 10px;

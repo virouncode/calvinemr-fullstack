@@ -11,7 +11,7 @@
   font-size: $size-base;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -183,7 +183,7 @@
     margin-bottom: 0.25em;
   }
   ul {
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 4px;
     overflow: scroll;
     height: 200px;

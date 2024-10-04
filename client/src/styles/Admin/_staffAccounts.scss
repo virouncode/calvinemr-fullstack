@@ -17,7 +17,7 @@
     background-color: $white;
     padding: 1rem;
     border-radius: 6px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     box-shadow: $box-shadow-default;
     input,
     select {
@@ -79,7 +79,7 @@
     }
     tbody {
       tr {
-        border-bottom: solid 1px $grey;
+        border-bottom: solid 1px $grey2;
         td {
           padding: 0.75rem;
           overflow: hidden;

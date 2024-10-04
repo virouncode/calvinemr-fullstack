@@ -15,7 +15,7 @@
   background-color: $white;
   width: 100%;
   margin: 1rem auto;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   padding: 1rem;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
@@ -51,7 +51,7 @@
 
 .billing__filter {
   margin: 0 auto 1rem;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   border-radius: 6px;
   padding: 1rem;
   width: 100%;
@@ -147,7 +147,7 @@
     z-index: 2;
   }
   &__item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     td {
       text-align: center;
       padding: 0.5rem;

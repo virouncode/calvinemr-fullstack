@@ -182,7 +182,7 @@ const ClinicalNotes = ({
           height={600}
           x={(window.innerWidth - 1024) / 2}
           y={(window.innerHeight - 600) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setOverviewVisible}
         >
           <ClinicalNotesOverview

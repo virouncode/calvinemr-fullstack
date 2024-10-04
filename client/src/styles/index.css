@@ -200,16 +200,6 @@ summary {
   src: url(../assets/fonts/Lato-Italic.ttf);
   font-style: italic;
 }
-@font-face {
-  font-family: "Rubik";
-  src: url(../assets/fonts/Rubik-Regular.ttf);
-  font-weight: normal;
-}
-@font-face {
-  font-family: "Rubik";
-  src: url(../assets/fonts/Rubik-Bold.ttf);
-  font-weight: bold;
-}
 * {
   margin: 0;
   padding: 0;
@@ -257,13 +247,13 @@ textarea {
   color: #3d375a;
 }
 textarea:focus {
-  outline: solid 2px #93b5e9;
+  outline: solid 2px #8fb4fb;
 }
 textarea::-moz-placeholder {
-  color: #a3a3a3;
+  color: #cecdcd;
 }
 textarea::placeholder {
-  color: #a3a3a3;
+  color: #cecdcd;
 }
 
 input {
@@ -276,7 +266,7 @@ input {
   text-overflow: ellipsis;
 }
 input:focus {
-  outline: solid 2px #93b5e9;
+  outline: solid 2px #8fb4fb;
 }
 input:-moz-read-only {
   outline: none;
@@ -285,13 +275,13 @@ input:read-only {
   outline: none;
 }
 input::-moz-placeholder {
-  color: #a3a3a3;
+  color: #cecdcd;
 }
 input::placeholder {
-  color: #a3a3a3;
+  color: #cecdcd;
 }
 input:disabled {
-  color: #a3a3a3;
+  color: #cecdcd;
 }
 
 input[type=text],
@@ -317,7 +307,7 @@ select {
   font-size: 0.85rem;
 }
 select:focus {
-  outline: solid 2px #93b5e9;
+  outline: solid 2px #8fb4fb;
 }
 
 ul {
@@ -345,7 +335,7 @@ select:disabled {
   font-size: 0.85rem;
   display: inline-block;
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: #efeff1;
   color: #3d375a;
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
@@ -358,7 +348,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .btn:hover {
-  background: #a3a3a3;
+  background: #cecdcd;
 }
 .btn:disabled {
   opacity: 0.2;
@@ -373,7 +363,7 @@ select:disabled {
   color: #fefefe;
 }
 .save-btn:hover {
-  background: #e63a6e;
+  background: #ea3a6f;
 }
 
 .container {
@@ -502,7 +492,7 @@ select:disabled {
 .clinic__sites-table thead {
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-radius: 6px;
 }
 .clinic__sites-table thead th {
@@ -1173,7 +1163,7 @@ select:disabled {
 .staff-accounts__table thead {
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-radius: 6px;
 }
 .staff-accounts__table thead th {
@@ -1280,7 +1270,7 @@ select:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   padding: 10px;
 }
 .confirm-dialog-header-logo img {
@@ -1379,7 +1369,7 @@ select:disabled {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  background-color: #6492d8;
+  background-color: #8fb4fb;
 }
 .header--login {
   background-color: transparent;
@@ -1754,7 +1744,7 @@ select:disabled {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 1.5rem;
-  color: #6492d8;
+  color: #8fb4fb;
 }
 
 .reset__success {
@@ -1918,7 +1908,7 @@ select:disabled {
   width: 100%;
   padding: 10px 0.935rem;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
-  background: rgb(243, 243, 243);
+  background: #efeff1;
   height: 45px;
   display: flex;
   align-items: center;
@@ -2122,7 +2112,7 @@ select:disabled {
   text-align: center;
   font-weight: bold;
   margin-bottom: 1rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .patient-appointments__past-content, .patient-appointments__next-content {
   flex: 1;
@@ -2135,7 +2125,7 @@ select:disabled {
 }
 .patient-appointments__past-item, .patient-appointments__next-item {
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -2187,7 +2177,7 @@ select:disabled {
   text-align: center;
   font-weight: bold;
   margin-bottom: 1rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .patient-appointments__new-disclaimer {
   font-style: italic;
@@ -2204,7 +2194,7 @@ select:disabled {
 }
 .patient-appointments__new-item {
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -2389,7 +2379,7 @@ select:disabled {
 .patient-pamphlets__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .patient-pamphlets__table th {
@@ -2544,7 +2534,7 @@ select:disabled {
 .patient-pharmacies .pharmacies-list__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .patient-pharmacies .pharmacies-list__table th {
@@ -2695,7 +2685,7 @@ select:disabled {
 .alerts__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .alerts__table th {
@@ -2777,7 +2767,7 @@ select:disabled {
 .allergies__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .allergies__table th {
@@ -2858,7 +2848,7 @@ select:disabled {
 .appointments__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .appointments__table th {
@@ -3087,7 +3077,7 @@ select:disabled {
   position: sticky;
   z-index: 1;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .billing-table th {
@@ -3153,7 +3143,7 @@ select:disabled {
 }
 .billing-codes__templates-list {
   height: 85%;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 10px;
@@ -3276,7 +3266,7 @@ select:disabled {
   position: absolute;
   display: inline-block;
   text-decoration: none;
-  background-color: #cecdcd;
+  background-color: #efeff1;
   color: #3d375a;
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
@@ -3288,7 +3278,7 @@ select:disabled {
   top: 40px;
 }
 .calendar__print-btn:hover {
-  background: #a3a3a3;
+  background: #cecdcd;
 }
 .calendar__print-btn:disabled {
   opacity: 0.2;
@@ -3357,7 +3347,7 @@ select:disabled {
 }
 .calendar__shortcutpickr .flatpickr-month {
   width: 100%;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .calendar__shortcutpickr .flatpickr-current-month .numInputWrapper {
   color: #3d375a;
@@ -3375,7 +3365,7 @@ select:disabled {
   font-size: 0.85rem;
   color: #3d375a;
   width: 60%;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .calendar__shortcutpickr .flatpickr-current-month {
   display: flex;
@@ -3397,7 +3387,7 @@ select:disabled {
 }
 .calendar__shortcutpickr .flatpickr-weekdays, .calendar__shortcutpickr .flatpickr-weekday {
   font-size: 0.5rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .calendar__shortcutpickr .flatpickr-innerContainer {
   border: none;
@@ -3408,7 +3398,7 @@ select:disabled {
   line-height: 1.25rem;
 }
 .calendar__shortcutpickr .flatpickr-day.selected {
-  background: #93b5e9;
+  background: #8fb4fb;
   color: #fefefe;
   border: none;
 }
@@ -3489,11 +3479,11 @@ select:disabled {
   outline: none;
 }
 .calendar__display .fc-button.fc-button-primary:hover {
-  background: #cecdcd;
+  background: #efeff1;
   color: rgb(70, 70, 70);
 }
 .calendar__display .fc-button.fc-button-primary:disabled {
-  background: #cecdcd;
+  background: #efeff1;
   color: rgb(70, 70, 70);
   border: none;
   opacity: 1;
@@ -3557,7 +3547,7 @@ select:disabled {
   padding: 0.4em 0.65em;
 }
 .calendar__toggle-option:hover {
-  background: #cecdcd;
+  background: #efeff1;
   color: rgb(70, 70, 70);
 }
 .calendar__toggle-option--active {
@@ -3593,7 +3583,7 @@ select:disabled {
   font-size: 0.85rem;
   height: 3rem;
   color: #3d375a;
-  background: #93b5e9;
+  background: #8fb4fb;
   width: 100%;
 }
 
@@ -3840,7 +3830,7 @@ select:disabled {
 }
 .calendar__daysheet .calendar__daysheet-event-card .calendar__daysheet-event-card-header {
   padding: 0.5rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   font-size: 1rem;
   overflow: hidden;
 }
@@ -4239,10 +4229,10 @@ select:disabled {
   font-weight: bold;
 }
 .calvinai-discussion__send-btn {
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .calvinai-discussion__send-btn:hover {
-  background-color: #6492d8;
+  background-color: #8fb4fb;
 }
 .calvinai-discussion__card {
   padding: 1rem;
@@ -4395,10 +4385,10 @@ select:disabled {
   padding: 5px 20px 5px 10px;
 }
 .calvinai__chat-input .calvinai__chat-send-btn {
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .calvinai__chat-input .calvinai__chat-send-btn:hover {
-  background-color: #6492d8;
+  background-color: #8fb4fb;
 }
 .calvinai__chat-input .calvinai__chat-textarea {
   width: 93%;
@@ -4482,7 +4472,7 @@ select:disabled {
   }
   .calvinai__chat-templates-list {
     flex: 1;
-    border: solid 0.5px #cecdcd;
+    border: solid 0.5px #efeff1;
     border-radius: 6px;
     overflow-y: scroll;
     padding: 0 0.5rem;
@@ -4490,7 +4480,7 @@ select:disabled {
   .calvinai__chat-templates-list-item {
     cursor: pointer;
     padding: 0.25rem;
-    border-bottom: solid 0.5px #cecdcd;
+    border-bottom: solid 0.5px #efeff1;
   }
   .calvinai__chat-templates-list-item:hover {
     text-decoration: underline;
@@ -4529,7 +4519,7 @@ select:disabled {
 .care-elements__card-title {
   border-radius: 6px 6px 0 0;
   padding: 0.5rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4749,7 +4739,7 @@ select:disabled {
   padding: 0.5rem;
   display: flex;
   gap: 2rem;
-  background-color: #cecdcd;
+  background-color: #efeff1;
   border-top: solid 1px #cecdcd;
   border-right: solid 1px #cecdcd;
   border-left: solid 1px #cecdcd;
@@ -4823,7 +4813,7 @@ select:disabled {
 }
 .clinical-notes__card-header {
   padding: 0.5rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -4934,7 +4924,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .clinical-notes__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   width: 30%;
   margin: 10px 5px 0;
 }
@@ -5066,7 +5056,7 @@ select:disabled {
   padding: 1rem;
 }
 .clinical-notes__print-btn button:hover {
-  background-color: #e63a6e;
+  background-color: #f53f77;
 }
 .clinical-notes__print-infos {
   font-size: 0.85rem;
@@ -5117,7 +5107,7 @@ select:disabled {
 }
 .clinical-notes__templates-list {
   height: 85%;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 10px;
@@ -5323,7 +5313,7 @@ select:disabled {
 .cycles__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .cycles__table th {
@@ -5471,7 +5461,7 @@ select:disabled {
 .cycles-form__events-table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
   z-index: 1000;
 }
@@ -5540,7 +5530,7 @@ select:disabled {
   padding: 1rem;
 }
 .cycle-print__btns button:hover {
-  background-color: #e63a6e;
+  background-color: #f53f77;
 }
 .cycle-print__card {
   width: 22cm;
@@ -5679,7 +5669,7 @@ select:disabled {
 .cycle-print__events-table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
   -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
@@ -5813,7 +5803,7 @@ select:disabled {
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px 6px 0 0;
 }
 .demographics-card__header h1 {
@@ -5989,7 +5979,7 @@ select:disabled {
 .diagnosis__container .diagnosis__results {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
@@ -6008,7 +5998,7 @@ select:disabled {
   font-size: 0.85rem;
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-bottom: none;
 }
 .diagnosis__container .diagnosis__results .diagnosis__results-item--headers .diagnosis__results-code {
@@ -6114,7 +6104,7 @@ select:disabled {
 .doctors__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .doctors__table th {
@@ -6197,7 +6187,7 @@ select:disabled {
 .doctors-list__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .doctors-list__table th {
@@ -6261,7 +6251,7 @@ select:disabled {
 .eforms__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .eforms__table th {
@@ -6830,7 +6820,7 @@ select:disabled {
 .famhistory__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .famhistory__table thead th {
@@ -6922,7 +6912,7 @@ select:disabled {
   grid-template-columns: 13% 60% 27%;
   align-items: center;
   justify-content: space-between;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px 6px 0 0;
 }
 .fax .fax__toolbar .fax__toolbar-title {
@@ -6979,7 +6969,7 @@ select:disabled {
 .fax .fax__content .fax__content-leftbar {
   overflow: scroll;
   border-radius: 0 0 0 6px;
-  background: #eeeeee;
+  background: #efeff1;
 }
 .fax .fax__content .fax__content-leftbar ul {
   font-size: 0.85rem;
@@ -6989,11 +6979,11 @@ select:disabled {
   cursor: pointer;
 }
 .fax .fax__content .fax__content-leftbar .fax__content-category:hover:not(.fax__content-category--active) {
-  background: #cecdcd;
+  background: #efeff1;
 }
 .fax .fax__content .fax__content-leftbar .fax__content-category--active {
   font-weight: bold;
-  background: #e63a6e;
+  background: #f53f77;
   color: #fefefe;
 }
 .fax .fax__content .fax__content-box {
@@ -7008,7 +6998,7 @@ select:disabled {
   display: grid;
   grid-template-columns: 60% 15% 23% 2%;
   align-items: center;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   font-size: 0.85rem;
   padding: 0.5rem;
   font-weight: bold;
@@ -7025,7 +7015,7 @@ select:disabled {
   font-size: 0.85rem;
   display: grid;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   align-items: center;
   grid-template-columns: 60% 15% 23% 2%;
 }
@@ -7064,7 +7054,7 @@ select:disabled {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   gap: 0.5rem;
 }
 .fax .fax__content .fax__content-box .fax__thumbnail-mobile:hover {
@@ -7099,7 +7089,7 @@ select:disabled {
 .fax .fax__content .fax__content-box .fax__detail-toolbar {
   font-size: 0.85rem;
   padding: 0.25rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: grid;
   grid-template-columns: 5% 90% 5%;
   align-items: center;
@@ -7132,14 +7122,14 @@ select:disabled {
   -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
   border-radius: 6px;
-  border: solid 0.3px #cecdcd;
+  border: solid 0.3px #efeff1;
   overflow: hidden;
 }
 .fax-print__subject, .fax-print__patient {
-  border-bottom: solid 0.3px #cecdcd;
+  border-bottom: solid 0.3px #efeff1;
   height: 30px;
   font-size: 0.9rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
 }
 .fax-print__btn {
   display: flex;
@@ -7239,7 +7229,7 @@ select:disabled {
   height: 100%;
 }
 .forward-message__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7267,7 +7257,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -7275,7 +7265,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .forward-message__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7293,7 +7283,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .forward-message__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7310,7 +7300,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .forward-message__form-patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7329,7 +7319,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .forward-message__form-attach {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7341,7 +7331,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message__form-duedate {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -7356,7 +7346,7 @@ select:disabled {
   width: 120px;
 }
 .forward-message__form-importance {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7386,7 +7376,7 @@ select:disabled {
 }
 .forward-message__form-body .forward-message__form-history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .forward-message__form-body .forward-message__form-history .message .message__title {
   display: flex;
@@ -7417,7 +7407,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .forward-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -7431,7 +7421,7 @@ select:disabled {
   cursor: pointer;
 }
 .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -7454,7 +7444,7 @@ select:disabled {
   max-width: 100%;
 }
 .forward-message__form__form-btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -7462,7 +7452,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .forward-message__patients {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7481,7 +7471,7 @@ select:disabled {
   width: 100%;
 }
 .forward-message__patients .patients .patients__list {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.5rem;
   height: 450px;
@@ -7500,7 +7490,7 @@ select:disabled {
   position: relative;
 }
 .forward-message-mobile__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -7539,7 +7529,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message-mobile__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -7548,7 +7538,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .forward-message-mobile__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7566,7 +7556,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .forward-message-mobile__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7583,7 +7573,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .forward-message-mobile__form-patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7602,7 +7592,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .forward-message-mobile__form-attach {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7614,7 +7604,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message-mobile__form-duedate {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -7629,7 +7619,7 @@ select:disabled {
   width: 120px;
 }
 .forward-message-mobile__form-importance {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7652,7 +7642,7 @@ select:disabled {
 }
 .forward-message-mobile__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -7660,7 +7650,7 @@ select:disabled {
 }
 .forward-message-mobile__form-body .forward-message__form-history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .forward-message-mobile__form-body .forward-message__form-history .message .message__title {
   display: flex;
@@ -7691,7 +7681,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .forward-message-mobile__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -7705,7 +7695,7 @@ select:disabled {
   cursor: pointer;
 }
 .forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -7728,7 +7718,7 @@ select:disabled {
   max-width: 100%;
 }
 .forward-message-mobile__form-btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -7736,7 +7726,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .forward-message-mobile__patients {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7835,7 +7825,7 @@ select:disabled {
   font-size: 0.85rem;
   font-style: italic;
   padding: 0.75rem;
-  background-color: #cecdcd;
+  background-color: #efeff1;
   white-space: pre-wrap;
 }
 
@@ -7852,8 +7842,8 @@ select:disabled {
 .groups__card-list-item {
   font-size: 0.85rem;
   padding: 5px 10px;
-  border-top: solid 0.5px #cecdcd;
-  border-bottom: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8073,7 +8063,7 @@ select:disabled {
 .hcn__container .hcn__results {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
@@ -8092,7 +8082,7 @@ select:disabled {
   font-size: 0.85rem;
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-bottom: none;
 }
 .hcn__container .hcn__results .hcn__results-item--headers .hcn__results-code {
@@ -8149,14 +8139,14 @@ select:disabled {
   margin-bottom: 10px;
 }
 .recimmunizations__table thead {
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border: solid 1px #3d375a;
 }
 .recimmunizations__table td {
   border: solid 1px #3d375a;
 }
 .recimmunizations__table th {
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   padding: 5px;
   border: solid 1px #3d375a;
 }
@@ -8209,7 +8199,7 @@ select:disabled {
   word-wrap: break-word;
 }
 .recimmunizations-item__empty {
-  background: #cecdcd;
+  background: #efeff1;
 }
 .recimmunizations-item__cell {
   display: flex;
@@ -8299,7 +8289,7 @@ select:disabled {
 .immunizations__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .immunizations__table th {
@@ -8561,7 +8551,7 @@ select:disabled {
 .letters__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .letters__table th {
@@ -8847,7 +8837,7 @@ select:disabled {
 .medications__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .medications__table th {
@@ -8859,7 +8849,7 @@ select:disabled {
   border-bottom: solid 1px #cecdcd;
 }
 .medications__item--notactive {
-  background: #cecdcd;
+  background: #efeff1;
 }
 .medications__item td {
   text-align: center;
@@ -9157,7 +9147,7 @@ select:disabled {
   grid-template-columns: 13% 60% 27%;
   align-items: center;
   justify-content: space-between;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px 6px 0 0;
 }
 .messages .messages__container .messages__toolbar .messages__toolbar-title {
@@ -9186,7 +9176,7 @@ select:disabled {
 .messages .messages__container .messages__content .messages__content-leftbar {
   overflow: scroll;
   border-radius: 0 0 0 6px;
-  background: #eeeeee;
+  background: #efeff1;
 }
 .messages .messages__container .messages__content .messages__content-leftbar ul {
   font-size: 0.85rem;
@@ -9196,11 +9186,11 @@ select:disabled {
   cursor: pointer;
 }
 .messages .messages__container .messages__content .messages__content-leftbar .messages__content-category:hover:not(.messages__content-category--active) {
-  background: #cecdcd;
+  background: #efeff1;
 }
 .messages .messages__container .messages__content .messages__content-leftbar .messages__content-category--active {
   font-weight: bold;
-  background: #e63a6e;
+  background: #f53f77;
   color: #fefefe;
 }
 .messages .messages__container .messages__content .messages__content-box {
@@ -9213,7 +9203,7 @@ select:disabled {
   display: grid;
   grid-template-columns: 25% 45% 15% 13% 2%;
   align-items: center;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   font-size: 0.85rem;
   padding: 0.5rem;
   font-weight: bold;
@@ -9238,7 +9228,7 @@ select:disabled {
   font-size: 0.85rem;
   display: grid;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   align-items: center;
   grid-template-columns: 25% 45% 15% 13% 2%;
 }
@@ -9322,7 +9312,7 @@ select:disabled {
   font-size: 0.85rem;
   gap: 0.25rem;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 85px;
 }
 .messages .messages__container .messages__content .messages__content-box .message__thumbnail-mobile .message__thumbnail-mobile-title {
@@ -9354,7 +9344,7 @@ select:disabled {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #a3a3a3;
+  color: #cecdcd;
   flex: 1;
 }
 .messages .messages__container .messages__content .messages__content-box .message__thumbnail-mobile .message__thumbnail-mobile-body {
@@ -9365,7 +9355,7 @@ select:disabled {
 .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar {
   font-size: 0.85rem;
   padding: 0.25rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: grid;
   grid-template-columns: 2% 48% 48% 2%;
   align-items: center;
@@ -9413,7 +9403,7 @@ select:disabled {
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__title {
   display: flex;
@@ -9444,7 +9434,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
   width: 15%;
 }
@@ -9459,7 +9449,7 @@ select:disabled {
   cursor: pointer;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -9507,26 +9497,26 @@ select:disabled {
   padding: 1rem;
 }
 .message__print .message__print-btn button:hover {
-  background-color: #e63a6e;
+  background-color: #f53f77;
 }
 .message__print .message__print-container {
   -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
   border-radius: 6px;
-  border: solid 0.3px #cecdcd;
+  border: solid 0.3px #efeff1;
   overflow: hidden;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
 .message__print .message__print-container .message__print-subject,
 .message__print .message__print-container .message__print-patient {
   font-size: 0.85rem;
-  border-bottom: solid 0.3px #cecdcd;
-  background-color: #93b5e9;
+  border-bottom: solid 0.3px #efeff1;
+  background-color: #8fb4fb;
   padding: 0.5rem;
 }
 .message__print .message__detail-content .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .message__print .message__detail-content .message__title {
   display: flex;
@@ -9557,7 +9547,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -9571,7 +9561,7 @@ select:disabled {
   cursor: pointer;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -9848,7 +9838,7 @@ select:disabled {
   height: 100%;
 }
 .new-fax .new-fax__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -9868,7 +9858,7 @@ select:disabled {
 .new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__list {
   height: 150px;
   overflow-y: scroll;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
@@ -9880,7 +9870,7 @@ select:disabled {
   text-decoration: underline;
 }
 .new-fax .new-fax__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -9888,7 +9878,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-fax .new-fax__form .new-fax__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9907,7 +9897,7 @@ select:disabled {
   outline: none;
 }
 .new-fax .new-fax__form .new-fax__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9924,7 +9914,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-fax .new-fax__form .new-fax__form-patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9943,7 +9933,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .new-fax .new-fax__form .new-fax__form-attach {
-  border-bottom: solid 0.3px #cecdcd;
+  border-bottom: solid 0.3px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -9955,7 +9945,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-fax .new-fax__form .new-fax__form-templates {
-  border-bottom: solid 0.3px #cecdcd;
+  border-bottom: solid 0.3px #efeff1;
   min-height: 30px;
   padding: 0.5rem;
   text-decoration: underline;
@@ -9969,7 +9959,7 @@ select:disabled {
 }
 .new-fax .new-fax__form .new-fax__form-body textarea {
   font-size: 0.85rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -9981,7 +9971,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
@@ -9995,7 +9985,7 @@ select:disabled {
   cursor: pointer;
 }
 .new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -10018,7 +10008,7 @@ select:disabled {
   max-width: 100%;
 }
 .new-fax .new-fax__form .new-fax__form-btns {
-  border-top: solid 0.3px #cecdcd;
+  border-top: solid 0.3px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10032,7 +10022,7 @@ select:disabled {
   position: relative;
 }
 .new-fax-mobile .new-fax-mobile__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -10063,7 +10053,7 @@ select:disabled {
 .new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__list {
   height: 110px;
   overflow-y: scroll;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
@@ -10076,7 +10066,7 @@ select:disabled {
   text-decoration: underline;
 }
 .new-fax-mobile .new-fax-mobile__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -10085,7 +10075,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10104,7 +10094,7 @@ select:disabled {
   outline: none;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10121,7 +10111,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-attach {
-  border-bottom: solid 0.3px #cecdcd;
+  border-bottom: solid 0.3px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10133,7 +10123,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-templates {
-  border-bottom: solid 0.3px #cecdcd;
+  border-bottom: solid 0.3px #efeff1;
   min-height: 30px;
   padding: 0.5rem;
   text-decoration: underline;
@@ -10147,14 +10137,14 @@ select:disabled {
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   outline: none;
   padding: 0.5rem;
   width: 100%;
   min-height: 100%;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-btns {
-  border-top: solid 0.3px #cecdcd;
+  border-top: solid 0.3px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10167,7 +10157,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-fax-mobile .fax__attachments .fax__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
@@ -10181,7 +10171,7 @@ select:disabled {
   cursor: pointer;
 }
 .new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -10219,7 +10209,7 @@ select:disabled {
   grid-template-columns: 1fr 3fr;
 }
 .new-message .new-message__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10247,7 +10237,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message .new-message__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -10255,7 +10245,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-message .new-message__form .new-message__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10273,7 +10263,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .new-message .new-message__form .new-message__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10290,7 +10280,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-message .new-message__form .new-message__form-patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10309,7 +10299,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .new-message .new-message__form .new-message__form-attach {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10321,7 +10311,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message .new-message__form .new-message__form-importance {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10344,7 +10334,7 @@ select:disabled {
 }
 .new-message .new-message__form .new-message__form-body textarea {
   font-size: 0.85rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -10356,7 +10346,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-message .new-message__form .new-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   padding: 0.5rem 0.25rem 0;
 }
 .new-message .new-message__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -10370,7 +10360,7 @@ select:disabled {
   cursor: pointer;
 }
 .new-message .new-message__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -10393,7 +10383,7 @@ select:disabled {
   max-width: 100%;
 }
 .new-message .new-message__form .new-message__form-btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10401,7 +10391,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .new-message .new-message__form .new-message__form-duedate {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -10416,7 +10406,7 @@ select:disabled {
   width: 120px;
 }
 .new-message .new-message__patients {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10435,7 +10425,7 @@ select:disabled {
   width: 100%;
 }
 .new-message .new-message__patients .patients .patients__list {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.5rem;
   height: 450px;
@@ -10454,7 +10444,7 @@ select:disabled {
   position: relative;
 }
 .new-message-mobile .new-message-mobile__contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -10493,7 +10483,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message-mobile .new-message-mobile__form {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -10502,7 +10492,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10520,7 +10510,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10537,7 +10527,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10556,7 +10546,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-attach {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10568,7 +10558,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-importance {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10591,7 +10581,7 @@ select:disabled {
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -10603,7 +10593,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   margin: 0.5rem 0.25rem 0;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -10617,7 +10607,7 @@ select:disabled {
   cursor: pointer;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -10640,7 +10630,7 @@ select:disabled {
   max-width: 100%;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10648,7 +10638,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-duedate {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -10663,7 +10653,7 @@ select:disabled {
   width: 120px;
 }
 .new-message-mobile .new-message-mobile__patients {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10694,7 +10684,7 @@ select:disabled {
   font-size: 1rem;
 }
 .new-message-mobile .new-message-mobile__patients .patients .patients__list {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.5rem;
   height: 400px;
@@ -10794,7 +10784,7 @@ select:disabled {
 .pasthealth__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .pasthealth__table th {
@@ -10806,7 +10796,7 @@ select:disabled {
   border-bottom: solid 1px #cecdcd;
 }
 .pasthealth__item--notgoing, .pasthealth__form--notgoing {
-  background: #cecdcd;
+  background: #efeff1;
 }
 .pasthealth__item td, .pasthealth__form td {
   text-align: center;
@@ -10889,8 +10879,8 @@ select:disabled {
 .patient-record__menu {
   display: flex;
   flex-direction: column;
-  border-top: solid 0.5px #cecdcd;
-  border-bottom: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #efeff1;
   background-color: #fefefe;
   height: 100%;
   overflow-y: scroll;
@@ -10898,7 +10888,7 @@ select:disabled {
 
 .patient-record-mobile__header {
   padding: 0.5rem;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-radius: 6px 6px 0 0;
   font-weight: bold;
 }
@@ -10971,11 +10961,11 @@ select:disabled {
 }
 .patient-record__topic-container--active {
   max-height: 400px;
-  border-left: solid 0.5px #cecdcd;
-  border-right: solid 0.5px #cecdcd;
+  border-left: solid 0.5px #efeff1;
+  border-right: solid 0.5px #efeff1;
 }
 .patient-record__topic-container--bottom {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 
 .topic-content {
@@ -11065,7 +11055,7 @@ select:disabled {
 .personalhistory-card__header {
   display: flex;
   align-items: center;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-radius: 6px 6px 0 0;
   padding: 0.5rem;
 }
@@ -11182,7 +11172,7 @@ select:disabled {
 .pharmacies .pharmacies-list__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .pharmacies .pharmacies-list__table th {
@@ -11318,7 +11308,7 @@ select:disabled {
 .pregnancies__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .pregnancies__table th {
@@ -11575,7 +11565,7 @@ select:disabled {
 .prescriptions__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .prescriptions__table th {
@@ -11659,7 +11649,7 @@ select:disabled {
 .problemlist__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .problemlist__table th {
@@ -11878,7 +11868,7 @@ select:disabled {
 .reference__edocs-table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
   z-index: 1;
 }
@@ -12012,7 +12002,7 @@ select:disabled {
 .refohip__container .refohip__results ul {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding-bottom: 0.5rem;
 }
@@ -12022,7 +12012,7 @@ select:disabled {
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .refohip__container .refohip__results ul .refohip__results-item:hover {
   text-decoration: underline;
@@ -12031,7 +12021,7 @@ select:disabled {
   font-size: 0.85rem;
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-bottom: none;
 }
 .refohip__container .refohip__results ul .refohip__results-item--headers .refohip__results-code {
@@ -12088,7 +12078,7 @@ select:disabled {
 .relationships__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .relationships__table thead th {
@@ -12187,7 +12177,7 @@ select:disabled {
 .reminders__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .reminders__table th {
@@ -12241,14 +12231,14 @@ select:disabled {
 }
 .reply-message {
   min-height: 250px;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   margin: 1rem auto;
   width: 90%;
   overflow-y: scroll;
 }
 .reply-message .reply-message__recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12267,7 +12257,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .reply-message .reply-message__subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12284,7 +12274,7 @@ select:disabled {
   font-size: 1rem;
 }
 .reply-message .reply-message__patient {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12304,7 +12294,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .reply-message .reply-message__attach {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -12316,7 +12306,7 @@ select:disabled {
   font-weight: bold;
 }
 .reply-message .reply-message__importance {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -12349,7 +12339,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .reply-message .reply-message__body .message__attachments .message__attachment-card {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   padding: 0.5rem 0.25rem 0;
 }
 .reply-message .reply-message__body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -12363,7 +12353,7 @@ select:disabled {
   cursor: pointer;
 }
 .reply-message .reply-message__body .message__attachments .message__attachment-card .message__attachment-card-footer {
-  background: #cecdcd;
+  background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
@@ -12391,7 +12381,7 @@ select:disabled {
 }
 .reply-message .reply-message__body .reply-message__history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
 }
 .reply-message .reply-message__body .reply-message__history .message__title {
   display: flex;
@@ -12417,7 +12407,7 @@ select:disabled {
   white-space: pre-wrap;
 }
 .reply-message .reply-message__btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -12477,7 +12467,7 @@ select:disabled {
 .reports__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .reports__table th {
@@ -12664,6 +12654,7 @@ select:disabled {
 }
 .reportsinbox {
   width: 100%;
+  height: 100%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -12671,6 +12662,13 @@ select:disabled {
 }
 .reportsinbox--secretary {
   max-width: 1300px;
+  height: auto;
+}
+
+.reportsinbox__subtitle {
+  font-style: italic;
+  font-weight: normal;
+  margin-bottom: 0.25rem;
 }
 
 .reportsinbox__results {
@@ -12705,7 +12703,7 @@ select:disabled {
 .reportsinbox__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .reportsinbox__table th {
@@ -12829,7 +12827,7 @@ select:disabled {
 .risk__table thead {
   position: sticky;
   top: 0;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 6px;
 }
 .risk__table th {
@@ -12945,7 +12943,7 @@ select:disabled {
 .search-patient__table thead {
   position: sticky;
   top: 0;
-  background-color: #93b5e9;
+  background-color: #8fb4fb;
   border-radius: 6px;
 }
 .search-patient__table thead th {
@@ -12970,7 +12968,7 @@ select:disabled {
   font-weight: bold;
 }
 .search-patient__table tbody tr .record-link:hover {
-  color: #93b5e9;
+  color: #8fb4fb;
 }
 .search-patient__table tbody tr td {
   padding: 0.75rem;
@@ -13229,7 +13227,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .templates .templates__list {
   flex: 1;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 0 0.5rem;
@@ -13237,7 +13235,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .templates .templates__list-item {
   padding: 0.25rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   text-align: left;
 }
 .templates .templates__list-item span {
@@ -13268,14 +13266,14 @@ input[type=file]::-webkit-file-upload-button {
 }
 .calvinai__chat-templates .templates__list {
   flex: 1;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 0 0.5rem;
 }
 .calvinai__chat-templates .templates__list-item {
   padding: 0.25rem;
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   font-size: 0.85rem;
 }
 .calvinai__chat-templates .templates__list-item span {
@@ -13315,7 +13313,7 @@ input[type=file]::-webkit-file-upload-button {
   grid-template-columns: 1fr;
 }
 .message-template__form-content .message-template__form-contacts {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   padding: 0.5rem;
 }
@@ -13355,13 +13353,13 @@ input[type=file]::-webkit-file-upload-button {
   width: 70%;
 }
 .message-template__form-content .message-template__form-message {
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-recipients {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13380,7 +13378,7 @@ input[type=file]::-webkit-file-upload-button {
   padding: 0.25rem 0.5rem;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13412,7 +13410,7 @@ input[type=file]::-webkit-file-upload-button {
   font-size: 1rem;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-btns {
-  border-top: solid 0.5px #cecdcd;
+  border-top: solid 0.5px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -13437,13 +13435,13 @@ input[type=file]::-webkit-file-upload-button {
 }
 .fax-template__form-content {
   flex: 1;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
 }
 .fax-template__form-content .fax-template__form-subject {
-  border-bottom: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #efeff1;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13475,7 +13473,7 @@ input[type=file]::-webkit-file-upload-button {
   font-size: 1rem;
 }
 .fax-template__form-content .fax-template__form-btns {
-  border-top: solid 0.3px #cecdcd;
+  border-top: solid 0.3px #efeff1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -13500,7 +13498,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .calvinai-template__form .calvinai-template__form-content {
   flex: 1;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -13562,7 +13560,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .clinical-note-template__form .clinical-note-template__form-body {
   flex: 1;
-  border: solid 0.5px #cecdcd;
+  border: solid 0.5px #efeff1;
   border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -13865,7 +13863,7 @@ input[type=file]::-webkit-file-upload-button {
   width: 4em;
   height: 1em;
   padding: 10px;
-  background: #93b5e9;
+  background: #8fb4fb;
   border-radius: 20px;
   display: flex;
   justify-content: space-around;
@@ -13906,7 +13904,7 @@ input[type=file]::-webkit-file-upload-button {
   }
 }
 .window {
-  border: 0.5px solid #cecdcd;
+  border: 0.5px solid #efeff1;
   background-color: #fefefe;
   border-radius: 8px;
   position: fixed;

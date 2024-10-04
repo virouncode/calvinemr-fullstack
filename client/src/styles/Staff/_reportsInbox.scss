@@ -1,12 +1,19 @@
 .reportsinbox {
   width: 100%;
+  height: 100%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   &--secretary {
     max-width: 1300px;
+    height: auto;
   }
+}
+.reportsinbox__subtitle {
+  font-style: italic;
+  font-weight: normal;
+  margin-bottom: 0.25rem;
 }
 
 .reportsinbox__results {

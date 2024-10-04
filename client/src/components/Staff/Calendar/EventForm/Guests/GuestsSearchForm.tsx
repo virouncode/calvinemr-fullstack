@@ -99,7 +99,7 @@ const GuestsSearchForm = ({
           height={500}
           x={(window.innerWidth - 500) / 2}
           y={(window.innerHeight - 500) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setInvitationsSentVisible}
           textColor="#3d375a"
         >

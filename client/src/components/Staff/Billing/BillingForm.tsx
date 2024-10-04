@@ -372,7 +372,7 @@ const BillingForm = ({
           height={600}
           x={0}
           y={0}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setBillingCodesTemplatesVisible}
         >
           <BillingCodesTemplates handleSelectTemplate={handleSelectTemplate} />

@@ -34,7 +34,7 @@
     }
   }
   &__item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     td {
       text-align: center;
       padding: 0.5rem;
@@ -83,7 +83,7 @@
     width: 22cm;
     height: 28cm;
     padding: 50px 60px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     box-shadow: $box-shadow-default;
     border-radius: 6px;
     margin-bottom: 10px;
@@ -157,7 +157,7 @@
       margin-top: 30px;
       white-space: pre-wrap;
       overflow-y: scroll;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       border-radius: 6px;
       &--preview {
         border: none;
@@ -189,7 +189,7 @@
   &__options {
     padding: 10px;
     flex: 1;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     box-shadow: $box-shadow-default;
     border-radius: 6px;
     &-name,
@@ -223,7 +223,7 @@
         margin-bottom: 2px;
       }
       &-list {
-        border: solid 1px $grey;
+        border: solid 1px $grey2;
         border-radius: 6px;
         padding: 10px;
       }
@@ -246,7 +246,7 @@
       &-list {
         height: 150px;
         padding: 10px;
-        border: solid 1px $grey;
+        border: solid 1px $grey2;
         border-radius: 6px;
       }
     }

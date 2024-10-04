@@ -17,7 +17,7 @@
   background-color: $white;
   padding: 1rem;
   border-radius: 6px;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   input {
     width: auto;
@@ -80,7 +80,7 @@
   }
   tbody {
     tr {
-      border-bottom: solid 1px $grey;
+      border-bottom: solid 1px $grey2;
       .record-link {
         text-decoration: underline;
         font-weight: bold;

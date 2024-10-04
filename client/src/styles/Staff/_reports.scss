@@ -39,7 +39,7 @@
     }
   }
   &__item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     td {
       text-align: center;
       padding: 0.5rem;
@@ -72,7 +72,7 @@
     gap: 1rem;
     padding: 1rem;
     width: 100%;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     box-shadow: $box-shadow-default;
     &-btn-container {
@@ -136,7 +136,7 @@
           flex-direction: column;
         }
         .patients__list {
-          border: solid 1px $grey;
+          border: solid 1px $grey2;
           border-radius: 6px;
           padding: 0.5rem 1rem;
           height: 350px;

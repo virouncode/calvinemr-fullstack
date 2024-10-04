@@ -40,7 +40,7 @@
     gap: 0.25rem;
   }
   &-item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     td {
       text-align: center;
       padding: 0.5rem;
@@ -75,7 +75,7 @@
     &__tests-infos {
       box-shadow: $box-shadow-default;
       padding: 0.5rem 0.5rem 1rem;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       border-radius: 6px;
       width: 100%;
       .rw-list-option {
@@ -151,7 +151,7 @@
     &__events {
       box-shadow: $box-shadow-default;
       padding: 0.5rem 0.5rem 1rem;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       border-radius: 6px;
       min-width: 100%;
       &-table-container {
@@ -190,7 +190,7 @@
         }
       }
       &-item {
-        border-bottom: solid 1px $grey;
+        border-bottom: solid 1px $grey2;
         td {
           text-align: center;
           padding: 10px;
@@ -248,7 +248,7 @@
       color: $white;
       padding: 1rem;
       &:hover {
-        background-color: $pink2;
+        background-color: $pink;
       }
     }
   }
@@ -257,7 +257,7 @@
     height: 28cm;
     padding: 1rem;
     margin: 0 auto;
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     margin-bottom: 70px;
   }
   &__row {
@@ -267,7 +267,7 @@
   }
   &__patient {
     flex: 1;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     &-title {
@@ -288,7 +288,7 @@
   }
   &__sperm {
     flex: 1;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     &-title {
@@ -309,7 +309,7 @@
   }
   &__cycle {
     margin-bottom: 10px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     width: 100%;
@@ -336,7 +336,7 @@
   }
   &__tests {
     flex: 1;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     &-title {
@@ -361,7 +361,7 @@
     transform-origin: top left;
     transform: rotate(90deg) translateX(20px);
     margin-bottom: 10px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     &-container {
@@ -406,7 +406,7 @@
       }
     }
     &-item {
-      border-bottom: solid 1px $grey;
+      border-bottom: solid 1px $grey2;
       td {
         text-align: center;
         padding: 10px;
@@ -416,7 +416,7 @@
   }
   &__notes {
     margin-bottom: 10px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     padding: 5px;
     &-title {

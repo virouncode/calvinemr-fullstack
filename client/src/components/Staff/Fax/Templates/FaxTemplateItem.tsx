@@ -89,7 +89,7 @@ const FaxTemplateItem = ({
           height={550}
           x={(window.innerWidth - 900) / 2}
           y={(window.innerHeight - 550) / 2}
-          color="#93B5E9"
+          color="#8fb4fb"
           setPopUpVisible={setEditTemplateVisible}
         >
           <FaxTemplateEdit

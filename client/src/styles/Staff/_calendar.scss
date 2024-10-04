@@ -11,7 +11,7 @@
   position: relative;
 }
 .calendar__options {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
   font-size: $size-sm;
@@ -101,7 +101,7 @@
   }
 }
 .calendar__shortcutpickr {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   overflow: hidden;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
@@ -191,7 +191,7 @@
 
 .calendar__display {
   position: relative;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   border-radius: 6px;
   padding: 0.75rem;
   height: 99%;
@@ -353,7 +353,7 @@
   font-weight: bold;
   overflow-y: scroll;
   flex: 1;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   background-color: $white;
 }
 .calendar__filter-title {

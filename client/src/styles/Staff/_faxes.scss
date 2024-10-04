@@ -79,7 +79,7 @@
     .fax__content-leftbar {
       overflow: scroll;
       border-radius: 0 0 0 6px;
-      background: $greylight;
+      background: $grey;
       ul {
         font-size: $size-sm;
       }
@@ -91,7 +91,7 @@
         }
         &--active {
           font-weight: bold;
-          background: $pink2;
+          background: $pink;
           color: $white;
         }
       }

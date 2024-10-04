@@ -69,7 +69,7 @@ const PatientsGroups = () => {
           height={670}
           x={100}
           y={(window.innerHeight - 670) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setAddGroupVisible}
         >
           <PatientsGroupForm

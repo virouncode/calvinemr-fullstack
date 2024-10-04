@@ -6,7 +6,7 @@
 }
 
 .reference__links {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   background: #fefefe;
   border-radius: 6px;
@@ -62,7 +62,7 @@
   height: 300px;
   padding: 0.5rem;
   border-radius: 6px;
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   font-size: $size-sm;
   li {
@@ -70,7 +70,7 @@
   }
 }
 .reference__links-form {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   border-radius: 6px;
   box-shadow: $box-shadow-default;
   padding: 0.5rem;
@@ -102,7 +102,7 @@
   }
 }
 .reference__edocs {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   background: #fefefe;
   border-radius: 6px;
@@ -160,7 +160,7 @@
   }
 }
 .reference__edocs-item {
-  border-bottom: solid 1px $grey;
+  border-bottom: solid 1px $grey2;
   td {
     text-align: center;
     padding: 0.5rem;

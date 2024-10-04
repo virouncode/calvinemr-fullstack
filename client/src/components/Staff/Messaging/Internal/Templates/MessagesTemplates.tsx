@@ -111,7 +111,7 @@ const MessagesTemplates = ({
             height={630}
             x={(window.innerWidth - 900) / 2}
             y={(window.innerHeight - 630) / 2}
-            color="#93B5E9"
+            color="#8fb4fb"
             setPopUpVisible={setNewTemplateVisible}
           >
             {isTabletOrMobile ? (

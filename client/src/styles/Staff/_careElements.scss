@@ -152,7 +152,7 @@
       margin: 0 auto;
       display: flex;
       justify-content: center;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       box-shadow: $box-shadow-default;
       border-radius: 6px;
       padding: 0.5rem;
@@ -175,7 +175,7 @@
     max-width: 700px;
     &-list {
       padding: 0.5rem 1rem;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       border-radius: 6px;
       overflow-y: scroll;
     }
@@ -185,7 +185,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
-      border-bottom: solid 1px $grey;
+      border-bottom: solid 1px $grey2;
       padding: 0.5rem 0;
       label {
         font-weight: bold;

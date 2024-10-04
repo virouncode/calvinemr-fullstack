@@ -357,7 +357,7 @@ Powered by Calvin EMR`,
           height={600}
           x={window.innerWidth - 800}
           y={0}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setTemplatesVisible}
         >
           <MessagesExternalTemplates

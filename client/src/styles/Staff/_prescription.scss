@@ -34,7 +34,7 @@
     }
   }
   &__page {
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     border-radius: 6px;
     width: 22cm;
     height: 28cm;
@@ -101,13 +101,13 @@
       font-size: 0.8rem;
       white-space: pre-wrap;
       height: 500px;
-      border: solid 1px $grey;
+      border: solid 1px $grey2;
       border-radius: 6px;
       &-textarea {
         width: 100%;
         min-height: 200px;
         margin-top: 10px;
-        border: solid 1px $grey;
+        border: solid 1px $grey2;
         border-radius: 6px;
         outline: none;
         font-size: $size-sm;

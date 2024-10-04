@@ -155,10 +155,10 @@ const EventForm = ({
     setErrMsgPost("");
     const value = parseInt(e.target.value);
     if (value === user.id) {
-      setFormColor("#93B5E9");
+      setFormColor("#8fb4fb");
     } else {
       const host = remainingStaff.find(({ id }) => id === value);
-      setFormColor(host?.color ?? "#93b5e9");
+      setFormColor(host?.color ?? "#8fb4fb");
     }
     //Update form datas
     setFormDatas({ ...formDatas, host_id: value });

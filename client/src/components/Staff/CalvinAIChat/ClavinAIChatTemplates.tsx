@@ -115,7 +115,7 @@ const CalvinAIChatTemplates = ({
           height={500}
           x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 500) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setNewTemplateVisible}
         >
           <CalvinAITemplateForm setNewTemplateVisible={setNewTemplateVisible} />
@@ -128,7 +128,7 @@ const CalvinAIChatTemplates = ({
           height={500}
           x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 500) / 2}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setEditTemplateVisible}
         >
           <CalvinAITemplateEdit

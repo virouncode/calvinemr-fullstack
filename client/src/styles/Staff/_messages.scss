@@ -11,7 +11,7 @@
     padding: 0.25rem 0.5rem;
     width: 250px;
     border-radius: 6px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -72,7 +72,7 @@
       .messages__content-leftbar {
         overflow: scroll;
         border-radius: 0 0 0 6px;
-        background: $greylight;
+        background: $grey;
         ul {
           font-size: $size-sm;
         }
@@ -84,7 +84,7 @@
           }
           &--active {
             font-weight: bold;
-            background: $pink2;
+            background: $pink;
             color: $white;
           }
         }
@@ -394,7 +394,7 @@
       color: $white;
       padding: 1rem;
       &:hover {
-        background-color: $pink2;
+        background-color: $pink;
       }
     }
   }

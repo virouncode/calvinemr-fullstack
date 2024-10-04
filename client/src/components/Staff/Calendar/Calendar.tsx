@@ -169,17 +169,17 @@ const Calendar = () => {
   useEffect(() => {
     if (!events) return;
     if (lastCurrentId.current) {
-      //remove red border from last currentElement
+      //remove pink border from last currentElement
       if (currentElement.current)
         (currentElement.current as HTMLElement).style.border = "none";
-      //change the currentElement and change the border to red
+      //change the currentElement and change the border to pink
       if (
         document.getElementsByClassName(`event-${lastCurrentId.current}`)[0]
       ) {
         currentElement.current = document.getElementsByClassName(
           `event-${lastCurrentId.current}`
         )[0] as HTMLElement;
-        currentElement.current.style.border = "solid 1px red";
+        currentElement.current.style.border = "solid 1px #f53f77";
       }
       //change the currentEvent
       currentEvent.current =
@@ -252,13 +252,13 @@ const Calendar = () => {
         currentEvent.current.start !==
           DateTime.fromJSDate(event.start as Date).toMillis())
     )
-      //remove red border on former current element
+      //remove pink border on former current element
       (currentElement.current as HTMLElement).style.border = "none";
     //change current event
     currentEvent.current = eventImplToEventInput(event);
     currentElement.current = element;
     lastCurrentId.current = event.id;
-    element.style.border = "solid 1px red";
+    element.style.border = "solid 1px #f53f77";
     !timelineVisible && setCurrentView(view);
     //XANO
     //If the event is recurring
@@ -423,7 +423,7 @@ const Calendar = () => {
       currentEvent.current = eventImplToEventInput(event);
       lastCurrentId.current = event.id;
       currentElement.current = element;
-      element.style.border = "solid 1px red";
+      element.style.border = "solid 1px #f53f77";
       !timelineVisible && setCurrentView(view);
     }
 
@@ -583,7 +583,7 @@ const Calendar = () => {
     currentElement.current = element;
     currentEvent.current = eventImplToEventInput(event);
     lastCurrentId.current = event.id;
-    element.style.border = "solid 1px red";
+    element.style.border = "solid 1px #f53f77";
 
     //XANO
     //Recurring events
@@ -741,7 +741,7 @@ const Calendar = () => {
     currentEvent.current = eventImplToEventInput(event);
     currentElement.current = element;
     lastCurrentId.current = event.id;
-    element.style.border = "solid 1px red";
+    element.style.border = "solid 1px #f53f77";
 
     //XANO
     //Recurring events

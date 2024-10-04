@@ -439,7 +439,7 @@ const ClinicalNoteCard = ({
             height={window.innerHeight}
             x={(window.innerWidth - 1000) / 2}
             y={0}
-            color="#93b5e9"
+            color="#8fb4fb"
             setPopUpVisible={setAIVisible}
           >
             <CalvinAIClinical
@@ -463,7 +463,7 @@ const ClinicalNoteCard = ({
             height={600}
             x={(window.innerWidth - 1024) / 2}
             y={(window.innerHeight - 600) / 2}
-            color="#93b5e9"
+            color="#8fb4fb"
             setPopUpVisible={setVersionsVisible}
           >
             <ClinicalNotesVersions
@@ -479,7 +479,7 @@ const ClinicalNoteCard = ({
             height={600}
             x={window.innerWidth - 500}
             y={0}
-            color="#93b5e9"
+            color="#8fb4fb"
             setPopUpVisible={setTemplatesVisible}
           >
             <ClinicalNotesTemplates

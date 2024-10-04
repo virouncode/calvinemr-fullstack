@@ -89,7 +89,7 @@ const TodoTemplateItem = ({
           height={500}
           x={(window.innerWidth - 700) / 2}
           y={(window.innerHeight - 500) / 2}
-          color="#93B5E9"
+          color="#8fb4fb"
           setPopUpVisible={setEditTemplateVisible}
         >
           <TodoTemplateEdit

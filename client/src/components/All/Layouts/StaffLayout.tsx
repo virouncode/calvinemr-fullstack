@@ -97,7 +97,7 @@ const StaffLayout = ({
           height={800}
           x={0}
           y={0}
-          color="#93b5e9"
+          color="#8fb4fb"
           setPopUpVisible={setNotepadVisible}
           closeCross={false}
         >

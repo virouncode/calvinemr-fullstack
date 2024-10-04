@@ -34,7 +34,7 @@
     }
   }
   &__item {
-    border-bottom: solid 1px $grey;
+    border-bottom: solid 1px $grey2;
     &--notactive {
       background: $grey;
     }
@@ -71,7 +71,7 @@
   }
 }
 .medications-form {
-  border: solid 1px $grey;
+  border: solid 1px $grey2;
   box-shadow: $box-shadow-default;
   border-radius: 6px;
   padding: 0.5rem;
@@ -201,7 +201,7 @@
     display: flex;
     justify-content: space-between;
     padding: 30px 40px;
-    border: solid 1px $grey;
+    border: solid 1px $grey2;
     box-shadow: $box-shadow-default;
     border-radius: 6px;
     form {
