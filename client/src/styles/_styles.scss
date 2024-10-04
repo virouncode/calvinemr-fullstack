@@ -141,6 +141,9 @@ select {
 input[type="file"] {
   padding: 0;
 }
+input[type="checkbox"] {
+  cursor: pointer;
+}
 
 select {
   cursor: pointer;
