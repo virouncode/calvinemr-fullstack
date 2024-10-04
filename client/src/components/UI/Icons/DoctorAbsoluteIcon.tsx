@@ -32,7 +32,7 @@ const DoctorAbsoluteIcon = ({
         top: `${top}px`,
         right: `${right}px`,
       }}
-      className={noPrint ? "no-print" : ""}
+      className={noPrint ? "no-print icon" : "icon"}
     />
   );
 };

@@ -24,6 +24,7 @@ const ArrowRightIcon = ({
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

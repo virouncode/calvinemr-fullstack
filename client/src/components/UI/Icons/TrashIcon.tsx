@@ -18,6 +18,7 @@ const TrashIcon = ({ onClick, ml = 0, mr = 0 }: TrashIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

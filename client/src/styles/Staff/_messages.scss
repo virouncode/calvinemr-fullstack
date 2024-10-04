@@ -98,7 +98,7 @@
           display: grid;
           grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv
           align-items: center;
-          border-bottom: solid 0.5px $grey;
+          border-bottom: solid 0.5px $grey2;
           font-size: $size-sm;
           padding: 0.5rem;
           font-weight: bold;
@@ -123,7 +123,7 @@
           font-size: $size-sm;
           display: grid;
           padding: 0.5rem;
-          border-bottom: solid 0.5px $grey;
+          border-bottom: solid 0.5px $grey2;
           align-items: center;
           grid-template-columns: 25% 45% 15% 13% 2%; //From, Subject, Patient, Date, Fakediv
           &:hover {
@@ -207,7 +207,7 @@
           font-size: $size-sm;
           gap: 0.25rem;
           padding: 0.5rem;
-          border-bottom: solid 0.5px $grey;
+          border-bottom: solid 0.5px $grey2;
           height: 85px;
           .message__thumbnail-mobile-title {
             display: grid;
@@ -249,7 +249,7 @@
         .message__detail-toolbar {
           font-size: $size-sm;
           padding: 0.25rem;
-          border-bottom: solid 0.5px $grey;
+          border-bottom: solid 0.5px $grey2;
           display: grid;
           grid-template-columns: 2% 48% 48% 2%; //Arrow, Subject, Patient, Logos
           align-items: center;
@@ -298,7 +298,7 @@
         .message__detail-content {
           .message {
             padding: 1rem;
-            border-bottom: solid 0.5px $grey;
+            border-bottom: solid 0.5px $grey2;
           }
           .message__title {
             display: flex;
@@ -328,7 +328,7 @@
             padding: 1rem;
             flex-wrap: wrap;
             .message__attachment-card {
-              border: solid 0.5px $grey;
+              border: solid 0.5px $grey2;
               margin: 0.5rem 0.25rem 0;
               width: 15%;
               .message__attachment-card-thumbnail {
@@ -416,7 +416,7 @@
   .message__detail-content {
     .message {
       padding: 1rem;
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
     }
     .message__title {
       display: flex;
@@ -446,7 +446,7 @@
       padding: 1rem;
       flex-wrap: wrap;
       .message__attachment-card {
-        border: solid 0.5px $grey;
+        border: solid 0.5px $grey2;
         margin: 0.5rem 0.25rem 0;
         .message__attachment-card-thumbnail {
           height: 80px;

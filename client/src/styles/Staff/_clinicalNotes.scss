@@ -198,7 +198,7 @@
     flex-wrap: wrap;
   }
   &__attachment-card {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     width: 30%;
     margin: 10px 5px 0;
   }
@@ -387,7 +387,7 @@
     }
     &-list {
       height: 85%;
-      border: solid 0.5px $grey;
+      border: solid 0.5px $grey2;
       border-radius: 6px;
       overflow-y: scroll;
       padding: 10px;

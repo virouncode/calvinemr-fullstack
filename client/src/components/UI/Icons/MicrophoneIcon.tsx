@@ -34,6 +34,7 @@ const MicrophoneIcon = ({
         color: color,
         zIndex: "1",
       }}
+      className="icon"
     />
   );
 };

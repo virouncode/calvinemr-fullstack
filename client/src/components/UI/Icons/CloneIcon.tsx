@@ -18,6 +18,7 @@ const CloneIcon = ({ onClick, ml = 0, mr = 0 }: CloneIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

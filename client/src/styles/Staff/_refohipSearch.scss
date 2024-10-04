@@ -24,7 +24,7 @@
     ul {
       flex: 1;
       overflow-y: scroll;
-      border: solid 0.5px $grey;
+      border: solid 0.5px $grey2;
       border-radius: 6px;
       padding-bottom: 0.5rem;
       .refohip__results-item {
@@ -33,7 +33,7 @@
         cursor: pointer;
         display: flex;
         justify-content: flex-start;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         &:hover {
           text-decoration: underline;
         }

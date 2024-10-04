@@ -17,6 +17,7 @@ const CameraIcon = ({ onClick, ml, mr }: CameraIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

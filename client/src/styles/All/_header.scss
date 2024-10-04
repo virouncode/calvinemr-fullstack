@@ -46,9 +46,6 @@
       li {
         font-weight: bold;
         cursor: pointer;
-        &:hover {
-          color: $black;
-        }
       }
     }
   }
@@ -60,6 +57,9 @@
       border: solid 1px $black;
       padding: 0.25rem 0.75rem;
       border-radius: 40px;
+    }
+    &:hover {
+      opacity: 0.85;
     }
   }
   .header__bars {

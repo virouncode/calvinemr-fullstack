@@ -17,6 +17,7 @@ const ClipboardIcon = ({ onClick, ml = 0, mr = 0 }: ClipboardIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

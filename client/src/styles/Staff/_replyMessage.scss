@@ -1,12 +1,12 @@
 .reply-message {
   min-height: 250px;
-  border: solid 0.5px $grey;
+  border: solid 0.5px $grey2;
   border-radius: 6px;
   margin: 1rem auto;
   width: 90%;
   overflow-y: scroll;
   .reply-message__recipients {
-    border-bottom: solid 0.5px $grey;
+    border-bottom: solid 0.5px $grey2;
     height: 30px;
     display: flex;
     align-items: center;
@@ -25,7 +25,7 @@
     }
   }
   .reply-message__subject {
-    border-bottom: solid 0.5px $grey;
+    border-bottom: solid 0.5px $grey2;
     height: 30px;
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@
     }
   }
   .reply-message__patient {
-    border-bottom: solid 0.5px $grey;
+    border-bottom: solid 0.5px $grey2;
     height: 30px;
     display: flex;
     align-items: center;
@@ -62,7 +62,7 @@
     }
   }
   .reply-message__attach {
-    border-bottom: solid 0.5px $grey;
+    border-bottom: solid 0.5px $grey2;
     min-height: 30px;
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@
     }
   }
   .reply-message__importance {
-    border-bottom: solid 0.5px $grey;
+    border-bottom: solid 0.5px $grey2;
     min-height: 30px;
     display: flex;
     align-items: center;
@@ -105,7 +105,7 @@
       padding: 1rem;
       flex-wrap: wrap;
       .message__attachment-card {
-        border: solid 0.5px $grey;
+        border: solid 0.5px $grey2;
         padding: 0.5rem 0.25rem 0;
         .message__attachment-card-thumbnail {
           height: 80px;
@@ -147,7 +147,7 @@
       flex-direction: column;
       .message {
         padding: 1rem;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
       }
       .message__title {
         display: flex;
@@ -176,7 +176,7 @@
   }
 
   .reply-message__btns {
-    border-top: solid 0.5px $grey;
+    border-top: solid 0.5px $grey2;
     display: flex;
     align-items: center;
     justify-content: flex-end;

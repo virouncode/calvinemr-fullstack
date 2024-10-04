@@ -26,6 +26,7 @@ const CheckIcon = ({
         marginRight: `${mr}px`,
         color: color,
       }}
+      className="icon"
     />
   );
 };

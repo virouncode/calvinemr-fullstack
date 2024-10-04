@@ -24,6 +24,7 @@ const ClockIcon = ({
         marginRight: `${mr}px`,
         color: color,
       }}
+      className="icon"
     />
   );
 };

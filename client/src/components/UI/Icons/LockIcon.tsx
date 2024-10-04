@@ -18,6 +18,7 @@ const LockIcon = ({ onClick, ml = 0, mr = 0 }: LockIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

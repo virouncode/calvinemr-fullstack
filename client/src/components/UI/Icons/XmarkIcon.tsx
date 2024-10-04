@@ -26,6 +26,7 @@ const XmarkIcon = ({
         marginRight: `${mr}px`,
         color: color,
       }}
+      className="icon"
     />
   );
 };

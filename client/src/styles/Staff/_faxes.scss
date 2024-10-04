@@ -107,7 +107,7 @@
         display: grid;
         grid-template-columns: 60% 15% 23% 2%;
         align-items: center;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         font-size: $size-sm;
         padding: 0.5rem;
         font-weight: bold;
@@ -124,7 +124,7 @@
         font-size: $size-sm;
         display: grid;
         padding: 0.5rem;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         align-items: center;
         grid-template-columns: 60% 15% 23% 2%;
         &:hover {
@@ -163,7 +163,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         gap: 0.5rem;
         &:hover {
           box-shadow: $box-shadow-default;
@@ -198,7 +198,7 @@
       .fax__detail-toolbar {
         font-size: $size-sm;
         padding: 0.25rem;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         display: grid;
         grid-template-columns: 5% 90% 5%;
         align-items: center;
@@ -295,7 +295,7 @@
 // }
 // .fax-attachment {
 //   &__card {
-//     border: solid 0.5px $grey;
+//     border: solid 0.5px $grey2;
 //     width: 30%;
 //     margin: 10px 5px 0;
 //   }

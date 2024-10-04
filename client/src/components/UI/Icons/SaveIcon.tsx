@@ -19,6 +19,7 @@ const SaveIcon = ({ onClick, ml = 0, mr = 0, color }: SaveIconProps) => {
         marginRight: `${mr}px`,
         color: color,
       }}
+      className="icon"
     />
   );
 };

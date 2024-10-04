@@ -12,7 +12,7 @@ const EyeIcon = ({ onClick, slash = false }: EyeIconProps) => {
     <FontAwesomeIcon
       icon={slash ? faEyeSlash : faEye}
       onClick={onClick}
-      className="eye-icon"
+      className="eye-icon icon"
     />
   );
 };

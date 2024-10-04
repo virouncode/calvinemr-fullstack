@@ -90,6 +90,12 @@
   background-color: $white;
 }
 
+.icon {
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
 // /*xs (tablets start)*/
 // @media (min-width: 475px) {
 //   .container,

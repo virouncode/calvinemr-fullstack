@@ -25,6 +25,7 @@ const PopUpIcon = ({
         color: "#FEFEFE",
         fontSize: "0.7rem",
       }}
+      className="icon"
     />
   );
 };

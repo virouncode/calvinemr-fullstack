@@ -25,6 +25,7 @@ const ExclamationIcon = ({
         marginRight: `${mr}px`,
         color: color,
       }}
+      className="icon"
     />
   );
 };

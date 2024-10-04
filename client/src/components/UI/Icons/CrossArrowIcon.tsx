@@ -24,6 +24,7 @@ const CrossArrowIcon = ({
         marginRight: `${mr}px`,
         touchAction: "none",
       }}
+      className="icon"
     />
   );
 };

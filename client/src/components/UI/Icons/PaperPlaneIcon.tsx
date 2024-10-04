@@ -23,6 +23,7 @@ const PaperPlaneIcon = ({
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

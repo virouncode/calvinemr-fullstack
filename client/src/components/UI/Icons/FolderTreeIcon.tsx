@@ -17,6 +17,7 @@ const FolderTreeIcon = ({ onClick, ml = 0, mr = 0 }: FolderTreeIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

@@ -31,6 +31,7 @@ const XmarkRectangleIcon = ({
         color: color,
       }}
       size={size}
+      className="icon"
     />
   );
 };

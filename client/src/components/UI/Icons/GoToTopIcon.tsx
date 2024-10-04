@@ -23,6 +23,7 @@ const GoToTopIcon = ({
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

@@ -11,7 +11,7 @@
     grid-template-columns: 1fr 3fr;
   }
   .new-message__contacts {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-sm;
     padding: 0.5rem;
@@ -41,14 +41,14 @@
     }
   }
   .new-message__form {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-sm;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     .new-message__form-recipients {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -66,7 +66,7 @@
       }
     }
     .new-message__form-subject {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -83,7 +83,7 @@
       }
     }
     .new-message__form-patient {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -102,7 +102,7 @@
       }
     }
     .new-message__form-attach {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -114,7 +114,7 @@
       }
     }
     .new-message__form-importance {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -136,7 +136,7 @@
       overflow-y: scroll;
       textarea {
         font-size: $size-sm;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         outline: none;
         padding: 0.5rem;
         width: 100%;
@@ -147,7 +147,7 @@
         padding: 1rem;
         flex-wrap: wrap;
         .message__attachment-card {
-          border: solid 0.5px $grey;
+          border: solid 0.5px $grey2;
           padding: 0.5rem 0.25rem 0;
           .message__attachment-card-thumbnail {
             height: 80px;
@@ -186,7 +186,7 @@
       }
     }
     .new-message__form-btns {
-      border-top: solid 0.5px $grey;
+      border-top: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -194,7 +194,7 @@
       padding: 0.5rem;
     }
     .new-message__form-duedate {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       padding: 0.5rem;
@@ -210,7 +210,7 @@
     }
   }
   .new-message__patients {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-sm;
     padding: 0.5rem;
@@ -229,7 +229,7 @@
         }
       }
       .patients__list {
-        border: solid 0.5px $grey;
+        border: solid 0.5px $grey2;
         border-radius: 6px;
         padding: 0.5rem;
         height: 450px;
@@ -250,7 +250,7 @@
   height: 100%;
   position: relative;
   .new-message-mobile__contacts {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-base;
     padding: 0.5rem;
@@ -291,7 +291,7 @@
     }
   }
   .new-message-mobile__form {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-base;
     display: flex;
@@ -299,7 +299,7 @@
     height: 100%;
     overflow-y: scroll;
     .new-message__form-recipients {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -317,7 +317,7 @@
       }
     }
     .new-message__form-subject {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -334,7 +334,7 @@
       }
     }
     .new-message__form-patient {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -353,7 +353,7 @@
       }
     }
     .new-message__form-attach {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -365,7 +365,7 @@
       }
     }
     .new-message__form-importance {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -387,7 +387,7 @@
       overflow-y: scroll;
       textarea {
         font-size: $size-base;
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         outline: none;
         padding: 0.5rem;
         width: 100%;
@@ -398,7 +398,7 @@
         padding: 15px;
         flex-wrap: wrap;
         .message__attachment-card {
-          border: solid 0.5px $grey;
+          border: solid 0.5px $grey2;
           margin: 0.5rem 0.25rem 0;
           .message__attachment-card-thumbnail {
             height: 80px;
@@ -437,7 +437,7 @@
       }
     }
     .new-message__form-btns {
-      border-top: solid 0.5px $grey;
+      border-top: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -445,7 +445,7 @@
       padding: 0.5rem;
     }
     .new-message__form-duedate {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       padding: 0.5rem;
@@ -461,7 +461,7 @@
     }
   }
   .new-message-mobile__patients {
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-sm;
     padding: 0.5rem;
@@ -492,7 +492,7 @@
         }
       }
       .patients__list {
-        border: solid 0.5px $grey;
+        border: solid 0.5px $grey2;
         border-radius: 6px;
         padding: 0.5rem;
         height: 400px;

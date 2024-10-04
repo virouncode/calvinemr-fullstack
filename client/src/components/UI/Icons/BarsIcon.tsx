@@ -19,6 +19,7 @@ const BarsIcon = ({ onClick, ml = 0, mr = 0 }: BarsIconProps) => {
         marginRight: `${mr}px`,
         fontSize: "1.5rem",
       }}
+      className="icon"
     />
   );
 };

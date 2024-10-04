@@ -23,6 +23,7 @@ const ArrowUpIcon = ({
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

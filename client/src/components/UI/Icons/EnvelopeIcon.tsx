@@ -19,6 +19,7 @@ const EnvelopeIcon = ({ onClick, ml = 0, mr = 0 }: EnvelopeIconProps) => {
         marginRight: `${mr}px`,
         fontSize: "0.7rem",
       }}
+      className="icon"
     />
   );
 };

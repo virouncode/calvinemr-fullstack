@@ -26,6 +26,7 @@ const PhoneIcon = ({
         color: color,
         fontSize: "0.7rem",
       }}
+      className="icon"
     />
   );
 };

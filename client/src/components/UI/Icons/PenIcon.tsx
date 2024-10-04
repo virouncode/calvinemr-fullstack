@@ -17,6 +17,7 @@ const PenIcon = ({ onClick, ml = 0, mr = 0 }: PenIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

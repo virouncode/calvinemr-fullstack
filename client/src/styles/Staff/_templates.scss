@@ -28,14 +28,14 @@
   }
   .templates__list {
     flex: 1;
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     overflow-y: scroll;
     padding: 0 0.5rem;
     font-size: $size-base;
     &-item {
       padding: 0.25rem;
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       text-align: left;
       span {
         cursor: pointer;
@@ -68,13 +68,13 @@
   }
   .templates__list {
     flex: 1;
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     overflow-y: scroll;
     padding: 0 0.5rem;
     &-item {
       padding: 0.25rem;
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       font-size: $size-sm;
       span {
         cursor: pointer;
@@ -113,7 +113,7 @@
       grid-template-columns: 1fr;
     }
     .message-template__form-contacts {
-      border: solid 0.5px $grey;
+      border: solid 0.5px $grey2;
       border-radius: 6px;
       padding: 0.5rem;
       .contacts {
@@ -155,12 +155,12 @@
       }
     }
     .message-template__form-message {
-      border: solid 0.5px $grey;
+      border: solid 0.5px $grey2;
       border-radius: 6px;
       display: flex;
       flex-direction: column;
       .message-template__form-message-recipients {
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         height: 30px;
         display: flex;
         align-items: center;
@@ -179,7 +179,7 @@
         }
       }
       .message-template__form-message-subject {
-        border-bottom: solid 0.5px $grey;
+        border-bottom: solid 0.5px $grey2;
         height: 30px;
         display: flex;
         align-items: center;
@@ -211,7 +211,7 @@
         }
       }
       .message-template__form-message-btns {
-        border-top: solid 0.5px $grey;
+        border-top: solid 0.5px $grey2;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -237,12 +237,12 @@
   }
   &-content {
     flex: 1;
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
     .fax-template__form-subject {
-      border-bottom: solid 0.5px $grey;
+      border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
       align-items: center;
@@ -300,7 +300,7 @@
   }
   .calvinai-template__form-content {
     flex: 1;
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     margin-bottom: 1rem;
     overflow: hidden;
@@ -362,7 +362,7 @@
   }
   .clinical-note-template__form-body {
     flex: 1;
-    border: solid 0.5px $grey;
+    border: solid 0.5px $grey2;
     border-radius: 6px;
     margin-bottom: 1rem;
     overflow: hidden;

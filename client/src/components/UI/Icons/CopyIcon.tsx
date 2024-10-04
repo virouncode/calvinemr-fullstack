@@ -17,6 +17,7 @@ const CopyIcon = ({ onClick, ml = 0, mr = 0 }: CopyIconProps) => {
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
       }}
+      className="icon"
     />
   );
 };

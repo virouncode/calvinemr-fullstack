@@ -18,7 +18,7 @@ const GearIcon = ({ onClick, ml = 0, mr = 0 }: GearIconProps) => {
         marginRight: `${mr}px`,
         fontSize: "1.2rem",
       }}
-      className="gear-icon"
+      className="gear-icon icon"
     />
   );
 };

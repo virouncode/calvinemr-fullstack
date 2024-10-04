@@ -166,13 +166,14 @@ const AddAttachmentToReportsForm = ({
 
   return (
     <div className="reports__form">
-      <form className="reports__content" onSubmit={handleSubmit}>
-        <div className="reports__row reports__row--btns">
+      <form className="reports__form-content" onSubmit={handleSubmit}>
+        {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+        <div className="reports__form-btn-container">
           <SubmitButton label="Save" />
           <CancelButton onClick={handleCancel} />
         </div>
-        {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-        <div className="reports__row">
+
+        <div className="reports__form-row">
           <Input
             label="Name"
             name="name"
@@ -181,15 +182,15 @@ const AddAttachmentToReportsForm = ({
             id="name"
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <label>Format</label>
           {formDatas.Format}
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <label>File extension</label>
           {formDatas.FileExtensionAndVersion}
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <GenericList
             name="Class"
             value={formDatas.Class || ""}
@@ -200,7 +201,7 @@ const AddAttachmentToReportsForm = ({
             placeHolder="Choose class..."
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <Input
             name="SubClass"
             value={formDatas.SubClass || ""}
@@ -209,7 +210,7 @@ const AddAttachmentToReportsForm = ({
             id="subclass"
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <InputDate
             label="Date of document"
             name="EventDateTime"
@@ -218,7 +219,7 @@ const AddAttachmentToReportsForm = ({
             id="date-of-doc"
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <InputDate
             label="Date received"
             name="ReceivedDateTime"
@@ -227,7 +228,7 @@ const AddAttachmentToReportsForm = ({
             id="date-received"
           />
         </div>
-        <div className="reports__row">
+        <div className="reports__form-row">
           <Input
             name="AuthorFreeText"
             value={formDatas.SourceAuthorPhysician?.AuthorFreeText || ""}
@@ -236,10 +237,10 @@ const AddAttachmentToReportsForm = ({
             id="author"
           />
         </div>
-        <div className="reports__row reports__row--special">
+        <div className="reports__form-row reports__form-row--special">
           <label>Reviewed by</label>
           <div>
-            <div className="reports__subrow">
+            <div className="reports__form-subrow">
               <Input
                 name="FirstName"
                 value={formDatas.ReportReviewed?.[0].Name?.FirstName || ""}
@@ -248,7 +249,7 @@ const AddAttachmentToReportsForm = ({
                 id="reviewed-first-name"
               />
             </div>
-            <div className="reports__subrow">
+            <div className="reports__form-subrow">
               <Input
                 name="LastName"
                 value={formDatas.ReportReviewed?.[0].Name?.LastName || ""}
@@ -257,7 +258,7 @@ const AddAttachmentToReportsForm = ({
                 id="reviewed-last-name"
               />
             </div>
-            <div className="reports__subrow">
+            <div className="reports__form-subrow">
               <Input
                 name="ReviewingOHIPPhysicianId"
                 value={
@@ -268,7 +269,7 @@ const AddAttachmentToReportsForm = ({
                 id="ohip"
               />
             </div>
-            <div className="reports__subrow">
+            <div className="reports__form-subrow">
               <InputDate
                 label="Date reviewed"
                 name="DateTimeReportReviewed"
@@ -281,7 +282,7 @@ const AddAttachmentToReportsForm = ({
             </div>
           </div>
         </div>
-        <div className="reports__row reports__row--text">
+        <div className="reports__form-row reports__form-row--text">
           <label htmlFor="notes">Notes</label>
           <textarea
             name="Notes"
@@ -293,7 +294,7 @@ const AddAttachmentToReportsForm = ({
         </div>
       </form>
       {formDatas.File && (
-        <div className="reports__preview">
+        <div className="reports__form-preview">
           <ReportViewer file={formDatas.File} />
         </div>
       )}

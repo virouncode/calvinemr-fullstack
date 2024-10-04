@@ -35,7 +35,7 @@ const TriangleIcon = ({
         fontSize: "0.7rem",
       }}
       ref={triangleRef}
-      className={className}
+      className={`${className} icon`}
     />
   );
 };
