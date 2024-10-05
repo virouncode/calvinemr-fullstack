@@ -193,7 +193,7 @@ const MyAccountStaff = () => {
             </div>
             <div className="myaccount__item">
               <label>OHIP#: </label>
-              <p>{tempFormDatas.licence_nbr}</p>
+              <p>{tempFormDatas.ohip_billing_nbr}</p>
             </div>
             <div className="myaccount__item">
               <InputTelToggle
