@@ -9,14 +9,17 @@ import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesM
 import {
   AttachmentType,
   DemographicsType,
+  EdocType,
   MessageAttachmentType,
   MessageTemplateType,
   MessageType,
+  PamphletType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -26,6 +29,7 @@ import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium"
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
 import StaffContacts from "../StaffContacts";
+import AddEdocsPamphlets from "./AddEdocsPamphlets";
 import MessagesAttachments from "./MessagesAttachments";
 import MessagesTemplates from "./Templates/MessagesTemplates";
 
@@ -48,6 +52,8 @@ const NewMessage = ({
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] =
     useState<Partial<MessageAttachmentType>[]>(initialAttachments);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [recipientsIds, setRecipientsIds] = useState<number[]>([]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState(initialBody || "");
@@ -56,6 +62,8 @@ const NewMessage = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
   const messagePost = useMessagePost(user.id, "Received messages");
@@ -116,16 +124,40 @@ const NewMessage = ({
     setAttachments(updatedAttachments);
   };
 
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+
   const handleSend = async () => {
     if (!recipientsIds.length) {
       toast.error("Please choose at least one recipient", { containerId: "A" });
       return;
     }
     setProgress(true);
-    let attach_ids = [];
-    if (attachments.length > 0) {
+    const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+      ...attachments,
+      ...(edocs.map((edoc) => ({
+        file: edoc.file,
+        alias: edoc.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+      ...(pamphlets.map((pamphlet) => ({
+        file: pamphlet.file,
+        alias: pamphlet.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+    ];
+    let attach_ids: number[] = [];
+    if (attachmentsToPost.length > 0) {
       attach_ids = await xanoPost("/messages_attachments", "staff", {
-        attachments_array: attachments,
+        attachments_array: attachmentsToPost,
       });
     }
     const messageToPost: Partial<MessageType> = {
@@ -218,6 +250,10 @@ const NewMessage = ({
     input.click();
   };
 
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
+
   return (
     <div className="new-message">
       <div className="new-message__contacts">
@@ -260,6 +296,13 @@ const NewMessage = ({
         <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
+        <div className="new-message__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
+          />
+        </div>
         <div className="new-message__form-importance">
           <div className="new-message__form-importance-check">
             <Checkbox
@@ -286,10 +329,16 @@ const NewMessage = ({
             autoFocus
             ref={textareaRef}
           />
-          {attachments.length > 0 && (
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
             <MessagesAttachments
               attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
               handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
               deletable={true}
               addable={false}
               cardWidth="30%"
@@ -313,7 +362,6 @@ const NewMessage = ({
           msgType="Internal"
         />
       </div>
-
       {templatesVisible && (
         <FakeWindow
           title={`CHOOSE MESSAGE TEMPLATE(S)`}
@@ -325,6 +373,25 @@ const NewMessage = ({
           setPopUpVisible={setTemplatesVisible}
         >
           <MessagesTemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
+          />
         </FakeWindow>
       )}
     </div>

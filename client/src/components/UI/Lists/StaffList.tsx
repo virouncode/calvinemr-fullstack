@@ -25,7 +25,7 @@ const StaffList = ({ value, name, handleChange }: StaffListProps) => {
         .filter(({ title }) => title !== "Secretary")
         .map((staff) => (
           <option value={staff.id} key={staff.id}>
-            {staffIdToTitleAndName(staffInfos, staff.id)}
+            {staffIdToTitleAndName(staffInfos, staff.id)} ({staff.title})
           </option>
         ))}
     </select>

@@ -66,7 +66,9 @@ const ClosedPracticianAccount = ({
           handleChange={handleChange}
           name="assignedMd"
         />
-        <SaveButton onClick={handleSubmit} />
+        <div className="closed-practician__form-btn">
+          <SaveButton onClick={handleSubmit} />
+        </div>
       </div>
     </div>
   );

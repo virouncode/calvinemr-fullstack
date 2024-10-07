@@ -327,9 +327,9 @@
             display: flex;
             padding: 1rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
             .message__attachment-card {
               border: solid 0.5px $grey2;
-              margin: 0.5rem 0.25rem 0;
               width: 15%;
               .message__attachment-card-thumbnail {
                 height: 80px;
@@ -371,6 +371,7 @@
           padding: 1rem;
           display: flex;
           align-items: center;
+          flex-wrap: wrap;
           gap: 0.25rem;
         }
       }
@@ -445,9 +446,9 @@
       display: flex;
       padding: 1rem;
       flex-wrap: wrap;
+      gap: 0.5rem;
       .message__attachment-card {
         border: solid 0.5px $grey2;
-        margin: 0.5rem 0.25rem 0;
         .message__attachment-card-thumbnail {
           height: 80px;
           overflow: hidden;

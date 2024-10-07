@@ -9,7 +9,9 @@ import { useMessagesPostBatch } from "../../../../hooks/reactquery/mutations/mes
 import {
   AttachmentType,
   DemographicsType,
+  EdocType,
   MessageAttachmentType,
+  PamphletType,
   TodoTemplateType,
   TodoType,
 } from "../../../../types/api";
@@ -21,6 +23,7 @@ import {
 import { titleToCategory } from "../../../../utils/messages/titleToCategory";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -33,6 +36,7 @@ import Patients from "../Patients";
 import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
+import AddEdocsPamphlets from "./AddEdocsPamphlets";
 
 type NewTodoMobileProps = {
   setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,6 +57,8 @@ const NewTodoMobile = ({
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] =
     useState<MessageAttachmentType[]>(initialAttachments);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [recipientsIds, setRecipientsIds] = useState([user.id]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState(initialBody);
@@ -62,6 +68,8 @@ const NewTodoMobile = ({
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [dueDate, setDueDate] = useState("");
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recipientsRef = useRef<HTMLDivElement | null>(null);
   const patientsRef = useRef<HTMLDivElement | null>(null);
@@ -129,10 +137,27 @@ const NewTodoMobile = ({
   const handleSave = async () => {
     try {
       setProgress(true);
+      const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+        ...attachments,
+        ...(edocs.map((edoc) => ({
+          file: edoc.file,
+          alias: edoc.name,
+          date_created: nowTZTimestamp(),
+          created_by_user_type: "staff",
+          created_by_id: user.id,
+        })) as Partial<MessageAttachmentType>[]),
+        ...(pamphlets.map((pamphlet) => ({
+          file: pamphlet.file,
+          alias: pamphlet.name,
+          date_created: nowTZTimestamp(),
+          created_by_user_type: "staff",
+          created_by_id: user.id,
+        })) as Partial<MessageAttachmentType>[]),
+      ];
       let attach_ids = [];
-      if (attachments.length > 0) {
+      if (attachmentsToPost.length > 0) {
         attach_ids = await xanoPost("/messages_attachments", "staff", {
-          attachments_array: attachments,
+          attachments_array: attachmentsToPost,
         });
       }
       const messagesToPost: Partial<TodoType>[] = [];
@@ -232,6 +257,15 @@ const NewTodoMobile = ({
       patientsRef.current.style.transform = "translateX(0)";
     }
   };
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
 
   return (
     <div className="new-message-mobile">
@@ -283,6 +317,13 @@ const NewTodoMobile = ({
         <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
+        <div className="new-message__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
+          />
+        </div>
         <div className="new-message__form-duedate">
           <InputDate
             value={dueDate}
@@ -312,13 +353,21 @@ const NewTodoMobile = ({
         </div>
         <div className="new-message__form-body">
           <textarea value={body} onChange={handleChange} ref={textareaRef} />
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-            cardWidth="30%"
-          />
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
+            <MessagesAttachments
+              attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
+              handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
         <div className="new-message__form-btns">
           <SaveButton
@@ -349,6 +398,25 @@ const NewTodoMobile = ({
           setPopUpVisible={setTemplatesVisible}
         >
           <TodosTemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
+          />
         </FakeWindow>
       )}
     </div>

@@ -104,9 +104,9 @@
       display: flex;
       padding: 1rem;
       flex-wrap: wrap;
+      gap: 0.5rem;
       .message__attachment-card {
         border: solid 0.5px $grey2;
-        padding: 0.5rem 0.25rem 0;
         .message__attachment-card-thumbnail {
           height: 80px;
           overflow: hidden;

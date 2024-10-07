@@ -86,10 +86,6 @@ const ClinicalNotesHeader = ({
     <div className="clinical-notes__header">
       <ClinicalNotesTitle
         demographicsInfos={demographicsInfos}
-        notesVisible={notesVisible}
-        setNotesVisible={setNotesVisible}
-        contentRef={contentRef}
-        triangleRef={triangleRef}
         setNewMessageVisible={setNewMessageVisible}
       />
       <ClinicalNotesToolBar

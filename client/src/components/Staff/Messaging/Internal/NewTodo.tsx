@@ -9,7 +9,9 @@ import { useMessagesPostBatch } from "../../../../hooks/reactquery/mutations/mes
 import {
   AttachmentType,
   DemographicsType,
+  EdocType,
   MessageAttachmentType,
+  PamphletType,
   TodoTemplateType,
   TodoType,
 } from "../../../../types/api";
@@ -31,8 +33,10 @@ import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium"
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
 import StaffContacts from "../StaffContacts";
+import AddEdocsPamphlets from "./AddEdocsPamphlets";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 
 type NewTodoProps = {
   setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,6 +57,8 @@ const NewTodo = ({
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] =
     useState<MessageAttachmentType[]>(initialAttachments);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [recipientsIds, setRecipientsIds] = useState([user.id]);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState(initialBody);
@@ -61,6 +67,8 @@ const NewTodo = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
@@ -127,10 +135,27 @@ const NewTodo = ({
   const handleSave = async () => {
     try {
       setProgress(true);
+      const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+        ...attachments,
+        ...(edocs.map((edoc) => ({
+          file: edoc.file,
+          alias: edoc.name,
+          date_created: nowTZTimestamp(),
+          created_by_user_type: "staff",
+          created_by_id: user.id,
+        })) as Partial<MessageAttachmentType>[]),
+        ...(pamphlets.map((pamphlet) => ({
+          file: pamphlet.file,
+          alias: pamphlet.name,
+          date_created: nowTZTimestamp(),
+          created_by_user_type: "staff",
+          created_by_id: user.id,
+        })) as Partial<MessageAttachmentType>[]),
+      ];
       let attach_ids = [];
-      if (attachments.length > 0) {
+      if (attachmentsToPost.length > 0) {
         attach_ids = await xanoPost("/messages_attachments", "staff", {
-          attachments_array: attachments,
+          attachments_array: attachmentsToPost,
         });
       }
       const messagesToPost: Partial<TodoType>[] = [];
@@ -220,6 +245,16 @@ const NewTodo = ({
     input.click();
   };
 
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
+
   return (
     <div className="new-message">
       <div className="new-message__contacts">
@@ -265,6 +300,13 @@ const NewTodo = ({
         <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
+        <div className="new-message__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
+          />
+        </div>
         <div className="new-message__form-duedate">
           <InputDate
             value={dueDate}
@@ -299,13 +341,21 @@ const NewTodo = ({
             ref={textareaRef}
             autoFocus
           />
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-            cardWidth="30%"
-          />
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
+            <MessagesAttachments
+              attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
+              handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
         <div className="new-message__form-btns">
           <SaveButton
@@ -334,6 +384,25 @@ const NewTodo = ({
           setPopUpVisible={setTemplatesVisible}
         >
           <TodosTemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
+          />
         </FakeWindow>
       )}
     </div>

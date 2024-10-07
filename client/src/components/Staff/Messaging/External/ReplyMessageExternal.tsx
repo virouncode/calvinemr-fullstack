@@ -9,9 +9,11 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
   AttachmentType,
+  EdocType,
   MessageAttachmentType,
   MessageExternalTemplateType,
   MessageExternalType,
+  PamphletType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
@@ -24,9 +26,11 @@ import Checkbox from "../../../UI/Checkbox/Checkbox";
 import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
+import AddEdocsPamphlets from "../Internal/AddEdocsPamphlets";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import MessageExternal from "./MessageExternal";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 axios.defaults.withCredentials = true;
 
 type ReplyMessageExternalProps = {
@@ -49,9 +53,13 @@ const ReplyMessageExternal = ({
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
   const [attachments, setAttachments] = useState<MessageAttachmentType[]>([]);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
   const messagePost = useMessageExternalPost();
@@ -78,13 +86,30 @@ const ReplyMessageExternal = ({
         (phone) => phone._phoneNumberType === "C"
       )?.phoneNumber ?? ""
     );
+    const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+      ...attachments,
+      ...(edocs.map((edoc) => ({
+        file: edoc.file,
+        alias: edoc.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+      ...(pamphlets.map((pamphlet) => ({
+        file: pamphlet.file,
+        alias: pamphlet.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+    ];
     let attach_ids: number[] = [];
-    if (attachments.length > 0) {
+    if (attachmentsToPost.length > 0) {
       const response: number[] = await xanoPost(
         "/messages_attachments",
         "staff",
         {
-          attachments_array: attachments,
+          attachments_array: attachmentsToPost,
         }
       );
       attach_ids = [
@@ -265,6 +290,15 @@ Powered by Calvin EMR`,
     );
     setAttachments(updatedAttachments);
   };
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
 
   return (
     <div className="reply-message">
@@ -294,6 +328,13 @@ Powered by Calvin EMR`,
       </div>
       <div className="reply-message__attach">
         <AttachFilesButton onClick={handleAttach} attachments={attachments} />
+      </div>
+      <div className="reply-message__attach">
+        <AttachEdocsPamphletsButton
+          onClick={handleEdocsPamphlets}
+          edocs={edocs}
+          pamphlets={pamphlets}
+        />
       </div>
       <div className="reply-message__importance">
         <div className="reply-message__importance-check">
@@ -331,13 +372,19 @@ Powered by Calvin EMR`,
             />
           ))}
         </div>
-        {attachments.length > 0 && (
+        {(attachments.length > 0 ||
+          edocs.length > 0 ||
+          pamphlets.length > 0) && (
           <MessagesAttachments
             attachments={attachments}
+            edocs={edocs}
+            pamphlets={pamphlets}
             handleRemoveAttachment={handleRemoveAttachment}
+            handleRemoveEdoc={handleRemoveEdoc}
+            handleRemovePamphlet={handleRemovePamphlet}
             deletable={true}
-            cardWidth="17%"
             addable={false}
+            cardWidth="30%"
           />
         )}
       </div>
@@ -362,6 +409,25 @@ Powered by Calvin EMR`,
         >
           <MessagesExternalTemplates
             handleSelectTemplate={handleSelectTemplate}
+          />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
           />
         </FakeWindow>
       )}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
@@ -14,6 +14,7 @@ import {
 import { copyTextToClipboard } from "../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import TriangleButton from "../../../UI/Buttons/TriangleButton";
 import CopyIcon from "../../../UI/Icons/CopyIcon";
 import EnvelopeIcon from "../../../UI/Icons/EnvelopeIcon";
 import PhoneIcon from "../../../UI/Icons/PhoneIcon";
@@ -22,23 +23,17 @@ import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 
 type ClinicalNotesTitleProps = {
   demographicsInfos: DemographicsType;
-  notesVisible: boolean;
-  setNotesVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  contentRef: React.MutableRefObject<HTMLDivElement | null>;
-  triangleRef: React.MutableRefObject<SVGSVGElement | null>;
   setNewMessageVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ClinicalNotesTitle = ({
   demographicsInfos,
-  notesVisible,
-  setNotesVisible,
-  contentRef,
-  triangleRef,
   setNewMessageVisible,
 }: ClinicalNotesTitleProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
+  const [allInfosVisible, setAllInfosVisible] = useState(true);
+  const triangleRef = useRef<SVGSVGElement | null>(null);
   //Queries
   const {
     data: patientAppointments,
@@ -51,11 +46,11 @@ const ClinicalNotesTitle = ({
   useFetchAllPages(fetchNextPage, hasNextPage);
 
   const handleTitleClick = () => {
-    if (!contentRef.current) return;
     if (triangleRef.current)
-      triangleRef.current.classList.toggle("triangle--active");
-    contentRef.current.classList.toggle("clinical-notes__content--active");
-    setNotesVisible((v) => !v);
+      triangleRef.current.style.transform = allInfosVisible
+        ? "rotate(180deg)"
+        : "rotate(90deg)";
+    setAllInfosVisible((v) => !v);
   };
 
   const handleClickMail = (
@@ -103,63 +98,72 @@ const ClinicalNotesTitle = ({
 
   return (
     <div className="clinical-notes__header-title" onClick={handleTitleClick}>
-      {/* <div className="clinical-notes__header-title-btn">
-        <TriangleButton
-          className={notesVisible ? "triangle triangle--active" : "triangle"}
-          color="#21201e"
-          triangleRef={triangleRef}
-        />
-      </div> */}
       <div className="clinical-notes__header-title-infos">
-        <span>
-          {toPatientName(demographicsInfos)},{" "}
-          {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
-          {getAgeTZ(demographicsInfos.DateOfBirth)}
-        </span>
-        <span>
-          Born {timestampToDateISOTZ(demographicsInfos.DateOfBirth)}, Chart#:{" "}
-          {demographicsInfos.ChartNumber}
-        </span>
-        <span
-          style={{ cursor: "pointer", textDecoration: "underline" }}
-          onClick={handleClickMail}
-        >
-          <EnvelopeIcon mr={2} /> {demographicsInfos.Email}
-        </span>
-        <span>
-          <PhoneIcon mr={2} />
-          {
-            demographicsInfos.PhoneNumber?.find(
-              ({ _phoneNumberType }) => _phoneNumberType === "C"
-            )?.phoneNumber
-          }
-          <CopyIcon onClick={handleCopyPhoneNumber} ml={5} />
-        </span>
-        <span>
-          Next appointment:{" "}
-          {patientNextAppointment
-            ? `${timestampToHumanDateTimeTZ(
-                patientNextAppointment.start
-              )} with ${staffIdToTitleAndName(
-                staffInfos,
-                patientNextAppointment.host_id
-              )}`
-            : "no appointment scheduled"}
-        </span>
-        <span>
-          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
+        <div className="clinical-notes__header-title-infos-demographics">
+          <div>
+            {toPatientName(demographicsInfos)},{" "}
+            {toCodeTableName(genderCT, demographicsInfos.Gender)},{" "}
+            {getAgeTZ(demographicsInfos.DateOfBirth)}
+          </div>
+          {allInfosVisible && (
             <>
-              {" "}
-              / <span style={{ color: "red" }}> Patient Inactive</span>
+              <div>
+                Born {timestampToDateISOTZ(demographicsInfos.DateOfBirth)},
+                Chart#: {demographicsInfos.ChartNumber}
+              </div>
+              <div
+                style={{ cursor: "pointer", textDecoration: "underline" }}
+                onClick={handleClickMail}
+              >
+                <EnvelopeIcon mr={2} /> {demographicsInfos.Email}
+              </div>
+              <div>
+                <PhoneIcon mr={2} />
+                {
+                  demographicsInfos.PhoneNumber?.find(
+                    ({ _phoneNumberType }) => _phoneNumberType === "C"
+                  )?.phoneNumber
+                }
+                <CopyIcon onClick={handleCopyPhoneNumber} ml={5} />
+              </div>
             </>
           )}
-          {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
-            <>
-              {" "}
-              / <span style={{ color: "red" }}> Patient Deceased</span>
-            </>
-          )}
-        </span>
+        </div>
+        {allInfosVisible && (
+          <div className="clinical-notes__header-title-infos-assignedmd">
+            Assigned practician:{" "}
+            {staffIdToTitleAndName(
+              staffInfos,
+              demographicsInfos.assigned_staff_id
+            )}
+          </div>
+        )}
+        {allInfosVisible && (
+          <div className="clinical-notes__header-title-infos-next">
+            Next appointment:{" "}
+            {patientNextAppointment
+              ? `${timestampToHumanDateTimeTZ(
+                  patientNextAppointment.start
+                )} with ${staffIdToTitleAndName(
+                  staffInfos,
+                  patientNextAppointment.host_id
+                )}`
+              : "no appointment scheduled"}
+          </div>
+        )}
+        {allInfosVisible && (
+          <div className="clinical-notes__header-title-infos-status">
+            {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "I" && (
+              <span style={{ color: "orange" }}>Patient Inactive</span>
+            )}
+            {demographicsInfos.PersonStatusCode?.PersonStatusAsEnum === "D" && (
+              <span style={{ color: "red" }}> Patient Deceased</span>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="clinical-notes__header-title-triangle">
+        <TriangleButton triangleRef={triangleRef} className="triangle-btn" />
       </div>
     </div>
   );

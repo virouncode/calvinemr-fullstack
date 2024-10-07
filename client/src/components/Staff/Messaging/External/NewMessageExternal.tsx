@@ -11,14 +11,17 @@ import { useMessageExternalPost } from "../../../../hooks/reactquery/mutations/m
 import {
   AttachmentType,
   DemographicsType,
+  EdocType,
   MessageAttachmentType,
   MessageExternalTemplateType,
   MessageExternalType,
+  PamphletType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -29,6 +32,7 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import Patients from "../Patients";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
+import AddEdocsPamphlets from "../Internal/AddEdocsPamphlets";
 axios.defaults.withCredentials = true;
 
 type NewMessageExternalProps = {
@@ -52,6 +56,8 @@ const NewMessageExternal = ({
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
   const [attachments, setAttachments] = useState(initialAttachments);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [recipients, setRecipients] = useState(initialRecipients);
   const [allPatientsChecked, setAllPatientsChecked] = useState(false);
   const [subject, setSubject] = useState("");
@@ -60,6 +66,8 @@ const NewMessageExternal = ({
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
   const messagePost = useMessageExternalPost();
@@ -163,16 +171,40 @@ const NewMessageExternal = ({
     setAttachments(updatedAttachments);
   };
 
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+
   const handleSend = async () => {
     if (!recipients.length) {
       toast.error("Please choose at least one recipient", { containerId: "A" });
       return;
     }
     setProgress(true);
+    const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+      ...attachments,
+      ...(edocs.map((edoc) => ({
+        file: edoc.file,
+        alias: edoc.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+      ...(pamphlets.map((pamphlet) => ({
+        file: pamphlet.file,
+        alias: pamphlet.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+    ];
     let attach_ids = [];
-    if (attachments.length > 0) {
+    if (attachmentsToPost.length > 0) {
       attach_ids = await xanoPost("/messages_attachments", "staff", {
-        attachments_array: attachments,
+        attachments_array: attachmentsToPost,
       });
     }
     const messageToPost: Partial<MessageExternalType> = {
@@ -317,6 +349,10 @@ const NewMessageExternal = ({
     input.click();
   };
 
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
+
   return (
     <div className="new-message new-message--external">
       <div className="new-message__form">
@@ -340,6 +376,13 @@ const NewMessageExternal = ({
         </div>
         <div className="new-message__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
+        </div>
+        <div className="new-message__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
+          />
         </div>
         <div className="new-message__form-importance">
           <div className="new-message__form-importance-check">
@@ -367,12 +410,18 @@ const NewMessageExternal = ({
             ref={textareaRef}
             autoFocus
           />
-          {attachments.length > 0 && (
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
             <MessagesAttachments
               attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
+              handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
               deletable={true}
               addable={false}
-              handleRemoveAttachment={handleRemoveAttachment}
               cardWidth="30%"
             />
           )}
@@ -410,6 +459,25 @@ const NewMessageExternal = ({
         >
           <MessagesExternalTemplates
             handleSelectTemplate={handleSelectTemplate}
+          />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
           />
         </FakeWindow>
       )}

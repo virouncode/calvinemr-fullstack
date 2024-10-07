@@ -810,6 +810,10 @@ const DemographicsPopUp = ({
               ) : (
                 <p>
                   {staffIdToTitleAndName(staffInfos, formDatas?.assignedMd)}
+                  {` (${
+                    staffInfos.find(({ id }) => id === formDatas?.assignedMd)
+                      ?.title
+                  })`}
                 </p>
               )}
             </div>

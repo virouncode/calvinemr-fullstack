@@ -8,14 +8,17 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagePost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
   AttachmentType,
+  EdocType,
   MessageAttachmentType,
   MessageExternalType,
   MessageTemplateType,
   MessageType,
+  PamphletType,
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -25,6 +28,7 @@ import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium"
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import MessageExternal from "../External/MessageExternal";
 import StaffContacts from "../StaffContacts";
+import AddEdocsPamphlets from "./AddEdocsPamphlets";
 import Message from "./Message";
 import MessagesAttachments from "./MessagesAttachments";
 import MessagesTemplates from "./Templates/MessagesTemplates";
@@ -49,12 +53,16 @@ const ForwardMessageMobile = ({
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [attachments, setAttachments] = useState<MessageAttachmentType[]>([]);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
   const [recipientsIds, setRecipientsIds] = useState<number[]>([]);
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
@@ -93,13 +101,30 @@ const ForwardMessageMobile = ({
       return;
     }
     setProgress(true);
+    const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+      ...attachments,
+      ...(edocs.map((edoc) => ({
+        file: edoc.file,
+        alias: edoc.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+      ...(pamphlets.map((pamphlet) => ({
+        file: pamphlet.file,
+        alias: pamphlet.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+    ];
     let attach_ids: number[] = [];
-    if (attachments.length > 0) {
+    if (attachmentsToPost.length > 0) {
       const response: number[] = await xanoPost(
         "/messages_attachments",
         "staff",
         {
-          attachments_array: attachments,
+          attachments_array: attachmentsToPost,
         }
       );
       attach_ids = [
@@ -222,6 +247,16 @@ const ForwardMessageMobile = ({
       recipientsRef.current.style.transform = "translateX(0)";
     }
   };
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
+  };
+
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
+  };
 
   return (
     <div className="forward-message-mobile">
@@ -235,7 +270,7 @@ const ForwardMessageMobile = ({
       </div>
       <div className="forward-message-mobile__form">
         <div
-          className="forward-message__form-recipients"
+          className="forward-message-mobile__form-recipients"
           onClick={handleClickRecipients}
         >
           <Input
@@ -249,24 +284,44 @@ const ForwardMessageMobile = ({
             readOnly={true}
           />
         </div>
-        <div className="forward-message__form-subject">
-          <strong>Subject:</strong>
-          {previousMsgs.length
-            ? `\u00A0Fwd: ${message.subject.slice(
-                message.subject.indexOf(":") + 1
-              )}`
-            : `\u00A0Fwd: ${message.subject}`}
+        <div className="forward-message-mobile__form-subject">
+          <Input
+            value={
+              previousMsgs.length
+                ? `\u00A0Fwd: ${message.subject.slice(
+                    message.subject.indexOf(":") + 1
+                  )}`
+                : `\u00A0Fwd: ${message.subject}`
+            }
+            readOnly={true}
+            id="subject"
+            label="Subject:"
+            placeholder="Subject"
+          />
         </div>
         {patientName && (
-          <div className="forward-message__form-patient">
-            <strong>About patient: {"\u00A0"}</strong> {patientName}
+          <div className="forward-message-mobile__form-patient">
+            <Input
+              id="relatedPatient"
+              label="About Patient:"
+              placeholder="Patient"
+              value={patientName}
+              readOnly
+            />
           </div>
         )}
-        <div className="forward-message__form-attach">
+        <div className="forward-message-mobile__form-attach">
           <AttachFilesButton onClick={handleAttach} attachments={attachments} />
         </div>
-        <div className="forward-message__form-importance">
-          <div className="forward-message__form-importance-check">
+        <div className="forward-message-mobile__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
+          />
+        </div>
+        <div className="forward-message-mobile__form-importance">
+          <div className="forward-message-mobile__form-importance-check">
             <Checkbox
               name="high_importance"
               id="importance"
@@ -284,9 +339,9 @@ const ForwardMessageMobile = ({
             </strong>
           </div>
         </div>
-        <div className="forward-message__form-body">
+        <div className="forward-message-mobile__form-body">
           <textarea value={body} onChange={handleChange} ref={textareaRef} />
-          <div className="forward-message__form-history">
+          <div className="forward-message-mobile__form-history">
             <Message
               message={message}
               key={message.id}
@@ -310,15 +365,23 @@ const ForwardMessageMobile = ({
               )
             )}
           </div>
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            cardWidth="30%"
-            addable={false}
-          />
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
+            <MessagesAttachments
+              attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
+              handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
-        <div className="forward-message__form-btns">
+        <div className="forward-message-mobile__form-btns">
           <SaveButton
             onClick={handleSend}
             disabled={isLoadingFile || progress}
@@ -339,6 +402,25 @@ const ForwardMessageMobile = ({
           setPopUpVisible={setTemplatesVisible}
         >
           <MessagesTemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
+          />
         </FakeWindow>
       )}
     </div>

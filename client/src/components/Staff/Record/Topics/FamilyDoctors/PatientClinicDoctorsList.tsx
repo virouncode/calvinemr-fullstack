@@ -78,6 +78,7 @@ const PatientClinicDoctorsList = ({
                   site={
                     sites?.find(({ id }) => id === item.site_id) as SiteType
                   }
+                  demographicsInfos={demographicsInfos}
                 />
               ))
             ) : (

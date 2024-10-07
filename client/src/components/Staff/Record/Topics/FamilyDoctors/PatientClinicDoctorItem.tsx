@@ -7,7 +7,11 @@ import {
   provinceStateTerritoryCT,
   toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
-import { SiteType, StaffType } from "../../../../../types/api";
+import {
+  DemographicsType,
+  SiteType,
+  StaffType,
+} from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
@@ -16,12 +20,14 @@ type PatientClinicDoctorItemProps = {
   item: StaffType;
   patientId: number;
   site: SiteType;
+  demographicsInfos: DemographicsType;
 };
 
 const PatientClinicDoctorItem = ({
   item,
   patientId,
   site,
+  demographicsInfos,
 }: PatientClinicDoctorItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
@@ -74,11 +80,15 @@ const PatientClinicDoctorItem = ({
     site && (
       <tr className="doctors__item">
         <td>
-          <Button
-            onClick={handleRemoveFromPatient}
-            disabled={progress}
-            label="Remove from patient"
-          />
+          {demographicsInfos.assigned_staff_id === item.id ? (
+            "Assigned practician"
+          ) : (
+            <Button
+              onClick={handleRemoveFromPatient}
+              disabled={progress}
+              label="Remove from patient"
+            />
+          )}
         </td>
         <td>{item.last_name}</td>
         <td>{item.first_name}</td>
