@@ -621,34 +621,39 @@ const AppointmentItem = ({
         ref={lastItemRef}
       >
         <td>
-          {(isSecretary() || user.id === itemInfos.host_id) && (
-            <div className="appointments__item-btn-container">
-              {!editVisible ? (
-                <>
-                  <EditButton
-                    onClick={handleEditClick}
-                    disabled={
-                      (item.recurrence === "Once" &&
-                        item.end < nowTZTimestamp()) ||
-                      progress
-                    }
-                  />
-                  <DeleteButton
-                    onClick={handleDeleteClick}
-                    disabled={progress}
-                  />
-                </>
-              ) : (
-                <>
-                  <SaveButton onClick={handleSubmit} disabled={progress} />
-                  <CancelButton onClick={handleCancel} disabled={progress} />
-                </>
-              )}
-            </div>
-          )}
+          {/* {(isSecretary() || user.id === itemInfos.host_id) && ( */}
+          <div className="appointments__item-btn-container">
+            {!editVisible ? (
+              <>
+                <EditButton
+                  onClick={handleEditClick}
+                  disabled={
+                    (item.recurrence === "Once" &&
+                      item.end < nowTZTimestamp()) ||
+                    progress
+                  }
+                />
+                <DeleteButton onClick={handleDeleteClick} disabled={progress} />
+              </>
+            ) : (
+              <>
+                <SaveButton onClick={handleSubmit} disabled={progress} />
+                <CancelButton onClick={handleCancel} disabled={progress} />
+              </>
+            )}
+          </div>
+          {/* )} */}
         </td>
         <td style={{ minWidth: "170px" }}>
-          {editVisible && isSecretary() ? (
+          {/* {editVisible && isSecretary() ? (
+            <HostsSelect
+              handleHostChange={handleHostChange}
+              hostId={itemInfos.host_id}
+            />
+          ) : (
+            <p>{staffIdToTitleAndName(staffInfos, item.host_id)}</p>
+          )} */}
+          {editVisible ? (
             <HostsSelect
               handleHostChange={handleHostChange}
               hostId={itemInfos.host_id}

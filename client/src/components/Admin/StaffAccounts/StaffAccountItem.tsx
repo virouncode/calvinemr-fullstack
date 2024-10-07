@@ -25,8 +25,9 @@ const StaffAccountItem = ({
     <tr
       style={{
         color:
-          staff.account_status === "Suspended" ||
-          staff.account_status === "Closed"
+          staff.account_status === "Suspended"
+            ? "orange"
+            : staff.account_status === "Closed"
             ? "red"
             : "",
       }}

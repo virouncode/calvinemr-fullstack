@@ -114,12 +114,12 @@ const EventElementTimegrid = ({
           </>
         )}
       </div>
-      {(event.extendedProps.host === user.id || user.title === "Secretary") && (
-        <div className="calendar__event-element-day-btns">
-          <CloneIcon ml={5} mr={5} onClick={(e) => handleCopyEvent(e, info)} />
-          <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
-        </div>
-      )}
+      {/* {(event.extendedProps.host === user.id || user.title === "Secretary") && ( */}
+      <div className="calendar__event-element-day-btns">
+        <CloneIcon ml={5} mr={5} onClick={(e) => handleCopyEvent(e, info)} />
+        <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
+      </div>
+      {/* )} */}
     </div>
   );
 };

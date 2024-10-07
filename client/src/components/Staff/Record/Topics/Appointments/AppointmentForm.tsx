@@ -27,7 +27,6 @@ import {
   staffIdToLastName,
   staffIdToOHIP,
 } from "../../../../../utils/names/staffIdToName";
-import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toRoomTitle } from "../../../../../utils/names/toRoomTitle";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
@@ -576,14 +575,18 @@ const AppointmentForm = ({
         </div>
       </td>
       <td style={{ minWidth: "170px" }}>
-        {isSecretary() ? (
+        {/* {isSecretary() ? (
           <HostsSelect
             handleHostChange={handleHostChange}
             hostId={formDatas.host_id}
           />
         ) : (
           <p>{staffIdToTitleAndName(staffInfos, user.id)}</p>
-        )}
+        )} */}
+        <HostsSelect
+          handleHostChange={handleHostChange}
+          hostId={formDatas.host_id}
+        />
       </td>
       <td>
         <Input

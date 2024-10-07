@@ -153,14 +153,14 @@ Cellphone: ${
     }
   };
 
-  if (
-    staffInfos.find(({ id }) => id === user.demographics.assigned_staff_id)
-      ?.account_status === "Closed"
-  ) {
+  const assignedStaff = staffInfos.find(
+    ({ id }) => id === user.demographics.assigned_staff_id
+  );
+  if (assignedStaff?.account_status === "Closed") {
     return (
       <div className="patient-appointments__new">
         <div className="patient-appointments__new-title">
-          Requestnew appointment
+          Request new appointment
         </div>
         <div className="patient-appointments__new-practician">
           <label>With: </label>

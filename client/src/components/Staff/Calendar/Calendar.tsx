@@ -86,7 +86,7 @@ const Calendar = () => {
   const [hostsIds, setHostsIds] = useState(
     user.title === "Secretary"
       ? [
-          0, //no host yet
+          0, //no host yet (grey events)
           ...(staffInfos
             .filter(({ site_id }) => site_id === user.site_id)
             .map(({ id }) => id) as number[]), //all staff from the secretary site

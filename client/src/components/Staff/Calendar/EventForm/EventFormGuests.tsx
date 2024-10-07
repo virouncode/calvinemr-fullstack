@@ -76,20 +76,20 @@ const EventFormGuests = ({
           handleRemovePatientGuest={handleRemovePatientGuest}
         />
       </div>
-      {editable && (
-        <div className="event-form__guests-search">
-          <GuestsSearch
-            hostId={hostId}
-            staff_guests_ids={
-              formDatas.staff_guests_ids as { staff_infos: StaffType }[]
-            }
-            handleAddPatientGuest={handleAddPatientGuest}
-            handleAddStaffGuest={handleAddStaffGuest}
-            patientsIdsToExclude={patientsIdsToExclude}
-            invitationsSent={formDatas.invitations_sent}
-          />
-        </div>
-      )}
+      {/* {editable && ( */}
+      <div className="event-form__guests-search">
+        <GuestsSearch
+          hostId={hostId}
+          staff_guests_ids={
+            formDatas.staff_guests_ids as { staff_infos: StaffType }[]
+          }
+          handleAddPatientGuest={handleAddPatientGuest}
+          handleAddStaffGuest={handleAddStaffGuest}
+          patientsIdsToExclude={patientsIdsToExclude}
+          invitationsSent={formDatas.invitations_sent}
+        />
+      </div>
+      {/* )} */}
     </div>
   );
 };

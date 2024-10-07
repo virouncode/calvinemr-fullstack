@@ -8,7 +8,7 @@
 }
 .event-form__host {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   column-gap: 3rem;
   row-gap: 1rem;
   padding-bottom: 1rem;
@@ -19,6 +19,10 @@
     label {
       font-weight: bold;
       margin-bottom: 0.25rem;
+    }
+    input,
+    select {
+      width: 100%;
     }
   }
 }

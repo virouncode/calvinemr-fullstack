@@ -41,8 +41,8 @@ const useCalendarShortcuts = (
         fcRef.current && fcRef.current.getApi().today();
       } else if (
         currentEvent.current &&
-        (currentEvent.current.extendedProps?.host === user.id ||
-          user.title === "Secretary") &&
+        // (currentEvent.current.extendedProps?.host === user.id ||
+        //   user.title === "Secretary") &&
         (e.key === "Backspace" || e.key === "Delete")
       ) {
         // Backspace or Delete key

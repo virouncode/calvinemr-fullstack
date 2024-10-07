@@ -65,21 +65,21 @@ const EventElement = ({
           <div className="calendar__event-element-purpose">
             {event.extendedProps.purpose ?? "Appointment"}
           </div>
-          {(event.extendedProps.host === user.id ||
-            user.title === "Secretary") && (
-            <div className="calendar__event-element-btns">
-              <CloneIcon
-                ml={5}
-                mr={5}
-                onClick={(e) => handleCopyEvent(e, info)}
-              />
-              <TrashIcon
-                onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
-                  handleDeleteEvent(e, info)
-                }
-              />
-            </div>
-          )}
+          {/* {(event.extendedProps.host === user.id ||
+            user.title === "Secretary") && ( */}
+          <div className="calendar__event-element-btns">
+            <CloneIcon
+              ml={5}
+              mr={5}
+              onClick={(e) => handleCopyEvent(e, info)}
+            />
+            <TrashIcon
+              onClick={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) =>
+                handleDeleteEvent(e, info)
+              }
+            />
+          </div>
+          {/* )} */}
         </div>
       </div>
       <div className="calendar__event-element-guests">

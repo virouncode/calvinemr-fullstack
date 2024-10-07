@@ -128,17 +128,13 @@ const EventElementListWeek = ({
         )}
       </div>
       <div className="calendar__event-element-list-btns">
-        {(event.extendedProps.host === user.id ||
-          user.title === "Secretary") && (
-          <div>
-            <CloneIcon
-              ml={5}
-              mr={5}
-              onClick={(e) => handleCopyEvent(e, info)}
-            />
-            <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
-          </div>
-        )}
+        {/* {(event.extendedProps.host === user.id ||
+          user.title === "Secretary") && ( */}
+        <div>
+          <CloneIcon ml={5} mr={5} onClick={(e) => handleCopyEvent(e, info)} />
+          <TrashIcon onClick={(e) => handleDeleteEvent(e, info)} />
+        </div>
+        {/* )} */}
       </div>
     </div>
   );

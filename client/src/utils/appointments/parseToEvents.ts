@@ -127,9 +127,11 @@ export const parseToEvent = (
     textColor: textColor,
     display: "block",
     allDay: appointment.all_day,
-    editable: appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
-    resourceEditable:
-      appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
+    // editable: appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
+    editable: true,
+    // resourceEditable:
+    //   appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
+    resourceEditable: true,
     resourceId: rooms?.find(({ id }) => id === appointment.room_id)
       ?.id as string,
     rrule: appointment.rrule?.freq

@@ -145,7 +145,7 @@ const ReportInboxFormSecretary = ({
         ?.account_status === "Closed"
     ) {
       setErrMsg(
-        "This patient's assigned practitioner is no longer working at the clinic, please assign a new practitioner to the patient in the patient's record"
+        "This patient's assigned practitioner is no longer working at the clinic, please assign a new practitioner to the patient in the patient's record before posting a report"
       );
       return;
     }

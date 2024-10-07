@@ -1041,12 +1041,13 @@ const EventForm = ({
     <>
       {!invitationVisible ? (
         <form
-          className={
-            user.title === "Secretary" ||
-            currentEvent.current?.extendedProps?.host === user.id
-              ? "event-form"
-              : "event-form event-form--uneditable"
-          }
+          // className={
+          //   user.title === "Secretary" ||
+          //   currentEvent.current?.extendedProps?.host === user.id
+          //     ? "event-form"
+          //     : "event-form event-form--uneditable"
+          // }
+          className="event-form"
           onSubmit={handleSubmit}
         >
           {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}

@@ -10,6 +10,8 @@ type HostOptionProps = {
 const HostOption = ({ staff }: HostOptionProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
+  console.log(staff);
+
   return (
     <option value={staff.id} key={staff.id}>
       {staffIdToTitleAndName(staffInfos, staff.id)} ({staff.title})
