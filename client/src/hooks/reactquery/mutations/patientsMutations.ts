@@ -5,13 +5,11 @@ import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { DemographicsType } from "../../../types/api";
 import { UserPatientType, UserStaffType } from "../../../types/app";
 import useSocketContext from "../../context/useSocketContext";
-import useStaffInfosContext from "../../context/useStaffInfosContext";
 import useUserContext from "../../context/useUserContext";
 
 export const usePatientPut = (patientId: number) => {
   const queryClient = useQueryClient();
   const { socket } = useSocketContext();
-  const { staffInfos } = useStaffInfosContext();
   const { user } = useUserContext() as {
     user: UserStaffType | UserPatientType;
   };
@@ -33,27 +31,6 @@ export const usePatientPut = (patientId: number) => {
     onSuccess: (data: DemographicsType) => {
       socket?.emit("message", { key: ["patient", patientId] });
       socket?.emit("message", { key: ["patients"] });
-      if (
-        !staffInfos
-          .find(({ id }) => id === data.assigned_staff_id)
-          ?.patients.includes(data.patient_id)
-      ) {
-        socket?.emit("message", {
-          route: "STAFF INFOS",
-          action: "update",
-          content: {
-            id: data.assigned_staff_id,
-            data: {
-              ...staffInfos.find(({ id }) => id === data.assigned_staff_id),
-              patients: [
-                ...(staffInfos.find(({ id }) => id === data.assigned_staff_id)
-                  ?.patients ?? []),
-                data.patient_id,
-              ],
-            },
-          },
-        });
-      }
       if (userType === "patient") {
         socket?.emit("message", {
           route: "USER",

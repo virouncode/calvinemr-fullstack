@@ -2,6 +2,8 @@ import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
+import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { usePatientPut } from "../../../../../hooks/reactquery/mutations/patientsMutations";
@@ -21,6 +23,7 @@ import {
   AttachmentType,
   DemographicsFormType,
   DemographicsType,
+  StaffType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
@@ -75,6 +78,7 @@ const DemographicsPopUp = ({
 }: DemographicsPopUpProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
@@ -115,7 +119,7 @@ const DemographicsPopUp = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setErrMsgPost("");
-    const value = e.target.value;
+    let value: string | number = e.target.value;
     const name = e.target.name;
     if (name === "postalCode") {
       postalOrZip === "postal"
@@ -128,6 +132,9 @@ const DemographicsPopUp = ({
             zipCode: value,
           });
       return;
+    }
+    if (name === "assignedMd") {
+      value = parseInt(value);
     }
     setFormDatas({ ...(formDatas as DemographicsFormType), [name]: value });
   };
@@ -449,6 +456,37 @@ const DemographicsPopUp = ({
     };
     //Submission
     setProgress(true);
+
+    if (
+      !staffInfos
+        .find(({ id }) => id === formDatas?.assignedMd)
+        ?.patients.includes(patientId)
+    ) {
+      const staffToPut: StaffType = {
+        ...(staffInfos.find(
+          ({ id }) => id === formDatas?.assignedMd
+        ) as StaffType),
+        patients: [
+          ...(staffInfos.find(({ id }) => id === formDatas?.assignedMd)
+            ?.patients ?? []),
+          patientId,
+        ],
+      };
+      //Submission
+      const response: StaffType = await xanoPut(
+        `/staff/${formDatas?.assignedMd}`,
+        "staff",
+        staffToPut
+      );
+      socket?.emit("message", {
+        route: "STAFF INFOS",
+        action: "update",
+        content: {
+          id: response.id,
+          data: response,
+        },
+      });
+    }
     patientPut.mutate(patientToPut, {
       onSuccess: () => {
         setEditVisible(false);
