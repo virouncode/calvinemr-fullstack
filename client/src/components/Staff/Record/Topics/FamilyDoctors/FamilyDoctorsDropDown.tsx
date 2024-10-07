@@ -5,7 +5,11 @@ import {
   provinceStateTerritoryCT,
   toCodeTableName,
 } from "../../../../../omdDatas/codesTables";
-import { DoctorType, XanoPaginatedType } from "../../../../../types/api";
+import {
+  DemographicsType,
+  DoctorType,
+  XanoPaginatedType,
+} from "../../../../../types/api";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
@@ -16,6 +20,7 @@ type FamilyDoctorsDropDownProps = {
   isPending: boolean;
   error: Error | null;
   patientId: number;
+  demographicsInfos: DemographicsType;
 };
 
 const FamilyDoctorsDropDown = ({
@@ -23,6 +28,7 @@ const FamilyDoctorsDropDown = ({
   isPending,
   error,
   patientId,
+  demographicsInfos,
 }: FamilyDoctorsDropDownProps) => {
   const { staffInfos } = useStaffInfosContext();
   const patientClinicDoctors = staffInfos.filter(
@@ -71,6 +77,9 @@ const FamilyDoctorsDropDown = ({
             {patientClinicDoctors.slice(0, 4).map((item) => (
               <li key={item.id} className="topic-content__item">
                 - Dr. {item.first_name} {item.last_name}, {item.speciality}
+                {demographicsInfos.assigned_staff_id === item.id
+                  ? " (assigned)"
+                  : ""}
               </li>
             ))}
             <li>...</li>

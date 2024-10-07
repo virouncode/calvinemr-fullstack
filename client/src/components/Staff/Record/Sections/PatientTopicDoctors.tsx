@@ -92,6 +92,7 @@ const PatientTopicDoctors = ({
           isPending={isPendingPatientDoctors}
           error={errorPatientDoctors}
           patientId={patientId}
+          demographicsInfos={demographicsInfos}
         />
         {popUpVisible && (
           <FakeWindow
