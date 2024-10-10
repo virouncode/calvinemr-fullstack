@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { splitStaffInfos } from "../../../utils/appointments/splitStaffInfos";
 import { categoryToTitle } from "../../../utils/names/categoryToTitle";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
 import StaffContactsCategory from "./StaffContactsCategory";
 
@@ -84,6 +85,17 @@ const StaffContacts = ({
       recipientsRef.current.style.transform = "translateX(-200%)";
   };
 
+  const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setRecipientsIds(activeStaff.map(({ id }) => id));
+      setCategories(categoriesInfos.map(({ name }) => name));
+    } else {
+      setRecipientsIds([]);
+      setCategories([]);
+    }
+  };
+
   return (
     <div className="contacts">
       <div className="contacts__title">
@@ -93,6 +105,16 @@ const StaffContacts = ({
         )}
       </div>
       <div className="contacts__list">
+        <div className="contacts__list-category">
+          <div className="contacts__list-category-overview">
+            <Checkbox
+              id="all"
+              onChange={handleCheckAll}
+              checked={recipientsIds.length === activeStaff.length}
+              label="All"
+            />
+          </div>
+        </div>
         {categoriesInfos
           .filter((category) => category.infos.length !== 0)
           .map((category) => (

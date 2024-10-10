@@ -23,7 +23,7 @@ const FilterCheckboxes = ({
     ({ account_status }) => account_status !== "Closed"
   );
   const [categories, setCategories] = useState<string[]>([]);
-  const categoriesInfos = splitStaffInfos(staffInfos, true);
+  const categoriesInfos = splitStaffInfos(staffInfos);
 
   const isChecked = (id: number) => hostsIds.includes(id);
 
