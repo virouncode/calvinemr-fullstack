@@ -65,31 +65,31 @@ export const demographicsSchema = yup.object({
   status: yup.string().required("Person status field is required"),
   assignedMd: yup
     .string()
-    .required("Assigned clinic physician field is required"),
+    .required("Assigned clinic practicioner field is required"),
   pPhysicianFirstName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Primary physician first name",
+    message: "Invalid primary physician first name",
     excludeEmptyString: true,
   }),
   pPhysicianLastName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Primary physician last name",
+    message: "Invalid primary physician last name",
     excludeEmptyString: true,
   }),
   pPhysicianOHIP: yup.string(),
   pPhysicianCPSO: yup.string(),
   rPhysicianFirstName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Referred physician first name",
+    message: "Invalid referred physician first name",
     excludeEmptyString: true,
   }),
   rPhysicianLastName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Referred physician last name",
+    message: "Invalid referred physician last name",
     excludeEmptyString: true,
   }),
   fPhysicianFirstName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Family physician first name",
+    message: "Invalid family physician first name",
     excludeEmptyString: true,
   }),
   fPhysicianLastName: yup.string().matches(/^[^0-9]*$/, {
-    message: "Invalid Family physician last name",
+    message: "Invalid family physician last name",
     excludeEmptyString: true,
   }),
   emergencyFirstName: yup.string().matches(/^[^0-9]*$/, {

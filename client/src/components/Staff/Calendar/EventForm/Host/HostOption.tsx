@@ -13,7 +13,7 @@ const HostOption = ({ staff }: HostOptionProps) => {
 
   return (
     <option value={staff.id} key={staff.id}>
-      {staffIdToTitleAndName(staffInfos, staff.id)} ({staff.title})
+      {staffIdToTitleAndName(staffInfos, staff.id)}
     </option>
   );
 };

@@ -188,7 +188,7 @@ const DemographicsDropDown = ({
           {demographicsInfos.PreferredOfficialLanguage}
         </p>
         <p>
-          <label>Assigned clinic physician: </label>
+          <label>Assigned clinic practicioner: </label>
           {staffIdToTitleAndName(
             staffInfos,
             demographicsInfos.assigned_staff_id

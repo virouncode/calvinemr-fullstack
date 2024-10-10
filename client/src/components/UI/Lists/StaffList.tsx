@@ -1,5 +1,6 @@
 import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
+import { splitStaffInfos } from "../../../utils/appointments/splitStaffInfos";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 
 type StaffListProps = {
@@ -10,6 +11,7 @@ type StaffListProps = {
 
 const StaffList = ({ value, name, handleChange }: StaffListProps) => {
   const { staffInfos } = useStaffInfosContext();
+  const splittedStaffInfos = splitStaffInfos(staffInfos, true);
   return (
     <select
       value={value}
@@ -20,13 +22,18 @@ const StaffList = ({ value, name, handleChange }: StaffListProps) => {
       <option value="0" disabled>
         Choose a practitioner...
       </option>
-      {staffInfos
-        .filter(({ account_status }) => account_status !== "Closed")
-        .filter(({ title }) => title !== "Secretary")
-        .map((staff) => (
-          <option value={staff.id} key={staff.id}>
-            {staffIdToTitleAndName(staffInfos, staff.id)} ({staff.title})
-          </option>
+      {splittedStaffInfos
+        .filter(({ infos }) => infos.length)
+        .map(({ name, infos }) => (
+          <optgroup label={name} key={name}>
+            {infos
+              .sort((a, b) => a.last_name.localeCompare(b.last_name))
+              .map((staff) => (
+                <option value={staff.id} key={staff.id}>
+                  {staffIdToTitleAndName(staffInfos, staff.id)}
+                </option>
+              ))}
+          </optgroup>
         ))}
     </select>
   );

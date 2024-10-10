@@ -838,7 +838,7 @@ const DemographicsPopUp = ({
               />
             </div>
             <div className="demographics-card__content-row">
-              <label>Assigned Clinic Physician: </label>
+              <label>Assigned clinic practicioner: </label>
               {editVisible ? (
                 <StaffList
                   value={formDatas?.assignedMd ?? 0}
