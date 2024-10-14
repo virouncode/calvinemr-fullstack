@@ -78,11 +78,7 @@ const FaxThumbnail = ({
         setFaxesSelectedIds([...faxesSelectedIds, id]);
       }
     } else {
-      let faxesSelectedIdsUpdated = [...faxesSelectedIds];
-      faxesSelectedIdsUpdated = faxesSelectedIdsUpdated.filter(
-        (faxId) => faxId !== id
-      );
-      setFaxesSelectedIds(faxesSelectedIdsUpdated);
+      setFaxesSelectedIds(faxesSelectedIds.filter((faxId) => faxId !== id));
     }
   };
 

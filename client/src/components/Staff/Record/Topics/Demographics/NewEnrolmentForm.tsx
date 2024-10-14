@@ -135,7 +135,7 @@ const NewEnrolmentForm = ({
         },
       },
     };
-    const datasToPut = {
+    const patientToPut = {
       ...demographicsInfos,
       Enrolment: {
         EnrolmentHistory: [
@@ -149,7 +149,7 @@ const NewEnrolmentForm = ({
       ],
     };
     //Submission
-    patientPut.mutate(datasToPut, {
+    patientPut.mutate(patientToPut, {
       onSuccess: () => {
         setNewEnrolmentVisible(false);
         toast.success("New enrolment saved successfully", { containerId: "A" });

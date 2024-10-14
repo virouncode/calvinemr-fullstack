@@ -717,8 +717,6 @@ const Calendar = () => {
             )} will be occupied at this time slot, change schedule anyway?`,
           })))
       ) {
-        // event.setExtendedProp("roomId", newRoomId);
-        // event.setResources([newRoomId]);
         appointmentToPut.room_id = newRoomId;
         appointmentPut.mutate(appointmentToPut);
       } else {

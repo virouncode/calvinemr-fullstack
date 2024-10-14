@@ -30,8 +30,7 @@ const StaffAIAgreement = ({
   const handleStart = async () => {
     if (agreed) {
       const response: StaffType = await xanoGet(`/staff/${user.id}`, "staff");
-      const datasToPut = response;
-      datasToPut.ai_consent = true;
+      const datasToPut = { ...response, ai_consent: true };
       const response2: StaffType = await xanoPut(
         `/staff/${user.id}`,
         "staff",

@@ -44,7 +44,6 @@ const AddAIReportItem = ({
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);
-    let reportsTextsToAddUpdated;
     if (checked) {
       setReportsAddedIds([...reportsAddedIds, id]);
       let textToAdd;
@@ -70,26 +69,34 @@ const AddAIReportItem = ({
         textToAdd = report.Content.TextContent;
       }
       textToAdd = toAnonymousText(textToAdd, demographicsInfos);
-      reportsTextsToAddUpdated = [
+
+      setReportsTextsToAdd([
         ...reportsTextToAdd,
         { id, content: textToAdd, date_created: report.date_created },
-      ];
-      setReportsTextsToAdd(reportsTextsToAddUpdated);
+      ]);
+      setPromptText({
+        ...promptText,
+        reports: [
+          ...reportsTextToAdd,
+          { id, content: textToAdd, date_created: report.date_created },
+        ]
+          .map(({ content }) => content)
+          .join("\n\n"),
+      });
     } else {
       let updatedIds = [...reportsAddedIds];
       updatedIds = updatedIds.filter((documentId) => documentId !== id);
       setReportsAddedIds(updatedIds);
-      reportsTextsToAddUpdated = [...reportsTextToAdd].filter(
-        (text) => text.id !== id
-      );
-      setReportsTextsToAdd(reportsTextsToAddUpdated);
+
+      setReportsTextsToAdd(reportsTextToAdd.filter((text) => text.id !== id));
+      setPromptText({
+        ...promptText,
+        reports: reportsTextToAdd
+          .filter((text) => text.id !== id)
+          .map(({ content }) => content)
+          .join("\n\n"),
+      });
     }
-    setPromptText({
-      ...promptText,
-      reports: reportsTextsToAddUpdated
-        .map(({ content }) => content)
-        .join("\n\n"),
-    });
   };
 
   return (

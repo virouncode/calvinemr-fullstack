@@ -141,11 +141,9 @@ const MessageThumbnail = ({
         setMsgsSelectedIds([...msgsSelectedIds, id]);
       }
     } else {
-      let msgsSelectedIdsUpdated = [...msgsSelectedIds];
-      msgsSelectedIdsUpdated = msgsSelectedIdsUpdated.filter(
-        (messageId) => messageId !== id
+      setMsgsSelectedIds(
+        msgsSelectedIds.filter((messageId) => messageId !== id)
       );
-      setMsgsSelectedIds(msgsSelectedIdsUpdated);
     }
   };
 

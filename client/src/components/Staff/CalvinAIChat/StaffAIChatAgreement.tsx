@@ -25,8 +25,7 @@ const StaffAIChatAgreement = ({ setStart }: StaffAIChatAgreementProps) => {
   const handleStart = async () => {
     try {
       const response = await xanoGet(`/staff/${user.id}`, "staff");
-      const datasToPut = response;
-      datasToPut.ai_consent = true;
+      const datasToPut = { ...response, ai_consent: true };
       const response2 = await xanoPut(`/staff/${user.id}`, "staff", datasToPut);
       socket?.emit("message", {
         route: "USER",

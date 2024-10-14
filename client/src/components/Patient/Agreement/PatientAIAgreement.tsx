@@ -27,9 +27,11 @@ const PatientAIAgreement = ({
     setAgreed(value === "Yes" ? true : false);
   };
   const handleConfirm = async () => {
-    const datasToPut: DemographicsType = { ...demographicsInfos };
-    datasToPut.ai_consent_read = true;
-    datasToPut.ai_consent = agreed;
+    const datasToPut: DemographicsType = {
+      ...demographicsInfos,
+      ai_consent_read: true,
+      ai_consent: agreed,
+    };
     try {
       await xanoPut(
         `/demographics/${user.demographics.id}`,

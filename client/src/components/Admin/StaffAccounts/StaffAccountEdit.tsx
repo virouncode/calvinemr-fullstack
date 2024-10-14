@@ -121,15 +121,14 @@ const StaffAccountEdit = ({
             updated_by_user_type: "admin",
           },
         ],
+        video_link:
+          formDatas.video_link.trim() &&
+          (!formDatas.video_link.includes("http") ||
+            !formDatas.video_link.includes("https"))
+            ? ["https://", formDatas.video_link].join("")
+            : formDatas.video_link,
       };
 
-      if (
-        datasToPut.video_link.trim() &&
-        (!datasToPut.video_link.includes("http") ||
-          !datasToPut.video_link.includes("https"))
-      ) {
-        datasToPut.video_link = ["https://", datasToPut.video_link].join("");
-      }
       //Validation
       try {
         await staffSchema.validate(datasToPut);

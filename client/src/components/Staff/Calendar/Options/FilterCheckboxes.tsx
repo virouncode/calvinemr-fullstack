@@ -65,6 +65,7 @@ const FilterCheckboxes = ({
           recipientsIdsUpdated.push(id);
         }
       });
+
       setHostsIds(recipientsIdsUpdated);
     } else {
       setCategories(categories.filter((cat) => cat !== category));

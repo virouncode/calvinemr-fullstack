@@ -53,7 +53,6 @@ const AddAIAttachmentItem = ({
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);
-    let attachmentsTextsToAddUpdated;
     if (checked) {
       setAttachmentsAddedIds([...attachmentsAddedIds, id]);
       setIsLoadingAttachmentText(true);
@@ -63,12 +62,23 @@ const AddAIAttachmentItem = ({
         ).join("");
 
         textToAdd = toAnonymousText(textToAdd, demographicsInfos);
-        attachmentsTextsToAddUpdated = [
+        setAttachmentsTextsToAdd([
           ...attachmentsTextsToAdd,
           { id, content: textToAdd, date_created: attachment.date_created },
-        ];
-        setAttachmentsTextsToAdd(attachmentsTextsToAddUpdated);
+        ]);
         setIsLoadingAttachmentText(false);
+        setPromptText({
+          ...promptText,
+          attachments:
+            "Here is further information that you may use: " +
+            "\n\n" +
+            [
+              ...attachmentsTextsToAdd,
+              { id, content: textToAdd, date_created: attachment.date_created },
+            ]
+              .map(({ content }) => content)
+              .join("\n\n"),
+        });
       } catch (err) {
         if (err instanceof Error)
           toast.error(
@@ -82,18 +92,20 @@ const AddAIAttachmentItem = ({
       let updatedIds = [...attachmentsAddedIds];
       updatedIds = updatedIds.filter((attachmentId) => attachmentId !== id);
       setAttachmentsAddedIds(updatedIds);
-      attachmentsTextsToAddUpdated = [...attachmentsTextsToAdd].filter(
-        (text) => text.id !== id
+      setAttachmentsTextsToAdd(
+        attachmentsTextsToAdd.filter((text) => text.id !== id)
       );
-      setAttachmentsTextsToAdd(attachmentsTextsToAddUpdated);
+      setPromptText({
+        ...promptText,
+        attachments:
+          "Here is further information that you may use: " +
+          "\n\n" +
+          attachmentsTextsToAdd
+            .filter((text) => text.id !== id)
+            .map(({ content }) => content)
+            .join("\n\n"),
+      });
     }
-    setPromptText({
-      ...promptText,
-      attachments:
-        "Here is further information that you may use: " +
-        "\n\n" +
-        attachmentsTextsToAddUpdated.map(({ content }) => content).join("\n\n"),
-    });
   };
 
   return (

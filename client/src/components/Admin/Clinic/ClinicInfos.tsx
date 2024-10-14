@@ -72,7 +72,7 @@ const ClinicInfos = () => {
       ) {
         websiteFormatted = ["https://", formDatas?.website].join("");
       }
-      const datasToPut: ClinicType = {
+      const clinicToPut: ClinicType = {
         ...formDatas,
         website: websiteFormatted,
         updates: [
@@ -83,7 +83,7 @@ const ClinicInfos = () => {
       const response: ClinicType = await xanoPut(
         `/clinic/${clinic?.id}`,
         "admin",
-        datasToPut
+        clinicToPut
       );
       socket?.emit("message", {
         route: "CLINIC",

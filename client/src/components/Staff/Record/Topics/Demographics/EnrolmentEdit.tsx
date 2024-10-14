@@ -125,7 +125,7 @@ const EnrolmentEdit = ({
         },
       },
     };
-    const datasToPut = {
+    const patientToPut: DemographicsType = {
       ...demographicsInfos,
       Enrolment: {
         EnrolmentHistory: enrolmentHistory.map((enrolment, index) =>
@@ -139,7 +139,7 @@ const EnrolmentEdit = ({
     };
 
     //Submission
-    patientPut.mutate(datasToPut, {
+    patientPut.mutate(patientToPut, {
       onSuccess: () => {
         setEditVisible(false);
         toast.success("Enrolment saved successfully", { containerId: "A" });

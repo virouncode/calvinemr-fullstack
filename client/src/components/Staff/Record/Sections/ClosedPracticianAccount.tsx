@@ -31,7 +31,7 @@ const ClosedPracticianAccount = ({
     setAssignedStaffId(parseInt(e.target.value));
   };
   const handleSubmit = async () => {
-    const patientToPut = {
+    const patientToPut: DemographicsType = {
       ...demographicsInfos,
       assigned_staff_id: assignedStaffId,
       updates: [

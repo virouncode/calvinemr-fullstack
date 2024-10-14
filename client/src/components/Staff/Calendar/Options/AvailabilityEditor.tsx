@@ -1,8 +1,7 @@
-import { cloneDeep } from "lodash";
 import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useAvailabilityPut } from "../../../../hooks/reactquery/mutations/availabilityMutations";
-import { AvailabilityType, ScheduleType } from "../../../../types/api";
+import { AvailabilityType } from "../../../../types/api";
 import { DayType, UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { availabilitySchema } from "../../../../validation/calendar/availabilityValidation";
@@ -28,7 +27,7 @@ const AvailabilityEditor = ({
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
-    setItemInfos(cloneDeep(availability));
+    setItemInfos(availability);
   }, [availability]);
 
   const availabilityPut = useAvailabilityPut(user.id);
@@ -46,18 +45,18 @@ const AvailabilityEditor = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Validation
-    const scheduleToPut: AvailabilityType = {
+    const availabilityToPut: AvailabilityType = {
       ...itemInfos,
       date_created: nowTZTimestamp(),
     };
     try {
-      await availabilitySchema.validate(scheduleToPut);
+      await availabilitySchema.validate(availabilityToPut);
     } catch (err) {
       if (err instanceof Error) setErrMsg(err.message);
       return;
     }
     setProgress(true);
-    availabilityPut.mutate(scheduleToPut, {
+    availabilityPut.mutate(availabilityToPut, {
       onSuccess: () => {
         setEditAvailability(false);
       },
@@ -71,16 +70,35 @@ const AvailabilityEditor = ({
     name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
-    const scheduleMorningUpdated: ScheduleType = {
-      ...itemInfos.schedule_morning,
-    };
-    if (name === "ampm")
-      scheduleMorningUpdated[day][0][name] = value as "AM" | "PM";
-    else scheduleMorningUpdated[day][0][name] = value;
-    setItemInfos({
-      ...itemInfos,
-      schedule_morning: scheduleMorningUpdated,
-    });
+    if (name === "ampm") {
+      setItemInfos({
+        ...itemInfos,
+        schedule_morning: {
+          ...itemInfos.schedule_morning,
+          [day]: [
+            {
+              ...itemInfos.schedule_morning[day][0],
+              [name]: value as "AM" | "PM",
+            },
+            itemInfos.schedule_morning[day][1],
+          ],
+        },
+      });
+    } else {
+      setItemInfos({
+        ...itemInfos,
+        schedule_morning: {
+          ...itemInfos.schedule_morning,
+          [day]: [
+            {
+              ...itemInfos.schedule_morning[day][0],
+              [name]: value,
+            },
+            itemInfos.schedule_morning[day][1],
+          ],
+        },
+      });
+    }
   };
   const handleEndMorningChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -88,16 +106,36 @@ const AvailabilityEditor = ({
     name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
-    const scheduleMorningUpdated: ScheduleType = {
-      ...itemInfos.schedule_morning,
-    };
-    if (name === "ampm")
-      scheduleMorningUpdated[day][1][name] = value as "AM" | "PM";
-    else scheduleMorningUpdated[day][1][name] = value;
-    setItemInfos({
-      ...itemInfos,
-      schedule_morning: scheduleMorningUpdated,
-    });
+
+    if (name === "ampm") {
+      setItemInfos({
+        ...itemInfos,
+        schedule_morning: {
+          ...itemInfos.schedule_morning,
+          [day]: [
+            itemInfos.schedule_morning[day][0],
+            {
+              ...itemInfos.schedule_morning[day][1],
+              [name]: value as "AM" | "PM",
+            },
+          ],
+        },
+      });
+    } else {
+      setItemInfos({
+        ...itemInfos,
+        schedule_morning: {
+          ...itemInfos.schedule_morning,
+          [day]: [
+            itemInfos.schedule_morning[day][0],
+            {
+              ...itemInfos.schedule_morning[day][1],
+              [name]: value,
+            },
+          ],
+        },
+      });
+    }
   };
   const handleStartAfternoonChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -105,16 +143,36 @@ const AvailabilityEditor = ({
     name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
-    const scheduleAfternoonUpdated: ScheduleType = {
-      ...itemInfos.schedule_afternoon,
-    };
-    if (name === "ampm")
-      scheduleAfternoonUpdated[day][0][name] = value as "AM" | "PM";
-    else scheduleAfternoonUpdated[day][0][name] = value;
-    setItemInfos({
-      ...itemInfos,
-      schedule_afternoon: scheduleAfternoonUpdated,
-    });
+
+    if (name === "ampm") {
+      setItemInfos({
+        ...itemInfos,
+        schedule_afternoon: {
+          ...itemInfos.schedule_afternoon,
+          [day]: [
+            {
+              ...itemInfos.schedule_afternoon[day][0],
+              [name]: value as "AM" | "PM",
+            },
+            itemInfos.schedule_afternoon[day][1],
+          ],
+        },
+      });
+    } else {
+      setItemInfos({
+        ...itemInfos,
+        schedule_afternoon: {
+          ...itemInfos.schedule_afternoon,
+          [day]: [
+            {
+              ...itemInfos.schedule_afternoon[day][0],
+              [name]: value,
+            },
+            itemInfos.schedule_afternoon[day][1],
+          ],
+        },
+      });
+    }
   };
   const handleEndAfternoonChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -122,16 +180,36 @@ const AvailabilityEditor = ({
     name: "hours" | "min" | "ampm"
   ) => {
     const value = e.target.value;
-    const scheduleAfternoonUpdated: ScheduleType = {
-      ...itemInfos.schedule_afternoon,
-    };
-    if (name === "ampm")
-      scheduleAfternoonUpdated[day][1][name] = value as "AM" | "PM";
-    else scheduleAfternoonUpdated[day][1][name] = value;
-    setItemInfos({
-      ...itemInfos,
-      schedule_afternoon: scheduleAfternoonUpdated,
-    });
+
+    if (name === "ampm") {
+      setItemInfos({
+        ...itemInfos,
+        schedule_afternoon: {
+          ...itemInfos.schedule_afternoon,
+          [day]: [
+            itemInfos.schedule_afternoon[day][0],
+            {
+              ...itemInfos.schedule_afternoon[day][1],
+              [name]: value as "AM" | "PM",
+            },
+          ],
+        },
+      });
+    } else {
+      setItemInfos({
+        ...itemInfos,
+        schedule_afternoon: {
+          ...itemInfos.schedule_afternoon,
+          [day]: [
+            itemInfos.schedule_afternoon[day][0],
+            {
+              ...itemInfos.schedule_afternoon[day][1],
+              [name]: value,
+            },
+          ],
+        },
+      });
+    }
   };
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>, day: string) => {
     const checked = e.target.checked;
