@@ -20,7 +20,7 @@ export const careElementsSchema = yup.object({
     }),
   }),
   HeightFeet: yup.object({
-    Height: yup.string().matches(/^\d{1,2}'\d{1,2}"?$|^\d{1,2}'$|^\d{1,2}$/, {
+    Height: yup.string().matches(/^\s*\d{1,2}'\d{1,2}"?\s*$|^\s*\d{1,2}\s*$/, {
       message: `Invalid Height (ft in) value, please enter the following format: feet'inches" (5'7") or feet (5)`,
       excludeEmptyString: true,
     }),
