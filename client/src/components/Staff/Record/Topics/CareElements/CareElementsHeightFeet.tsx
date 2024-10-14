@@ -6,7 +6,7 @@ import {
   CareElementLastDatasType,
   CareElementType,
 } from "../../../../../types/api";
-import { cmToFeet } from "../../../../../utils/measurements/measurements";
+import { cmToFeetAndInches } from "../../../../../utils/measurements/measurements";
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -39,10 +39,10 @@ const CareElementsHeightFeet = ({
   return (
     <div className="care-elements__card-content-row">
       <label className="care-elements__card-content-row-label">
-        Height (feet):
+        Height (ft in):
       </label>
       <div className="care-elements__card-content-row-value">
-        {cmToFeet(lastDatas.Height?.Height)}
+        {cmToFeetAndInches(lastDatas.Height?.Height)}
       </div>
       {lastDatas.Height?.Height && (
         <div className="care-elements__card-content-row-btns">
@@ -63,7 +63,7 @@ const CareElementsHeightFeet = ({
       )}
       {editVisible && (
         <FakeWindow
-          title="EDIT HEIGHT(feet) HISTORY"
+          title="EDIT HEIGHT(ft in) HISTORY"
           width={450}
           height={550}
           x={(window.innerWidth - 450) / 2}

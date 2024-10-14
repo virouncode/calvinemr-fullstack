@@ -12,8 +12,8 @@ import {
 import {
   bodyMassIndex,
   bodySurfaceArea,
-  cmToFeet,
-  feetToCm,
+  cmToFeetAndInches,
+  feetAndInchesToCm,
   kgToLbs,
   lbsToKg,
 } from "../../../../../utils/measurements/measurements";
@@ -51,7 +51,7 @@ const CareElementsForm = ({
     Weight: { Weight: "", WeightUnit: "kg", Date: nowTZTimestamp() },
     WeightLbs: { Weight: "", WeightUnit: "lbs", Date: nowTZTimestamp() },
     Height: { Height: "", HeightUnit: "cm", Date: nowTZTimestamp() },
-    HeightFeet: { Height: "", HeightUnit: "feet", Date: nowTZTimestamp() },
+    HeightFeet: { Height: "", HeightUnit: "ft in", Date: nowTZTimestamp() },
     WaistCircumference: {
       WaistCircumference: "",
       WaistCircumferenceUnit: "cm",
@@ -196,10 +196,10 @@ const CareElementsForm = ({
           HeightFeet: {
             ...(formDatas.HeightFeet as {
               Height: string;
-              HeightUnit: "feet";
+              HeightUnit: "ft in";
               Date: number;
             }),
-            Height: cmToFeet(value),
+            Height: cmToFeetAndInches(value),
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
           },
           bodyMassIndex: {
@@ -220,7 +220,7 @@ const CareElementsForm = ({
           HeightFeet: {
             ...(formDatas.HeightFeet as {
               Height: string;
-              HeightUnit: "feet";
+              HeightUnit: "ft in";
               Date: number;
             }),
             Height: value,
@@ -232,18 +232,21 @@ const CareElementsForm = ({
               HeightUnit: "cm";
               Date: number;
             }),
-            Height: feetToCm(value),
+            Height: feetAndInchesToCm(value),
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
           },
           bodyMassIndex: {
             ...formDatas.bodyMassIndex,
-            BMI: bodyMassIndex(feetToCm(value), formDatas.Weight?.Weight ?? ""),
+            BMI: bodyMassIndex(
+              feetAndInchesToCm(value),
+              formDatas.Weight?.Weight ?? ""
+            ),
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
           },
           bodySurfaceArea: {
             ...formDatas.bodySurfaceArea,
             BSA: bodySurfaceArea(
-              feetToCm(value),
+              feetAndInchesToCm(value),
               formDatas.Weight?.Weight ?? ""
             ),
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
@@ -440,11 +443,12 @@ const CareElementsForm = ({
             />
           </div>
           <div className="care-elements__card-content-row-add">
-            <label>Height (feet):</label>
+            <label>Height (ft in):</label>
             <Input
               name="HeightFeet"
               onChange={handleChange}
               value={formDatas.HeightFeet?.Height ?? ""}
+              placeholder={`feet'inches"`}
             />
           </div>
           <div className="care-elements__card-content-row-add">

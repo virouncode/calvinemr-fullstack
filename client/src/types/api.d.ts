@@ -353,7 +353,7 @@ export type CareElementFormType = {
   Weight: { Weight: string; WeightUnit: "kg"; Date: number };
   WeightLbs: { Weight: string; WeightUnit: "lbs"; Date: number };
   Height: { Height: string; HeightUnit: "cm"; Date: number };
-  HeightFeet: { Height: string; HeightUnit: "feet"; Date: number };
+  HeightFeet: { Height: string; HeightUnit: "ft in"; Date: number };
   WaistCircumference: {
     WaistCircumference: string;
     WaistCircumferenceUnit: "cm";

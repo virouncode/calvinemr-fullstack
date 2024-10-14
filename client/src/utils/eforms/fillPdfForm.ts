@@ -16,7 +16,7 @@ import {
   timestampToDateISOTZ,
   timestampToTimeStrTZ,
 } from "../dates/formatDates";
-import { cmToFeet, kgToLbs } from "../measurements/measurements";
+import { cmToFeetAndInches, kgToLbs } from "../measurements/measurements";
 import { staffIdToTitleAndName } from "../names/staffIdToTitleAndName";
 import {
   toPatientFirstName,
@@ -171,7 +171,7 @@ export const fillPdfForm = async (
     },
     {
       fieldName: "patient_height_feet",
-      value: cmToFeet(
+      value: cmToFeetAndInches(
         demographicsInfos.patient_care_elements?.Height?.sort(
           (a, b) => b.Date - a.Date
         )?.[0]?.Height ?? ""

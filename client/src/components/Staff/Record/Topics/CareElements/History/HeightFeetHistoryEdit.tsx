@@ -10,8 +10,8 @@ import {
 } from "../../../../../../utils/dates/formatDates";
 import {
   bodyMassIndex,
-  cmToFeet,
-  feetToCm,
+  cmToFeetAndInches,
+  feetAndInchesToCm,
 } from "../../../../../../utils/measurements/measurements";
 import CloseButton from "../../../../../UI/Buttons/CloseButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -46,7 +46,7 @@ const HeightFeetHistoryEdit = ({
     }[]
   >(
     datas?.Height.map((item, index) => {
-      return { ...item, id: index, Height: cmToFeet(item.Height) };
+      return { ...item, id: index, Height: cmToFeetAndInches(item.Height) };
     })
   );
   const [formDatasBodyMassIndex, setFormDatasBodyMassIndex] = useState<
@@ -107,14 +107,20 @@ const HeightFeetHistoryEdit = ({
         setFormDatasBodyMassIndex(
           formDatasBodyMassIndex.map((item) => {
             return item.id === id
-              ? { ...item, BMI: bodyMassIndex(feetToCm(value), lastWeight) }
+              ? {
+                  ...item,
+                  BMI: bodyMassIndex(feetAndInchesToCm(value), lastWeight),
+                }
               : item;
           })
         );
         setFormDatasBodySurfaceArea(
           formDatasBodySurfaceArea.map((item) => {
             return item.id === id
-              ? { ...item, BSA: bodyMassIndex(feetToCm(value), lastWeight) }
+              ? {
+                  ...item,
+                  BSA: bodyMassIndex(feetAndInchesToCm(value), lastWeight),
+                }
               : item;
           })
         );
@@ -138,7 +144,7 @@ const HeightFeetHistoryEdit = ({
               ? {
                   ...item,
                   BMI: bodyMassIndex(
-                    feetToCm(
+                    feetAndInchesToCm(
                       formDatasHeight.find(({ id }) => id === id)?.Height ?? ""
                     ),
                     lastWeight
@@ -154,7 +160,7 @@ const HeightFeetHistoryEdit = ({
               ? {
                   ...item,
                   BSA: bodyMassIndex(
-                    feetToCm(
+                    feetAndInchesToCm(
                       formDatasHeight.find(({ id }) => id === id)?.Height ?? ""
                     ),
                     lastWeight
@@ -176,15 +182,20 @@ const HeightFeetHistoryEdit = ({
       return;
     }
     if (
-      formDatasHeight.some(({ Height }) => !Height.match(/^\d+([.,]\d{0,2})?$/))
+      formDatasHeight.some(
+        ({ Height }) =>
+          !Height.match(/^\d{1,2}'\d{1,2}"?$|^\d{1,2}'$|^\d{1,2}$/)
+      )
     ) {
-      setErrMsgPost("Please enter a valid number for Height");
+      setErrMsgPost(
+        `Invalid Height (ft in) value, please enter the following format: feet'inches" (5'7") or feet (5)`
+      );
       return;
     }
     const careElementToPut: CareElementType = {
       ...datas,
       Height: formDatasHeight.map((item) => {
-        return { ...item, Height: feetToCm(item.Height) };
+        return { ...item, Height: feetAndInchesToCm(item.Height) };
       }),
       bodyMassIndex: formDatasBodyMassIndex,
       bodySurfaceArea: formDatasBodySurfaceArea,
@@ -225,7 +236,8 @@ const HeightFeetHistoryEdit = ({
                 onChange={handleChange}
                 id={item.id.toString()}
                 name="Height"
-                label="Height (feet): "
+                label="Height (ft in): "
+                placeholder={`feet'inches"`}
               />
             </span>
           </li>

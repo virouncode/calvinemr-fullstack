@@ -19,6 +19,12 @@ export const careElementsSchema = yup.object({
       excludeEmptyString: true,
     }),
   }),
+  HeightFeet: yup.object({
+    Height: yup.string().matches(/^\d{1,2}'\d{1,2}"?$|^\d{1,2}'$|^\d{1,2}$/, {
+      message: `Invalid Height (ft in) value, please enter the following format: feet'inches" (5'7") or feet (5)`,
+      excludeEmptyString: true,
+    }),
+  }),
   WaistCircumference: yup.object({
     WaistCircumference: yup.string().matches(/^\d+([.,]\d{0,2})?$/, {
       message: "Invalid Waist Circumference value",

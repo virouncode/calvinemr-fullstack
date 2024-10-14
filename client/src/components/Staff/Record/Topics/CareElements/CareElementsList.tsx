@@ -73,7 +73,7 @@ const CareElementsList = ({
     Weight: { Weight: "", WeightUnit: "kg", Date: nowTZTimestamp() },
     WeightLbs: { Weight: "", WeightUnit: "lbs", Date: nowTZTimestamp() },
     Height: { Height: "", HeightUnit: "cm", Date: nowTZTimestamp() },
-    HeightFeet: { Height: "", HeightUnit: "feet", Date: nowTZTimestamp() },
+    HeightFeet: { Height: "", HeightUnit: "ft in", Date: nowTZTimestamp() },
     WaistCircumference: {
       WaistCircumference: "",
       WaistCircumferenceUnit: "cm",
@@ -428,7 +428,7 @@ const CareElementsList = ({
           Height: { Height: "", HeightUnit: "cm", Date: nowTZTimestamp() },
           HeightFeet: {
             Height: "",
-            HeightUnit: "feet",
+            HeightUnit: "ft in",
             Date: nowTZTimestamp(),
           },
           WaistCircumference: {
@@ -462,6 +462,27 @@ const CareElementsList = ({
 
   const handleCancel = () => {
     setAddVisible(false);
+    setAddFormDatas({
+      SmokingStatus: { Status: "", Date: nowTZTimestamp() },
+      SmokingPacks: { PerDay: "", Date: nowTZTimestamp() },
+      Weight: { Weight: "", WeightUnit: "kg", Date: nowTZTimestamp() },
+      WeightLbs: { Weight: "", WeightUnit: "lbs", Date: nowTZTimestamp() },
+      Height: { Height: "", HeightUnit: "cm", Date: nowTZTimestamp() },
+      HeightFeet: { Height: "", HeightUnit: "ft in", Date: nowTZTimestamp() },
+      WaistCircumference: {
+        WaistCircumference: "",
+        WaistCircumferenceUnit: "cm",
+        Date: nowTZTimestamp(),
+      },
+      BloodPressure: {
+        SystolicBP: "",
+        DiastolicBP: "",
+        BPUnit: "mmHg",
+        Date: nowTZTimestamp(),
+      },
+      bodyMassIndex: { BMI: "", Date: nowTZTimestamp() },
+      bodySurfaceArea: { BSA: "", Date: nowTZTimestamp() },
+    });
     setAddFormAdditionalDatas(
       additionalDatas.map((additionalData) => ({
         Name: additionalData.Name,

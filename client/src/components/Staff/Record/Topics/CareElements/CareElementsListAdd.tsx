@@ -11,8 +11,8 @@ import {
 import {
   bodyMassIndex,
   bodySurfaceArea,
-  cmToFeet,
-  feetToCm,
+  cmToFeetAndInches,
+  feetAndInchesToCm,
   kgToLbs,
   lbsToKg,
 } from "../../../../../utils/measurements/measurements";
@@ -194,10 +194,10 @@ const CareElementsListAdd = ({
           HeightFeet: {
             ...(addFormDatas.HeightFeet as {
               Height: string;
-              HeightUnit: "feet";
+              HeightUnit: "ft in";
               Date: number;
             }),
-            Height: cmToFeet(value),
+            Height: cmToFeetAndInches(value),
             Date: addDate,
           },
           bodyMassIndex: {
@@ -218,7 +218,7 @@ const CareElementsListAdd = ({
           HeightFeet: {
             ...(addFormDatas.HeightFeet as {
               Height: string;
-              HeightUnit: "feet";
+              HeightUnit: "ft in";
               Date: number;
             }),
             Height: value,
@@ -230,13 +230,13 @@ const CareElementsListAdd = ({
               HeightUnit: "cm";
               Date: number;
             }),
-            Height: feetToCm(value),
+            Height: feetAndInchesToCm(value),
             Date: addDate,
           },
           bodyMassIndex: {
             ...addFormDatas.bodyMassIndex,
             BMI: bodyMassIndex(
-              feetToCm(value),
+              feetAndInchesToCm(value),
               addFormDatas.Weight?.Weight ?? ""
             ),
             Date: addDate,
@@ -244,7 +244,7 @@ const CareElementsListAdd = ({
           bodySurfaceArea: {
             ...addFormDatas.bodySurfaceArea,
             BSA: bodySurfaceArea(
-              feetToCm(value),
+              feetAndInchesToCm(value),
               addFormDatas.Weight?.Weight ?? ""
             ),
             Date: addDate,
@@ -357,7 +357,7 @@ const CareElementsListAdd = ({
       HeightFeet: {
         ...(addFormDatas.HeightFeet as {
           Height: string;
-          HeightUnit: "feet";
+          HeightUnit: "ft in";
           Date: number;
         }),
         Date: dateISOToTimestampTZ(value) as number,
@@ -455,12 +455,12 @@ const CareElementsListAdd = ({
         />
       </div>
       <div className="care-elements__card-content-row-add">
-        <label>Height (feet):</label>
-
+        <label>Height (ft in):</label>
         <Input
           name="HeightFeet"
           onChange={handleChange}
           value={addFormDatas.HeightFeet?.Height ?? ""}
+          placeholder={`feet'inches"`}
         />
       </div>
       <div className="care-elements__card-content-row-add">

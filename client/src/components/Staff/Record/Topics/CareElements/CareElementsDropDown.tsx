@@ -10,7 +10,7 @@ import {
   XanoPaginatedType,
 } from "../../../../../types/api";
 import {
-  cmToFeet,
+  cmToFeetAndInches,
   kgToLbs,
 } from "../../../../../utils/measurements/measurements";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -94,8 +94,8 @@ const CareElementsDropDown = ({
             {lastDatas.Height?.Height}
           </p>
           <p>
-            <label>Height (feet): </label>
-            {cmToFeet(lastDatas.Height?.Height)}
+            <label>Height (ft in): </label>
+            {cmToFeetAndInches(lastDatas.Height?.Height)}
           </p>
           <p>
             <label>Body Mass Index (kg/m2): </label>

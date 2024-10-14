@@ -5,7 +5,10 @@ import {
   toCodeTableName,
   ynIndicatorsimpleCT,
 } from "../../../../omdDatas/codesTables";
-import { cmToFeet, kgToLbs } from "../../../../utils/measurements/measurements";
+import {
+  cmToFeetAndInches,
+  kgToLbs,
+} from "../../../../utils/measurements/measurements";
 
 type ExportCareElementsProps = {
   patientId: number;
@@ -87,7 +90,9 @@ const ExportCareElements = ({ patientId }: ExportCareElementsProps) => {
               <li>- Weight (kg): {lastDatas.Weight?.Weight}</li>
               <li>- Weight (lbs): {kgToLbs(lastDatas.Weight?.Weight)}</li>
               <li>- Height (cm): {lastDatas.Height?.Height}</li>
-              <li>- Height (feet): {cmToFeet(lastDatas.Height?.Height)}</li>
+              <li>
+                - Height (ft in): {cmToFeetAndInches(lastDatas.Height?.Height)}
+              </li>
               <li>- Body Mass Index (kg/m2): {lastDatas.bodyMassIndex?.BMI}</li>
               <li>
                 - Body Surface Area (m2): {lastDatas.bodySurfaceArea?.BSA}
