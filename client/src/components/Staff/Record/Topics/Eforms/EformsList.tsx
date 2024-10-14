@@ -14,7 +14,7 @@ const EformsList = ({
 }: EformsListProps) => {
   return (
     <select onChange={handleFormChange} value={formSelectedId}>
-      <option value={0} disabled>
+      <option value={-1} disabled>
         Choose an e-form...
       </option>
       {eformsBlank.map((eform) => (

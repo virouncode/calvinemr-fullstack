@@ -31,7 +31,7 @@ const Eform = ({ demographicsInfos, setAddVisible }: EformProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { clinic } = useClinicContext();
   const { staffInfos } = useStaffInfosContext();
-  const [formSelectedId, setFormSelectedId] = useState(0);
+  const [formSelectedId, setFormSelectedId] = useState(-1);
   const [url, setUrl] = useState("");
   const {
     data: sites,
@@ -47,9 +47,14 @@ const Eform = ({ demographicsInfos, setAddVisible }: EformProps) => {
 
   const handleFormChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormSelectedId(parseInt(e.target.value));
+    console.log("eformsBlank", eformsBlank);
+    console.log("e.target.value", e.target.value);
+
     const fileURL = eformsBlank?.find(
       ({ id }) => id === parseInt(e.target.value)
     )?.file?.url;
+    console.log("fileURL", fileURL);
+
     const filledFormURL = await fillPdfForm(
       fileURL ?? "",
       demographicsInfos,
