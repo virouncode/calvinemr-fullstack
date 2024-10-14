@@ -6,14 +6,15 @@ type LoginHeaderProps = {
 };
 const LoginHeader = ({ setCreditsVisible }: LoginHeaderProps) => {
   return (
-    <div className="header__container">
-      <header
-        className="header header--login"
-        style={{
-          backgroundColor:
-            `#${import.meta.env.VITE_LOGIN_BACKGROUND_COLOR}` ?? "",
-        }}
-      >
+    <div
+      className="header__container"
+      style={{
+        backgroundColor: import.meta.env.VITE_LOGIN_BACKGROUND_COLOR
+          ? `#${import.meta.env.VITE_LOGIN_BACKGROUND_COLOR}`
+          : "",
+      }}
+    >
+      <header className="header header--login">
         <div
           className="header__logo"
           onClick={() => setCreditsVisible((p) => !p)}

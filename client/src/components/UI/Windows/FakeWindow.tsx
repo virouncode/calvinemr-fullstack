@@ -157,7 +157,6 @@ const FakeWindow = ({
         onTouchStart={handleDragStart} // Handle drag start on touch devices
         style={{
           background: color,
-          width: windowSize.width,
         }}
       >
         <p
