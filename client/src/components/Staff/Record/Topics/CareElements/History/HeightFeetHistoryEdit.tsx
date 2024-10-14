@@ -184,7 +184,7 @@ const HeightFeetHistoryEdit = ({
     if (
       formDatasHeight.some(
         ({ Height }) =>
-          !Height.match(/^\d{1,2}'\d{1,2}"?$|^\d{1,2}'$|^\d{1,2}$/)
+          !Height.match(/^\s*\d{1,2}'\d{1,2}"?\s*$|^\s*\d{1,2}\s*$/)
       )
     ) {
       setErrMsgPost(
