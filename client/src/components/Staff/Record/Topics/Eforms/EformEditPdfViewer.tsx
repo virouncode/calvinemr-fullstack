@@ -89,7 +89,7 @@ const EformEditPdfViewer = ({
   ]);
 
   return (
-    <div className="in-line-container" style={{ marginTop: "40px" }}>
+    <div className="in-line-container">
       <div id="pdf-div" className="in-line-div" style={{ height: "720px" }} />
     </div>
   );

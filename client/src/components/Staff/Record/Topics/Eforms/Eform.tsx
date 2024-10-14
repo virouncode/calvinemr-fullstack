@@ -47,9 +47,6 @@ const Eform = ({ demographicsInfos, setAddVisible }: EformProps) => {
 
   const handleFormChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormSelectedId(parseInt(e.target.value));
-    console.log("eformsBlank", eformsBlank);
-    console.log("e.target.value", e.target.value);
-
     const fileURL = eformsBlank?.find(
       ({ id }) => id === parseInt(e.target.value)
     )?.file?.url;

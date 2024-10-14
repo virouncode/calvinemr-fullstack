@@ -100,15 +100,6 @@ class ViewSDKClient {
     viewerConfig: Record<string, unknown>,
     url: string
   ) {
-    const client_id =
-      import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_PDF_EMBED_API_CLIENT_ID_DEV
-        : import.meta.env.VITE_PDF_EMBED_API_CLIENT_ID;
-
-    console.log("mode", import.meta.env.MODE);
-
-    console.log("client_id", client_id);
-
     const config: { clientId: string; divId?: string } = {
       /* Pass your registered client id */
       clientId:

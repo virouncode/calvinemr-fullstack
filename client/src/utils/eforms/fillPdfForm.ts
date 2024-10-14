@@ -35,9 +35,16 @@ export const fillPdfForm = async (
 ) => {
   if (!demographicsInfos) return;
   const formUrl = url;
+  console.log("formUrl", formUrl);
+
   const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
+  console.log("formPdfBytes", formPdfBytes);
+
   const pdfDoc = await PDFDocument.load(formPdfBytes);
+
   const form = pdfDoc.getForm();
+  console.log("form", form);
+
   const address =
     demographicsInfos.Address.find(({ _addressType }) => _addressType === "R")
       ?.Structured ||
@@ -250,9 +257,13 @@ export const fillPdfForm = async (
   }
 
   const pdfBytes = await pdfDoc.save();
+  console.log("pdfBytes", pdfBytes);
+
   const docUrl = URL.createObjectURL(
     new Blob([pdfBytes], { type: "application/pdf" })
   );
+  console.log("docUrl", docUrl);
+
   return docUrl;
 };
 
