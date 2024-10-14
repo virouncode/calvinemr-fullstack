@@ -5,16 +5,16 @@ import { xanoPost } from "../../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQueries";
 import {
-  AttachmentType,
-  DemographicsType,
-  LetterAttachmentType,
-  LetterTemplateType,
-  TopicType,
+    AttachmentType,
+    DemographicsType,
+    LetterAttachmentType,
+    LetterTemplateType,
+    TopicType,
 } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
 import {
-  nowTZ,
-  nowTZTimestamp,
+    nowTZ,
+    nowTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
@@ -88,7 +88,7 @@ const LetterForm = ({
   const handleAttach = () => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

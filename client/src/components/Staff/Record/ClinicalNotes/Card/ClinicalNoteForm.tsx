@@ -8,19 +8,19 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../../hooks/reactquery/mutations/clinicalNotesMutations";
 import { useSpeechRecognition } from "../../../../../hooks/useSpeechRecognition";
 import {
-  AttachmentType,
-  ClinicalNoteAttachmentType,
-  ClinicalNoteFormType,
-  ClinicalNoteTemplateType,
-  DemographicsType,
+    AttachmentType,
+    ClinicalNoteAttachmentType,
+    ClinicalNoteFormType,
+    ClinicalNoteTemplateType,
+    DemographicsType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import {
-  staffIdToFirstName,
-  staffIdToLastName,
-  staffIdToOHIP,
+    staffIdToFirstName,
+    staffIdToLastName,
+    staffIdToOHIP,
 } from "../../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -243,7 +243,7 @@ const ClinicalNoteForm = ({
   const handleAttach = () => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

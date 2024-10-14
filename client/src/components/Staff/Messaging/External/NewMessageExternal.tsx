@@ -29,10 +29,10 @@ import Checkbox from "../../../UI/Checkbox/Checkbox";
 import Input from "../../../UI/Inputs/Input";
 import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
+import AddEdocsPamphlets from "../Internal/AddEdocsPamphlets";
 import MessagesAttachments from "../Internal/MessagesAttachments";
 import Patients from "../Patients";
 import MessagesExternalTemplates from "./Templates/MessagesExternalTemplates";
-import AddEdocsPamphlets from "../Internal/AddEdocsPamphlets";
 axios.defaults.withCredentials = true;
 
 type NewMessageExternalProps = {
@@ -296,7 +296,7 @@ const NewMessageExternal = ({
   const handleAttach = () => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

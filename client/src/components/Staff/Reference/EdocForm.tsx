@@ -137,7 +137,7 @@ const EdocForm = ({ setAddVisible }: EdocFormProps) => {
             name="Content"
             type="file"
             onChange={handleUpload}
-            accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
+            accept=".jpeg, .jpg, .png, .pdf"
             // .jpeg, .jpg, .png, .gif, .tif, , .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx"
           />
         </div>

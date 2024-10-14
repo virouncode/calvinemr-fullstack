@@ -23,6 +23,7 @@ import {
 import { titleToCategory } from "../../../../utils/messages/titleToCategory";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
+import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -36,7 +37,6 @@ import StaffContacts from "../StaffContacts";
 import AddEdocsPamphlets from "./AddEdocsPamphlets";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
-import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 
 type NewTodoProps = {
   setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -193,7 +193,7 @@ const NewTodo = ({
     const input = document.createElement("input");
     createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

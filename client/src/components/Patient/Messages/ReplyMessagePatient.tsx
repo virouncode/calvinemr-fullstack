@@ -7,9 +7,9 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/messagesMutations";
 import {
-  AttachmentType,
-  MessageAttachmentType,
-  MessageExternalType,
+    AttachmentType,
+    MessageAttachmentType,
+    MessageExternalType,
 } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
@@ -107,7 +107,7 @@ const ReplyMessagePatient = ({
   const handleAttach = () => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

@@ -34,9 +34,9 @@ import CircularProgressMedium from "../../../UI/Progress/CircularProgressMedium"
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import Patients from "../Patients";
 import StaffContacts from "../StaffContacts";
+import AddEdocsPamphlets from "./AddEdocsPamphlets";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
-import AddEdocsPamphlets from "./AddEdocsPamphlets";
 
 type NewTodoMobileProps = {
   setNewTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -195,7 +195,7 @@ const NewTodoMobile = ({
     const input = document.createElement("input");
     createElement("input");
     input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg";
+    input.accept = ".jpeg, .jpg, .png, .pdf";
     // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
     input.onchange = (event) => {
       // getting a hold of the file reference

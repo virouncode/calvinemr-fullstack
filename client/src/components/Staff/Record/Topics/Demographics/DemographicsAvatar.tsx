@@ -38,7 +38,7 @@ const DemographicsAvatar = ({
           <input
             name="avatar"
             type="file"
-            accept=".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg"
+            accept=".jpeg, .jpg, .png, .pdf"
             onChange={handleAvatarChange}
           />
         </div>

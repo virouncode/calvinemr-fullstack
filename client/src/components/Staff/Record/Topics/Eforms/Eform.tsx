@@ -50,7 +50,6 @@ const Eform = ({ demographicsInfos, setAddVisible }: EformProps) => {
     const fileURL = eformsBlank?.find(
       ({ id }) => id === parseInt(e.target.value)
     )?.file?.url;
-    console.log("fileURL", fileURL);
 
     const filledFormURL = await fillPdfForm(
       fileURL ?? "",
