@@ -135,9 +135,9 @@ const FaxThumbnailMobile = ({
         <FakeWindow
           title="ADD CONTACT TO DIRECTORY"
           width={700}
-          height={570}
+          height={650}
           x={(window.innerWidth - 700) / 2}
-          y={(window.innerHeight - 570) / 2}
+          y={(window.innerHeight - 650) / 2}
           color="#94bae8"
           setPopUpVisible={setAddFaxNumberVisible}
         >
