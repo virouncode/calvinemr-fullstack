@@ -38,7 +38,7 @@ const InputImgFile = ({
       <input
         name="logo"
         type="file"
-        accept=".jpeg, .jpg, .png, .tif, .svg"
+        accept=".jpeg, .jpg, .png"
         onChange={onChange}
       />
     </>

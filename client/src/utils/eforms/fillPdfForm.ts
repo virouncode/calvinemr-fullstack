@@ -255,7 +255,15 @@ export const fillPdfForm = async (
         const signImageBytes = await fetch(signUrl).then((res) =>
           res.arrayBuffer()
         );
-        const signImage = await pdfDoc.embedPng(signImageBytes);
+        let signImage;
+        if (signUrl.endsWith(".png")) {
+          signImage = await pdfDoc.embedPng(signImageBytes);
+        } else if (signUrl.endsWith(".jpg") || signUrl.endsWith(".jpeg")) {
+          signImage = await pdfDoc.embedJpg(signImageBytes);
+        } else {
+          throw new Error("Unsupported image format for signature");
+        }
+
         const signImageField = form.getButton("doctor_sign");
         signImageField.setImage(signImage);
       } catch (error) {
