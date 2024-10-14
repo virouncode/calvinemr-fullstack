@@ -1,5 +1,7 @@
 import axios from "axios";
+import dotenv from "dotenv";
 import { Request, Response } from "express";
+dotenv.config();
 axios.defaults.withCredentials = true;
 
 // Helper function to download and encode the file to base64
