@@ -68,7 +68,9 @@ const PatientResultItem = ({
     <tr ref={lastPatientRef}>
       {user.access_level === "admin" && (
         <td>
-          <Button label="Reset pwd & PIN" onClick={handleResetPwd} />
+          <div className="search-patient__item-btn-container">
+            <Button label="Reset pwd & PIN" onClick={handleResetPwd} />
+          </div>
         </td>
       )}
       {user.access_level === "admin" ? (

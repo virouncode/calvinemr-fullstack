@@ -33,6 +33,15 @@
     display: inline-block;
     width: 100px;
   }
+  &-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    button {
+      font-size: $size-xs;
+    }
+  }
 }
 .search-patient__count {
   font-weight: bold;
@@ -167,5 +176,10 @@
   }
   .search-patient__table {
     font-size: $size-sm;
+  }
+  .search-patient__item-btn-container {
+    button {
+      font-size: $size-sm;
+    }
   }
 }

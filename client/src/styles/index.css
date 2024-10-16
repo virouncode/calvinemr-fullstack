@@ -298,6 +298,10 @@ input[type=file] {
   padding: 0;
 }
 
+input[type=checkbox] {
+  cursor: pointer;
+}
+
 select {
   cursor: pointer;
   padding: 0.5rem;
@@ -346,6 +350,7 @@ select:disabled {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 .btn:hover {
   background: #cecdcd;
@@ -391,6 +396,8 @@ select:disabled {
 .main-login {
   flex: 1;
   background-color: #fefefe;
+  max-width: 1700px;
+  width: 100%;
 }
 
 .wrapper {
@@ -404,8 +411,21 @@ select:disabled {
   flex: 1;
   overflow-y: scroll;
   background-color: #fefefe;
+  max-width: 1700px;
+  width: 100%;
 }
 
+.icon:hover {
+  opacity: 0.85;
+}
+
+@media (min-width: 1700px) {
+  .main,
+  .main-login {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+}
 .clinic {
   width: 100%;
   height: 100%;
@@ -1285,6 +1305,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .confirm-dialog-btn-container {
+  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -1362,14 +1383,20 @@ select:disabled {
   background-color: rgb(34, 139, 34);
 }
 
+.header__container {
+  background-color: #8fb4fb;
+}
+
 .header {
   position: sticky;
   top: 0;
+  padding: 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
-  background-color: #8fb4fb;
+  max-width: 1700px;
+  margin: 0 auto;
+  width: 100%;
 }
 .header--login {
   background-color: transparent;
@@ -1410,9 +1437,6 @@ select:disabled {
     font-weight: bold;
     cursor: pointer;
   }
-  .header__nav ul li:hover {
-    color: #3d375a;
-  }
   .header__link {
     color: #3d375a;
     font-weight: bold;
@@ -1422,6 +1446,9 @@ select:disabled {
     border: solid 1px #3d375a;
     padding: 0.25rem 0.75rem;
     border-radius: 40px;
+  }
+  .header__link:hover {
+    opacity: 0.85;
   }
   .header__bars {
     display: none;
@@ -1902,17 +1929,24 @@ select:disabled {
     font-size: 0.85rem;
   }
 }
+.subheader__container {
+  background: #efeff1;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  margin-bottom: 0.25rem;
+}
+
 .subheader {
   position: sticky;
   top: 53px;
   width: 100%;
   padding: 10px 0.935rem;
-  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   background: #efeff1;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1700px;
+  margin: 0 auto;
 }
 .subheader__left {
   display: none;
@@ -1969,6 +2003,42 @@ select:disabled {
     font-size: 1.125rem;
   }
 }
+.suspended {
+  padding: 1rem;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suspended__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: #fefefe;
+  padding: 1rem;
+  border-radius: 6px;
+  border: solid 2px #f53f77;
+}
+.suspended__container p {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.suspended__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.suspended__link {
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
 .unauthorized {
   padding: 1rem;
   height: 100%;
@@ -2125,7 +2195,7 @@ select:disabled {
 }
 .patient-appointments__past-item, .patient-appointments__next-item {
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -2194,7 +2264,7 @@ select:disabled {
 }
 .patient-appointments__new-item {
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -2607,6 +2677,90 @@ select:disabled {
     font-size: 0.85rem;
   }
   .patient-pharmacies .pharmacies-list__item-btn-container button, .patient-pharmacies .pharmacies-list__form-btn-container button {
+    font-size: 0.85rem;
+  }
+}
+.add-edocs-pamphlets {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+.add-edocs-pamphlets__btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.add-edocs {
+  display: flex;
+  flex-direction: column;
+  height: 45%;
+  gap: 0.5rem;
+}
+.add-edocs__title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.add-edocs__search input {
+  width: 100%;
+  font-size: 1rem;
+}
+.add-edocs__results {
+  flex: 1;
+  border-radius: 6px;
+  border: solid 1px #cecdcd;
+  overflow-y: scroll;
+  padding: 0.5rem;
+}
+.add-edocs__results ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.add-edocs__results li {
+  display: flex;
+  align-items: center;
+}
+
+.add-pamphlets {
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.add-pamphlets__title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.add-pamphlets__search input {
+  width: 100%;
+  font-size: 1rem;
+}
+.add-pamphlets__results {
+  flex: 1;
+  border-radius: 6px;
+  border: solid 1px #cecdcd;
+  overflow-y: scroll;
+  padding: 0.5rem;
+}
+.add-pamphlets__results ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.add-pamphlets__results li {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .add-edocs__search input {
+    font-size: 0.85rem;
+  }
+  .add-pamphlets__search input {
     font-size: 0.85rem;
   }
 }
@@ -3143,7 +3297,7 @@ select:disabled {
 }
 .billing-codes__templates-list {
   height: 85%;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 10px;
@@ -3338,6 +3492,7 @@ select:disabled {
 }
 .calendar__shortcutpickr .flatpickr-calendar.animate.inline {
   top: 0;
+  width: 100%;
 }
 .calendar__shortcutpickr .flatpickr-calendar {
   max-width: 100%;
@@ -4472,7 +4627,7 @@ select:disabled {
   }
   .calvinai__chat-templates-list {
     flex: 1;
-    border: solid 0.5px #efeff1;
+    border: solid 0.5px #cecdcd;
     border-radius: 6px;
     overflow-y: scroll;
     padding: 0 0.5rem;
@@ -4480,7 +4635,7 @@ select:disabled {
   .calvinai__chat-templates-list-item {
     cursor: pointer;
     padding: 0.25rem;
-    border-bottom: solid 0.5px #efeff1;
+    border-bottom: solid 0.5px #cecdcd;
   }
   .calvinai__chat-templates-list-item:hover {
     text-decoration: underline;
@@ -4735,19 +4890,32 @@ select:disabled {
   flex-direction: column;
 }
 .clinical-notes__header-title {
-  font-weight: bold;
-  padding: 0.5rem;
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
   background-color: #efeff1;
   border-top: solid 1px #cecdcd;
   border-right: solid 1px #cecdcd;
   border-left: solid 1px #cecdcd;
 }
+.clinical-notes__header-title-triangle .triangle-btn {
+  padding: 0.5rem;
+  transform: rotate(90deg);
+  transition: all 0.2s;
+}
 .clinical-notes__header-title-infos {
+  font-weight: bold;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  max-width: 90%;
+}
+.clinical-notes__header-title-infos-demographics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
 }
 .clinical-notes__header-toolbar {
   padding: 0.5rem;
@@ -4924,7 +5092,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .clinical-notes__attachment-card {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   width: 30%;
   margin: 10px 5px 0;
 }
@@ -4966,7 +5134,7 @@ select:disabled {
 }
 .clinical-notes__form-header {
   padding: 0.5rem;
-  background: #f53f77;
+  background: #8fb4fb;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -5107,7 +5275,7 @@ select:disabled {
 }
 .clinical-notes__templates-list {
   height: 85%;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 10px;
@@ -5205,31 +5373,36 @@ select:disabled {
     font-size: 0.85rem;
   }
 }
-@media (min-width: 1280px) {
-  .clinical-notes__header-title-infos {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    -moz-column-gap: 1rem;
-         column-gap: 1rem;
-  }
-}
 .closed-practician {
-  padding: 20px;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .closed-practician__message {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
-.closed-practician label {
-  margin-right: 20px;
+.closed-practician__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.closed-practician button {
-  margin-left: 20px;
+.closed-practician__form select {
+  width: 100%;
+  font-size: 1rem;
+  max-width: 300px;
+}
+.closed-practician__form-btn {
+  display: flex;
+  justify-content: center;
 }
 
+@media (min-width: 1024px) {
+  .closed-practician {
+    font-size: 0.85rem;
+  }
+  .closed-practician__form select {
+    font-size: 0.85rem;
+  }
+}
 .contact-fax__form {
-  margin-top: 40px;
   padding: 0.5rem;
   height: 93%;
   overflow-y: scroll;
@@ -5240,6 +5413,7 @@ select:disabled {
 .contact-fax__form .contact-fax__form-radios {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 .contact-fax__form .contact-fax__form-radios label {
   font-size: 1rem;
@@ -5250,6 +5424,7 @@ select:disabled {
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
+  gap: 0.5rem;
 }
 .contact-fax__form .contact-fax__form-radios-item {
   display: flex;
@@ -5979,7 +6154,7 @@ select:disabled {
 .diagnosis__container .diagnosis__results {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
@@ -6353,7 +6528,7 @@ select:disabled {
 
 .event-form__host {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   -moz-column-gap: 3rem;
        column-gap: 3rem;
   row-gap: 1rem;
@@ -6367,6 +6542,10 @@ select:disabled {
 .event-form__host .event-form__host-item label {
   font-weight: bold;
   margin-bottom: 0.25rem;
+}
+.event-form__host .event-form__host-item input,
+.event-form__host .event-form__host-item select {
+  width: 100%;
 }
 
 .event-form__time {
@@ -6998,7 +7177,7 @@ select:disabled {
   display: grid;
   grid-template-columns: 60% 15% 23% 2%;
   align-items: center;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   font-size: 0.85rem;
   padding: 0.5rem;
   font-weight: bold;
@@ -7015,7 +7194,7 @@ select:disabled {
   font-size: 0.85rem;
   display: grid;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   align-items: center;
   grid-template-columns: 60% 15% 23% 2%;
 }
@@ -7054,7 +7233,7 @@ select:disabled {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   gap: 0.5rem;
 }
 .fax .fax__content .fax__content-box .fax__thumbnail-mobile:hover {
@@ -7089,7 +7268,7 @@ select:disabled {
 .fax .fax__content .fax__content-box .fax__detail-toolbar {
   font-size: 0.85rem;
   padding: 0.25rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: grid;
   grid-template-columns: 5% 90% 5%;
   align-items: center;
@@ -7229,7 +7408,7 @@ select:disabled {
   height: 100%;
 }
 .forward-message__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7257,7 +7436,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -7265,7 +7444,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .forward-message__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7283,7 +7462,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .forward-message__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7300,7 +7479,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .forward-message__form-patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7319,7 +7498,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .forward-message__form-attach {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7331,7 +7510,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message__form-duedate {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -7346,7 +7525,7 @@ select:disabled {
   width: 120px;
 }
 .forward-message__form-importance {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7376,7 +7555,7 @@ select:disabled {
 }
 .forward-message__form-body .forward-message__form-history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .forward-message__form-body .forward-message__form-history .message .message__title {
   display: flex;
@@ -7405,10 +7584,10 @@ select:disabled {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .forward-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  margin: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .forward-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -7443,8 +7622,8 @@ select:disabled {
   font-size: 0.7rem;
   max-width: 100%;
 }
-.forward-message__form__form-btns {
-  border-top: solid 0.5px #efeff1;
+.forward-message__form-btns {
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -7452,7 +7631,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .forward-message__patients {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7471,7 +7650,7 @@ select:disabled {
   width: 100%;
 }
 .forward-message__patients .patients .patients__list {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.5rem;
   height: 450px;
@@ -7490,7 +7669,7 @@ select:disabled {
   position: relative;
 }
 .forward-message-mobile__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -7529,7 +7708,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message-mobile__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -7538,7 +7717,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .forward-message-mobile__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7556,7 +7735,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .forward-message-mobile__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7573,7 +7752,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .forward-message-mobile__form-patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -7592,7 +7771,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .forward-message-mobile__form-attach {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7604,7 +7783,7 @@ select:disabled {
   font-weight: bold;
 }
 .forward-message-mobile__form-duedate {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -7619,7 +7798,7 @@ select:disabled {
   width: 120px;
 }
 .forward-message-mobile__form-importance {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -7642,7 +7821,7 @@ select:disabled {
 }
 .forward-message-mobile__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -7650,7 +7829,7 @@ select:disabled {
 }
 .forward-message-mobile__form-body .forward-message__form-history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .forward-message-mobile__form-body .forward-message__form-history .message .message__title {
   display: flex;
@@ -7677,12 +7856,12 @@ select:disabled {
 }
 .forward-message-mobile__form-body .message__attachments {
   display: flex;
-  padding: 15px;
+  padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .forward-message-mobile__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  margin: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .forward-message-mobile__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -7718,7 +7897,7 @@ select:disabled {
   max-width: 100%;
 }
 .forward-message-mobile__form-btns {
-  border-top: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -7726,7 +7905,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .forward-message-mobile__patients {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -7842,8 +8021,8 @@ select:disabled {
 .groups__card-list-item {
   font-size: 0.85rem;
   padding: 5px 10px;
-  border-top: solid 0.5px #efeff1;
-  border-bottom: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8063,7 +8242,7 @@ select:disabled {
 .hcn__container .hcn__results {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
 }
@@ -9203,7 +9382,7 @@ select:disabled {
   display: grid;
   grid-template-columns: 25% 45% 15% 13% 2%;
   align-items: center;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   font-size: 0.85rem;
   padding: 0.5rem;
   font-weight: bold;
@@ -9228,7 +9407,7 @@ select:disabled {
   font-size: 0.85rem;
   display: grid;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   align-items: center;
   grid-template-columns: 25% 45% 15% 13% 2%;
 }
@@ -9312,7 +9491,7 @@ select:disabled {
   font-size: 0.85rem;
   gap: 0.25rem;
   padding: 0.5rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 85px;
 }
 .messages .messages__container .messages__content .messages__content-box .message__thumbnail-mobile .message__thumbnail-mobile-title {
@@ -9355,7 +9534,7 @@ select:disabled {
 .messages .messages__container .messages__content .messages__content-box .message__detail-toolbar {
   font-size: 0.85rem;
   padding: 0.25rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: grid;
   grid-template-columns: 2% 48% 48% 2%;
   align-items: center;
@@ -9403,7 +9582,7 @@ select:disabled {
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__title {
   display: flex;
@@ -9432,10 +9611,10 @@ select:disabled {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  margin: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
   width: 15%;
 }
 .messages .messages__container .messages__content .messages__content-box .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
@@ -9475,6 +9654,7 @@ select:disabled {
   padding: 1rem;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.25rem;
 }
 
@@ -9516,7 +9696,7 @@ select:disabled {
 }
 .message__print .message__detail-content .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .message__print .message__detail-content .message__title {
   display: flex;
@@ -9545,10 +9725,10 @@ select:disabled {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  margin: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .message__print .message__detail-content .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -9838,7 +10018,7 @@ select:disabled {
   height: 100%;
 }
 .new-fax .new-fax__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -9858,7 +10038,7 @@ select:disabled {
 .new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__list {
   height: 150px;
   overflow-y: scroll;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
@@ -9870,7 +10050,7 @@ select:disabled {
   text-decoration: underline;
 }
 .new-fax .new-fax__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -9878,7 +10058,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-fax .new-fax__form .new-fax__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9897,7 +10077,7 @@ select:disabled {
   outline: none;
 }
 .new-fax .new-fax__form .new-fax__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9914,7 +10094,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-fax .new-fax__form .new-fax__form-patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -9959,7 +10139,7 @@ select:disabled {
 }
 .new-fax .new-fax__form .new-fax__form-body textarea {
   font-size: 0.85rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -9971,7 +10151,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   margin: 0.5rem 0.25rem 0;
 }
 .new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
@@ -10022,7 +10202,7 @@ select:disabled {
   position: relative;
 }
 .new-fax-mobile .new-fax-mobile__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -10053,7 +10233,7 @@ select:disabled {
 .new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__list {
   height: 110px;
   overflow-y: scroll;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
@@ -10066,7 +10246,7 @@ select:disabled {
   text-decoration: underline;
 }
 .new-fax-mobile .new-fax-mobile__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -10075,7 +10255,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10094,7 +10274,7 @@ select:disabled {
   outline: none;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10137,7 +10317,7 @@ select:disabled {
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -10157,7 +10337,7 @@ select:disabled {
   flex-wrap: wrap;
 }
 .new-fax-mobile .fax__attachments .fax__attachment-card {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   margin: 0.5rem 0.25rem 0;
 }
 .new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
@@ -10209,7 +10389,7 @@ select:disabled {
   grid-template-columns: 1fr 3fr;
 }
 .new-message .new-message__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10237,7 +10417,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message .new-message__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   display: flex;
@@ -10245,7 +10425,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-message .new-message__form .new-message__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10263,7 +10443,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .new-message .new-message__form .new-message__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10280,7 +10460,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-message .new-message__form .new-message__form-patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10299,7 +10479,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .new-message .new-message__form .new-message__form-attach {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10311,7 +10491,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message .new-message__form .new-message__form-importance {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10334,7 +10514,7 @@ select:disabled {
 }
 .new-message .new-message__form .new-message__form-body textarea {
   font-size: 0.85rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -10344,10 +10524,10 @@ select:disabled {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .new-message .new-message__form .new-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  padding: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .new-message .new-message__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -10383,7 +10563,7 @@ select:disabled {
   max-width: 100%;
 }
 .new-message .new-message__form .new-message__form-btns {
-  border-top: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10391,7 +10571,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .new-message .new-message__form .new-message__form-duedate {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -10406,7 +10586,7 @@ select:disabled {
   width: 120px;
 }
 .new-message .new-message__patients {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10425,7 +10605,7 @@ select:disabled {
   width: 100%;
 }
 .new-message .new-message__patients .patients .patients__list {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.5rem;
   height: 450px;
@@ -10444,7 +10624,7 @@ select:disabled {
   position: relative;
 }
 .new-message-mobile .new-message-mobile__contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.5rem;
@@ -10483,7 +10663,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message-mobile .new-message-mobile__form {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
   display: flex;
@@ -10492,7 +10672,7 @@ select:disabled {
   overflow-y: scroll;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10510,7 +10690,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10527,7 +10707,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -10546,7 +10726,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-attach {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10558,7 +10738,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-importance {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10581,7 +10761,7 @@ select:disabled {
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body textarea {
   font-size: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   outline: none;
   padding: 0.5rem;
   width: 100%;
@@ -10589,12 +10769,12 @@ select:disabled {
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments {
   display: flex;
-  padding: 15px;
+  padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  margin: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -10630,7 +10810,7 @@ select:disabled {
   max-width: 100%;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-btns {
-  border-top: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10638,7 +10818,7 @@ select:disabled {
   padding: 0.5rem;
 }
 .new-message-mobile .new-message-mobile__form .new-message__form-duedate {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -10653,7 +10833,7 @@ select:disabled {
   width: 120px;
 }
 .new-message-mobile .new-message-mobile__patients {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 0.85rem;
   padding: 0.5rem;
@@ -10684,7 +10864,7 @@ select:disabled {
   font-size: 1rem;
 }
 .new-message-mobile .new-message-mobile__patients .patients .patients__list {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.5rem;
   height: 400px;
@@ -10879,8 +11059,8 @@ select:disabled {
 .patient-record__menu {
   display: flex;
   flex-direction: column;
-  border-top: solid 0.5px #efeff1;
-  border-bottom: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
+  border-bottom: solid 0.5px #cecdcd;
   background-color: #fefefe;
   height: 100%;
   overflow-y: scroll;
@@ -10961,11 +11141,11 @@ select:disabled {
 }
 .patient-record__topic-container--active {
   max-height: 400px;
-  border-left: solid 0.5px #efeff1;
-  border-right: solid 0.5px #efeff1;
+  border-left: solid 0.5px #cecdcd;
+  border-right: solid 0.5px #cecdcd;
 }
 .patient-record__topic-container--bottom {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 
 .topic-content {
@@ -12002,7 +12182,7 @@ select:disabled {
 .refohip__container .refohip__results ul {
   flex: 1;
   overflow-y: scroll;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding-bottom: 0.5rem;
 }
@@ -12012,7 +12192,7 @@ select:disabled {
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .refohip__container .refohip__results ul .refohip__results-item:hover {
   text-decoration: underline;
@@ -12231,14 +12411,14 @@ select:disabled {
 }
 .reply-message {
   min-height: 250px;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   margin: 1rem auto;
   width: 90%;
   overflow-y: scroll;
 }
 .reply-message .reply-message__recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12257,7 +12437,7 @@ select:disabled {
   padding: 0.25rem 0.5rem;
 }
 .reply-message .reply-message__subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12274,7 +12454,7 @@ select:disabled {
   font-size: 1rem;
 }
 .reply-message .reply-message__patient {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -12294,7 +12474,7 @@ select:disabled {
   text-overflow: ellipsis;
 }
 .reply-message .reply-message__attach {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -12306,7 +12486,7 @@ select:disabled {
   font-weight: bold;
 }
 .reply-message .reply-message__importance {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -12337,10 +12517,10 @@ select:disabled {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .reply-message .reply-message__body .message__attachments .message__attachment-card {
-  border: solid 0.5px #efeff1;
-  padding: 0.5rem 0.25rem 0;
+  border: solid 0.5px #cecdcd;
 }
 .reply-message .reply-message__body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
@@ -12381,7 +12561,7 @@ select:disabled {
 }
 .reply-message .reply-message__body .reply-message__history .message {
   padding: 1rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
 }
 .reply-message .reply-message__body .reply-message__history .message__title {
   display: flex;
@@ -12407,7 +12587,7 @@ select:disabled {
   white-space: pre-wrap;
 }
 .reply-message .reply-message__btns {
-  border-top: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -12881,7 +13061,7 @@ select:disabled {
 }
 .search-patient {
   padding: 1rem;
-  width: 98%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -12917,6 +13097,15 @@ select:disabled {
   font-weight: bold;
   display: inline-block;
   width: 100px;
+}
+.search-patient__item-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.search-patient__item-btn-container button {
+  font-size: 0.7rem;
 }
 
 .search-patient__count {
@@ -12968,7 +13157,7 @@ select:disabled {
   font-weight: bold;
 }
 .search-patient__table tbody tr .record-link:hover {
-  color: #8fb4fb;
+  opacity: 0.85;
 }
 .search-patient__table tbody tr td {
   padding: 0.75rem;
@@ -12976,6 +13165,34 @@ select:disabled {
   text-align: center;
 }
 .search-patient__table tbody tr td:nth-child(1), .search-patient__table tbody tr td:nth-child(2), .search-patient__table tbody tr td:nth-child(3) {
+  text-align: left;
+}
+.search-patient__table--admin thead th:nth-child(1) {
+  min-width: 150px;
+}
+.search-patient__table--admin thead th:nth-child(2), .search-patient__table--admin thead th:nth-child(3), .search-patient__table--admin thead th:nth-child(4) {
+  min-width: 110px;
+}
+.search-patient__table--admin thead th:nth-child(5) {
+  min-width: 150px;
+}
+.search-patient__table--admin thead th:nth-child(6) {
+  min-width: 10px;
+}
+.search-patient__table--admin thead th:nth-child(13) {
+  min-width: 150px;
+}
+.search-patient__table--admin thead th:nth-child(14), .search-patient__table--admin thead th:nth-child(15), .search-patient__table--admin thead th:nth-child(16) {
+  min-width: 130px;
+}
+.search-patient__table--admin tbody tr .record-link {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.search-patient__table--admin tbody tr .record-link:hover {
+  opacity: 0.85;
+}
+.search-patient__table--admin tbody tr td:nth-child(2), .search-patient__table--admin tbody tr td:nth-child(3), .search-patient__table--admin tbody tr td:nth-child(4) {
   text-align: left;
 }
 
@@ -12997,6 +13214,9 @@ select:disabled {
     font-size: 0.85rem;
   }
   .search-patient__table {
+    font-size: 0.85rem;
+  }
+  .search-patient__item-btn-container button {
     font-size: 0.85rem;
   }
 }
@@ -13227,7 +13447,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .templates .templates__list {
   flex: 1;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 0 0.5rem;
@@ -13235,7 +13455,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .templates .templates__list-item {
   padding: 0.25rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   text-align: left;
 }
 .templates .templates__list-item span {
@@ -13266,14 +13486,14 @@ input[type=file]::-webkit-file-upload-button {
 }
 .calvinai__chat-templates .templates__list {
   flex: 1;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   overflow-y: scroll;
   padding: 0 0.5rem;
 }
 .calvinai__chat-templates .templates__list-item {
   padding: 0.25rem;
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   font-size: 0.85rem;
 }
 .calvinai__chat-templates .templates__list-item span {
@@ -13313,7 +13533,7 @@ input[type=file]::-webkit-file-upload-button {
   grid-template-columns: 1fr;
 }
 .message-template__form-content .message-template__form-contacts {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   padding: 0.5rem;
 }
@@ -13353,13 +13573,13 @@ input[type=file]::-webkit-file-upload-button {
   width: 70%;
 }
 .message-template__form-content .message-template__form-message {
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-recipients {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13378,7 +13598,7 @@ input[type=file]::-webkit-file-upload-button {
   padding: 0.25rem 0.5rem;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13410,7 +13630,7 @@ input[type=file]::-webkit-file-upload-button {
   font-size: 1rem;
 }
 .message-template__form-content .message-template__form-message .message-template__form-message-btns {
-  border-top: solid 0.5px #efeff1;
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -13435,13 +13655,13 @@ input[type=file]::-webkit-file-upload-button {
 }
 .fax-template__form-content {
   flex: 1;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
 }
 .fax-template__form-content .fax-template__form-subject {
-  border-bottom: solid 0.5px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13498,7 +13718,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .calvinai-template__form .calvinai-template__form-content {
   flex: 1;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -13560,7 +13780,7 @@ input[type=file]::-webkit-file-upload-button {
 }
 .clinical-note-template__form .clinical-note-template__form-body {
   flex: 1;
-  border: solid 0.5px #efeff1;
+  border: solid 0.5px #cecdcd;
   border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -13913,6 +14133,7 @@ input[type=file]::-webkit-file-upload-button {
   box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
   overflow: hidden;
   font-size: 0.85rem;
+  max-width: 1700px;
 }
 
 .window-title {
@@ -13923,6 +14144,7 @@ input[type=file]::-webkit-file-upload-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .window-title p {
   margin: 0;
