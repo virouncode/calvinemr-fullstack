@@ -7,6 +7,7 @@ import {
   newStaff,
   postXano,
   putXano,
+  resetPatientPwd,
   resetStaffPwd,
   resetXano,
   tempPassword,
@@ -29,5 +30,6 @@ xanoRouter.route("/new_patient").post(newPatient);
 xanoRouter.route("/temp_password").get(tempPassword);
 xanoRouter.route("/unlock").post(unlock);
 xanoRouter.route("/reset_staff_password").put(resetStaffPwd);
+xanoRouter.route("/reset_patient_password").put(resetPatientPwd);
 
 export default xanoRouter;

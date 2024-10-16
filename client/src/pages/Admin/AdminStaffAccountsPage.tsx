@@ -4,7 +4,7 @@ import StaffAccounts from "../../components/Admin/StaffAccounts/StaffAccounts";
 import useTitle from "../../hooks/useTitle";
 
 const AdminStaffAccountsPage = () => {
-  useTitle("Manage staff accounts");
+  useTitle("Staff accounts");
   return (
     <>
       <HelmetProvider>

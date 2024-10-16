@@ -381,7 +381,6 @@ export const unlock = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// POST request handler to create new staff
 export const resetStaffPwd = async (
   req: Request,
   res: Response
@@ -418,6 +417,58 @@ Password: ${password}
 PIN: ${pin}
 
 Please ensure you sign in as a staff member.
+
+Please do not reply to this email, as this address is automated and not monitored.
+
+Regards,
+The Reception Desk
+
+Powered by Calvin EMR`,
+    };
+    const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
+    await axios.post(mailgunUrl, emailToPost);
+    handleResponse(response, res);
+  } catch (err) {
+    handleError(err as AxiosError, res);
+  }
+};
+
+export const resetPatientPwd = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { patient_id, email, clinic_name, full_name } = req.body;
+    const password = generatePassword();
+    const pin = generatePIN();
+    const authToken = req.cookies.token;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    };
+    const config = {
+      method: "put",
+      url: "/patient_password_pin",
+      headers,
+      data: { password, pin, patient_id },
+    };
+    const axiosXanoInstance = getAxiosInstance("admin");
+    const response = await axiosXanoInstance(config);
+    const emailToPost = {
+      to: email,
+      subject: `${clinic_name} - Password reset - DO NOT REPLY`,
+      text: `Dear ${full_name},
+
+Your password and PIN have been reset.
+
+Here is your new access to the Patient Portal : 
+
+Go to the following web address: ${process.env.APP_URL_SHORTCUT}
+Login: ${email} 
+Password: ${password}
+PIN: ${pin}
+
+Please ensure you sign in as a patient.
 
 Please do not reply to this email, as this address is automated and not monitored.
 

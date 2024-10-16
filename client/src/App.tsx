@@ -26,6 +26,7 @@ import AdminCredentialsPage from "./pages/Admin/AdminCredentialsPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
 import AdminMigrationPage from "./pages/Admin/AdminMigrationPage";
 import AdminMyAccountPage from "./pages/Admin/AdminMyAccountPage";
+import AdminPatientsAccountsPage from "./pages/Admin/AdminPatientsAccountsPage";
 import AdminStaffAccountsPage from "./pages/Admin/AdminStaffAccountsPage";
 import ClosedPage from "./pages/All/ClosedPage";
 import LoginPage from "./pages/All/LoginPage";
@@ -144,6 +145,10 @@ const App = () => {
           <Route element={<RequireAuth allowedAccesses={["admin"]} />}>
             <Route path="dashboard" element={<AdminDashboardPage />} />
             <Route path="staff-accounts" element={<AdminStaffAccountsPage />} />
+            <Route
+              path="patients-accounts"
+              element={<AdminPatientsAccountsPage />}
+            />
             <Route path="clinic" element={<AdminClinicPage />} />
             <Route path="billing" element={<AdminBillingPage />} />
             <Route path="migration" element={<AdminMigrationPage />} />

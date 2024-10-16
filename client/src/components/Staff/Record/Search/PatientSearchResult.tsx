@@ -1,7 +1,12 @@
 import React from "react";
+import useUserContext from "../../../../hooks/context/useUserContext";
 import { usePatients } from "../../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../../hooks/useIntersection";
-import { SearchPatientType } from "../../../../types/app";
+import {
+  SearchPatientType,
+  UserAdminType,
+  UserStaffType,
+} from "../../../../types/app";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import LoadingRow from "../../../UI/Tables/LoadingRow";
@@ -12,6 +17,7 @@ type PatientSearchResultProps = {
 };
 
 const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
+  const { user } = useUserContext() as { user: UserStaffType | UserAdminType };
   //Queries
   const {
     data: patients,
@@ -40,9 +46,16 @@ const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
           <em>Number of patients: {patients.pages[0].itemsTotal}</em>
         </div>
         <div className="search-patient__table-container" ref={divRef}>
-          <table className="search-patient__table">
+          <table
+            className={
+              user.access_level === "admin"
+                ? "search-patient__table search-patient__table--admin"
+                : "search-patient__table"
+            }
+          >
             <thead>
               <tr>
+                {user.access_level === "admin" && <th>Action</th>}
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Middle Name</th>

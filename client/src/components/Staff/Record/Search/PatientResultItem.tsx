@@ -1,15 +1,23 @@
 import { Tooltip } from "@mui/material";
+import axios from "axios";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import useClinicContext from "../../../../hooks/context/useClinicContext";
+import useUserContext from "../../../../hooks/context/useUserContext";
 import {
   provinceStateTerritoryCT,
   toCodeTableName,
 } from "../../../../omdDatas/codesTables";
 import { DemographicsType } from "../../../../types/api";
+import { UserAdminType, UserStaffType } from "../../../../types/app";
 import {
   getAgeTZ,
   timestampToDateISOTZ,
 } from "../../../../utils/dates/formatDates";
+import { toPatientName } from "../../../../utils/names/toPatientName";
+import Button from "../../../UI/Buttons/Button";
+import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 
 type PatientResultItemProps = {
   patient: DemographicsType;
@@ -20,19 +28,64 @@ const PatientResultItem = ({
   patient,
   lastPatientRef,
 }: PatientResultItemProps) => {
+  const { user } = useUserContext() as { user: UserStaffType | UserAdminType };
+  const { clinic } = useClinicContext();
+  const handleResetPwd = async () => {
+    if (
+      await confirmAlert({
+        content: `You are about to reset ${toPatientName(
+          patient
+        )}'s password and PIN. An email with ${
+          patient.Gender === "M" ? "his" : "her"
+        } new credentials will be sent to ${
+          patient.Email
+        }. This action cannot be undone. Do you really want to proceed?`,
+      })
+    ) {
+      try {
+        await axios.put(`/api/xano/reset_patient_password`, {
+          patient_id: patient.patient_id,
+          email: patient.Email,
+          clinic_name: clinic?.name,
+          full_name: toPatientName(patient),
+        });
+        toast.success(
+          `Password and PIN reset, email sent to ${patient.Email}`,
+          {
+            containerId: "A",
+          }
+        );
+      } catch (err) {
+        if (err instanceof Error) {
+          toast.error(`Unable to reset patient password: ${err.message}`, {
+            containerId: "A",
+          });
+        }
+      }
+    }
+  };
   return (
     <tr ref={lastPatientRef}>
-      <td>
-        <Tooltip title="Go to EMR" placement="top-start" arrow>
-          <NavLink
-            to={`/staff/patient-record/${patient.patient_id}`}
-            className="record-link"
-            // target="_blank"
-          >
-            {patient.Names.LegalName.LastName.Part || ""}
-          </NavLink>
-        </Tooltip>
-      </td>
+      {user.access_level === "admin" && (
+        <td>
+          <Button label="Reset pwd & PIN" onClick={handleResetPwd} />
+        </td>
+      )}
+      {user.access_level === "admin" ? (
+        <td>{patient.Names.LegalName.LastName.Part || ""}</td>
+      ) : (
+        <td>
+          <Tooltip title="Go to EMR" placement="top-start" arrow>
+            <NavLink
+              to={`/staff/patient-record/${patient.patient_id}`}
+              className="record-link"
+              // target="_blank"
+            >
+              {patient.Names.LegalName.LastName.Part || ""}
+            </NavLink>
+          </Tooltip>
+        </td>
+      )}
       <td>{patient.Names.LegalName.FirstName.Part || ""}</td>
       <td>{patient.Names.LegalName.OtherName?.[0]?.Part || ""}</td>
       <td>{timestampToDateISOTZ(patient.DateOfBirth)}</td>
