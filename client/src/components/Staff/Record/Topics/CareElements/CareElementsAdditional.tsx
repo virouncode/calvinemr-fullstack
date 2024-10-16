@@ -49,16 +49,18 @@ const CareElementsAdditional = ({
       </div>
       {lastAdditionalData.Data?.Value && (
         <div className="care-elements__card-content-row-btns">
-          <Tooltip title="Show history">
-            <span>
-              <ClockIcon
-                onClick={() =>
-                  handleClickAdditionalHistory(lastAdditionalData.Name)
-                }
-                mr={15}
-              />
-            </span>
-          </Tooltip>
+          {!isNaN(Number(lastAdditionalData.Data?.Value)) && (
+            <Tooltip title="Show history">
+              <span>
+                <ClockIcon
+                  onClick={() =>
+                    handleClickAdditionalHistory(lastAdditionalData.Name)
+                  }
+                  mr={15}
+                />
+              </span>
+            </Tooltip>
+          )}
           <Tooltip title="Edit history">
             <span>
               <PenIcon onClick={handleEditClick} />
