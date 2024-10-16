@@ -219,7 +219,7 @@ Login: ${datasToPost.email}
 Temporary Password: ${newPassword}
 Temporary PIN: ${newPIN}
 
-Make sure to sign in as a staff member (click the pink button on the left).
+Please ensure you sign in as a staff member.
 Once you login for the first time, it is very important to change your password and your PIN. This will guarantee that only you have access to your personal staff portal.
 
 For confidentiality purposes, all the messages you send and receive will be through the portal and are not shared with any external email server.
@@ -284,7 +284,7 @@ Login: ${datasToPost.email}
 Temporary Password: ${newPassword}
 Temporary PIN: ${newPIN}
 
-Make sure to sign in as a patient (click the pink button in the middle).
+Please ensure you sign in as a patient.
 Once you login for the first time, it is very important to change your password and your PIN. This will guarantee that only you have access to your personal patient portal.
 
 In the patient portal, you will be able to :
@@ -375,6 +375,59 @@ export const unlock = async (req: Request, res: Response): Promise<void> => {
     };
     const axiosXanoInstance = getAxiosInstance(userType as string);
     const response = await axiosXanoInstance(config);
+    handleResponse(response, res);
+  } catch (err) {
+    handleError(err as AxiosError, res);
+  }
+};
+
+// POST request handler to create new staff
+export const resetStaffPwd = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { staff_id, email, clinic_name, full_name } = req.body;
+    const password = generatePassword();
+    const pin = generatePIN();
+    const authToken = req.cookies.token;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    };
+    const config = {
+      method: "put",
+      url: "/staff_password_pin",
+      headers,
+      data: { password, pin, staff_id },
+    };
+    const axiosXanoInstance = getAxiosInstance("admin");
+    const response = await axiosXanoInstance(config);
+    const emailToPost = {
+      to: email,
+      subject: `${clinic_name} - Password reset - DO NOT REPLY`,
+      text: `Dear ${full_name},
+
+Your password and PIN have been reset.
+
+Here is your new access to the Staff Portal : 
+
+Go to the following web address: ${process.env.APP_URL_SHORTCUT}
+Login: ${email} 
+Password: ${password}
+PIN: ${pin}
+
+Please ensure you sign in as a staff member.
+
+Please do not reply to this email, as this address is automated and not monitored.
+
+Regards,
+The Reception Desk
+
+Powered by Calvin EMR`,
+    };
+    const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
+    await axios.post(mailgunUrl, emailToPost);
     handleResponse(response, res);
   } catch (err) {
     handleError(err as AxiosError, res);

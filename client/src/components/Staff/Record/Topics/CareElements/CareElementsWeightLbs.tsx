@@ -64,9 +64,9 @@ const CareElementsWeightLbs = ({
       {editVisible && (
         <FakeWindow
           title="EDIT WEIGHT (lbs) HISTORY"
-          width={400}
+          width={450}
           height={550}
-          x={(window.innerWidth - 400) / 2}
+          x={(window.innerWidth - 450) / 2}
           y={(window.innerHeight - 550) / 2}
           color="#577399"
           setPopUpVisible={setEditVisible}

@@ -41,7 +41,8 @@ const CareElementsAdditional = ({
   return (
     <div className="care-elements__card-content-row">
       <label className="care-elements__card-content-row-label">
-        {lastAdditionalData.Name} ({lastAdditionalData.Unit}):
+        {lastAdditionalData.Name}
+        {lastAdditionalData.Unit ? ` (${lastAdditionalData.Unit})` : ""}:
       </label>
       <div className="care-elements__card-content-row-value">
         {lastAdditionalData.Data?.Value}
