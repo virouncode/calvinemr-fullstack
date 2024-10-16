@@ -115,7 +115,7 @@ const SmokingHistoryEdit = ({
     }
     if (
       formDatasSmokingPacks.some(
-        ({ PerDay }) => !PerDay.match(/^\d+([.,]\d{0,2})?$/)
+        ({ PerDay }) => !PerDay.match(/^\d+(\.\d{0,2})?$/)
       )
     ) {
       setErrMsgPost("Please enter a valid number for Packs Per Day");

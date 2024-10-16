@@ -167,7 +167,7 @@ const HeightHistoryEdit = ({
       return;
     }
     if (
-      formDatasHeight.some(({ Height }) => !Height.match(/^\d+([.,]\d{0,2})?$/))
+      formDatasHeight.some(({ Height }) => !Height.match(/^\d+(\.\d{0,2})?$/))
     ) {
       setErrMsgPost("Please enter a valid number for Height");
       return;

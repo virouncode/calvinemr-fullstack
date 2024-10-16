@@ -98,8 +98,8 @@ const BPHistoryEdit = ({
     if (
       formDatasBP.some(
         ({ SystolicBP, DiastolicBP }) =>
-          !SystolicBP.match(/^\d+([.,]\d{0,2})?$/) ||
-          !DiastolicBP.match(/^\d+([.,]\d{0,2})?$/)
+          !SystolicBP.match(/^\d+(\.\d{0,2})?$/) ||
+          !DiastolicBP.match(/^\d+(\.\d{0,2})?$/)
       )
     ) {
       setErrMsgPost(

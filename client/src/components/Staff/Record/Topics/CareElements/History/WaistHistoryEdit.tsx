@@ -92,7 +92,7 @@ const WaistHistoryEdit = ({
     if (
       formDatasWaist.some(
         ({ WaistCircumference }) =>
-          !WaistCircumference.match(/^\d+([.,]\d{0,2})?$/)
+          !WaistCircumference.match(/^\d+(\.\d{0,2})?$/)
       )
     ) {
       setErrMsgPost("Please enter a valid number for Waist Circumference");

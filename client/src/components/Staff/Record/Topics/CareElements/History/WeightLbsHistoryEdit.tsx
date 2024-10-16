@@ -177,7 +177,7 @@ const WeightLbsHistoryEdit = ({
       return;
     }
     if (
-      formDatasWeight.some(({ Weight }) => !Weight.match(/^\d+([.,]\d{0,2})?$/))
+      formDatasWeight.some(({ Weight }) => !Weight.match(/^\d+(\.\d{0,2})?$/))
     ) {
       setErrMsgPost("Please enter a valid number for Weight");
       return;
