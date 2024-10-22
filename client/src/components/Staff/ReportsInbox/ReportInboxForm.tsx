@@ -156,16 +156,16 @@ const ReportInboxForm = ({
 
   return (
     <div
-      className="reportsinbox__form"
+      className="reports__form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
     >
-      <form className="reportsinbox__form-content" onSubmit={handleSubmit}>
-        <div className="reportsinbox__form-row reportsinbox__form-row--btns">
+      <form className="reports__form-content" onSubmit={handleSubmit}>
+        <div className="reports__form-row reports__form-row--btns">
           <SubmitButton label="Save" disabled={progress} />
           <CancelButton onClick={handleCancel} />
         </div>
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Report Name"
             name="name"
@@ -174,18 +174,17 @@ const ReportInboxForm = ({
             id="inbox-name"
           />
         </div>
-        <div className="reportsinbox__form-row reportsinbox__form-row--patients">
-          <label>Related patient</label>
+        <div className="reports__form-row">
           <ReportsInboxPatients
             isPatientChecked={isPatientChecked}
             handleCheckPatient={handleCheckPatient}
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <label>File extension</label>
           <p>{formDatas.FileExtensionAndVersion}</p>
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <GenericList
             label="Class"
             name="Class"
@@ -195,7 +194,7 @@ const ReportInboxForm = ({
             placeHolder="Choose..."
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Sub class"
             name="SubClass"
@@ -204,7 +203,7 @@ const ReportInboxForm = ({
             id="inbox-subclass"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <InputDate
             label="Date of document"
             name="EventDateTime"
@@ -213,7 +212,7 @@ const ReportInboxForm = ({
             id="inbox-date"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <InputDate
             label="Date received"
             name="ReceivedDateTime"
@@ -222,7 +221,7 @@ const ReportInboxForm = ({
             id="inbox-date-received"
           />
         </div>
-        <div className="reportsinbox__form-row">
+        <div className="reports__form-row">
           <Input
             label="Author"
             name="AuthorFreeText"
@@ -231,7 +230,7 @@ const ReportInboxForm = ({
             id="inbox-author"
           />
         </div>
-        <div className="reportsinbox__form-row reportsinbox__form-row--text">
+        <div className="reports__form-row reports__form-row--text">
           <label htmlFor="inbox-notes">Notes</label>
           <textarea
             name="Notes"
@@ -243,7 +242,7 @@ const ReportInboxForm = ({
         </div>
       </form>
       {formDatas.File && (
-        <div className="reportsinbox__form-preview">
+        <div className="reports__form-preview">
           <ReportViewer file={formDatas.File} />
         </div>
       )}
