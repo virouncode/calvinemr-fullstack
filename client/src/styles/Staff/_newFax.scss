@@ -29,12 +29,6 @@
           padding: 0.25rem 0.5rem;
           margin-top: 0.25rem;
         }
-        .fax-numbers__item {
-          cursor: pointer;
-          &:hover {
-            text-decoration: underline;
-          }
-        }
       }
     }
   }
@@ -101,7 +95,7 @@
       }
     }
     .new-fax__form-attach {
-      border-bottom: solid 0.3px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -113,7 +107,7 @@
       }
     }
     .new-fax__form-templates {
-      border-bottom: solid 0.3px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       padding: 0.5rem;
       text-decoration: underline;
@@ -132,14 +126,14 @@
         width: 100%;
         min-height: 100%;
       }
-      .fax__attachments {
+      .message__attachments {
         display: flex;
         padding: 1rem;
         flex-wrap: wrap;
-        .fax__attachment-card {
+        gap: 0.5rem;
+        .message__attachment-card {
           border: solid 0.5px $grey2;
-          margin: 0.5rem 0.25rem 0;
-          .fax__attachment-card-thumbnail {
+          .message__attachment-card-thumbnail {
             height: 80px;
             overflow: hidden;
             position: relative;
@@ -149,14 +143,14 @@
               cursor: pointer;
             }
           }
-          .fax__attachment-card-footer {
+          .message__attachment-card-footer {
             background: $grey;
             padding: 0.25rem;
             font-size: $size-xs;
             display: flex;
             flex-direction: column;
           }
-          .fax__attachment-card-title {
+          .message__attachment-card-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -165,7 +159,7 @@
               margin-bottom: 0.25rem;
             }
           }
-          .fax__attachment-card-btn {
+          .message__attachment-card-btn {
             text-align: center;
             button {
               font-size: $size-xs;
@@ -176,7 +170,7 @@
       }
     }
     .new-fax__form-btns {
-      border-top: solid 0.3px $grey;
+      border-top: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -227,13 +221,6 @@
           margin-top: 0.25rem;
           font-size: $size-base;
         }
-
-        &__item {
-          cursor: pointer;
-          &:hover {
-            text-decoration: underline;
-          }
-        }
       }
     }
   }
@@ -282,7 +269,7 @@
       }
     }
     .new-fax__form-attach {
-      border-bottom: solid 0.3px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
       align-items: center;
@@ -294,7 +281,7 @@
       }
     }
     .new-fax__form-templates {
-      border-bottom: solid 0.3px $grey;
+      border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       padding: 0.5rem;
       text-decoration: underline;
@@ -313,56 +300,56 @@
         width: 100%;
         min-height: 100%;
       }
+      .message__attachments {
+        display: flex;
+        padding: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        .message__attachment-card {
+          border: solid 0.5px $grey2;
+          .message__attachment-card-thumbnail {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            iframe {
+              border: none;
+              cursor: pointer;
+            }
+          }
+          .message__attachment-card-footer {
+            background: $grey;
+            padding: 0.25rem;
+            font-size: $size-xs;
+            display: flex;
+            flex-direction: column;
+          }
+          .message__attachment-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+              font-size: $size-xs;
+              margin-bottom: 0.25rem;
+            }
+          }
+          .message__attachment-card-btn {
+            text-align: center;
+            button {
+              font-size: $size-xs;
+              max-width: 100%;
+            }
+          }
+        }
+      }
     }
     .new-fax__form-btns {
-      border-top: solid 0.3px $grey;
+      border-top: solid 0.5px $grey2;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 0.25rem;
       padding: 0.5rem;
-    }
-  }
-  .fax__attachments {
-    display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-    .fax__attachment-card {
-      border: solid 0.5px $grey2;
-      margin: 0.5rem 0.25rem 0;
-      .fax__attachment-card-thumbnail {
-        height: 80px;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        iframe {
-          border: none;
-          cursor: pointer;
-        }
-      }
-      .fax__attachment-card-footer {
-        background: $grey;
-        padding: 0.25rem;
-        font-size: $size-xs;
-        display: flex;
-        flex-direction: column;
-      }
-      .fax__attachment-card-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p {
-          font-size: $size-xs;
-          margin-bottom: 0.25rem;
-        }
-      }
-      .fax__attachment-card-btn {
-        text-align: center;
-        button {
-          font-size: $size-xs;
-          max-width: 100%;
-        }
-      }
     }
   }
 }

@@ -1884,14 +1884,13 @@ export type FaxOutboxType = {
 };
 
 export type FaxToPostType = {
-  sToFaxNumber: string;
+  faxNumbers: string[];
   sCPFromName: string;
   sCPToName: string;
   sCPOrganization: string;
   sCPSubject: string;
   sCPComments: string;
-  sFileName_1?: string;
-  fileURL?: string;
+  attachments: { fileName: string; fileURL: string }[];
 };
 
 export type FaxToDeleteType = {

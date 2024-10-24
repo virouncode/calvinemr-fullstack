@@ -233,12 +233,12 @@ const EformsPopUp = ({
           {isTabletOrMobile ? (
             <NewFaxMobile
               setNewVisible={setFaxVisible}
-              initialAttachment={fileToFax}
+              initialAttachments={fileToFax ? [fileToFax] : []}
             />
           ) : (
             <NewFax
               setNewVisible={setFaxVisible}
-              initialAttachment={fileToFax}
+              initialAttachments={fileToFax ? [fileToFax] : []}
             />
           )}
         </FakeWindow>

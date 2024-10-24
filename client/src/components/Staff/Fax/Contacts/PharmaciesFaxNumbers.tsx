@@ -1,16 +1,17 @@
 import React from "react";
 import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../hooks/useIntersection";
-import { PharmacyType } from "../../../../types/api";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import PharmacyFaxNumberItem from "./PharmacyFaxNumberItem";
 
 type PharmaciesFaxNumbersProps = {
-  handleClickPharmacy: (pharmacy: PharmacyType) => void;
+  handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isContactChecked: (faxNumber: string) => boolean;
 };
 
 const PharmaciesFaxNumbers = ({
-  handleClickPharmacy,
+  handleCheckContact,
+  isContactChecked,
 }: PharmaciesFaxNumbersProps) => {
   //Queries
   const {
@@ -61,13 +62,15 @@ const PharmaciesFaxNumbers = ({
               key={pharmacy.id}
               pharmacy={pharmacy}
               lastItemRef={lastItemRef}
-              handleClickPharmacy={handleClickPharmacy}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           ) : (
             <PharmacyFaxNumberItem
               key={pharmacy.id}
               pharmacy={pharmacy}
-              handleClickPharmacy={handleClickPharmacy}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           )
         )}

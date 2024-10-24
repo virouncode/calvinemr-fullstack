@@ -33,12 +33,12 @@ import {
 import { confirmAlert } from "../../../../../../UI/Confirm/ConfirmGlobal";
 import FakeWindow from "../../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../../Fax/NewFax";
+import NewFaxMobile from "../../../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../../../Messaging/External/NewMessageExternalMobile";
 import PrescriptionAdditionalPages from "./PrescriptionAdditionalPages";
 import PrescriptionOptionsPreview from "./PrescriptionOptionsPreview";
 import PrescriptionPagePreview from "./PrescriptionPagePreview";
-import NewFaxMobile from "../../../../../Fax/NewFaxMobile";
 
 type PrescriptionPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -397,18 +397,22 @@ const PrescriptionPreview = ({
           {isTabletOrMobile ? (
             <NewFaxMobile
               setNewVisible={setFaxVisible}
-              initialAttachment={{
-                alias: `Prescription_${prescriptionStamp}.pdf`,
-                file: prescription,
-              }}
+              initialAttachments={[
+                {
+                  alias: `Prescription_${prescriptionStamp}.pdf`,
+                  file: prescription,
+                },
+              ]}
             />
           ) : (
             <NewFax
               setNewVisible={setFaxVisible}
-              initialAttachment={{
-                alias: `Prescription_${prescriptionStamp}.pdf`,
-                file: prescription,
-              }}
+              initialAttachments={[
+                {
+                  alias: `Prescription_${prescriptionStamp}.pdf`,
+                  file: prescription,
+                },
+              ]}
             />
           )}
         </FakeWindow>

@@ -1,33 +1,40 @@
 import React from "react";
-import {
-  DoctorType,
-  FaxContactType,
-  PharmacyType,
-} from "../../../../types/api";
 import XmarkRectangleIcon from "../../../UI/Icons/XmarkRectangleIcon";
 import DoctorsFaxNumbers from "./DoctorsFaxNumbers";
 import OthersFaxNumbers from "./OthersFaxNumbers";
 import PharmaciesFaxNumbers from "./PharmaciesFaxNumbers";
 
 type FaxContactsProps = {
-  handleClickPharmacy: (pharmacy: PharmacyType) => void;
-  handleClickDoctor: (doctor: DoctorType) => void;
-  handleClickOther: (other: FaxContactType) => void;
+  toFaxNumbers: string[];
+  setToFaxNumbers: React.Dispatch<React.SetStateAction<string[]>>;
   closeCross?: boolean;
   recipientsRef?: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 const FaxContacts = ({
-  handleClickPharmacy,
-  handleClickDoctor,
-  handleClickOther,
+  toFaxNumbers,
+  setToFaxNumbers,
   closeCross,
   recipientsRef,
 }: FaxContactsProps) => {
+  const isContactChecked = (faxNumber: string) =>
+    toFaxNumbers.includes(faxNumber);
+
   const handleClose = () => {
     if (recipientsRef?.current)
       recipientsRef.current.style.transform = "translateX(-200%)";
   };
+
+  const handleCheckContact = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    const faxNumber = e.target.id;
+    if (checked) {
+      setToFaxNumbers([...toFaxNumbers, faxNumber]);
+    } else {
+      setToFaxNumbers(toFaxNumbers.filter((number) => number !== faxNumber));
+    }
+  };
+
   return (
     <div className="fax-contacts">
       <div className="fax-contacts__title">
@@ -36,11 +43,19 @@ const FaxContacts = ({
           <XmarkRectangleIcon color=" #3d375a" onClick={handleClose} />
         )}
       </div>
-      <PharmaciesFaxNumbers handleClickPharmacy={handleClickPharmacy} />
-      <DoctorsFaxNumbers handleClickDoctor={handleClickDoctor} />
-      <OthersFaxNumbers handleClickOther={handleClickOther} />
+      <PharmaciesFaxNumbers
+        handleCheckContact={handleCheckContact}
+        isContactChecked={isContactChecked}
+      />
+      <DoctorsFaxNumbers
+        handleCheckContact={handleCheckContact}
+        isContactChecked={isContactChecked}
+      />
+      <OthersFaxNumbers
+        handleCheckContact={handleCheckContact}
+        isContactChecked={isContactChecked}
+      />
     </div>
   );
 };
-
 export default FaxContacts;

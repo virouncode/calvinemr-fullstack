@@ -303,10 +303,9 @@ const NewMessageExternal = ({
       const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
       const file = e.target.files?.[0];
       if (!file) return;
-
-      if (file.size > 25000000) {
+      if (file.size > 500000000) {
         toast.error(
-          "The file is over 25Mb, please choose another one or send a link",
+          "The file is over 500Mb, please choose another file or send a link",
           { containerId: "A" }
         );
         return;

@@ -8,19 +8,19 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../../hooks/reactquery/mutations/clinicalNotesMutations";
 import { useSpeechRecognition } from "../../../../../hooks/useSpeechRecognition";
 import {
-    AttachmentType,
-    ClinicalNoteAttachmentType,
-    ClinicalNoteFormType,
-    ClinicalNoteTemplateType,
-    DemographicsType,
+  AttachmentType,
+  ClinicalNoteAttachmentType,
+  ClinicalNoteFormType,
+  ClinicalNoteTemplateType,
+  DemographicsType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import {
-    staffIdToFirstName,
-    staffIdToLastName,
-    staffIdToOHIP,
+  staffIdToFirstName,
+  staffIdToLastName,
+  staffIdToOHIP,
 } from "../../../../../utils/names/staffIdToName";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -250,9 +250,9 @@ const ClinicalNoteForm = ({
       const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
       const file = e.target.files?.[0];
       if (!file) return;
-      if (file.size > 25000000) {
+      if (file.size > 500000000) {
         toast.error(
-          "The file is over 25Mb, please choose another one or send a link",
+          "The file is over 500Mb, please choose another file or send a link",
           { containerId: "A" }
         );
         return;

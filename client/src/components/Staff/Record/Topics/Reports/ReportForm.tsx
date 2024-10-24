@@ -263,14 +263,12 @@ const ReportForm = ({
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsgPost("");
-    setIsLoadingFile(true);
-
-    if (file.size > 25000000) {
-      setErrMsgPost("The file is over 25Mb, please choose another file");
-      setIsLoadingFile(false);
+    if (file.size > 500000000) {
+      toast.error("The file is over 500Mb, please choose another file", {
+        containerId: "A",
+      });
       return;
     }
-
     setIsLoadingFile(true);
     const reader = new FileReader();
     reader.readAsDataURL(file);

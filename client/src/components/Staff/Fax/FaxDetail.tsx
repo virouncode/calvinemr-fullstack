@@ -52,7 +52,7 @@ const FaxDetail = ({
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
-    data: fax,
+    data: faxBase64,
     isPending,
     error,
   } = useFax(currentFaxId, section === "Received faxes" ? "IN" : "OUT");
@@ -82,19 +82,27 @@ const FaxDetail = ({
 
   const handleClickReply = async () => {
     setProgress(true);
-    const response = await xanoPost("/upload/attachment", "staff", {
-      content: "data:application/pdf;base64," + fax,
-    });
-    setAttachmentToForward({
-      file: response,
-      alias: "initial_fax.pdf",
-      date_created: nowTZTimestamp(),
-      created_by_id: user.id,
-      created_by_user_type: "staff",
-      id: uniqueId("messages_attachment_"),
-    });
-    setProgress(false);
-    setReplyVisible(true);
+    try {
+      const response = await xanoPost("/upload/attachment", "staff", {
+        content: "data:application/pdf;base64," + faxBase64,
+      });
+      setAttachmentToForward({
+        file: response,
+        alias: "initial_fax.pdf",
+        date_created: nowTZTimestamp(),
+        created_by_id: user.id,
+        created_by_user_type: "staff",
+        id: uniqueId("messages_attachment_"),
+      });
+      setProgress(false);
+      setReplyVisible(true);
+    } catch (err) {
+      setProgress(false);
+      if (err instanceof Error)
+        toast.error(`Unable to reply fax: ${err.message}`, {
+          containerId: "A",
+        });
+    }
   };
 
   const handleClickForward = async () => {
@@ -104,7 +112,7 @@ const FaxDetail = ({
         "/upload/attachment",
         "staff",
         {
-          content: "data:application/pdf;base64," + fax,
+          content: "data:application/pdf;base64," + faxBase64,
         }
       );
       setAttachmentToForward({
@@ -133,7 +141,7 @@ const FaxDetail = ({
         "/upload/attachment",
         "staff",
         {
-          content: "data:application/pdf;base64," + fax,
+          content: "data:application/pdf;base64," + faxBase64,
         }
       );
       setAttachmentToForward({
@@ -159,7 +167,7 @@ const FaxDetail = ({
   if (error) return <ErrorParagraph errorMsg={error.message} />;
 
   return (
-    fax && (
+    faxBase64 && (
       <>
         <div className="fax__detail-toolbar">
           <ArrowLeftIcon onClick={handleClickBack} mr={20} />
@@ -188,7 +196,7 @@ const FaxDetail = ({
           </div>
         </div>
         <div className="fax__detail-content">
-          <Fax faxURL={fax} />
+          <Fax faxBase64={faxBase64} />
         </div>
         {forwardVisible && (
           <FakeWindow
@@ -203,12 +211,16 @@ const FaxDetail = ({
             {isTabletOrMobile ? (
               <NewFaxMobile
                 setNewVisible={setForwardVisible}
-                initialAttachment={attachmentToForward}
+                initialAttachments={
+                  attachmentToForward ? [attachmentToForward] : []
+                }
               />
             ) : (
               <NewFax
                 setNewVisible={setForwardVisible}
-                initialAttachment={attachmentToForward}
+                initialAttachments={
+                  attachmentToForward ? [attachmentToForward] : []
+                }
               />
             )}
           </FakeWindow>
@@ -226,14 +238,18 @@ const FaxDetail = ({
             {isTabletOrMobile ? (
               <NewFaxMobile
                 setNewVisible={setReplyVisible}
-                initialAttachment={attachmentToForward}
+                initialAttachments={
+                  attachmentToForward ? [attachmentToForward] : []
+                }
                 initialRecipient={{ ToFaxNumber: currentCallerId }}
                 reply={true}
               />
             ) : (
               <NewFax
                 setNewVisible={setReplyVisible}
-                initialAttachment={attachmentToForward}
+                initialAttachments={
+                  attachmentToForward ? [attachmentToForward] : []
+                }
                 initialRecipient={{ ToFaxNumber: currentCallerId }}
                 reply={true}
               />

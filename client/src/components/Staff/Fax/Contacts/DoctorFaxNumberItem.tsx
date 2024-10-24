@@ -1,26 +1,32 @@
 import React from "react";
 import { DoctorType } from "../../../../types/api";
+import Checkbox from "../../../UI/Checkbox/Checkbox";
 
 type DoctorFaxNumberItemProps = {
   doctor: DoctorType;
-  handleClickDoctor: (doctor: DoctorType) => void;
+  handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isContactChecked: (faxNumber: string) => boolean;
   lastItemRef?: (node: Element | null) => void;
 };
 
 const DoctorFaxNumberItem = ({
   doctor,
-  handleClickDoctor,
+  handleCheckContact,
+  isContactChecked,
   lastItemRef,
 }: DoctorFaxNumberItemProps) => {
+  const label = `${doctor.LastName ? doctor.LastName : ""}${
+    doctor.FirstName ? `${doctor.FirstName}, ` : ""
+  }${doctor.speciality}`;
   return (
-    <li
-      className="fax-numbers__item"
-      ref={lastItemRef}
-      onClick={() => handleClickDoctor(doctor)}
-    >
-      {doctor.LastName ? `${doctor.LastName}, ` : ""}
-      {doctor.FirstName ? `${doctor.FirstName}, ` : ""}
-      {doctor.speciality}
+    <li className="fax-numbers__item" ref={lastItemRef}>
+      <Checkbox
+        id={doctor.FaxNumber.phoneNumber}
+        name={doctor.LastName}
+        onChange={handleCheckContact}
+        checked={isContactChecked(doctor.FaxNumber.phoneNumber)}
+        label={label}
+      />
     </li>
   );
 };

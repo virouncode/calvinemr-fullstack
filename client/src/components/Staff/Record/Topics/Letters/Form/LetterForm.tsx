@@ -5,16 +5,16 @@ import { xanoPost } from "../../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQueries";
 import {
-    AttachmentType,
-    DemographicsType,
-    LetterAttachmentType,
-    LetterTemplateType,
-    TopicType,
+  AttachmentType,
+  DemographicsType,
+  LetterAttachmentType,
+  LetterTemplateType,
+  TopicType,
 } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
 import {
-    nowTZ,
-    nowTZTimestamp,
+  nowTZ,
+  nowTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
@@ -95,9 +95,9 @@ const LetterForm = ({
       const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
       const file = e.target.files?.[0];
       if (!file) return;
-      if (file.size > 25000000) {
+      if (file.size > 500000000) {
         toast.error(
-          "The file is over 25Mb, please choose another one or send a link",
+          "The file is over 500Mb, please choose another file or send a link",
           { containerId: "A" }
         );
         return;

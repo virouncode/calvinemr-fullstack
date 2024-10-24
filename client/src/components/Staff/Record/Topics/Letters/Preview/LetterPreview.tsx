@@ -22,6 +22,7 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
 import NewFax from "../../../../Fax/NewFax";
+import NewFaxMobile from "../../../../Fax/NewFaxMobile";
 import NewMessageExternal from "../../../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../../../Messaging/Internal/NewMessage";
@@ -30,7 +31,6 @@ import LetterAdditionalPages from "./LetterAdditionalPages";
 import LetterOptionsPreview from "./LetterOptionsPreview";
 import LetterPagePreview from "./LetterPagePreview";
 import LetterRecordInfosPagePreview from "./LetterRecordInfosPagePreview";
-import NewFaxMobile from "../../../../Fax/NewFaxMobile";
 
 type LetterPreviewProps = {
   demographicsInfos: DemographicsType;
@@ -610,18 +610,22 @@ const LetterPreview = ({
           {isTabletOrMobile ? (
             <NewFaxMobile
               setNewVisible={setFaxVisible}
-              initialAttachment={{
-                alias: `${name.replaceAll(" ", "")}.pdf`,
-                file: letter,
-              }}
+              initialAttachments={[
+                {
+                  alias: `${name.replaceAll(" ", "")}.pdf`,
+                  file: letter,
+                },
+              ]}
             />
           ) : (
             <NewFax
               setNewVisible={setFaxVisible}
-              initialAttachment={{
-                alias: `${name.replaceAll(" ", "")}.pdf`,
-                file: letter,
-              }}
+              initialAttachments={[
+                {
+                  alias: `${name.replaceAll(" ", "")}.pdf`,
+                  file: letter,
+                },
+              ]}
             />
           )}
         </FakeWindow>

@@ -8,17 +8,18 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxPost } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import {
+  AttachmentType,
   ClinicType,
-  DoctorType,
-  FaxContactType,
+  EdocType,
   FaxTemplateType,
   FaxToPostType,
   MessageAttachmentType,
-  PharmacyType,
+  PamphletType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import AttachEdocsPamphletsButton from "../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../UI/Buttons/CancelButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
@@ -27,20 +28,21 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../UI/Windows/FakeWindow";
+import AddEdocsPamphlets from "../Messaging/Internal/AddEdocsPamphlets";
+import MessagesAttachments from "../Messaging/Internal/MessagesAttachments";
 import FaxContacts from "./Contacts/FaxContacts";
-import FaxAttachmentCard from "./FaxAttachmentCard";
 import FaxesTemplates from "./Templates/FaxesTemplates";
 
 type NewFaxProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  initialAttachment?: Partial<MessageAttachmentType>;
+  initialAttachments?: Partial<MessageAttachmentType>[];
   initialRecipient?: { ToFaxNumber: string };
   reply?: boolean;
 };
 
 const NewFaxMobile = ({
   setNewVisible,
-  initialAttachment,
+  initialAttachments = [],
   initialRecipient,
   reply = false,
 }: NewFaxProps) => {
@@ -48,16 +50,21 @@ const NewFaxMobile = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const { clinic } = useClinicContext() as { clinic: ClinicType };
-  const [attachment, setAttachment] =
-    useState<Partial<MessageAttachmentType> | null>(initialAttachment ?? null);
-  const [toFaxNumber, setToFaxNumber] = useState(
-    initialRecipient?.ToFaxNumber || ""
+  const [attachments, setAttachments] =
+    useState<Partial<MessageAttachmentType>[]>(initialAttachments);
+  const [edocs, setEdocs] = useState<EdocType[]>([]);
+  const [pamphlets, setPamphlets] = useState<PamphletType[]>([]);
+  const [toFaxNumbers, setToFaxNumbers] = useState(
+    initialRecipient ? [initialRecipient.ToFaxNumber] : []
   );
+  const [toNewFaxNumbers, setToNewFaxNumbers] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
+  const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
+    useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recipientsRef = useRef<HTMLDivElement | null>(null);
   //Queries
@@ -68,11 +75,6 @@ const NewFaxMobile = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setBody(e.target.value);
-  };
-
-  const handleChangeToFaxNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setToFaxNumber(value);
   };
 
   const handleChangeSubject = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,22 +99,51 @@ const NewFaxMobile = ({
     setNewVisible(false);
   };
 
-  const handleRemoveAttachment = () => {
-    setAttachment(null);
+  const handleRemoveAttachment = (fileName: string) => {
+    setAttachments(
+      attachments.filter((attachment) => attachment.file?.name !== fileName)
+    );
+  };
+  const handleRemoveEdoc = (edocId: number) => {
+    setEdocs(edocs.filter(({ id }) => id !== edocId));
+  };
+  const handleRemovePamphlet = (pamphletId: number) => {
+    setPamphlets(pamphlets.filter(({ id }) => id !== pamphletId));
   };
 
   const handleSend = async () => {
     const regex = /^\d{10}$/;
-    if (!regex.test(toFaxNumber)) {
-      toast.error("Please enter a valid 10-digit fax number", {
-        containerId: "A",
-      });
-      return;
-    }
+    toFaxNumbers.forEach((toFaxNumber) => {
+      if (!regex.test(toFaxNumber)) {
+        toast.error(
+          `${toFaxNumber} is not a valid fax number, please enter a valid 10-digit fax number`,
+          {
+            containerId: "A",
+          }
+        );
+        return;
+      }
+    });
     setProgress(true);
-
+    const attachmentsToPost: Partial<MessageAttachmentType>[] = [
+      ...attachments,
+      ...(edocs.map((edoc) => ({
+        file: edoc.file,
+        alias: edoc.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+      ...(pamphlets.map((pamphlet) => ({
+        file: pamphlet.file,
+        alias: pamphlet.name,
+        date_created: nowTZTimestamp(),
+        created_by_user_type: "staff",
+        created_by_id: user.id,
+      })) as Partial<MessageAttachmentType>[]),
+    ];
     const faxToPost: FaxToPostType = {
-      sToFaxNumber: `1${toFaxNumber}`,
+      faxNumbers: toFaxNumbers,
       sCPFromName: staffIdToTitleAndName(staffInfos, user.id),
       sCPToName: "whom it may concern",
       sCPOrganization: `${clinic.name} - ${
@@ -120,15 +151,13 @@ const NewFaxMobile = ({
       } - phone: ${sites?.find(({ id }) => id === user.site_id)?.phone ?? ""}`,
       sCPSubject: subject,
       sCPComments: body,
+      attachments: attachmentsToPost.map((attachment) => ({
+        fileURL:
+          `${import.meta.env.VITE_XANO_BASE_URL}${attachment.file?.path}` || "",
+        fileName: attachment.file?.name || "",
+      })),
     };
-    if (attachment) {
-      faxToPost.sFileName_1 = (
-        attachment as Partial<MessageAttachmentType>
-      ).file?.name;
-      faxToPost.fileURL = `${import.meta.env.VITE_XANO_BASE_URL}${
-        (attachment as Partial<MessageAttachmentType>).file?.path
-      }`;
-    }
+
     faxPost.mutate(faxToPost, {
       onSuccess: () => {
         setNewVisible(false);
@@ -150,11 +179,10 @@ const NewFaxMobile = ({
       const file = e.target.files?.[0];
       if (!file) return;
 
-      if (file.size > 25000000) {
-        toast.error(
-          "The file is over 25Mb, please choose another one or send a link",
-          { containerId: "A" }
-        );
+      if (file.size > 500000000) {
+        toast.error("The file is over 500Mb, please choose another file", {
+          containerId: "A",
+        });
         return;
       }
       setIsLoadingFile(true);
@@ -165,18 +193,25 @@ const NewFaxMobile = ({
       reader.onload = async (e) => {
         const content = e.target?.result; // this is the content!
         try {
-          const response = await xanoPost("/upload/attachment", "staff", {
-            content,
-          });
+          const response: AttachmentType = await xanoPost(
+            "/upload/attachment",
+            "staff",
+            {
+              content,
+            }
+          );
           if (!response.type) response.type = "document";
-          setAttachment({
-            file: response,
-            alias: file.name,
-            date_created: nowTZTimestamp(),
-            created_by_id: user.id,
-            created_by_user_type: "staff",
-            id: uniqueId("messages_attachment_"),
-          }); //meta, mime, name, path, size, type
+          setAttachments([
+            ...attachments,
+            {
+              file: response,
+              alias: file.name,
+              date_created: nowTZTimestamp(),
+              created_by_id: user.id,
+              created_by_user_type: "staff",
+              id: uniqueId("messages_attachment_"),
+            },
+          ]); //meta, mime, name, path, size, type
           setIsLoadingFile(false);
         } catch (err) {
           if (err instanceof Error)
@@ -190,19 +225,18 @@ const NewFaxMobile = ({
     input.click();
   };
 
-  const handleClickPharmacy = (pharmacy: PharmacyType) => {
-    setToFaxNumber(pharmacy.FaxNumber.phoneNumber.replace(/-/g, ""));
-  };
-  const handleClickDoctor = (doctor: DoctorType) => {
-    setToFaxNumber(doctor.FaxNumber.phoneNumber.replace(/-/g, ""));
-  };
-  const handleClickOther = (other: FaxContactType) => {
-    setToFaxNumber(other.fax_number.replace(/-/g, ""));
+  const handleEdocsPamphlets = () => {
+    setAddEdocsPamphletsVisible((v) => !v);
   };
   const handleClickRecipients = () => {
     if (recipientsRef.current) {
       recipientsRef.current.style.transform = "translateX(0)";
     }
+  };
+  const handleChangeToNewFaxNumbers = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setToNewFaxNumbers(e.target.value);
   };
 
   if (isPending)
@@ -222,9 +256,8 @@ const NewFaxMobile = ({
     <div className="new-fax-mobile">
       <div className="new-fax-mobile__contacts" ref={recipientsRef}>
         <FaxContacts
-          handleClickDoctor={handleClickDoctor}
-          handleClickPharmacy={handleClickPharmacy}
-          handleClickOther={handleClickOther}
+          toFaxNumbers={toFaxNumbers}
+          setToFaxNumbers={setToFaxNumbers}
           closeCross={true}
           recipientsRef={recipientsRef}
         />
@@ -235,26 +268,30 @@ const NewFaxMobile = ({
           onClick={handleClickRecipients}
         >
           <Input
-            value={toFaxNumber}
-            onChange={handleChangeToFaxNumber}
+            value={toFaxNumbers.join(", ")}
+            readOnly={true}
             id="to"
             label="To:"
-            placeholder="Please enter a 10-digit fax number or select a contact..."
+            placeholder="Choose Recipient(s) from directory"
           />
         </div>
-        <div className="new-fax__form-subject">
+        <div className="new-fax__form-recipients">
           <Input
-            value={subject}
-            onChange={handleChangeSubject}
-            id="subject"
-            label="Subject:"
-            placeholder="Subject"
+            value={toNewFaxNumbers}
+            onChange={handleChangeToNewFaxNumbers}
+            id="to"
+            label="To:"
+            placeholder="New numbers: xxx-xxx-xxxx, xxx-xxx-xxxx, ..."
           />
         </div>
         <div className="new-fax__form-attach">
-          <AttachFilesButton
-            onClick={handleAttach}
-            attachments={attachment ? [attachment] : []}
+          <AttachFilesButton onClick={handleAttach} attachments={attachments} />
+        </div>
+        <div className="new-fax__form-attach">
+          <AttachEdocsPamphletsButton
+            onClick={handleEdocsPamphlets}
+            edocs={edocs}
+            pamphlets={pamphlets}
           />
         </div>
         <div className="new-fax__form-templates">
@@ -279,11 +316,19 @@ const NewFaxMobile = ({
                 : ""
             }
           />
-          {attachment && (
-            <FaxAttachmentCard
-              attachment={attachment}
+          {(attachments.length > 0 ||
+            edocs.length > 0 ||
+            pamphlets.length > 0) && (
+            <MessagesAttachments
+              attachments={attachments}
+              edocs={edocs}
+              pamphlets={pamphlets}
               handleRemoveAttachment={handleRemoveAttachment}
+              handleRemoveEdoc={handleRemoveEdoc}
+              handleRemovePamphlet={handleRemovePamphlet}
               deletable={true}
+              addable={false}
+              cardWidth="30%"
             />
           )}
         </div>
@@ -308,6 +353,25 @@ const NewFaxMobile = ({
           setPopUpVisible={setTemplatesVisible}
         >
           <FaxesTemplates handleSelectTemplate={handleSelectTemplate} />
+        </FakeWindow>
+      )}
+      {addEdocsPamphletsVisible && (
+        <FakeWindow
+          title={`CHOOSE EDOCS/PAMPHLETS TO SEND`}
+          width={800}
+          height={window.innerHeight}
+          x={window.innerWidth - 800}
+          y={0}
+          color="#8fb4fb"
+          setPopUpVisible={setAddEdocsPamphletsVisible}
+        >
+          <AddEdocsPamphlets
+            edocs={edocs}
+            pamphlets={pamphlets}
+            setEdocs={setEdocs}
+            setPamphlets={setPamphlets}
+            setAddEdocsPamphletsVisible={setAddEdocsPamphletsVisible}
+          />
         </FakeWindow>
       )}
     </div>

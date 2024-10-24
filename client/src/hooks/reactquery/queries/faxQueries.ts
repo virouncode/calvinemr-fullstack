@@ -34,8 +34,8 @@ const fetchFax = async (id: string, direction: string) => {
     id,
     direction,
   });
-  const faxURL: string = response.data;
-  return faxURL;
+  const faxBase64: string = response.data;
+  return faxBase64;
 };
 
 export const useFaxesInbox = (

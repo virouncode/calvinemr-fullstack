@@ -1,15 +1,18 @@
 import React from "react";
 import { useDoctors } from "../../../../hooks/reactquery/queries/doctorsQueries";
 import useIntersection from "../../../../hooks/useIntersection";
-import { DoctorType } from "../../../../types/api";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import DoctorFaxNumberItem from "./DoctorFaxNumberItem";
 
 type DoctorsFaxNumbersProps = {
-  handleClickDoctor: (doctor: DoctorType) => void;
+  handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isContactChecked: (faxNumber: string) => boolean;
 };
 
-const DoctorsFaxNumbers = ({ handleClickDoctor }: DoctorsFaxNumbersProps) => {
+const DoctorsFaxNumbers = ({
+  handleCheckContact,
+  isContactChecked,
+}: DoctorsFaxNumbersProps) => {
   //Queries
   const {
     data,
@@ -59,13 +62,15 @@ const DoctorsFaxNumbers = ({ handleClickDoctor }: DoctorsFaxNumbersProps) => {
               key={doctor.id}
               doctor={doctor}
               lastItemRef={lastItemRef}
-              handleClickDoctor={handleClickDoctor}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           ) : (
             <DoctorFaxNumberItem
               key={doctor.id}
               doctor={doctor}
-              handleClickDoctor={handleClickDoctor}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           )
         )}

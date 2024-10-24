@@ -1,15 +1,18 @@
 import React from "react";
 import { useFaxDirectory } from "../../../../hooks/reactquery/queries/faxDirectoryQueries";
 import useIntersection from "../../../../hooks/useIntersection";
-import { FaxContactType } from "../../../../types/api";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import OtherFaxNumberItem from "./OtherFaxNumberItem";
 
 type OthersFaxNumbersProps = {
-  handleClickOther: (other: FaxContactType) => void;
+  handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isContactChecked: (faxNumber: string) => boolean;
 };
 
-const OthersFaxNumbers = ({ handleClickOther }: OthersFaxNumbersProps) => {
+const OthersFaxNumbers = ({
+  handleCheckContact,
+  isContactChecked,
+}: OthersFaxNumbersProps) => {
   //Queries
   const {
     data,
@@ -57,13 +60,15 @@ const OthersFaxNumbers = ({ handleClickOther }: OthersFaxNumbersProps) => {
               key={other.id}
               other={other}
               lastItemRef={lastItemRef}
-              handleClickOther={handleClickOther}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           ) : (
             <OtherFaxNumberItem
               key={other.id}
               other={other}
-              handleClickOther={handleClickOther}
+              handleCheckContact={handleCheckContact}
+              isContactChecked={isContactChecked}
             />
           )
         )}

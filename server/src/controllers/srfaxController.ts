@@ -4,6 +4,28 @@ import { Request, Response } from "express";
 dotenv.config();
 axios.defaults.withCredentials = true;
 
+type AttachmentType = {
+  access: string;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
+  mime: string;
+  meta: {
+    width: number;
+    height: number;
+  };
+  url: string;
+};
+type MessageAttachmentType = {
+  id: number | string;
+  file: AttachmentType | null;
+  alias: string;
+  date_created: number;
+  created_by_user_type: "staff" | "patient";
+  created_by_id: number;
+};
+
 // Helper function to download and encode the file to base64
 const downloadAndEncodeFile = async (url: string): Promise<string> => {
   try {
@@ -29,52 +51,88 @@ const handleError = (err: unknown): string => {
 export const postFax = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
-      sToFaxNumber,
+      faxNumbers,
       sCPFromName,
       sCPToName,
       sCPOrganization,
       sCPSubject,
       sCPComments,
-      sFileName_1,
-      fileURL,
+      attachments,
     } = req.body;
 
-    const encodedFileContent = await downloadAndEncodeFile(fileURL);
-    const data = {
+    const data: {
+      action: string;
+      access_id: string;
+      access_pwd: string;
+      sCallerID: string;
+      sSenderEmail: string;
+      sFaxType: string;
+      sCPFromName: string;
+      sCPToName: string;
+      sCPOrganization: string;
+      sCoverPage: string;
+      sCPSubject: string;
+      sCPComments: string;
+      [key: string]: string;
+    } = {
       action: "Queue_Fax",
       access_id: process.env.SRFAX_ACCESS_ID!,
       access_pwd: process.env.SRFAX_ACCESS_PWD!,
       sCallerID: process.env.SRFAX_CALLER_ID!,
       sSenderEmail: "calvinemrtest@gmail.com",
       sFaxType: "SINGLE",
-      sToFaxNumber,
       sCPFromName,
       sCPToName,
       sCPOrganization,
       sCoverPage: "Basic",
       sCPSubject,
       sCPComments,
-      sFileName_1,
-      sFileContent_1: encodedFileContent,
     };
 
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-
-    if (response.data.Status === "Failed") {
-      throw new Error(response.data.Result);
+    // Process attachments if they exist
+    if (attachments && attachments.length > 0) {
+      await Promise.all(
+        attachments.map(
+          async (
+            attachment: { fileName: string; fileURL: string },
+            index: number
+          ) => {
+            const encodedFileContent = await downloadAndEncodeFile(
+              attachment.fileURL
+            );
+            data[`sFileName_${index + 1}`] = attachment.fileName;
+            data[`sFileContent_${index + 1}`] = encodedFileContent;
+          }
+        )
+      );
     }
 
-    res.status(200).json({ success: true, data: response.data });
+    // Send faxes to each number
+    await Promise.all(
+      faxNumbers.map(async (faxNumber: string) => {
+        const faxToPost = { ...data, sToFaxNumber: `1${faxNumber}` }; // Fix fax number formatting
+
+        const response = await axios.post(
+          "https://secure.srfax.com/SRF_SecWebSvc.php",
+          faxToPost,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        if (response.data.Status === "Failed") {
+          throw new Error(response.data.Result);
+        }
+      })
+    );
+
+    res
+      .status(200)
+      .json({ success: true, data: { message: "Fax successfully sent" } });
   } catch (err) {
     const errorMessage = handleError(err);
     console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
+    res.status(500).json({ success: false, message: errorMessage }); // Changed to 500 for server errors
   }
 };
 

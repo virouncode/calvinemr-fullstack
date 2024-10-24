@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useEdocs } from "../../../../hooks/reactquery/queries/edocsQueries";
 import { usePamphlets } from "../../../../hooks/reactquery/queries/pamphletsQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
 import { EdocType, PamphletType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
@@ -34,6 +35,9 @@ const AddEdocsPamphlets = ({
   const [checkedEdocs, setCheckedEdocs] = useState<EdocType[]>(edocs);
   const [checkedPamphlets, setCheckedPamphlets] =
     useState<PamphletType[]>(pamphlets);
+  const debouncedSearchEdocs = useDebounce(searchEdocs, 300);
+  const debouncedSearchPamphlets = useDebounce(searchPamphlets, 300);
+
   const {
     data: dataEdocs,
     isPending: isPendingEdocs,
@@ -41,7 +45,7 @@ const AddEdocsPamphlets = ({
     isFetchingNextPage: isFetchingNextPageEdocs,
     fetchNextPage: fetchNextPageEdocs,
     isFetching: isFetchingEdocs,
-  } = useEdocs(searchEdocs);
+  } = useEdocs(debouncedSearchEdocs);
 
   //INTERSECTION OBSERVER
   const { divRef: divRefEdocs, lastItemRef: lastItemRefEdocs } =
@@ -58,7 +62,7 @@ const AddEdocsPamphlets = ({
     isFetchingNextPage: isFetchingNextPagePamphlets,
     fetchNextPage: fetchNextPagePamphlets,
     isFetching: isFetchingPamphlets,
-  } = usePamphlets(searchPamphlets);
+  } = usePamphlets(debouncedSearchPamphlets);
 
   //INTERSECTION OBSERVER
   const { divRef: divRefPamphlets, lastItemRef: lastItemRefPamphlets } =

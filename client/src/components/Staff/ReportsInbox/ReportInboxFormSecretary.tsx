@@ -192,9 +192,10 @@ const ReportInboxFormSecretary = ({
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
-    if (file.size > 25000000) {
-      setErrMsg("The file is over 25Mb, please choose another file");
-      setIsLoadingFile(false);
+    if (file.size > 500000000) {
+      toast.error("The file is over 500Mb, please choose another file", {
+        containerId: "A",
+      });
       return;
     }
     // setting up the reader
