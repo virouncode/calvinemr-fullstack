@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const billingFormSchema = yup.object({
-  date: yup.string().required("Date field is required"),
+  dateStr: yup.string().required("Date field is required"),
   provider_ohip_billing_nbr: yup
     .string()
     .required("Provider OHIP number is required"),
