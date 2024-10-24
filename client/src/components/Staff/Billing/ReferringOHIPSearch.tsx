@@ -7,6 +7,7 @@ import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
 import LoadingLi from "../../UI/Lists/LoadingLi";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import useDebounce from "../../../hooks/useDebounce";
 
 type ReferringOHIPSearchProps = {
   handleClickRefOHIP: (item: StaffType | DoctorType) => void;
@@ -20,6 +21,7 @@ const ReferringOHIPSearch = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(setSearch, 300);
   const clinicDoctors = staffInfos
     .filter(({ account_status }) => account_status !== "Closed")
     .filter(({ title }) => title === "Doctor");
@@ -31,7 +33,7 @@ const ReferringOHIPSearch = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useDoctorsSearch(search);
+  } = useDoctorsSearch(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

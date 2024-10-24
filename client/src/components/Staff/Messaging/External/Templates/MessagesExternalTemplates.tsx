@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMessagesExternalTemplates } from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
+import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { MessageExternalTemplateType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
@@ -21,6 +22,7 @@ const MessagesExternalTemplates = ({
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data,
@@ -29,7 +31,7 @@ const MessagesExternalTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useMessagesExternalTemplates(search);
+  } = useMessagesExternalTemplates(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

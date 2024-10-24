@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCalvinAITemplates } from "../../../hooks/reactquery/queries/calvinaiTemplatesQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import { CalvinAITemplateType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
@@ -26,6 +27,7 @@ const CalvinAIChatTemplates = ({
     undefined
   );
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: templates,
@@ -34,7 +36,7 @@ const CalvinAIChatTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useCalvinAITemplates(search);
+  } = useCalvinAITemplates(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

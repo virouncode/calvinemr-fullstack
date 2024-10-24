@@ -10,6 +10,7 @@ import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import TodoTemplateForm from "./TodoTemplateForm";
 import TodoTemplateItem from "./TodoTemplateItem";
+import useDebounce from "../../../../../hooks/useDebounce";
 
 type TodosTemplatesProps = {
   handleSelectTemplate: (template: TodoTemplateType) => void;
@@ -19,6 +20,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(setSearch, 300);
   //Queries
   const {
     data,
@@ -27,7 +29,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useTodosTemplates(search);
+  } = useTodosTemplates(debounceSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

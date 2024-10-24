@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useBillingCodesTemplates } from "../../../../hooks/reactquery/queries/billingCodesTemplatesQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
 import Button from "../../../UI/Buttons/Button";
 import Input from "../../../UI/Inputs/Input";
@@ -23,6 +24,7 @@ const BillingCodesTemplates = ({
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const billingCodesTemplatesStartRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const {
@@ -32,7 +34,7 @@ const BillingCodesTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useBillingCodesTemplates(search);
+  } = useBillingCodesTemplates(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

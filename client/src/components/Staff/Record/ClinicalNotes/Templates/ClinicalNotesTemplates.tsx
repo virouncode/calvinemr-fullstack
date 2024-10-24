@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useClinicalNotesTemplates } from "../../../../../hooks/reactquery/queries/clinicalNotesTemplatesQueries";
+import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { ClinicalNoteTemplateType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
@@ -24,6 +25,7 @@ const ClinicalNotesTemplates = ({
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number>();
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(setSearch, 300);
   //Queries
   const {
     data: templates,
@@ -32,7 +34,7 @@ const ClinicalNotesTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useClinicalNotesTemplates(search);
+  } = useClinicalNotesTemplates(debounceSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

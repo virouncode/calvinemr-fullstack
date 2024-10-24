@@ -5,6 +5,7 @@ import EmptyLi from "../../../../../UI/Lists/EmptyLi";
 
 import React from "react";
 import { useLettersTemplates } from "../../../../../../hooks/reactquery/queries/lettersTemplatesQueries";
+import useDebounce from "../../../../../../hooks/useDebounce";
 import { LetterTemplateType } from "../../../../../../types/api";
 import Button from "../../../../../UI/Buttons/Button";
 import Input from "../../../../../UI/Inputs/Input";
@@ -22,6 +23,8 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
 
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(setSearch, 300);
+
   const {
     data: templates,
     isPending,
@@ -29,7 +32,7 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useLettersTemplates(search);
+  } = useLettersTemplates(debouncedSearch);
 
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

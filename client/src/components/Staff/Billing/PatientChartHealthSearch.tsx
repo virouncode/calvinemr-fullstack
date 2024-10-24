@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePatientsSimpleSearch } from "../../../hooks/reactquery/queries/patientsQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import { DemographicsType } from "../../../types/api";
 import { toPatientName } from "../../../utils/names/toPatientName";
@@ -19,6 +20,7 @@ const PatientChartHealthSearch = ({
 }: PatientChartHealthSearchProps) => {
   //Hooks
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: patients,
@@ -27,7 +29,7 @@ const PatientChartHealthSearch = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePatientsSimpleSearch(search);
+  } = usePatientsSimpleSearch(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

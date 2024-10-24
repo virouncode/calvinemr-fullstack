@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDiagnosis } from "../../../hooks/reactquery/queries/diagnosisQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
@@ -13,6 +14,7 @@ type DiagnosisSearchProps = {
 const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
   //Hooks
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data,
@@ -21,7 +23,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useDiagnosis(search);
+  } = useDiagnosis(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

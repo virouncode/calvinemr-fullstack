@@ -12,6 +12,7 @@ import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateForm from "./MessageTemplateForm";
 import MessageTemplateFormMobile from "./MessageTemplateFormMobile";
 import MessageTemplateItem from "./MessageTemplateItem";
+import useDebounce from "../../../../../hooks/useDebounce";
 
 type MessagesTemplatesProps = {
   handleSelectTemplate: (template: MessageTemplateType) => void;
@@ -23,6 +24,7 @@ const MessagesTemplates = ({
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
@@ -32,7 +34,7 @@ const MessagesTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useMessagesTemplates(search);
+  } = useMessagesTemplates(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

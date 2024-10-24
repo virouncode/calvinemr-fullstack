@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePamphlets } from "../../../hooks/reactquery/queries/pamphletsQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import Button from "../../UI/Buttons/Button";
 import Input from "../../UI/Inputs/Input";
@@ -12,6 +13,7 @@ import PamphletItem from "./PamphletItem";
 
 const Pamphlets = () => {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(setSearch, 300);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [addVisible, setAddVisible] = useState(false);
   const {
@@ -21,7 +23,7 @@ const Pamphlets = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePamphlets(search);
+  } = usePamphlets(debouncedSearch);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

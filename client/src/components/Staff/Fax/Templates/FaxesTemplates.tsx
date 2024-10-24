@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFaxesTemplates } from "../../../../hooks/reactquery/queries/faxesTemplatesQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
 import { FaxTemplateType } from "../../../../types/api";
 import Button from "../../../UI/Buttons/Button";
@@ -19,6 +20,7 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const {
     data,
     isPending,
@@ -26,7 +28,7 @@ const FaxesTemplates = ({ handleSelectTemplate }: FaxesTemplatesProps) => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useFaxesTemplates(search);
+  } = useFaxesTemplates(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
