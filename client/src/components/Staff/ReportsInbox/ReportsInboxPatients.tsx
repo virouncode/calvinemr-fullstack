@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useDebounce from "../../../hooks/useDebounce";
 import { DemographicsType } from "../../../types/api";
 import Input from "../../UI/Inputs/Input";
 import PatientsList from "../Messaging/PatientsList";
@@ -16,6 +17,7 @@ const ReportsInboxPatients = ({
   handleCheckPatient,
 }: ReportsInboxPatientsProps) => {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -34,7 +36,7 @@ const ReportsInboxPatients = ({
       <PatientsList
         isPatientChecked={isPatientChecked}
         handleCheckPatient={handleCheckPatient}
-        search={search}
+        search={debouncedSearch}
       />
     </div>
   );

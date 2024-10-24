@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePamphlets } from "../../../hooks/reactquery/queries/pamphletsQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import Input from "../../UI/Inputs/Input";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -9,6 +10,7 @@ import PatientPamphletItem from "./PatientPamhpletItem";
 
 const PatientPamphlets = () => {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const {
     data,
     isPending,
@@ -16,7 +18,7 @@ const PatientPamphlets = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePamphlets(search);
+  } = usePamphlets(debouncedSearch);
 
   //Hooks
   const { divRef, lastItemRef } = useIntersection(

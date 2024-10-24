@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useDebounce from "../../../hooks/useDebounce";
 import { DemographicsType } from "../../../types/api";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
 import Input from "../../UI/Inputs/Input";
@@ -32,6 +33,7 @@ const Patients = ({
 }: PatientsProps) => {
   //Hooks
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -62,7 +64,7 @@ const Patients = ({
       <PatientsList
         isPatientChecked={isPatientChecked}
         handleCheckPatient={handleCheckPatient}
-        search={search}
+        search={debouncedSearch}
         allAvailable={allAvailable}
         allPatientsChecked={allPatientsChecked}
         handleCheckAllPatients={handleCheckAllPatients}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { usePatientExternalMessages } from "../../../hooks/reactquery/queries/messagesQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import { MessageExternalType } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import { filterAndSortExternalMessages } from "../../../utils/messages/filterAndSortExternalMessages";
@@ -19,6 +20,7 @@ const MessagesPatient = () => {
   const [currentMsgId, setCurrentMsgId] = useState(0);
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAllVisible, setSelectAllVisible] = useState(true);
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: messages,
@@ -27,7 +29,7 @@ const MessagesPatient = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePatientExternalMessages(user.id, section, search);
+  } = usePatientExternalMessages(user.id, section, debouncedSearch);
 
   if (error)
     return (
@@ -81,7 +83,7 @@ const MessagesPatient = () => {
           isFetching={isFetching}
           printVisible={printVisible}
           setPrintVisible={setPrintVisible}
-          search={search}
+          search={debouncedSearch}
         />
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useMediaQuery } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
 import { useClinicalNotes } from "../../../../hooks/reactquery/queries/clinicalNotesQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
 import useRetrieveEditClinicalNote from "../../../../hooks/useRetrieveEditClinicalNote";
 import useRetrieveNewClinicalNote from "../../../../hooks/useRetrieveNewClinicalNote";
@@ -54,6 +55,7 @@ const ClinicalNotes = ({
   const topRef = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: clinicalNotes,
@@ -63,7 +65,7 @@ const ClinicalNotes = ({
     fetchNextPage,
     isFetching,
     hasNextPage,
-  } = useClinicalNotes(patientId, search, order);
+  } = useClinicalNotes(patientId, debouncedSearch, order);
 
   const { newClinicalNoteInMemory, setNewClinicalNoteInMemory } =
     useRetrieveNewClinicalNote(patientId, setAddVisible);

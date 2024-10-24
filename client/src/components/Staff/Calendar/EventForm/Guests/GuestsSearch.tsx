@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePatients } from "../../../../../hooks/reactquery/queries/patientsQueries";
+import useDebounce from "../../../../../hooks/useDebounce";
 import {
   DemographicsType,
   InvitationSentType,
@@ -34,6 +35,7 @@ const GuestsSearch = ({
     chart: "",
     health: "",
   });
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: patients,
@@ -42,7 +44,7 @@ const GuestsSearch = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePatients(search);
+  } = usePatients(debouncedSearch);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

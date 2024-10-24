@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import useDebounce from "../../../hooks/useDebounce";
 import { AdminType, DemographicsType } from "../../../types/api";
 import { SearchPatientType } from "../../../types/app";
 import { nowTZ } from "../../../utils/dates/formatDates";
@@ -42,6 +43,8 @@ const MigrationExport = () => {
   const [checkedRecordsIds, setCheckedRecordsIds] = useState([1]);
   const [allRecordsIdsChecked, setAllRecordsIdsChecked] = useState(false);
   const [progress, setProgress] = useState(false);
+
+  const debouncedSearch = useDebounce(search, 300);
 
   const isPatientChecked = (id: number) => {
     return checkedPatients.map(({ patient_id }) => patient_id).includes(id);
@@ -197,7 +200,7 @@ const MigrationExport = () => {
             handleCheckAllPatients={handleCheckAllPatients}
             allPatientsChecked={allPatientsChecked}
             progress={progress}
-            search={search}
+            search={debouncedSearch}
           />
         </div>
         <div className="migration__export-records">

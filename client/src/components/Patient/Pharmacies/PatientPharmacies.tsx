@@ -5,6 +5,7 @@ import {
   useTopicPut,
 } from "../../../hooks/reactquery/mutations/topicMutations";
 import { usePatientPharmacies } from "../../../hooks/reactquery/queries/patientPharmaciesQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import { UserPatientType } from "../../../types/app";
 import PharmaciesList from "../../Staff/Record/Topics/Pharmacies/PharmaciesList";
 import PharmacyCard from "../../Staff/Record/Topics/Pharmacies/PharmacyCard";
@@ -19,6 +20,7 @@ const PatientPharmacies = () => {
     postal_code: "",
     phone: "",
   });
+  const debouncedSearch = useDebounce(search, 300);
   const preferredPharmacy = user.demographics?.preferred_pharmacy;
   const {
     data: topicDatas,
@@ -27,7 +29,7 @@ const PatientPharmacies = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePatientPharmacies(user.id, search);
+  } = usePatientPharmacies(user.id, debouncedSearch);
 
   const topicPost = useTopicPost("PHARMACIES", user.id);
   const topicPut = useTopicPut("PHARMACIES", user.id);

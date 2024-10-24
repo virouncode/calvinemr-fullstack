@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useMedsTemplatePost } from "../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { useMedsTemplates } from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
+import useDebounce from "../../../../../hooks/useDebounce";
 import {
   dosageUnitCT,
   formCT,
@@ -98,6 +99,7 @@ const MedicationForm = ({
   const [errMsg, setErrMsg] = useState("");
   const [search, setSearch] = useState("");
   const [progressTemplates, setProgressTemplates] = useState(false);
+  const debouncedSearch = useDebounce(search, 300);
 
   //Queries
   const {
@@ -107,7 +109,7 @@ const MedicationForm = ({
     isFetchingNextPage: isFetchingNextPageTemplates,
     fetchNextPage: fetchNextPageTemplates,
     isFetching: isFetchingTemplates,
-  } = useMedsTemplates(search);
+  } = useMedsTemplates(debouncedSearch);
 
   const medTemplatePost = useMedsTemplatePost();
 

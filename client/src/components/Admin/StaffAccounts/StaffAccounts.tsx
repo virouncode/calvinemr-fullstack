@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import { SearchStaffType, StaffType } from "../../../types/api";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import Button from "../../UI/Buttons/Button";
@@ -29,6 +30,7 @@ const StaffAccounts = () => {
     ohip_billing_nbr: "",
     site_id: -1, //All
   });
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: sites,
@@ -62,7 +64,7 @@ const StaffAccounts = () => {
           <em>Number of staff: {staffInfos.length}</em>
         </div>
         <StaffAccountsTable
-          search={search}
+          search={debouncedSearch}
           setEditVisible={setEditVisible}
           setSelectedStaffId={setSelectedStaffId}
         />

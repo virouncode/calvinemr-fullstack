@@ -76,8 +76,18 @@ const GuestsSearchResults = ({
       .flatMap((page) => page.items)
       .filter(({ patient_id }) => !patientsIdsToExclude.includes(patient_id)) ??
     [];
-  if (isPending) return <LoadingParagraph />;
-  if (error) return <ErrorParagraph errorMsg={error.message} />;
+  if (isPending)
+    return (
+      <div className="guests-results" ref={divRef}>
+        <LoadingParagraph />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="guests-results" ref={divRef}>
+        <ErrorParagraph errorMsg={error.message} />
+      </div>
+    );
   return (
     <div className="guests-results" ref={divRef}>
       <div className="guests-results__patients">

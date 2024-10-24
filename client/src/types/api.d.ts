@@ -562,6 +562,15 @@ export type CycleMedNumberType =
   | "med_6"
   | "med_7";
 
+export type ConsentFormType = {
+  id: number;
+  patient_id: number;
+  date_created: number;
+  created_by_id: number;
+  consent: string;
+  consent_read: boolean;
+};
+
 export type EmergencyContactType = {
   ContactPurpose: { PurposeAsEnum: string; PurposeAsPlainText: string };
   Name: { FirstName: string; MiddleName: string; LastName: string };
@@ -1919,6 +1928,7 @@ export type TopicPaginatedDataMap = {
   ["REMINDERS"]: XanoPaginatedType<ReminderType>;
   ["LETTERS/REFERRALS"]: XanoPaginatedType<LetterType>;
   ["GROUPS"]: XanoPaginatedType<GroupType>;
+  ["CONSENT FORMS"]: XanoPaginatedType<ConsentFormType>;
   ["PERSONAL HISTORY"]: XanoPaginatedType<PersonalHistoryType>;
   ["CARE ELEMENTS"]: XanoPaginatedType<CareElementType>;
   ["PROBLEM LIST"]: XanoPaginatedType<ProblemListType>;
@@ -1945,6 +1955,7 @@ export type TopicDataMap = {
   ["REMINDERS"]: ReminderType;
   ["LETTERS/REFERRALS"]: LetterType;
   ["GROUPS"]: GroupType;
+  ["CONSENT FORMS"]: ConsentFormType;
   ["PERSONAL HISTORY"]: PersonalHistoryType;
   ["CARE ELEMENTS"]: CareElementType;
   ["PROBLEM LIST"]: ProblemListType;

@@ -13,10 +13,10 @@ import LoadingRow from "../../../UI/Tables/LoadingRow";
 import PatientResultItem from "./PatientResultItem";
 
 type PatientSearchResultProps = {
-  search: SearchPatientType;
+  debouncedSearch: SearchPatientType;
 };
 
-const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
+const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
   const { user } = useUserContext() as { user: UserStaffType | UserAdminType };
   //Queries
   const {
@@ -26,7 +26,7 @@ const PatientSearchResult = ({ search }: PatientSearchResultProps) => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = usePatients(search);
+  } = usePatients(debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

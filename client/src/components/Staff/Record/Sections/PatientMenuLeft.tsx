@@ -126,6 +126,16 @@ const PatientMenuLeft = ({
       />
       <PatientTopic
         textColor="#FEFEFE"
+        backgroundColor="#009da5"
+        topic="CONSENT FORMS"
+        patientId={patientId}
+        contentsVisible={contentsVisible}
+        patientName={toPatientName(demographicsInfos)}
+        side="left"
+        demographicsInfos={demographicsInfos}
+      />
+      <PatientTopic
+        textColor="#FEFEFE"
         backgroundColor="#CE2D4F"
         topic="REMINDERS"
         patientId={patientId}
