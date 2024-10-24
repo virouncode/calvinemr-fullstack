@@ -10,24 +10,28 @@
     font-size: $size-sm;
     padding: 0.5rem;
     .fax-contacts {
-      .fax-contacts__title {
+      &__title {
         font-weight: bold;
         font-size: $size-base;
         margin-bottom: 1rem;
       }
       .fax-numbers {
         margin-bottom: 20px;
-        .fax-numbers__title {
+        &__title {
           font-weight: bold;
           font-size: $size-sm;
         }
-        .fax-numbers__list {
+        &__list {
           height: 150px;
           overflow-y: scroll;
           border: solid 0.5px $grey2;
           border-radius: 6px;
           padding: 0.25rem 0.5rem;
           margin-top: 0.25rem;
+        }
+        &__item {
+          display: flex;
+          align-items: center;
         }
       }
     }
@@ -39,7 +43,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    .new-fax__form-recipients {
+    &-recipients {
       border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
@@ -58,7 +62,7 @@
         outline: none;
       }
     }
-    .new-fax__form-subject {
+    &-subject {
       border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
@@ -75,7 +79,7 @@
         overflow-x: scroll;
       }
     }
-    .new-fax__form-patient {
+    &-patient {
       border-bottom: solid 0.5px $grey2;
       height: 30px;
       display: flex;
@@ -94,7 +98,7 @@
         text-overflow: ellipsis;
       }
     }
-    .new-fax__form-attach {
+    &-attach {
       border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       display: flex;
@@ -106,14 +110,14 @@
         font-weight: bold;
       }
     }
-    .new-fax__form-templates {
+    &-templates {
       border-bottom: solid 0.5px $grey2;
       min-height: 30px;
       padding: 0.5rem;
       text-decoration: underline;
       cursor: pointer;
     }
-    .new-fax__form-body {
+    &-body {
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -169,7 +173,7 @@
         }
       }
     }
-    .new-fax__form-btns {
+    &-btns {
       border-top: solid 0.5px $grey2;
       display: flex;
       align-items: center;
@@ -184,7 +188,7 @@
   padding: 0 0.5rem;
   height: 100%;
   position: relative;
-  .new-fax-mobile__contacts {
+  &__contacts {
     border: solid 0.5px $grey2;
     border-radius: 6px;
     font-size: $size-base;
@@ -198,7 +202,7 @@
     height: 100%;
     width: 70%;
     .fax-contacts {
-      .fax-contacts__title {
+      &__title {
         font-weight: bold;
         font-size: $size-base;
         display: flex;
@@ -220,6 +224,10 @@
           padding: 0.25rem 0.5rem;
           margin-top: 0.25rem;
           font-size: $size-base;
+        }
+        &__item {
+          display: flex;
+          align-items: center;
         }
       }
     }

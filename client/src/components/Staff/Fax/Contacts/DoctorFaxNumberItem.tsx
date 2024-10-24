@@ -15,7 +15,7 @@ const DoctorFaxNumberItem = ({
   isContactChecked,
   lastItemRef,
 }: DoctorFaxNumberItemProps) => {
-  const label = `${doctor.LastName ? doctor.LastName : ""}${
+  const label = `${doctor.LastName ? `${doctor.LastName} ` : ""}${
     doctor.FirstName ? `${doctor.FirstName}, ` : ""
   }${doctor.speciality}`;
   return (
