@@ -17,7 +17,9 @@ const DoctorFaxNumberItem = ({
 }: DoctorFaxNumberItemProps) => {
   const label = `${doctor.LastName ? `${doctor.LastName} ` : ""}${
     doctor.FirstName ? `${doctor.FirstName}, ` : ""
-  }${doctor.speciality}`;
+  }${doctor.speciality ? `${doctor.speciality}, ` : ""}${
+    doctor.Address.Structured.City
+  }`;
   return (
     <li className="fax-numbers__item" ref={lastItemRef}>
       <Checkbox

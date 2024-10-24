@@ -22,7 +22,7 @@ const PharmacyFaxNumberItem = ({
         name={pharmacy.Name}
         onChange={handleCheckContact}
         checked={isContactChecked(pharmacy.FaxNumber.phoneNumber)}
-        label={pharmacy.Name}
+        label={`${pharmacy.Name}, ${pharmacy.Address.Structured.City}`}
       />
     </li>
   );
