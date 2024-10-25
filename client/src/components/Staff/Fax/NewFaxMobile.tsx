@@ -8,13 +8,13 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxPost } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import {
-  AttachmentType,
-  ClinicType,
-  EdocType,
-  FaxTemplateType,
-  FaxToPostType,
-  MessageAttachmentType,
-  PamphletType,
+    AttachmentType,
+    ClinicType,
+    EdocType,
+    FaxTemplateType,
+    FaxToPostType,
+    MessageAttachmentType,
+    PamphletType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
@@ -179,8 +179,8 @@ const NewFaxMobile = ({
       const file = e.target.files?.[0];
       if (!file) return;
 
-      if (file.size > 500000000) {
-        toast.error("The file is over 500Mb, please choose another file", {
+      if (file.size > 128000000) {
+        toast.error("The file is over 128Mb, please choose another file", {
           containerId: "A",
         });
         return;

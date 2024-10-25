@@ -4,10 +4,10 @@ import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPost } from "../../../hooks/reactquery/mutations/sitesMutations";
 import {
-  AdminType,
-  AttachmentType,
-  SiteFormType,
-  SiteType,
+    AdminType,
+    AttachmentType,
+    SiteFormType,
+    SiteType,
 } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { initialSite } from "../../../utils/initialDatas/initialDatas";
@@ -41,8 +41,8 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
-    if (file.size > 500000000) {
-      toast.error("The file is over 500Mb, please choose another file", {
+    if (file.size > 128000000) {
+      toast.error("The file is over 128Mb, please choose another file", {
         containerId: "A",
       });
       return;

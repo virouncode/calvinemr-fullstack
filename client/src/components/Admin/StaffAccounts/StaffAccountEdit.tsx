@@ -67,8 +67,8 @@ const StaffAccountEdit = ({
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
-    if (file.size > 500000000) {
-      toast.error("The file is over 500Mb, please choose another file", {
+    if (file.size > 128000000) {
+      toast.error("The file is over 128Mb, please choose another file", {
         containerId: "A",
       });
       return;

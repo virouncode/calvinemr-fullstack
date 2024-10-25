@@ -26,8 +26,8 @@ const app = express();
 
 app
   .use(cookieParser())
-  .use(bodyParser.json({ limit: "500mb" }))
-  .use(bodyParser.urlencoded({ limit: "500mb", extended: true }))
+  .use(bodyParser.json({ limit: "128Mb" }))
+  .use(bodyParser.urlencoded({ limit: "128Mb", extended: true }))
   .use(express.json({ limit: "50mb" }))
   .use(
     cors({
