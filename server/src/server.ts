@@ -1,4 +1,3 @@
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -26,9 +25,8 @@ const app = express();
 
 app
   .use(cookieParser())
-  .use(bodyParser.json({ limit: "128Mb" }))
-  .use(bodyParser.urlencoded({ limit: "128Mb", extended: true }))
-  .use(express.json({ limit: "50mb" }))
+  .use(express.urlencoded({ limit: "128mb", extended: true }))
+  .use(express.json({ limit: "128mb" }))
   .use(
     cors({
       origin:

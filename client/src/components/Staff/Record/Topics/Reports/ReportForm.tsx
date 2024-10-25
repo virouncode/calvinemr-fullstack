@@ -1,4 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
@@ -20,6 +21,7 @@ import { getExtension } from "../../../../../utils/files/getExtension";
 import { patientIdToAssignedStaffTitleAndName } from "../../../../../utils/names/patientIdToAssignedStaffName";
 import { reportSchema } from "../../../../../validation/record/reportValidation";
 import FormReport from "./FormReport";
+axios.defaults.withCredentials = true;
 
 type ReportFormProps = {
   demographicsInfos: DemographicsType;
@@ -45,6 +47,9 @@ const ReportForm = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
+  const [fileContent, setFileContent] = useState<string | ArrayBuffer | null>(
+    null
+  );
   const [formDatas, setFormDatas] = useState<ReportFormType>({
     patient_id: patientId,
     date_created: nowTZTimestamp(),
@@ -275,6 +280,7 @@ const ReportForm = ({
 
     reader.onload = async (e) => {
       const content = e.target?.result;
+
       try {
         const fileToUpload: AttachmentType = await xanoPost(
           "/upload/attachment",
