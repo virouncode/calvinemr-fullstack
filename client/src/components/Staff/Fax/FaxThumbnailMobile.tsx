@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
@@ -33,30 +33,30 @@ const FaxThumbnailMobile = ({
   //Queries
   const faxDelete = useFaxDelete();
 
-  useEffect(() => {
-    const contactWithFaxNumber = async () => {
-      const response = await xanoGet("/contact_with_fax_number", "staff", {
-        fax_number:
-          section === "Received faxes"
-            ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-            : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber),
-      });
-      if (response) {
-        setContactName(
-          response.Name
-            ? response.Name
-            : response.name
-            ? response.name
-            : response.LastName
-            ? `${response.LastName}, `
-            : "" + response.FirstName
-            ? `${response.FirstName}, `
-            : "" + response.speciality
-        );
-      }
-    };
-    contactWithFaxNumber();
-  }, [fax, section]);
+  // useEffect(() => {
+  //   const contactWithFaxNumber = async () => {
+  //     const response = await xanoGet("/contact_with_fax_number", "staff", {
+  //       fax_number:
+  //         section === "Received faxes"
+  //           ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
+  //           : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber),
+  //     });
+  //     if (response) {
+  //       setContactName(
+  //         response.Name
+  //           ? response.Name
+  //           : response.name
+  //           ? response.name
+  //           : response.LastName
+  //           ? `${response.LastName}, `
+  //           : "" + response.FirstName
+  //           ? `${response.FirstName}, `
+  //           : "" + response.speciality
+  //       );
+  //     }
+  //   };
+  //   contactWithFaxNumber();
+  // }, [fax, section]);
 
   const handleFaxClick = async () => {
     if (section === "Received faxes") {
