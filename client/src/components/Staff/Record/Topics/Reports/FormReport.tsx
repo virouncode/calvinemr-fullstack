@@ -16,6 +16,7 @@ import InputDate from "../../../../UI/Inputs/InputDate";
 import GenericList from "../../../../UI/Lists/GenericList";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
+import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 
 type FormReportProps = {
   errMsgPost: string;
@@ -66,14 +67,12 @@ const FormReport = ({
       <form className="reports__form-content" onSubmit={handleSubmit}>
         {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
         <div className="reports__form-btn-container">
-          <SubmitButton
-            label={isLoadingFile ? "Loading" : "Save"}
-            disabled={isLoadingFile || progress}
-          />
+          <SubmitButton label={"Save"} disabled={isLoadingFile || progress} />
           <CancelButton
             onClick={handleCancel}
             disabled={progress || isLoadingFile}
           />
+          {isLoadingFile && <CircularProgressSmall />}
         </div>
         <div className="reports__form-row">
           <label htmlFor="report-sent-received">Sent or Received*</label>
