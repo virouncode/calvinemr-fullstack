@@ -1,5 +1,4 @@
 import axios from "axios";
-import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
@@ -9,7 +8,6 @@ import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessageExternalPost } from "../../../../hooks/reactquery/mutations/messagesMutations";
 import {
-  AttachmentType,
   DemographicsType,
   EdocType,
   MessageAttachmentType,
@@ -19,6 +17,7 @@ import {
 } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
+import { handleUploadAttachment } from "../../../../utils/files/handleUploadAttachment";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
 import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
@@ -289,58 +288,13 @@ const NewMessageExternalMobile = ({
   };
 
   const handleAttach = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .pdf";
-    // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
-    input.onchange = (event) => {
-      // getting a hold of the file reference
-      const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
-      const file = e.target.files?.[0];
-      if (!file) return;
-      if (file.size > 128000000) {
-        toast.error(
-          "The file is over 128Mb, please choose another file or send a link",
-          { containerId: "A" }
-        );
-        return;
-      }
-      setIsLoadingFile(true);
-      // setting up the reader`
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      // here we tell the reader what to do when it's done reading...
-      reader.onload = async (e) => {
-        const content = e.target?.result; // this is the content!
-        try {
-          const response: AttachmentType = await xanoPost(
-            "/upload/attachment",
-            "staff",
-            { content }
-          );
-          if (!response.type) response.type = "document";
-          setAttachments([
-            ...attachments,
-            {
-              file: response,
-              alias: file.name,
-              date_created: nowTZTimestamp(),
-              created_by_id: user.id,
-              created_by_user_type: "staff",
-              id: uniqueId("messages_external_attachment_"),
-            },
-          ]); //meta, mime, name, path, size, type
-          setIsLoadingFile(false);
-        } catch (err) {
-          if (err instanceof Error)
-            toast.error(`Error: unable to load file: ${err.message}`, {
-              containerId: "A",
-            });
-          setIsLoadingFile(false);
-        }
-      };
-    };
-    input.click();
+    handleUploadAttachment(
+      setIsLoadingFile,
+      attachments,
+      setAttachments,
+      user,
+      "messages_external_attachment_"
+    );
   };
 
   const handleClickRecipients = () => {

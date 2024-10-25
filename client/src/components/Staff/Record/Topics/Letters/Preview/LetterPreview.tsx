@@ -1,10 +1,10 @@
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useTopicPost } from "../../../../../../hooks/reactquery/mutations/topicMutations";
 import useLetterMultipage from "../../../../../../hooks/useLetterMultipage";
@@ -232,13 +232,11 @@ const LetterPreview = ({
         }
       }
       const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fileToUpload: AttachmentType = await xanoPost(
-        "/upload/attachment",
-        "staff",
-        {
-          content: pdfURI,
-        }
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        { content: pdfURI }
       );
+      const fileToUpload: AttachmentType = response.data;
       setLetter(fileToUpload);
       //Create the letter
       const letterToPost: LetterFormType = {
@@ -354,13 +352,11 @@ const LetterPreview = ({
     }
     const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
     //Create the letter for message and send
-    const fileToUploadLetterForMessage: AttachmentType = await xanoPost(
-      "/upload/attachment",
-      "staff",
-      {
-        content: pdfURI,
-      }
+    const response = await axios.post(
+      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+      { content: pdfURI }
     );
+    const fileToUploadLetterForMessage: AttachmentType = response.data;
     setAttachmentsToSend([
       {
         file: fileToUploadLetterForMessage,
@@ -437,13 +433,13 @@ const LetterPreview = ({
         }
       }
       const pdfURIForRecord = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fileToUploadLetterForRecord: AttachmentType = await xanoPost(
-        "/upload/attachment",
-        "staff",
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
         {
           content: pdfURIForRecord,
         }
       );
+      const fileToUploadLetterForRecord: AttachmentType = response.data;
       setLetter(fileToUploadLetterForRecord);
       const letterToPost = {
         patient_id: patientId,

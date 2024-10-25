@@ -1,10 +1,14 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { reportClassCT } from "../../../../../omdDatas/codesTables";
-import { MessageAttachmentType, ReportType } from "../../../../../types/api";
+import {
+  AttachmentType,
+  MessageAttachmentType,
+  ReportType,
+} from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
   nowTZTimestamp,
@@ -146,9 +150,13 @@ const ReportItemSent = ({
         maxWidth: pdfPage.getWidth() - 50,
       });
       const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fileToUpload = await xanoPost("/upload/attachment", "staff", {
-        content: pdfURI,
-      });
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        {
+          content: pdfURI,
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
       setFileToFax({
         alias: `${item.name.split(" ").join("")}.pdf`,
         file: fileToUpload,
@@ -175,10 +183,13 @@ const ReportItemSent = ({
         maxWidth: pdfPage.getWidth() - 50,
       });
       const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fileToUpload = await xanoPost("/upload/attachment", "staff", {
-        content: pdfURI,
-      });
-      fileToSend = fileToUpload;
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        {
+          content: pdfURI,
+        }
+      );
+      fileToSend = response.data;
     }
     setAttachmentsToSend([
       {

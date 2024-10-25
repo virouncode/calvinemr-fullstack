@@ -9,6 +9,7 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
   AdminType,
+  AttachmentType,
   ClinicType,
   NotepadType,
   SettingsType,
@@ -76,29 +77,29 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
       return;
     }
     setIsLoadingFile(true);
-    // setting up the reader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload = await xanoPost(
-          "/upload/attachment",
-          "admin",
+    const formData = new FormData();
+    formData.append("content", file);
 
-          { content }
-        );
-        setFormDatas({ ...formDatas, sign: fileToUpload });
-        setIsLoadingFile(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(`Error unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
-        setIsLoadingFile(false);
-      }
-    };
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setFormDatas({ ...formDatas, sign: fileToUpload });
+      setIsLoadingFile(false);
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error unable to load file: ${err.message}`, {
+          containerId: "A",
+        });
+      setIsLoadingFile(false);
+    }
   };
   const handleSubmit = async () => {
     setErrMsg("");

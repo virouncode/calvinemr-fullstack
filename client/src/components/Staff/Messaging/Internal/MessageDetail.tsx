@@ -1,4 +1,5 @@
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
@@ -182,13 +183,13 @@ const MessageDetail = ({
       scale: 2,
     });
     const dataURL = canvas.toDataURL("image/jpeg");
-    const fileToUpload: AttachmentType = await xanoPost(
-      "/upload/attachment",
-      "staff",
+    const response = await axios.post(
+      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
       {
         content: dataURL,
       }
     );
+    const fileToUpload: AttachmentType = response.data;
     //post attachment and get id
     const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
       {

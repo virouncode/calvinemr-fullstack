@@ -1,20 +1,17 @@
-import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxPost } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import {
-    AttachmentType,
-    ClinicType,
-    EdocType,
-    FaxTemplateType,
-    FaxToPostType,
-    MessageAttachmentType,
-    PamphletType,
+  ClinicType,
+  EdocType,
+  FaxTemplateType,
+  FaxToPostType,
+  MessageAttachmentType,
+  PamphletType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
@@ -32,6 +29,7 @@ import AddEdocsPamphlets from "../Messaging/Internal/AddEdocsPamphlets";
 import MessagesAttachments from "../Messaging/Internal/MessagesAttachments";
 import FaxContacts from "./Contacts/FaxContacts";
 import FaxesTemplates from "./Templates/FaxesTemplates";
+import { handleUploadAttachment } from "../../../utils/files/handleUploadAttachment";
 
 type NewFaxProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -169,60 +167,13 @@ const NewFaxMobile = ({
   };
 
   const handleAttach = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".jpeg, .jpg, .png, .pdf";
-    // ".jpeg, .jpg, .png, .gif, .tif, .pdf, .svg, .mp3, .aac, .aiff, .flac, .ogg, .wma, .wav, .mov, .mp4, .avi, .wmf, .flv, .doc, .docm, .docx, .txt, .csv, .xls, .xlsx, .ppt, .pptx";
-    input.onchange = (event) => {
-      // getting a hold of the file reference
-      const e = event as unknown as React.ChangeEvent<HTMLInputElement>;
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      if (file.size > 128000000) {
-        toast.error("The file is over 128Mb, please choose another file", {
-          containerId: "A",
-        });
-        return;
-      }
-      setIsLoadingFile(true);
-      // setting up the reader`
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      // here we tell the reader what to do when it's done reading...
-      reader.onload = async (e) => {
-        const content = e.target?.result; // this is the content!
-        try {
-          const response: AttachmentType = await xanoPost(
-            "/upload/attachment",
-            "staff",
-            {
-              content,
-            }
-          );
-          if (!response.type) response.type = "document";
-          setAttachments([
-            ...attachments,
-            {
-              file: response,
-              alias: file.name,
-              date_created: nowTZTimestamp(),
-              created_by_id: user.id,
-              created_by_user_type: "staff",
-              id: uniqueId("messages_attachment_"),
-            },
-          ]); //meta, mime, name, path, size, type
-          setIsLoadingFile(false);
-        } catch (err) {
-          if (err instanceof Error)
-            toast.error(`Error: unable to load file: ${err.message}`, {
-              containerId: "A",
-            });
-          setIsLoadingFile(false);
-        }
-      };
-    };
-    input.click();
+    handleUploadAttachment(
+      setIsLoadingFile,
+      attachments,
+      setAttachments,
+      user,
+      "fax_attachment_"
+    );
   };
 
   const handleEdocsPamphlets = () => {

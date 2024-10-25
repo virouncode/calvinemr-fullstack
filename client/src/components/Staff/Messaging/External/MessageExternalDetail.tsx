@@ -41,6 +41,7 @@ import MessageExternalDetailToolbar from "./MessageExternalDetailToolbar";
 import MessagesExternalAttachments from "./MessagesExternalAttachments";
 import MessagesExternalPrint from "./MessagesExternalPrint";
 import ReplyMessageExternal from "./ReplyMessageExternal";
+import axios from "axios";
 
 type MessageExternalDetailProps = {
   setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
@@ -153,13 +154,13 @@ const MessageExternalDetail = ({
       scale: 2,
     });
     const dataURL = canvas.toDataURL("image/jpeg");
-    const fileToUpload: AttachmentType = await xanoPost(
-      "/upload/attachment",
-      "staff",
+    const response = await axios.post(
+      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
       {
         content: dataURL,
       }
     );
+    const fileToUpload: AttachmentType = response.data;
     if (section === "Received messages") {
       //post attachment and get id
       const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [

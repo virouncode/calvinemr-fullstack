@@ -1,8 +1,8 @@
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 import uniqueId from "lodash/uniqueId";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { useFax } from "../../../hooks/reactquery/queries/faxQueries";
@@ -83,11 +83,15 @@ const FaxDetail = ({
   const handleClickReply = async () => {
     setProgress(true);
     try {
-      const response = await xanoPost("/upload/attachment", "staff", {
-        content: "data:application/pdf;base64," + faxBase64,
-      });
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        {
+          content: "data:application/pdf;base64," + faxBase64,
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
       setAttachmentToForward({
-        file: response,
+        file: fileToUpload,
         alias: "initial_fax.pdf",
         date_created: nowTZTimestamp(),
         created_by_id: user.id,
@@ -108,15 +112,15 @@ const FaxDetail = ({
   const handleClickForward = async () => {
     setProgress(true);
     try {
-      const response: AttachmentType = await xanoPost(
-        "/upload/attachment",
-        "staff",
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
         {
           content: "data:application/pdf;base64," + faxBase64,
         }
       );
+      const fileToUpload: AttachmentType = response.data;
       setAttachmentToForward({
-        file: response,
+        file: fileToUpload,
         alias: "fax_forwarded.pdf",
         date_created: nowTZTimestamp(),
         created_by_id: user.id,
@@ -137,15 +141,15 @@ const FaxDetail = ({
   const handleAddToReports = async () => {
     setProgress(true);
     try {
-      const response: AttachmentType = await xanoPost(
-        "/upload/attachment",
-        "staff",
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
         {
           content: "data:application/pdf;base64," + faxBase64,
         }
       );
+      const fileToUpload: AttachmentType = response.data;
       setAttachmentToForward({
-        file: response,
+        file: fileToUpload,
         alias: "fax_forwarded.pdf",
         date_created: nowTZTimestamp(),
         created_by_id: user.id,

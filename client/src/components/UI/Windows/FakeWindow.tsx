@@ -108,8 +108,8 @@ const FakeWindow = ({
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleMouseMove);
-    window.addEventListener("touchend", handleMouseUp);
+    window.addEventListener("touchmove", handleMouseMove, { passive: false });
+    window.addEventListener("touchend", handleMouseUp, { passive: false });
   };
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
@@ -135,8 +135,8 @@ const FakeWindow = ({
 
     window.addEventListener("mousemove", handleResizeMove);
     window.addEventListener("mouseup", handleResizeEnd);
-    window.addEventListener("touchmove", handleResizeMove);
-    window.addEventListener("touchend", handleResizeEnd);
+    window.addEventListener("touchmove", handleResizeMove, { passive: true });
+    window.addEventListener("touchend", handleResizeEnd, { passive: true });
   };
 
   return (

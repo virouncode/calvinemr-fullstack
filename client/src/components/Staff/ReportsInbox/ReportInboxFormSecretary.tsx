@@ -1,6 +1,4 @@
 import React, { useRef, useState } from "react";
-import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useReportPost } from "../../../hooks/reactquery/mutations/reportsMutations";
@@ -12,7 +10,7 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
-import { getExtension } from "../../../utils/files/getExtension";
+import { handleUploadReport } from "../../../utils/files/handleUploadReport";
 import { reportSchema } from "../../../validation/record/reportValidation";
 import SubmitButton from "../../UI/Buttons/SubmitButton";
 import ReportViewer from "../../UI/Documents/ReportViewer";
@@ -189,47 +187,7 @@ const ReportInboxFormSecretary = ({
     });
   };
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setErrMsg("");
-    if (file.size > 128000000) {
-      toast.error("The file is over 128Mb, please choose another file", {
-        containerId: "A",
-      });
-      return;
-    }
-    // setting up the reader
-    setIsLoadingFile(true);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload = await xanoPost(
-          "/upload/attachment",
-          "staff",
-
-          { content }
-        );
-        setIsLoadingFile(false);
-        setFormDatas({
-          ...formDatas,
-          File: fileToUpload,
-          FileExtensionAndVersion: getExtension(fileToUpload.path),
-          Content: {
-            TextContent: "",
-            Media: "",
-          },
-        });
-      } catch (err) {
-        setIsLoadingFile(false);
-        if (err instanceof Error)
-          toast.error(`Error unable to load document: ${err.message}`, {
-            containerId: "A",
-          });
-      }
-    };
+    handleUploadReport(e, setErrMsg, setIsLoadingFile, formDatas, setFormDatas);
   };
 
   return (

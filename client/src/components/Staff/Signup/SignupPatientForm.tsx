@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -136,12 +135,11 @@ const SignupPatientForm = () => {
     reader.onload = async (e) => {
       const content = e.target?.result; // this is the content!
       try {
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "staff",
-
+        const response = await axios.post(
+          import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
           { content }
         );
+        const fileToUpload: AttachmentType = response.data;
         setFormDatas({
           ...formDatas,
           avatar: fileToUpload,

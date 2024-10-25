@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 
+import axios from "axios";
 import React from "react";
 import { usePamphletPost } from "../../../hooks/reactquery/mutations/pamphletsMutations";
 import { AttachmentType, PamphletFormType } from "../../../types/api";
@@ -14,6 +14,7 @@ import SubmitButton from "../../UI/Buttons/SubmitButton";
 import ReportViewer from "../../UI/Documents/ReportViewer";
 import Input from "../../UI/Inputs/Input";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 type PamphletFormProps = {
   errMsgPost: string;
@@ -91,34 +92,34 @@ const PamphletForm = ({
       });
       return;
     }
-    // setting up the reader
+
     setIsLoadingFile(true);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "staff",
-          {
-            content,
-          }
-        );
-        setIsLoadingFile(false);
-        setFormDatas({
-          ...formDatas,
-          file: fileToUpload,
+    const formData = new FormData();
+    formData.append("content", file);
+
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setIsLoadingFile(false);
+      setFormDatas({
+        ...formDatas,
+        file: fileToUpload,
+      });
+    } catch (err) {
+      setIsLoadingFile(false);
+      if (err instanceof Error)
+        toast.error(`Error unable to load document: ${err.message}`, {
+          containerId: "A",
         });
-      } catch (err) {
-        setIsLoadingFile(false);
-        if (err instanceof Error)
-          toast.error(`Error unable to load document: ${err.message}`, {
-            containerId: "A",
-          });
-      }
-    };
+    }
   };
   return (
     <div
@@ -130,6 +131,7 @@ const PamphletForm = ({
         <div className="reference__edocs-form-btn-container">
           <SubmitButton label="Save" disabled={isLoadingFile || progress} />
           <CancelButton onClick={handleCancel} />
+          {isLoadingFile && <CircularProgressSmall />}
         </div>
         <div className="reference__edocs-form-row">
           <Input

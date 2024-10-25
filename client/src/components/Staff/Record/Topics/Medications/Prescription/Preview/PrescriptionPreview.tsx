@@ -1,5 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
 import html2canvas from "html2canvas";
 import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
@@ -175,13 +176,13 @@ const PrescriptionPreview = ({
         }
 
         const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "staff",
+        const response = await axios.post(
+          import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
           {
             content: pdfURI,
           }
         );
+        const fileToUpload: AttachmentType = response.data;
         //Post the meds
         const medsToPost: Partial<MedType>[] = [];
         if (addedMeds.length !== 0) {

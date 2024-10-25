@@ -10,8 +10,8 @@ written permission of Adobe.
 */
 
 import { UseMutationResult } from "@tanstack/react-query";
+import axios from "axios";
 import { uniqueId } from "lodash";
-import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import { EformType } from "../../../../../types/api";
 import { arrayBufferToDataURL } from "../../../../../utils/files/arrayBufferToDataURL";
 declare global {
@@ -191,9 +191,11 @@ class ViewSDKClient {
       window.AdobeDC.View.Enum.CallbackType.SAVE_API,
       async (metaData: Record<string, unknown>, content: Iterable<number>) => {
         const dataURL = arrayBufferToDataURL(content, "application/pdf");
-        const attachmentFile = await xanoPost("/upload/attachment", "staff", {
-          content: dataURL,
-        });
+        const attachmentFile = (
+          await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+            content: dataURL,
+          })
+        ).data;
 
         if (this.method === "post") {
           const eformToPost: Partial<EformType> = {

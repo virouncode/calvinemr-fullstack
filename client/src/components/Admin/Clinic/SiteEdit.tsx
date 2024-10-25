@@ -1,9 +1,14 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPut } from "../../../hooks/reactquery/mutations/sitesMutations";
-import { AdminType, SiteFormType, SiteType } from "../../../types/api";
+import {
+  AdminType,
+  AttachmentType,
+  SiteFormType,
+  SiteType,
+} from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { firstLetterUpper } from "../../../utils/strings/firstLetterUpper";
 import { siteSchema } from "../../../validation/clinic/siteValidation";
@@ -44,7 +49,7 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
     setEditVisible(false);
   };
 
-  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLogoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
@@ -55,26 +60,30 @@ const SiteEdit = ({ site, editVisible, setEditVisible }: SiteEditProps) => {
       return;
     }
     setIsLoadingFile(true);
-    // setting up the reader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload = await xanoPost("/upload/attachment", "admin", {
-          content,
+
+    const formData = new FormData();
+    formData.append("content", file);
+
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setFormDatas({ ...formDatas, logo: fileToUpload });
+      setIsLoadingFile(false);
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error unable to load file: ${err.message}`, {
+          containerId: "A",
         });
-        setFormDatas({ ...formDatas, logo: fileToUpload });
-        setIsLoadingFile(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(`Error unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
-        setIsLoadingFile(false);
-      }
-    };
+      setIsLoadingFile(false);
+    }
   };
 
   const handleChange = (

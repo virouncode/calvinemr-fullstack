@@ -1,11 +1,11 @@
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 import html2canvas from "html2canvas";
 import { uniqueId } from "lodash";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
   AttachmentType,
@@ -462,17 +462,24 @@ const ExportChartPreview = ({
     let pdfFile;
     if (!chart) {
       const pdfURI = await handleGeneratePDF();
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: pdfURI,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: pdfURI,
+        })
+      ).data;
+
+      pdfFile;
+
       setFileToFax({
         alias: `${toPatientName(demographicsInfos).replaceAll(" ", "")}.pdf`,
         file: pdfFile,
       });
     } else {
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: chart,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: chart,
+        })
+      ).data;
       setFileToFax({
         alias: `${toPatientName(demographicsInfos).replaceAll(" ", "")}.pdf`,
         file: pdfFile,
@@ -487,13 +494,17 @@ const ExportChartPreview = ({
     let pdfFile;
     if (!chart) {
       const pdfURI = await handleGeneratePDF();
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: pdfURI,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: pdfURI,
+        })
+      ).data;
     } else {
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: chart,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: chart,
+        })
+      ).data;
     }
     printJS({
       printable: `${import.meta.env.VITE_XANO_BASE_URL}${pdfFile.path}`,
@@ -507,13 +518,17 @@ const ExportChartPreview = ({
     let pdfFile: AttachmentType;
     if (!chart) {
       const pdfURI = await handleGeneratePDF();
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: pdfURI,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: pdfURI,
+        })
+      ).data;
     } else {
-      pdfFile = await xanoPost("/upload/attachment", "staff", {
-        content: chart,
-      });
+      pdfFile = (
+        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
+          content: chart,
+        })
+      ).data;
     }
     setAttachmentsToSend([
       {

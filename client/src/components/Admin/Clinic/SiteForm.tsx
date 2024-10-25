@@ -1,13 +1,13 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useSitesPost } from "../../../hooks/reactquery/mutations/sitesMutations";
 import {
-    AdminType,
-    AttachmentType,
-    SiteFormType,
-    SiteType,
+  AdminType,
+  AttachmentType,
+  SiteFormType,
+  SiteType,
 } from "../../../types/api";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { initialSite } from "../../../utils/initialDatas/initialDatas";
@@ -37,7 +37,7 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
     setAddVisible(false);
   };
 
-  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLogoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setErrMsg("");
@@ -48,29 +48,30 @@ const SiteForm = ({ setAddVisible }: SiteFormProps) => {
       return;
     }
     setIsLoadingFile(true);
-    // setting up the reader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "admin",
 
-          { content }
-        );
-        setFormDatas({ ...formDatas, logo: fileToUpload ?? null });
-        setIsLoadingFile(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(`Error unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
-        setIsLoadingFile(false);
-      }
-    };
+    const formData = new FormData();
+    formData.append("content", file);
+
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setFormDatas({ ...formDatas, logo: fileToUpload ?? null });
+      setIsLoadingFile(false);
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error unable to load file: ${err.message}`, {
+          containerId: "A",
+        });
+      setIsLoadingFile(false);
+    }
   };
 
   const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {

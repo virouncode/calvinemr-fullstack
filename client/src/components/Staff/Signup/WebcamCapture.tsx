@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import { DemographicsFormType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
 import CancelButton from "../../UI/Buttons/CancelButton";
@@ -21,9 +21,13 @@ const WebcamCapture = ({
   const webcamRef = useRef<Webcam | null>(null);
 
   const handleConfirm = async () => {
-    const fileToUpload = await xanoPost("/upload/attachment", "staff", {
-      content: imgSrc,
-    });
+    const response = await axios.post(
+      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+      {
+        content: imgSrc,
+      }
+    );
+    const fileToUpload = response.data;
     setFormDatas((old) => {
       return {
         ...(old as Partial<DemographicsFormType>),

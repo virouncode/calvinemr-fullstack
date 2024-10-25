@@ -48,10 +48,10 @@ const useAutoLockScreen = (
     window.addEventListener("mousemove", resetTimer);
     window.addEventListener("mousedown", resetTimer);
     window.addEventListener("keypress", resetTimer);
-    window.addEventListener("DOMMouseScroll", resetTimer);
-    window.addEventListener("mousewheel", resetTimer);
-    window.addEventListener("touchmove", resetTimer);
-    window.addEventListener("MSPointerMove", resetTimer);
+    window.addEventListener("DOMMouseScroll", resetTimer, { passive: true });
+    window.addEventListener("mousewheel", resetTimer, { passive: true });
+    window.addEventListener("touchmove", resetTimer, { passive: true });
+    window.addEventListener("MSPointerMove", resetTimer, { passive: true });
     return () => {
       stopTimer();
       window.removeEventListener("storage", handleStorageEvent);

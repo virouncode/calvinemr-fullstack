@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useEdocPost } from "../../../hooks/reactquery/mutations/edocsMutations";
 import { AttachmentType, EdocFormType } from "../../../types/api";
@@ -12,7 +12,7 @@ import SaveButton from "../../UI/Buttons/SaveButton";
 import ReportViewer from "../../UI/Documents/ReportViewer";
 import Input from "../../UI/Inputs/Input";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
+import CircularProgressSmall from "../../UI/Progress/CircularProgressSmall";
 
 type EdocFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -81,34 +81,34 @@ const EdocForm = ({ setAddVisible }: EdocFormProps) => {
       });
       return;
     }
-    // setting up the reader
+
     setIsLoadingFile(true);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "staff",
-          {
-            content,
-          }
-        );
-        setIsLoadingFile(false);
-        setFormDatas({
-          ...formDatas,
-          file: fileToUpload,
+    const formData = new FormData();
+    formData.append("content", file);
+
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setIsLoadingFile(false);
+      setFormDatas({
+        ...formDatas,
+        file: fileToUpload,
+      });
+    } catch (err) {
+      setIsLoadingFile(false);
+      if (err instanceof Error)
+        toast.error(`Error unable to load document: ${err.message}`, {
+          containerId: "A",
         });
-      } catch (err) {
-        setIsLoadingFile(false);
-        if (err instanceof Error)
-          toast.error(`Error unable to load document: ${err.message}`, {
-            containerId: "A",
-          });
-      }
-    };
+    }
   };
   return (
     <div className="reference__edocs-form">
@@ -121,6 +121,7 @@ const EdocForm = ({ setAddVisible }: EdocFormProps) => {
             onClick={handleSubmit}
           />
           <CancelButton onClick={handleCancel} />
+          {isLoadingFile && <CircularProgressSmall />}
         </div>
         <div className="reference__edocs-form-row">
           <Input
@@ -154,7 +155,6 @@ const EdocForm = ({ setAddVisible }: EdocFormProps) => {
       </div>
       {formDatas.file && (
         <div className="reference__edocs-form-preview">
-          {isLoadingFile && <LoadingParagraph />}
           <ReportViewer file={formDatas.file} />
         </div>
       )}

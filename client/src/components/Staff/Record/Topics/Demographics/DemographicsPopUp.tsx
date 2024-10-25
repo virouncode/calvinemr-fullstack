@@ -1,7 +1,6 @@
 import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
@@ -64,6 +63,7 @@ import WebcamCapture from "../../../Signup/WebcamCapture";
 import DemographicsAvatar from "./DemographicsAvatar";
 import EnrolmentHistory from "./EnrolmentHistory";
 import NewEnrolmentForm from "./NewEnrolmentForm";
+import axios from "axios";
 
 type DemographicsPopUpProps = {
   demographicsInfos: DemographicsType;
@@ -148,32 +148,32 @@ const DemographicsPopUp = ({
       return;
     }
     setLoadingFile(true);
-    // setting up the reader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const fileToUpload: AttachmentType = await xanoPost(
-          "/upload/attachment",
-          "staff",
+    const formData = new FormData();
+    formData.append("content", file);
 
-          { content }
-        );
-        setFormDatas({
-          ...(formDatas as DemographicsFormType),
-          avatar: fileToUpload,
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setFormDatas({
+        ...(formDatas as DemographicsFormType),
+        avatar: fileToUpload,
+      });
+      setLoadingFile(false);
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error: unable to load file: ${err.message}`, {
+          containerId: "A",
         });
-        setLoadingFile(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(`Error: unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
-        setLoadingFile(false);
-      }
-    };
+      setLoadingFile(false);
+    }
   };
   const handleClose = async () => {
     if (!editVisible) {
