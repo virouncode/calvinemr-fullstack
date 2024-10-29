@@ -23,7 +23,7 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
 
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(setSearch, 300);
+  const debouncedSearch = useDebounce(search, 300);
 
   const {
     data: templates,

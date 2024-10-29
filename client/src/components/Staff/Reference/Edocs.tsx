@@ -13,7 +13,7 @@ import EdocItem from "./EdocItem";
 
 const Edocs = () => {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(setSearch, 300);
+  const debouncedSearch = useDebounce(search, 300);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [addVisible, setAddVisible] = useState(false);
   const {

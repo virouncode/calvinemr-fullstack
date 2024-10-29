@@ -25,7 +25,7 @@ const ClinicalNotesTemplates = ({
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number>();
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(setSearch, 300);
+  const debounceSearch = useDebounce(search, 300);
   //Queries
   const {
     data: templates,

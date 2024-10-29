@@ -13,7 +13,7 @@ import PamphletItem from "./PamphletItem";
 
 const Pamphlets = () => {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(setSearch, 300);
+  const debouncedSearch = useDebounce(search, 300);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [addVisible, setAddVisible] = useState(false);
   const {

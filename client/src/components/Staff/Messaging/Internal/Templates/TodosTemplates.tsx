@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTodosTemplates } from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
+import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { TodoTemplateType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
@@ -10,7 +11,6 @@ import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import TodoTemplateForm from "./TodoTemplateForm";
 import TodoTemplateItem from "./TodoTemplateItem";
-import useDebounce from "../../../../../hooks/useDebounce";
 
 type TodosTemplatesProps = {
   handleSelectTemplate: (template: TodoTemplateType) => void;
@@ -20,7 +20,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
   //Hooks
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(setSearch, 300);
+  const debounceSearch = useDebounce(search, 300);
   //Queries
   const {
     data,
