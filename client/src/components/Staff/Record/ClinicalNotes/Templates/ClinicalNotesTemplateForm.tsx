@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactQuill from "react-quill-new";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useClinicalNotesTemplatesPost } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
 import { ClinicalNoteTemplateFormType } from "../../../../../types/api";
@@ -26,6 +27,18 @@ const ClinicalNotesTemplateForm = ({
     date_created: nowTZTimestamp(),
   });
   const [errMsg, setErrMsg] = useState("");
+  const [inputText, setInputText] = useState("");
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ align: [] }],
+    ],
+  };
+
   //Queries
   const templatePost = useClinicalNotesTemplatesPost();
 
@@ -52,6 +65,7 @@ const ClinicalNotesTemplateForm = ({
       ...newTemplate,
       name: firstLetterOfFirstWordUpper(newTemplate.name),
       date_created: nowTZTimestamp(),
+      body: inputText,
     };
     templatePost.mutate(templateToPost, {
       onSuccess: () => setNewTemplateVisible(false),
@@ -71,11 +85,15 @@ const ClinicalNotesTemplateForm = ({
         />
       </div>
       <div className="clinical-note-template__form-body">
-        <textarea
-          name="body"
-          value={newTemplate.body}
-          onChange={handleChange}
-        />
+        <div className="clinical-note-template__form-body-quill">
+          <ReactQuill
+            theme="snow"
+            value={inputText}
+            onChange={setInputText}
+            modules={modules}
+            style={{ height: "100%" }}
+          />
+        </div>
       </div>
       <div className="clinical-note-template__form-btns">
         <SaveButton onClick={handleSave} />

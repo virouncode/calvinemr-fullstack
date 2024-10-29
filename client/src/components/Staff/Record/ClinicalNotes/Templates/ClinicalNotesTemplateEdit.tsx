@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill-new";
 import { useClinicalNotesTemplatesPut } from "../../../../../hooks/reactquery/mutations/clinicalNotesTemplatesMutations";
 import { ClinicalNoteTemplateType } from "../../../../../types/api";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
@@ -21,6 +22,17 @@ const ClinicalNotesTemplateEdit = ({
   const [editedTemplate, setEditedTemplate] =
     useState<ClinicalNoteTemplateType>(templateToEdit);
   const [errMsg, setErrMsg] = useState("");
+  const [inputText, setInputText] = useState(templateToEdit.body);
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ align: [] }],
+    ],
+  };
   //Queries
   const templatePut = useClinicalNotesTemplatesPut();
 
@@ -50,6 +62,7 @@ const ClinicalNotesTemplateEdit = ({
       ...editedTemplate,
       name: firstLetterOfFirstWordUpper(editedTemplate.name),
       date_created: nowTZTimestamp(),
+      body: inputText,
     };
     templatePut.mutate(templateToPut, {
       onSuccess: () => setEditTemplateVisible(false),
@@ -69,11 +82,15 @@ const ClinicalNotesTemplateEdit = ({
         />
       </div>
       <div className="clinical-note-template__form-body">
-        <textarea
-          name="body"
-          value={editedTemplate.body}
-          onChange={handleChange}
-        />
+        <div className="clinical-note-template__form-body-quill">
+          <ReactQuill
+            theme="snow"
+            value={inputText}
+            onChange={setInputText}
+            modules={modules}
+            style={{ height: "100%" }}
+          />
+        </div>
       </div>
       <div className="clinical-note-template__form-btns">
         <SaveButton onClick={handleSave} />

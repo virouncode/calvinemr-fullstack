@@ -362,16 +362,21 @@
   }
   .clinical-note-template__form-body {
     flex: 1;
-    border: solid 0.5px $grey2;
-    border-radius: 6px;
     margin-bottom: 1rem;
     overflow: hidden;
-    textarea {
-      padding: 0.5rem;
-      font-size: $size-base;
-      height: 100%;
+    &-quill {
       width: 100%;
-      outline: none;
+      height: 100%;
+      overflow-y: scroll;
+      .ql-toolbar.ql-snow {
+        display: block;
+        text-align: left;
+      }
+      .ql-container.ql-snow {
+        font-size: $size-base;
+        height: 86%;
+        border-radius: 0 0 6px 6px;
+      }
     }
   }
   .clinical-note-template__form-btns {
@@ -565,8 +570,10 @@
       }
     }
     .clinical-note-template__form-body {
-      textarea {
-        font-size: $size-sm;
+      &-quill {
+        .ql-container.ql-snow {
+          font-size: $size-sm;
+        }
       }
     }
   }
