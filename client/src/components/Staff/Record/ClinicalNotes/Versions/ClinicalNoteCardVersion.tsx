@@ -1,4 +1,5 @@
 import React from "react";
+import ReactQuill from "react-quill-new";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
   ClinicalNoteLogType,
@@ -45,7 +46,14 @@ const ClinicalNoteCardVersion = ({ version }: ClinicalNoteCardVersionProps) => {
         </div>
       </div>
       <div className="clinical-notes__card-body">
-        <p>{version.MyClinicalNotesContent}</p>
+        <div className="clinical-notes__card-body-quill">
+          <ReactQuill
+            theme="snow"
+            readOnly={true}
+            value={version.MyClinicalNotesContent}
+            style={{ height: "100%" }}
+          />
+        </div>
       </div>
     </div>
   );

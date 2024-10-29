@@ -1,4 +1,5 @@
 import React from "react";
+import ReactQuill from "react-quill-new";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { ClinicalNoteType } from "../../../../../types/api";
 import { timestampToDateTimeSecondsStrTZ } from "../../../../../utils/dates/formatDates";
@@ -31,7 +32,14 @@ const ClinicalNoteOverviewCard = ({
       </div>
       <div className="clinical-notes__overview-card-row">
         <label>Body:</label>
-        <p>{clinicalNote.MyClinicalNotesContent}</p>
+        <div className="clinical-notes__card-body-quill clinical-notes__card-body-quill--overview">
+          <ReactQuill
+            theme="snow"
+            readOnly={true}
+            value={clinicalNote.MyClinicalNotesContent}
+            style={{ height: "100%" }}
+          />
+        </div>
       </div>
     </div>
   );

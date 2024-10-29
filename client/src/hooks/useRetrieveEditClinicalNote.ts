@@ -23,6 +23,7 @@ const useRetrieveEditClinicalNote = (
 ) => {
   const [editClinicalNoteInMemory, setEditClinicalNoteInMemory] =
     useState<ClinicalNoteType | null>(null);
+
   useEffect(() => {
     if (!clinicalNotes) return;
     const retrieveClinicalNote = async () => {

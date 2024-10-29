@@ -1,7 +1,7 @@
 import axios from "axios";
 import { uniqueId } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
+import React, { useRef, useState } from "react";
+import ReactQuill from "react-quill-new";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -31,14 +31,12 @@ import { clinicalNoteSchema } from "../../../../../validation/record/clinicalNot
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
-import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
 import PaperclipIcon from "../../../../UI/Icons/PaperclipIcon";
 import Input from "../../../../UI/Inputs/Input";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import ClinicalNotesTemplates from "../Templates/ClinicalNotesTemplates";
-import ClinicalNoteAttachments from "./ClinicalNoteAttachments";
+import ClinicalNoteFormBody from "./ClinicalNoteFormBody";
 
 type ClinicalNoteFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -86,14 +84,13 @@ const ClinicalNoteForm = ({
       ? newClinicalNoteInMemory.MyClinicalNotesContent
       : ""
   );
+  const quillRef = useRef<ReactQuill | null>(null);
   const [attachments, setAttachments] = useState<ClinicalNoteAttachmentType[]>(
     []
   );
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [templatesVisible, setTemplatesVisible] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const inputTextBeforeSpeech = useRef(
     newClinicalNoteInMemory
       ? newClinicalNoteInMemory.MyClinicalNotesContent
@@ -101,12 +98,6 @@ const ClinicalNoteForm = ({
   );
   //Queries
   const clinicalNotePost = useClinicalNotePost();
-
-  useEffect(() => {
-    if (textareaRef.current && !isTyping) {
-      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-    }
-  }, [isTyping, formDatas.MyClinicalNotesContent]);
 
   const { isListening, setIsListening, recognition } = useSpeechRecognition(
     setInputText,
@@ -218,29 +209,15 @@ const ClinicalNoteForm = ({
       },
     });
   };
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
     const value = e.target.value;
-    setIsTyping(true);
     localStorage.setItem(
       "currentNewClinicalNote",
       JSON.stringify({ ...formDatas, [name]: value })
     );
     setFormDatas({ ...formDatas, [name]: value });
-  };
-
-  const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setErrMsg("");
-    setInputText(value);
-    inputTextBeforeSpeech.current = value;
-    localStorage.setItem(
-      "currentNewClinicalNote",
-      JSON.stringify({ ...formDatas, MyClinicalNotesContent: value })
-    );
   };
 
   const handleAttach = () => {
@@ -307,17 +284,22 @@ const ClinicalNoteForm = ({
 
   const handleSelectTemplate = (template: ClinicalNoteTemplateType) => {
     setErrMsg("");
-    setIsTyping(false);
-    setInputText(inputText + (inputText ? "\n\n" : "") + template.body + "\n");
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-      textareaRef.current.setSelectionRange(
-        (inputText + (inputText ? "\n\n" : "") + template.body + "\n").length,
-        (inputText + (inputText ? "\n\n" : "") + template.body + "\n").length
-      );
-      inputTextBeforeSpeech.current =
-        inputText + (inputText ? "\n\n" : "") + template.body + "\n";
-    }
+    const newInputText =
+      inputText + (inputText ? "<p><br/></p>" : "") + template.body;
+    setInputText(newInputText);
+    inputTextBeforeSpeech.current = newInputText;
+    localStorage.setItem(
+      "currentNewClinicalNote",
+      JSON.stringify({ ...formDatas, MyClinicalNotesContent: newInputText })
+    );
+    requestAnimationFrame(() => {
+      if (quillRef.current) {
+        const editor = quillRef.current.getEditor();
+        editor.setSelection(newInputText.length, 0);
+        editor.root.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        editor.focus();
+      }
+    });
   };
 
   const handleStartSpeech = () => {
@@ -390,53 +372,18 @@ const ClinicalNoteForm = ({
             </div>
           </div>
         </div>
-        <div className="clinical-notes__form-body">
-          {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-          {isListening ? (
-            <MicrophoneIcon
-              onClick={handleStopSpeech}
-              color="red"
-              top={30}
-              right={30}
-            />
-          ) : (
-            <MicrophoneIcon
-              onClick={handleStartSpeech}
-              color="black"
-              top={30}
-              right={30}
-            />
-          )}
-          <div className="clinical-notes__form-body-quill">
-            <ReactQuill
-              theme="snow"
-              value={inputText}
-              onChange={setInputText}
-              modules={{
-                toolbar: [
-                  ["bold", "italic", "underline", "strike"],
-                  [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-                  [{ indent: "-1" }, { indent: "+1" }],
-                  [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-                  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-                  [{ align: [] }],
-                  ["clean"],
-                ],
-              }}
-              style={{ height: "100%" }}
-            />
-          </div>
-          {attachments.length > 0 && (
-            <ClinicalNoteAttachments
-              attachments={attachments}
-              handleRemoveAttachment={handleRemoveAttachment}
-              deletable={true}
-              addable={false}
-              patientId={patientId}
-              date={nowTZTimestamp()}
-            />
-          )}
-        </div>
+        <ClinicalNoteFormBody
+          errMsg={errMsg}
+          isListening={isListening}
+          handleStartSpeech={handleStartSpeech}
+          handleStopSpeech={handleStopSpeech}
+          inputText={inputText}
+          setInputText={setInputText}
+          attachments={attachments}
+          handleRemoveAttachment={handleRemoveAttachment}
+          patientId={patientId}
+          quillRef={quillRef}
+        />
         <div className="clinical-notes__form-btns">
           <SaveButton
             disabled={isLoadingFile}

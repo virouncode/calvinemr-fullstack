@@ -1,3 +1,5 @@
+import ReactQuill from "react-quill-new";
+
 export const copyToClipboard = async (
   newWindow: Window,
   element: HTMLElement
@@ -11,10 +13,14 @@ export const copyToClipboard = async (
 };
 
 export const copyClinicalNoteToClipboard = async (
-  bodyRef: React.MutableRefObject<HTMLDivElement | null>
+  quillRef: React.MutableRefObject<ReactQuill | null>
 ) => {
-  if (bodyRef.current)
-    await navigator.clipboard.writeText(bodyRef.current.innerText);
+  if (quillRef.current) {
+    console.log(quillRef.current.getEditor().root.innerText);
+    await navigator.clipboard.writeText(
+      quillRef.current.getEditor().root.innerText
+    );
+  }
 };
 
 export const copyCalvinAIMsgToClipboard = async (

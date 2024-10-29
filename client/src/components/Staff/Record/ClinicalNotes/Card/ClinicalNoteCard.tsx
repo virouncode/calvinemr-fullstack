@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import ReactQuill from "react-quill-new";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
@@ -79,14 +80,13 @@ const ClinicalNoteCard = ({
   const [bodyVisible, setBodyVisible] = useState(true);
   const [aiVisible, setAIVisible] = useState(false);
   const [versionsVisible, setVersionsVisible] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [aiRewriteText, setAIRewritedText] = useState("");
   const [isRewriting, setIsRewriting] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [inputText, setInputText] = useState("");
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const quillRef = useRef<ReactQuill | null>(null);
   const editClinicalNoteRef = useRef<HTMLDivElement | null>(null);
   const inputTextBeforeSpeech = useRef<string>("");
   //Queries
@@ -117,6 +117,13 @@ const ClinicalNoteCard = ({
         });
         setInputText(aiRewriteText);
         inputTextBeforeSpeech.current = aiRewriteText;
+        localStorage.setItem(
+          "currentEditClinicalNote",
+          JSON.stringify({
+            ...clinicalNote,
+            MyClinicalNotesContent: aiRewriteText,
+          })
+        );
       } else {
         setTempFormDatas(clinicalNote);
         setInputText(clinicalNote.MyClinicalNotesContent);
@@ -130,15 +137,10 @@ const ClinicalNoteCard = ({
     setNewButtonDisabled,
   ]);
 
+  //Fot the global fold/unfold button
   useEffect(() => {
     setBodyVisible(contentsVisible);
   }, [contentsVisible]);
-
-  useEffect(() => {
-    if (textareaRef.current && !isTyping) {
-      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-    }
-  }, [isTyping, tempFormDatas.MyClinicalNotesContent]);
 
   const { isListening, setIsListening, recognition } = useSpeechRecognition(
     setInputText,
@@ -149,17 +151,22 @@ const ClinicalNoteCard = ({
   //HANDLERS
   const handleSelectTemplate = (template: ClinicalNoteTemplateType) => {
     setErrMsg("");
-    setIsTyping(false);
-    setInputText(inputText + (inputText ? "\n\n" : "") + template.body + "\n");
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-      textareaRef.current.setSelectionRange(
-        (inputText + (inputText ? "\n\n" : "") + template.body + "\n").length,
-        (inputText + (inputText ? "\n\n" : "") + template.body + "\n").length
-      );
-    }
-    inputTextBeforeSpeech.current =
-      inputText + (inputText ? "\n\n" : "") + template.body + "\n";
+    const newInputText =
+      inputText + (inputText ? "<p><br/></p>" : "") + template.body;
+    setInputText(newInputText);
+    inputTextBeforeSpeech.current = newInputText;
+    localStorage.setItem(
+      "currentEditClinicalNote",
+      JSON.stringify({ ...formDatas, MyClinicalNotesContent: newInputText })
+    );
+    requestAnimationFrame(() => {
+      if (quillRef.current) {
+        const editor = quillRef.current.getEditor();
+        editor.setSelection(newInputText.length, 0);
+        editor.root.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        editor.focus();
+      }
+    });
   };
 
   const handleClinicalHeaderClick = (
@@ -194,23 +201,11 @@ const ClinicalNoteCard = ({
     setErrMsg("");
     const name = e.target.name;
     const value = e.target.value;
-    setIsTyping(true);
     localStorage.setItem(
       "currentEditClinicalNote",
       JSON.stringify({ ...(tempFormDatas as ClinicalNoteType), [name]: value })
     );
     setTempFormDatas({ ...(tempFormDatas as ClinicalNoteType), [name]: value });
-  };
-
-  const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setErrMsg("");
-    setInputText(value);
-    inputTextBeforeSpeech.current = value;
-    localStorage.setItem(
-      "currentEditClinicalNote",
-      JSON.stringify({ ...formDatas, MyClinicalNotesContent: value })
-    );
   };
 
   const handleCancelClick = async (
@@ -368,12 +363,12 @@ const ClinicalNoteCard = ({
             inputTextBeforeSpeech={inputTextBeforeSpeech}
             handleClinicalHeaderClick={handleClinicalHeaderClick}
             addVisible={addVisible}
-            bodyRef={bodyRef}
             selectAll={selectAll}
             setAIRewritedText={setAIRewritedText}
             setEditVisible={setEditVisible}
             isRewriting={isRewriting}
             setIsRewriting={setIsRewriting}
+            quillRef={quillRef}
           />
         ) : (
           <ClinicalNoteCardHeaderFolded
@@ -395,15 +390,13 @@ const ClinicalNoteCard = ({
         >
           {errMsg && <ErrorParagraph errorMsg={errMsg} />}
           <ClinicalNoteCardBody
-            clinicalNote={clinicalNote}
             inputText={inputText}
             setInputText={setInputText}
             editVisible={editVisible}
-            handleChangeText={handleChangeText}
-            textareaRef={textareaRef}
             isListening={isListening}
             handleStartSpeech={handleStartSpeech}
             handleStopSpeech={handleStopSpeech}
+            quillRef={quillRef}
           />
           {clinicalNote.attachments_ids.length > 0 && (
             <ClinicalNoteAttachments

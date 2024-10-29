@@ -1,4 +1,5 @@
 import React from "react";
+import ReactQuill from "react-quill-new";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
   ClinicalNoteAttachmentType,
@@ -47,9 +48,13 @@ const ClinicalNoteCardPrint = ({
         </div>
       </div>
       <div className="clinical-notes__card-body">
-        <p style={{ whiteSpace: "pre-wrap" }}>
-          {clinicalNote.MyClinicalNotesContent}
-        </p>
+        <div className="clinical-notes__card-body-quill clinical-notes__card-body-quill--print">
+          <ReactQuill
+            theme="snow"
+            readOnly={true}
+            value={clinicalNote.MyClinicalNotesContent}
+          />
+        </div>
         <ClinicalNoteAttachments
           attachments={(
             clinicalNote.attachments_ids as {

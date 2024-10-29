@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import ReactQuill from "react-quill-new";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -52,12 +53,12 @@ type ClinicalNoteCardHeaderProps = {
   setInputText: React.Dispatch<React.SetStateAction<string>>;
   inputTextBeforeSpeech: React.MutableRefObject<string>;
   addVisible: boolean;
-  bodyRef: React.MutableRefObject<HTMLDivElement | null>;
   selectAll: boolean;
   setAIRewritedText: React.Dispatch<React.SetStateAction<string>>;
   setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isRewriting: boolean;
   setIsRewriting: React.Dispatch<React.SetStateAction<boolean>>;
+  quillRef: React.MutableRefObject<ReactQuill | null>;
 };
 
 const ClinicalNoteCardHeader = ({
@@ -79,12 +80,12 @@ const ClinicalNoteCardHeader = ({
   setInputText,
   inputTextBeforeSpeech,
   addVisible,
-  bodyRef,
   selectAll,
   setAIRewritedText,
   setEditVisible,
   isRewriting,
   setIsRewriting,
+  quillRef,
 }: ClinicalNoteCardHeaderProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
@@ -102,7 +103,7 @@ const ClinicalNoteCardHeader = ({
   ) => {
     e.stopPropagation();
     try {
-      await copyClinicalNoteToClipboard(bodyRef);
+      await copyClinicalNoteToClipboard(quillRef);
       toast.success("Copied !", { containerId: "A" });
     } catch (err) {
       if (err instanceof Error)
@@ -212,9 +213,6 @@ const ClinicalNoteCardHeader = ({
             </>
           )}
         </div>
-        {/* <div className="clinical-notes__card-triangle">
-          <TriangleIcon color="black" rotation={90} />
-        </div> */}
       </div>
       <div className="clinical-notes__card-header-row">
         <div className="clinical-notes__card-header-subject">
