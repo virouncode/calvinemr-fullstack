@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactQuill from "react-quill-new";
 import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
 
@@ -31,12 +31,6 @@ const ClinicalNoteCardBody = ({
       [{ align: [] }],
     ],
   };
-  useEffect(() => {
-    if (editVisible) {
-      quillRef.current?.getEditor()?.setSelection(inputText.length, 0);
-    }
-  }, [editVisible, quillRef, inputText.length]);
-
   return (
     <div className="clinical-notes__card-body">
       {editVisible &&
