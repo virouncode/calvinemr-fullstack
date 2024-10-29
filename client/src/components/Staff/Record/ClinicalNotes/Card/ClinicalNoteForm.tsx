@@ -1,6 +1,8 @@
 import axios from "axios";
 import { uniqueId } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
@@ -394,23 +396,36 @@ const ClinicalNoteForm = ({
             <MicrophoneIcon
               onClick={handleStopSpeech}
               color="red"
-              top={15}
+              top={30}
               right={30}
             />
           ) : (
             <MicrophoneIcon
               onClick={handleStartSpeech}
               color="black"
-              top={15}
+              top={30}
               right={30}
             />
           )}
-          <textarea
-            onChange={handleChangeText}
-            value={inputText}
-            autoFocus
-            ref={textareaRef}
-          />
+          <div className="clinical-notes__form-body-quill">
+            <ReactQuill
+              theme="snow"
+              value={inputText}
+              onChange={setInputText}
+              modules={{
+                toolbar: [
+                  ["bold", "italic", "underline", "strike"],
+                  [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+                  [{ indent: "-1" }, { indent: "+1" }],
+                  [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+                  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+                  [{ align: [] }],
+                  ["clean"],
+                ],
+              }}
+              style={{ height: "100%" }}
+            />
+          </div>
           {attachments.length > 0 && (
             <ClinicalNoteAttachments
               attachments={attachments}

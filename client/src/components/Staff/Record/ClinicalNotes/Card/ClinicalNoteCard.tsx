@@ -397,6 +397,7 @@ const ClinicalNoteCard = ({
           <ClinicalNoteCardBody
             clinicalNote={clinicalNote}
             inputText={inputText}
+            setInputText={setInputText}
             editVisible={editVisible}
             handleChangeText={handleChangeText}
             textareaRef={textareaRef}
