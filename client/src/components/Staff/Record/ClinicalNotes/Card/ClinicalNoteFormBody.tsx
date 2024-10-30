@@ -1,5 +1,5 @@
 import React from "react";
-import ReactQuill from "react-quill-new";
+import ReactQuill, { DeltaStatic, EmitterSource } from "react-quill-new";
 import { ClinicalNoteAttachmentType } from "../../../../../types/api";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
@@ -12,11 +12,16 @@ type ClinicalNoteFormBodyProps = {
   handleStartSpeech: () => void;
   handleStopSpeech: () => void;
   inputText: string;
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
   attachments: ClinicalNoteAttachmentType[];
   handleRemoveAttachment: (fileName: string) => void;
   patientId: number;
   quillRef: React.MutableRefObject<ReactQuill | null>;
+  handleBodyChange: (
+    value: string,
+    delta: DeltaStatic,
+    source: EmitterSource,
+    editor: ReactQuill.UnprivilegedEditor
+  ) => void;
 };
 
 const ClinicalNoteFormBody = ({
@@ -25,11 +30,11 @@ const ClinicalNoteFormBody = ({
   handleStartSpeech,
   handleStopSpeech,
   inputText,
-  setInputText,
   attachments,
   handleRemoveAttachment,
   patientId,
   quillRef,
+  handleBodyChange,
 }: ClinicalNoteFormBodyProps) => {
   const modules = {
     toolbar: [
@@ -63,7 +68,7 @@ const ClinicalNoteFormBody = ({
         <ReactQuill
           theme="snow"
           value={inputText}
-          onChange={setInputText}
+          onChange={handleBodyChange}
           modules={modules}
           style={{ height: "100%" }}
           ref={quillRef}

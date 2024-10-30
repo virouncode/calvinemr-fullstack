@@ -1,7 +1,7 @@
 import axios from "axios";
 import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
-import ReactQuill from "react-quill-new";
+import ReactQuill, { DeltaStatic, EmitterSource } from "react-quill-new";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,6 +15,7 @@ import {
   ClinicalNoteAttachmentType,
   ClinicalNoteFormType,
   ClinicalNoteTemplateType,
+  ClinicalNoteType,
   DemographicsType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -220,6 +221,25 @@ const ClinicalNoteForm = ({
     setFormDatas({ ...formDatas, [name]: value });
   };
 
+  const handleBodyChange = (
+    value: string,
+    delta: DeltaStatic,
+    source: EmitterSource,
+    editor: ReactQuill.UnprivilegedEditor
+  ) => {
+    if (source === "user") {
+      setInputText(value);
+      localStorage.setItem(
+        "currentEditClinicalNote",
+        JSON.stringify({
+          ...(formDatas as ClinicalNoteType),
+          MyClinicalNotesContent: value,
+        })
+      );
+      inputTextBeforeSpeech.current = value;
+    }
+  };
+
   const handleAttach = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -378,11 +398,11 @@ const ClinicalNoteForm = ({
           handleStartSpeech={handleStartSpeech}
           handleStopSpeech={handleStopSpeech}
           inputText={inputText}
-          setInputText={setInputText}
           attachments={attachments}
           handleRemoveAttachment={handleRemoveAttachment}
           patientId={patientId}
           quillRef={quillRef}
+          handleBodyChange={handleBodyChange}
         />
         <div className="clinical-notes__form-btns">
           <SaveButton

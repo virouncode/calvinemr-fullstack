@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill-new";
+import ReactQuill, { DeltaStatic, EmitterSource } from "react-quill-new";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import {
@@ -207,6 +207,24 @@ const ClinicalNoteCard = ({
     );
     setTempFormDatas({ ...(tempFormDatas as ClinicalNoteType), [name]: value });
   };
+  const handleBodyChange = (
+    value: string,
+    delta: DeltaStatic,
+    source: EmitterSource,
+    editor: ReactQuill.UnprivilegedEditor
+  ) => {
+    if (source === "user") {
+      setInputText(value);
+      localStorage.setItem(
+        "currentEditClinicalNote",
+        JSON.stringify({
+          ...(tempFormDatas as ClinicalNoteType),
+          MyClinicalNotesContent: value,
+        })
+      );
+      inputTextBeforeSpeech.current = value;
+    }
+  };
 
   const handleCancelClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -391,12 +409,12 @@ const ClinicalNoteCard = ({
           {errMsg && <ErrorParagraph errorMsg={errMsg} />}
           <ClinicalNoteCardBody
             inputText={inputText}
-            setInputText={setInputText}
             editVisible={editVisible}
             isListening={isListening}
             handleStartSpeech={handleStartSpeech}
             handleStopSpeech={handleStopSpeech}
             quillRef={quillRef}
+            handleBodyChange={handleBodyChange}
           />
           {clinicalNote.attachments_ids.length > 0 && (
             <ClinicalNoteAttachments

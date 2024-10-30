@@ -1,25 +1,30 @@
 import React from "react";
-import ReactQuill from "react-quill-new";
+import ReactQuill, { DeltaStatic, EmitterSource } from "react-quill-new";
 import MicrophoneIcon from "../../../../UI/Icons/MicrophoneIcon";
 
 type ClinicalNoteCardBodyProps = {
   inputText: string;
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
   editVisible: boolean;
   isListening: boolean;
   handleStopSpeech: () => void;
   handleStartSpeech: () => void;
   quillRef: React.MutableRefObject<ReactQuill | null>;
+  handleBodyChange: (
+    value: string,
+    delta: DeltaStatic,
+    source: EmitterSource,
+    editor: ReactQuill.UnprivilegedEditor
+  ) => void;
 };
 
 const ClinicalNoteCardBody = ({
   inputText,
-  setInputText,
   editVisible,
   isListening,
   handleStopSpeech,
   handleStartSpeech,
   quillRef,
+  handleBodyChange,
 }: ClinicalNoteCardBodyProps) => {
   const modules = {
     toolbar: [
@@ -60,7 +65,7 @@ const ClinicalNoteCardBody = ({
           theme="snow"
           readOnly={!editVisible}
           value={inputText}
-          onChange={setInputText}
+          onChange={handleBodyChange}
           modules={modules}
           style={{ height: "100%" }}
           ref={quillRef}
