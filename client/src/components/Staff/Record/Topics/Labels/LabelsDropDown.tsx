@@ -4,6 +4,7 @@ import { DemographicsType } from "../../../../../types/api";
 import ClinicSiteLabel from "./ClinicSiteLabel";
 import MdLabel from "./MdLabel";
 import PatientLabel from "./PatientLabel";
+import PatientLabelSimplified from "./PatientLabelSimplified";
 
 type LabelsDropDownProps = {
   demographicsInfos: DemographicsType;
@@ -16,6 +17,10 @@ const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
 
   const handleClickPatientLabel = () => {
     setChoosenLabel("patient");
+    setLabelVisible((v) => !v);
+  };
+  const handleClickPatientLabelSimplified = () => {
+    setChoosenLabel("patientSimplified");
     setLabelVisible((v) => !v);
   };
   const handleClickMdLabel = () => {
@@ -37,6 +42,12 @@ const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
         <ul>
           <li className="topic-content__link" onClick={handleClickPatientLabel}>
             - Patient label
+          </li>
+          <li
+            className="topic-content__link"
+            onClick={handleClickPatientLabelSimplified}
+          >
+            - Patient label (simple)
           </li>
           <li className="topic-content__link" onClick={handleClickMdLabel}>
             - MD label
@@ -65,6 +76,12 @@ const LabelsDropDown = ({ demographicsInfos }: LabelsDropDownProps) => {
         >
           {choosenLabel === "patient" && (
             <PatientLabel
+              demographicsInfos={demographicsInfos}
+              windowRef={windowRef}
+            />
+          )}
+          {choosenLabel === "patientSimplified" && (
+            <PatientLabelSimplified
               demographicsInfos={demographicsInfos}
               windowRef={windowRef}
             />
