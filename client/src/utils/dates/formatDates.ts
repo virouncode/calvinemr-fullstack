@@ -185,6 +185,24 @@ export const timestampToHumanDateTimeTZ = (
     minute: "2-digit",
   });
 };
+export const timestampToHumanDateTimeSecondsTZ = (
+  timestamp: number | undefined | null,
+  timezone = "America/Toronto",
+  locale = "en-CA"
+) => {
+  if (!timestamp) return "";
+  return DateTime.fromMillis(timestamp, {
+    zone: timezone,
+    locale,
+  }).toLocaleString({
+    weekday: "short",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
 
 export const timestampToHumanDateTZ = (
   timestamp: number | undefined | null,

@@ -1,6 +1,6 @@
 import React from "react";
 import { LogType } from "../../../types/api";
-import { timestampToHumanDateTimeTZ } from "../../../utils/dates/formatDates";
+import { timestampToHumanDateTimeSecondsTZ } from "../../../utils/dates/formatDates";
 
 type LogResultItemProps = {
   log: LogType;
@@ -10,7 +10,7 @@ type LogResultItemProps = {
 const LogResultItem = ({ log, lastLogRef }: LogResultItemProps) => {
   return (
     <tr ref={lastLogRef}>
-      <td>{timestampToHumanDateTimeTZ(log.created_at)}</td>
+      <td>{timestampToHumanDateTimeSecondsTZ(log.created_at)}</td>
       <td>{log.user_id}</td>
       <td>{log.user_name}</td>
       <td>{log.user_type}</td>

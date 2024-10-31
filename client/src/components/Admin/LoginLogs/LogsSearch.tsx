@@ -68,8 +68,8 @@ const LogsSearch = ({
         value={timestampToDateISOTZ(rangeStart)}
         onChange={handleDateChange}
         name="date_start"
-        id="to"
-        label="To"
+        id="from"
+        label="From"
         disabled={all}
       />
       <InputDate
