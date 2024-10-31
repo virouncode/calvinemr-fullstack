@@ -24,6 +24,7 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 app
+  .set("trust proxy", true)
   .use(cookieParser())
   .use(express.urlencoded({ extended: true }))
   .use(express.json({ limit: "50mb" }))

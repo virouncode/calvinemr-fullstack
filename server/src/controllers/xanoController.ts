@@ -47,6 +47,22 @@ export const getXano = async (req: Request, res: Response): Promise<void> => {
     };
     const axiosXanoInstance = getAxiosInstance(userType as string);
     const response = await axiosXanoInstance(config);
+
+    if (URL === "/auth/me" && process.env.NODE_ENV !== "development") {
+      console.log("Logging user login");
+      const logConfig = {
+        method: "post",
+        url: "/logs",
+        headers,
+        data: {
+          user_id: response.data.id,
+          user_type: userType,
+          ip_address: req.ip,
+        },
+      };
+      await axiosXanoInstance(logConfig);
+    }
+
     handleResponse(response, res);
   } catch (err) {
     handleError(err as AxiosError, res);
@@ -130,6 +146,7 @@ export const deleteXano = async (
 export const authXano = async (req: Request, res: Response): Promise<void> => {
   try {
     const { URL, userType } = req.query;
+
     const datasToPost = req.body;
     const headers = {
       "Content-Type": "application/json",
@@ -140,8 +157,10 @@ export const authXano = async (req: Request, res: Response): Promise<void> => {
       headers,
       data: datasToPost,
     };
+
     const axiosXanoInstance = getAxiosInstance(userType as string);
     const response = await axiosXanoInstance(config);
+
     res.cookie("token", response.data.authToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
