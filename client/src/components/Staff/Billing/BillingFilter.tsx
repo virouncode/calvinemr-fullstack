@@ -114,8 +114,9 @@ const BillingFilter = ({
       setRangeStart(dateISOToTimestampTZ(value) as number);
     }
     if (name === "date_end") {
-      initialRangeEnd.current = dateISOToTimestampTZ(value) as number;
-      setRangeEnd(dateISOToTimestampTZ(value) as number);
+      initialRangeEnd.current =
+        (dateISOToTimestampTZ(value) as number) + 86399999;
+      setRangeEnd((dateISOToTimestampTZ(value) as number) + 86399999);
     }
   };
 

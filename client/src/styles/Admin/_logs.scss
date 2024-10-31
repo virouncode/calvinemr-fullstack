@@ -6,10 +6,43 @@
   flex-direction: column;
   gap: 1rem;
   &__search {
-    font-size: $size-base;
-    input {
+    margin: 0 auto 1rem;
+    border: solid 1px $grey2;
+    border-radius: 6px;
+    padding: 1rem;
+    width: 100%;
+    max-width: 940px;
+    box-shadow: $box-shadow-default;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    &-filter {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+      &-item {
+        display: flex;
+        flex-direction: column;
+        input {
+          font-size: $size-base;
+          width: 100%;
+          &:disabled {
+            color: $white;
+          }
+        }
+      }
+    }
+    label {
+      font-weight: bold;
       font-size: $size-base;
-      width: 100%;
+      margin-bottom: 0.25em;
+    }
+    &-input {
+      input {
+        font-size: $size-base;
+        width: 100%;
+      }
     }
   }
   &__table-container {
@@ -58,7 +91,9 @@
 }
 @media (min-width: 1024px) {
   .logs__search {
-    font-size: $size-sm;
+    label {
+      font-size: $size-sm;
+    }
     input {
       font-size: $size-sm;
     }

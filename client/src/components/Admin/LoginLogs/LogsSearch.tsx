@@ -41,8 +41,9 @@ const LogsSearch = ({
       setRangeStart(dateISOToTimestampTZ(value) as number);
     }
     if (name === "date_end") {
-      initialRangeEnd.current = dateISOToTimestampTZ(value) as number;
-      setRangeEnd(dateISOToTimestampTZ(value) as number);
+      initialRangeEnd.current =
+        (dateISOToTimestampTZ(value) as number) + 86399999;
+      setRangeEnd((dateISOToTimestampTZ(value) as number) + 86399999);
     }
   };
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,34 +60,46 @@ const LogsSearch = ({
 
   return (
     <div className="logs__search">
-      <Input
-        value={search}
-        onChange={handleSearch}
-        placeholder="Search by user name..."
-      />
-      <InputDate
-        value={timestampToDateISOTZ(rangeStart)}
-        onChange={handleDateChange}
-        name="date_start"
-        id="from"
-        label="From"
-        disabled={all}
-      />
-      <InputDate
-        value={timestampToDateISOTZ(rangeEnd)}
-        onChange={handleDateChange}
-        name="date_end"
-        id="to"
-        label="To"
-        disabled={all}
-      />
-      <Checkbox
-        id="all"
-        name="all"
-        onChange={handleCheckAll}
-        checked={all}
-        label="All"
-      />
+      <div className="logs__search-input">
+        <Input
+          value={search}
+          onChange={handleSearch}
+          placeholder="Search by user name..."
+          autoFocus={true}
+        />
+      </div>
+
+      <div className="logs__search-filter">
+        <div className="logs__search-filter-item">
+          <InputDate
+            value={timestampToDateISOTZ(rangeStart)}
+            onChange={handleDateChange}
+            name="date_start"
+            id="from"
+            label="From"
+            disabled={all}
+          />
+        </div>
+        <div className="logs__search-filter-item">
+          <InputDate
+            value={timestampToDateISOTZ(rangeEnd)}
+            onChange={handleDateChange}
+            name="date_end"
+            id="to"
+            label="To"
+            disabled={all}
+          />
+        </div>
+        <div className="logs__search-filter-checkbox">
+          <Checkbox
+            id="all"
+            name="all"
+            onChange={handleCheckAll}
+            checked={all}
+            label="All"
+          />
+        </div>
+      </div>
     </div>
   );
 };

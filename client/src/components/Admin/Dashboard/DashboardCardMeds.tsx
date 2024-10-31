@@ -40,7 +40,7 @@ const DashboardCardMeds = () => {
   const handleChangeEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (!value) return;
-    setRangeEndMeds(dateISOToTimestampTZ(value) as number);
+    setRangeEndMeds((dateISOToTimestampTZ(value) as number) + 86399999);
   };
   const handleSiteChangeMeds = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSiteSelectedIdMeds(parseInt(e.target.value));
