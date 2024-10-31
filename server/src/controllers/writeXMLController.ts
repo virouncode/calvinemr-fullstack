@@ -1,9 +1,9 @@
 import axios from "axios";
+import downloadsFolder from "downloads-folder";
 import { Request, Response } from "express";
 import fs from "fs";
 import fsPromises from "fs/promises";
 import { DateTime } from "luxon";
-import os from "os";
 import path from "path";
 axios.defaults.withCredentials = true;
 
@@ -44,7 +44,7 @@ export const postWriteXML = async (
     const reportsFilesFolderName = "Reports_files";
 
     // Paths
-    const downloadsPath = path.join(os.homedir(), "Downloads");
+    const downloadsPath = downloadsFolder();
     const exportFolderPath = path.join(downloadsPath, exportFolderName);
     const folderPath = path.join(downloadsPath, exportFolderName, folderName);
     const filePath = path.join(folderPath, fileName);
