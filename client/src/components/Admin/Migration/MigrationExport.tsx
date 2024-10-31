@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -43,6 +44,7 @@ const MigrationExport = () => {
   const [checkedRecordsIds, setCheckedRecordsIds] = useState([1]);
   const [allRecordsIdsChecked, setAllRecordsIdsChecked] = useState(false);
   const [progress, setProgress] = useState(false);
+  const isTabletOrMobile = useMediaQuery("(max-width: 768px)");
 
   const debouncedSearch = useDebounce(search, 300);
 
@@ -114,7 +116,7 @@ const MigrationExport = () => {
   };
 
   const handleExport = async () => {
-    if (window.matchMedia("(pointer: coarse)")) {
+    if (isTabletOrMobile) {
       toast.warning("This feature is not available on mobile devices", {
         containerId: "A",
         autoClose: 3000,

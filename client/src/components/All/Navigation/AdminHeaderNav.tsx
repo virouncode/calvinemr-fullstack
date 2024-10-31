@@ -95,6 +95,18 @@ const AdminHeaderNav = ({ setLockedScreen }: AdminHeaderNavProps) => {
         </li>
         <li>
           <NavLink
+            to="/admin/logs"
+            className={(nav) =>
+              nav.isActive
+                ? "header__link header__link--admin header__link--active"
+                : "header__link header__link--admin"
+            }
+          >
+            Logs
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             to="/admin/my-account"
             className={(nav) =>
               nav.isActive

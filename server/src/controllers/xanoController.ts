@@ -57,6 +57,10 @@ export const getXano = async (req: Request, res: Response): Promise<void> => {
           user_id: response.data.id,
           user_type: userType,
           ip_address: req.ip,
+          user_name:
+            userType === "patient"
+              ? toPatientName(response.data.patient_infos)
+              : response.data.full_name,
         },
       };
       await axiosXanoInstance(logConfig);

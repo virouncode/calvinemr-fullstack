@@ -1102,6 +1102,15 @@ export type LinkFormType = {
   created_by_id: number;
 };
 
+export type LogType = {
+  id: number;
+  user_id: number;
+  user_name: string;
+  created_at: number;
+  ip_address: string;
+  user_type: string;
+};
+
 export type MedType = {
   id: number;
   temp_id?: string;

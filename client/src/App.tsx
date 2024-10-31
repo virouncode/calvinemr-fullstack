@@ -53,6 +53,7 @@ import StaffReferencePage from "./pages/Staff/StaffReferencePage";
 import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
 import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
+import AdminLogsPage from "./pages/Admin/AdminLogsPage";
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
@@ -152,6 +153,7 @@ const App = () => {
             <Route path="clinic" element={<AdminClinicPage />} />
             <Route path="billing" element={<AdminBillingPage />} />
             <Route path="migration" element={<AdminMigrationPage />} />
+            <Route path="logs" element={<AdminLogsPage />} />
             <Route path="my-account" element={<AdminMyAccountPage />} />
             <Route path="credentials" element={<AdminCredentialsPage />} />
           </Route>
