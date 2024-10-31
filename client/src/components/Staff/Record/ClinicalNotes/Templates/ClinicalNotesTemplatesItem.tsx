@@ -64,11 +64,12 @@ const ClinicalNotesTemplatesItem = ({
       </span>
       <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
       {/* {user.id === template.author_id && ( */}
-      <>
-        <PenIcon ml={15} onClick={() => handleEdit(template.id)} />
-        <TrashIcon ml={15} onClick={handleDelete} />
-      </>
-      {/* // )} */}
+      {user.id === 2 && (
+        <>
+          <PenIcon ml={15} onClick={() => handleEdit(template.id)} />
+          <TrashIcon ml={15} onClick={handleDelete} />
+        </>
+      )}
     </li>
   );
 };
