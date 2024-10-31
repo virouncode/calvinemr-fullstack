@@ -6,6 +6,7 @@ import xanoPostAuth from "../../../api/xanoCRUD/xanoPostAuth";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useClinicContext from "../../../hooks/context/useClinicContext";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -27,6 +28,7 @@ const USERINFO_URL = "/auth/me";
 
 const LoginForm = () => {
   //Hooks
+  const { socket } = useSocketContext();
   const { setAuth } = useAuthContext();
   const { setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -85,6 +87,7 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
+      socket?.emit("message", { key: ["logs"] });
 
       //================ USER INFOS ===================//
 
@@ -225,7 +228,7 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
-
+      socket?.emit("message", { key: ["logs"] });
       //================ USER INFOS ===================//
 
       const user: PatientType = await xanoGet(USERINFO_URL, "patient");
@@ -333,7 +336,7 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
-
+      socket?.emit("message", { key: ["logs"] });
       //=============== USER =================//
       const user: AdminType = await xanoGet(USERINFO_URL, "admin");
       setUser(user);

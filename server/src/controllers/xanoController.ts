@@ -4,7 +4,12 @@ import { Request, Response } from "express";
 import { generatePassword } from "../utils/generatePassword";
 import { generatePIN } from "../utils/generatePIN";
 import { handleError, handleResponse } from "../utils/helper";
-import { toPatientName } from "../utils/toPatientName";
+import {
+  toPatientFirstName,
+  toPatientLastName,
+  toPatientMiddleName,
+  toPatientName,
+} from "../utils/toPatientName";
 import {
   axiosXanoAdmin,
   axiosXanoPatient,
@@ -59,7 +64,11 @@ export const getXano = async (req: Request, res: Response): Promise<void> => {
           ip_address: req.ip,
           user_name:
             userType === "patient"
-              ? toPatientName(response.data.patient_infos)
+              ? toPatientFirstName(response.data.patient_infos) +
+                " " +
+                toPatientMiddleName(response.data.patient_infos) +
+                " " +
+                toPatientLastName(response.data.patient_infos)
               : response.data.full_name,
         },
       };
