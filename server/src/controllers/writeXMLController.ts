@@ -50,10 +50,24 @@ export const postWriteXML = async (
     const filePath = path.join(folderPath, fileName);
     const reportsFilesPath = path.join(folderPath, reportsFilesFolderName);
 
-    // Create folders
-    await fsPromises.mkdir(exportFolderPath, { recursive: true });
-    await fsPromises.mkdir(folderPath, { recursive: true });
-    await fsPromises.mkdir(reportsFilesPath, { recursive: true });
+    // Create folders with detailed logging
+    await fsPromises
+      .mkdir(exportFolderPath, { recursive: true })
+      .catch((error) => {
+        throw new Error(
+          `Failed to create export folder: ${handleError(error)}`
+        );
+      });
+    await fsPromises.mkdir(folderPath, { recursive: true }).catch((error) => {
+      throw new Error(`Failed to create main folder: ${handleError(error)}`);
+    });
+    await fsPromises
+      .mkdir(reportsFilesPath, { recursive: true })
+      .catch((error) => {
+        throw new Error(
+          `Failed to create reports folder: ${handleError(error)}`
+        );
+      });
 
     // Create ReadMe text
     const currentDateTime = DateTime.local({
@@ -105,7 +119,6 @@ The XML file follows the OntarioMD EMR Specification for EMR Data Migration. For
     );
 
     await Promise.all(downloadPromises);
-
     res.status(200).json({ success: true });
   } catch (err) {
     const errorMessage = handleError(err);
