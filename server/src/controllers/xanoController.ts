@@ -49,7 +49,6 @@ export const getXano = async (req: Request, res: Response): Promise<void> => {
     const response = await axiosXanoInstance(config);
 
     if (URL === "/auth/me" && process.env.NODE_ENV !== "development") {
-      console.log("Logging user login");
       const logConfig = {
         method: "post",
         url: "/logs",

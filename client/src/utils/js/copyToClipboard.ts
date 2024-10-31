@@ -16,7 +16,6 @@ export const copyClinicalNoteToClipboard = async (
   quillRef: React.MutableRefObject<ReactQuill | null>
 ) => {
   if (quillRef.current) {
-    console.log(quillRef.current.getEditor().root.innerText);
     await navigator.clipboard.writeText(
       quillRef.current.getEditor().root.innerText
     );
