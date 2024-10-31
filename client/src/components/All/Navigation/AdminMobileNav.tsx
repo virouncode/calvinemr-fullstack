@@ -116,6 +116,11 @@ const AdminMobileNav = ({
             </NavLink>
           </li>
           <li onClick={handleClose}>
+            <NavLink to="/admin/logs" className="mobile-nav__link">
+              Logs
+            </NavLink>
+          </li>
+          <li onClick={handleClose}>
             <NavLink to="/admin/my-account" className="mobile-nav__link">
               My Account
             </NavLink>
