@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import Logs from "../../components/Admin/Logs/Logs";
+import Logs from "../../components/Admin/LoginLogs/Logs";
 import useTitle from "../../hooks/useTitle";
 
 const AdminLogsPage = () => {
