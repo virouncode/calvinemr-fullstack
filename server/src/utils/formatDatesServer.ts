@@ -1,9 +1,10 @@
-import { DateTime, Duration } from "luxon";
 //DATE Date object
 //ISO "1984-04-25T23:54:23+UTCOffset"
 //STR "1984-04-25, 11:54:23 PM"
 //HUMAN "Thursday, Apr 10, 11:54 PM"
 //TIMESTAMPS
+
+import { DateTime, Duration } from "luxon";
 
 //DATE
 export const nowTZ = (timezone = "America/Toronto") => {
