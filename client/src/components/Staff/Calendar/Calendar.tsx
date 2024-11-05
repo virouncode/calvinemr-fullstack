@@ -212,7 +212,6 @@ const Calendar = () => {
       zone: "America/Toronto",
     });
     if (localOffset > 0) {
-      console.log("localOffset > 0");
       fcRef.current
         ?.getApi()
         .gotoDate(torontoMidnight.plus({ day: 1 }).toJSDate());

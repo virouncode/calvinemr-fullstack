@@ -96,7 +96,6 @@ const PamphletForm = ({
     setIsLoadingFile(true);
     const formData = new FormData();
     formData.append("content", file);
-
     try {
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,

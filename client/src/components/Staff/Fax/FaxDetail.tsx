@@ -82,11 +82,16 @@ const FaxDetail = ({
 
   const handleClickReply = async () => {
     setProgress(true);
+    const formData = new FormData();
+    formData.append("content", "data:application/pdf;base64," + faxBase64);
     try {
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
         {
-          content: "data:application/pdf;base64," + faxBase64,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       const fileToUpload: AttachmentType = response.data;
@@ -111,11 +116,16 @@ const FaxDetail = ({
 
   const handleClickForward = async () => {
     setProgress(true);
+    const formData = new FormData();
+    formData.append("content", "data:application/pdf;base64," + faxBase64);
     try {
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
         {
-          content: "data:application/pdf;base64," + faxBase64,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       const fileToUpload: AttachmentType = response.data;
@@ -140,11 +150,16 @@ const FaxDetail = ({
 
   const handleAddToReports = async () => {
     setProgress(true);
+    const formData = new FormData();
+    formData.append("content", "data:application/pdf;base64," + faxBase64);
     try {
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
         {
-          content: "data:application/pdf;base64," + faxBase64,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       const fileToUpload: AttachmentType = response.data;

@@ -21,10 +21,15 @@ const WebcamCapture = ({
   const webcamRef = useRef<Webcam | null>(null);
 
   const handleConfirm = async () => {
+    const formData = new FormData();
+    formData.append("content", imgSrc);
     const response = await axios.post(
       import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+      formData,
       {
-        content: imgSrc,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     const fileToUpload = response.data;

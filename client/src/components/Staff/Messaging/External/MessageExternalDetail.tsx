@@ -1,4 +1,5 @@
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
@@ -41,7 +42,6 @@ import MessageExternalDetailToolbar from "./MessageExternalDetailToolbar";
 import MessagesExternalAttachments from "./MessagesExternalAttachments";
 import MessagesExternalPrint from "./MessagesExternalPrint";
 import ReplyMessageExternal from "./ReplyMessageExternal";
-import axios from "axios";
 
 type MessageExternalDetailProps = {
   setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
@@ -154,13 +154,31 @@ const MessageExternalDetail = ({
       scale: 2,
     });
     const dataURL = canvas.toDataURL("image/jpeg");
-    const response = await axios.post(
-      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-      {
-        content: dataURL,
+    const formData = new FormData();
+    formData.append("content", dataURL);
+    let response;
+    try {
+      response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        setPosting(false);
+        toast.error(
+          `Unable to add message to patient clinical notes: ${err.message}`,
+          { containerId: "A" }
+        );
+        return;
       }
-    );
-    const fileToUpload: AttachmentType = response.data;
+    }
+
+    const fileToUpload: AttachmentType = response?.data;
     if (section === "Received messages") {
       //post attachment and get id
       const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [

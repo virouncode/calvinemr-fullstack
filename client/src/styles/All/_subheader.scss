@@ -45,6 +45,13 @@
   &__right {
     display: none;
   }
+  &__right-logout {
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 }
 
 @media (min-width: 1024px) {

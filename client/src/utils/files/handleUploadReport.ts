@@ -12,7 +12,6 @@ export const handleUploadReport = async (
 ) => {
   const file = e.target.files?.[0];
   if (!file) return;
-
   setErrMsgPost("");
   if (file.size > 128000000) {
     toast.error("The file is over 128Mb, please choose another file", {
@@ -24,7 +23,6 @@ export const handleUploadReport = async (
 
   const formData = new FormData();
   formData.append("content", file);
-
   try {
     const response = await axios.post(
       import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,

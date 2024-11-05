@@ -461,24 +461,46 @@ const ExportChartPreview = ({
     setProgress(true);
     let pdfFile;
     if (!chart) {
-      const pdfURI = await handleGeneratePDF();
-      pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: pdfURI,
-        })
-      ).data;
-
-      pdfFile;
-
-      setFileToFax({
-        alias: `${toPatientName(demographicsInfos).replaceAll(" ", "")}.pdf`,
-        file: pdfFile,
-      });
+      try {
+        const pdfURI = await handleGeneratePDF();
+        const formData = new FormData();
+        formData.append("content", pdfURI as string);
+        pdfFile = (
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        ).data;
+        setFileToFax({
+          alias: `${toPatientName(demographicsInfos).replaceAll(" ", "")}.pdf`,
+          file: pdfFile,
+        });
+      } catch (err) {
+        setProgress(false);
+        if (err instanceof Error)
+          toast.error(`Unable to fax: ${err.message}`, {
+            containerId: "A",
+          });
+        return;
+      }
     } else {
+      const formData = new FormData();
+      formData.append("content", chart);
       pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: chart,
-        })
+        await axios.post(
+          import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
       ).data;
       setFileToFax({
         alias: `${toPatientName(demographicsInfos).replaceAll(" ", "")}.pdf`,
@@ -493,18 +515,54 @@ const ExportChartPreview = ({
     setProgress(true);
     let pdfFile;
     if (!chart) {
-      const pdfURI = await handleGeneratePDF();
-      pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: pdfURI,
-        })
-      ).data;
+      try {
+        const pdfURI = await handleGeneratePDF();
+        const formData = new FormData();
+        formData.append("content", pdfURI as string);
+        pdfFile = (
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        ).data;
+      } catch (err) {
+        setProgress(false);
+        if (err instanceof Error) {
+          toast.error(`Unable to print: ${err.message}`, {
+            containerId: "A",
+          });
+          return;
+        }
+      }
     } else {
-      pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: chart,
-        })
-      ).data;
+      const formData = new FormData();
+      formData.append("content", chart);
+      try {
+        pdfFile = (
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        ).data;
+      } catch (err) {
+        setProgress(false);
+        if (err instanceof Error) {
+          toast.error(`Unable to print: ${err.message}`, {
+            containerId: "A",
+          });
+          return;
+        }
+      }
     }
     printJS({
       printable: `${import.meta.env.VITE_XANO_BASE_URL}${pdfFile.path}`,
@@ -517,31 +575,79 @@ const ExportChartPreview = ({
     setProgress(true);
     let pdfFile: AttachmentType;
     if (!chart) {
-      const pdfURI = await handleGeneratePDF();
-      pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: pdfURI,
-        })
-      ).data;
+      try {
+        const pdfURI = await handleGeneratePDF();
+        const formData = new FormData();
+        formData.append("content", pdfURI as string);
+        pdfFile = (
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        ).data;
+        setAttachmentsToSend([
+          {
+            id: uniqueId("export_chart_"),
+            file: pdfFile,
+            alias: pdfFile.name,
+            date_created: nowTZTimestamp(),
+            created_by_id: user.id,
+            created_by_user_type: "staff",
+          },
+        ]);
+        setNewMessageExternalVisible(true);
+        setProgress(false);
+      } catch (err) {
+        setProgress(false);
+        if (err instanceof Error) {
+          toast.error(`Unable to send: ${err.message}`, {
+            containerId: "A",
+          });
+          return;
+        }
+      }
     } else {
-      pdfFile = (
-        await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-          content: chart,
-        })
-      ).data;
+      const formData = new FormData();
+      formData.append("content", chart);
+      try {
+        pdfFile = (
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        ).data;
+        setAttachmentsToSend([
+          {
+            id: uniqueId("export_chart_"),
+            file: pdfFile,
+            alias: pdfFile.name,
+            date_created: nowTZTimestamp(),
+            created_by_id: user.id,
+            created_by_user_type: "staff",
+          },
+        ]);
+        setNewMessageExternalVisible(true);
+        setProgress(false);
+      } catch (err) {
+        setProgress(false);
+        if (err instanceof Error) {
+          toast.error(`Unable to send: ${err.message}`, {
+            containerId: "A",
+          });
+          return;
+        }
+      }
     }
-    setAttachmentsToSend([
-      {
-        id: uniqueId("export_chart_"),
-        file: pdfFile,
-        alias: pdfFile.name,
-        date_created: nowTZTimestamp(),
-        created_by_id: user.id,
-        created_by_user_type: "staff",
-      },
-    ]);
-    setNewMessageExternalVisible(true);
-    setProgress(false);
   };
 
   const handleClose = () => {

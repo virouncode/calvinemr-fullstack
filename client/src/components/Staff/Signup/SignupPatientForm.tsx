@@ -118,7 +118,7 @@ const SignupPatientForm = () => {
     }
     setFormDatas({ ...formDatas, [name]: value });
   };
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 128000000) {
@@ -128,31 +128,31 @@ const SignupPatientForm = () => {
       return;
     }
     setIsLoadingFile(true);
-    // setting up the reader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = async (e) => {
-      const content = e.target?.result; // this is the content!
-      try {
-        const response = await axios.post(
-          import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-          { content }
-        );
-        const fileToUpload: AttachmentType = response.data;
-        setFormDatas({
-          ...formDatas,
-          avatar: fileToUpload,
+    const formData = new FormData();
+    formData.append("content", file);
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload: AttachmentType = response.data;
+      setFormDatas({
+        ...formDatas,
+        avatar: fileToUpload,
+      });
+      setIsLoadingFile(false);
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error unable to load file: ${err.message}`, {
+          containerId: "A",
         });
-        setIsLoadingFile(false);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(`Error unable to load file: ${err.message}`, {
-            containerId: "A",
-          });
-        setIsLoadingFile(false);
-      }
-    };
+      setIsLoadingFile(false);
+    }
   };
   const handleSubmit = async () => {
     setErrMsg("");

@@ -183,13 +183,32 @@ const MessageDetail = ({
       scale: 2,
     });
     const dataURL = canvas.toDataURL("image/jpeg");
-    const response = await axios.post(
-      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-      {
-        content: dataURL,
-      }
-    );
-    const fileToUpload: AttachmentType = response.data;
+    const formData = new FormData();
+    formData.append("content", dataURL);
+    let response;
+    try {
+      response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (err) {
+      setPosting(false);
+      if (err instanceof Error)
+        toast.error(
+          `Unable to add message to patient clinical notes: ${err.message}`,
+          {
+            containerId: "A",
+          }
+        );
+      return;
+    }
+
+    const fileToUpload: AttachmentType = response?.data;
     //post attachment and get id
     const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
       {

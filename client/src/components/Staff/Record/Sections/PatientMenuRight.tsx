@@ -123,6 +123,16 @@ const PatientMenuRight = ({
       />
       <PatientTopic
         textColor="#FEFEFE"
+        backgroundColor="#009da5"
+        topic="CHECKLIST"
+        patientId={patientId}
+        contentsVisible={contentsVisible}
+        patientName={toPatientName(demographicsInfos)}
+        side="right"
+        demographicsInfos={demographicsInfos}
+      />
+      <PatientTopic
+        textColor="#FEFEFE"
         backgroundColor="#CE2D4F"
         topic="MESSAGES ABOUT PATIENT"
         patientId={patientId}

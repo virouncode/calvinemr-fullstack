@@ -41,7 +41,7 @@ const PatientAvatarInput = ({
           <input
             name="avatar"
             type="file"
-            accept=".jpeg, .jpg, .png, .pdf"
+            accept=".jpeg, .jpg, .png"
             onChange={handleAvatarChange}
             id="avatar"
           />

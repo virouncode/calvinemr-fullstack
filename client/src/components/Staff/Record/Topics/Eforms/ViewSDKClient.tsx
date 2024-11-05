@@ -191,10 +191,18 @@ class ViewSDKClient {
       window.AdobeDC.View.Enum.CallbackType.SAVE_API,
       async (metaData: Record<string, unknown>, content: Iterable<number>) => {
         const dataURL = arrayBufferToDataURL(content, "application/pdf");
+        const formData = new FormData();
+        formData.append("content", dataURL);
         const attachmentFile = (
-          await axios.post(import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT, {
-            content: dataURL,
-          })
+          await axios.post(
+            import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
         ).data;
 
         if (this.method === "post") {

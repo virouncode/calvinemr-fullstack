@@ -232,9 +232,16 @@ const LetterPreview = ({
         }
       }
       const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
+      const formData = new FormData();
+      formData.append("content", pdfURI);
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-        { content: pdfURI }
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       const fileToUpload: AttachmentType = response.data;
       setLetter(fileToUpload);
@@ -351,10 +358,17 @@ const LetterPreview = ({
       }
     }
     const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
+    const formData = new FormData();
+    formData.append("content", pdfURI);
     //Create the letter for message and send
     const response = await axios.post(
       import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-      { content: pdfURI }
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     const fileToUploadLetterForMessage: AttachmentType = response.data;
     setAttachmentsToSend([
@@ -433,10 +447,15 @@ const LetterPreview = ({
         }
       }
       const pdfURIForRecord = await pdfDoc.saveAsBase64({ dataUri: true });
+      const formData = new FormData();
+      formData.append("content", pdfURIForRecord);
       const response = await axios.post(
         import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
         {
-          content: pdfURIForRecord,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       const fileToUploadLetterForRecord: AttachmentType = response.data;

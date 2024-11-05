@@ -176,10 +176,15 @@ const PrescriptionPreview = ({
         }
 
         const pdfURI = await pdfDoc.saveAsBase64({ dataUri: true });
+        const formData = new FormData();
+        formData.append("content", pdfURI);
         const response = await axios.post(
           import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+          formData,
           {
-            content: pdfURI,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
         const fileToUpload: AttachmentType = response.data;

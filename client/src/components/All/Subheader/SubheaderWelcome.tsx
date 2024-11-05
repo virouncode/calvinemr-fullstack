@@ -76,10 +76,7 @@ const SubheaderWelcome = ({
       <span style={{ marginRight: "5px" }}>
         {welcomeMessage} {toWelcomeName(user, staffInfos, adminsInfos)}
       </span>
-      <strong
-        style={{ textDecoration: "underline", cursor: "pointer" }}
-        onClick={handleLogout}
-      >
+      <strong className="subheader__right-logout" onClick={handleLogout}>
         (Logout)
       </strong>
     </div>

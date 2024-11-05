@@ -1944,6 +1944,7 @@ export type TopicPaginatedDataMap = {
   ["CYCLES"]: XanoPaginatedType<CycleType>;
   ["ALLERGIES & ADVERSE REACTIONS"]: XanoPaginatedType<AllergyType>;
   ["IMMUNIZATIONS"]: XanoPaginatedType<ImmunizationType>;
+  ["CHECKLIST"]: XanoPaginatedType<CheckListType>;
   ["APPOINTMENTS"]: XanoPaginatedType<AppointmentType>;
   ["MESSAGES ABOUT PATIENT"]: XanoPaginatedType<MessageType>;
   ["MESSAGES WITH PATIENT"]: XanoPaginatedType<MessageExternalType>;
@@ -1971,6 +1972,7 @@ export type TopicDataMap = {
   ["CYCLES"]: CycleType;
   ["ALLERGIES & ADVERSE REACTIONS"]: AllergyType;
   ["IMMUNIZATIONS"]: ImmunizationType;
+  ["CHECKLIST"]: CheckListType;
   ["APPOINTMENTS"]: AppointmentType;
   ["MESSAGES ABOUT PATIENT"]: MessageType;
   ["MESSAGES WITH PATIENT"]: MessageExternalType;
