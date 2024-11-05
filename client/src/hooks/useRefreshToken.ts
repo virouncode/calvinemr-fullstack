@@ -51,7 +51,7 @@ const useRefreshToken = () => {
         );
       }
     };
-    tokenLimitVerifierID.current = setInterval(tokenLimitVerifier, 1000);
+    tokenLimitVerifierID.current = window.setInterval(tokenLimitVerifier, 1000);
     return () => {
       if (tokenLimitVerifierID.current)
         clearInterval(tokenLimitVerifierID.current);

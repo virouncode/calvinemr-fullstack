@@ -13,7 +13,6 @@ import openaiRouter from "./routes/openai/openai";
 import srfaxRouter from "./routes/srfax/srfax";
 import twilioRouter from "./routes/twilio/twilio";
 import weatherRouter from "./routes/weather/weather";
-import writeXMLRouter from "./routes/writeXML/writeXML";
 import xanoRouter from "./routes/xano/xano";
 import xmlToJSRouter from "./routes/xmlToJs/xmlToJs";
 
@@ -41,7 +40,6 @@ app
   .use(express.static(join(__dirname, "../../client/dist")))
   .use("/api/xano", xanoRouter)
   .use("/api/twilio", twilioRouter)
-  .use("/api/writeXML", writeXMLRouter)
   .use("/api/extractToText", extractToTextRouter)
   .use("/api/xmlToJs", xmlToJSRouter)
   .use("/api/srfax", srfaxRouter)

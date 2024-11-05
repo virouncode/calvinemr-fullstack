@@ -1,5 +1,10 @@
 import xmlFormat from "xml-formatter";
 import {
+  timestampToDateISOTZ,
+  timestampToDateTimeSecondsISOTZ,
+} from "../../../../../server/src/utils/formatDatesServer";
+import { toPatientName } from "../../../../../server/src/utils/toPatientName";
+import {
   AlertType,
   AllergyType,
   AppointmentType,
@@ -17,11 +22,6 @@ import {
   ReportType,
   RiskFactorType,
 } from "../../../types/api";
-import {
-  timestampToDateISOTZ,
-  timestampToDateTimeSecondsISOTZ,
-} from "../../dates/formatDates";
-import { toPatientName } from "../../names/toPatientName";
 import { escapeXml } from "../../xml/escapeXml";
 
 export const toXmlDemographics = (jsObj: DemographicsType) => {

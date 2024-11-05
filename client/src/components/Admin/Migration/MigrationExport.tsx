@@ -1,4 +1,5 @@
 import { useMediaQuery } from "@mui/material";
+import JSZip from "jszip";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -124,13 +125,20 @@ const MigrationExport = () => {
       return;
     }
     if (checkedPatients.length === 0) {
-      alert("Please choose at least 1 patient !");
+      toast.warning("Please choose at least 1 patient !", {
+        containerId: "A",
+      });
       return;
     }
     setProgress(true);
     const dateOfExport = nowTZ().toFormat("yyyy-LL-dd_hh-mm-ss_a");
+
     try {
+      const zip = new JSZip();
+      const exportFolder = zip.folder(`CalvinEMR_Export_${dateOfExport}`);
+
       for (const patient of checkedPatients) {
+        const patientId = patient.patient_id;
         const patientFirstName = toPatientFirstName(patient);
         const patientLastName = toPatientLastName(patient);
         const patientDob = DateTime.fromMillis(patient.DateOfBirth ?? 0, {
@@ -140,7 +148,6 @@ const MigrationExport = () => {
           staffInfos,
           patient.assigned_staff_id
         );
-
         const doctorLastName = staffIdToLastName(
           staffInfos,
           patient.assigned_staff_id
@@ -149,24 +156,74 @@ const MigrationExport = () => {
         const sortedCheckedRecordsIds = [...checkedRecordsIds].sort(
           (a, b) => a - b
         );
-        await exportPatientEMR(
+        const doctorFolder = exportFolder?.folder(
+          `${doctorFirstName}_${doctorLastName}_${doctorOHIP}`
+        );
+        const patientFolder = doctorFolder?.folder(
+          `${patientFirstName}_${patientLastName}_${patientId}_${patientDob}`
+        );
+        const patientReportsFolder = patientFolder?.folder(
+          `Reports_files_${patientFirstName}_${patientLastName}`
+        );
+        const { xmlFinal, reportsFiles } = await exportPatientEMR(
           sortedCheckedRecordsIds,
-          patientFirstName,
-          patientLastName,
-          patient.patient_id,
-          patientDob,
-          doctorFirstName,
-          doctorLastName,
-          doctorOHIP,
-          user.full_name,
-          dateOfExport,
+          patientId,
           patient
         );
+        patientFolder?.file(
+          `${patientFirstName}_${patientLastName}_${patientId}_${patientDob}.xml`,
+          xmlFinal
+        );
+        await Promise.all(
+          reportsFiles.map(async (report) => {
+            if (report.url) {
+              try {
+                const response = await fetch(report.url);
+                const blob = await response.blob();
+                const arrayBuffer = await blob.arrayBuffer();
+                const fileName = report.name || `report_${Date.now()}.pdf`;
+                patientReportsFolder?.file(fileName, arrayBuffer);
+              } catch (err) {
+                if (err instanceof Error)
+                  console.error(
+                    `Failed to fetch report from ${report.url}: ${err.message}`
+                  );
+              }
+            }
+          })
+        );
       }
+      // Create ReadMe text
+      const currentDateTime = DateTime.local({
+        zone: "America/Toronto",
+        locale: "en-CA",
+      });
+      const formattedDateTime = currentDateTime.toLocaleString({
+        month: "long",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZoneName: "short",
+      });
+      const readMeContent = `This EMR export from CalvinEMR software was performed by ${user.full_name} on ${formattedDateTime}.
+The XML file follows the OntarioMD EMR Specification for EMR Data Migration. For more details, visit: https://www.ontariomd.ca/emr-certification/library/specifications`;
+
+      exportFolder?.file("README.md", readMeContent);
+
+      const content = await zip.generateAsync({ type: "blob" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(content);
+      link.download = `CalvinEMR_Export_${dateOfExport}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
       setProgress(false);
       toast.success("EMR exported successfully in your Downloads folder", {
         containerId: "A",
-        autoClose: 5000,
+        autoClose: 2000,
       });
     } catch (err) {
       setProgress(false);

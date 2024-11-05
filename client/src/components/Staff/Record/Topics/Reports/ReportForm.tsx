@@ -45,9 +45,6 @@ const ReportForm = ({
   //HOOKS
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  const [fileContent, setFileContent] = useState<string | ArrayBuffer | null>(
-    null
-  );
   const [formDatas, setFormDatas] = useState<ReportFormType>({
     patient_id: patientId,
     date_created: nowTZTimestamp(),

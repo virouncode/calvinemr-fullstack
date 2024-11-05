@@ -207,20 +207,10 @@ const Calendar = () => {
     selectedDates: Date[],
     dateStr: string
   ) => {
-    const now = DateTime.now();
-    const offsetLocal = now.offset;
-    const offsetToronto = DateTime.local({ zone: "America/Toronto" }).offset;
-    const midnightUTC = DateTime.fromISO(dateStr, { zone: "utc" })
-      .plus({ minutes: offsetLocal })
-      .startOf("day")
-      .toJSDate();
-    fcRef.current?.getApi().gotoDate(
-      DateTime.fromJSDate(midnightUTC, { zone: "America/Toronto" })
-        .minus({
-          minutes: offsetToronto,
-        })
-        .toMillis()
-    );
+    const torontoMidnight = DateTime.fromISO(dateStr.slice(0, 10), {
+      zone: "America/Toronto",
+    });
+    fcRef.current?.getApi().gotoDate(torontoMidnight.toJSDate());
   };
 
   const handlePatientClick = (

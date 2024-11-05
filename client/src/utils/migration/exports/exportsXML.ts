@@ -14,15 +14,7 @@ axios.defaults.withCredentials = true;
 
 export const exportPatientEMR = async (
   checkedRecordCategoriesIds: number[],
-  patientFirstName: string,
-  patientLastName: string,
   patientId: number,
-  patientDob: string,
-  doctorFirstName: string,
-  doctorLastName: string,
-  doctorOHIP: string,
-  authorName: string,
-  dateOfExport: string,
   patientInfos: DemographicsType
 ) => {
   const xmlHeader = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!--file created by CALVIN EMR, compliant with EMR Data Migration 5.0 - Schema v1.0; Publication Date: August 4,2017; Status: Final-->
@@ -71,19 +63,7 @@ export const exportPatientEMR = async (
       reports.filter(({ Format }) => Format === "Binary") as ReportType[]
     ).map(({ File }) => File) as AttachmentType[];
   }
-  await axios.post(`/api/writeXML`, {
-    xmlFinal,
-    patientFirstName,
-    patientLastName,
-    patientId,
-    patientDob,
-    doctorFirstName,
-    doctorLastName,
-    doctorOHIP,
-    authorName,
-    dateOfExport,
-    reportsFiles,
-  });
+  return { xmlFinal, reportsFiles };
 };
 
 export const exportEMRCategory = async (

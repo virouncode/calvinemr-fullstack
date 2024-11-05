@@ -36,6 +36,7 @@
     "flatpickr": "^4.6.13",
     "framer-motion": "^11.3.17",
     "html2canvas": "^1.4.1",
+    "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
     "pdf-lib": "^1.17.1",
