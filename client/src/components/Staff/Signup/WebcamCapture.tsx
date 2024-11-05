@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import Webcam from "react-webcam";
 import { DemographicsFormType } from "../../../types/api";
 import Button from "../../UI/Buttons/Button";
@@ -23,23 +24,32 @@ const WebcamCapture = ({
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("content", imgSrc);
-    const response = await axios.post(
-      import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileToUpload = response.data;
+      setFormDatas((old) => {
+        return {
+          ...(old as Partial<DemographicsFormType>),
+          avatar: fileToUpload,
+        };
+      });
+      setWebcamVisible(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(`Error unable to load document: ${err.message}`, {
+          containerId: "A",
+        });
       }
-    );
-    const fileToUpload = response.data;
-    setFormDatas((old) => {
-      return {
-        ...(old as Partial<DemographicsFormType>),
-        avatar: fileToUpload,
-      };
-    });
-    setWebcamVisible(false);
+      setWebcamVisible(false);
+    }
   };
 
   const handleTake = useCallback(async () => {
