@@ -18,6 +18,7 @@ import {
   AllergyType,
   AppointmentType,
   CareElementType,
+  ChecklistType,
   CycleType,
   DemographicsType,
   EformType,
@@ -56,6 +57,7 @@ import AppointmentsDropdown from "../Topics/Appointments/AppointmentsDropDown";
 import AppointmentsPopUp from "../Topics/Appointments/AppointmentsPopUp";
 import CareElementsDropDown from "../Topics/CareElements/CareElementsDropDown";
 import CareElementsPopUp from "../Topics/CareElements/CareElementsPopUp";
+import ChecklistPopUp from "../Topics/Checklist/ChecklistPopUp";
 import CycleDropDown from "../Topics/Cycles/CyclesDropDown";
 import CyclesPopUp from "../Topics/Cycles/CyclesPopUp";
 import EformsDropDown from "../Topics/Eforms/EformsDropDown";
@@ -1345,6 +1347,72 @@ const PatientTopic = ({
                 ) => Promise<
                   InfiniteQueryObserverResult<
                     InfiniteData<XanoPaginatedType<AppointmentType>, unknown>,
+                    Error
+                  >
+                >
+              }
+              isFetching={isFetching}
+            />
+          </FakeWindow>
+        )}
+        {/*******************/}
+
+        {/* CHECKLIST */}
+        {/* {topic === "CHECKLIST" && (
+          <ChecklistDropdown
+            topicDatas={
+              topicDatas as
+                | InfiniteData<XanoPaginatedType<AppointmentType>>
+                | undefined
+            }
+            isPending={isPending}
+            error={error}
+          />
+        )} */}
+        {topic === "CHECKLIST" && popUpVisible && (
+          <FakeWindow
+            title={`CHECKLIST of ${patientName}`}
+            width={window.innerWidth}
+            height={600}
+            x={0}
+            y={(window.innerHeight - 600) / 2}
+            color={backgroundColor}
+            setPopUpVisible={setPopUpVisible}
+          >
+            <ChecklistPopUp
+              topicDatas={
+                topicDatas as
+                  | InfiniteData<XanoPaginatedType<ChecklistType>>
+                  | undefined
+              }
+              topicPost={
+                topicPost as UseMutationResult<
+                  ChecklistType,
+                  Error,
+                  Partial<ChecklistType>,
+                  void
+                >
+              }
+              topicPut={
+                topicPut as UseMutationResult<
+                  ChecklistType,
+                  Error,
+                  ChecklistType,
+                  void
+                >
+              }
+              topicDelete={topicDelete}
+              isPending={isPending}
+              error={error}
+              patientId={patientId}
+              setPopUpVisible={setPopUpVisible}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchNextPage={
+                fetchNextPage as (
+                  options?: FetchNextPageOptions
+                ) => Promise<
+                  InfiniteQueryObserverResult<
+                    InfiniteData<XanoPaginatedType<ChecklistType>, unknown>,
                     Error
                   >
                 >

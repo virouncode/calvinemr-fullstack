@@ -1,0 +1,152 @@
+.checklist {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
+  &__title {
+    font-size: $size-xl;
+    text-align: center;
+  }
+  &__table-container {
+    flex: 1;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    position: relative;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: $size-xs;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
+    }
+    th {
+      min-width: 120px;
+      padding: 0.5rem;
+      cursor: pointer;
+      &:nth-child(2) {
+        width: 360px;
+      }
+    }
+  }
+  &__item {
+    border-bottom: solid 1px $grey2;
+    &--notgoing {
+      background: $grey;
+    }
+    td {
+      text-align: center;
+      padding: 0.5rem;
+      word-break: break-word;
+      input,
+      select {
+        width: 100%;
+        font-size: $size-base;
+      }
+    }
+  }
+  &__item-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    button {
+      font-size: $size-xs;
+    }
+  }
+  &__form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    &-item {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      label {
+        font-weight: bold;
+        font-size: $size-base;
+        margin-bottom: 0.25rem;
+      }
+      input {
+        font-size: $size-base;
+        width: 100%;
+      }
+      p {
+        font-size: $size-base;
+        width: 100%;
+        padding: 0.5rem 0;
+      }
+    }
+    &-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .checklist {
+    &__item {
+      td {
+        input,
+        select {
+          font-size: $size-sm;
+        }
+      }
+    }
+    &__table {
+      font-size: $size-sm;
+    }
+    &__item-btn-container {
+      button {
+        font-size: $size-sm;
+      }
+    }
+    &__form {
+      flex-direction: row;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      &-item {
+        &:nth-child(2) {
+          min-width: 340px;
+        }
+        &:nth-child(3),
+        &:nth-child(4) {
+          flex: 1;
+        }
+        label {
+          font-size: $size-sm;
+        }
+        input {
+          font-size: $size-sm;
+        }
+        p {
+          padding: 0.5rem 0;
+          font-size: $size-sm;
+        }
+      }
+    }
+  }
+}

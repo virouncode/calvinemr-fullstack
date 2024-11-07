@@ -393,6 +393,23 @@ export type CareElementFormType = {
   bodySurfaceArea: { BSA: string; Date: number };
 };
 
+export type ChecklistType = {
+  id: number;
+  date_created: number;
+  patient_id: number;
+  test_name: string;
+  validity: {
+    days: number;
+    weeks: number;
+    months: number;
+    years: number;
+  };
+  result: string;
+  date: number;
+  created_by_id: number;
+  updates: { updated_by_id: number; date_updated: number }[];
+};
+
 export type ClinicType = {
   id: number;
   date_created: number;

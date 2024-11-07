@@ -214,7 +214,7 @@ const Calendar = () => {
     if (localOffset > 0) {
       fcRef.current
         ?.getApi()
-        .gotoDate(torontoMidnight.plus({ day: 1 }).toJSDate());
+        .gotoDate(torontoMidnight.plus({ days: 1 }).toJSDate());
     } else {
       fcRef.current?.getApi().gotoDate(torontoMidnight.toJSDate());
     }

@@ -40,6 +40,8 @@ export const getTopicUrl = (topic: TopicType) => {
       return "/allergies_of_patient";
     case "IMMUNIZATIONS":
       return "/immunizations_of_patient";
+    case "CHECKLIST":
+      return "/checklist_of_patient";
     case "APPOINTMENTS":
       return "/appointments_of_patient";
     case "MESSAGES ABOUT PATIENT":
@@ -93,6 +95,8 @@ export const getTopicUrlMutation = (topic: TopicType) => {
       return "/allergies";
     case "IMMUNIZATIONS":
       return "/immunizations";
+    case "CHECKLIST":
+      return "/checklist";
     case "APPOINTMENTS":
       return "/appointments";
     default:

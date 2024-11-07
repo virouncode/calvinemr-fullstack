@@ -2,7 +2,7 @@ import React from "react";
 import { Combobox } from "react-widgets";
 
 const tests = [
-  "Folic acid intake (ask parient periodically)",
+  "Folic acid intake (ask patient periodically)",
   "HIV 1 AND 2",
   "HTLV 1 and 2",
   "HBs Antigen",
