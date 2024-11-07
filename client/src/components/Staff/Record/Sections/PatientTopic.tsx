@@ -1407,18 +1407,6 @@ const PatientTopic = ({
               error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<ChecklistType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}

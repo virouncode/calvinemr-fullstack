@@ -5,7 +5,7 @@ import {
   isTestExpired,
   toValidityText,
 } from "../../../../../utils/checklist/checklistUtils";
-import { tests } from "../../../../../utils/checklist/splitResults";
+import { checklistTests } from "../../../../../utils/checklist/splitResults";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 
@@ -16,7 +16,7 @@ type ChecklistItemProps = {
   setHistoryVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setTestNameToShow: React.Dispatch<React.SetStateAction<string>>;
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setTestNameToAdd: React.Dispatch<React.SetStateAction<string | null>>;
+  setTestNameToAdd: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ChecklistItem = ({
@@ -32,7 +32,7 @@ const ChecklistItem = ({
   const isExpired = isTestExpired(lastResult?.date, lastResult?.validity);
   const handleAddVisible = () => {
     setAddVisible(true);
-    setTestNameToAdd(tests[index].name);
+    setTestNameToAdd(checklistTests[index].name);
   };
   const handleShowHistory = () => {
     setHistoryVisible(true);
@@ -55,9 +55,11 @@ const ChecklistItem = ({
         <Button label="Add" onClick={handleAddVisible} />
         <Button label="Show history" onClick={handleShowHistory} />
       </td>
-      <td>{tests[index].name}</td>
+      <td>{checklistTests[index].name}</td>
       <td>
-        {toValidityText(lastResult?.validity ?? tests[index].defaultValidity)}
+        {toValidityText(
+          lastResult?.validity ?? checklistTests[index].defaultValidity
+        )}
       </td>
       <td>{lastResult?.result}</td>
       <td>{timestampToDateISOTZ(lastResult?.date)}</td>

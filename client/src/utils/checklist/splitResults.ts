@@ -1,5 +1,5 @@
 import { ChecklistType } from "../../types/api";
-export const tests = [
+export const checklistTests = [
   {
     name: "Folic acid intake (ask patient periodically)",
     defaultValidity: { days: 0, weeks: 0, months: 3, years: 0 },
@@ -211,8 +211,8 @@ export const tests = [
   { name: "MRI", defaultValidity: { days: 0, weeks: 0, months: 0, years: 1 } },
 ];
 
-export const splitResults = (datas: ChecklistType[]) => {
-  return tests.map(({ name }) =>
+export const splitChecklistResults = (datas: ChecklistType[]) => {
+  return checklistTests.map(({ name }) =>
     datas
       .filter((data) => data.test_name === name)
       .sort((a, b) => b.date - a.date)

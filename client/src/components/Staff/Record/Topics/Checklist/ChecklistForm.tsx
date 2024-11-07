@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { ChecklistType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import { tests } from "../../../../../utils/checklist/splitResults";
+import { checklistTests } from "../../../../../utils/checklist/splitResults";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
@@ -40,7 +40,8 @@ const ChecklistForm = ({
     id: -1,
     patient_id: patientId,
     test_name: testName,
-    validity: tests.find((test) => test.name === testName)?.defaultValidity ?? {
+    validity: checklistTests.find((test) => test.name === testName)
+      ?.defaultValidity ?? {
       days: 0,
       weeks: 0,
       months: 0,
@@ -141,7 +142,8 @@ const ChecklistForm = ({
           <p>{testName}</p>
         </div>
         <div className="checklist__form-item">
-          {tests.find((test) => test.name === testName)?.defaultValidity ? (
+          {checklistTests.find((test) => test.name === testName)
+            ?.defaultValidity ? (
             <DurationPickerLong
               durationYears={formDatas.validity.years}
               durationMonths={formDatas.validity?.months}

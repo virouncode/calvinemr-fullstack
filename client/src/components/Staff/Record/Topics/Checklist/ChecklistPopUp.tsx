@@ -1,14 +1,9 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
+import { InfiniteData, UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { ChecklistType, XanoPaginatedType } from "../../../../../types/api";
 import {
-  splitResults,
-  tests,
+  checklistTests,
+  splitChecklistResults,
 } from "../../../../../utils/checklist/splitResults";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -32,16 +27,6 @@ type ChecklistPopUpProps = {
   error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ChecklistType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
 const ChecklistPopUp = ({
@@ -53,16 +38,12 @@ const ChecklistPopUp = ({
   error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
 }: ChecklistPopUpProps) => {
-  console.log("render");
-
   const [addVisible, setAddVisible] = useState(false);
   const [historyVisible, setHistoryVisible] = useState(false);
   const [testNameToShow, setTestNameToShow] = useState("");
-  const [testNameToAdd, setTestNameToAdd] = useState<string | null>(null);
+  const [testNameToAdd, setTestNameToAdd] = useState<string>("");
+
   const handleClose = () => {
     setPopUpVisible(false);
   };
@@ -84,12 +65,9 @@ const ChecklistPopUp = ({
     );
   }
   const datas = topicDatas?.pages.flatMap((page) => page.items);
-
-  const splittedResults = splitResults(datas as ChecklistType[]);
-
-  // useEffect(() => {
-  //   setTestHistoryToShow();
-  // }, []);
+  const splittedChecklistResults = splitChecklistResults(
+    datas as ChecklistType[]
+  );
 
   return (
     <div className="checklist">
@@ -108,10 +86,10 @@ const ChecklistPopUp = ({
             </tr>
           </thead>
           <tbody>
-            {tests.map((test, index) => (
+            {checklistTests.map((test, index) => (
               <ChecklistItem
                 testName={test.name}
-                results={splittedResults[index]}
+                results={splittedChecklistResults[index]}
                 key={test.name}
                 index={index}
                 setTestNameToShow={setTestNameToShow}
@@ -138,7 +116,7 @@ const ChecklistPopUp = ({
         >
           <ChecklistForm
             setAddVisible={setAddVisible}
-            testName={testNameToAdd as string}
+            testName={testNameToAdd}
             patientId={patientId}
             topicPost={topicPost}
           />
@@ -158,8 +136,8 @@ const ChecklistPopUp = ({
             testName={testNameToShow}
             setHistoryVisible={setHistoryVisible}
             testHistoryToShow={
-              splittedResults[
-                tests.findIndex((test) => test.name === testNameToShow)
+              splittedChecklistResults[
+                checklistTests.findIndex((test) => test.name === testNameToShow)
               ]
             }
             topicPut={topicPut}

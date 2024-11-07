@@ -23,7 +23,7 @@ const Fax = ({ faxBase64 }: FaxProps) => {
     socket?.emit("message", { key: ["faxes inbox"] });
     socket?.emit("message", { key: ["faxes outbox"] });
   }, [socket]);
-  return <embed src={faxUrl} title="fax" />;
+  return <iframe src={faxUrl} title="fax" />;
 };
 
 export default Fax;
