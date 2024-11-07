@@ -57,6 +57,7 @@ import AppointmentsDropdown from "../Topics/Appointments/AppointmentsDropDown";
 import AppointmentsPopUp from "../Topics/Appointments/AppointmentsPopUp";
 import CareElementsDropDown from "../Topics/CareElements/CareElementsDropDown";
 import CareElementsPopUp from "../Topics/CareElements/CareElementsPopUp";
+import ChecklistDropDown from "../Topics/Checklist/ChecklistDropDown";
 import ChecklistPopUp from "../Topics/Checklist/ChecklistPopUp";
 import CycleDropDown from "../Topics/Cycles/CyclesDropDown";
 import CyclesPopUp from "../Topics/Cycles/CyclesPopUp";
@@ -1358,17 +1359,17 @@ const PatientTopic = ({
         {/*******************/}
 
         {/* CHECKLIST */}
-        {/* {topic === "CHECKLIST" && (
-          <ChecklistDropdown
+        {topic === "CHECKLIST" && (
+          <ChecklistDropDown
             topicDatas={
               topicDatas as
-                | InfiniteData<XanoPaginatedType<AppointmentType>>
+                | InfiniteData<XanoPaginatedType<ChecklistType>>
                 | undefined
             }
             isPending={isPending}
             error={error}
           />
-        )} */}
+        )}
         {topic === "CHECKLIST" && popUpVisible && (
           <FakeWindow
             title={`CHECKLIST of ${patientName}`}

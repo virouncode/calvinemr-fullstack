@@ -100,7 +100,7 @@ export const toValidityText = (validity: {
       : `${parsedValidity.years} years`
     : "";
 
-  const validTexts = [daysText, weeksText, monthsText, yearsText]
+  const validTexts = [yearsText, monthsText, weeksText, daysText]
     .filter((text) => text)
     .join(" ");
 

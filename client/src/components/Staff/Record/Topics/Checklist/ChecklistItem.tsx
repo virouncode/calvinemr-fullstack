@@ -10,21 +10,21 @@ import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 
 type ChecklistItemProps = {
+  testName: string;
   results: ChecklistType[];
   index: number;
   setHistoryVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setTestHistoryToShow: React.Dispatch<
-    React.SetStateAction<ChecklistType[] | null>
-  >;
+  setTestNameToShow: React.Dispatch<React.SetStateAction<string>>;
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setTestNameToAdd: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const ChecklistItem = ({
+  testName,
   results,
   index,
   setHistoryVisible,
-  setTestHistoryToShow,
+  setTestNameToShow,
   setAddVisible,
   setTestNameToAdd,
 }: ChecklistItemProps) => {
@@ -36,23 +36,24 @@ const ChecklistItem = ({
   };
   const handleShowHistory = () => {
     setHistoryVisible(true);
-    setTestHistoryToShow(results);
+    setTestNameToShow(testName);
   };
 
   return (
     <tr
       style={{
-        color: isExpired === "Y" ? "red" : "",
+        color:
+          isExpired === "Y"
+            ? "red"
+            : isExpired === "N" || (isExpired === "N/A" && results.length)
+            ? "green"
+            : "",
       }}
       className="checklist__item"
     >
       <td className="checklist__item-btn-container">
         <Button label="Add" onClick={handleAddVisible} />
-        <Button
-          label="Show history"
-          onClick={handleShowHistory}
-          disabled={results.length === 0}
-        />
+        <Button label="Show history" onClick={handleShowHistory} />
       </td>
       <td>{tests[index].name}</td>
       <td>

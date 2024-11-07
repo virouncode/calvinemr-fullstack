@@ -57,13 +57,12 @@ const ChecklistPopUp = ({
   fetchNextPage,
   isFetching,
 }: ChecklistPopUpProps) => {
-  const [errMsgPost, setErrMsgPost] = useState<string | null>(null);
+  console.log("render");
+
   const [addVisible, setAddVisible] = useState(false);
   const [historyVisible, setHistoryVisible] = useState(false);
+  const [testNameToShow, setTestNameToShow] = useState("");
   const [testNameToAdd, setTestNameToAdd] = useState<string | null>(null);
-  const [testHistoryToShow, setTestHistoryToShow] = useState<
-    ChecklistType[] | null
-  >(null);
   const handleClose = () => {
     setPopUpVisible(false);
   };
@@ -88,10 +87,13 @@ const ChecklistPopUp = ({
 
   const splittedResults = splitResults(datas as ChecklistType[]);
 
+  // useEffect(() => {
+  //   setTestHistoryToShow();
+  // }, []);
+
   return (
     <div className="checklist">
       <h1 className="checklist__title">Patient checklist</h1>
-      {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="checklist__table-container">
         <table className="checklist__table">
           <thead>
@@ -108,10 +110,11 @@ const ChecklistPopUp = ({
           <tbody>
             {tests.map((test, index) => (
               <ChecklistItem
+                testName={test.name}
                 results={splittedResults[index]}
                 key={test.name}
                 index={index}
-                setTestHistoryToShow={setTestHistoryToShow}
+                setTestNameToShow={setTestNameToShow}
                 setTestNameToAdd={setTestNameToAdd}
                 setAddVisible={setAddVisible}
                 setHistoryVisible={setHistoryVisible}
@@ -143,7 +146,7 @@ const ChecklistPopUp = ({
       )}
       {historyVisible && (
         <FakeWindow
-          title={`${testHistoryToShow?.[0]?.test_name} RESULTS HISTORY`}
+          title={`${setTestNameToShow} RESULTS HISTORY`}
           width={window.innerWidth}
           height={600}
           x={0}
@@ -152,8 +155,13 @@ const ChecklistPopUp = ({
           setPopUpVisible={setHistoryVisible}
         >
           <ChecklistHistory
+            testName={testNameToShow}
             setHistoryVisible={setHistoryVisible}
-            testHistoryToShow={testHistoryToShow as ChecklistType[]}
+            testHistoryToShow={
+              splittedResults[
+                tests.findIndex((test) => test.name === testNameToShow)
+              ]
+            }
             topicPut={topicPut}
             topicDelete={topicDelete}
           />

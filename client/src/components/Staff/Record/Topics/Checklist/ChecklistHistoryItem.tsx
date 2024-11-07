@@ -162,7 +162,7 @@ const ChecklistHistoryItem = ({
         color:
           isTestExpired(itemInfos.date, itemInfos.validity) === "Y"
             ? "red"
-            : "",
+            : "green",
         borderColor: errMsgPost ? "red" : "",
       }}
     >
