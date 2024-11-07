@@ -1,13 +1,13 @@
 import React from "react";
 import { ChecklistType } from "../../../../../types/api";
+import {
+  getLimitDate,
+  isTestExpired,
+  toValidityText,
+} from "../../../../../utils/checklist/checklistUtils";
 import { tests } from "../../../../../utils/checklist/splitResults";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
-import {
-  isTestExpired,
-  toValidityText,
-  getLimitDate,
-} from "../../../../../utils/checklist/checklistUtils";
 
 type ChecklistItemProps = {
   results: ChecklistType[];
@@ -38,6 +38,7 @@ const ChecklistItem = ({
     setHistoryVisible(true);
     setTestHistoryToShow(results);
   };
+
   return (
     <tr
       style={{

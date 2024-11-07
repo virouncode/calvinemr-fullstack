@@ -48,6 +48,7 @@ const ChecklistHistoryItem = ({
   }, [result]);
 
   const handleEdit = () => {
+    setErrMsgPost("");
     setEditVisible(true);
   };
   const handleDelete = async () => {
@@ -150,6 +151,7 @@ const ChecklistHistoryItem = ({
   };
 
   const handleCancel = () => {
+    setErrMsgPost("");
     setEditVisible(false);
     setItemInfos(result);
   };
@@ -187,7 +189,7 @@ const ChecklistHistoryItem = ({
             handleDurationPickerChange={handleDurationPickerChange}
           />
         ) : (
-          toValidityText(result.validity)
+          toValidityText(itemInfos.validity)
         )}
       </td>
       <td>
