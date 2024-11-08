@@ -42,6 +42,8 @@ const CareElementsDropDown = ({
       </div>
     );
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
+  console.log(datas);
+
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
   const lastDatas = datas
@@ -58,6 +60,16 @@ const CareElementsDropDown = ({
         bodySurfaceArea: datas.bodySurfaceArea?.sort(
           (a, b) => b.Date - a.Date
         )[0],
+        FSH: datas.FSH?.sort((a, b) => b.Date - a.Date)[0],
+        E2: datas.E2?.sort((a, b) => b.Date - a.Date)[0],
+        AMHP: datas.AMHP?.sort((a, b) => b.Date - a.Date)[0],
+        DHEA: datas.DHEA?.sort((a, b) => b.Date - a.Date)[0],
+        HCG: datas.HCG?.sort((a, b) => b.Date - a.Date)[0],
+        LH: datas.LH?.sort((a, b) => b.Date - a.Date)[0],
+        PRL: datas.PRL?.sort((a, b) => b.Date - a.Date)[0],
+        P4: datas.P4?.sort((a, b) => b.Date - a.Date)[0],
+        TSH: datas.TSH?.sort((a, b) => b.Date - a.Date)[0],
+        Testosterone: datas.Testosterone?.sort((a, b) => b.Date - a.Date)[0],
       }
     : null;
 
@@ -116,6 +128,46 @@ const CareElementsDropDown = ({
           <p>
             <label>Diastolic (mmHg): </label>
             {lastDatas.BloodPressure?.DiastolicBP}
+          </p>
+          <p>
+            <label>E2 (pmol/L): </label>
+            {lastDatas.E2?.E2}
+          </p>
+          <p>
+            <label>LH (IU/L): </label>
+            {lastDatas.LH?.LH}
+          </p>
+          <p>
+            <label>P4 (ng/mL): </label>
+            {lastDatas.P4?.P4}
+          </p>
+          <p>
+            <label>FSH (IU/L): </label>
+            {lastDatas.FSH?.FSH}
+          </p>
+          <p>
+            <label>AMHP (pmol/L): </label>
+            {lastDatas.AMHP?.AMHP}
+          </p>
+          <p>
+            <label>DHEA (umol/L): </label>
+            {lastDatas.DHEA?.DHEA}
+          </p>
+          <p>
+            <label>HCG (IU/L): </label>
+            {lastDatas.HCG?.HCG}
+          </p>
+          <p>
+            <label>PRL (ng/mL): </label>
+            {lastDatas.PRL?.PRL}
+          </p>
+          <p>
+            <label>TSH (mIU/L): </label>
+            {lastDatas.TSH?.TSH}
+          </p>
+          <p>
+            <label>Testosterone (nmol/L): </label>
+            {lastDatas.Testosterone?.Testosterone}
           </p>
           {lastAdditionalDatas.length > 0 &&
             lastAdditionalDatas.map((additionalData) => (

@@ -271,6 +271,20 @@ export type CareElementType = {
     WaistCircumferenceUnit: "cm";
     Date: number;
   }[];
+  FSH: { FSH: string; FSHUnit: "IU/L"; Date: number }[];
+  E2: { E2: string; E2Unit: "pmol/L"; Date: number }[];
+  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number }[];
+  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number }[];
+  HCG: { HCG: string; HCGUnit: "IU/L"; Date: number }[];
+  LH: { LH: string; LHUnit: "IU/L"; Date: number }[];
+  PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number }[];
+  P4: { P4: string; P4Unit: "ng/mL"; Date: number }[];
+  TSH: { TSH: string; TSHUnit: "uIU/mL"; Date: number }[];
+  Testosterone: {
+    Testosterone: string;
+    TestosteroneUnit: "nmol/L";
+    Date: number;
+  }[];
   BloodPressure: {
     SystolicBP: string;
     DiastolicBP: string;
@@ -296,10 +310,7 @@ export type CareElementType = {
     EducationalTrainingPerformed: string;
     Date: number;
   }[];
-  HypoglycemicEpisodes: {
-    NumOfReportedEpisodes: number;
-    Date: number;
-  }[];
+  HypoglycemicEpisodes: { NumOfReportedEpisodes: number; Date: number }[];
   SelfMonitoringBloodGlucose: { SelfMonitoring: string; Date: number }[];
   bodyMassIndex: { BMI: string; Date: number }[];
   bodySurfaceArea: { BSA: string; Date: number }[];

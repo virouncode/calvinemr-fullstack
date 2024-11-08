@@ -23,7 +23,7 @@ const InputImgFile = ({
     <>
       {isLoadingFile ? (
         <CircularProgressMedium />
-      ) : img ? (
+      ) : img?.path ? (
         <img
           src={`${import.meta.env.VITE_XANO_BASE_URL}${img?.path}`}
           alt={alt}

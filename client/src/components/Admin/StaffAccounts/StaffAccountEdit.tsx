@@ -43,6 +43,7 @@ const StaffAccountEdit = ({
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
+  console.log(infos);
 
   useEffect(() => {
     setFormDatas(infos);
@@ -135,6 +136,7 @@ const StaffAccountEdit = ({
             !formDatas.video_link.includes("https"))
             ? ["https://", formDatas.video_link].join("")
             : formDatas.video_link,
+        sign: formDatas.sign?.url ? formDatas.sign : null,
       };
 
       //Validation
