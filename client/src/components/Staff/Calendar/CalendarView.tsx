@@ -84,6 +84,7 @@ const CalendarView = ({
         luxonPlugin,
         rrulePlugin,
       ]}
+      slotEventOverlap={false}
       timeZone="America/Toronto"
       initialDate={initialDate}
       //===================Design=====================//

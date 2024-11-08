@@ -231,6 +231,9 @@
   .fc-timegrid-event .fc-event-main {
     overflow: hidden;
   }
+  .fc-timegrid-event-harness {
+    margin: 0.1rem;
+  }
   .fc-toolbar-chunk {
     &:nth-child(1) {
       margin-bottom: 2.5rem;

@@ -61,6 +61,7 @@ const TimelineView = ({
       plugins={[resourceTimeGrid, interaction, luxonPlugin, rrulePlugin]}
       timeZone="America/Toronto"
       initialDate={initialDate}
+      slotEventOverlap={false}
       //===================Design=====================//
       headerToolbar={{
         start: "title",
