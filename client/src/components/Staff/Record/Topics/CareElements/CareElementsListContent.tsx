@@ -20,7 +20,7 @@ import CareElementsFSH from "./CareElementsFSH";
 import CareElementsHCG from "./CareElementsHCG";
 import CareElementsHeight from "./CareElementsHeight";
 import CareElementsHeightFeet from "./CareElementsHeightFeet";
-import CareElementsLH from "./CareElementsLH_temp";
+import CareElementsLH from "./CareElementsLH";
 import CareElementsP4 from "./CareElementsP4";
 import CareElementsPacks from "./CareElementsPacks";
 import CareElementsPRL from "./CareElementsPRL";
