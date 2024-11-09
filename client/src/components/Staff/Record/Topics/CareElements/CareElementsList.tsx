@@ -79,6 +79,20 @@ const CareElementsList = ({
       WaistCircumferenceUnit: "cm",
       Date: nowTZTimestamp(),
     },
+    FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
+    E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
+    AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
+    DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+    HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
+    LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
+    PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
+    P4: { P4: "", P4Unit: "ng/mL", Date: nowTZTimestamp() },
+    TSH: { TSH: "", TSHUnit: "uIU/mL", Date: nowTZTimestamp() },
+    Testosterone: {
+      Testosterone: "",
+      TestosteroneUnit: "nmol/L",
+      Date: nowTZTimestamp(),
+    },
     BloodPressure: {
       SystolicBP: "",
       DiastolicBP: "",
@@ -98,7 +112,7 @@ const CareElementsList = ({
       }))
     );
 
-  const lastDatas: CareElementLastDatasType = datas
+  const lastDatas: CareElementLastDatasType | null = datas
     ? {
         SmokingStatus: datas.SmokingStatus?.sort(
           (a, b) => b.Date - a.Date
@@ -137,6 +151,58 @@ const CareElementsList = ({
         bodySurfaceArea: datas.bodySurfaceArea?.sort(
           (a, b) => b.Date - a.Date
         )?.[0] || { BSA: "", Date: null },
+        FSH: datas.FSH?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          FSH: "",
+          FSHUnit: "IU/L",
+          Date: null,
+        },
+        E2: datas.E2?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          E2: "",
+          E2Unit: "pmol/L",
+          Date: null,
+        },
+        AMHP: datas.AMHP?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          AMHP: "",
+          AMHPUnit: "pmol/L",
+          Date: null,
+        },
+        DHEA: datas.DHEA?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          DHEA: "",
+          DHEAUnit: "ug/dL",
+          Date: null,
+        },
+        HCG: datas.HCG?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          HCG: "",
+          HCGUnit: "IU/L",
+          Date: null,
+        },
+        LH: datas.LH?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          LH: "",
+          LHUnit: "IU/L",
+          Date: null,
+        },
+        PRL: datas.PRL?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          PRL: "",
+          PRLUnit: "ng/mL",
+          Date: null,
+        },
+        P4: datas.P4?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          P4: "",
+          P4Unit: "ng/mL",
+          Date: null,
+        },
+        TSH: datas.TSH?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          TSH: "",
+          TSHUnit: "uIU/mL",
+          Date: null,
+        },
+        Testosterone: datas.Testosterone?.sort(
+          (a, b) => b.Date - a.Date
+        )?.[0] || {
+          Testosterone: "",
+          TestosteroneUnit: "nmol/L",
+          Date: null,
+        },
       }
     : {
         SmokingStatus: { Status: "", Date: null },
@@ -156,6 +222,20 @@ const CareElementsList = ({
         },
         bodyMassIndex: { BMI: "", Date: null },
         bodySurfaceArea: { BSA: "", Date: null },
+        FSH: { FSH: "", FSHUnit: "IU/L", Date: null },
+        E2: { E2: "", E2Unit: "pmol/L", Date: null },
+        AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: null },
+        DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: null },
+        HCG: { HCG: "", HCGUnit: "IU/L", Date: null },
+        LH: { LH: "", LHUnit: "IU/L", Date: null },
+        PRL: { PRL: "", PRLUnit: "ng/mL", Date: null },
+        P4: { P4: "", P4Unit: "ng/mL", Date: null },
+        TSH: { TSH: "", TSHUnit: "uIU/mL", Date: null },
+        Testosterone: {
+          Testosterone: "",
+          TestosteroneUnit: "nmol/L",
+          Date: null,
+        },
       };
 
   const lastAdditionalDatas =
@@ -252,6 +332,66 @@ const CareElementsList = ({
           : [];
         historyUnitToPass = "m2";
         break;
+      case "FSH":
+        historyDatasToPass = datas.FSH?.length
+          ? datas.FSH.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "IU/L";
+        break;
+      case "E2":
+        historyDatasToPass = datas.E2?.length
+          ? datas.E2.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "pmol/L";
+        break;
+      case "AMHP":
+        historyDatasToPass = datas.AMHP?.length
+          ? datas.AMHP.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "pmol/L";
+        break;
+      case "DHEA":
+        historyDatasToPass = datas.DHEA?.length
+          ? datas.DHEA.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "ug/dL";
+        break;
+      case "HCG":
+        historyDatasToPass = datas.HCG?.length
+          ? datas.HCG.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "IU/L";
+        break;
+      case "LH":
+        historyDatasToPass = datas.LH?.length
+          ? datas.LH.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "IU/L";
+        break;
+      case "PRL":
+        historyDatasToPass = datas.PRL?.length
+          ? datas.PRL.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "ng/mL";
+        break;
+      case "P4":
+        historyDatasToPass = datas.P4?.length
+          ? datas.P4.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "ng/mL";
+        break;
+      case "TSH":
+        historyDatasToPass = datas.TSH?.length
+          ? datas.TSH.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "uIU/mL";
+        break;
+      case "TESTOSTERONE":
+        historyDatasToPass = datas.Testosterone?.length
+          ? datas.Testosterone.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "nmol/L";
+        break;
       default:
         break;
     }
@@ -309,6 +449,30 @@ const CareElementsList = ({
       WaistCircumference: addFormDatas.WaistCircumference?.WaistCircumference
         ? [...datas.WaistCircumference, addFormDatas.WaistCircumference]
         : [...datas.WaistCircumference],
+      FSH: addFormDatas.FSH?.FSH
+        ? [...datas.FSH, addFormDatas.FSH]
+        : [...datas.FSH],
+      E2: addFormDatas.E2?.E2 ? [...datas.E2, addFormDatas.E2] : [...datas.E2],
+      AMHP: addFormDatas.AMHP?.AMHP
+        ? [...datas.AMHP, addFormDatas.AMHP]
+        : [...datas.AMHP],
+      DHEA: addFormDatas.DHEA?.DHEA
+        ? [...datas.DHEA, addFormDatas.DHEA]
+        : [...datas.DHEA],
+      HCG: addFormDatas.HCG?.HCG
+        ? [...datas.HCG, addFormDatas.HCG]
+        : [...datas.HCG],
+      LH: addFormDatas.LH?.LH ? [...datas.LH, addFormDatas.LH] : [...datas.LH],
+      PRL: addFormDatas.PRL?.PRL
+        ? [...datas.PRL, addFormDatas.PRL]
+        : [...datas.PRL],
+      P4: addFormDatas.P4?.P4 ? [...datas.P4, addFormDatas.P4] : [...datas.P4],
+      TSH: addFormDatas.TSH?.TSH
+        ? [...datas.TSH, addFormDatas.TSH]
+        : [...datas.TSH],
+      Testosterone: addFormDatas.Testosterone?.Testosterone
+        ? [...datas.Testosterone, addFormDatas.Testosterone]
+        : [...datas.Testosterone],
       BloodPressure:
         addFormDatas.BloodPressure?.SystolicBP &&
         addFormDatas.BloodPressure?.DiastolicBP
@@ -436,6 +600,20 @@ const CareElementsList = ({
             WaistCircumferenceUnit: "cm",
             Date: nowTZTimestamp(),
           },
+          FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
+          E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
+          AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
+          DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+          HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
+          LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
+          PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
+          P4: { P4: "", P4Unit: "ng/mL", Date: nowTZTimestamp() },
+          TSH: { TSH: "", TSHUnit: "uIU/mL", Date: nowTZTimestamp() },
+          Testosterone: {
+            Testosterone: "",
+            TestosteroneUnit: "nmol/L",
+            Date: nowTZTimestamp(),
+          },
           BloodPressure: {
             SystolicBP: "",
             DiastolicBP: "",
@@ -472,6 +650,20 @@ const CareElementsList = ({
       WaistCircumference: {
         WaistCircumference: "",
         WaistCircumferenceUnit: "cm",
+        Date: nowTZTimestamp(),
+      },
+      FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
+      E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
+      AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
+      DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+      HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
+      LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
+      PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
+      P4: { P4: "", P4Unit: "ng/mL", Date: nowTZTimestamp() },
+      TSH: { TSH: "", TSHUnit: "uIU/mL", Date: nowTZTimestamp() },
+      Testosterone: {
+        Testosterone: "",
+        TestosteroneUnit: "nmol/L",
         Date: nowTZTimestamp(),
       },
       BloodPressure: {

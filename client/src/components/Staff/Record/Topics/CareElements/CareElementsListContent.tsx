@@ -10,9 +10,14 @@ import { timestampToDateTimeSecondsStrTZ } from "../../../../../utils/dates/form
 import { getLastUpdate, isUpdated } from "../../../../../utils/dates/updates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import CareElementsAdditional from "./CareElementsAdditional";
+import CareElementsAMHP from "./CareElementsAMHP";
 import CareElementsBMI from "./CareElementsBMI";
 import CareElementsBSA from "./CareElementsBSA";
+import CareElementsDHEA from "./CareElementsDHEA";
 import CareElementsDiastolic from "./CareElementsDiastolic";
+import CareElementsE2 from "./CareElementsE2";
+import CareElementsFSH from "./CareElementsFSH";
+import CareElementsHCG from "./CareelementsHCG";
 import CareElementsHeight from "./CareElementsHeight";
 import CareElementsHeightFeet from "./CareElementsHeightFeet";
 import CareElementsPacks from "./CareElementsPacks";
@@ -21,6 +26,11 @@ import CareElementsSystolic from "./CareElementsSystolic";
 import CareElementsWaist from "./CareElementsWaist";
 import CareElementsWeight from "./CareElementsWeight";
 import CareElementsWeightLbs from "./CareElementsWeightLbs";
+import CareElementsLH from "./CareelementsLH";
+import CareElementsP4 from "./CareElementsP4";
+import CareElementsPRL from "./CareElementsPRL";
+import CareElementsTestosterone from "./CareElementsTestosterone";
+import CareElementsTSH from "./CareElementsTSH";
 
 type CareElementsListContentProps = {
   careElementPut: UseMutationResult<
@@ -117,6 +127,67 @@ const CareElementsListContent = ({
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
+      <CareElementsFSH
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsE2
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsAMHP
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsDHEA
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsHCG
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsLH
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsPRL
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsP4
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsTSH
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsTestosterone
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+
       {lastAdditionalDatas.map((lastAdditionalData) => (
         <CareElementsAdditional
           key={lastAdditionalData.Name}

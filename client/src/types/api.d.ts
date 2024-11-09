@@ -347,6 +347,20 @@ export type CareElementLastDatasType = {
     WaistCircumferenceUnit: "cm";
     Date: number | null;
   };
+  FSH: { FSH: string; FSHUnit: "IU/L"; Date: number | null };
+  E2: { E2: string; E2Unit: "pmol/L"; Date: number | null };
+  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number | null };
+  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number | null };
+  HCG: { HCG: string; HCGUnit: "IU/L"; Date: number | null };
+  LH: { LH: string; LHUnit: "IU/L"; Date: number | null };
+  PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number | null };
+  P4: { P4: string; P4Unit: "ng/mL"; Date: number | null };
+  TSH: { TSH: string; TSHUnit: "uIU/mL"; Date: number | null };
+  Testosterone: {
+    Testosterone: string;
+    TestosteroneUnit: "nmol/L";
+    Date: number | null;
+  };
   BloodPressure: {
     SystolicBP: string;
     DiastolicBP: string;
@@ -368,6 +382,20 @@ export type CareElementFormType = {
   WaistCircumference: {
     WaistCircumference: string;
     WaistCircumferenceUnit: "cm";
+    Date: number;
+  };
+  FSH: { FSH: string; FSHUnit: "IU/L"; Date: number };
+  E2: { E2: string; E2Unit: "pmol/L"; Date: number };
+  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number };
+  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number };
+  HCG: { HCG: string; HCGUnit: "IU/L"; Date: number };
+  LH: { LH: string; LHUnit: "IU/L"; Date: number };
+  PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number };
+  P4: { P4: string; P4Unit: "ng/mL"; Date: number };
+  TSH: { TSH: string; TSHUnit: "uIU/mL"; Date: number };
+  Testosterone: {
+    Testosterone: string;
+    TestosteroneUnit: "nmol/L";
     Date: number;
   };
   BloodPressure: {
@@ -2047,7 +2075,17 @@ export type CareElementHistoryTopicType =
   | "WAIST CIRCUMFERENCE"
   | "BLOOD PRESSURE"
   | "BODY MASS INDEX"
-  | "BODY SURFACE AREA";
+  | "BODY SURFACE AREA"
+  | "FSH"
+  | "E2"
+  | "AMHP"
+  | "DHEA"
+  | "HCG"
+  | "LH"
+  | "PRL"
+  | "P4"
+  | "TSH"
+  | "TESTOSTERONE";
 
 export type XMLExportFunctionType =
   | ((jsObj: AlertType) => string)

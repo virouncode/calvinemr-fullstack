@@ -57,6 +57,20 @@ const CareElementsForm = ({
       WaistCircumferenceUnit: "cm",
       Date: nowTZTimestamp(),
     },
+    FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
+    E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
+    AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
+    DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+    HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
+    LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
+    PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
+    P4: { P4: "", P4Unit: "ng/mL", Date: nowTZTimestamp() },
+    TSH: { TSH: "", TSHUnit: "uIU/mL", Date: nowTZTimestamp() },
+    Testosterone: {
+      Testosterone: "",
+      TestosteroneUnit: "nmol/L",
+      Date: nowTZTimestamp(),
+    },
     BloodPressure: {
       SystolicBP: "",
       DiastolicBP: "",
@@ -297,6 +311,134 @@ const CareElementsForm = ({
           },
         });
         break;
+      case "FSH":
+        setFormDatas({
+          ...formDatas,
+          FSH: {
+            ...(formDatas.FSH as {
+              FSH: string;
+              FSHUnit: "IU/L";
+              Date: number;
+            }),
+            FSH: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "E2":
+        setFormDatas({
+          ...formDatas,
+          E2: {
+            ...(formDatas.E2 as { E2: string; E2Unit: "pmol/L"; Date: number }),
+            E2: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "AMHP":
+        setFormDatas({
+          ...formDatas,
+          AMHP: {
+            ...(formDatas.AMHP as {
+              AMHP: string;
+              AMHPUnit: "pmol/L";
+              Date: number;
+            }),
+            AMHP: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "DHEA":
+        setFormDatas({
+          ...formDatas,
+          DHEA: {
+            ...(formDatas.DHEA as {
+              DHEA: string;
+              DHEAUnit: "ug/dL";
+              Date: number;
+            }),
+            DHEA: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "HCG":
+        setFormDatas({
+          ...formDatas,
+          HCG: {
+            ...(formDatas.HCG as {
+              HCG: string;
+              HCGUnit: "IU/L";
+              Date: number;
+            }),
+            HCG: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "LH":
+        setFormDatas({
+          ...formDatas,
+          LH: {
+            ...(formDatas.LH as { LH: string; LHUnit: "IU/L"; Date: number }),
+            LH: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "PRL":
+        setFormDatas({
+          ...formDatas,
+          PRL: {
+            ...(formDatas.PRL as {
+              PRL: string;
+              PRLUnit: "ng/mL";
+              Date: number;
+            }),
+            PRL: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "P4":
+        setFormDatas({
+          ...formDatas,
+          P4: {
+            ...(formDatas.P4 as { P4: string; P4Unit: "ng/mL"; Date: number }),
+            P4: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "TSH":
+        setFormDatas({
+          ...formDatas,
+          TSH: {
+            ...(formDatas.TSH as {
+              TSH: string;
+              TSHUnit: "uIU/mL";
+              Date: number;
+            }),
+            TSH: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
+      case "Testosterone":
+        setFormDatas({
+          ...formDatas,
+          Testosterone: {
+            ...(formDatas.Testosterone as {
+              Testosterone: string;
+              TestosteroneUnit: "nmol/L";
+              Date: number;
+            }),
+            Testosterone: value,
+            Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
+          },
+        });
+        break;
       default:
         break;
     }
@@ -354,6 +496,18 @@ const CareElementsForm = ({
         : [],
       bodySurfaceArea: formDatas.bodySurfaceArea?.BSA
         ? [formDatas.bodySurfaceArea]
+        : [],
+      FSH: formDatas.FSH?.FSH ? [formDatas.FSH] : [],
+      E2: formDatas.E2?.E2 ? [formDatas.E2] : [],
+      AMHP: formDatas.AMHP?.AMHP ? [formDatas.AMHP] : [],
+      DHEA: formDatas.DHEA?.DHEA ? [formDatas.DHEA] : [],
+      HCG: formDatas.HCG?.HCG ? [formDatas.HCG] : [],
+      LH: formDatas.LH?.LH ? [formDatas.LH] : [],
+      PRL: formDatas.PRL?.PRL ? [formDatas.PRL] : [],
+      P4: formDatas.P4?.P4 ? [formDatas.P4] : [],
+      TSH: formDatas.TSH?.TSH ? [formDatas.TSH] : [],
+      Testosterone: formDatas.Testosterone?.Testosterone
+        ? [formDatas.Testosterone]
         : [],
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
@@ -489,6 +643,86 @@ const CareElementsForm = ({
               name="DiastolicBP"
               onChange={handleChange}
               value={formDatas.BloodPressure?.DiastolicBP ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>FSH (IU/L):</label>
+            <Input
+              name="FSH"
+              onChange={handleChange}
+              value={formDatas.FSH?.FSH ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>E2 (pmol/L):</label>
+            <Input
+              name="E2"
+              onChange={handleChange}
+              value={formDatas.E2?.E2 ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>AMHP (pmol/L):</label>
+            <Input
+              name="AMHP"
+              onChange={handleChange}
+              value={formDatas.AMHP?.AMHP ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>DHEA (umol/L):</label>
+            <Input
+              name="DHEA"
+              onChange={handleChange}
+              value={formDatas.DHEA?.DHEA ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>HCG (IU/L):</label>
+            <Input
+              name="HCG"
+              onChange={handleChange}
+              value={formDatas.HCG?.HCG ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>LH (IU/L):</label>
+            <Input
+              name="LH"
+              onChange={handleChange}
+              value={formDatas.LH?.LH ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>PRL (ng/mL):</label>
+            <Input
+              name="PRL"
+              onChange={handleChange}
+              value={formDatas.PRL?.PRL ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>P4 (ng/mL):</label>
+            <Input
+              name="P4"
+              onChange={handleChange}
+              value={formDatas.P4?.P4 ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>TSH (mIU/L):</label>
+            <Input
+              name="TSH"
+              onChange={handleChange}
+              value={formDatas.TSH?.TSH ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>Testosterone (nmol/L):</label>
+            <Input
+              name="Testosterone"
+              onChange={handleChange}
+              value={formDatas.Testosterone?.Testosterone ?? ""}
             />
           </div>
         </div>

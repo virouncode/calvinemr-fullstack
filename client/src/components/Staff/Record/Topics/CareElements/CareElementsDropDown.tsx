@@ -6,6 +6,7 @@ import {
 } from "../../../../../omdDatas/codesTables";
 import {
   CareElementAdditionalType,
+  CareElementLastDatasType,
   CareElementType,
   XanoPaginatedType,
 } from "../../../../../types/api";
@@ -46,7 +47,7 @@ const CareElementsDropDown = ({
 
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
-  const lastDatas = datas
+  const lastDatas: CareElementLastDatasType | null = datas
     ? {
         SmokingStatus: datas.SmokingStatus?.sort((a, b) => b.Date - a.Date)[0],
         SmokingPacks: datas.SmokingPacks?.sort((a, b) => b.Date - a.Date)[0],

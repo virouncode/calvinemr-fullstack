@@ -110,18 +110,24 @@ const NewFax = ({
   };
 
   const handleSend = async () => {
-    const regex = /^\d{3}-\d{3}-\d{4}$/;
-    let toNewFaxNumbersArray = toNewFaxNumbers.split(",");
-    toNewFaxNumbersArray = toNewFaxNumbersArray.map((number) => number.trim());
-    for (const toNewFaxNumber of toNewFaxNumbersArray) {
-      if (!regex.test(toNewFaxNumber)) {
-        toast.error(
-          `${toNewFaxNumber} is not a valid fax number format, please enter xxx-xxx-xxxx format`,
-          {
-            containerId: "A",
-          }
-        );
-        return;
+    let toNewFaxNumbersArray: string[] = [];
+    if (toNewFaxNumbers) {
+      const regex = /^\d{3}-\d{3}-\d{4}$/;
+      toNewFaxNumbersArray = toNewFaxNumbers.split(",");
+      toNewFaxNumbersArray = toNewFaxNumbersArray.map((number) =>
+        number.trim()
+      );
+      for (const toNewFaxNumber of toNewFaxNumbersArray) {
+        console.log(toNewFaxNumber);
+        if (!regex.test(toNewFaxNumber)) {
+          toast.error(
+            `${toNewFaxNumber} is not a valid fax number format, please enter xxx-xxx-xxxx format`,
+            {
+              containerId: "A",
+            }
+          );
+          return;
+        }
       }
     }
     const toFaxNumbersToPost = toFaxNumbers.map((number) =>
