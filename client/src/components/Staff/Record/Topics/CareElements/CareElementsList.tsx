@@ -55,7 +55,7 @@ const CareElementsList = ({
   const [historyTopic, setHistoryTopic] =
     useState<CareElementHistoryTopicType>("SMOKING STATUS");
   const [historyDatas, setHistoryDatas] = useState<unknown[]>([]);
-  const [historyUnit, setHistoryUnit] = useState("");
+  const [historyUnit, setHistoryUnit] = useState<string>("");
   const [historyVisible, setHistoryVisible] = useState(false);
   const [additionalHistoryTopic, setAdditionalHistoryTopic] =
     useState<string>("");
@@ -270,7 +270,7 @@ const CareElementsList = ({
   const handleClickHistory = (rowName: CareElementHistoryTopicType) => {
     setHistoryTopic(rowName);
     let historyDatasToPass: unknown[] = [];
-    let historyUnitToPass = "";
+    let historyUnitToPass: string | string[] = "";
 
     switch (rowName) {
       case "SMOKING STATUS":
@@ -344,6 +344,18 @@ const CareElementsList = ({
           : [];
         historyUnitToPass = "pmol/L";
         break;
+      case "LH":
+        historyDatasToPass = datas.LH?.length
+          ? datas.LH.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "IU/L";
+        break;
+      case "P4":
+        historyDatasToPass = datas.P4?.length
+          ? datas.P4.sort((a, b) => b.Date - a.Date)
+          : [];
+        historyUnitToPass = "ng/mL";
+        break;
       case "AMHP":
         historyDatasToPass = datas.AMHP?.length
           ? datas.AMHP.sort((a, b) => b.Date - a.Date)
@@ -362,21 +374,10 @@ const CareElementsList = ({
           : [];
         historyUnitToPass = "IU/L";
         break;
-      case "LH":
-        historyDatasToPass = datas.LH?.length
-          ? datas.LH.sort((a, b) => b.Date - a.Date)
-          : [];
-        historyUnitToPass = "IU/L";
-        break;
+
       case "PRL":
         historyDatasToPass = datas.PRL?.length
           ? datas.PRL.sort((a, b) => b.Date - a.Date)
-          : [];
-        historyUnitToPass = "ng/mL";
-        break;
-      case "P4":
-        historyDatasToPass = datas.P4?.length
-          ? datas.P4.sort((a, b) => b.Date - a.Date)
           : [];
         historyUnitToPass = "ng/mL";
         break;

@@ -1,6 +1,10 @@
+import { CareElementHistoryTopicType } from "../../types/api";
 import { cmToFeet, kgToLbs } from "../measurements/measurements";
 
-export const toDatasToPlot = (historyTopic: string, historyDatas: unknown) => {
+export const toDatasToPlot = (
+  historyTopic: CareElementHistoryTopicType,
+  historyDatas: unknown
+) => {
   let datasToPlot;
   switch (historyTopic) {
     case "SMOKING STATUS":
@@ -125,6 +129,110 @@ export const toDatasToPlot = (historyTopic: string, historyDatas: unknown) => {
           return {
             ...data,
             BSA: data.BSA ? parseFloat(data.BSA) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "E2":
+      datasToPlot = (historyDatas as { E2: ""; Date: number }[]).map((data) => {
+        return {
+          ...data,
+          E2: data.E2 ? parseFloat(data.E2) : 0,
+          Date: new Date(data.Date),
+        };
+      });
+      break;
+    case "LH":
+      datasToPlot = (historyDatas as { LH: ""; Date: number }[]).map((data) => {
+        return {
+          ...data,
+          LH: data.LH ? parseFloat(data.LH) : 0,
+          Date: new Date(data.Date),
+        };
+      });
+      break;
+    case "P4":
+      datasToPlot = (historyDatas as { P4: ""; Date: number }[]).map((data) => {
+        return {
+          ...data,
+          P4: data.P4 ? parseFloat(data.P4) : 0,
+          Date: new Date(data.Date),
+        };
+      });
+      break;
+    case "FSH":
+      datasToPlot = (historyDatas as { FSH: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            FSH: data.FSH ? parseFloat(data.FSH) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "AMHP":
+      datasToPlot = (historyDatas as { AMHP: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            AMHP: data.AMHP ? parseFloat(data.AMHP) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "DHEA":
+      datasToPlot = (historyDatas as { DHEA: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            DHEA: data.DHEA ? parseFloat(data.DHEA) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "HCG":
+      datasToPlot = (historyDatas as { HCG: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            HCG: data.HCG ? parseFloat(data.HCG) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "PRL":
+      datasToPlot = (historyDatas as { PRL: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            PRL: data.PRL ? parseFloat(data.PRL) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "TSH":
+      datasToPlot = (historyDatas as { TSH: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            TSH: data.TSH ? parseFloat(data.TSH) : 0,
+            Date: new Date(data.Date),
+          };
+        }
+      );
+      break;
+    case "TESTOSTERONE":
+      datasToPlot = (historyDatas as { Testosterone: ""; Date: number }[]).map(
+        (data) => {
+          return {
+            ...data,
+            Testosterone: data.Testosterone ? parseFloat(data.Testosterone) : 0,
             Date: new Date(data.Date),
           };
         }

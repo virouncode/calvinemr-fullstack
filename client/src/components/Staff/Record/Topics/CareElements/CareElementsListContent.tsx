@@ -20,7 +20,7 @@ import CareElementsFSH from "./CareElementsFSH";
 import CareElementsHCG from "./CareElementsHCG";
 import CareElementsHeight from "./CareElementsHeight";
 import CareElementsHeightFeet from "./CareElementsHeightFeet";
-import CareElementsLH from "./CareelementsLH";
+import CareElementsLH from "./CareElementsLH";
 import CareElementsP4 from "./CareElementsP4";
 import CareElementsPacks from "./CareElementsPacks";
 import CareElementsPRL from "./CareElementsPRL";
@@ -127,13 +127,25 @@ const CareElementsListContent = ({
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
-      <CareElementsFSH
+      <CareElementsE2
         careElementPut={careElementPut}
         datas={datas}
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
-      <CareElementsE2
+      <CareElementsLH
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsP4
+        careElementPut={careElementPut}
+        datas={datas}
+        lastDatas={lastDatas}
+        handleClickHistory={handleClickHistory}
+      />
+      <CareElementsFSH
         careElementPut={careElementPut}
         datas={datas}
         lastDatas={lastDatas}
@@ -157,19 +169,7 @@ const CareElementsListContent = ({
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
-      <CareElementsLH
-        careElementPut={careElementPut}
-        datas={datas}
-        lastDatas={lastDatas}
-        handleClickHistory={handleClickHistory}
-      />
       <CareElementsPRL
-        careElementPut={careElementPut}
-        datas={datas}
-        lastDatas={lastDatas}
-        handleClickHistory={handleClickHistory}
-      />
-      <CareElementsP4
         careElementPut={careElementPut}
         datas={datas}
         lastDatas={lastDatas}

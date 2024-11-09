@@ -265,6 +265,146 @@ const CareElementsListAdd = ({
           },
         });
         break;
+      case "FSH":
+        setAddFormDatas({
+          ...addFormDatas,
+          FSH: {
+            ...(addFormDatas.FSH as {
+              FSH: string;
+              FSHUnit: "IU/L";
+              Date: number;
+            }),
+            FSH: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "E2":
+        setAddFormDatas({
+          ...addFormDatas,
+          E2: {
+            ...(addFormDatas.E2 as {
+              E2: string;
+              E2Unit: "pmol/L";
+              Date: number;
+            }),
+            E2: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "AMHP":
+        setAddFormDatas({
+          ...addFormDatas,
+          AMHP: {
+            ...(addFormDatas.AMHP as {
+              AMHP: string;
+              AMHPUnit: "pmol/L";
+              Date: number;
+            }),
+            AMHP: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "DHEA":
+        setAddFormDatas({
+          ...addFormDatas,
+          DHEA: {
+            ...(addFormDatas.DHEA as {
+              DHEA: string;
+              DHEAUnit: "ug/dL";
+              Date: number;
+            }),
+            DHEA: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "HCG":
+        setAddFormDatas({
+          ...addFormDatas,
+          HCG: {
+            ...(addFormDatas.HCG as {
+              HCG: string;
+              HCGUnit: "IU/L";
+              Date: number;
+            }),
+            HCG: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "LH":
+        setAddFormDatas({
+          ...addFormDatas,
+          LH: {
+            ...(addFormDatas.LH as {
+              LH: string;
+              LHUnit: "IU/L";
+              Date: number;
+            }),
+            LH: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "PRL":
+        setAddFormDatas({
+          ...addFormDatas,
+          PRL: {
+            ...(addFormDatas.PRL as {
+              PRL: string;
+              PRLUnit: "ng/mL";
+              Date: number;
+            }),
+            PRL: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "P4":
+        setAddFormDatas({
+          ...addFormDatas,
+          P4: {
+            ...(addFormDatas.P4 as {
+              P4: string;
+              P4Unit: "ng/mL";
+              Date: number;
+            }),
+            P4: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "TSH":
+        setAddFormDatas({
+          ...addFormDatas,
+          TSH: {
+            ...(addFormDatas.TSH as {
+              TSH: string;
+              TSHUnit: "uIU/mL";
+              Date: number;
+            }),
+            TSH: value,
+            Date: addDate,
+          },
+        });
+        break;
+      case "Testosterone":
+        setAddFormDatas({
+          ...addFormDatas,
+          Testosterone: {
+            ...(addFormDatas.Testosterone as {
+              Testosterone: string;
+              TestosteroneUnit: "nmol/L";
+              Date: number;
+            }),
+            Testosterone: value,
+            Date: addDate,
+          },
+        });
+        break;
       case "SystolicBP":
         setAddFormDatas({
           ...addFormDatas,
@@ -402,7 +542,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Date:</label>
-
         <InputDate
           onChange={handleDateChange}
           value={timestampToDateISOTZ(addDate)}
@@ -421,7 +560,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Smoking Packs (per day):</label>
-
         <Input
           name="SmokingPacks"
           onChange={handleChange}
@@ -438,7 +576,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Weight (lbs):</label>
-
         <Input
           name="WeightLbs"
           onChange={handleChange}
@@ -447,7 +584,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Height (cm):</label>
-
         <Input
           name="Height"
           onChange={handleChange}
@@ -465,7 +601,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Body mass index (kg/m2):</label>
-
         <Input
           name="BMI"
           value={addFormDatas.bodyMassIndex?.BMI ?? ""}
@@ -474,7 +609,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Body surface area (m2):</label>
-
         <Input
           name="BSA"
           value={addFormDatas.bodySurfaceArea?.BSA ?? ""}
@@ -483,7 +617,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Waist circumference (cm):</label>
-
         <Input
           name="Waist"
           onChange={handleChange}
@@ -492,7 +625,6 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Systolic (mmHg):</label>
-
         <Input
           name="SystolicBP"
           onChange={handleChange}
@@ -501,13 +633,93 @@ const CareElementsListAdd = ({
       </div>
       <div className="care-elements__card-content-row-add">
         <label>Diastolic (mmHg):</label>
-
         <Input
           name="DiastolicBP"
           onChange={handleChange}
           value={addFormDatas.BloodPressure?.DiastolicBP ?? ""}
         />
       </div>
+      <div className="care-elements__card-content-row-add">
+        <label>E2 (pmol/L):</label>
+        <Input
+          name="E2"
+          onChange={handleChange}
+          value={addFormDatas.E2?.E2 ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>LH (IU/L):</label>
+        <Input
+          name="LH"
+          onChange={handleChange}
+          value={addFormDatas.LH?.LH ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>P4 (ng/mL):</label>
+        <Input
+          name="P4"
+          onChange={handleChange}
+          value={addFormDatas.P4?.P4 ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>FSH (IU/L):</label>
+        <Input
+          name="FSH"
+          onChange={handleChange}
+          value={addFormDatas.FSH?.FSH ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>AMHP (pmol/L):</label>
+        <Input
+          name="AMHP"
+          onChange={handleChange}
+          value={addFormDatas.AMHP?.AMHP ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>DHEA (ug/dL):</label>
+        <Input
+          name="DHEA"
+          onChange={handleChange}
+          value={addFormDatas.DHEA?.DHEA ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>HCG (IU/L):</label>
+        <Input
+          name="HCG"
+          onChange={handleChange}
+          value={addFormDatas.HCG?.HCG ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>PRL (ng/mL):</label>
+        <Input
+          name="PRL"
+          onChange={handleChange}
+          value={addFormDatas.PRL?.PRL ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>TSH (uIU/mL):</label>
+        <Input
+          name="TSH"
+          onChange={handleChange}
+          value={addFormDatas.TSH?.TSH ?? ""}
+        />
+      </div>
+      <div className="care-elements__card-content-row-add">
+        <label>Testosterone (nmol/L):</label>
+        <Input
+          name="Testosterone"
+          onChange={handleChange}
+          value={addFormDatas.Testosterone?.Testosterone ?? ""}
+        />
+      </div>
+
       {addFormAdditionalDatas.map((addAdditionalData) => (
         <div
           className="care-elements__card-content-row-add"

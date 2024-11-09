@@ -646,19 +646,35 @@ const CareElementsForm = ({
             />
           </div>
           <div className="care-elements__card-content-row-add">
-            <label>FSH (IU/L):</label>
-            <Input
-              name="FSH"
-              onChange={handleChange}
-              value={formDatas.FSH?.FSH ?? ""}
-            />
-          </div>
-          <div className="care-elements__card-content-row-add">
             <label>E2 (pmol/L):</label>
             <Input
               name="E2"
               onChange={handleChange}
               value={formDatas.E2?.E2 ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>LH (IU/L):</label>
+            <Input
+              name="LH"
+              onChange={handleChange}
+              value={formDatas.LH?.LH ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>P4 (ng/mL):</label>
+            <Input
+              name="P4"
+              onChange={handleChange}
+              value={formDatas.P4?.P4 ?? ""}
+            />
+          </div>
+          <div className="care-elements__card-content-row-add">
+            <label>FSH (IU/L):</label>
+            <Input
+              name="FSH"
+              onChange={handleChange}
+              value={formDatas.FSH?.FSH ?? ""}
             />
           </div>
           <div className="care-elements__card-content-row-add">
@@ -686,27 +702,11 @@ const CareElementsForm = ({
             />
           </div>
           <div className="care-elements__card-content-row-add">
-            <label>LH (IU/L):</label>
-            <Input
-              name="LH"
-              onChange={handleChange}
-              value={formDatas.LH?.LH ?? ""}
-            />
-          </div>
-          <div className="care-elements__card-content-row-add">
             <label>PRL (ng/mL):</label>
             <Input
               name="PRL"
               onChange={handleChange}
               value={formDatas.PRL?.PRL ?? ""}
-            />
-          </div>
-          <div className="care-elements__card-content-row-add">
-            <label>P4 (ng/mL):</label>
-            <Input
-              name="P4"
-              onChange={handleChange}
-              value={formDatas.P4?.P4 ?? ""}
             />
           </div>
           <div className="care-elements__card-content-row-add">

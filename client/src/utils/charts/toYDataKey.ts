@@ -17,6 +17,26 @@ export const toYDataKey = (historyTopic: CareElementHistoryTopicType) => {
     return "BMI";
   } else if (historyTopic === "BODY SURFACE AREA") {
     return "BSA";
+  } else if (historyTopic === "E2") {
+    return "E2";
+  } else if (historyTopic === "LH") {
+    return "LH";
+  } else if (historyTopic === "P4") {
+    return "P4";
+  } else if (historyTopic === "FSH") {
+    return "FSH";
+  } else if (historyTopic === "AMHP") {
+    return "AMHP";
+  } else if (historyTopic === "DHEA") {
+    return "DHEA";
+  } else if (historyTopic === "HCG") {
+    return "HCG";
+  } else if (historyTopic === "PRL") {
+    return "PRL";
+  } else if (historyTopic === "TSH") {
+    return "TSH";
+  } else if (historyTopic === "TESTOSTERONE") {
+    return "Testosterone";
   } else {
     return "";
   }
