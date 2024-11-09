@@ -56,6 +56,7 @@ const CareElementsLH = ({
           </Tooltip>
         </div>
       )}
+
       {editVisible && (
         <FakeWindow
           title="EDIT LH HISTORY"
