@@ -17,6 +17,7 @@ import CareElementsDHEA from "./CareElementsDHEA";
 import CareElementsDiastolic from "./CareElementsDiastolic";
 import CareElementsE2 from "./CareElementsE2";
 import CareElementsFSH from "./CareElementsFSH";
+import CareElementsHCG from "./CareElementsHCG";
 import CareElementsHeight from "./CareElementsHeight";
 import CareElementsHeightFeet from "./CareElementsHeightFeet";
 import CareElementsLH from "./CareelementsLH";
@@ -30,7 +31,6 @@ import CareElementsTSH from "./CareElementsTSH";
 import CareElementsWaist from "./CareElementsWaist";
 import CareElementsWeight from "./CareElementsWeight";
 import CareElementsWeightLbs from "./CareElementsWeightLbs";
-import CareElementsHCG from "./CareelementsHCG";
 
 type CareElementsListContentProps = {
   careElementPut: UseMutationResult<
