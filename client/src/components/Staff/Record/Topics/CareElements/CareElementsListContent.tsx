@@ -17,20 +17,20 @@ import CareElementsDHEA from "./CareElementsDHEA";
 import CareElementsDiastolic from "./CareElementsDiastolic";
 import CareElementsE2 from "./CareElementsE2";
 import CareElementsFSH from "./CareElementsFSH";
-import CareElementsHCG from "./CareelementsHCG";
 import CareElementsHeight from "./CareElementsHeight";
 import CareElementsHeightFeet from "./CareElementsHeightFeet";
+import CareElementsLH from "./CareelementsLH";
+import CareElementsP4 from "./CareElementsP4";
 import CareElementsPacks from "./CareElementsPacks";
+import CareElementsPRL from "./CareElementsPRL";
 import CareElementsSmoking from "./CareElementsSmoking";
 import CareElementsSystolic from "./CareElementsSystolic";
+import CareElementsTestosterone from "./CareElementsTestosterone";
+import CareElementsTSH from "./CareElementsTSH";
 import CareElementsWaist from "./CareElementsWaist";
 import CareElementsWeight from "./CareElementsWeight";
 import CareElementsWeightLbs from "./CareElementsWeightLbs";
-import CareElementsLH from "./CareelementsLH";
-import CareElementsP4 from "./CareElementsP4";
-import CareElementsPRL from "./CareElementsPRL";
-import CareElementsTestosterone from "./CareElementsTestosterone";
-import CareElementsTSH from "./CareElementsTSH";
+import CareElementsHCG from "./CareelementsHCG";
 
 type CareElementsListContentProps = {
   careElementPut: UseMutationResult<

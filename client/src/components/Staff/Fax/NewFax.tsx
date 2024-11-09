@@ -118,7 +118,6 @@ const NewFax = ({
         number.trim()
       );
       for (const toNewFaxNumber of toNewFaxNumbersArray) {
-        console.log(toNewFaxNumber);
         if (!regex.test(toNewFaxNumber)) {
           toast.error(
             `${toNewFaxNumber} is not a valid fax number format, please enter xxx-xxx-xxxx format`,
