@@ -273,8 +273,8 @@ export type CareElementType = {
   }[];
   FSH: { FSH: string; FSHUnit: "IU/L"; Date: number }[];
   E2: { E2: string; E2Unit: "pmol/L"; Date: number }[];
-  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number }[];
-  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number }[];
+  AMH: { AMH: string; AMHUnit: "pmol/L"; Date: number }[];
+  DHEAS: { DHEAS: string; DHEASUnit: "ug/dL"; Date: number }[];
   HCG: { HCG: string; HCGUnit: "IU/L"; Date: number }[];
   LH: { LH: string; LHUnit: "IU/L"; Date: number }[];
   PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number }[];
@@ -349,8 +349,8 @@ export type CareElementLastDatasType = {
   };
   FSH: { FSH: string; FSHUnit: "IU/L"; Date: number | null };
   E2: { E2: string; E2Unit: "pmol/L"; Date: number | null };
-  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number | null };
-  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number | null };
+  AMH: { AMH: string; AMHUnit: "pmol/L"; Date: number | null };
+  DHEAS: { DHEAS: string; DHEASUnit: "ug/dL"; Date: number | null };
   HCG: { HCG: string; HCGUnit: "IU/L"; Date: number | null };
   LH: { LH: string; LHUnit: "IU/L"; Date: number | null };
   PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number | null };
@@ -386,8 +386,8 @@ export type CareElementFormType = {
   };
   FSH: { FSH: string; FSHUnit: "IU/L"; Date: number };
   E2: { E2: string; E2Unit: "pmol/L"; Date: number };
-  AMHP: { AMHP: string; AMHPUnit: "pmol/L"; Date: number };
-  DHEA: { DHEA: string; DHEAUnit: "ug/dL"; Date: number };
+  AMH: { AMH: string; AMHUnit: "pmol/L"; Date: number };
+  DHEAS: { DHEAS: string; DHEASUnit: "ug/dL"; Date: number };
   HCG: { HCG: string; HCGUnit: "IU/L"; Date: number };
   LH: { LH: string; LHUnit: "IU/L"; Date: number };
   PRL: { PRL: string; PRLUnit: "ng/mL"; Date: number };
@@ -2078,8 +2078,8 @@ export type CareElementHistoryTopicType =
   | "BODY SURFACE AREA"
   | "FSH"
   | "E2"
-  | "AMHP"
-  | "DHEA"
+  | "AMH"
+  | "DHEAS"
   | "HCG"
   | "LH"
   | "PRL"

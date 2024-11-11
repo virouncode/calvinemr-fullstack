@@ -22,7 +22,7 @@ const tests = [
   "Testosterone",
   "SHBG",
   "Albumin",
-  "DHEAS",
+  "DHEASS",
   "Lipid profile",
   "Mammogram",
   "Pap test",

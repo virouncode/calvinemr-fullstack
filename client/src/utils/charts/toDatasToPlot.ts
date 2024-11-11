@@ -172,23 +172,23 @@ export const toDatasToPlot = (
         }
       );
       break;
-    case "AMHP":
-      datasToPlot = (historyDatas as { AMHP: ""; Date: number }[]).map(
+    case "AMH":
+      datasToPlot = (historyDatas as { AMH: ""; Date: number }[]).map(
         (data) => {
           return {
             ...data,
-            AMHP: data.AMHP ? parseFloat(data.AMHP) : 0,
+            AMH: data.AMH ? parseFloat(data.AMH) : 0,
             Date: new Date(data.Date),
           };
         }
       );
       break;
-    case "DHEA":
-      datasToPlot = (historyDatas as { DHEA: ""; Date: number }[]).map(
+    case "DHEAS":
+      datasToPlot = (historyDatas as { DHEAS: ""; Date: number }[]).map(
         (data) => {
           return {
             ...data,
-            DHEA: data.DHEA ? parseFloat(data.DHEA) : 0,
+            DHEAS: data.DHEAS ? parseFloat(data.DHEAS) : 0,
             Date: new Date(data.Date),
           };
         }

@@ -59,8 +59,8 @@ const CareElementsForm = ({
     },
     FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
     E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
-    AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
-    DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+    AMH: { AMH: "", AMHUnit: "pmol/L", Date: nowTZTimestamp() },
+    DHEAS: { DHEAS: "", DHEASUnit: "ug/dL", Date: nowTZTimestamp() },
     HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
     LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
     PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
@@ -335,30 +335,30 @@ const CareElementsForm = ({
           },
         });
         break;
-      case "AMHP":
+      case "AMH":
         setFormDatas({
           ...formDatas,
-          AMHP: {
-            ...(formDatas.AMHP as {
-              AMHP: string;
-              AMHPUnit: "pmol/L";
+          AMH: {
+            ...(formDatas.AMH as {
+              AMH: string;
+              AMHUnit: "pmol/L";
               Date: number;
             }),
-            AMHP: value,
+            AMH: value,
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
           },
         });
         break;
-      case "DHEA":
+      case "DHEAS":
         setFormDatas({
           ...formDatas,
-          DHEA: {
-            ...(formDatas.DHEA as {
-              DHEA: string;
-              DHEAUnit: "ug/dL";
+          DHEAS: {
+            ...(formDatas.DHEAS as {
+              DHEAS: string;
+              DHEASUnit: "ug/dL";
               Date: number;
             }),
-            DHEA: value,
+            DHEAS: value,
             Date: dateISOToTimestampTZ(date) ?? nowTZTimestamp(),
           },
         });
@@ -499,8 +499,8 @@ const CareElementsForm = ({
         : [],
       FSH: formDatas.FSH?.FSH ? [formDatas.FSH] : [],
       E2: formDatas.E2?.E2 ? [formDatas.E2] : [],
-      AMHP: formDatas.AMHP?.AMHP ? [formDatas.AMHP] : [],
-      DHEA: formDatas.DHEA?.DHEA ? [formDatas.DHEA] : [],
+      AMH: formDatas.AMH?.AMH ? [formDatas.AMH] : [],
+      DHEAS: formDatas.DHEAS?.DHEAS ? [formDatas.DHEAS] : [],
       HCG: formDatas.HCG?.HCG ? [formDatas.HCG] : [],
       LH: formDatas.LH?.LH ? [formDatas.LH] : [],
       PRL: formDatas.PRL?.PRL ? [formDatas.PRL] : [],
@@ -678,19 +678,19 @@ const CareElementsForm = ({
             />
           </div>
           <div className="care-elements__card-content-row-add">
-            <label>AMHP (pmol/L):</label>
+            <label>AMH (pmol/L):</label>
             <Input
-              name="AMHP"
+              name="AMH"
               onChange={handleChange}
-              value={formDatas.AMHP?.AMHP ?? ""}
+              value={formDatas.AMH?.AMH ?? ""}
             />
           </div>
           <div className="care-elements__card-content-row-add">
-            <label>DHEA (umol/L):</label>
+            <label>DHEAS (umol/L):</label>
             <Input
-              name="DHEA"
+              name="DHEAS"
               onChange={handleChange}
-              value={formDatas.DHEA?.DHEA ?? ""}
+              value={formDatas.DHEAS?.DHEAS ?? ""}
             />
           </div>
           <div className="care-elements__card-content-row-add">

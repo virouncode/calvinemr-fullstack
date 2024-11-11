@@ -293,30 +293,30 @@ const CareElementsListAdd = ({
           },
         });
         break;
-      case "AMHP":
+      case "AMH":
         setAddFormDatas({
           ...addFormDatas,
-          AMHP: {
-            ...(addFormDatas.AMHP as {
-              AMHP: string;
-              AMHPUnit: "pmol/L";
+          AMH: {
+            ...(addFormDatas.AMH as {
+              AMH: string;
+              AMHUnit: "pmol/L";
               Date: number;
             }),
-            AMHP: value,
+            AMH: value,
             Date: addDate,
           },
         });
         break;
-      case "DHEA":
+      case "DHEAS":
         setAddFormDatas({
           ...addFormDatas,
-          DHEA: {
-            ...(addFormDatas.DHEA as {
-              DHEA: string;
-              DHEAUnit: "ug/dL";
+          DHEAS: {
+            ...(addFormDatas.DHEAS as {
+              DHEAS: string;
+              DHEASUnit: "ug/dL";
               Date: number;
             }),
-            DHEA: value,
+            DHEAS: value,
             Date: addDate,
           },
         });
@@ -672,19 +672,19 @@ const CareElementsListAdd = ({
         />
       </div>
       <div className="care-elements__card-content-row-add">
-        <label>AMHP (pmol/L):</label>
+        <label>AMH (pmol/L):</label>
         <Input
-          name="AMHP"
+          name="AMH"
           onChange={handleChange}
-          value={addFormDatas.AMHP?.AMHP ?? ""}
+          value={addFormDatas.AMH?.AMH ?? ""}
         />
       </div>
       <div className="care-elements__card-content-row-add">
-        <label>DHEA (ug/dL):</label>
+        <label>DHEAS (ug/dL):</label>
         <Input
-          name="DHEA"
+          name="DHEAS"
           onChange={handleChange}
-          value={addFormDatas.DHEA?.DHEA ?? ""}
+          value={addFormDatas.DHEAS?.DHEAS ?? ""}
         />
       </div>
       <div className="care-elements__card-content-row-add">

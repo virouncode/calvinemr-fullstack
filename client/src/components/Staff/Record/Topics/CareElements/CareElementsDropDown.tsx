@@ -43,7 +43,6 @@ const CareElementsDropDown = ({
       </div>
     );
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
-  console.log(datas);
 
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
@@ -63,8 +62,8 @@ const CareElementsDropDown = ({
         )[0],
         FSH: datas.FSH?.sort((a, b) => b.Date - a.Date)[0],
         E2: datas.E2?.sort((a, b) => b.Date - a.Date)[0],
-        AMHP: datas.AMHP?.sort((a, b) => b.Date - a.Date)[0],
-        DHEA: datas.DHEA?.sort((a, b) => b.Date - a.Date)[0],
+        AMH: datas.AMH?.sort((a, b) => b.Date - a.Date)[0],
+        DHEAS: datas.DHEAS?.sort((a, b) => b.Date - a.Date)[0],
         HCG: datas.HCG?.sort((a, b) => b.Date - a.Date)[0],
         LH: datas.LH?.sort((a, b) => b.Date - a.Date)[0],
         PRL: datas.PRL?.sort((a, b) => b.Date - a.Date)[0],
@@ -147,12 +146,12 @@ const CareElementsDropDown = ({
             {lastDatas.FSH?.FSH}
           </p>
           <p>
-            <label>AMHP (pmol/L): </label>
-            {lastDatas.AMHP?.AMHP}
+            <label>AMH (pmol/L): </label>
+            {lastDatas.AMH?.AMH}
           </p>
           <p>
-            <label>DHEA (umol/L): </label>
-            {lastDatas.DHEA?.DHEA}
+            <label>DHEAS (umol/L): </label>
+            {lastDatas.DHEAS?.DHEAS}
           </p>
           <p>
             <label>HCG (IU/L): </label>

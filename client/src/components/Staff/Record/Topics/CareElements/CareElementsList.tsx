@@ -54,8 +54,17 @@ const CareElementsList = ({
   const [addVisible, setAddVisible] = useState(false);
   const [historyTopic, setHistoryTopic] =
     useState<CareElementHistoryTopicType>("SMOKING STATUS");
-  const [historyDatas, setHistoryDatas] = useState<unknown[]>([]);
-  const [historyUnit, setHistoryUnit] = useState<string>("");
+  const [historyDatas, setHistoryDatas] = useState<
+    | {
+        Date: number;
+        [key: string]: string | number;
+      }[]
+    | {
+        Date: number;
+        [key: string]: string | number;
+      }[][]
+  >([]);
+  const [historyUnit, setHistoryUnit] = useState<string | string[]>("");
   const [historyVisible, setHistoryVisible] = useState(false);
   const [additionalHistoryTopic, setAdditionalHistoryTopic] =
     useState<string>("");
@@ -81,8 +90,8 @@ const CareElementsList = ({
     },
     FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
     E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
-    AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
-    DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+    AMH: { AMH: "", AMHUnit: "pmol/L", Date: nowTZTimestamp() },
+    DHEAS: { DHEAS: "", DHEASUnit: "ug/dL", Date: nowTZTimestamp() },
     HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
     LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
     PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
@@ -161,14 +170,14 @@ const CareElementsList = ({
           E2Unit: "pmol/L",
           Date: null,
         },
-        AMHP: datas.AMHP?.sort((a, b) => b.Date - a.Date)?.[0] || {
-          AMHP: "",
-          AMHPUnit: "pmol/L",
+        AMH: datas.AMH?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          AMH: "",
+          AMHUnit: "pmol/L",
           Date: null,
         },
-        DHEA: datas.DHEA?.sort((a, b) => b.Date - a.Date)?.[0] || {
-          DHEA: "",
-          DHEAUnit: "ug/dL",
+        DHEAS: datas.DHEAS?.sort((a, b) => b.Date - a.Date)?.[0] || {
+          DHEAS: "",
+          DHEASUnit: "ug/dL",
           Date: null,
         },
         HCG: datas.HCG?.sort((a, b) => b.Date - a.Date)?.[0] || {
@@ -224,8 +233,8 @@ const CareElementsList = ({
         bodySurfaceArea: { BSA: "", Date: null },
         FSH: { FSH: "", FSHUnit: "IU/L", Date: null },
         E2: { E2: "", E2Unit: "pmol/L", Date: null },
-        AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: null },
-        DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: null },
+        AMH: { AMH: "", AMHUnit: "pmol/L", Date: null },
+        DHEAS: { DHEAS: "", DHEASUnit: "ug/dL", Date: null },
         HCG: { HCG: "", HCGUnit: "IU/L", Date: null },
         LH: { LH: "", LHUnit: "IU/L", Date: null },
         PRL: { PRL: "", PRLUnit: "ng/mL", Date: null },
@@ -269,7 +278,15 @@ const CareElementsList = ({
 
   const handleClickHistory = (rowName: CareElementHistoryTopicType) => {
     setHistoryTopic(rowName);
-    let historyDatasToPass: unknown[] = [];
+    let historyDatasToPass:
+      | {
+          Date: number;
+          [key: string]: string | number;
+        }[]
+      | {
+          Date: number;
+          [key: string]: string | number;
+        }[][] = [];
     let historyUnitToPass: string | string[] = "";
 
     switch (rowName) {
@@ -332,39 +349,46 @@ const CareElementsList = ({
           : [];
         historyUnitToPass = "m2";
         break;
+      case "E2":
+        historyDatasToPass = [
+          datas.E2?.length ? datas.E2.sort((a, b) => b.Date - a.Date) : [],
+          datas.LH?.length ? datas.LH.sort((a, b) => b.Date - a.Date) : [],
+          datas.P4?.length ? datas.P4.sort((a, b) => b.Date - a.Date) : [],
+        ];
+        historyUnitToPass = ["pmol/L", "IU/L", "ng/mL"];
+        break;
+      case "LH":
+        historyDatasToPass = [
+          datas.E2?.length ? datas.E2.sort((a, b) => b.Date - a.Date) : [],
+          datas.LH?.length ? datas.LH.sort((a, b) => b.Date - a.Date) : [],
+          datas.P4?.length ? datas.P4.sort((a, b) => b.Date - a.Date) : [],
+        ];
+        historyUnitToPass = ["pmol/L", "IU/L", "ng/mL"];
+        break;
+      case "P4":
+        historyDatasToPass = [
+          datas.E2?.length ? datas.E2.sort((a, b) => b.Date - a.Date) : [],
+          datas.LH?.length ? datas.LH.sort((a, b) => b.Date - a.Date) : [],
+          datas.P4?.length ? datas.P4.sort((a, b) => b.Date - a.Date) : [],
+        ];
+        historyUnitToPass = ["pmol/L", "IU/L", "ng/mL"];
+        break;
       case "FSH":
         historyDatasToPass = datas.FSH?.length
           ? datas.FSH.sort((a, b) => b.Date - a.Date)
           : [];
         historyUnitToPass = "IU/L";
         break;
-      case "E2":
-        historyDatasToPass = datas.E2?.length
-          ? datas.E2.sort((a, b) => b.Date - a.Date)
+
+      case "AMH":
+        historyDatasToPass = datas.AMH?.length
+          ? datas.AMH.sort((a, b) => b.Date - a.Date)
           : [];
         historyUnitToPass = "pmol/L";
         break;
-      case "LH":
-        historyDatasToPass = datas.LH?.length
-          ? datas.LH.sort((a, b) => b.Date - a.Date)
-          : [];
-        historyUnitToPass = "IU/L";
-        break;
-      case "P4":
-        historyDatasToPass = datas.P4?.length
-          ? datas.P4.sort((a, b) => b.Date - a.Date)
-          : [];
-        historyUnitToPass = "ng/mL";
-        break;
-      case "AMHP":
-        historyDatasToPass = datas.AMHP?.length
-          ? datas.AMHP.sort((a, b) => b.Date - a.Date)
-          : [];
-        historyUnitToPass = "pmol/L";
-        break;
-      case "DHEA":
-        historyDatasToPass = datas.DHEA?.length
-          ? datas.DHEA.sort((a, b) => b.Date - a.Date)
+      case "DHEAS":
+        historyDatasToPass = datas.DHEAS?.length
+          ? datas.DHEAS.sort((a, b) => b.Date - a.Date)
           : [];
         historyUnitToPass = "ug/dL";
         break;
@@ -374,7 +398,6 @@ const CareElementsList = ({
           : [];
         historyUnitToPass = "IU/L";
         break;
-
       case "PRL":
         historyDatasToPass = datas.PRL?.length
           ? datas.PRL.sort((a, b) => b.Date - a.Date)
@@ -454,12 +477,12 @@ const CareElementsList = ({
         ? [...datas.FSH, addFormDatas.FSH]
         : [...datas.FSH],
       E2: addFormDatas.E2?.E2 ? [...datas.E2, addFormDatas.E2] : [...datas.E2],
-      AMHP: addFormDatas.AMHP?.AMHP
-        ? [...datas.AMHP, addFormDatas.AMHP]
-        : [...datas.AMHP],
-      DHEA: addFormDatas.DHEA?.DHEA
-        ? [...datas.DHEA, addFormDatas.DHEA]
-        : [...datas.DHEA],
+      AMH: addFormDatas.AMH?.AMH
+        ? [...datas.AMH, addFormDatas.AMH]
+        : [...datas.AMH],
+      DHEAS: addFormDatas.DHEAS?.DHEAS
+        ? [...datas.DHEAS, addFormDatas.DHEAS]
+        : [...datas.DHEAS],
       HCG: addFormDatas.HCG?.HCG
         ? [...datas.HCG, addFormDatas.HCG]
         : [...datas.HCG],
@@ -603,8 +626,8 @@ const CareElementsList = ({
           },
           FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
           E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
-          AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
-          DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+          AMH: { AMH: "", AMHUnit: "pmol/L", Date: nowTZTimestamp() },
+          DHEAS: { DHEAS: "", DHEASUnit: "ug/dL", Date: nowTZTimestamp() },
           HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
           LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
           PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },
@@ -655,8 +678,8 @@ const CareElementsList = ({
       },
       FSH: { FSH: "", FSHUnit: "IU/L", Date: nowTZTimestamp() },
       E2: { E2: "", E2Unit: "pmol/L", Date: nowTZTimestamp() },
-      AMHP: { AMHP: "", AMHPUnit: "pmol/L", Date: nowTZTimestamp() },
-      DHEA: { DHEA: "", DHEAUnit: "ug/dL", Date: nowTZTimestamp() },
+      AMH: { AMH: "", AMHUnit: "pmol/L", Date: nowTZTimestamp() },
+      DHEAS: { DHEAS: "", DHEASUnit: "ug/dL", Date: nowTZTimestamp() },
       HCG: { HCG: "", HCGUnit: "IU/L", Date: nowTZTimestamp() },
       LH: { LH: "", LHUnit: "IU/L", Date: nowTZTimestamp() },
       PRL: { PRL: "", PRLUnit: "ng/mL", Date: nowTZTimestamp() },

@@ -14,7 +14,7 @@ const ivfMeds = [
   "Orgalutran",
   "Omnitrope/Saizen",
   "Testogel",
-  "DHEA",
+  "DHEAS",
   "Orilissa",
   "Provera",
   "Progesterone suppositories",

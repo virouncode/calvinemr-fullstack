@@ -21,9 +21,6 @@ const ChecklistHistory = ({
   topicPut,
   topicDelete,
 }: ChecklistHistoryProps) => {
-  console.log("render history");
-  console.log(testHistoryToShow);
-
   const [errMsgPost, setErrMsgPost] = React.useState<string>("");
   const handleClose = () => {
     setHistoryVisible(false);

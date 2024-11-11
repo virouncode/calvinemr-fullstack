@@ -14,7 +14,7 @@ import Input from "../../../../../UI/Inputs/Input";
 import InputDate from "../../../../../UI/Inputs/InputDate";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 
-type AMHPHistoryEditProps = {
+type DHEASHistoryEditProps = {
   datas: CareElementType;
   careElementPut: UseMutationResult<
     CareElementType,
@@ -25,22 +25,22 @@ type AMHPHistoryEditProps = {
   setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AMHPHistoryEdit = ({
+const DHEASHistoryEdit = ({
   datas,
   careElementPut,
   setEditVisible,
-}: AMHPHistoryEditProps) => {
+}: DHEASHistoryEditProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
-  const [formDatasAMHP, setFormDatasAMHP] = useState<
+  const [formDatasDHEAS, setFormDatasDHEAS] = useState<
     {
       id: number;
-      AMHP: string;
-      AMHPUnit: "pmol/L";
+      DHEAS: string;
+      DHEASUnit: "ug/dL";
       Date: number;
     }[]
   >(
-    datas?.AMHP.map((item, index) => {
+    datas?.DHEAS.map((item, index) => {
       return { ...item, id: index };
     })
   );
@@ -57,16 +57,16 @@ const AMHPHistoryEdit = ({
     const name = e.target.name;
     if (name === "Date" && !value) return; //to avoid clearing the date field
     switch (name) {
-      case "AMHP":
-        setFormDatasAMHP(
-          formDatasAMHP.map((item) => {
-            return item.id === id ? { ...item, AMHP: value } : item;
+      case "DHEAS":
+        setFormDatasDHEAS(
+          formDatasDHEAS.map((item) => {
+            return item.id === id ? { ...item, DHEAS: value } : item;
           })
         );
         break;
       case "Date":
-        setFormDatasAMHP(
-          formDatasAMHP.map((item) => {
+        setFormDatasDHEAS(
+          formDatasDHEAS.map((item) => {
             return item.id === id
               ? { ...item, Date: dateISOToTimestampTZ(value) ?? 0 }
               : item;
@@ -79,17 +79,17 @@ const AMHPHistoryEdit = ({
   };
   const handleSubmit = async () => {
     //Validation
-    if (formDatasAMHP.some(({ AMHP, Date }) => !AMHP || !Date)) {
-      setErrMsgPost("Please fill both AMHP and Date fields");
+    if (formDatasDHEAS.some(({ DHEAS, Date }) => !DHEAS || !Date)) {
+      setErrMsgPost("Please fill both DHEAS and Date fields");
       return;
     }
-    if (formDatasAMHP.some(({ AMHP }) => !AMHP.match(/^\d+(\.\d{0,2})?$/))) {
-      setErrMsgPost("Please enter a valid number for AMHP");
+    if (formDatasDHEAS.some(({ DHEAS }) => !DHEAS.match(/^\d+(\.\d{0,2})?$/))) {
+      setErrMsgPost("Please enter a valid number for DHEAS");
       return;
     }
     const careElementToPut = {
       ...datas,
-      AMHP: formDatasAMHP,
+      DHEAS: formDatasDHEAS,
       updates: [
         ...datas.updates,
         { date_updated: nowTZTimestamp(), updated_by_id: user.id },
@@ -106,13 +106,13 @@ const AMHPHistoryEdit = ({
         className="care-elements__edit-list"
         style={{ border: errMsgPost && "solid 1px red" }}
       >
-        {formDatasAMHP.map((item) => (
+        {formDatasDHEAS.map((item) => (
           <li className="care-elements__edit-item" key={item.id}>
             <span className="care-elements__edit-block care-elements__edit-block--double">
               <InputDate
                 label="Date:"
                 value={timestampToDateISOTZ(
-                  formDatasAMHP.find(({ id }) => id === item.id)?.Date
+                  formDatasDHEAS.find(({ id }) => id === item.id)?.Date
                 )}
                 onChange={handleChange}
                 id={item.id.toString()}
@@ -121,13 +121,13 @@ const AMHPHistoryEdit = ({
             </span>
             <span className="care-elements__edit-block care-elements__edit-block--double">
               <Input
-                label="AMHP (pmol/L):"
+                label="DHEAS (ug/dL):"
                 value={
-                  formDatasAMHP.find(({ id }) => id === item.id)?.AMHP ?? ""
+                  formDatasDHEAS.find(({ id }) => id === item.id)?.DHEAS ?? ""
                 }
                 onChange={handleChange}
                 id={item.id.toString()}
-                name="AMHP"
+                name="DHEAS"
               />
             </span>
           </li>
@@ -141,4 +141,4 @@ const AMHPHistoryEdit = ({
   );
 };
 
-export default AMHPHistoryEdit;
+export default DHEASHistoryEdit;

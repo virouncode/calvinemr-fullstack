@@ -10,10 +10,10 @@ import { timestampToDateTimeSecondsStrTZ } from "../../../../../utils/dates/form
 import { getLastUpdate, isUpdated } from "../../../../../utils/dates/updates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import CareElementsAdditional from "./CareElementsAdditional";
-import CareElementsAMHP from "./CareElementsAMHP";
+import CareElementsAMH from "./CareElementsAMH";
 import CareElementsBMI from "./CareElementsBMI";
 import CareElementsBSA from "./CareElementsBSA";
-import CareElementsDHEA from "./CareElementsDHEA";
+import CareElementsDHEAS from "./CareElementsDHEAS";
 import CareElementsDiastolic from "./CareElementsDiastolic";
 import CareElementsE2 from "./CareElementsE2";
 import CareElementsFSH from "./CareElementsFSH";
@@ -151,13 +151,13 @@ const CareElementsListContent = ({
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
-      <CareElementsAMHP
+      <CareElementsAMH
         careElementPut={careElementPut}
         datas={datas}
         lastDatas={lastDatas}
         handleClickHistory={handleClickHistory}
       />
-      <CareElementsDHEA
+      <CareElementsDHEAS
         careElementPut={careElementPut}
         datas={datas}
         lastDatas={lastDatas}

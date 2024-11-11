@@ -65,15 +65,15 @@ export const careElementsSchema = yup.object({
       excludeEmptyString: true,
     }),
   }),
-  AMHP: yup.object({
-    AMHP: yup.string().matches(/^\d+(\.\d{0,2})?$/, {
-      message: "Invalid AMHP value",
+  AMH: yup.object({
+    AMH: yup.string().matches(/^\d+(\.\d{0,2})?$/, {
+      message: "Invalid AMH value",
       excludeEmptyString: true,
     }),
   }),
-  DHEA: yup.object({
-    DHEA: yup.string().matches(/^\d+(\.\d{0,2})?$/, {
-      message: "Invalid DHEA value",
+  DHEAS: yup.object({
+    DHEAS: yup.string().matches(/^\d+(\.\d{0,2})?$/, {
+      message: "Invalid DHEAS value",
       excludeEmptyString: true,
     }),
   }),

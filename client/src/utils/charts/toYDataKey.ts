@@ -25,10 +25,10 @@ export const toYDataKey = (historyTopic: CareElementHistoryTopicType) => {
     return "P4";
   } else if (historyTopic === "FSH") {
     return "FSH";
-  } else if (historyTopic === "AMHP") {
-    return "AMHP";
-  } else if (historyTopic === "DHEA") {
-    return "DHEA";
+  } else if (historyTopic === "AMH") {
+    return "AMH";
+  } else if (historyTopic === "DHEAS") {
+    return "DHEAS";
   } else if (historyTopic === "HCG") {
     return "HCG";
   } else if (historyTopic === "PRL") {

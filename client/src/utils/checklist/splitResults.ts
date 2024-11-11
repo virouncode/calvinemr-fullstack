@@ -63,7 +63,7 @@ export const checklistTests = [
     defaultValidity: { days: 0, weeks: 0, months: 6, years: 0 },
   },
   {
-    name: "DHEAS",
+    name: "DHEASS",
     defaultValidity: { days: 0, weeks: 0, months: 6, years: 0 },
   },
   {

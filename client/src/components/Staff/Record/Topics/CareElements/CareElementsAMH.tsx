@@ -9,9 +9,9 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import DHEAHistoryEdit from "./History/DHEAHistoryEdit";
+import AMHHistoryEdit from "./History/AMHHistoryEdit";
 
-type CareElementsDHEAProps = {
+type CareElementsAMHProps = {
   datas: CareElementType;
   lastDatas: CareElementLastDatasType;
   careElementPut: UseMutationResult<
@@ -22,12 +22,12 @@ type CareElementsDHEAProps = {
   >;
   handleClickHistory: (rowName: CareElementHistoryTopicType) => void;
 };
-const CareElementsDHEA = ({
+const CareElementsAMH = ({
   datas,
   lastDatas,
   careElementPut,
   handleClickHistory,
-}: CareElementsDHEAProps) => {
+}: CareElementsAMHProps) => {
   //Hooks
   const [editVisible, setEditVisible] = useState(false);
 
@@ -37,16 +37,16 @@ const CareElementsDHEA = ({
   return (
     <div className="care-elements__card-content-row">
       <label className="care-elements__card-content-row-label">
-        DHEA (ug/dL):
+        AMH (pmol/L):
       </label>
       <div className="care-elements__card-content-row-value">
-        {lastDatas.DHEA?.DHEA}
+        {lastDatas.AMH?.AMH}
       </div>
-      {lastDatas.DHEA?.DHEA && (
+      {lastDatas.AMH?.AMH && (
         <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
-              <ClockIcon onClick={() => handleClickHistory("DHEA")} mr={15} />
+              <ClockIcon onClick={() => handleClickHistory("AMH")} mr={15} />
             </span>
           </Tooltip>
           <Tooltip title="Edit history">
@@ -58,7 +58,7 @@ const CareElementsDHEA = ({
       )}
       {editVisible && (
         <FakeWindow
-          title="EDIT DHEA HISTORY"
+          title="EDIT AMH HISTORY"
           width={550}
           height={550}
           x={(window.innerWidth - 550) / 2}
@@ -66,7 +66,7 @@ const CareElementsDHEA = ({
           color="#577399"
           setPopUpVisible={setEditVisible}
         >
-          <DHEAHistoryEdit
+          <AMHHistoryEdit
             datas={datas}
             careElementPut={careElementPut}
             setEditVisible={setEditVisible}
@@ -77,4 +77,4 @@ const CareElementsDHEA = ({
   );
 };
 
-export default CareElementsDHEA;
+export default CareElementsAMH;

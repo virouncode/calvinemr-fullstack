@@ -43,7 +43,6 @@ const StaffAccountEdit = ({
   const [errMsg, setErrMsg] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);
-  console.log(infos);
 
   useEffect(() => {
     setFormDatas(infos);

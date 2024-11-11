@@ -9,9 +9,9 @@ import {
 import ClockIcon from "../../../../UI/Icons/ClockIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
-import AMHPHistoryEdit from "./History/AMHPHistoryEdit";
+import DHEASHistoryEdit from "./History/DHEASHistoryEdit";
 
-type CareElementsAMHPProps = {
+type CareElementsDHEASProps = {
   datas: CareElementType;
   lastDatas: CareElementLastDatasType;
   careElementPut: UseMutationResult<
@@ -22,12 +22,12 @@ type CareElementsAMHPProps = {
   >;
   handleClickHistory: (rowName: CareElementHistoryTopicType) => void;
 };
-const CareElementsAMHP = ({
+const CareElementsDHEAS = ({
   datas,
   lastDatas,
   careElementPut,
   handleClickHistory,
-}: CareElementsAMHPProps) => {
+}: CareElementsDHEASProps) => {
   //Hooks
   const [editVisible, setEditVisible] = useState(false);
 
@@ -37,16 +37,16 @@ const CareElementsAMHP = ({
   return (
     <div className="care-elements__card-content-row">
       <label className="care-elements__card-content-row-label">
-        AMHP (pmol/L):
+        DHEAS (ug/dL):
       </label>
       <div className="care-elements__card-content-row-value">
-        {lastDatas.AMHP?.AMHP}
+        {lastDatas.DHEAS?.DHEAS}
       </div>
-      {lastDatas.AMHP?.AMHP && (
+      {lastDatas.DHEAS?.DHEAS && (
         <div className="care-elements__card-content-row-btns">
           <Tooltip title="Show history">
             <span>
-              <ClockIcon onClick={() => handleClickHistory("AMHP")} mr={15} />
+              <ClockIcon onClick={() => handleClickHistory("DHEAS")} mr={15} />
             </span>
           </Tooltip>
           <Tooltip title="Edit history">
@@ -58,7 +58,7 @@ const CareElementsAMHP = ({
       )}
       {editVisible && (
         <FakeWindow
-          title="EDIT AMHP HISTORY"
+          title="EDIT DHEAS HISTORY"
           width={550}
           height={550}
           x={(window.innerWidth - 550) / 2}
@@ -66,7 +66,7 @@ const CareElementsAMHP = ({
           color="#577399"
           setPopUpVisible={setEditVisible}
         >
-          <AMHPHistoryEdit
+          <DHEASHistoryEdit
             datas={datas}
             careElementPut={careElementPut}
             setEditVisible={setEditVisible}
@@ -77,4 +77,4 @@ const CareElementsAMHP = ({
   );
 };
 
-export default CareElementsAMHP;
+export default CareElementsDHEAS;
