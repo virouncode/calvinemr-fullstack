@@ -50,6 +50,9 @@
         width: 100%;
         font-size: $size-base;
       }
+      &:nth-child(2) {
+        text-align: left;
+      }
     }
   }
   &__item-btn-container {
