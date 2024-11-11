@@ -8,7 +8,7 @@ import useTitle from "../../hooks/useTitle";
 
 const StaffPatientsGroupsPage = () => {
   const { gtype } = useParams();
-  const [groupType, setGroupType] = useState(gtype || "My groups");
+  const [groupType, setGroupType] = useState(gtype || "Clinic groups");
   const isTypeChecked = (type: string) => {
     return type === groupType ? true : false;
   };
