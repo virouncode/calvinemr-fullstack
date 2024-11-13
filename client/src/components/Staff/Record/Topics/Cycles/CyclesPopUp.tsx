@@ -197,6 +197,7 @@ const CyclesPopUp = ({
             cycleToShow={cycleToShow}
             demographicsInfos={demographicsInfos}
             topicPut={topicPut}
+            patientId={patientId}
           />
         </FakeWindow>
       )}

@@ -125,7 +125,6 @@ const CareElementsPopUp = ({
       </div>
     );
   }
-
   const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 

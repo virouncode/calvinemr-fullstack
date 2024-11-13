@@ -6,8 +6,8 @@ import {
 } from "../../../../../../types/api";
 import {
   dateISOToTimestampTZ,
-  nowTZTimestamp,
   timestampToDateISOTZ,
+  todayTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -29,7 +29,7 @@ const NewCareElementItemForm = ({
   const [formDatas, setFormDatas] = useState<CareElementAdditionalType>({
     Name: "",
     Unit: "",
-    Data: [{ Value: "", Date: nowTZTimestamp() }],
+    Data: [{ Value: "", Date: todayTZTimestamp() }],
   });
   const [errMsgPost, setErrMsgPost] = useState("");
   const [progress, setProgress] = useState(false);

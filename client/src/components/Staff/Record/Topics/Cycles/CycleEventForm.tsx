@@ -52,6 +52,7 @@ const CycleEventForm = ({
     const name = e.target.name;
     let value: string | number | null = e.target.value;
     if (name === "date") {
+      if (!value) return;
       value = dateISOToTimestampTZ(value);
       setFormDatas({
         ...formDatas,

@@ -91,6 +91,7 @@ const CycleDropDown = ({
             cycleToShow={cycleToShow}
             demographicsInfos={demographicsInfos}
             topicPut={topicPut}
+            patientId={demographicsInfos.patient_id}
           />
         </FakeWindow>
       )}

@@ -11,6 +11,7 @@ import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
+  todayTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -46,11 +47,11 @@ const CareElementFormSmoking = ({
   const [progress, setProgress] = useState(false);
   const [formDatasSmokingStatus, setFormDatasSmokingStatus] = useState({
     Status: "",
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
   const [formDatasSmokingPacks, setFormDatasSmokingPacks] = useState({
     PerDay: "",
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
 
   const handleChange = (

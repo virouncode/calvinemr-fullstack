@@ -7,6 +7,7 @@ import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
+  todayTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import {
   bodyMassIndex,
@@ -47,22 +48,22 @@ const CareElementFormMeasurements = ({
   const [formDatasKg, setFormDatasKg] = useState({
     Weight: "",
     WeightUnit: "kg" as const,
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
   const [formDatasLbs, setFormDatasLbs] = useState({
     Weight: "",
     WeightUnit: "lbs" as const,
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
   const [formDatasCm, setFormDatasCm] = useState({
     Height: "",
     HeightUnit: "cm" as const,
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
   const [formDatasFtIn, setFormDatasFtIn] = useState({
     Height: "",
     HeightUnit: "ft in" as const,
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

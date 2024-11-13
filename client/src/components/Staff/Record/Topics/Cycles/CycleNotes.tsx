@@ -1,10 +1,10 @@
 import _ from "lodash";
 import React from "react";
 import { CycleType } from "../../../../../types/api";
-import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleNoteForm from "./CycleNoteForm";
+import { todayTZTimestamp } from "../../../../../utils/dates/formatDates";
 
 type CycleNotesProps = {
   formDatas: Partial<CycleType>;
@@ -27,7 +27,7 @@ const CycleNotes = ({
         {
           temp_id: _.uniqueId(),
           text: "",
-          date: nowTZTimestamp(),
+          date: todayTZTimestamp(),
         },
       ],
     });

@@ -10,6 +10,7 @@ import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
+  todayTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -45,7 +46,7 @@ const CareElementForm = ({
   const [formDatas, setFormDatas] = useState({
     [careElementToAdd.valueKey]: "",
     [careElementToAdd.unitKey]: careElementToAdd.unit,
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

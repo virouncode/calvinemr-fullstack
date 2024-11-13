@@ -313,6 +313,10 @@ export const nowTZTimestamp = (timezone = "America/Toronto") => {
   return nowTZ(timezone).toMillis();
 };
 
+export const todayTZTimestamp = (timezone = "America/Toronto") => {
+  return nowTZ(timezone).startOf("day").toMillis();
+};
+
 export const tzComponentsToTimestamp = (
   dateStr: string | undefined | null,
   hoursStr: string,
@@ -447,7 +451,7 @@ export const toDayOfCycle = (date: number, lmp: number) => {
   const dateCurrent = DateTime.fromMillis(date);
 
   // Calculate the difference in days
-  const diffInDays = dateCurrent.diff(dateLmp, "days").days + 1;
+  const diffInDays = Math.floor(dateCurrent.diff(dateLmp, "days").days) + 1;
   if (diffInDays < 0) return "";
   return diffInDays.toString();
 };

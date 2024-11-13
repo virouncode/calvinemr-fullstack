@@ -1,7 +1,10 @@
 import _ from "lodash";
 import React from "react";
 import { CycleEventType, CycleType } from "../../../../../types/api";
-import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
+import {
+  toDayOfCycle,
+  todayTZTimestamp,
+} from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleEventForm from "./CycleEventForm";
@@ -27,8 +30,11 @@ const CycleEvents = ({
         ...(formDatas.events as CycleEventType[]),
         {
           temp_id: _.uniqueId(),
-          date: nowTZTimestamp(),
-          day_of_cycle: "",
+          date: todayTZTimestamp(),
+          day_of_cycle: toDayOfCycle(
+            todayTZTimestamp(),
+            formDatas.lmp as number
+          ),
           left_follicles: "",
           right_follicles: "",
           endometrial_thickness: "",
@@ -62,9 +68,9 @@ const CycleEvents = ({
               <th>Action</th>
               <th>Date</th>
               <th>Day of cycle</th>
-              <th>E2</th>
-              <th>LH</th>
-              <th>P4</th>
+              <th>E2 (pmol/L)</th>
+              <th>LH (IU/L)</th>
+              <th>P4 (ng/mL)</th>
               <th>End</th>
               <th>Left follicles</th>
               <th>Right follicles</th>

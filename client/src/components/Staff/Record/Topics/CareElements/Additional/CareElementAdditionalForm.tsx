@@ -10,6 +10,7 @@ import {
   dateISOToTimestampTZ,
   nowTZTimestamp,
   timestampToDateISOTZ,
+  todayTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -47,7 +48,7 @@ const CareElementAdditionalForm = ({
   const [progress, setProgress] = useState(false);
   const [formDatas, setFormDatas] = useState({
     Value: "",
-    Date: nowTZTimestamp(),
+    Date: todayTZTimestamp(),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
