@@ -1,6 +1,9 @@
-import React from "react";
-import { useDoctors } from "../../../../hooks/reactquery/queries/doctorsQueries";
+import React, { useState } from "react";
+import { useDoctorsSearch } from "../../../../hooks/reactquery/queries/doctorsQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
+import Input from "../../../UI/Inputs/Input";
+import EmptyLi from "../../../UI/Lists/EmptyLi";
 import LoadingLi from "../../../UI/Lists/LoadingLi";
 import DoctorFaxNumberItem from "./DoctorFaxNumberItem";
 
@@ -13,6 +16,8 @@ const DoctorsFaxNumbers = ({
   handleCheckContact,
   isContactChecked,
 }: DoctorsFaxNumbersProps) => {
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data,
@@ -21,7 +26,7 @@ const DoctorsFaxNumbers = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useDoctors();
+  } = useDoctorsSearch(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -29,51 +34,41 @@ const DoctorsFaxNumbers = ({
     isFetching
   );
 
-  if (isPending)
-    return (
-      <div className="fax-numbers">
-        <label className="fax-numbers__title">Doctors</label>
-        <ul className="fax-numbers__list">
-          <LoadingLi />
-        </ul>
-      </div>
-    );
-  if (error)
-    return (
-      <div className="fax-numbers">
-        <label className="fax-numbers__title">Doctors</label>
-        <ul className="fax-numbers__list">
-          <li>{error.message}</li>
-        </ul>
-      </div>
-    );
-
-  const doctors = data.pages
+  const doctors = data?.pages
     ?.flatMap((page) => page.items)
     .filter(({ FaxNumber }) => FaxNumber.phoneNumber);
 
   return (
     <div className="fax-numbers">
       <label className="fax-numbers__title">Doctors</label>
+      <Input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
       <ul className="fax-numbers__list" ref={ulRef}>
-        {doctors.map((doctor, index) =>
-          index === doctors.length - 1 ? (
-            <DoctorFaxNumberItem
-              key={doctor.id}
-              doctor={doctor}
-              lastItemRef={lastItemRef}
-              handleCheckContact={handleCheckContact}
-              isContactChecked={isContactChecked}
-            />
-          ) : (
-            <DoctorFaxNumberItem
-              key={doctor.id}
-              doctor={doctor}
-              handleCheckContact={handleCheckContact}
-              isContactChecked={isContactChecked}
-            />
-          )
-        )}
+        {error && <li>{error.message}</li>}
+        {doctors && doctors.length > 0
+          ? doctors.map((doctor, index) =>
+              index === doctors.length - 1 ? (
+                <DoctorFaxNumberItem
+                  key={doctor.id}
+                  doctor={doctor}
+                  lastItemRef={lastItemRef}
+                  handleCheckContact={handleCheckContact}
+                  isContactChecked={isContactChecked}
+                />
+              ) : (
+                <DoctorFaxNumberItem
+                  key={doctor.id}
+                  doctor={doctor}
+                  handleCheckContact={handleCheckContact}
+                  isContactChecked={isContactChecked}
+                />
+              )
+            )
+          : !isFetchingNextPage && !isPending && <EmptyLi text="No results" />}
+        {(isPending || isFetchingNextPage) && <LoadingLi />}
       </ul>
     </div>
   );
