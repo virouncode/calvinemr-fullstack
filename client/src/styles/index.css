@@ -205,6 +205,12 @@ summary {
   padding: 0;
 }
 
+embed,
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
 html {
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
@@ -519,6 +525,9 @@ select:disabled {
   padding: 0.75rem;
   cursor: pointer;
   min-width: 150px;
+}
+.clinic__sites-table thead th:nth-child(11) {
+  min-width: 300px;
 }
 .clinic__sites-table tbody tr {
   border-bottom: solid 1px #cecdcd;
@@ -1187,6 +1196,7 @@ select:disabled {
   border-radius: 6px;
 }
 .staff-accounts__table thead th {
+  text-align: left;
   padding: 0.75rem;
   cursor: pointer;
   min-width: 150px;
@@ -1197,7 +1207,7 @@ select:disabled {
 .staff-accounts__table tbody tr td {
   padding: 0.75rem;
   overflow: hidden;
-  text-align: center;
+  text-align: left;
 }
 
 @media (min-width: 475px) {
@@ -1220,6 +1230,105 @@ select:disabled {
     font-size: 0.85rem;
   }
   .staff-accounts__item-btn-container button {
+    font-size: 0.85rem;
+  }
+}
+.logs {
+  padding: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.logs__search {
+  margin: 0 auto 1rem;
+  border: solid 1px #cecdcd;
+  border-radius: 6px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 940px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.logs__search-filter {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+}
+.logs__search-filter-item {
+  display: flex;
+  flex-direction: column;
+}
+.logs__search-filter-item input {
+  font-size: 1rem;
+  width: 100%;
+}
+.logs__search-filter-item input:disabled {
+  color: #fefefe;
+}
+.logs__search label {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.25em;
+}
+.logs__search-input input {
+  font-size: 1rem;
+  width: 100%;
+}
+.logs__table-container {
+  height: 300px;
+  overflow-y: scroll;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  background-color: #fefefe;
+}
+.logs__table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.7rem;
+}
+.logs__table thead {
+  position: sticky;
+  top: 0;
+  background-color: #8fb4fb;
+  border-radius: 6px;
+}
+.logs__table thead th {
+  padding: 0.75rem;
+  cursor: pointer;
+  min-width: 150px;
+}
+.logs__table tbody tr {
+  border-bottom: solid 1px #cecdcd;
+}
+.logs__table tbody tr td {
+  padding: 0.75rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+@media (min-width: 475px) {
+  .logs__table-container {
+    flex: 1;
+  }
+  .logs {
+    height: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  .logs__search label {
+    font-size: 0.85rem;
+  }
+  .logs__search input {
+    font-size: 0.85rem;
+  }
+  .logs__table {
     font-size: 0.85rem;
   }
 }
@@ -1978,6 +2087,13 @@ select:disabled {
 }
 .subheader__right {
   display: none;
+}
+.subheader__right-logout {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.subheader__right-logout:hover {
+  opacity: 0.9;
 }
 
 @media (min-width: 1024px) {
@@ -3608,6 +3724,9 @@ select:disabled {
 .calendar__display .fc-timegrid-event .fc-event-main {
   overflow: hidden;
 }
+.calendar__display .fc-timegrid-event-harness {
+  margin: 0.1rem;
+}
 .calendar__display .fc-toolbar-chunk:nth-child(1) {
   margin-bottom: 2.5rem;
 }
@@ -4664,6 +4783,106 @@ select:disabled {
   font-size: 1.25rem;
   text-align: center;
 }
+.care-elements__table-container {
+  flex: 1;
+  overflow: scroll;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  position: relative;
+}
+.care-elements__table {
+  table-layout: fixed;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.7rem;
+}
+.care-elements__table thead {
+  position: sticky;
+  top: 0;
+  background: #8fb4fb;
+  border-radius: 6px;
+}
+.care-elements__table th {
+  min-width: 120px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.care-elements__table th:nth-child(1) {
+  width: 400px;
+}
+.care-elements__table th:nth-child(2) {
+  width: 360px;
+}
+.care-elements__item {
+  border-bottom: solid 1px #cecdcd;
+}
+.care-elements__item--notgoing {
+  background: #efeff1;
+}
+.care-elements__item td {
+  text-align: center;
+  padding: 0.5rem;
+  word-break: break-word;
+}
+.care-elements__item td input,
+.care-elements__item td select {
+  width: 100%;
+  font-size: 1rem;
+}
+.care-elements__item td:nth-child(2) {
+  text-align: left;
+}
+.care-elements__item-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+.care-elements__item-btn-container button {
+  font-size: 0.7rem;
+}
+.care-elements__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.care-elements__form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+.care-elements__form-item {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.care-elements__form-item label {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+.care-elements__form-item input {
+  font-size: 1rem;
+  width: 100%;
+}
+.care-elements__form-item p {
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+.care-elements__form-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+.care-elements__btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
 .care-elements__card {
   width: 95%;
   flex: 1;
@@ -4830,6 +5049,33 @@ select:disabled {
   }
 }
 @media (min-width: 1024px) {
+  .care-elements__item td input,
+  .care-elements__item td select {
+    font-size: 0.85rem;
+  }
+  .care-elements__table {
+    font-size: 0.85rem;
+  }
+  .care-elements__item-btn-container button {
+    font-size: 0.85rem;
+  }
+  .care-elements__form {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .care-elements__form-item label {
+    font-size: 0.85rem;
+  }
+  .care-elements__form-item input {
+    font-size: 0.85rem;
+    width: 100%;
+  }
+  .care-elements__form-item p {
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+  }
   .care-elements__card-content {
     gap: 0.5rem;
   }
@@ -4879,6 +5125,150 @@ select:disabled {
   }
   .care-elements__edit-block input,
   .care-elements__edit-block select {
+    font-size: 0.85rem;
+  }
+}
+.checklist {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+.checklist__title {
+  font-size: 1.25rem;
+  text-align: center;
+}
+.checklist__table-container {
+  flex: 1;
+  overflow: scroll;
+  border-radius: 6px;
+  box-shadow: rgba(149, 157, 165, 0.8) 0px 3px 4px;
+  position: relative;
+}
+.checklist__table {
+  table-layout: fixed;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.7rem;
+}
+.checklist__table thead {
+  position: sticky;
+  top: 0;
+  background: #8fb4fb;
+  border-radius: 6px;
+}
+.checklist__table th {
+  min-width: 120px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.checklist__table th:nth-child(2) {
+  width: 360px;
+}
+.checklist__item {
+  border-bottom: solid 1px #cecdcd;
+}
+.checklist__item--notgoing {
+  background: #efeff1;
+}
+.checklist__item td {
+  text-align: center;
+  padding: 0.5rem;
+  word-break: break-word;
+}
+.checklist__item td input,
+.checklist__item td select {
+  width: 100%;
+  font-size: 1rem;
+}
+.checklist__item td:nth-child(2) {
+  text-align: left;
+}
+.checklist__item-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+.checklist__item-btn-container button {
+  font-size: 0.7rem;
+}
+.checklist__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.checklist__form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+.checklist__form-item {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.checklist__form-item label {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+.checklist__form-item input {
+  font-size: 1rem;
+  width: 100%;
+}
+.checklist__form-item p {
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+.checklist__form-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+.checklist__btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .checklist__item td input,
+  .checklist__item td select {
+    font-size: 0.85rem;
+  }
+  .checklist__table {
+    font-size: 0.85rem;
+  }
+  .checklist__item-btn-container button {
+    font-size: 0.85rem;
+  }
+  .checklist__form {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .checklist__form-item:nth-child(2) {
+    min-width: 340px;
+  }
+  .checklist__form-item:nth-child(3), .checklist__form-item:nth-child(4) {
+    flex: 1;
+  }
+  .checklist__form-item label {
+    font-size: 0.85rem;
+  }
+  .checklist__form-item input {
+    font-size: 0.85rem;
+  }
+  .checklist__form-item p {
+    padding: 0.5rem 0;
     font-size: 0.85rem;
   }
 }
@@ -5065,17 +5455,44 @@ select:disabled {
   white-space: pre-wrap;
 }
 .clinical-notes__card-body-container p {
-  width: 98%;
   overflow-wrap: break-word;
   margin: 0 auto;
 }
-.clinical-notes__card-body-container textarea {
-  padding: 0.5rem;
-  display: block;
-  margin: 0 auto;
-  width: 98%;
-  overflow-y: scroll;
+.clinical-notes__card-body-quill {
+  width: 100%;
+}
+.clinical-notes__card-body-quill .ql-toolbar.ql-snow {
+  display: none;
+}
+.clinical-notes__card-body-quill .ql-container.ql-snow {
+  height: 100%;
+  border: none;
   font-size: 1rem;
+}
+.clinical-notes__card-body-quill--edit {
+  height: 400px;
+  overflow-y: scroll;
+}
+.clinical-notes__card-body-quill--edit .ql-container.ql-snow {
+  height: 86%;
+  border: solid 1px #cecdcd;
+  border-radius: 0 0 6px 6px;
+}
+.clinical-notes__card-body-quill--edit .ql-toolbar.ql-snow {
+  display: block;
+}
+.clinical-notes__card-body-quill--overview .ql-editor {
+  margin-left: 40px;
+  padding: 0;
+}
+.clinical-notes__card-body-quill--overview .ql-editor p {
+  margin: 0;
+}
+.clinical-notes__card-body-quill--print .ql-container.ql-snow {
+  height: auto;
+}
+.clinical-notes__card-body-quill--print .ql-editor {
+  height: auto;
 }
 .clinical-notes__card-sign {
   text-align: end;
@@ -5177,24 +5594,22 @@ select:disabled {
   white-space: nowrap;
 }
 .clinical-notes__form-body {
-  padding: 0.5rem;
+  padding: 1rem;
   position: relative;
   margin-bottom: 0.5rem;
 }
-.clinical-notes__form-body textarea {
-  font-size: 1rem;
-  display: block;
-  resize: none;
+.clinical-notes__form-body-quill {
+  width: 100%;
+  height: 400px;
   overflow-y: scroll;
-  padding: 0.5rem;
-  padding-right: 2rem;
-  font-family: Lato, sans-serif, sans-serif;
-  width: 98%;
-  border: none;
-  border-radius: 3px;
-  height: 300px;
-  margin: 0 auto;
-  position: relative;
+}
+.clinical-notes__form-body-quill .ql-toolbar.ql-snow {
+  display: block;
+}
+.clinical-notes__form-body-quill .ql-container.ql-snow {
+  font-size: 1rem;
+  height: 86%;
+  border-radius: 0 0 6px 6px;
 }
 .clinical-notes__form-btns {
   display: flex;
@@ -5363,13 +5778,13 @@ select:disabled {
   .clinical-notes__card-header-subject input {
     font-size: 0.85rem;
   }
-  .clinical-notes__card-body textarea {
+  .clinical-notes__card-body-quill .ql-container.ql-snow {
     font-size: 0.85rem;
   }
   .clinical-notes__form-header-subject input {
     font-size: 0.85rem;
   }
-  .clinical-notes__form-body textarea {
+  .clinical-notes__form-body-quill .ql-container.ql-snow {
     font-size: 0.85rem;
   }
 }
@@ -7292,6 +7707,7 @@ select:disabled {
 .fax .fax__content .fax__content-box .fax__detail-content {
   flex: 1;
   width: 100%;
+  overflow-y: auto;
 }
 
 .fax-print__container {
@@ -10023,7 +10439,7 @@ select:disabled {
   font-size: 0.85rem;
   padding: 0.5rem;
 }
-.new-fax .new-fax__contacts .fax-contacts .fax-contacts__title {
+.new-fax .new-fax__contacts .fax-contacts__title {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 1rem;
@@ -10031,11 +10447,11 @@ select:disabled {
 .new-fax .new-fax__contacts .fax-contacts .fax-numbers {
   margin-bottom: 20px;
 }
-.new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__title {
+.new-fax .new-fax__contacts .fax-contacts .fax-numbers__title {
   font-weight: bold;
   font-size: 0.85rem;
 }
-.new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__list {
+.new-fax .new-fax__contacts .fax-contacts .fax-numbers__list {
   height: 150px;
   overflow-y: scroll;
   border: solid 0.5px #cecdcd;
@@ -10043,11 +10459,9 @@ select:disabled {
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
 }
-.new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__item {
-  cursor: pointer;
-}
-.new-fax .new-fax__contacts .fax-contacts .fax-numbers .fax-numbers__item:hover {
-  text-decoration: underline;
+.new-fax .new-fax__contacts .fax-contacts .fax-numbers__item {
+  display: flex;
+  align-items: center;
 }
 .new-fax .new-fax__form {
   border: solid 0.5px #cecdcd;
@@ -10057,17 +10471,17 @@ select:disabled {
   flex-direction: column;
   overflow-y: scroll;
 }
-.new-fax .new-fax__form .new-fax__form-recipients {
+.new-fax .new-fax__form-recipients {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.new-fax .new-fax__form .new-fax__form-recipients label {
+.new-fax .new-fax__form-recipients label {
   font-weight: bold;
 }
-.new-fax .new-fax__form .new-fax__form-recipients input {
+.new-fax .new-fax__form-recipients input {
   width: 97%;
   overflow: hidden;
   white-space: nowrap;
@@ -10076,34 +10490,34 @@ select:disabled {
   padding: 0.25rem 0.5rem;
   outline: none;
 }
-.new-fax .new-fax__form .new-fax__form-subject {
+.new-fax .new-fax__form-subject {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.new-fax .new-fax__form .new-fax__form-subject label {
+.new-fax .new-fax__form-subject label {
   font-weight: bold;
 }
-.new-fax .new-fax__form .new-fax__form-subject input {
+.new-fax .new-fax__form-subject input {
   outline: none;
   width: 95%;
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
   overflow-x: scroll;
 }
-.new-fax .new-fax__form .new-fax__form-patient {
+.new-fax .new-fax__form-patient {
   border-bottom: solid 0.5px #cecdcd;
   height: 30px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
-.new-fax .new-fax__form .new-fax__form-patient label {
+.new-fax .new-fax__form-patient label {
   font-weight: bold;
 }
-.new-fax .new-fax__form .new-fax__form-patient input {
+.new-fax .new-fax__form-patient input {
   outline: none;
   width: 80%;
   font-size: 0.85rem;
@@ -10112,8 +10526,8 @@ select:disabled {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.new-fax .new-fax__form .new-fax__form-attach {
-  border-bottom: solid 0.3px #efeff1;
+.new-fax .new-fax__form-attach {
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10121,23 +10535,23 @@ select:disabled {
   padding: 0.5rem;
   font-size: 0.85rem;
 }
-.new-fax .new-fax__form .new-fax__form-attach label {
+.new-fax .new-fax__form-attach label {
   font-weight: bold;
 }
-.new-fax .new-fax__form .new-fax__form-templates {
-  border-bottom: solid 0.3px #efeff1;
+.new-fax .new-fax__form-templates {
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   padding: 0.5rem;
   text-decoration: underline;
   cursor: pointer;
 }
-.new-fax .new-fax__form .new-fax__form-body {
+.new-fax .new-fax__form-body {
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow-y: scroll;
 }
-.new-fax .new-fax__form .new-fax__form-body textarea {
+.new-fax .new-fax__form-body textarea {
   font-size: 0.85rem;
   border-bottom: solid 0.5px #cecdcd;
   outline: none;
@@ -10145,50 +10559,50 @@ select:disabled {
   width: 100%;
   min-height: 100%;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments {
+.new-fax .new-fax__form-body .message__attachments {
   display: flex;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
-  margin: 0.5rem 0.25rem 0;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail iframe {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
   border: none;
   cursor: pointer;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-footer {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
   background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
   flex-direction: column;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-title {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-title p {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
   font-size: 0.7rem;
   margin-bottom: 0.25rem;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-btn {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
   text-align: center;
 }
-.new-fax .new-fax__form .new-fax__form-body .fax__attachments .fax__attachment-card .fax__attachment-card-btn button {
+.new-fax .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
   font-size: 0.7rem;
   max-width: 100%;
 }
-.new-fax .new-fax__form .new-fax__form-btns {
-  border-top: solid 0.3px #efeff1;
+.new-fax .new-fax__form-btns {
+  border-top: solid 0.5px #cecdcd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10201,7 +10615,7 @@ select:disabled {
   height: 100%;
   position: relative;
 }
-.new-fax-mobile .new-fax-mobile__contacts {
+.new-fax-mobile__contacts {
   border: solid 0.5px #cecdcd;
   border-radius: 6px;
   font-size: 1rem;
@@ -10215,7 +10629,7 @@ select:disabled {
   height: 100%;
   width: 70%;
 }
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-contacts__title {
+.new-fax-mobile__contacts .fax-contacts__title {
   font-weight: bold;
   font-size: 1rem;
   display: flex;
@@ -10223,14 +10637,14 @@ select:disabled {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers {
+.new-fax-mobile__contacts .fax-contacts .fax-numbers {
   margin-bottom: 1rem;
 }
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__title {
+.new-fax-mobile__contacts .fax-contacts .fax-numbers__title {
   font-weight: bold;
   font-size: 1rem;
 }
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__list {
+.new-fax-mobile__contacts .fax-contacts .fax-numbers__list {
   height: 110px;
   overflow-y: scroll;
   border: solid 0.5px #cecdcd;
@@ -10239,11 +10653,9 @@ select:disabled {
   margin-top: 0.25rem;
   font-size: 1rem;
 }
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__item {
-  cursor: pointer;
-}
-.new-fax-mobile .new-fax-mobile__contacts .fax-contacts .fax-numbers__item:hover {
-  text-decoration: underline;
+.new-fax-mobile__contacts .fax-contacts .fax-numbers__item {
+  display: flex;
+  align-items: center;
 }
 .new-fax-mobile .new-fax-mobile__form {
   border: solid 0.5px #cecdcd;
@@ -10291,7 +10703,7 @@ select:disabled {
   overflow-x: scroll;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-attach {
-  border-bottom: solid 0.3px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -10303,7 +10715,7 @@ select:disabled {
   font-weight: bold;
 }
 .new-fax-mobile .new-fax-mobile__form .new-fax__form-templates {
-  border-bottom: solid 0.3px #efeff1;
+  border-bottom: solid 0.5px #cecdcd;
   min-height: 30px;
   padding: 0.5rem;
   text-decoration: underline;
@@ -10323,55 +10735,55 @@ select:disabled {
   width: 100%;
   min-height: 100%;
 }
-.new-fax-mobile .new-fax-mobile__form .new-fax__form-btns {
-  border-top: solid 0.3px #efeff1;
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.25rem;
-  padding: 0.5rem;
-}
-.new-fax-mobile .fax__attachments {
-  display: flex;
-  padding: 15px;
+  padding: 1rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card {
   border: solid 0.5px #cecdcd;
-  margin: 0.5rem 0.25rem 0;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail {
   height: 80px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-thumbnail iframe {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-thumbnail iframe {
   border: none;
   cursor: pointer;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-footer {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-footer {
   background: #efeff1;
   padding: 0.25rem;
   font-size: 0.7rem;
   display: flex;
   flex-direction: column;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-title {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-title p {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-title p {
   font-size: 0.7rem;
   margin-bottom: 0.25rem;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-btn {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-btn {
   text-align: center;
 }
-.new-fax-mobile .fax__attachments .fax__attachment-card .fax__attachment-card-btn button {
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-body .message__attachments .message__attachment-card .message__attachment-card-btn button {
   font-size: 0.7rem;
   max-width: 100%;
+}
+.new-fax-mobile .new-fax-mobile__form .new-fax__form-btns {
+  border-top: solid 0.5px #cecdcd;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.5rem;
 }
 
 .new-message {
@@ -12741,7 +13153,7 @@ select:disabled {
   font-size: 1rem;
 }
 .reports__form-row--btns {
-  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
@@ -13136,6 +13548,7 @@ select:disabled {
   border-radius: 6px;
 }
 .search-patient__table thead th {
+  text-align: left;
   padding: 0.75rem;
   cursor: pointer;
   min-width: 150px;
@@ -13162,9 +13575,6 @@ select:disabled {
 .search-patient__table tbody tr td {
   padding: 0.75rem;
   overflow: hidden;
-  text-align: center;
-}
-.search-patient__table tbody tr td:nth-child(1), .search-patient__table tbody tr td:nth-child(2), .search-patient__table tbody tr td:nth-child(3) {
   text-align: left;
 }
 .search-patient__table--admin thead th:nth-child(1) {
@@ -13192,7 +13602,7 @@ select:disabled {
 .search-patient__table--admin tbody tr .record-link:hover {
   opacity: 0.85;
 }
-.search-patient__table--admin tbody tr td:nth-child(2), .search-patient__table--admin tbody tr td:nth-child(3), .search-patient__table--admin tbody tr td:nth-child(4) {
+.search-patient__table--admin tbody tr td {
   text-align: left;
 }
 
@@ -13780,17 +14190,22 @@ input[type=file]::-webkit-file-upload-button {
 }
 .clinical-note-template__form .clinical-note-template__form-body {
   flex: 1;
-  border: solid 0.5px #cecdcd;
-  border-radius: 6px;
   margin-bottom: 1rem;
   overflow: hidden;
 }
-.clinical-note-template__form .clinical-note-template__form-body textarea {
-  padding: 0.5rem;
-  font-size: 1rem;
-  height: 100%;
+.clinical-note-template__form .clinical-note-template__form-body-quill {
   width: 100%;
-  outline: none;
+  height: 100%;
+  overflow-y: scroll;
+}
+.clinical-note-template__form .clinical-note-template__form-body-quill .ql-toolbar.ql-snow {
+  display: block;
+  text-align: left;
+}
+.clinical-note-template__form .clinical-note-template__form-body-quill .ql-container.ql-snow {
+  font-size: 1rem;
+  height: 86%;
+  border-radius: 0 0 6px 6px;
 }
 .clinical-note-template__form .clinical-note-template__form-btns {
   display: flex;
@@ -13937,7 +14352,7 @@ input[type=file]::-webkit-file-upload-button {
   .clinical-note-template__form .clinical-note-template__form-name input {
     font-size: 0.85rem;
   }
-  .clinical-note-template__form .clinical-note-template__form-body textarea {
+  .clinical-note-template__form .clinical-note-template__form-body-quill .ql-container.ql-snow {
     font-size: 0.85rem;
   }
 }

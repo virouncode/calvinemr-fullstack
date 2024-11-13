@@ -42,34 +42,34 @@ const CareElementsDropDown = ({
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
-  const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
 
+  const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
   const lastDatas: CareElementLastDatasType | null = datas
     ? {
-        SmokingStatus: datas.SmokingStatus?.sort((a, b) => b.Date - a.Date)[0],
-        SmokingPacks: datas.SmokingPacks?.sort((a, b) => b.Date - a.Date)[0],
-        Weight: datas.Weight?.sort((a, b) => b.Date - a.Date)[0],
-        Height: datas.Height?.sort((a, b) => b.Date - a.Date)[0],
-        WaistCircumference: datas.WaistCircumference?.sort(
+        SmokingStatus: datas.SmokingStatus.sort((a, b) => b.Date - a.Date)[0],
+        SmokingPacks: datas.SmokingPacks.sort((a, b) => b.Date - a.Date)[0],
+        Weight: datas.Weight.sort((a, b) => b.Date - a.Date)[0],
+        Height: datas.Height.sort((a, b) => b.Date - a.Date)[0],
+        WaistCircumference: datas.WaistCircumference.sort(
           (a, b) => b.Date - a.Date
         )[0],
-        BloodPressure: datas.BloodPressure?.sort((a, b) => b.Date - a.Date)[0],
-        bodyMassIndex: datas.bodyMassIndex?.sort((a, b) => b.Date - a.Date)[0],
-        bodySurfaceArea: datas.bodySurfaceArea?.sort(
+        BloodPressure: datas.BloodPressure.sort((a, b) => b.Date - a.Date)[0],
+        bodyMassIndex: datas.bodyMassIndex.sort((a, b) => b.Date - a.Date)[0],
+        bodySurfaceArea: datas.bodySurfaceArea.sort(
           (a, b) => b.Date - a.Date
         )[0],
-        FSH: datas.FSH?.sort((a, b) => b.Date - a.Date)[0],
-        E2: datas.E2?.sort((a, b) => b.Date - a.Date)[0],
-        AMH: datas.AMH?.sort((a, b) => b.Date - a.Date)[0],
-        DHEAS: datas.DHEAS?.sort((a, b) => b.Date - a.Date)[0],
-        HCG: datas.HCG?.sort((a, b) => b.Date - a.Date)[0],
-        LH: datas.LH?.sort((a, b) => b.Date - a.Date)[0],
-        PRL: datas.PRL?.sort((a, b) => b.Date - a.Date)[0],
-        P4: datas.P4?.sort((a, b) => b.Date - a.Date)[0],
-        TSH: datas.TSH?.sort((a, b) => b.Date - a.Date)[0],
-        Testosterone: datas.Testosterone?.sort((a, b) => b.Date - a.Date)[0],
+        FSH: datas.FSH.sort((a, b) => b.Date - a.Date)[0],
+        E2: datas.E2.sort((a, b) => b.Date - a.Date)[0],
+        AMH: datas.AMH.sort((a, b) => b.Date - a.Date)[0],
+        DHEAS: datas.DHEAS.sort((a, b) => b.Date - a.Date)[0],
+        HCG: datas.HCG.sort((a, b) => b.Date - a.Date)[0],
+        LH: datas.LH.sort((a, b) => b.Date - a.Date)[0],
+        PRL: datas.PRL.sort((a, b) => b.Date - a.Date)[0],
+        P4: datas.P4.sort((a, b) => b.Date - a.Date)[0],
+        TSH: datas.TSH.sort((a, b) => b.Date - a.Date)[0],
+        Testosterone: datas.Testosterone.sort((a, b) => b.Date - a.Date)[0],
       }
     : null;
 
@@ -173,9 +173,10 @@ const CareElementsDropDown = ({
             lastAdditionalDatas.map((additionalData) => (
               <p key={additionalData.Name}>
                 <label>
-                  {additionalData.Name} ({additionalData.Unit}):{" "}
+                  {additionalData.Name}{" "}
+                  {additionalData.Unit ? `(${additionalData.Unit})` : ""}:{" "}
                 </label>
-                {additionalData.Data?.Value}
+                {additionalData.Data.Value}
               </p>
             ))}
         </>

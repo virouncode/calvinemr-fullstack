@@ -317,6 +317,32 @@ export type CareElementType = {
   Additional: CareElementAdditionalType[];
 };
 
+export type CareElementListItemType = {
+  name: string;
+  key:
+    | "SmokingStatus"
+    | "SmokingPacks"
+    | "Weight"
+    | "Height"
+    | "bodyMassIndex"
+    | "bodySurfaceArea"
+    | "WaistCircumference"
+    | "BloodPressure"
+    | "E2"
+    | "LH"
+    | "P4"
+    | "FSH"
+    | "AMH"
+    | "DHEAS"
+    | "HCG"
+    | "PRL"
+    | "TSH"
+    | "Testosterone";
+  valueKey: string;
+  unit: string;
+  unitKey: string;
+};
+
 export type CareElementAdditionalType = {
   Unit: string;
   Name: string;
@@ -2065,13 +2091,13 @@ export type TopicExportType =
   | "E-FORMS"
   | "LETTERS/REFERRALS";
 
-export type CareElementHistoryTopicType =
+export type CareElementGraphTopicType =
   | "SMOKING STATUS"
   | "SMOKING PACKS PER DAY"
   | "WEIGHT"
   | "WEIGHT LBS"
   | "HEIGHT"
-  | "HEIGHT FEET"
+  | "HEIGHT FT IN"
   | "WAIST CIRCUMFERENCE"
   | "BLOOD PRESSURE"
   | "BODY MASS INDEX"
@@ -2086,6 +2112,11 @@ export type CareElementHistoryTopicType =
   | "P4"
   | "TSH"
   | "TESTOSTERONE";
+
+export type CareElementGraphDataType = {
+  Date: number;
+  [key: string]: string | number;
+};
 
 export type XMLExportFunctionType =
   | ((jsObj: AlertType) => string)
