@@ -5,6 +5,7 @@ import { nowTZTimestamp } from "../utils/dates/formatDates";
 import useAdminsInfosContext from "./context/useAdminsInfosContext";
 import useAuthContext from "./context/useAuthContext";
 import useClinicContext from "./context/useClinicContext";
+import useSocketContext from "./context/useSocketContext";
 import useStaffInfosContext from "./context/useStaffInfosContext";
 import useUserContext from "./context/useUserContext";
 
@@ -13,6 +14,7 @@ const useAutoLogout = (
   toastExpiredID: React.MutableRefObject<Id | null>,
   tokenLimitVerifierID: React.MutableRefObject<number | null>
 ) => {
+  const { socket, setSocket } = useSocketContext();
   const { setUser } = useUserContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAuth } = useAuthContext();
@@ -46,6 +48,8 @@ const useAutoLogout = (
     setAdminsInfos([]);
     setClinic(null);
     navigate("/");
+    socket?.disconnect();
+    setSocket(null);
   }, [
     navigate,
     setAdminsInfos,
@@ -56,6 +60,8 @@ const useAutoLogout = (
     timeMin,
     toastExpiredID,
     tokenLimitVerifierID,
+    socket,
+    setSocket,
   ]);
 
   const startTimer = useCallback(() => {

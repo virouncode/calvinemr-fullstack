@@ -150,7 +150,6 @@ const CareElementGraph = ({
   return (
     <div className="care-elements__graph-container">
       <LineChart
-        onMarkClick={(e, data) => console.log(e, data)}
         xAxis={xAxis}
         series={series}
         width={500}

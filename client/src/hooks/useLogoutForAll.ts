@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import useAdminsInfosContext from "./context/useAdminsInfosContext";
 import useAuthContext from "./context/useAuthContext";
 import useClinicContext from "./context/useClinicContext";
+import useSocketContext from "./context/useSocketContext";
 import useStaffInfosContext from "./context/useStaffInfosContext";
 import useUserContext from "./context/useUserContext";
 
 const useLogoutForAll = () => {
+  const { socket, setSocket } = useSocketContext();
   const { setUser } = useUserContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAuth } = useAuthContext();
@@ -28,9 +30,20 @@ const useLogoutForAll = () => {
         setAdminsInfos([]);
         setClinic(null);
         navigate("/");
+        socket?.disconnect();
+        setSocket(null);
       }
     },
-    [navigate, setAdminsInfos, setAuth, setClinic, setStaffInfos, setUser]
+    [
+      navigate,
+      setAdminsInfos,
+      setAuth,
+      setClinic,
+      setStaffInfos,
+      setUser,
+      socket,
+      setSocket,
+    ]
   );
   useEffect(() => {
     window.addEventListener("storage", handleStorageEvent);

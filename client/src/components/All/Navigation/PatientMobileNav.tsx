@@ -9,6 +9,7 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { UserPatientType } from "../../../types/app";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 
 type PatientMobileNavProps = {
   mobileNavRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -22,6 +23,7 @@ const PatientMobileNav = ({
   tokenLimitVerifierID,
 }: PatientMobileNavProps) => {
   const { user } = useUserContext() as { user: UserPatientType };
+  const { socket, setSocket } = useSocketContext();
   const navigate = useNavigate();
   const { setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -40,6 +42,8 @@ const PatientMobileNav = ({
     setStaffInfos([]);
     setAdminsInfos([]);
     setClinic(null);
+    socket?.disconnect();
+    setSocket(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");

@@ -1,5 +1,7 @@
 import React from "react";
 import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { UserStaffType } from "../../../types/app";
 
 type FaxLeftBarProps = {
   section: string;
@@ -17,6 +19,7 @@ const FaxLeftBar = ({
   setSelectAllVisible,
 }: FaxLeftBarProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
 
   const handleClickSection = (
@@ -46,7 +49,8 @@ const FaxLeftBar = ({
           id="Received faxes"
           onClick={handleClickSection}
         >
-          Received faxes
+          {"Received faxes" +
+            (user.unreadFaxNbr ? ` (${user.unreadFaxNbr})` : "")}
         </li>
         <li
           className={isActiveClass("Sent")}

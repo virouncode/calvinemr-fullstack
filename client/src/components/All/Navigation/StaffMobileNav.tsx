@@ -13,6 +13,7 @@ import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
 import LockIcon from "../../UI/Icons/LockIcon";
 import QuestionIcon from "../../UI/Icons/QuestionIcon";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 
 type StaffMobileNavProps = {
   setNotepadVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +31,7 @@ const StaffMobileNav = ({
   tokenLimitVerifierID,
 }: StaffMobileNavProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
+  const { socket, setSocket } = useSocketContext();
   const navigate = useNavigate();
   const { setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -61,6 +63,8 @@ const StaffMobileNav = ({
     setStaffInfos([]);
     setAdminsInfos([]);
     setClinic(null);
+    socket?.disconnect();
+    setSocket(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");

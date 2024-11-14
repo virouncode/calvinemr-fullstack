@@ -8,6 +8,7 @@ import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { nowTZ } from "../../../utils/dates/formatDates";
 import { toWelcomeName } from "../../../utils/names/toWelcomeName";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 
 type SubheaderWelcomeProps = {
   toastExpiredID: React.MutableRefObject<Id | null>;
@@ -21,6 +22,7 @@ const SubheaderWelcome = ({
   //Hooks
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
+  const { socket, setSocket } = useSocketContext();
   const { setClinic } = useClinicContext();
   const { setAuth } = useAuthContext();
   const { staffInfos, setStaffInfos } = useStaffInfosContext();
@@ -56,6 +58,8 @@ const SubheaderWelcome = ({
     setStaffInfos([]);
     setAdminsInfos([]);
     setClinic(null);
+    socket?.disconnect();
+    setSocket(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");

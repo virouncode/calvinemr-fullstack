@@ -4,11 +4,13 @@ import { Id, toast } from "react-toastify";
 import useAdminsInfosContext from "./context/useAdminsInfosContext";
 import useAuthContext from "./context/useAuthContext";
 import useClinicContext from "./context/useClinicContext";
+import useSocketContext from "./context/useSocketContext";
 import useStaffInfosContext from "./context/useStaffInfosContext";
 import useUserContext from "./context/useUserContext";
 
 const useRefreshToken = () => {
   const { auth, setAuth } = useAuthContext();
+  const { socket, setSocket } = useSocketContext();
   const { setUser } = useUserContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAdminsInfos } = useAdminsInfosContext();
@@ -23,6 +25,8 @@ const useRefreshToken = () => {
     setStaffInfos([]);
     setAdminsInfos([]);
     setClinic(null);
+    socket?.disconnect();
+    setSocket(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");
@@ -36,7 +40,16 @@ const useRefreshToken = () => {
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
     toastExpiredID.current && toast.dismiss(toastExpiredID.current);
     navigate("/");
-  }, [navigate, setAdminsInfos, setAuth, setClinic, setStaffInfos, setUser]);
+  }, [
+    navigate,
+    setAdminsInfos,
+    setAuth,
+    setClinic,
+    setStaffInfos,
+    setUser,
+    socket,
+    setSocket,
+  ]);
 
   useEffect(() => {
     if (!auth?.tokenLimit) return;

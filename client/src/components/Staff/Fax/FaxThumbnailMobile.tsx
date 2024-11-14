@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import { timestampToDateStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
@@ -30,6 +33,8 @@ const FaxThumbnailMobile = ({
   //Hooks
   const [addFaxNumberVisible, setAddFaxNumberVisible] = useState(false);
   const [contactName, setContactName] = useState("");
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   //Queries
   const faxDelete = useFaxDelete();
 
@@ -61,6 +66,15 @@ const FaxThumbnailMobile = ({
   const handleFaxClick = async () => {
     if (section === "Received faxes") {
       setCurrentCallerId((fax as FaxInboxType).CallerID);
+      if (
+        (fax as FaxInboxType).ViewedStatus === "N" &&
+        user.unreadFaxNbr !== 0
+      ) {
+        socket?.emit("message", {
+          route: "UNREAD FAX",
+          action: "update",
+        });
+      }
     }
     setCurrentFaxId(fax.FileName);
   };
@@ -124,7 +138,7 @@ const FaxThumbnailMobile = ({
           {section === "Received faxes"
             ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
-          / {contactName}
+          {/* / {contactName} */}
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>

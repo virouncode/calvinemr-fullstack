@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import socketIOClient from "socket.io-client";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPostAuth from "../../../api/xanoCRUD/xanoPostAuth";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
@@ -28,7 +29,7 @@ const USERINFO_URL = "/auth/me";
 
 const LoginForm = () => {
   //Hooks
-  const { socket } = useSocketContext();
+  const { socket, setSocket } = useSocketContext();
   const { setAuth } = useAuthContext();
   const { setUser } = useUserContext();
   const { setClinic } = useClinicContext();
@@ -87,7 +88,13 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
-      socket?.emit("message", { key: ["logs"] });
+      //================ SOCKET ===================//
+      const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
+        withCredentials: true,
+      });
+      mySocket.emit("message", { key: ["logs"] });
+      mySocket.emit("start polling faxes");
+      setSocket(mySocket);
 
       //================ USER INFOS ===================//
 
@@ -166,6 +173,7 @@ const LoginForm = () => {
           unreadFaxNbr,
         })
       );
+      //Connect socket
 
       //================ CLINIC =============//
       const clinic: ClinicType = await xanoGet("/clinic/1", "staff");
@@ -239,7 +247,12 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
-      socket?.emit("message", { key: ["logs"] });
+      //================ SOCKET ===================//
+      const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
+        withCredentials: true,
+      });
+      mySocket.emit("message", { key: ["logs"] });
+      setSocket(mySocket);
       //================ USER INFOS ===================//
 
       const user: PatientType = await xanoGet(USERINFO_URL, "patient");
@@ -347,7 +360,14 @@ const LoginForm = () => {
         "auth",
         JSON.stringify({ email, tokenLimit: response.data + 60000 })
       );
-      socket?.emit("message", { key: ["logs"] });
+
+      //================ SOCKET ===================//
+      const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
+        withCredentials: true,
+      });
+      mySocket.emit("message", { key: ["logs"] });
+      setSocket(mySocket);
+
       //=============== USER =================//
       const user: AdminType = await xanoGet(USERINFO_URL, "admin");
       setUser(user);

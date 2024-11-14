@@ -32,7 +32,7 @@ const LockForm = ({
   //Hooks
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
-  const { socket } = useSocketContext();
+  const { socket, setSocket } = useSocketContext();
   const { setAuth } = useAuthContext();
   const { setStaffInfos } = useStaffInfosContext();
   const { setAdminsInfos } = useAdminsInfosContext();
@@ -139,6 +139,8 @@ const LockForm = ({
     setStaffInfos([]);
     setAdminsInfos([]);
     setClinic(null);
+    socket?.disconnect();
+    setSocket(null);
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
     localStorage.removeItem("staffInfos");

@@ -6,13 +6,13 @@ import LoginLayout from "./components/All/Layouts/LoginLayout";
 import PatientLayout from "./components/All/Layouts/PatientLayout";
 import StaffLayout from "./components/All/Layouts/StaffLayout";
 import RequireAuth from "./context/RequireAuth";
-import useSocketConfig from "./hooks/reactquery/queries/useSocketConfig";
 import useAdminsInfosSocket from "./hooks/socket/useAdminsInfosSocket";
 import useClinicSocket from "./hooks/socket/useClinicSocket";
 import useReactQuerySocket from "./hooks/socket/useReactQuerySocket";
 import { useServerErrorSocket } from "./hooks/socket/useServerErrorSocket";
 import useStaffInfosSocket from "./hooks/socket/useStaffInfosSocket";
 import useUnreadExternalSocket from "./hooks/socket/useUnreadExternalSocket";
+import useUnreadFaxSocket from "./hooks/socket/useUnreadFaxSocket";
 import useUnreadSocket from "./hooks/socket/useUnreadSocket";
 import useUnreadTodoSocket from "./hooks/socket/useUnreadTodoSocket";
 import useUserSocket from "./hooks/socket/useUserSocket";
@@ -24,6 +24,7 @@ import AdminBillingPage from "./pages/Admin/AdminBillingPage";
 import AdminClinicPage from "./pages/Admin/AdminClinicPage";
 import AdminCredentialsPage from "./pages/Admin/AdminCredentialsPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
+import AdminLogsPage from "./pages/Admin/AdminLogsPage";
 import AdminMigrationPage from "./pages/Admin/AdminMigrationPage";
 import AdminMyAccountPage from "./pages/Admin/AdminMyAccountPage";
 import AdminPatientsAccountsPage from "./pages/Admin/AdminPatientsAccountsPage";
@@ -53,7 +54,6 @@ import StaffReferencePage from "./pages/Staff/StaffReferencePage";
 import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
 import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
-import AdminLogsPage from "./pages/Admin/AdminLogsPage";
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
@@ -63,8 +63,6 @@ const App = () => {
   useLocalStorageTracker();
   useAutoLogout(120, toastExpiredID, tokenLimitVerifierID); //autologout in x min
   useLogoutForAll(); //log every tabs out if logout in one tab
-  //SOCKET CONFIG
-  useSocketConfig(); //true for dev, false for prod
   //CONTEXT SOCKETS
   useStaffInfosSocket();
   useAdminsInfosSocket();
@@ -73,6 +71,7 @@ const App = () => {
   useUnreadExternalSocket(); //for staff and patient
   useUnreadSocket(); //for staff
   useUnreadTodoSocket(); //for staff
+  useUnreadFaxSocket(); //for staff (to remove one for all user if a user reads a new fax)
   //REACT QUERY SOCKETS
   useReactQuerySocket();
   useServerErrorSocket(setServerErrorMsg); //for server errors

@@ -76,15 +76,8 @@ const FaxThumbnail = ({
         user.unreadFaxNbr !== 0
       ) {
         socket?.emit("message", {
-          route: "USER",
+          route: "UNREAD FAX",
           action: "update",
-          content: {
-            id: user.id,
-            data: {
-              ...user,
-              unreadFaxNbr: user.unreadFaxNbr - 1,
-            },
-          },
         });
       }
     }
@@ -169,7 +162,7 @@ const FaxThumbnail = ({
           {section === "Received faxes"
             ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
-          / {contactName}
+          {/* / {contactName} */}
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>

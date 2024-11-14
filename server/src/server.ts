@@ -7,6 +7,7 @@ import { join } from "path";
 import { Server } from "socket.io";
 
 // Import routers
+import axios from "axios";
 import extractToTextRouter from "./routes/extractToText/extractToText";
 import mailgunRouter from "./routes/mailgun/mailgun";
 import openaiRouter from "./routes/openai/openai";
@@ -64,12 +65,70 @@ app.get("*", (req, res) => {
   res.sendFile(join(__dirname, "../../client/dist/index.html"));
 });
 
+//Polling Faxes for staff users
+let pollingInterval: NodeJS.Timeout | null = null;
+let previousUnreadFaxNbr = 0;
+const connectedStaff = new Set(); // Track only users with "staff" access
+
+const startPollingFaxes = () => {
+  if (!pollingInterval) {
+    pollingInterval = setInterval(fetchUnreadFaxes, 10000);
+    console.log("Polling started");
+  }
+};
+
+const stopPollingFaxes = () => {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+    console.log("Polling stopped");
+  }
+};
+
+const fetchUnreadFaxes = async () => {
+  try {
+    const response = await axios.post(
+      `${process.env.BACKEND_URL}/api/srfax/inbox`,
+      {
+        viewedStatus: "UNREAD",
+        all: true,
+        start: "",
+        end: "",
+      }
+    );
+    const unreadFaxNbr = response.data.length;
+    if (unreadFaxNbr !== previousUnreadFaxNbr) {
+      previousUnreadFaxNbr = unreadFaxNbr;
+      io.emit("message", {
+        action: "create",
+        route: "UNREAD FAX",
+        content: { data: unreadFaxNbr },
+      });
+    }
+  } catch (error) {
+    if (error instanceof Error)
+      console.error("Failed to retrieve unread faxes:", error.message);
+  }
+};
+
 // SOCKET CONNECTION/DECONNECTION EVENT LISTENERS
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+
+  socket.on("start polling faxes", () => {
+    connectedStaff.add(socket.id);
+    if (connectedStaff.size === 1) {
+      startPollingFaxes(); // Start polling when the first staff member connects
+    }
+  });
   socket.on("disconnect", (reason) => {
-    console.log(`User ${socket.id} disconnected`);
-    console.log(reason);
+    if (connectedStaff.has(socket.id)) {
+      connectedStaff.delete(socket.id);
+      if (connectedStaff.size === 0) {
+        stopPollingFaxes(); // Stop polling if no staff members are connected
+      }
+    }
+    console.log(`User ${socket.id} disconnected because: ${reason}`);
   });
   socket.on("message", (message) => {
     io.emit("message", message);
