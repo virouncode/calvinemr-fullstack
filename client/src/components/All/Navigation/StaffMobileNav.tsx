@@ -116,7 +116,7 @@ const StaffMobileNav = ({
           </li>
           <li onClick={handleClose}>
             <NavLink to="/staff/fax" className="mobile-nav__link">
-              Fax
+              {"Fax" + (user.unreadFaxNbr ? ` (${user.unreadFaxNbr})` : "")}
             </NavLink>
           </li>
           <li onClick={handleClose}>

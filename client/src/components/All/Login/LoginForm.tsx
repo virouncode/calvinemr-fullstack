@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -136,6 +136,15 @@ const LoginForm = () => {
       const unreadNbr =
         unreadTodosNbr + unreadMessagesExternalNbr + unreadMessagesNbr;
 
+      const unreadFaxNbr: number = (
+        await axios.post(`/api/srfax/inbox`, {
+          viewedStatus: "UNREAD",
+          all: true,
+          start: "",
+          end: "",
+        })
+      ).data.length;
+
       setUser({
         ...user,
         settings,
@@ -143,6 +152,7 @@ const LoginForm = () => {
         unreadMessagesExternalNbr,
         unreadTodosNbr,
         unreadNbr,
+        unreadFaxNbr,
       });
       localStorage.setItem(
         "user",
@@ -153,6 +163,7 @@ const LoginForm = () => {
           unreadMessagesExternalNbr,
           unreadTodosNbr,
           unreadNbr,
+          unreadFaxNbr,
         })
       );
 

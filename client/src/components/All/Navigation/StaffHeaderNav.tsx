@@ -101,7 +101,7 @@ const StaffHeaderNav = ({
                 : "header__link"
             }
           >
-            Fax
+            {"Fax" + (user.unreadFaxNbr ? ` (${user.unreadFaxNbr})` : "")}
           </NavLink>
         </li>
         <li>

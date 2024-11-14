@@ -34,6 +34,7 @@ export type UserStaffType = StaffType & {
   unreadMessagesExternalNbr: number;
   unreadTodosNbr: number;
   unreadNbr: number;
+  unreadFaxNbr: number;
 };
 
 export type UserPatientType = PatientType & {

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
 import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
 import {
   FaxInboxType,
   FaxOutboxType,
   FaxToDeleteType,
 } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
@@ -33,6 +36,8 @@ const FaxThumbnail = ({
   section,
 }: FaxThumbnailProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const [addFaxNumberVisible, setAddFaxNumberVisible] = useState(false);
   const [contactName, setContactName] = useState("");
   //Queries
@@ -66,6 +71,22 @@ const FaxThumbnail = ({
   const handleFaxClick = async () => {
     if (section === "Received faxes") {
       setCurrentCallerId((fax as FaxInboxType).CallerID);
+      if (
+        (fax as FaxInboxType).ViewedStatus === "N" &&
+        user.unreadFaxNbr !== 0
+      ) {
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              unreadFaxNbr: user.unreadFaxNbr - 1,
+            },
+          },
+        });
+      }
     }
     setCurrentFaxId(fax.FileName);
   };

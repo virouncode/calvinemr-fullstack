@@ -87,6 +87,7 @@ const CalendarView = ({
       slotEventOverlap={false}
       timeZone="America/Toronto"
       initialDate={initialDate}
+      eventOrder={"start"}
       //===================Design=====================//
       headerToolbar={{
         start: "title",
