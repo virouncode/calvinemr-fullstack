@@ -1,4 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import { uniqueId } from "lodash";
 import React, { useState } from "react";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
@@ -32,7 +33,7 @@ const CareElementEdit = ({
   const [errMsgPost, setErrMsgPost] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
   const [formDatas, setFormDatas] = useState<
-    { Date: number; [key: string]: string | number }[] | undefined
+    { id: string; Date: number; [key: string]: string | number }[] | undefined
   >(
     careElementsDatas?.[
       careElementToEdit.key as
@@ -54,7 +55,9 @@ const CareElementEdit = ({
         | "PRL"
         | "TSH"
         | "Testosterone"
-    ].sort((a, b) => b.Date - a.Date)
+    ]
+      .sort((a, b) => b.Date - a.Date)
+      .map((data) => ({ ...data, id: uniqueId() }))
   );
   const handleSubmit = async () => {
     setErrMsgPost("");
@@ -75,7 +78,7 @@ const CareElementEdit = ({
         ...(careElementsDatas?.updates ?? []),
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
-      [careElementToEdit.key]: formDatas,
+      [careElementToEdit.key]: formDatas?.map(({ id, ...rest }) => rest),
     };
     setProgress(true);
     topicPut.mutate(topicToPut, {
@@ -90,17 +93,14 @@ const CareElementEdit = ({
   const handleCancel = () => {
     setEditVisible(false);
   };
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     setErrMsgPost("");
     const { name, value } = e.target;
     if (name === "Date") {
       if (value === "") return;
       setFormDatas(
-        formDatas?.map((data, i) =>
-          i === index
+        formDatas?.map((data) =>
+          data.id === id
             ? { ...data, Date: dateISOToTimestampTZ(value) as number }
             : data
         )
@@ -108,27 +108,26 @@ const CareElementEdit = ({
       return;
     }
     setFormDatas(
-      formDatas?.map((data, i) =>
-        i === index ? { ...data, [careElementToEdit.key]: value } : data
+      formDatas?.map((data) =>
+        data.id === id ? { ...data, [careElementToEdit.key]: value } : data
       )
     );
   };
 
-  const handleRemove = (index: number) => {
-    setFormDatas(formDatas?.filter((data, i) => i !== index));
+  const handleRemove = (id: string) => {
+    setFormDatas(formDatas?.filter((data) => data.id !== id));
   };
   return (
     <div className="care-elements__edit-container">
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="care-elements__edit">
-        {formDatas?.map((data, index) => (
+        {formDatas?.map((data) => (
           <CareElementEditItem
-            key={index}
+            key={data.id}
             data={data}
             careElementToEdit={careElementToEdit}
             handleChange={handleChange}
             handleRemove={handleRemove}
-            index={index}
           />
         ))}
       </div>

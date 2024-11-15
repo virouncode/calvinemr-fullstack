@@ -1,4 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import { uniqueId } from "lodash";
 import React, { useState } from "react";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
@@ -37,7 +38,12 @@ const CareElementAdditionalEdit = ({
   const [formDatas, setFormDatas] = useState(
     careElementsDatas?.Additional?.find(
       ({ Name }) => Name === careElementAdditionalToEdit.Name
-    )?.Data.sort((a, b) => b.Date - a.Date)
+    )
+      ?.Data.sort((a, b) => b.Date - a.Date)
+      .map((data) => ({
+        ...data,
+        id: uniqueId(),
+      }))
   );
   const handleSubmit = async () => {
     setErrMsgPost("");
@@ -53,7 +59,10 @@ const CareElementAdditionalEdit = ({
       ],
       Additional: careElementsDatas?.Additional.map((data) =>
         data.Name === careElementAdditionalToEdit.Name
-          ? { ...data, Data: formDatas }
+          ? {
+              ...data,
+              Data: formDatas?.map(({ id, ...rest }) => rest),
+            }
           : data
       ) as CareElementAdditionalType[],
     };
@@ -70,17 +79,14 @@ const CareElementAdditionalEdit = ({
   const handleCancel = () => {
     setEditAdditionalVisible(false);
   };
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     setErrMsgPost("");
     const { name, value } = e.target;
     if (name === "Date") {
       if (value === "") return;
       setFormDatas(
-        formDatas?.map((data, i) =>
-          i === index
+        formDatas?.map((data) =>
+          data.id === id
             ? { ...data, Date: dateISOToTimestampTZ(value) as number }
             : data
         )
@@ -88,8 +94,8 @@ const CareElementAdditionalEdit = ({
       return;
     }
     setFormDatas(
-      formDatas?.map((data, i) =>
-        i === index ? { ...data, Value: value } : data
+      formDatas?.map((data) =>
+        data.id === id ? { ...data, Value: value } : data
       )
     );
   };
@@ -97,13 +103,12 @@ const CareElementAdditionalEdit = ({
     <div className="care-elements__edit-container">
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="care-elements__edit">
-        {formDatas?.map((data, index) => (
+        {formDatas?.map((data) => (
           <CareElementAdditionalEditItem
-            key={index}
+            key={data.id}
             data={data}
             careElementAdditionalToEdit={careElementAdditionalToEdit}
             handleChange={handleChange}
-            index={index}
           />
         ))}
       </div>

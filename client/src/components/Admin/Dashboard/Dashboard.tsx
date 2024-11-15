@@ -4,10 +4,14 @@ import DashboardCardMeds from "./DashboardCardMeds";
 import DashboardCardPatients from "./DashboardCardPatients";
 import DashboardCardStaff from "./DashboardCardStaff";
 import DashboardCardVisits from "./DashboardCardVisits";
+import DashboardCardCycles from "./DashboardCardCycles";
 
 const Dashboard = () => {
   return (
     <>
+      <div className="dashboard-row">
+        <DashboardCardCycles />
+      </div>
       <div className="dashboard-row">
         <DashboardCardVisits />
       </div>

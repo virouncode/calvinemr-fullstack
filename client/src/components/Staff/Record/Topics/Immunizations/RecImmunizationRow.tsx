@@ -75,7 +75,7 @@ const RecImmunizationRow = ({
     (immunizationAge: RecImmunizationAgeType, index: number) =>
       immunizationAges?.includes(immunizationAge) ? (
         <RecImmunizationCell
-          key={index}
+          key={type + immunizationAge}
           age={immunizationAge}
           type={immunizationType}
           route={immunizationRoute}
@@ -91,7 +91,7 @@ const RecImmunizationRow = ({
           topicDelete={topicDelete}
         />
       ) : (
-        <RecImmunizationEmptyCell key={index} />
+        <RecImmunizationEmptyCell key={type + immunizationAge} />
       )
   );
 };

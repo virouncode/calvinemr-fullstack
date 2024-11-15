@@ -1,11 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import { uniqueId } from "lodash";
 import React, { useState } from "react";
-import useUserContext from "../../../../../../hooks/context/useUserContext";
-import {
-  CareElementListItemType,
-  CareElementType,
-} from "../../../../../../types/api";
-import { UserStaffType } from "../../../../../../types/app";
+import { CareElementType } from "../../../../../../types/api";
 import { dateISOToTimestampTZ } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -14,29 +10,31 @@ import CareElementEditItemBloodPressure from "./CareElementEditItemBloodPressure
 
 type CareElementEditBloodPressureProps = {
   setEditVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  careElementToEdit: CareElementListItemType;
   careElementsDatas?: CareElementType;
   topicPut: UseMutationResult<CareElementType, Error, CareElementType, void>;
 };
 
 const CareElementEditBloodPressure = ({
   setEditVisible,
-  careElementToEdit,
   careElementsDatas,
   topicPut,
 }: CareElementEditBloodPressureProps) => {
-  const { user } = useUserContext() as { user: UserStaffType };
   const [errMsgPost, setErrMsgPost] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
   const [formDatas, setFormDatas] = useState<
     | {
+        id: string;
         SystolicBP: string;
         DiastolicBP: string;
         BPUnit: "mmHg";
         Date: number;
       }[]
     | undefined
-  >(careElementsDatas?.BloodPressure?.sort((a, b) => b.Date - a.Date));
+  >(
+    careElementsDatas?.BloodPressure?.sort((a, b) => b.Date - a.Date).map(
+      (data) => ({ ...data, id: uniqueId() })
+    )
+  );
 
   const handleSubmit = async () => {
     setErrMsgPost("");
@@ -51,12 +49,7 @@ const CareElementEditBloodPressure = ({
     }
     const topicToPut: CareElementType = {
       ...(careElementsDatas as CareElementType),
-      BloodPressure: formDatas as {
-        SystolicBP: string;
-        DiastolicBP: string;
-        BPUnit: "mmHg";
-        Date: number;
-      }[],
+      BloodPressure: formDatas?.map(({ id, ...rest }) => rest) ?? [],
     };
     setProgress(true);
     topicPut.mutate(topicToPut, {
@@ -73,7 +66,7 @@ const CareElementEditBloodPressure = ({
   };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    index: number
+    id: string
   ) => {
     setErrMsgPost("");
     const { name, value } = e.target;
@@ -81,8 +74,8 @@ const CareElementEditBloodPressure = ({
       case "Date":
         if (value === "") return;
         setFormDatas(
-          formDatas?.map((data, i) =>
-            i === index
+          formDatas?.map((data) =>
+            data.id === id
               ? { ...data, Date: dateISOToTimestampTZ(value) as number }
               : data
           )
@@ -90,34 +83,33 @@ const CareElementEditBloodPressure = ({
         return;
       case "Systolic":
         setFormDatas(
-          formDatas?.map((data, i) =>
-            i === index ? { ...data, SystolicBP: value } : data
+          formDatas?.map((data) =>
+            data.id === id ? { ...data, SystolicBP: value } : data
           )
         );
         return;
       case "Diastolic":
         setFormDatas(
           formDatas?.map((data, i) =>
-            i === index ? { ...data, DiastolicBP: value } : data
+            data.id === id ? { ...data, DiastolicBP: value } : data
           )
         );
         return;
     }
   };
-  const handleRemove = (index: number) => {
-    setFormDatas(formDatas?.filter((data, i) => i !== index));
+  const handleRemove = (id: string) => {
+    setFormDatas(formDatas?.filter((data) => data.id !== id));
   };
   return (
     <div className="care-elements__edit-container">
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div className="care-elements__edit">
-        {formDatas?.map((data, index) => (
+        {formDatas?.map((data) => (
           <CareElementEditItemBloodPressure
-            key={index}
+            key={data.id}
             data={data}
             handleChange={handleChange}
             handleRemove={handleRemove}
-            index={index}
           />
         ))}
       </div>

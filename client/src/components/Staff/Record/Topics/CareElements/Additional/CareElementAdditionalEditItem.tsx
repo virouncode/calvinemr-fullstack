@@ -5,20 +5,19 @@ import InputDate from "../../../../../UI/Inputs/InputDate";
 
 type CareElementAdditionalEditItemProps = {
   data: {
+    id: string;
     Date: number;
     Value: string;
   };
-  index: number;
   careElementAdditionalToEdit: {
     Name: string;
     Unit: string;
   };
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void;
 };
 const CareElementAdditionalEditItem = ({
   data,
   careElementAdditionalToEdit,
-  index,
   handleChange,
 }: CareElementAdditionalEditItemProps) => {
   return (
@@ -34,7 +33,7 @@ const CareElementAdditionalEditItem = ({
             }`
           }
           value={data.Value}
-          onChange={(e) => handleChange(e, index)}
+          onChange={(e) => handleChange(e, data.id)}
           name="Value"
           id="result"
         />
@@ -43,7 +42,7 @@ const CareElementAdditionalEditItem = ({
         <InputDate
           label="Date"
           value={timestampToDateISOTZ(data.Date)}
-          onChange={(e) => handleChange(e, index)}
+          onChange={(e) => handleChange(e, data.id)}
           name="Date"
           id="date"
         />

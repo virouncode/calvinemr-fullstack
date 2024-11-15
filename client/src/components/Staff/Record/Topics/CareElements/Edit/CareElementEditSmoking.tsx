@@ -1,8 +1,6 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
-import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { CareElementType } from "../../../../../../types/api";
-import { UserStaffType } from "../../../../../../types/app";
 import { dateISOToTimestampTZ } from "../../../../../../utils/dates/formatDates";
 import CancelButton from "../../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../../UI/Buttons/SaveButton";
@@ -20,7 +18,6 @@ const CareElementEditSmoking = ({
   careElementsDatas,
   topicPut,
 }: CareElementEditSmokingProps) => {
-  const { user } = useUserContext() as { user: UserStaffType };
   const [errMsgPost, setErrMsgPost] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
   const [formDatasStatus, setFormDatasStatus] = useState<

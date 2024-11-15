@@ -6,19 +6,18 @@ import InputDate from "../../../../../UI/Inputs/InputDate";
 
 type CareElementEditItemBloodPressureProps = {
   data: {
+    id: string;
     SystolicBP: string;
     DiastolicBP: string;
     Date: number;
     BPUnit: "mmHg";
   };
-  index: number;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
-  handleRemove: (index: number) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+  handleRemove: (id: string) => void;
 };
 
 const CareElementEditItemBloodPressure = ({
   data,
-  index,
   handleChange,
   handleRemove,
 }: CareElementEditItemBloodPressureProps) => {
@@ -28,7 +27,7 @@ const CareElementEditItemBloodPressure = ({
         <Input
           label="Systolic"
           value={data.SystolicBP}
-          onChange={(e) => handleChange(e, index)}
+          onChange={(e) => handleChange(e, data.id)}
           name="Systolic"
           id="systolic"
         />
@@ -37,7 +36,7 @@ const CareElementEditItemBloodPressure = ({
         <Input
           label="Diastolic"
           value={data.DiastolicBP}
-          onChange={(e) => handleChange(e, index)}
+          onChange={(e) => handleChange(e, data.id)}
           name="Diastolic"
           id="systolic"
         />
@@ -46,7 +45,7 @@ const CareElementEditItemBloodPressure = ({
         <InputDate
           label="Date"
           value={timestampToDateISOTZ(data.Date)}
-          onChange={(e) => handleChange(e, index)}
+          onChange={(e) => handleChange(e, data.id)}
           name="Date"
           id="date"
         />
@@ -55,7 +54,7 @@ const CareElementEditItemBloodPressure = ({
         className="care-elements__edit-item"
         style={{ alignSelf: "flex-start" }}
       >
-        <TrashIcon onClick={(e) => handleRemove(index)} />
+        <TrashIcon onClick={(e) => handleRemove(data.id)} />
       </div>
     </div>
   );

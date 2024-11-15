@@ -322,7 +322,6 @@ const CareElementsPopUp = ({
           ) : careElementToEdit.key === "BloodPressure" ? (
             <CareElementEditBloodPressure
               setEditVisible={setEditVisible}
-              careElementToEdit={careElementToEdit}
               careElementsDatas={datas}
               topicPut={topicPut}
             />
