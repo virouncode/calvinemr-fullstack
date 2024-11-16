@@ -1,7 +1,7 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import React, { useState } from "react";
 import { useDashboardBillings } from "../../../hooks/reactquery/queries/dashboardQueries";
-import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { SiteType } from "../../../types/api";
 import { getRevenues } from "../../../utils/dashboard/getRevenues";
 import { getTop10BillingCodes } from "../../../utils/dashboard/getTop10BillingCodes";
 import { getTop10Diagnosis } from "../../../utils/dashboard/getTop10Diagnoses";
@@ -16,7 +16,11 @@ import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DashboardCardRanking from "./DashboardCardRanking";
 import DashboardDateFilter from "./DashboardDateFilter";
 
-const DashboardCardBillings = () => {
+type DashboardCardBillingsProps = {
+  sites: SiteType[];
+};
+
+const DashboardCardBillings = ({ sites }: DashboardCardBillingsProps) => {
   //Hooks
   const [rangeStartBillings, setRangeStartBillings] = useState(
     getStartOfTheMonthTZ()
@@ -29,18 +33,12 @@ const DashboardCardBillings = () => {
     useState(-1);
   //Queries
   const {
-    data: sites,
-    isPending: isPendingSites,
-    error: errorSites,
-  } = useSites();
-
-  const {
     data: billings,
     isPending: isPendingBillings,
     error: errorBillings,
   } = useDashboardBillings(rangeStartBillings, rangeEndBillings);
 
-  if (isPendingSites || isPendingBillings)
+  if (isPendingBillings)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Billings</div>
@@ -48,13 +46,11 @@ const DashboardCardBillings = () => {
       </div>
     );
 
-  if (errorSites || errorBillings)
+  if (errorBillings)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Billings</div>
-        <ErrorParagraph
-          errorMsg={errorSites?.message || errorBillings?.message || ""}
-        />
+        <ErrorParagraph errorMsg={errorBillings?.message} />
       </div>
     );
 

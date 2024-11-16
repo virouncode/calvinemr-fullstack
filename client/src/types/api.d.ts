@@ -612,6 +612,7 @@ export type CycleType = {
   notes: CycleNoteType[];
   cycle_notes: string;
   status: string;
+  site_id: number;
 };
 
 export type CycleNoteType = { temp_id?: string; text: string; date: number };

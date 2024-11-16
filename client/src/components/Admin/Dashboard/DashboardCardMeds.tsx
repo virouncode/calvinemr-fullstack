@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDashboardMedications } from "../../../hooks/reactquery/queries/dashboardQueries";
-import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 
+import { SiteType } from "../../../types/api";
 import { getTop10Meds } from "../../../utils/dashboard/getTop10Meds";
 import {
   dateISOToTimestampTZ,
@@ -14,18 +14,16 @@ import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DashboardCardRanking from "./DashboardCardRanking";
 import DashboardDateFilter from "./DashboardDateFilter";
 
-const DashboardCardMeds = () => {
+type DashboardCardMedsProps = {
+  sites: SiteType[];
+};
+
+const DashboardCardMeds = ({ sites }: DashboardCardMedsProps) => {
   //Hooks
   const [siteSelectedIdMeds, setSiteSelectedIdMeds] = useState(-1);
   const [rangeStartMeds, setRangeStartMeds] = useState(getStartOfTheMonthTZ());
   const [rangeEndMeds, setRangeEndMeds] = useState(getEndOfTheMonthTZ());
   //Queries
-  const {
-    data: sites,
-    isPending: isPendingSites,
-    error: errorSites,
-  } = useSites();
-
   const {
     data: medications,
     isPending: isPendingMedications,
@@ -46,7 +44,7 @@ const DashboardCardMeds = () => {
     setSiteSelectedIdMeds(parseInt(e.target.value));
   };
 
-  if (isPendingSites || isPendingMedications)
+  if (isPendingMedications)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Medications</div>
@@ -54,13 +52,11 @@ const DashboardCardMeds = () => {
       </div>
     );
 
-  if (errorSites || errorMedications)
+  if (errorMedications)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Medications</div>
-        <ErrorParagraph
-          errorMsg={errorSites?.message || errorMedications?.message || ""}
-        />
+        <ErrorParagraph errorMsg={errorMedications?.message} />
       </div>
     );
 

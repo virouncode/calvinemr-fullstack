@@ -2,6 +2,8 @@ import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import xanoGet from "../../../../../api/xanoCRUD/xanoGet";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../../../hooks/context/useSocketContext";
+import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   CareElementType,
@@ -23,7 +25,6 @@ import CycleNotes from "./CycleNotes";
 import CyclePatientInfos from "./CyclePatientInfos";
 import CycleSpermInfos from "./CycleSpermInfos";
 import CycleTestsInfos from "./CycleTestsInfos";
-import useSocketContext from "../../../../../hooks/context/useSocketContext";
 
 type CycleFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,11 +41,12 @@ const CycleForm = ({
 }: CycleFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+  const { staffInfos } = useStaffInfosContext();
   const { socket } = useSocketContext();
   const [progress, setProgress] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [formDatas, setFormDatas] = useState<Partial<CycleType>>(
-    initialCycle(patientId)
+    initialCycle(demographicsInfos, staffInfos)
   );
 
   const handleSubmit = async () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Combobox } from "react-widgets";
-const cycleType = [
+export const cycleTypes = [
   "Natural/Investigative",
   "IC + Ovulation induction",
   "IUI + Ovulation induction",
@@ -18,7 +18,7 @@ const cycleType = [
   "Oocyte thaw (donor oocytes)",
   "Oocyte cryopreservation",
   "Split Fertilization - Oocyte cryopreservation",
-];
+] as const;
 
 type CycleTypeListProps = {
   handleChange: (value: string) => void;
@@ -34,7 +34,7 @@ const CycleTypeList = ({ handleChange, value, label }: CycleTypeListProps) => {
         placeholder="Choose or type..."
         value={value}
         onChange={(value) => handleChange(value)}
-        data={cycleType}
+        data={cycleTypes}
       />
     </>
   );

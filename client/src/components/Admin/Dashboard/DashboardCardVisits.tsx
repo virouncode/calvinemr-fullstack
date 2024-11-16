@@ -1,7 +1,7 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import React, { useState } from "react";
 import { useDashboardVisits } from "../../../hooks/reactquery/queries/dashboardQueries";
-import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { SiteType } from "../../../types/api";
 import { getVisitsPerAge } from "../../../utils/dashboard/getVisitsPerAge";
 import { getVisitsPerGender } from "../../../utils/dashboard/getVisitsPerGender";
 import {
@@ -14,7 +14,11 @@ import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DashboardDateFilter from "./DashboardDateFilter";
 
-const DashboardCardVisits = () => {
+type DashboardCardVisitsProps = {
+  sites: SiteType[];
+};
+
+const DashboardCardVisits = ({ sites }: DashboardCardVisitsProps) => {
   //Hooks
   const [rangeStartVisits, setRangeStartVisits] = useState(
     getStartOfTheMonthTZ()
@@ -26,11 +30,6 @@ const DashboardCardVisits = () => {
     isPending: isPendingVisits,
     error: errorVisits,
   } = useDashboardVisits(rangeStartVisits, rangeEndVisits);
-  const {
-    data: sites,
-    isPending: isPendingSites,
-    error: errorSites,
-  } = useSites();
 
   const handleChangeStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -43,7 +42,7 @@ const DashboardCardVisits = () => {
     setRangeEndVisits((dateISOToTimestampTZ(value) as number) + 86399999);
   };
 
-  if (isPendingSites || isPendingVisits)
+  if (isPendingVisits)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Visits</div>
@@ -51,13 +50,11 @@ const DashboardCardVisits = () => {
       </div>
     );
 
-  if (errorSites || errorVisits)
+  if (errorVisits)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Visits</div>
-        <ErrorParagraph
-          errorMsg={errorSites?.message || errorVisits?.message || ""}
-        />
+        <ErrorParagraph errorMsg={errorVisits?.message} />
       </div>
     );
 

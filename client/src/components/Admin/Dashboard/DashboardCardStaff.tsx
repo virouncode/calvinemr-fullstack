@@ -1,12 +1,10 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { SiteType } from "../../../types/api";
 import { getStaffDuration } from "../../../utils/dashboard/getStaffDuration";
 import { getStaffPerCategory } from "../../../utils/dashboard/getStaffPerCategory";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
-import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
-import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 const categoriesData = [
   "Doctors",
   "Medical students",
@@ -34,26 +32,13 @@ const colorsPalette = [
   "#42d4f4",
 ];
 
-const DashboardCardStaff = () => {
+type DashboardCardStaffProps = {
+  sites: SiteType[];
+};
+
+const DashboardCardStaff = ({ sites }: DashboardCardStaffProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
-  //Queries
-  const { data: sites, isPending, error } = useSites();
-
-  if (isPending)
-    return (
-      <div className="dashboard-card">
-        <div className="dashboard-card__title">Staff members</div>
-        <LoadingParagraph />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="dashboard-card">
-        <div className="dashboard-card__title">Staff members</div>
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
 
   const staffPerCategory = getStaffPerCategory(
     staffInfos.filter(({ account_status }) => account_status !== "Closed"),

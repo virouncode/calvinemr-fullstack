@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import { cycleTypes } from "../../../components/UI/Lists/CycleTypeList";
 import {
   AppointmentType,
   BillingType,
@@ -182,6 +183,157 @@ export const useDashboardPatientsPerAge = (sites?: SiteType[]) => {
   return useQuery({
     queryKey: ["dashboardPatientsPerAge"],
     queryFn: () => fetchPatientsPerAge(sites as SiteType[]),
+    enabled: !!sites,
+  });
+};
+
+type TotalsForSitePerCycleType = {
+  ["Natural/Investigative"]: number;
+  ["IC + Ovulation induction"]: number;
+  ["IUI + Ovulation induction"]: number;
+  ["IUI Natural cycle"]: number;
+  ["IVF antagonist"]: number;
+  ["IVF down regulation"]: number;
+  ["IVF flare up"]: number;
+  ["IVF sandwich"]: number;
+  ["IVF duostim"]: number;
+  ["FET natural cycle, no trigger"]: number;
+  ["FET natural cycle + trigger"]: number;
+  ["FET estrace + progesterone"]: number;
+  ["FET down regulation"]: number;
+  ["Oocyte thaw (own oocytes)"]: number;
+  ["Oocyte thaw (donor oocytes)"]: number;
+  ["Oocyte cryopreservation"]: number;
+  ["Split Fertilization - Oocyte cryopreservation"]: number;
+};
+
+const fetchCycles = async (
+  sites: SiteType[],
+  rangeStart: number,
+  rangeEnd: number
+) => {
+  let totals: TotalsForSitePerCycleType[] = [];
+  for (const site of sites) {
+    const totalsForSite: TotalsForSitePerCycleType = {
+      ["Natural/Investigative"]: 0,
+      ["IC + Ovulation induction"]: 0,
+      ["IUI + Ovulation induction"]: 0,
+      ["IUI Natural cycle"]: 0,
+      ["IVF antagonist"]: 0,
+      ["IVF down regulation"]: 0,
+      ["IVF flare up"]: 0,
+      ["IVF sandwich"]: 0,
+      ["IVF duostim"]: 0,
+      ["FET natural cycle, no trigger"]: 0,
+      ["FET natural cycle + trigger"]: 0,
+      ["FET estrace + progesterone"]: 0,
+      ["FET down regulation"]: 0,
+      ["Oocyte thaw (own oocytes)"]: 0,
+      ["Oocyte thaw (donor oocytes)"]: 0,
+      ["Oocyte cryopreservation"]: 0,
+      ["Split Fertilization - Oocyte cryopreservation"]: 0,
+    };
+    for (let i = 0; i < cycleTypes.length; i++) {
+      const response: number = await xanoGet(
+        "/dashboard/cycle_type_range_site",
+        "admin",
+        {
+          cycle_type: cycleTypes[i],
+          range_start: rangeStart,
+          range_end: rangeEnd,
+          site_id: site.id,
+        }
+      );
+      totalsForSite[cycleTypes[i]] = response;
+    }
+    totals = [...totals, totalsForSite];
+  }
+
+  const totalNatural = totals.reduce((acc, current) => {
+    return acc + current["Natural/Investigative"];
+  }, 0);
+  const totalIC = totals.reduce((acc, current) => {
+    return acc + current["IC + Ovulation induction"];
+  }, 0);
+  const totalIUI = totals.reduce((acc, current) => {
+    return acc + current["IUI + Ovulation induction"];
+  }, 0);
+  const totalIUINatural = totals.reduce((acc, current) => {
+    return acc + current["IUI Natural cycle"];
+  }, 0);
+  const totalIVFAntagonist = totals.reduce((acc, current) => {
+    return acc + current["IVF antagonist"];
+  }, 0);
+  const totalIVFDownReg = totals.reduce((acc, current) => {
+    return acc + current["IVF down regulation"];
+  }, 0);
+  const totalIVFFlare = totals.reduce((acc, current) => {
+    return acc + current["IVF flare up"];
+  }, 0);
+  const totalIVFSandwich = totals.reduce((acc, current) => {
+    return acc + current["IVF sandwich"];
+  }, 0);
+  const totalIVFDuostim = totals.reduce((acc, current) => {
+    return acc + current["IVF duostim"];
+  }, 0);
+  const totalFETNaturalNoTrigger = totals.reduce((acc, current) => {
+    return acc + current["FET natural cycle, no trigger"];
+  }, 0);
+  const totalFETNaturalTrigger = totals.reduce((acc, current) => {
+    return acc + current["FET natural cycle + trigger"];
+  }, 0);
+  const totalFETEstrace = totals.reduce((acc, current) => {
+    return acc + current["FET estrace + progesterone"];
+  }, 0);
+  const totalFETDownReg = totals.reduce((acc, current) => {
+    return acc + current["FET down regulation"];
+  }, 0);
+  const totalOocyteThawOwn = totals.reduce((acc, current) => {
+    return acc + current["Oocyte thaw (own oocytes)"];
+  }, 0);
+  const totalOocyteThawDonor = totals.reduce((acc, current) => {
+    return acc + current["Oocyte thaw (donor oocytes)"];
+  }, 0);
+  const totalOocyteCryo = totals.reduce((acc, current) => {
+    return acc + current["Oocyte cryopreservation"];
+  }, 0);
+  const totalSplitFertilization = totals.reduce((acc, current) => {
+    return acc + current["Split Fertilization - Oocyte cryopreservation"];
+  }, 0);
+
+  return [
+    ...totals,
+    {
+      ["Natural/Investigative"]: totalNatural,
+      ["IC + Ovulation induction"]: totalIC,
+      ["IUI + Ovulation induction"]: totalIUI,
+      ["IUI Natural cycle"]: totalIUINatural,
+      ["IVF antagonist"]: totalIVFAntagonist,
+      ["IVF down regulation"]: totalIVFDownReg,
+      ["IVF flare up"]: totalIVFFlare,
+      ["IVF sandwich"]: totalIVFSandwich,
+      ["IVF duostim"]: totalIVFDuostim,
+      ["FET natural cycle, no trigger"]: totalFETNaturalNoTrigger,
+      ["FET natural cycle + trigger"]: totalFETNaturalTrigger,
+      ["FET estrace + progesterone"]: totalFETEstrace,
+      ["FET down regulation"]: totalFETDownReg,
+      ["Oocyte thaw (own oocytes)"]: totalOocyteThawOwn,
+      ["Oocyte thaw (donor oocytes)"]: totalOocyteThawDonor,
+      ["Oocyte cryopreservation"]: totalOocyteCryo,
+      ["Split Fertilization - Oocyte cryopreservation"]:
+        totalSplitFertilization,
+    },
+  ];
+};
+
+export const useDashboardCycles = (
+  sites: SiteType[],
+  rangeStart: number,
+  rangeEnd: number
+) => {
+  return useQuery({
+    queryKey: ["dashboardCycles", rangeStart, rangeEnd],
+    queryFn: () => fetchCycles(sites, rangeStart, rangeEnd),
     enabled: !!sites,
   });
 };

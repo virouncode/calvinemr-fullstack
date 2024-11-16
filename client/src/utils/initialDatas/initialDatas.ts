@@ -1,4 +1,10 @@
-import { CycleType, SiteFormType, StaffFormType } from "../../types/api";
+import {
+  CycleType,
+  DemographicsType,
+  SiteFormType,
+  StaffFormType,
+  StaffType,
+} from "../../types/api";
 import { nowTZTimestamp } from "../dates/formatDates";
 
 export const initialSite: SiteFormType = {
@@ -18,7 +24,10 @@ export const initialSite: SiteFormType = {
   site_status: "Open",
 };
 
-export const initialCycle = (patientId: number): Partial<CycleType> => ({
+export const initialCycle = (
+  demographicsInfos: DemographicsType,
+  staffInfos: StaffType[]
+): Partial<CycleType> => ({
   cycle_length: "",
   menstruation_length: "",
   etiology: "",
@@ -48,12 +57,15 @@ export const initialCycle = (patientId: number): Partial<CycleType> => ({
   test_cmv_male: "",
   test_sonohysterogram_female: "",
   test_endo_bx_female: "",
-  patient_id: patientId,
+  patient_id: demographicsInfos.patient_id,
   cycle_nbr: "",
   events: [],
   notes: [],
   cycle_notes: "",
   status: "Active",
+  site_id:
+    staffInfos.find(({ id }) => id === demographicsInfos.assigned_staff_id)
+      ?.site_id ?? 0,
 });
 
 export const initialStaff: StaffFormType = {

@@ -4,18 +4,17 @@ import {
   useDashboardPatientsPerAge,
   useDashboardPatientsPerGender,
 } from "../../../hooks/reactquery/queries/dashboardQueries";
-import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import { SiteType } from "../../../types/api";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 
-const DashboardCardPatients = () => {
+type DashboardCardPatientsProps = {
+  sites: SiteType[];
+};
+
+const DashboardCardPatients = ({ sites }: DashboardCardPatientsProps) => {
   //Queries
-  const {
-    data: sites,
-    isPending: isPendingSites,
-    error: errorSites,
-  } = useSites();
   const {
     data: patientsPerGender,
     isPending: isPendingPatientsPerGender,
@@ -27,7 +26,7 @@ const DashboardCardPatients = () => {
     error: errorPatientsPerAge,
   } = useDashboardPatientsPerAge(sites);
 
-  if (isPendingSites || isPendingPatientsPerGender || isPendingPatientsPerAge)
+  if (isPendingPatientsPerGender || isPendingPatientsPerAge)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Patients</div>
@@ -35,13 +34,12 @@ const DashboardCardPatients = () => {
       </div>
     );
 
-  if (errorSites || errorPatientsPerGender || errorPatientsPerAge)
+  if (errorPatientsPerGender || errorPatientsPerAge)
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title">Patients</div>
         <ErrorParagraph
           errorMsg={
-            errorSites?.message ||
             errorPatientsPerGender?.message ||
             errorPatientsPerAge?.message ||
             ""
