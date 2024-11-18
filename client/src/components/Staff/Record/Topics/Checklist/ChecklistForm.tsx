@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { ChecklistType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import { checklistTests } from "../../../../../utils/checklist/splitResults";
+import { checklistTests } from "../../../../../utils/checklist/checklistUtils";
 import {
   dateISOToTimestampTZ,
   nowTZTimestamp,

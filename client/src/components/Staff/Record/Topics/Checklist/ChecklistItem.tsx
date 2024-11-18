@@ -1,11 +1,11 @@
 import React from "react";
 import { ChecklistType } from "../../../../../types/api";
 import {
+  checklistTests,
   getLimitDate,
   isTestExpired,
   toValidityText,
 } from "../../../../../utils/checklist/checklistUtils";
-import { checklistTests } from "../../../../../utils/checklist/splitResults";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 

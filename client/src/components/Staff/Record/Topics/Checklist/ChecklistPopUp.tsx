@@ -4,7 +4,7 @@ import { ChecklistType, XanoPaginatedType } from "../../../../../types/api";
 import {
   checklistTests,
   splitChecklistResults,
-} from "../../../../../utils/checklist/splitResults";
+} from "../../../../../utils/checklist/checklistUtils";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";

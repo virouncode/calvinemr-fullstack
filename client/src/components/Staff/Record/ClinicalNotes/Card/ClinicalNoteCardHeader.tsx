@@ -121,7 +121,7 @@ const ClinicalNoteCardHeader = ({
         messages: [
           {
             role: "user",
-            content: `Can you rewrite this with sentences in a medical context: ${clinicalNote.MyClinicalNotesContent}`,
+            content: clinicalNote.MyClinicalNotesContent,
           },
         ],
       });

@@ -1,8 +1,10 @@
 import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
 import { ChecklistType, XanoPaginatedType } from "../../../../../types/api";
-import { isTestExpired } from "../../../../../utils/checklist/checklistUtils";
-import { splitChecklistResults } from "../../../../../utils/checklist/splitResults";
+import {
+  isTestExpired,
+  splitChecklistResults,
+} from "../../../../../utils/checklist/checklistUtils";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
