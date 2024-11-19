@@ -1985,6 +1985,15 @@ export type FaxToPostType = {
   attachments: { fileName: string; fileURL: string }[];
 };
 
+export type FaxNotesType = {
+  id: number;
+  date_created: number;
+  created_by_id: number;
+  FileName: string;
+  Notes: string;
+  updates: { date_updated: number; updated_by_id: number }[];
+};
+
 export type FaxToDeleteType = {
   faxFileName: string;
   direction: "IN" | "OUT";

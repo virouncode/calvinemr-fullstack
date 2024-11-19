@@ -1,8 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import {
   FaxesToDeleteType,
+  FaxNotesType,
   FaxToDeleteType,
   FaxToPostType,
 } from "../../../types/api";
@@ -29,6 +33,25 @@ const deleteFaxes = async (faxFileNames: string[], direction: string) => {
     direction,
   });
   return response.data;
+};
+
+const postFaxNotes = async (faxNotesToPost: Partial<FaxNotesType>) => {
+  const response = await xanoPost("/faxnotes", "staff", faxNotesToPost);
+  return response;
+};
+
+const putFaxNotes = async (faxNotesToPut: FaxNotesType) => {
+  const response = await xanoPut(
+    `/faxnotes/${faxNotesToPut.id}`,
+    "staff",
+    faxNotesToPut
+  );
+  return response;
+};
+
+const deleteFaxNotes = async (faxNotesToDeleteId: number) => {
+  const response = await xanoDelete(`/faxnotes/${faxNotesToDeleteId}`, "staff");
+  return response;
 };
 
 export const useFaxPost = () => {
@@ -78,6 +101,56 @@ export const useFaxesDelete = () => {
     },
     onError: (error) => {
       toast.error(`Error: unable to delete faxes: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFaxNotesPost = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxNotesToPost: Partial<FaxNotesType>) =>
+      postFaxNotes(faxNotesToPost),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax notes"] });
+      toast.success("Fax notes saved succesfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to save fax notes: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFaxNotesPut = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxNotesToPut: FaxNotesType) => putFaxNotes(faxNotesToPut),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax notes"] });
+      toast.success("Fax notes saved succesfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to save fax notes: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFaxNotesDelete = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxNotesToDeleteId: number) =>
+      deleteFaxNotes(faxNotesToDeleteId),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax notes"] });
+      toast.success("Fax notes deleted succesfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to delete fax notes: ${error.message}`, {
         containerId: "A",
       });
     },

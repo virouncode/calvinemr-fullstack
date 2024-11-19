@@ -251,87 +251,25 @@
     margin: 10px 0;
   }
 }
-// .fax {
-//   padding: 20px;
-//   border-bottom: solid 0.5px rgb(204, 204, 204);
-//   &__title {
-//     display: flex;
-//     justify-content: space-between;
-//     font-size: 0.8rem;
-//   }
-//   &__author {
-//     font-weight: bold;
-//   }
-//   &__date {
-//     width: 28%;
-//     text-align: right;
-//   }
-//   &__subject {
-//     border-bottom: solid 0.3px $grey;
-//     height: 30px;
-//     display: flex;
-//     align-items: center;
-//     label {
-//       font-weight: bold;
-//       margin: 0;
-//     }
-//     input {
-//       outline: none;
-//       width: 92%;
-//     }
-//   }
-//   &__subtitle {
-//     font-size: 0.6rem;
-//   }
-//   &__body {
-//     padding: 20px 20px 0;
-//     font-size: 0.8rem;
-//     white-space: pre-wrap;
-//   }
-// }
-// .fax-attachments {
-//   display: flex;
-//   padding: 15px;
-//   flex-wrap: wrap;
-// }
-// .fax-attachment {
-//   &__card {
-//     border: solid 0.5px $grey2;
-//     width: 30%;
-//     margin: 10px 5px 0;
-//   }
-//   &__thumbnail {
-//     height: 80px;
-//     overflow: hidden;
-//     position: relative;
-//     cursor: pointer;
-//     iframe {
-//       border: none;
-//       cursor: pointer;
-//     }
-//   }
-//   &__footer {
-//     background: rgb(154, 154, 154);
-//     padding: 5px;
-//     font-size: 0.7rem;
-//     display: flex;
-//     flex-direction: column;
-//   }
-//   &__title {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     p {
-//       margin-top: 0;
-//       font-size: 0.7rem;
-//     }
-//   }
-//   &__btn {
-//     button {
-//       font-size: 0.65rem;
-//     }
-//   }
-// }
+
+.fax-notes {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+  gap: 1rem;
+  &__text {
+    flex: 1;
+    width: 100%;
+    font-size: $size-sm;
+  }
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    align-items: center;
+  }
+}
 
 @media print {
   .fax-print__btn {
@@ -390,6 +328,11 @@
           }
         }
       }
+    }
+  }
+  .fax-notes {
+    &__text {
+      font-size: $size-base;
     }
   }
 }

@@ -3,11 +3,16 @@ import axios from "axios";
 import uniqueId from "lodash/uniqueId";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
+import {
+  useFaxDelete,
+  useFaxNotesDelete,
+} from "../../../hooks/reactquery/mutations/faxMutations";
 import { useFax } from "../../../hooks/reactquery/queries/faxQueries";
 import {
   AttachmentType,
+  FaxNotesType,
   FaxToDeleteType,
   MessageAttachmentType,
 } from "../../../types/api";
@@ -57,6 +62,7 @@ const FaxDetail = ({
     error,
   } = useFax(currentFaxId, section === "Received faxes" ? "IN" : "OUT");
   const faxDelete = useFaxDelete();
+  const faxNotesDelete = useFaxNotesDelete();
 
   const handleClickBack = () => {
     setCurrentFaxId("");
@@ -68,6 +74,32 @@ const FaxDetail = ({
         content: `Do you really want to delete this fax ? (this action is irreversible)`,
       })
     ) {
+      //Delete fax notes
+      try {
+        const faxNotesToDelete: FaxNotesType = await xanoGet(
+          "/faxnotes_for_filename",
+          "staff",
+          {
+            file_name: currentFaxId,
+          }
+        );
+        if (faxNotesToDelete) {
+          faxNotesDelete.mutate(faxNotesToDelete.id, {
+            onError: (err) => {
+              toast.error(`Unable to delete fax notes: ${err}`, {
+                containerId: "A",
+              });
+            },
+          });
+        }
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Unable to delete fax notes: ${err.message}`, {
+            containerId: "A",
+          });
+        return;
+      }
+      //Delete fax
       const faxToDelete: FaxToDeleteType = {
         faxFileName: currentFaxId,
         direction: section === "Received faxes" ? "IN" : "OUT",

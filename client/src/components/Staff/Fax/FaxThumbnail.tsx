@@ -1,10 +1,16 @@
+import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
+import {
+  useFaxDelete,
+  useFaxNotesDelete,
+} from "../../../hooks/reactquery/mutations/faxMutations";
 import {
   FaxInboxType,
+  FaxNotesType,
   FaxOutboxType,
   FaxToDeleteType,
 } from "../../../types/api";
@@ -13,10 +19,12 @@ import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
 import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./Contacts/ContactFaxForm";
+import FaxNotes from "./FaxNotes";
 
 type FaxThumbnailProps = {
   fax: FaxInboxType | FaxOutboxType;
@@ -39,9 +47,10 @@ const FaxThumbnail = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const [addFaxNumberVisible, setAddFaxNumberVisible] = useState(false);
-  const [contactName, setContactName] = useState("");
+  const [notesVisible, setNotesVisible] = useState(false);
   //Queries
   const faxDelete = useFaxDelete();
+  const faxNotesDelete = useFaxNotesDelete();
 
   // useEffect(() => {
   //   const contactWithFaxNumber = async () => {
@@ -107,6 +116,31 @@ const FaxThumbnail = ({
           "Do you really want to delete this fax (this action is irreversible)?",
       })
     ) {
+      //Delete fax notes
+      try {
+        const faxNotesToDelete: FaxNotesType = await xanoGet(
+          "/faxnotes_for_filename",
+          "staff",
+          {
+            file_name: fax.FileName,
+          }
+        );
+        if (faxNotesToDelete) {
+          faxNotesDelete.mutate(faxNotesToDelete.id, {
+            onError: (err) => {
+              toast.error(`Unable to delete fax notes: ${err}`, {
+                containerId: "A",
+              });
+            },
+          });
+        }
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Unable to delete fax notes: ${err.message}`, {
+            containerId: "A",
+          });
+        return;
+      }
       const faxToDelete: FaxToDeleteType = {
         faxFileName: fax.FileName,
         direction: section === "Received faxes" ? "IN" : "OUT",
@@ -141,6 +175,11 @@ const FaxThumbnail = ({
     }
   };
 
+  const handleClickNotes = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.stopPropagation();
+    setNotesVisible(true);
+  };
+
   return (
     <div
       className={
@@ -168,6 +207,11 @@ const FaxThumbnail = ({
       </div>
       <div className="fax__thumbnail-pages" onClick={handleFaxClick}>
         {fax.Pages}
+        <Tooltip title="Notes">
+          <span>
+            <ClipboardIcon ml={15} onClick={handleClickNotes} />
+          </span>
+        </Tooltip>
       </div>
       <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateTimeStrTZ(parseInt(fax.EpochTime) * 1000)}
@@ -193,6 +237,19 @@ const FaxThumbnail = ({
                 : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
             }
           />
+        </FakeWindow>
+      )}
+      {notesVisible && (
+        <FakeWindow
+          title="FAX NOTES"
+          width={700}
+          height={300}
+          x={(window.innerWidth - 700) / 2}
+          y={(window.innerHeight - 300) / 2}
+          color="#94bae8"
+          setPopUpVisible={setNotesVisible}
+        >
+          <FaxNotes fileName={fax.FileName} setNotesVisible={setNotesVisible} />
         </FakeWindow>
       )}
     </div>

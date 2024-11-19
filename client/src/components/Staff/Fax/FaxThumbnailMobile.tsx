@@ -9,9 +9,11 @@ import { timestampToDateStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
 import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./Contacts/ContactFaxForm";
+import FaxNotes from "./FaxNotes";
 
 type FaxThumbnailMobileProps = {
   fax: FaxInboxType | FaxOutboxType;
@@ -32,9 +34,9 @@ const FaxThumbnailMobile = ({
 }: FaxThumbnailMobileProps) => {
   //Hooks
   const [addFaxNumberVisible, setAddFaxNumberVisible] = useState(false);
-  const [contactName, setContactName] = useState("");
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+  const [notesVisible, setNotesVisible] = useState(false);
   //Queries
   const faxDelete = useFaxDelete();
 
@@ -117,6 +119,11 @@ const FaxThumbnailMobile = ({
     }
   };
 
+  const handleClickNotes = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.stopPropagation();
+    setNotesVisible(true);
+  };
+
   return (
     <div
       className={
@@ -141,6 +148,7 @@ const FaxThumbnailMobile = ({
           {/* / {contactName} */}
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
+        <ClipboardIcon ml={15} onClick={handleClickNotes} />
       </div>
       <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateStrTZ(parseInt(fax.EpochTime) * 1000)}
@@ -163,6 +171,19 @@ const FaxThumbnailMobile = ({
                 : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
             }
           />
+        </FakeWindow>
+      )}
+      {notesVisible && (
+        <FakeWindow
+          title="FAX NOTES"
+          width={700}
+          height={300}
+          x={(window.innerWidth - 700) / 2}
+          y={(window.innerHeight - 300) / 2}
+          color="#94bae8"
+          setPopUpVisible={setNotesVisible}
+        >
+          <FaxNotes fileName={fax.FileName} setNotesVisible={setNotesVisible} />
         </FakeWindow>
       )}
     </div>

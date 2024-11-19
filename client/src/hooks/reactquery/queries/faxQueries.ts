@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { FaxInboxType, FaxOutboxType } from "../../../types/api";
+import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import { FaxInboxType, FaxNotesType, FaxOutboxType } from "../../../types/api";
 axios.defaults.withCredentials = true;
 
 const fetchFaxesInbox = async (
@@ -17,6 +18,18 @@ const fetchFaxesInbox = async (
   });
   const faxesInbox: FaxInboxType[] = response.data;
   return faxesInbox;
+};
+
+const fetchFaxNotes = async (fileName: string) => {
+  console.log("fetchFaxNotesfileName", fileName);
+  const response: FaxNotesType = await xanoGet(
+    "/faxnotes_for_filename",
+    "staff",
+    {
+      file_name: fileName,
+    }
+  );
+  return response;
 };
 
 const fetchFaxesOutbox = async (all: boolean, start: string, end: string) => {
@@ -61,5 +74,12 @@ export const useFax = (id: string, direction: string) => {
   return useQuery({
     queryKey: ["fax", id, direction],
     queryFn: () => fetchFax(id, direction),
+  });
+};
+
+export const useFaxNotes = (fileName: string) => {
+  return useQuery({
+    queryKey: ["fax notes", fileName],
+    queryFn: () => fetchFaxNotes(fileName),
   });
 };
