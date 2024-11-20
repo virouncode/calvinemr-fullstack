@@ -242,9 +242,11 @@ const FaxDetail = ({
             )}
             {progress && <CircularProgressSmall />}
           </div>
-          <div className="fax__detail-toolbar-logos">
-            <TrashIcon onClick={handleDeleteFax} />
-          </div>
+          {import.meta.env.VITE_ISDEMO === "false" && (
+            <div className="fax__detail-toolbar-logos">
+              <TrashIcon onClick={handleDeleteFax} />
+            </div>
+          )}
         </div>
         <div className="fax__detail-content">
           <Fax faxBase64={faxBase64} />

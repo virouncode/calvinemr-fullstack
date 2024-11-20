@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -48,6 +48,14 @@ const LoginForm = () => {
   const [loadingAdmin, setLoadingAdmin] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [pinVisible, setPinVisible] = useState(false);
+
+  useEffect(() => {
+    if (import.meta.env.VITE_ISDEMO === "true") {
+      alert(
+        "Welcome to CalvinEMR demo, here are the credentials to login : \n\nLogin: demo@calvinemr.com\nPassword: Calvin123@\nPIN: 1234\n\nEnter these credentials and click on the Staff button"
+      );
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

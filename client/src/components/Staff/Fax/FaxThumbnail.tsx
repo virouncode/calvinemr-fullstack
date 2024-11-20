@@ -216,9 +216,11 @@ const FaxThumbnail = ({
       <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateTimeStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
-      <div className="fax__thumbnail-logos">
-        <TrashIcon onClick={handleDeleteFax} />
-      </div>
+      {import.meta.env.VITE_ISDEMO === "false" && (
+        <div className="fax__thumbnail-logos">
+          <TrashIcon onClick={handleDeleteFax} />
+        </div>
+      )}
       {addFaxNumberVisible && (
         <FakeWindow
           title="ADD CONTACT TO DIRECTORY"

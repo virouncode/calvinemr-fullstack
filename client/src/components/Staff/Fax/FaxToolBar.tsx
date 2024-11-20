@@ -173,9 +173,11 @@ const FaxToolBar = ({
 
       <div className="fax__toolbar-btns">
         <Button onClick={handleClickNew} label="New" disabled={newVisible} />
-        {currentFaxId === "" && faxesSelectedIds.length !== 0 && (
-          <Button onClick={handleDeleteSelected} label="Delete Selected" />
-        )}
+        {currentFaxId === "" &&
+          faxesSelectedIds.length !== 0 &&
+          import.meta.env.VITE_ISDEMO === "false" && (
+            <Button onClick={handleDeleteSelected} label="Delete Selected" />
+          )}
         {currentFaxId === "" &&
           (selectAllVisible ? (
             <Button
