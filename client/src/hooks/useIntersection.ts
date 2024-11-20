@@ -32,7 +32,11 @@ const useIntersection = <TData, TError>(
 
       observer.current = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting && !isFetching) {
-          await fetchNextPage();
+          try {
+            await fetchNextPage();
+          } catch (error) {
+            console.error("Error fetching next page:", error);
+          }
         }
       }, options);
 

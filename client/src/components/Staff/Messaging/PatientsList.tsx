@@ -41,7 +41,8 @@ const PatientsList = ({
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    "ul"
   );
 
   const patientsDemographics = data?.pages?.flatMap((page) => page.items);

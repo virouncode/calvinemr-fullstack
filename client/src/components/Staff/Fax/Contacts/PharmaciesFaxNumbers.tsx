@@ -31,7 +31,8 @@ const PharmaciesFaxNumbers = ({
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    "ul"
   );
 
   const pharmacies = data?.pages

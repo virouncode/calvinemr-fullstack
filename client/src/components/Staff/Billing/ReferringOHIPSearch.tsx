@@ -38,7 +38,8 @@ const ReferringOHIPSearch = ({
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    "ul"
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

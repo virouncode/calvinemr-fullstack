@@ -44,7 +44,8 @@ const MigrationPatientsList = ({
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    "ul"
   );
 
   if (isPending) return <LoadingParagraph />;

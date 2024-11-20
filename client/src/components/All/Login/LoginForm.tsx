@@ -51,9 +51,14 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (import.meta.env.VITE_ISDEMO === "true") {
-      alert(
-        "Welcome to CalvinEMR demo, here are the credentials to login : \n\nLogin: demo@calvinemr.com\nPassword: Calvin123@\nPIN: 1234\n\nEnter these credentials and click on the Staff button"
+      const timer = setTimeout(
+        () =>
+          alert(
+            "Welcome to CalvinEMR demo, here are the credentials to login : \n\nLogin: demo@calvinemr.com\nPassword: Calvin123@\nPIN: 1234\n\nEnter these credentials and click on the Staff button"
+          ),
+        1000
       );
+      return () => clearTimeout(timer);
     }
   }, []);
 

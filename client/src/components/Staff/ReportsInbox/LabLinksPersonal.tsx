@@ -33,7 +33,8 @@ const LabLinksPersonal = () => {
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    "ul"
   );
   const [addVisible, setAddVisible] = useState(false);
   const handleAdd = () => {
