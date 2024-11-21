@@ -85,16 +85,20 @@ const CycleEvents = ({
           </thead>
           <tbody>
             {(formDatas.events ?? []).length > 0 ? (
-              formDatas.events?.map((item, index) => (
-                <CycleEventForm
-                  key={(item.temp_id as string) + index}
-                  item={item}
-                  formDatas={formDatas}
-                  setFormDatas={setFormDatas}
-                  setErrMsg={setErrMsg}
-                  index={index}
-                />
-              ))
+              formDatas.events
+                ?.sort(
+                  (a, b) => ((a.date as number) - (b.date as number)) as number
+                )
+                .map((item, index) => (
+                  <CycleEventForm
+                    key={(item.temp_id as string) + index}
+                    item={item}
+                    formDatas={formDatas}
+                    setFormDatas={setFormDatas}
+                    setErrMsg={setErrMsg}
+                    index={index}
+                  />
+                ))
             ) : (
               <EmptyRow colSpan={13} text="No events" />
             )}

@@ -81,6 +81,7 @@ const App = () => {
   return (
     <>
       <Routes>
+        {/*=============== LOGIN LAYOUT =================*/}
         <Route path="/" element={<LoginLayout />}>
           {/* public routes */}
           <Route index element={<LoginPage />} />
@@ -91,6 +92,7 @@ const App = () => {
           {/* catch all */}
           <Route path="*" element={<MissingPage />} />
         </Route>
+        {/*=============== STAFF LAYOUT =================*/}
         <Route
           path="staff"
           element={
@@ -132,6 +134,7 @@ const App = () => {
             <Route path="credentials" element={<StaffCredentialsPage />} />
           </Route>
         </Route>
+        {/*=============== ADMIN LAYOUT =================*/}
         <Route
           path="admin"
           element={
@@ -157,6 +160,7 @@ const App = () => {
             <Route path="credentials" element={<AdminCredentialsPage />} />
           </Route>
         </Route>
+        {/*=============== PATIENT LAYOUT =================*/}
         <Route
           path="patient"
           element={

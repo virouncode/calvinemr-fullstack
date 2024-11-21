@@ -1,10 +1,10 @@
 import _ from "lodash";
 import React from "react";
 import { CycleType } from "../../../../../types/api";
+import { todayTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
 import CycleNoteForm from "./CycleNoteForm";
-import { todayTZTimestamp } from "../../../../../utils/dates/formatDates";
 
 type CycleNotesProps = {
   formDatas: Partial<CycleType>;
@@ -55,15 +55,19 @@ const CycleNotes = ({
           </thead>
           <tbody>
             {(formDatas.notes?.length ?? 0) > 0 ? (
-              formDatas.notes?.map((item, index) => (
-                <CycleNoteForm
-                  key={(item.temp_id as string) + index}
-                  item={item}
-                  formDatas={formDatas}
-                  setFormDatas={setFormDatas}
-                  setErrMsg={setErrMsg}
-                />
-              ))
+              formDatas.notes
+                ?.sort(
+                  (a, b) => ((a.date as number) - (b.date as number)) as number
+                )
+                .map((item, index) => (
+                  <CycleNoteForm
+                    key={(item.temp_id as string) + index}
+                    item={item}
+                    formDatas={formDatas}
+                    setFormDatas={setFormDatas}
+                    setErrMsg={setErrMsg}
+                  />
+                ))
             ) : (
               <EmptyRow colSpan={3} text="No notes" />
             )}
