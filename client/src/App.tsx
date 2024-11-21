@@ -91,6 +91,7 @@ const App = () => {
           {/* catch all */}
           <Route path="*" element={<MissingPage />} />
         </Route>
+
         <Route
           path="staff"
           element={
