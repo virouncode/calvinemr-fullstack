@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Id } from "react-toastify";
 import useTitleContext from "../../../hooks/context/useTitleContext";
 import useAutoLockScreen from "../../../hooks/useAutoLockScreen";
+import useAutoLogout from "../../../hooks/useAutoLogout";
 import { useLocalStorageLock } from "../../../hooks/useLocalStorageLock";
+import useLocalStorageTracker from "../../../hooks/useLocalStorageTracker";
+import useLogoutForAll from "../../../hooks/useLogoutForAll";
+import useRefreshToken from "../../../hooks/useRefreshToken";
 import LockPage from "../../../pages/All/LockPage";
 import Notepad from "../../Staff/Notepad/Notepad";
 import ConfirmGlobal from "../../UI/Confirm/ConfirmGlobal";
@@ -15,16 +18,33 @@ import FakeWindow from "../../UI/Windows/FakeWindow";
 import StaffHeader from "../Headers/StaffHeader";
 import StaffMobileNav from "../Navigation/StaffMobileNav";
 import Subheader from "../Subheader/Subheader";
+import useAdminsInfosSocket from "../../../hooks/socket/useAdminsInfosSocket";
+import useClinicSocket from "../../../hooks/socket/useClinicSocket";
+import useReactQuerySocket from "../../../hooks/socket/useReactQuerySocket";
+import useStaffInfosSocket from "../../../hooks/socket/useStaffInfosSocket";
+import useUnreadExternalSocket from "../../../hooks/socket/useUnreadExternalSocket";
+import useUnreadFaxSocket from "../../../hooks/socket/useUnreadFaxSocket";
+import useUnreadSocket from "../../../hooks/socket/useUnreadSocket";
+import useUnreadTodoSocket from "../../../hooks/socket/useUnreadTodoSocket";
+import useUserSocket from "../../../hooks/socket/useUserSocket";
 
-type StaffLayoutProps = {
-  toastExpiredID: React.MutableRefObject<Id | null>;
-  tokenLimitVerifierID: React.MutableRefObject<number | null>;
-};
-
-const StaffLayout = ({
-  toastExpiredID,
-  tokenLimitVerifierID,
-}: StaffLayoutProps) => {
+const StaffLayout = () => {
+  //REFRESH TOKEN
+  const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
+  //LOCAL STORAGE
+  useLocalStorageTracker();
+  useAutoLogout(120, toastExpiredID, tokenLimitVerifierID); //autologout in x min
+  useLogoutForAll(); //log every tabs out if logout in one tab
+  useStaffInfosSocket();
+  useAdminsInfosSocket();
+  useUserSocket();
+  useClinicSocket();
+  useUnreadExternalSocket(); //for staff and patient
+  useUnreadSocket(); //for staff
+  useUnreadTodoSocket(); //for staff
+  useUnreadFaxSocket(); //for staff (to remove one for all user if a user reads a new fax)
+  //REACT QUERY SOCKETS
+  useReactQuerySocket();
   //Hooks
   const { title } = useTitleContext();
   const [creditsVisible, setCreditsVisible] = useState(false);

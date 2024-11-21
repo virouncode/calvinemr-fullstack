@@ -1,46 +1,16 @@
 //Librairies
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import AdminLayout from "./components/All/Layouts/AdminLayout";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginLayout from "./components/All/Layouts/LoginLayout";
-import PatientLayout from "./components/All/Layouts/PatientLayout";
-import StaffLayout from "./components/All/Layouts/StaffLayout";
 import RequireAuth from "./context/RequireAuth";
-import useAdminsInfosSocket from "./hooks/socket/useAdminsInfosSocket";
-import useClinicSocket from "./hooks/socket/useClinicSocket";
-import useReactQuerySocket from "./hooks/socket/useReactQuerySocket";
 import { useServerErrorSocket } from "./hooks/socket/useServerErrorSocket";
-import useStaffInfosSocket from "./hooks/socket/useStaffInfosSocket";
-import useUnreadExternalSocket from "./hooks/socket/useUnreadExternalSocket";
-import useUnreadFaxSocket from "./hooks/socket/useUnreadFaxSocket";
-import useUnreadSocket from "./hooks/socket/useUnreadSocket";
-import useUnreadTodoSocket from "./hooks/socket/useUnreadTodoSocket";
-import useUserSocket from "./hooks/socket/useUserSocket";
-import useAutoLogout from "./hooks/useAutoLogout";
-import { useLocalStorageTracker } from "./hooks/useLocalStorageTracker";
-import useLogoutForAll from "./hooks/useLogoutForAll";
-import useRefreshToken from "./hooks/useRefreshToken";
-import AdminBillingPage from "./pages/Admin/AdminBillingPage";
-import AdminClinicPage from "./pages/Admin/AdminClinicPage";
-import AdminCredentialsPage from "./pages/Admin/AdminCredentialsPage";
-import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
-import AdminLogsPage from "./pages/Admin/AdminLogsPage";
-import AdminMigrationPage from "./pages/Admin/AdminMigrationPage";
-import AdminMyAccountPage from "./pages/Admin/AdminMyAccountPage";
-import AdminPatientsAccountsPage from "./pages/Admin/AdminPatientsAccountsPage";
-import AdminStaffAccountsPage from "./pages/Admin/AdminStaffAccountsPage";
 import ClosedPage from "./pages/All/ClosedPage";
+import ErrorPage from "./pages/All/ErrorPage";
 import LoginPage from "./pages/All/LoginPage";
 import MissingPage from "./pages/All/MissingPage";
 import ResetPage from "./pages/All/ResetPage";
 import SuspendedPage from "./pages/All/SuspendedPage";
 import UnauthorizedPage from "./pages/All/UnauthorizedPage";
-import PatientAppointmentsPage from "./pages/Patient/PatientAppointmentsPage";
-import PatientCredentialsPage from "./pages/Patient/PatientCredentialsPage";
-import PatientMessagesPage from "./pages/Patient/PatientMessagesPage";
-import PatientMyAccountPage from "./pages/Patient/PatientMyAccountPage";
-import PatientPamphletsPage from "./pages/Patient/PatientPamphletsPage";
-import PatientPharmaciesPage from "./pages/Patient/PatientPharmaciesPage";
 import StaffBillingPage from "./pages/Staff/StaffBillingPage";
 import StaffCalendarPage from "./pages/Staff/StaffCalendarPage";
 import StaffCalvinAIPage from "./pages/Staff/StaffCalvinAIPage";
@@ -54,132 +24,244 @@ import StaffReferencePage from "./pages/Staff/StaffReferencePage";
 import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
 import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
 import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
+import StaffLayout from "./components/All/Layouts/StaffLayout";
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
-  //REFRESH TOKEN
-  const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
-  //LOCAL STORAGE
-  useLocalStorageTracker();
-  useAutoLogout(120, toastExpiredID, tokenLimitVerifierID); //autologout in x min
-  useLogoutForAll(); //log every tabs out if logout in one tab
+  // //REFRESH TOKEN
+  // const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
+  // //LOCAL STORAGE
+  // useLocalStorageTracker();
+  // useAutoLogout(120, toastExpiredID, tokenLimitVerifierID); //autologout in x min
+  // useLogoutForAll(); //log every tabs out if logout in one tab
   //CONTEXT SOCKETS
-  useStaffInfosSocket();
-  useAdminsInfosSocket();
-  useUserSocket();
-  useClinicSocket();
-  useUnreadExternalSocket(); //for staff and patient
-  useUnreadSocket(); //for staff
-  useUnreadTodoSocket(); //for staff
-  useUnreadFaxSocket(); //for staff (to remove one for all user if a user reads a new fax)
-  //REACT QUERY SOCKETS
-  useReactQuerySocket();
+  // useStaffInfosSocket();
+  // useAdminsInfosSocket();
+  // useUserSocket();
+  // useClinicSocket();
+  // useUnreadExternalSocket(); //for staff and patient
+  // useUnreadSocket(); //for staff
+  // useUnreadTodoSocket(); //for staff
+  // useUnreadFaxSocket(); //for staff (to remove one for all user if a user reads a new fax)
+  // //REACT QUERY SOCKETS
+  // useReactQuerySocket();
   useServerErrorSocket(setServerErrorMsg); //for server errors
 
   if (serverErrorMsg) return <div>{serverErrorMsg}</div>;
 
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<LoginLayout />}>
-          {/* public routes */}
-          <Route index element={<LoginPage />} />
-          <Route path="unauthorized" element={<UnauthorizedPage />} />
-          <Route path="suspended" element={<SuspendedPage />} />
-          <Route path="closed" element={<ClosedPage />} />
-          <Route path="reset-password" element={<ResetPage />} />
-          {/* catch all */}
-          <Route path="*" element={<MissingPage />} />
-        </Route>
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <LoginLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "",
+          element: <LoginPage />,
+        },
+        {
+          path: "unauthorized",
+          element: <UnauthorizedPage />,
+        },
+        {
+          path: "suspended",
+          element: <SuspendedPage />,
+        },
+        {
+          path: "closed",
+          element: <ClosedPage />,
+        },
+        {
+          path: "reset-password",
+          element: <ResetPage />,
+        },
+        {
+          path: "*",
+          element: <MissingPage />,
+        },
+      ],
+    },
+    {
+      path: "/staff",
+      element: <RequireAuth allowedAccesses={["staff"]} />,
+      children: [
+        {
+          path: "calendar",
+          element: (
+            <StaffLayout>
+              <StaffCalendarPage />
+            </StaffLayout>
+          ),
+        },
+        {
+          path: "search-patient",
+          element: <StaffSearchPatientPage />,
+        },
+        {
+          path: "groups",
+          element: <StaffPatientsGroupsPage />,
+        },
+        {
+          path: "groups/:gid/:gtype",
+          element: <StaffPatientsGroupsPage />,
+        },
+        {
+          path: "patient-record/:id",
+          element: <StaffPatientRecordPage />,
+        },
+        {
+          path: "signup-patient",
+          element: <StaffSignupPatientPage />,
+        },
+        {
+          path: "reports-inbox",
+          element: <StaffReportsInboxPage />,
+        },
+        {
+          path: "messages",
+          element: <StaffMessagesPage />,
+        },
+        {
+          path: "messages/:messageId/:sectionName/:msgType",
+          element: <StaffMessagesPage />,
+        },
+        {
+          path: "fax",
+          element: <StaffFaxPage />,
+        },
+        {
+          path: "reference",
+          element: <StaffReferencePage />,
+        },
+        {
+          path: "calvinai",
+          element: <StaffCalvinAIPage />,
+        },
+        {
+          path: "billing",
+          element: <StaffBillingPage />,
+        },
+        {
+          path: "billing/:pid/:pName/:hcn/:date",
+          element: <StaffBillingPage />,
+        },
+        {
+          path: "my-account",
+          element: <StaffMyAccountPage />,
+        },
+        {
+          path: "credentials",
+          element: <StaffCredentialsPage />,
+        },
+      ],
+    },
+  ]);
 
-        <Route
-          path="staff"
-          element={
-            <StaffLayout
-              toastExpiredID={toastExpiredID}
-              tokenLimitVerifierID={tokenLimitVerifierID}
-            />
-          }
-        >
-          {/* protected routes */}
-          <Route element={<RequireAuth allowedAccesses={["staff"]} />}>
-            <Route path="calendar" element={<StaffCalendarPage />} />
-            <Route path="search-patient" element={<StaffSearchPatientPage />} />
-            <Route path="groups" element={<StaffPatientsGroupsPage />} />
-            <Route
-              path="groups/:gid/:gtype"
-              element={<StaffPatientsGroupsPage />}
-            />
-            <Route
-              path="patient-record/:id"
-              element={<StaffPatientRecordPage />}
-            />
-            <Route path="signup-patient" element={<StaffSignupPatientPage />} />
-            <Route path="reports-inbox" element={<StaffReportsInboxPage />} />
-            <Route path="messages" element={<StaffMessagesPage />} />
-            <Route
-              path="messages/:messageId/:sectionName/:msgType"
-              element={<StaffMessagesPage />}
-            />
-            <Route path="fax" element={<StaffFaxPage />} />
-            <Route path="reference" element={<StaffReferencePage />} />
-            <Route path="calvinai" element={<StaffCalvinAIPage />} />
-            <Route path="billing" element={<StaffBillingPage />} />
-            <Route
-              path="billing/:pid/:pName/:hcn/:date"
-              element={<StaffBillingPage />}
-            />
-            <Route path="my-account" element={<StaffMyAccountPage />} />
-            <Route path="credentials" element={<StaffCredentialsPage />} />
-          </Route>
-        </Route>
-        <Route
-          path="admin"
-          element={
-            <AdminLayout
-              toastExpiredID={toastExpiredID}
-              tokenLimitVerifierID={tokenLimitVerifierID}
-            />
-          }
-        >
-          {/* protected routes */}
-          <Route element={<RequireAuth allowedAccesses={["admin"]} />}>
-            <Route path="dashboard" element={<AdminDashboardPage />} />
-            <Route path="staff-accounts" element={<AdminStaffAccountsPage />} />
-            <Route
-              path="patients-accounts"
-              element={<AdminPatientsAccountsPage />}
-            />
-            <Route path="clinic" element={<AdminClinicPage />} />
-            <Route path="billing" element={<AdminBillingPage />} />
-            <Route path="migration" element={<AdminMigrationPage />} />
-            <Route path="logs" element={<AdminLogsPage />} />
-            <Route path="my-account" element={<AdminMyAccountPage />} />
-            <Route path="credentials" element={<AdminCredentialsPage />} />
-          </Route>
-        </Route>
-        <Route
-          path="patient"
-          element={
-            <PatientLayout
-              toastExpiredID={toastExpiredID}
-              tokenLimitVerifierID={tokenLimitVerifierID}
-            />
-          }
-        >
-          {/* protected routes */}
-          <Route element={<RequireAuth allowedAccesses={["patient"]} />}>
-            <Route path="messages" element={<PatientMessagesPage />} />
-            <Route path="appointments" element={<PatientAppointmentsPage />} />
-            <Route path="pamphlets" element={<PatientPamphletsPage />} />
-            <Route path="pharmacies" element={<PatientPharmaciesPage />} />
-            <Route path="my-account" element={<PatientMyAccountPage />} />
-            <Route path="credentials" element={<PatientCredentialsPage />} />
-          </Route>
-        </Route>
-      </Routes>
-    </>
-  );
+  //   return (
+  //     <>
+
+  //       <Routes>
+  //         <Route path="/" element={<LoginLayout />}>
+  //           {/* public routes */}
+  //           <Route index element={<LoginPage />} />
+  //           <Route path="unauthorized" element={<UnauthorizedPage />} />
+  //           <Route path="suspended" element={<SuspendedPage />} />
+  //           <Route path="closed" element={<ClosedPage />} />
+  //           <Route path="reset-password" element={<ResetPage />} />
+  //           {/* catch all */}
+  //           <Route path="*" element={<MissingPage />} />
+  //         </Route>
+
+  //         <Route
+  //           path="staff"
+  //           element={
+  //             <StaffLayout
+  //               toastExpiredID={toastExpiredID}
+  //               tokenLimitVerifierID={tokenLimitVerifierID}
+  //             />
+  //           }
+  //         >
+  //           {/* protected routes */}
+  //           <Route element={<RequireAuth allowedAccesses={["staff"]} />}>
+  //             <Route path="calendar" element={<StaffCalendarPage />} />
+  //             <Route path="search-patient" element={<StaffSearchPatientPage />} />
+  //             <Route path="groups" element={<StaffPatientsGroupsPage />} />
+  //             <Route
+  //               path="groups/:gid/:gtype"
+  //               element={<StaffPatientsGroupsPage />}
+  //             />
+  //             <Route
+  //               path="patient-record/:id"
+  //               element={<StaffPatientRecordPage />}
+  //             />
+  //             <Route path="signup-patient" element={<StaffSignupPatientPage />} />
+  //             <Route path="reports-inbox" element={<StaffReportsInboxPage />} />
+  //             <Route path="messages" element={<StaffMessagesPage />} />
+  //             <Route
+  //               path="messages/:messageId/:sectionName/:msgType"
+  //               element={<StaffMessagesPage />}
+  //             />
+  //             <Route path="fax" element={<StaffFaxPage />} />
+  //             <Route path="reference" element={<StaffReferencePage />} />
+  //             <Route path="calvinai" element={<StaffCalvinAIPage />} />
+  //             <Route path="billing" element={<StaffBillingPage />} />
+  //             <Route
+  //               path="billing/:pid/:pName/:hcn/:date"
+  //               element={<StaffBillingPage />}
+  //             />
+  //             <Route path="my-account" element={<StaffMyAccountPage />} />
+  //             <Route path="credentials" element={<StaffCredentialsPage />} />
+  //           </Route>
+  //         </Route>
+  //         <Route
+  //           path="admin"
+  //           element={
+  //             <AdminLayout
+  //               toastExpiredID={toastExpiredID}
+  //               tokenLimitVerifierID={tokenLimitVerifierID}
+  //             />
+  //           }
+  //         >
+  //           {/* protected routes */}
+  //           <Route element={<RequireAuth allowedAccesses={["admin"]} />}>
+  //             <Route path="dashboard" element={<AdminDashboardPage />} />
+  //             <Route path="staff-accounts" element={<AdminStaffAccountsPage />} />
+  //             <Route
+  //               path="patients-accounts"
+  //               element={<AdminPatientsAccountsPage />}
+  //             />
+  //             <Route path="clinic" element={<AdminClinicPage />} />
+  //             <Route path="billing" element={<AdminBillingPage />} />
+  //             <Route path="migration" element={<AdminMigrationPage />} />
+  //             <Route path="logs" element={<AdminLogsPage />} />
+  //             <Route path="my-account" element={<AdminMyAccountPage />} />
+  //             <Route path="credentials" element={<AdminCredentialsPage />} />
+  //           </Route>
+  //         </Route>
+  //         <Route
+  //           path="patient"
+  //           element={
+  //             <PatientLayout
+  //               toastExpiredID={toastExpiredID}
+  //               tokenLimitVerifierID={tokenLimitVerifierID}
+  //             />
+  //           }
+  //         >
+  //           {/* protected routes */}
+  //           <Route element={<RequireAuth allowedAccesses={["patient"]} />}>
+  //             <Route path="messages" element={<PatientMessagesPage />} />
+  //             <Route path="appointments" element={<PatientAppointmentsPage />} />
+  //             <Route path="pamphlets" element={<PatientPamphletsPage />} />
+  //             <Route path="pharmacies" element={<PatientPharmaciesPage />} />
+  //             <Route path="my-account" element={<PatientMyAccountPage />} />
+  //             <Route path="credentials" element={<PatientCredentialsPage />} />
+  //           </Route>
+  //         </Route>
+  //       </Routes>
+  //     </>
+  //   );
+  // };
+  return <RouterProvider router={router} />;
 };
 
 export default App;
