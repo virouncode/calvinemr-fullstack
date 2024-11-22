@@ -272,6 +272,8 @@ const MessageDetail = ({
   if (error && section !== "To-dos")
     return <ErrorParagraph errorMsg={error.message} />;
 
+  console.log("previousMsgs", previousMsgs);
+
   return (
     message && (
       <>
