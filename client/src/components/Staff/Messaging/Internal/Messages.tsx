@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useStaffMessages } from "../../../../hooks/reactquery/queries/messagesQueries";
+import { MessageType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { filterAndSortMessages } from "../../../../utils/messages/filterAndSortMessages";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
@@ -36,18 +37,13 @@ const Messages = () => {
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
     const fetchMessagesUntilMessageId = async () => {
-      const results = messages.pages.flatMap((page) => page.items);
-      while (!results.find((item) => item.id === parseInt(messageId))) {
-        console.log(
-          "messages",
-          messages.pages.flatMap((page) => page.items)
+      let results: MessageType[] | undefined = messages.pages.flatMap(
+        (page) => page.items
+      );
+      while (!results?.find((item) => item.id === parseInt(messageId))) {
+        results = (await fetchNextPage()).data?.pages.flatMap(
+          (page) => page.items
         );
-        console.log("messageId", messageId);
-
-        console.log("fetching next page");
-
-        const a = await fetchNextPage();
-        console.log("a", a);
       }
     };
     fetchMessagesUntilMessageId();
