@@ -82,9 +82,6 @@ const MessageDetail = ({
   const [allPersons, setAllPersons] = useState(false);
   const [posting, setPosting] = useState(false);
   const messageContentRef = useRef<HTMLDivElement | null>(null);
-  const attachments = (
-    message.attachments_ids as { attachment: MessageAttachmentType }[]
-  ).map(({ attachment }) => attachment);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
   const {
@@ -102,6 +99,10 @@ const MessageDetail = ({
       navigate("/staff/messages");
     }
   }, [messageId, navigate]);
+
+  const attachments = (
+    message?.attachments_ids as { attachment: MessageAttachmentType }[]
+  ).map(({ attachment }) => attachment);
 
   const handleEdit = () => {
     setEditTodoVisible(true);
