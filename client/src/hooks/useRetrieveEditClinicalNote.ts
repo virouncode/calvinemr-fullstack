@@ -43,18 +43,20 @@ const useRetrieveEditClinicalNote = (
                 localStorage.getItem("currentEditClinicalNote") as string
               )
             );
+            let results: ClinicalNoteType[] | undefined =
+              clinicalNotes.pages.flatMap((page) => page.items);
             while (
-              !clinicalNotes.pages
-                .flatMap((page) => page.items)
-                .find(
-                  ({ id }) =>
-                    id ===
-                    JSON.parse(
-                      localStorage.getItem("currentEditClinicalNote") as string
-                    ).id
-                )
+              !results?.find(
+                ({ id }) =>
+                  id ===
+                  JSON.parse(
+                    localStorage.getItem("currentEditClinicalNote") as string
+                  ).id
+              )
             ) {
-              await fetchNextPage();
+              results = (await fetchNextPage()).data?.pages.flatMap(
+                (page) => page.items
+              );
             }
           } else {
             localStorage.removeItem("currentEditClinicalNote");

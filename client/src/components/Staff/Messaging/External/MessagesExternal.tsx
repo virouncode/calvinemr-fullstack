@@ -8,6 +8,7 @@ import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import MessagesLeftBar from "../MessagesLeftBar";
 import MessagesExternalBox from "./MessagesExternalBox";
 import MessagesExternalToolBar from "./MessagesExternalToolbar";
+import { MessageExternalType } from "../../../../types/api";
 
 const MessagesExternal = () => {
   //Hooks
@@ -35,12 +36,13 @@ const MessagesExternal = () => {
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
     const fetchMessagesUntilMessageId = async () => {
-      while (
-        !messages.pages
-          .flatMap((page) => page.items)
-          .find((item) => item.id === parseInt(messageId))
-      ) {
-        await fetchNextPage();
+      let results: MessageExternalType[] | undefined = messages.pages.flatMap(
+        (page) => page.items
+      );
+      while (!results?.find((item) => item.id === parseInt(messageId))) {
+        results = (await fetchNextPage()).data?.pages.flatMap(
+          (page) => page.items
+        );
       }
     };
     fetchMessagesUntilMessageId();
