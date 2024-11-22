@@ -89,7 +89,7 @@ const MessageExternalDetail = ({
     .sort((a, b) => b.date_created - a.date_created);
 
   const attachments = (
-    message?.attachments_ids as { attachment: MessageAttachmentType }[]
+    (message?.attachments_ids as { attachment: MessageAttachmentType }[]) ?? []
   ).map(({ attachment }) => attachment);
 
   const handleClickBack = () => {

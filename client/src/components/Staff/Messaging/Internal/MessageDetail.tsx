@@ -101,7 +101,7 @@ const MessageDetail = ({
   }, [messageId, navigate]);
 
   const attachments = (
-    message?.attachments_ids as { attachment: MessageAttachmentType }[]
+    (message?.attachments_ids as { attachment: MessageAttachmentType }[]) ?? []
   ).map(({ attachment }) => attachment);
 
   const handleEdit = () => {
@@ -296,7 +296,7 @@ const MessageDetail = ({
           {section !== "To-dos" && (
             <>
               {previousMsgs && previousMsgs.length > 0
-                ? previousMsgs.map((message, index) =>
+                ? previousMsgs?.map((message, index) =>
                     message.type === "Internal" ? (
                       <Message
                         message={message as MessageType}
