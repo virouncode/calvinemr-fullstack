@@ -294,8 +294,6 @@ const MessageExternalDetail = ({
     }
   };
 
-  console.log("previousMsgs", previousMsgs);
-
   return (
     message && (
       <>

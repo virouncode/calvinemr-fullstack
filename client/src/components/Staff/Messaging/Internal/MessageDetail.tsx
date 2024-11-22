@@ -106,8 +106,6 @@ const MessageDetail = ({
       )
     : [];
 
-  console.log("attachments", attachments);
-
   const handleEdit = () => {
     setEditTodoVisible(true);
   };
@@ -275,8 +273,6 @@ const MessageDetail = ({
   if (isPending) return <LoadingParagraph />;
   if (error && section !== "To-dos")
     return <ErrorParagraph errorMsg={error.message} />;
-
-  console.log("previousMsgs", previousMsgs);
 
   return (
     message && (
