@@ -100,9 +100,11 @@ const MessageDetail = ({
     }
   }, [messageId, navigate]);
 
-  const attachments = (
-    (message?.attachments_ids as { attachment: MessageAttachmentType }[]) ?? []
-  ).map(({ attachment }) => attachment);
+  const attachments = message
+    ? (message.attachments_ids as { attachment: MessageAttachmentType }[]).map(
+        ({ attachment }) => attachment
+      )
+    : [];
 
   console.log("attachments", attachments);
 

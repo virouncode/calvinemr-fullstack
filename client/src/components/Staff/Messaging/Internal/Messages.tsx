@@ -37,10 +37,6 @@ const Messages = () => {
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
     const fetchMessagesUntilMessageId = async () => {
-      console.log("fetchMessagesUntilMessageId");
-      console.log("messages", messages);
-      console.log("messageId", messageId);
-
       let results: MessageType[] | undefined = messages.pages.flatMap(
         (page) => page.items
       );
@@ -48,7 +44,6 @@ const Messages = () => {
         results = (await fetchNextPage()).data?.pages.flatMap(
           (page) => page.items
         );
-        console.log("results", results);
       }
     };
     fetchMessagesUntilMessageId();
