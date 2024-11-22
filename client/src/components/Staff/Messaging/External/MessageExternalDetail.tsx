@@ -316,23 +316,25 @@ const MessageExternalDetail = ({
                 index={index + 1}
               />
             ))}
-          <MessagesExternalAttachments
-            attachments={attachments}
-            deletable={false}
-            addable={true}
-            patientsNames={
-              message.from_patient_id
-                ? [toPatientName(message.from_patient_infos)]
-                : (
-                    message.to_patients_ids as {
-                      to_patient_infos: DemographicsType;
-                    }[]
-                  ).map(({ to_patient_infos }) =>
-                    toPatientName(to_patient_infos)
-                  )
-            }
-            message={message}
-          />
+          {attachments && (
+            <MessagesExternalAttachments
+              attachments={attachments}
+              deletable={false}
+              addable={true}
+              patientsNames={
+                message.from_patient_id
+                  ? [toPatientName(message.from_patient_infos)]
+                  : (
+                      message.to_patients_ids as {
+                        to_patient_infos: DemographicsType;
+                      }[]
+                    ).map(({ to_patient_infos }) =>
+                      toPatientName(to_patient_infos)
+                    )
+              }
+              message={message}
+            />
+          )}
         </div>
         {section !== "Deleted messages" && !replyVisible && (
           <div className="message__detail-btns">

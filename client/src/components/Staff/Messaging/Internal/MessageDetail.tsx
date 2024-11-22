@@ -315,14 +315,16 @@ const MessageDetail = ({
                 : null}
             </>
           )}
-          <MessagesAttachments
-            attachments={attachments}
-            deletable={false}
-            addable={true}
-            hasRelatedPatient={message.related_patient_id ? true : false}
-            patientName={toPatientName(message.patient_infos)}
-            message={message}
-          />
+          {attachments && (
+            <MessagesAttachments
+              attachments={attachments}
+              deletable={false}
+              addable={true}
+              hasRelatedPatient={message.related_patient_id ? true : false}
+              patientName={toPatientName(message.patient_infos)}
+              message={message}
+            />
+          )}
         </div>
         {section !== "Deleted messages" &&
           section !== "To-dos" &&

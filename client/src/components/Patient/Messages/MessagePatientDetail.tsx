@@ -147,12 +147,14 @@ const MessagePatientDetail = ({
                 index={index + 1}
               />
             ))}
-          <MessagesExternalAttachments
-            attachments={attachments}
-            deletable={false}
-            addable={false}
-            message={message}
-          />
+          {attachments && (
+            <MessagesExternalAttachments
+              attachments={attachments}
+              deletable={false}
+              addable={false}
+              message={message}
+            />
+          )}
         </div>
         {printVisible && (
           <NewWindow
