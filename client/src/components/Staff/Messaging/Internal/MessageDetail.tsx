@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@mui/material";
 import axios from "axios";
 import html2canvas from "html2canvas";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -93,12 +93,12 @@ const MessageDetail = ({
   const todoDelete = useTodoDelete(user.id);
   const clinicalNotePost = useClinicalNotePost();
 
-  // useEffect(() => {
-  //   //to hide parameters
-  //   if (messageId) {
-  //     navigate("/staff/messages");
-  //   }
-  // }, [messageId, navigate]);
+  useEffect(() => {
+    //to hide parameters
+    if (messageId) {
+      navigate("/staff/messages");
+    }
+  }, [messageId, navigate]);
 
   const attachments = (
     (message?.attachments_ids as { attachment: MessageAttachmentType }[]) ?? []
