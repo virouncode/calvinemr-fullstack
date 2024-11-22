@@ -41,6 +41,8 @@ const Messages = () => {
           .flatMap((page) => page.items)
           .find((item) => item.id === parseInt(messageId))
       ) {
+        console.log("fetching next page");
+
         await fetchNextPage();
       }
     };
