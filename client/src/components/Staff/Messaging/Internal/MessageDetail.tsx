@@ -104,6 +104,8 @@ const MessageDetail = ({
     (message?.attachments_ids as { attachment: MessageAttachmentType }[]) ?? []
   ).map(({ attachment }) => attachment);
 
+  console.log("attachments", attachments);
+
   const handleEdit = () => {
     setEditTodoVisible(true);
   };
