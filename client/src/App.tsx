@@ -1,10 +1,11 @@
 //Librairies
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AdminLayout from "./components/All/Layouts/AdminLayout";
 import LoginLayout from "./components/All/Layouts/LoginLayout";
 import PatientLayout from "./components/All/Layouts/PatientLayout";
 import StaffLayout from "./components/All/Layouts/StaffLayout";
+import CircularProgressMedium from "./components/UI/Progress/CircularProgressMedium";
 import RequireAuth from "./context/RequireAuth";
 import useAdminsInfosSocket from "./hooks/socket/useAdminsInfosSocket";
 import useClinicSocket from "./hooks/socket/useClinicSocket";
@@ -20,40 +21,77 @@ import useAutoLogout from "./hooks/useAutoLogout";
 import { useLocalStorageTracker } from "./hooks/useLocalStorageTracker";
 import useLogoutForAll from "./hooks/useLogoutForAll";
 import useRefreshToken from "./hooks/useRefreshToken";
-import AdminBillingPage from "./pages/Admin/AdminBillingPage";
-import AdminClinicPage from "./pages/Admin/AdminClinicPage";
-import AdminCredentialsPage from "./pages/Admin/AdminCredentialsPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
-import AdminLogsPage from "./pages/Admin/AdminLogsPage";
-import AdminMigrationPage from "./pages/Admin/AdminMigrationPage";
-import AdminMyAccountPage from "./pages/Admin/AdminMyAccountPage";
-import AdminPatientsAccountsPage from "./pages/Admin/AdminPatientsAccountsPage";
-import AdminStaffAccountsPage from "./pages/Admin/AdminStaffAccountsPage";
-import ClosedPage from "./pages/All/ClosedPage";
 import LoginPage from "./pages/All/LoginPage";
 import MissingPage from "./pages/All/MissingPage";
 import ResetPage from "./pages/All/ResetPage";
-import SuspendedPage from "./pages/All/SuspendedPage";
 import UnauthorizedPage from "./pages/All/UnauthorizedPage";
-import PatientAppointmentsPage from "./pages/Patient/PatientAppointmentsPage";
-import PatientCredentialsPage from "./pages/Patient/PatientCredentialsPage";
 import PatientMessagesPage from "./pages/Patient/PatientMessagesPage";
-import PatientMyAccountPage from "./pages/Patient/PatientMyAccountPage";
-import PatientPamphletsPage from "./pages/Patient/PatientPamphletsPage";
-import PatientPharmaciesPage from "./pages/Patient/PatientPharmaciesPage";
-import StaffBillingPage from "./pages/Staff/StaffBillingPage";
 import StaffCalendarPage from "./pages/Staff/StaffCalendarPage";
-import StaffCalvinAIPage from "./pages/Staff/StaffCalvinAIPage";
-import StaffCredentialsPage from "./pages/Staff/StaffCredentialsPage";
-import StaffFaxPage from "./pages/Staff/StaffFaxPage";
-import StaffMessagesPage from "./pages/Staff/StaffMessagesPage";
-import StaffMyAccountPage from "./pages/Staff/StaffMyAccountPage";
-import StaffPatientRecordPage from "./pages/Staff/StaffPatientRecordPage";
-import StaffPatientsGroupsPage from "./pages/Staff/StaffPatientsGroupsPage";
-import StaffReferencePage from "./pages/Staff/StaffReferencePage";
-import StaffReportsInboxPage from "./pages/Staff/StaffReportsInboxPage";
-import StaffSearchPatientPage from "./pages/Staff/StaffSearchPatientPage";
-import StaffSignupPatientPage from "./pages/Staff/StaffSignupPatientPage";
+
+const PatientAppointmentsPage = lazy(
+  () => import("./pages/Patient/PatientAppointmentsPage")
+);
+const PatientCredentialsPage = lazy(
+  () => import("./pages/Patient/PatientCredentialsPage")
+);
+const PatientMyAccountPage = lazy(
+  () => import("./pages/Patient/PatientMyAccountPage")
+);
+const PatientPamphletsPage = lazy(
+  () => import("./pages/Patient/PatientPamphletsPage")
+);
+const PatientPharmaciesPage = lazy(
+  () => import("./pages/Patient/PatientPharmaciesPage")
+);
+const StaffBillingPage = lazy(() => import("./pages/Staff/StaffBillingPage"));
+const StaffCalvinAIPage = lazy(() => import("./pages/Staff/StaffCalvinAIPage"));
+const StaffCredentialsPage = lazy(
+  () => import("./pages/Staff/StaffCredentialsPage")
+);
+const StaffFaxPage = lazy(() => import("./pages/Staff/StaffFaxPage"));
+const StaffMessagesPage = lazy(() => import("./pages/Staff/StaffMessagesPage"));
+const StaffMyAccountPage = lazy(
+  () => import("./pages/Staff/StaffMyAccountPage")
+);
+const StaffPatientRecordPage = lazy(
+  () => import("./pages/Staff/StaffPatientRecordPage")
+);
+const StaffPatientsGroupsPage = lazy(
+  () => import("./pages/Staff/StaffPatientsGroupsPage")
+);
+const StaffReferencePage = lazy(
+  () => import("./pages/Staff/StaffReferencePage")
+);
+const StaffReportsInboxPage = lazy(
+  () => import("./pages/Staff/StaffReportsInboxPage")
+);
+const StaffSearchPatientPage = lazy(
+  () => import("./pages/Staff/StaffSearchPatientPage")
+);
+const StaffSignupPatientPage = lazy(
+  () => import("./pages/Staff/StaffSignupPatientPage")
+);
+const SuspendedPage = lazy(() => import("./pages/All/SuspendedPage"));
+const ClosedPage = lazy(() => import("./pages/All/ClosedPage"));
+const AdminStaffAccountsPage = lazy(
+  () => import("./pages/Admin/AdminStaffAccountsPage")
+);
+const AdminPatientsAccountsPage = lazy(
+  () => import("./pages/Admin/AdminPatientsAccountsPage")
+);
+const AdminMyAccountPage = lazy(
+  () => import("./pages/Admin/AdminMyAccountPage")
+);
+const AdminMigrationPage = lazy(
+  () => import("./pages/Admin/AdminMigrationPage")
+);
+const AdminLogsPage = lazy(() => import("./pages/Admin/AdminLogsPage"));
+const AdminCredentialsPage = lazy(
+  () => import("./pages/Admin/AdminCredentialsPage")
+);
+const AdminBillingPage = lazy(() => import("./pages/Admin/AdminBillingPage"));
+const AdminClinicPage = lazy(() => import("./pages/Admin/AdminClinicPage"));
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
@@ -86,8 +124,22 @@ const App = () => {
           {/* public routes */}
           <Route index element={<LoginPage />} />
           <Route path="unauthorized" element={<UnauthorizedPage />} />
-          <Route path="suspended" element={<SuspendedPage />} />
-          <Route path="closed" element={<ClosedPage />} />
+          <Route
+            path="suspended"
+            element={
+              <Suspense fallback={<CircularProgressMedium />}>
+                <SuspendedPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="closed"
+            element={
+              <Suspense fallback={<CircularProgressMedium />}>
+                <ClosedPage />
+              </Suspense>
+            }
+          />
           <Route path="reset-password" element={<ResetPage />} />
           {/* catch all */}
           <Route path="*" element={<MissingPage />} />
@@ -105,33 +157,126 @@ const App = () => {
           {/* protected routes */}
           <Route element={<RequireAuth allowedAccesses={["staff"]} />}>
             <Route path="calendar" element={<StaffCalendarPage />} />
-            <Route path="search-patient" element={<StaffSearchPatientPage />} />
-            <Route path="groups" element={<StaffPatientsGroupsPage />} />
+            <Route
+              path="search-patient"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffSearchPatientPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="groups"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffPatientsGroupsPage />
+                </Suspense>
+              }
+            />
             <Route
               path="groups/:gid/:gtype"
-              element={<StaffPatientsGroupsPage />}
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffPatientsGroupsPage />
+                </Suspense>
+              }
             />
             <Route
               path="patient-record/:id"
-              element={<StaffPatientRecordPage />}
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffPatientRecordPage />
+                </Suspense>
+              }
             />
-            <Route path="signup-patient" element={<StaffSignupPatientPage />} />
-            <Route path="reports-inbox" element={<StaffReportsInboxPage />} />
-            <Route path="messages" element={<StaffMessagesPage />} />
+            <Route
+              path="signup-patient"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffSignupPatientPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="reports-inbox"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffReportsInboxPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="messages"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffMessagesPage />
+                </Suspense>
+              }
+            />
             <Route
               path="messages/:messageId/:sectionName/:msgType"
-              element={<StaffMessagesPage />}
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffMessagesPage />
+                </Suspense>
+              }
             />
-            <Route path="fax" element={<StaffFaxPage />} />
-            <Route path="reference" element={<StaffReferencePage />} />
-            <Route path="calvinai" element={<StaffCalvinAIPage />} />
-            <Route path="billing" element={<StaffBillingPage />} />
+            <Route
+              path="fax"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffFaxPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="reference"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffReferencePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="calvinai"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffCalvinAIPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="billing"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffBillingPage />
+                </Suspense>
+              }
+            />
             <Route
               path="billing/:pid/:pName/:hcn/:date"
-              element={<StaffBillingPage />}
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffBillingPage />
+                </Suspense>
+              }
             />
-            <Route path="my-account" element={<StaffMyAccountPage />} />
-            <Route path="credentials" element={<StaffCredentialsPage />} />
+            <Route
+              path="my-account"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffMyAccountPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="credentials"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffCredentialsPage />
+                </Suspense>
+              }
+            />
           </Route>
         </Route>
         {/*=============== ADMIN LAYOUT =================*/}
@@ -147,17 +292,70 @@ const App = () => {
           {/* protected routes */}
           <Route element={<RequireAuth allowedAccesses={["admin"]} />}>
             <Route path="dashboard" element={<AdminDashboardPage />} />
-            <Route path="staff-accounts" element={<AdminStaffAccountsPage />} />
+            <Route
+              path="staff-accounts"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminStaffAccountsPage />
+                </Suspense>
+              }
+            />
             <Route
               path="patients-accounts"
-              element={<AdminPatientsAccountsPage />}
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminPatientsAccountsPage />
+                </Suspense>
+              }
             />
-            <Route path="clinic" element={<AdminClinicPage />} />
-            <Route path="billing" element={<AdminBillingPage />} />
-            <Route path="migration" element={<AdminMigrationPage />} />
-            <Route path="logs" element={<AdminLogsPage />} />
-            <Route path="my-account" element={<AdminMyAccountPage />} />
-            <Route path="credentials" element={<AdminCredentialsPage />} />
+            <Route
+              path="clinic"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminClinicPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="billing"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminBillingPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="migration"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminMigrationPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="logs"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminLogsPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="my-account"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminMyAccountPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="credentials"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <AdminCredentialsPage />
+                </Suspense>
+              }
+            />
           </Route>
         </Route>
         {/*=============== PATIENT LAYOUT =================*/}
@@ -173,11 +371,46 @@ const App = () => {
           {/* protected routes */}
           <Route element={<RequireAuth allowedAccesses={["patient"]} />}>
             <Route path="messages" element={<PatientMessagesPage />} />
-            <Route path="appointments" element={<PatientAppointmentsPage />} />
-            <Route path="pamphlets" element={<PatientPamphletsPage />} />
-            <Route path="pharmacies" element={<PatientPharmaciesPage />} />
-            <Route path="my-account" element={<PatientMyAccountPage />} />
-            <Route path="credentials" element={<PatientCredentialsPage />} />
+            <Route
+              path="appointments"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <PatientAppointmentsPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="pamphlets"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <PatientPamphletsPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="pharmacies"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <PatientPharmaciesPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="my-account"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <PatientMyAccountPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="credentials"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <PatientCredentialsPage />
+                </Suspense>
+              }
+            />
           </Route>
         </Route>
       </Routes>
