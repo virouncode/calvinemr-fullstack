@@ -211,7 +211,7 @@ const ConsentFormsPopUp = ({
           </tbody>
         </table>
       </div>
-      <div className="eforms__btn-container">
+      <div className="consentforms__btn-container">
         <Button onClick={handleAdd} disabled={addVisible} label="Add" />
         <CloseButton onClick={handleClose} disabled={isLoadingFile} />
       </div>

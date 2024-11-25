@@ -1,10 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
-  AttachmentType,
   ConsentFormType,
   EformType,
   MessageAttachmentType,
@@ -111,46 +108,6 @@ const ConsentFormItem = ({
     editCounter.current += 1;
     setErrMsgPost("");
     setEditVisible(true);
-  };
-
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setErrMsgPost("");
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setErrMsgPost("");
-    if (file.size > 128000000) {
-      toast.error("The file is over 128Mb, please choose another file", {
-        containerId: "A",
-      });
-      return;
-    }
-
-    setIsLoadingFile(true);
-    const formData = new FormData();
-    formData.append("content", file);
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const fileToUpload: AttachmentType = response.data;
-      setIsLoadingFile(false);
-      setItemInfos({
-        ...itemInfos,
-        file: fileToUpload,
-      });
-    } catch (err) {
-      setIsLoadingFile(false);
-      if (err instanceof Error)
-        toast.error(`Error unable to load document: ${err.message}`, {
-          containerId: "A",
-        });
-    }
   };
 
   const handleDeleteClick = async () => {
