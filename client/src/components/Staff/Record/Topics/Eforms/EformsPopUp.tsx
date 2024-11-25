@@ -227,7 +227,7 @@ const EformsPopUp = ({
           height={700}
           x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
-          color={"#94bae8"}
+          color={"#29CBD6"}
           setPopUpVisible={setFaxVisible}
         >
           {isTabletOrMobile ? (

@@ -235,7 +235,7 @@ const LettersPopUp = ({
           height={700}
           x={(window.innerWidth - 1000) / 2}
           y={(window.innerHeight - 700) / 2}
-          color={"#94bae8"}
+          color={"#848484"}
           setPopUpVisible={setFaxVisible}
         >
           {isTabletOrMobile ? (
