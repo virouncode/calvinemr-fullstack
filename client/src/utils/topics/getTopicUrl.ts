@@ -20,6 +20,8 @@ export const getTopicUrl = (topic: TopicType) => {
       return "/pharmacies";
     case "E-FORMS":
       return "/eforms_of_patient";
+    case "CONSENT FORMS":
+      return "/consentforms_of_patient";
     case "REMINDERS":
       return "/reminders_of_patient";
     case "LETTERS/REFERRALS":
@@ -75,6 +77,8 @@ export const getTopicUrlMutation = (topic: TopicType) => {
       return "/pharmacies";
     case "E-FORMS":
       return "/eforms";
+    case "CONSENT FORMS":
+      return "/consentforms";
     case "REMINDERS":
       return "/reminders";
     case "LETTERS/REFERRALS":

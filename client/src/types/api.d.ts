@@ -647,11 +647,20 @@ export type CycleMedNumberType =
 
 export type ConsentFormType = {
   id: number;
-  patient_id: number;
   date_created: number;
   created_by_id: number;
-  consent: string;
-  consent_read: boolean;
+  name: string;
+  updates: { updated_by_id: number; date_updated: number }[];
+  file: AttachmentType;
+  patient_id: number;
+};
+
+export type ConsentFormFormType = {
+  date_created: number;
+  created_by_id: number;
+  name: string;
+  file: AttachmentType | null;
+  patient_id: number;
 };
 
 export type EmergencyContactType = {
@@ -2025,6 +2034,7 @@ export type TopicPaginatedDataMap = {
   ["PAST PRESCRIPTIONS"]: XanoPaginatedType<PrescriptionType>;
   ["PHARMACIES"]: XanoPaginatedType<PharmacyType>;
   ["E-FORMS"]: XanoPaginatedType<EformType>;
+  ["CONSENT FORMS"]: XanoPaginatedType<ConsentFormType>;
   ["REMINDERS"]: XanoPaginatedType<ReminderType>;
   ["LETTERS/REFERRALS"]: XanoPaginatedType<LetterType>;
   ["GROUPS"]: XanoPaginatedType<GroupType>;
@@ -2053,6 +2063,7 @@ export type TopicDataMap = {
   ["PAST PRESCRIPTIONS"]: PrescriptionType;
   ["PHARMACIES"]: PharmacyType;
   ["E-FORMS"]: EformType;
+  ["CONSENT FORMS"]: ConsentFormType;
   ["REMINDERS"]: ReminderType;
   ["LETTERS/REFERRALS"]: LetterType;
   ["GROUPS"]: GroupType;

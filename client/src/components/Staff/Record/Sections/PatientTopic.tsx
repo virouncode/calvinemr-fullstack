@@ -19,6 +19,7 @@ import {
   AppointmentType,
   CareElementType,
   ChecklistType,
+  ConsentFormType,
   CycleType,
   DemographicsType,
   EformType,
@@ -59,6 +60,8 @@ import CareElementsDropDown from "../Topics/CareElements/CareElementsDropDown";
 import CareElementsPopUp from "../Topics/CareElements/CareElementsPopUp";
 import ChecklistDropDown from "../Topics/Checklist/ChecklistDropDown";
 import ChecklistPopUp from "../Topics/Checklist/ChecklistPopUp";
+import ConsentFormsDropDown from "../Topics/ConsentForms/ConsentFormsDropDown";
+import ConsentFormsPopUp from "../Topics/ConsentForms/ConsentFormsPopUp";
 import CycleDropDown from "../Topics/Cycles/CyclesDropDown";
 import CyclesPopUp from "../Topics/Cycles/CyclesPopUp";
 import EformsDropDown from "../Topics/Eforms/EformsDropDown";
@@ -732,6 +735,72 @@ const PatientTopic = ({
                 ) => Promise<
                   InfiniteQueryObserverResult<
                     InfiniteData<XanoPaginatedType<EformType>, unknown>,
+                    Error
+                  >
+                >
+              }
+              isFetching={isFetching}
+              demographicsInfos={demographicsInfos as DemographicsType}
+            />
+          </FakeWindow>
+        )}
+        {/*******************/}
+        {/*CONSENT FORMS */}
+        {topic === "CONSENT FORMS" && (
+          <ConsentFormsDropDown
+            topicDatas={
+              topicDatas as
+                | InfiniteData<XanoPaginatedType<ConsentFormType>>
+                | undefined
+            }
+            isPending={isPending}
+            error={error}
+          />
+        )}
+        {topic === "CONSENT FORMS" && popUpVisible && (
+          <FakeWindow
+            title={`CONSENT FORMS of ${patientName}`}
+            width={1000}
+            height={650}
+            x={(window.innerWidth - 1000) / 2}
+            y={(window.innerHeight - 650) / 2}
+            color={backgroundColor}
+            setPopUpVisible={setPopUpVisible}
+          >
+            <ConsentFormsPopUp
+              topicDatas={
+                topicDatas as
+                  | InfiniteData<XanoPaginatedType<ConsentFormType>>
+                  | undefined
+              }
+              topicPost={
+                topicPost as UseMutationResult<
+                  EformType,
+                  Error,
+                  Partial<ConsentFormType>,
+                  void
+                >
+              }
+              topicPut={
+                topicPut as UseMutationResult<
+                  ConsentFormType,
+                  Error,
+                  ConsentFormType,
+                  void
+                >
+              }
+              topicDelete={topicDelete}
+              isPending={isPending}
+              error={error}
+              patientId={patientId}
+              setPopUpVisible={setPopUpVisible}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchNextPage={
+                fetchNextPage as (
+                  options?: FetchNextPageOptions
+                ) => Promise<
+                  InfiniteQueryObserverResult<
+                    InfiniteData<XanoPaginatedType<ConsentFormType>, unknown>,
                     Error
                   >
                 >

@@ -1,0 +1,97 @@
+.consentforms {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
+  &__title {
+    font-size: $size-xl;
+    text-align: center;
+  }
+  &__table-container {
+    flex: 1;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: $size-xs;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
+    }
+    th {
+      min-width: 120px;
+      padding: 0.5rem;
+      cursor: pointer;
+      &:nth-child(3) {
+        min-width: 300px;
+      }
+    }
+  }
+  &__item,
+  &__form {
+    border-bottom: solid 1px $grey2;
+    td {
+      text-align: center;
+      padding: 0.5rem;
+      word-break: break-word;
+      input {
+        width: 100%;
+        font-size: $size-base;
+      }
+    }
+    &-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
+      button {
+        font-size: $size-xs;
+      }
+    }
+  }
+  &__link {
+    cursor: pointer;
+    color: $darkblue;
+    text-decoration: underline;
+  }
+
+  &__form {
+    width: 100%;
+  }
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .consentforms {
+    &__table {
+      font-size: $size-sm;
+    }
+    &__item,
+    &__form {
+      td {
+        input {
+          width: 100%;
+          font-size: $size-sm;
+        }
+      }
+      &-btn-container {
+        button {
+          font-size: $size-sm;
+        }
+      }
+    }
+  }
+}
