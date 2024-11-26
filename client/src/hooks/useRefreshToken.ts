@@ -36,6 +36,7 @@ const useRefreshToken = () => {
     localStorage.removeItem("locked");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("alreadyWarnedSiteClosed");
     localStorage.setItem("message", "logout");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
     toastExpiredID.current && toast.dismiss(toastExpiredID.current);

@@ -5,11 +5,11 @@ import { Id, toast } from "react-toastify";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useClinicContext from "../../../hooks/context/useClinicContext";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { UserPatientType } from "../../../types/app";
 import XmarkRectangleIcon from "../../UI/Icons/XmarkRectangleIcon";
-import useSocketContext from "../../../hooks/context/useSocketContext";
 
 type PatientMobileNavProps = {
   mobileNavRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -53,6 +53,7 @@ const PatientMobileNav = ({
     localStorage.removeItem("lastAction");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("alreadyWarnedSiteClosed");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);

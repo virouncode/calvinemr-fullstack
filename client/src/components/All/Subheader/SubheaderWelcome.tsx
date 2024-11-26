@@ -4,11 +4,11 @@ import { Id, toast } from "react-toastify";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useClinicContext from "../../../hooks/context/useClinicContext";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { nowTZ } from "../../../utils/dates/formatDates";
 import { toWelcomeName } from "../../../utils/names/toWelcomeName";
-import useSocketContext from "../../../hooks/context/useSocketContext";
 
 type SubheaderWelcomeProps = {
   toastExpiredID: React.MutableRefObject<Id | null>;
@@ -69,6 +69,7 @@ const SubheaderWelcome = ({
     localStorage.removeItem("lastAction");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("alreadyWarnedSiteClosed");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
