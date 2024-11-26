@@ -156,8 +156,8 @@ const ClinicalNoteForm = ({
     }
     clinicalNotePost.mutate(clinicalNoteToPost, {
       onSuccess: () => {
-        setAddVisible(false);
         localStorage.removeItem("currentNewClinicalNote");
+        setAddVisible(false);
       },
     });
   };
@@ -230,7 +230,7 @@ const ClinicalNoteForm = ({
     if (source === "user") {
       setInputText(value);
       localStorage.setItem(
-        "currentEditClinicalNote",
+        "currentNewClinicalNote",
         JSON.stringify({
           ...(formDatas as ClinicalNoteType),
           MyClinicalNotesContent: value,
