@@ -454,11 +454,27 @@ const BillingItem = ({
               itemInfos.billing_code
             )}
           </td>
-          <td>{itemInfos.provider_fee ?? 0 / 10000} $</td>
-          <td>{itemInfos.assistant_fee ?? 0 / 10000} $</td>
-          <td>{itemInfos.specialist_fee ?? 0 / 10000} $</td>
-          <td>{itemInfos.anaesthetist_fee ?? 0 / 10000} $</td>
-          <td>{itemInfos.non_anaesthetist_fee ?? 0 / 10000} $</td>
+          <td>
+            {itemInfos.provider_fee ? itemInfos.provider_fee / 10000 : 0} $
+          </td>
+          <td>
+            {itemInfos.assistant_fee ? itemInfos.assistant_fee / 10000 : 0} $
+          </td>
+          <td>
+            {itemInfos.specialist_fee ? itemInfos.specialist_fee / 10000 : 0} $
+          </td>
+          <td>
+            {itemInfos.anaesthetist_fee
+              ? itemInfos.anaesthetist_fee / 10000
+              : 0}{" "}
+            $
+          </td>
+          <td>
+            {itemInfos.non_anaesthetist_fee
+              ? itemInfos.non_anaesthetist_fee / 10000
+              : 0}{" "}
+            $
+          </td>
           <SignCellMultipleTypes item={billing} />
         </tr>
         {fakewindowRoot &&
