@@ -6,12 +6,15 @@ import {
 } from "../../../utils/dates/formatDates";
 import ExportCSVButton from "../../UI/Buttons/ExportCSVButton";
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
 
 type BillingFilterProps = {
-  billings: BillingType[];
+  billings?: BillingType[];
   rangeStart: number;
   rangeEnd: number;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
   setRangeStart: React.Dispatch<React.SetStateAction<number>>;
   setRangeEnd: React.Dispatch<React.SetStateAction<number>>;
   all: boolean;
@@ -24,6 +27,8 @@ const BillingFilter = ({
   billings,
   rangeStart,
   rangeEnd,
+  search,
+  setSearch,
   setRangeStart,
   setRangeEnd,
   all,
@@ -120,6 +125,10 @@ const BillingFilter = ({
     }
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className="billing__filter">
       <div className="billing__filter-row-dates">
@@ -152,18 +161,29 @@ const BillingFilter = ({
             label="All"
           />
         </div>
+        <div className="billing__filter-item">
+          <Input
+            value={search}
+            onChange={handleSearch}
+            name="search"
+            id="search"
+            label="Search"
+          />
+        </div>
       </div>
       <div className="billing__filter-row-btns">
         <a href="https://cab.md/Signin.aspx" target="_blank">
           Cab MD
         </a>
-        <ExportCSVButton
-          billings={billings}
-          rangeStart={rangeStart}
-          rangeEnd={rangeEnd}
-          all={all}
-          headers={csvHeaders}
-        />
+        {billings && (
+          <ExportCSVButton
+            billings={billings}
+            rangeStart={rangeStart}
+            rangeEnd={rangeEnd}
+            all={all}
+            headers={csvHeaders}
+          />
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useBillings } from "../../../hooks/reactquery/queries/billingQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
+import useDebounce from "../../../hooks/useDebounce";
 import { AdminType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import {
@@ -24,10 +25,12 @@ const Billing = () => {
   const [errMsgPost, setErrMsgPost] = useState("");
   const [rangeStart, setRangeStart] = useState(getStartOfTheMonthTZ()); //start of the month
   const [rangeEnd, setRangeEnd] = useState(getEndOfTheMonthTZ()); //end of the month
+  const [search, setSearch] = useState("");
   const [all, setAll] = useState(false);
   const initialRangeStart = useRef(rangeStart);
   const initialRangeEnd = useRef(rangeEnd);
   //Queries
+  const debouncedSearch = useDebounce(search, 300);
   const {
     data,
     isPending,
@@ -35,7 +38,8 @@ const Billing = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useBillings(rangeStart, rangeEnd);
+  } = useBillings(rangeStart, rangeEnd, debouncedSearch);
+
   const {
     data: sites,
     isPending: isPendingSites,
@@ -46,12 +50,13 @@ const Billing = () => {
     setAddVisible(true);
   };
 
-  if (isPending || isPendingSites)
+  if (isPendingSites)
     return (
       <div className="billing">
         <LoadingParagraph />
       </div>
     );
+
   if (error || errorSites)
     return (
       <div className="billing">
@@ -60,6 +65,7 @@ const Billing = () => {
         />
       </div>
     );
+
   const billings = data?.pages.flatMap((page) => page.items);
 
   return (
@@ -86,6 +92,8 @@ const Billing = () => {
         billings={billings}
         rangeStart={rangeStart}
         rangeEnd={rangeEnd}
+        search={search}
+        setSearch={setSearch}
         setRangeStart={setRangeStart}
         setRangeEnd={setRangeEnd}
         all={all}
@@ -94,6 +102,7 @@ const Billing = () => {
         initialRangeEnd={initialRangeEnd}
       />
       <BillingTable
+        isPending={isPending}
         billings={billings}
         errMsgPost={errMsgPost}
         setErrMsgPost={setErrMsgPost}

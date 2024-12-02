@@ -11,7 +11,7 @@ import LoadingRow from "../../UI/Tables/LoadingRow";
 import BillingItem from "./BillingItem";
 
 type BillingTableProps = {
-  billings: BillingType[];
+  billings?: BillingType[];
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   isFetchingNextPage: boolean;
@@ -26,9 +26,10 @@ type BillingTableProps = {
   isFetching: boolean;
   sites: SiteType[];
   addVisible: boolean;
+  isPending: boolean;
 };
 
-const BillingTable = ({
+const BillingTable: React.FC<BillingTableProps> = ({
   billings,
   errMsgPost,
   setErrMsgPost,
@@ -36,14 +37,31 @@ const BillingTable = ({
   fetchNextPage,
   isFetching,
   sites,
-  addVisible,
-}: BillingTableProps) => {
-  //Intersection observer
+  isPending,
+}) => {
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
+
+  const calculateTotal = (
+    key:
+      | "provider_fee"
+      | "assistant_fee"
+      | "specialist_fee"
+      | "anaesthetist_fee"
+      | "non_anaesthetist_fee",
+    divisor = 10000
+  ) => {
+    if (!billings) return 0.0;
+    return (
+      billings
+        .map(({ billing_infos }) => (billing_infos?.[key] ?? 0) / divisor)
+        .reduce((acc, curr) => acc + curr, 0)
+        .toFixed(2) || 0.0
+    );
+  };
 
   return (
     <div className="billing-table__container" ref={divRef}>
@@ -69,8 +87,9 @@ const BillingTable = ({
           </tr>
         </thead>
         <tbody>
+          {isPending && <LoadingRow colSpan={16} />}
           {billings && billings.length > 0
-            ? billings.map((item: BillingType, index: number) =>
+            ? billings.map((item, index) =>
                 index === billings.length - 1 ? (
                   <BillingItem
                     key={item.id}
@@ -91,9 +110,9 @@ const BillingTable = ({
                 )
               )
             : !isFetchingNextPage && (
-                <EmptyRow colSpan={13} text="No Billings" />
+                <EmptyRow colSpan={16} text="No Billings" />
               )}
-          {isFetchingNextPage && <LoadingRow colSpan={13} />}
+          {isFetchingNextPage && <LoadingRow colSpan={16} />}
         </tbody>
         <tfoot>
           <tr className="billing-table__item">
@@ -101,72 +120,22 @@ const BillingTable = ({
               Total fees
             </td>
             <td style={{ fontWeight: "bold", border: "none" }}>
-              Nbr of billings: {billings.length}
+              Nbr of billings: {billings?.length ?? 0}
             </td>
             <td style={{ border: "none" }}>
-              {Math.round(
-                billings
-                  .map(
-                    ({ billing_infos }) =>
-                      (billing_infos?.provider_fee ?? 0) / 10000
-                  )
-                  .reduce((acc, current) => {
-                    return acc + current;
-                  }, 0) * 100
-              ) / 100}{" "}
-              $
+              {calculateTotal("provider_fee")} $
             </td>
             <td style={{ border: "none" }}>
-              {Math.round(
-                billings
-                  .map(
-                    ({ billing_infos }) =>
-                      (billing_infos?.assistant_fee ?? 0) / 10000
-                  )
-                  .reduce((acc, current) => {
-                    return acc + current;
-                  }, 0) * 100
-              ) / 100}{" "}
-              $
+              {calculateTotal("assistant_fee")} $
             </td>
             <td style={{ border: "none" }}>
-              {Math.round(
-                billings
-                  .map(
-                    ({ billing_infos }) =>
-                      (billing_infos?.specialist_fee ?? 0) / 10000
-                  )
-                  .reduce((acc, current) => {
-                    return acc + current;
-                  }, 0) * 100
-              ) / 100}{" "}
-              $
+              {calculateTotal("specialist_fee")} $
             </td>
             <td style={{ border: "none" }}>
-              {Math.round(
-                billings
-                  .map(
-                    ({ billing_infos }) =>
-                      (billing_infos?.anaesthetist_fee ?? 0) / 10000
-                  )
-                  .reduce((acc, current) => {
-                    return acc + current;
-                  }, 0) * 100
-              ) / 100}{" "}
-              $
+              {calculateTotal("anaesthetist_fee")} $
             </td>
             <td style={{ border: "none" }}>
-              {Math.round(
-                billings
-                  .map(
-                    ({ billing_infos }) =>
-                      (billing_infos?.non_anaesthetist_fee ?? 0) / 10000
-                  )
-                  .reduce((acc, current) => {
-                    return acc + current;
-                  }, 0) * 100
-              ) / 100}{" "}
-              $
+              {calculateTotal("non_anaesthetist_fee")} $
             </td>
             <td colSpan={2}></td>
           </tr>

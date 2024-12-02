@@ -30,7 +30,7 @@ const ExportCSVButton = ({
   return (
     <button className="btn">
       <CSVLink
-        data={billings.map((billing) => {
+        data={billings?.map((billing) => {
           return {
             ...billing,
             date: [
