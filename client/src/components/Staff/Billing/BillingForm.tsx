@@ -52,7 +52,7 @@ const BillingForm = ({
 }: BillingFormProps) => {
   //Hooks
   const navigate = useNavigate();
-  const { pid, pName, hcn, date } = useParams();
+  const { pid, pName, hcn, date, refohip } = useParams();
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
@@ -62,7 +62,7 @@ const BillingForm = ({
       : timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto"),
     provider_ohip_billing_nbr:
       user.access_level === "admin" ? "" : staffIdToOHIP(staffInfos, user.id),
-    referrer_ohip_billing_nbr: "",
+    referrer_ohip_billing_nbr: refohip ?? "",
     patient_id: pid ? parseInt(pid) : 0,
     patient_hcn: hcn || "",
     patient_name: pName || "",

@@ -1,12 +1,15 @@
 //Librairies
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import socketIOClient from "socket.io-client";
 import AdminLayout from "./components/All/Layouts/AdminLayout";
 import LoginLayout from "./components/All/Layouts/LoginLayout";
 import PatientLayout from "./components/All/Layouts/PatientLayout";
 import StaffLayout from "./components/All/Layouts/StaffLayout";
 import CircularProgressMedium from "./components/UI/Progress/CircularProgressMedium";
 import RequireAuth from "./context/RequireAuth";
+import useAuthContext from "./hooks/context/useAuthContext";
+import useSocketContext from "./hooks/context/useSocketContext";
 import useAdminsInfosSocket from "./hooks/socket/useAdminsInfosSocket";
 import useClinicSocket from "./hooks/socket/useClinicSocket";
 import useReactQuerySocket from "./hooks/socket/useReactQuerySocket";
@@ -95,6 +98,8 @@ const AdminClinicPage = lazy(() => import("./pages/Admin/AdminClinicPage"));
 
 const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
+  const { socket, setSocket } = useSocketContext();
+  const { auth } = useAuthContext();
   //REFRESH TOKEN
   const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
   //LOCAL STORAGE
@@ -113,6 +118,17 @@ const App = () => {
   //REACT QUERY SOCKETS
   useReactQuerySocket();
   useServerErrorSocket(setServerErrorMsg); //for server errors
+
+  useEffect(() => {
+    if (auth && !socket) {
+      const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
+        withCredentials: true,
+      });
+      mySocket.emit("message", { key: ["logs"] });
+      mySocket.emit("start polling faxes");
+      setSocket(mySocket);
+    }
+  }, [auth, socket, setSocket]);
 
   if (serverErrorMsg) return <div>{serverErrorMsg}</div>;
 
@@ -247,6 +263,14 @@ const App = () => {
             />
             <Route
               path="billing"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffBillingPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="billing/:pid/:pName/:hcn/:date/:refohip"
               element={
                 <Suspense fallback={<CircularProgressMedium />}>
                   <StaffBillingPage />

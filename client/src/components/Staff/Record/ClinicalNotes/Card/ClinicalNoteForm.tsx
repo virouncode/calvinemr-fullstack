@@ -5,6 +5,7 @@ import ReactQuill, { DeltaStatic, EmitterSource } from "react-quill-new";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import xanoGet from "../../../../../api/xanoCRUD/xanoGet";
 import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
@@ -17,6 +18,8 @@ import {
   ClinicalNoteTemplateType,
   ClinicalNoteType,
   DemographicsType,
+  DoctorType,
+  XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { isChromeBrowser } from "../../../../../utils/browsers/isChromeBrowser";
@@ -193,14 +196,38 @@ const ClinicalNoteForm = ({
       if (err instanceof Error) setErrMsg(err.message);
       return;
     }
+    //Get referrer_ohip
+    let referrer_ohip = "";
+    try {
+      const response: XanoPaginatedType<DoctorType> = await xanoGet(
+        "/doctors_of_patient",
+        "staff",
+        {
+          patient_id: patientId,
+          page: 1,
+        }
+      );
+      referrer_ohip =
+        response.items.map((doctor) => doctor.ohip_billing_nbr)?.[0] ?? "";
+    } catch (err) {
+      if (err instanceof Error)
+        console.log(`Unable to get referrer_ohip: ${err.message}`);
+    }
+
     clinicalNotePost.mutate(clinicalNoteToPost, {
       onSuccess: () => {
         setAddVisible(false);
         localStorage.removeItem("currentNewClinicalNote");
         navigate(
-          `/staff/billing/${patientId}/${toPatientName(demographicsInfos)}/${
-            demographicsInfos.HealthCard?.Number
-          }/${nowTZTimestamp()}`
+          referrer_ohip
+            ? `/staff/billing/${patientId}/${toPatientName(
+                demographicsInfos
+              )}/${
+                demographicsInfos.HealthCard?.Number
+              }/${nowTZTimestamp()}/${referrer_ohip}`
+            : `/staff/billing/${patientId}/${toPatientName(
+                demographicsInfos
+              )}/${demographicsInfos.HealthCard?.Number}/${nowTZTimestamp()}`
         );
       },
       onError: (err) => {
@@ -210,6 +237,7 @@ const ClinicalNoteForm = ({
       },
     });
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsg("");
     const name = e.target.name;
@@ -262,7 +290,6 @@ const ClinicalNoteForm = ({
       try {
         const response = await axios.post(
           import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-          formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
