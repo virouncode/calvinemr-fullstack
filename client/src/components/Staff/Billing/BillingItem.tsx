@@ -392,7 +392,7 @@ const BillingItem = ({
               <>
                 <InputWithSearchInTable
                   name="referrer_ohip_billing_nbr"
-                  value={itemInfos.referrer_ohip_billing_nbr.toString()}
+                  value={itemInfos.referrer_ohip_billing_nbr}
                   onChange={handleChange}
                   onClick={() => setRefOHIPSearchVisible(true)}
                 />
@@ -406,7 +406,7 @@ const BillingItem = ({
               <>
                 <InputWithSearchInTable
                   name="patient_hcn"
-                  value={itemInfos.patient_hcn?.toString() ?? ""}
+                  value={itemInfos.patient_hcn ?? ""}
                   readOnly={true}
                   onClick={() => setPatientSearchVisible(true)}
                 />
@@ -440,7 +440,7 @@ const BillingItem = ({
                 />
               </>
             ) : (
-              itemInfos.diagnosis_code
+              itemInfos.diagnosis_code?.toString()
             )}
           </td>
           <td>

@@ -3,6 +3,7 @@ import { DemographicsType } from "../../../../types/api";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import PatientTopic from "./PatientTopic";
 import PatientTopicAgeCalculator from "./PatientTopicAgeCalculator";
+import PatientTopicCycleCalculator from "./PatientTopicCycleCalculator";
 import PatientTopicLabels from "./PatientTopicLabels";
 import PatientTopicReports from "./PatientTopicReports";
 
@@ -85,6 +86,15 @@ const PatientMenuRight = ({
         patientName={toPatientName(demographicsInfos)}
         side="right"
       />
+      {demographicsInfos.Gender !== "M" && (
+        <PatientTopicCycleCalculator
+          textColor="#FEFEFE"
+          backgroundColor="#db4a9c"
+          patientDob={demographicsInfos.DateOfBirth as number}
+          patientName={toPatientName(demographicsInfos)}
+          side="right"
+        />
+      )}
       <PatientTopicReports
         textColor="#FEFEFE"
         backgroundColor="#e3afce"

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { onMessageStaffInfos } from "../../socketHandlers/onMessageStaffInfos";
+import { StaffType } from "../../types/api";
 import { SocketMessageType } from "../../types/app";
 import useSocketContext from "../context/useSocketContext";
 import useStaffInfosContext from "../context/useStaffInfosContext";
-import { StaffType } from "../../types/api";
 
 const useStaffInfosSocket = () => {
   const { socket } = useSocketContext();

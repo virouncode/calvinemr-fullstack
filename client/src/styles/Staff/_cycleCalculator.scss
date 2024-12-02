@@ -1,0 +1,60 @@
+.cycle-calculator {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 0.5rem;
+  &__title {
+    font-size: $size-xl;
+    text-align: center;
+  }
+  &__form {
+    width: 90%;
+    margin: 0 auto;
+    &-row {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      label {
+        font-weight: bold;
+        margin-right: 10px;
+        width: 150px;
+        font-size: $size-base;
+      }
+      input[type="date"] {
+        font-size: $size-base;
+      }
+      input[type="number"] {
+        width: 60px;
+        font-size: $size-base;
+      }
+      &--result {
+        padding: 0.5rem;
+        border: solid 1px $grey;
+        border-radius: 6px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .cycle-calculator {
+    &__form {
+      &-row {
+        label {
+          font-size: $size-sm;
+        }
+        input[type="date"] {
+          font-size: $size-sm;
+        }
+        input[type="number"] {
+          font-size: $size-sm;
+        }
+        &--result {
+        }
+      }
+    }
+  }
+}
