@@ -151,9 +151,13 @@
     &:nth-child(11),
     &:nth-child(12),
     &:nth-child(13),
-    &:nth-child(14),
-    &:nth-child(15) {
+    &:nth-child(14) {
       text-align: end;
+    }
+    &:nth-child(1),
+    &:nth-child(15),
+    &:nth-child(16) {
+      text-align: center;
     }
   }
   tfoot {
@@ -169,9 +173,13 @@
       &:nth-child(11),
       &:nth-child(12),
       &:nth-child(13),
-      &:nth-child(14),
-      &:nth-child(15) {
+      &:nth-child(14) {
         text-align: end;
+      }
+      &:nth-child(1),
+      &:nth-child(15),
+      &:nth-child(16) {
+        text-align: center;
       }
     }
     input,
