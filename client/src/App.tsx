@@ -10,6 +10,7 @@ import CircularProgressMedium from "./components/UI/Progress/CircularProgressMed
 import RequireAuth from "./context/RequireAuth";
 import useAuthContext from "./hooks/context/useAuthContext";
 import useSocketContext from "./hooks/context/useSocketContext";
+import useUserContext from "./hooks/context/useUserContext";
 import useAdminsInfosSocket from "./hooks/socket/useAdminsInfosSocket";
 import useClinicSocket from "./hooks/socket/useClinicSocket";
 import useReactQuerySocket from "./hooks/socket/useReactQuerySocket";
@@ -100,6 +101,7 @@ const App = () => {
   const [serverErrorMsg, setServerErrorMsg] = useState<string | undefined>();
   const { socket, setSocket } = useSocketContext();
   const { auth } = useAuthContext();
+  const { user } = useUserContext();
   //REFRESH TOKEN
   const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
   //LOCAL STORAGE
@@ -120,15 +122,16 @@ const App = () => {
   useServerErrorSocket(setServerErrorMsg); //for server errors
 
   useEffect(() => {
-    if (auth && !socket) {
+    if (auth?.email && !socket) {
+      console.log("Connecting to socket...");
       const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
         withCredentials: true,
       });
       mySocket.emit("message", { key: ["logs"] });
-      mySocket.emit("start polling faxes");
+      if (user?.access_level === "staff") mySocket.emit("start polling faxes");
       setSocket(mySocket);
     }
-  }, [auth, socket, setSocket]);
+  }, [auth, socket, setSocket, user]);
 
   if (serverErrorMsg) return <div>{serverErrorMsg}</div>;
 
