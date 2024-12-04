@@ -1,16 +1,23 @@
 import axios from "axios";
 import React from "react";
 import ReactQuill from "react-quill-new";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import xanoGet from "../../../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   ClinicalNoteLogType,
   ClinicalNoteType,
   DemographicsType,
+  DoctorType,
+  XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import { timestampToDateTimeStrTZ } from "../../../../../utils/dates/formatDates";
+import {
+  nowTZTimestamp,
+  timestampToDateTimeStrTZ,
+} from "../../../../../utils/dates/formatDates";
 import { copyClinicalNoteToClipboard } from "../../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -90,6 +97,7 @@ const ClinicalNoteCardHeader = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   const { user } = useUserContext() as { user: UserStaffType };
+  const navigate = useNavigate();
 
   const handleClickTemplate = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -137,6 +145,41 @@ const ClinicalNoteCardHeader = ({
     }
   };
 
+  const handleClickBill = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    //Get referrer_ohip
+    let referrer_ohip = "";
+    try {
+      const response: XanoPaginatedType<DoctorType> = await xanoGet(
+        "/doctors_of_patient",
+        "staff",
+        {
+          patient_id: demographicsInfos.patient_id,
+          page: 1,
+        }
+      );
+      referrer_ohip =
+        response.items.map((doctor) => doctor.ohip_billing_nbr)?.[0] ?? "";
+    } catch (err) {
+      if (err instanceof Error)
+        console.log(`Unable to get referrer_ohip: ${err.message}`);
+    }
+
+    navigate(
+      referrer_ohip
+        ? `/staff/billing/${demographicsInfos.patient_id}/${toPatientName(
+            demographicsInfos
+          )}/${
+            demographicsInfos.HealthCard?.Number
+          }/${nowTZTimestamp()}/${referrer_ohip}`
+        : `/staff/billing/${demographicsInfos.patient_id}/${toPatientName(
+            demographicsInfos
+          )}/${demographicsInfos.HealthCard?.Number}/${nowTZTimestamp()}`
+    );
+  };
+
   return (
     <div
       className="clinical-notes__card-header"
@@ -168,18 +211,13 @@ const ClinicalNoteCardHeader = ({
                 }
               />
               <LinkButton
-                onClick={(e) => e.stopPropagation()}
+                onClick={handleClickBill}
                 disabled={
                   user.id !== clinicalNote.created_by_id ||
                   addVisible ||
                   isRewriting
                 }
                 label="Bill"
-                url={`/staff/billing/${
-                  demographicsInfos.patient_id
-                }/${toPatientName(demographicsInfos)}/${
-                  demographicsInfos.HealthCard?.Number
-                }/${clinicalNote.date_created}`}
               />
               {user.title !== "Secretary" && user.title !== "Nurse" && (
                 <Button

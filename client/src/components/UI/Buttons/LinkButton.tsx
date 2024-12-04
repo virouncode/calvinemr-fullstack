@@ -4,7 +4,7 @@ type LinkButtonProps = {
   label: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: boolean;
-  url: string;
+  url?: string;
 };
 
 const LinkButton = ({
@@ -15,9 +15,13 @@ const LinkButton = ({
 }: LinkButtonProps) => {
   return (
     <button type="button" onClick={onClick} disabled={disabled} className="btn">
-      <a href={url} rel="noreferrer">
-        {label}
-      </a>
+      {url ? (
+        <a href={url} rel="noreferrer">
+          {label}
+        </a>
+      ) : (
+        label
+      )}
     </button>
   );
 };

@@ -121,9 +121,9 @@ const App = () => {
   useReactQuerySocket();
   useServerErrorSocket(setServerErrorMsg); //for server errors
 
+  //For new tabs
   useEffect(() => {
     if (auth?.email && !socket) {
-      console.log("Connecting to socket...");
       const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
         withCredentials: true,
       });
