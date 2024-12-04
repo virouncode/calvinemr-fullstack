@@ -168,6 +168,7 @@ const BillingFilter = ({
             name="search"
             id="search"
             label="Search"
+            placeholder="Billing code, Name, ..."
           />
         </div>
       </div>
