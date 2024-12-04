@@ -8,6 +8,7 @@ import {
   getStartOfTheMonthTZ,
 } from "../../../utils/dates/formatDates";
 import { cycleTypes } from "../../UI/Lists/CycleTypeList";
+import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import DashboardDateFilter from "./DashboardDateFilter";
@@ -80,6 +81,14 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
       </div>
     );
 
+  const totalCycles =
+    cycles.length > 0
+      ? Object.values(cycles[cycles.length - 1]).reduce(
+          (acc, currentValue) => acc + currentValue
+        )
+      : 0;
+  console.log("totalCycles", totalCycles);
+
   return (
     <div className="dashboard-card">
       <div className="dashboard-card__title">ART Cycles</div>
@@ -92,17 +101,14 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
         />
         <div className="dashboard-card__filter-total">
           <label>Total cycles: </label>
-          {cycles.length > 0
-            ? Object.values(cycles[cycles.length - 1]).reduce(
-                (acc, currentValue) => acc + currentValue
-              )
-            : "0"}
+          {totalCycles}
         </div>
       </div>
-      {cycles && cycles.length > 0 && (
+      {totalCycles > 0 ? (
         <div className="dashboard-card__content">
           <div className="dashboard-card__chart">
             <p className="dashboard-card__chart-title">Cycles</p>
+
             <BarChart
               dataset={cycles}
               series={cycleTypes.map((cycleType, index) => ({
@@ -138,6 +144,8 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
             />
           </div>
         </div>
+      ) : (
+        <EmptyParagraph text="No cycles in this range" />
       )}
     </div>
   );
