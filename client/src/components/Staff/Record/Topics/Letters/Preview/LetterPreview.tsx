@@ -12,6 +12,7 @@ import useRecordInfosMultipage from "../../../../../../hooks/useRecordInfosMulti
 import {
   AttachmentType,
   DemographicsType,
+  DoctorType,
   LetterAttachmentType,
   LetterFormType,
   MessageAttachmentType,
@@ -48,6 +49,7 @@ type LetterPreviewProps = {
   description: string;
   attachments: LetterAttachmentType[];
   isLoadingFile: boolean;
+  referringDoctor: DoctorType | null;
 };
 
 const LetterPreview = ({
@@ -66,6 +68,7 @@ const LetterPreview = ({
   description,
   attachments,
   isLoadingFile,
+  referringDoctor,
 }: LetterPreviewProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -641,6 +644,11 @@ const LetterPreview = ({
                   file: letter,
                 },
               ]}
+              initialRecipient={{
+                ToFaxNumber:
+                  referringDoctor?.FaxNumber.phoneNumber.replaceAll("-", "") ||
+                  "",
+              }}
             />
           )}
         </FakeWindow>

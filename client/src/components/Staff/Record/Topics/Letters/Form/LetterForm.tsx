@@ -1,21 +1,25 @@
 import axios from "axios";
 import { uniqueId } from "lodash";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import xanoGet from "../../../../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../../../../hooks/context/useUserContext";
 import { useSites } from "../../../../../../hooks/reactquery/queries/sitesQueries";
 import {
   AttachmentType,
   DemographicsType,
+  DoctorType,
   LetterAttachmentType,
   LetterTemplateType,
   TopicType,
+  XanoPaginatedType,
 } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
 import {
   nowTZ,
   nowTZTimestamp,
 } from "../../../../../../utils/dates/formatDates";
+import { toRecipientInfos } from "../../../../../../utils/letters/toRecipientInfos";
 import { toPatientName } from "../../../../../../utils/names/toPatientName";
 import ErrorParagraph from "../../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../../UI/Paragraphs/LoadingParagraph";
@@ -41,12 +45,15 @@ const LetterForm = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [siteSelectedId, setSiteSelectedId] = useState(user.site_id);
   const [dateStr, setDateStr] = useState(nowTZ().toISODate());
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState("Consultation report");
   const [recipientInfos, setRecipientInfos] = useState("whom it may concern");
+  const [referringDoctor, setReferringDoctor] = useState<DoctorType | null>(
+    null
+  );
   const [body, setBody] = useState("");
   const [topicsSelected, setTopicsSelected] = useState<TopicType[]>([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Consultation report");
   const [description, setDescription] = useState("");
   const [templatesVisible, setTemplatesVisible] = useState(false);
   const [attachments, setAttachments] = useState<LetterAttachmentType[]>([]);
@@ -54,6 +61,30 @@ const LetterForm = ({
   const [reportsAddedIds, setReportsAddedIds] = useState<number[]>([]);
   const bodyRef = useRef<HTMLTextAreaElement | null>(null);
   const recordInfosBodyRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const getReferringDoctor = async () => {
+      try {
+        const response: XanoPaginatedType<DoctorType> = await xanoGet(
+          "/doctors_of_patient",
+          "staff",
+          {
+            patient_id: patientId,
+            page: 1,
+          }
+        );
+        const doctor = response.items?.[0];
+        if (doctor?.FirstName) {
+          setRecipientInfos(toRecipientInfos(doctor, [], null));
+          setReferringDoctor(doctor);
+        }
+      } catch (err) {
+        if (err instanceof Error)
+          console.log(`Unable to get referrer_ohip: ${err.message}`);
+      }
+    };
+    getReferringDoctor();
+  }, [patientId]);
 
   //Queries
   const {
@@ -235,6 +266,7 @@ const LetterForm = ({
             description={description}
             attachments={attachments}
             isLoadingFile={isLoadingFile}
+            referringDoctor={referringDoctor}
           />
         </FakeWindow>
       )}
