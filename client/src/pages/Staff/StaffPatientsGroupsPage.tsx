@@ -21,7 +21,7 @@ const StaffPatientsGroupsPage = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Patients</title>
+          <title>Groups</title>
         </Helmet>
       </HelmetProvider>
       <section className="groups">
