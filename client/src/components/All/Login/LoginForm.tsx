@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
@@ -39,28 +39,15 @@ const LoginForm = () => {
   const location = useLocation();
   const [err, setErr] = useState("");
   const [formDatas, setFormDatas] = useState({
-    email: "",
-    password: "",
-    pin: "",
+    email: import.meta.env.VITE_ISDEMO === "true" ? "demo@calvinemr.com" : "",
+    password: import.meta.env.VITE_ISDEMO === "true" ? "Calvin123@" : "",
+    pin: import.meta.env.VITE_ISDEMO === "true" ? "1234" : "",
   });
   const [loadingStaff, setLoadingStaff] = useState(false);
   const [loadingPatient, setLoadingPatient] = useState(false);
   const [loadingAdmin, setLoadingAdmin] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [pinVisible, setPinVisible] = useState(false);
-
-  useEffect(() => {
-    if (import.meta.env.VITE_ISDEMO === "true") {
-      const timer = setTimeout(
-        () =>
-          alert(
-            "Welcome to CalvinEMR demo, here are the credentials to login : \n\nLogin: demo@calvinemr.com\nPassword: Calvin123@\nPIN: 1234\n\nEnter these credentials and click on the Staff button"
-          ),
-        1000
-      );
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
