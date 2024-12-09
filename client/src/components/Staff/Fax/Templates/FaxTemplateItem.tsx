@@ -4,6 +4,7 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import {
   useFaxTemplateDelete,
   useFaxTemplatePost,
+  useFaxTemplatePut,
 } from "../../../../hooks/reactquery/mutations/faxesTemplatesMutations";
 import { FaxTemplateType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
@@ -11,6 +12,7 @@ import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -32,8 +34,9 @@ const FaxTemplateItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   //Queries
-  const faxTemplatePost = useFaxTemplatePost();
-  const faxTemplateDelete = useFaxTemplateDelete();
+  const templatePost = useFaxTemplatePost();
+  const templateDelete = useFaxTemplateDelete();
+  const templatePut = useFaxTemplatePut();
 
   const handleEditClick = () => {
     setEditTemplateVisible(true);
@@ -45,7 +48,7 @@ const FaxTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      faxTemplateDelete.mutate(template.id, {
+      templateDelete.mutate(template.id, {
         onSuccess: () => {
           setEditTemplateVisible(false);
         },
@@ -59,7 +62,17 @@ const FaxTemplateItem = ({
       author_id: user.id,
       date_created: nowTZTimestamp(),
     };
-    faxTemplatePost.mutate(faxTemplateToPost);
+    templatePost.mutate(faxTemplateToPost);
+  };
+
+  const handleLike = async (template: FaxTemplateType) => {
+    const templateToPut: FaxTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -74,6 +87,11 @@ const FaxTemplateItem = ({
         </span>
         <>
           <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+          <HeartIcon
+            ml={15}
+            onClick={() => handleLike(template)}
+            active={template.favorites_staff_ids.includes(user.id)}
+          />
           {template.author_id === user.id && (
             <PenIcon ml={15} onClick={handleEditClick} />
           )}

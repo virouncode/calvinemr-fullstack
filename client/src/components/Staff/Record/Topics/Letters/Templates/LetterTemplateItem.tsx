@@ -4,6 +4,7 @@ import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
   useLettersTemplateDelete,
   useLettersTemplatePost,
+  useLettersTemplatePut,
 } from "../../../../../../hooks/reactquery/mutations/lettersTemplatesMutations";
 import { LetterTemplateType } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
@@ -11,6 +12,7 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -32,8 +34,9 @@ const LetterTemplateItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   //Queries
-  const letterTemplatePost = useLettersTemplatePost();
-  const letterTemplateDelete = useLettersTemplateDelete();
+  const templatePost = useLettersTemplatePost();
+  const templateDelete = useLettersTemplateDelete();
+  const templatePut = useLettersTemplatePut();
 
   const handleEditClick = () => {
     setEditTemplateVisible(true);
@@ -45,7 +48,7 @@ const LetterTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      letterTemplateDelete.mutate(template.id);
+      templateDelete.mutate(template.id);
     }
   };
 
@@ -55,7 +58,17 @@ const LetterTemplateItem = ({
       author_id: user.id,
       date_created: nowTZTimestamp(),
     };
-    letterTemplatePost.mutate(letterTemplateToPost);
+    templatePost.mutate(letterTemplateToPost);
+  };
+
+  const handleLike = async (template: LetterTemplateType) => {
+    const templateToPut: LetterTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -70,11 +83,16 @@ const LetterTemplateItem = ({
         </span>
         <>
           <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+          <HeartIcon
+            ml={15}
+            onClick={() => handleLike(template)}
+            active={template.favorites_staff_ids.includes(user.id)}
+          />
           {template.author_id === user.id && (
-            <PenIcon ml={15} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
-            <TrashIcon onClick={handleDelete} ml={15} />
+            <>
+              <PenIcon ml={15} onClick={handleEditClick} />
+              <TrashIcon onClick={handleDelete} ml={15} />
+            </>
           )}
         </>
       </li>

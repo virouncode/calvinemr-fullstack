@@ -3,7 +3,10 @@ import _ from "lodash";
 import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useMedsTemplatePost } from "../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
-import { useMedsTemplates } from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
+import {
+  useMedsFavoritesTemplates,
+  useMedsTemplates,
+} from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
 import useDebounce from "../../../../../hooks/useDebounce";
 import {
   dosageUnitCT,
@@ -110,6 +113,12 @@ const MedicationForm = ({
     fetchNextPage: fetchNextPageTemplates,
     isFetching: isFetchingTemplates,
   } = useMedsTemplates(debouncedSearch);
+
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useMedsFavoritesTemplates(user.id, debouncedSearch);
 
   const medTemplatePost = useMedsTemplatePost();
 
@@ -885,8 +894,11 @@ const MedicationForm = ({
         >
           <MedsTemplatesList
             medsTemplates={templates}
+            favoritesTemplates={favoritesTemplates}
             progress={progress}
             isPendingTemplates={isPendingTemplates}
+            isPendingFavorites={isPendingFavorites}
+            errorFavorites={errorFavorites}
             errorTemplates={errorTemplates}
             isFetchingNextPageTemplates={isFetchingNextPageTemplates}
             fetchNextPageTemplates={fetchNextPageTemplates}

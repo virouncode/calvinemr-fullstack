@@ -45,12 +45,13 @@ const CalvinAITemplateForm = ({
       setErrMsg("Please enter a name for your template");
       return;
     }
-    const templateToPost = {
+    const templateToPost: Partial<CalvinAITemplateType> = {
       ...newTemplate,
       name: firstLetterOfFirstWordUpper(newTemplate.name),
+      favorites_staff_ids: [user.id],
+      date_created: nowTZTimestamp(),
+      author_id: user.id,
     };
-    templateToPost.date_created = nowTZTimestamp();
-    templateToPost.author_id = user.id;
     templatePost.mutate(templateToPost, {
       onSuccess: () => {
         setNewTemplateVisible(false);

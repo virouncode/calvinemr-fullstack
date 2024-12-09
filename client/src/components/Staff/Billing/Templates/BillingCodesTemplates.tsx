@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
-import { useBillingCodesTemplates } from "../../../../hooks/reactquery/queries/billingCodesTemplatesQueries";
+import useUserContext from "../../../../hooks/context/useUserContext";
+import {
+  useBillingCodesFavoritesTemplates,
+  useBillingCodesTemplates,
+} from "../../../../hooks/reactquery/queries/billingCodesTemplatesQueries";
 import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
+import { UserStaffType } from "../../../../types/app";
 import Button from "../../../UI/Buttons/Button";
 import Input from "../../../UI/Inputs/Input";
 import EmptyLi from "../../../UI/Lists/EmptyLi";
@@ -21,6 +26,7 @@ const BillingCodesTemplates = ({
   handleSelectTemplate,
 }: BillingCodesTemplatesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [search, setSearch] = useState("");
@@ -28,13 +34,20 @@ const BillingCodesTemplates = ({
   const billingCodesTemplatesStartRef = useRef<HTMLDivElement | null>(null);
   //Queries
   const {
-    data,
+    data: templates,
     isPending,
     error,
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
   } = useBillingCodesTemplates(debouncedSearch);
+
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useBillingCodesFavoritesTemplates(user.id, debouncedSearch);
+
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -51,15 +64,25 @@ const BillingCodesTemplates = ({
       billingCodesTemplatesStartRef.current.scrollIntoView();
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={error.message} />
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
 
-  const templates = data?.pages.flatMap((page) => page.items);
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
 
   return (
     <div className="templates">
@@ -92,9 +115,9 @@ const BillingCodesTemplates = ({
               setNewTemplateVisible={setNewTemplateVisible}
             />
           )}
-          {templates && templates.length > 0
-            ? templates.map((template, index) =>
-                index === templates.length - 1 ? (
+          {templatesDatas && templatesDatas.length > 0
+            ? templatesDatas.map((template, index) =>
+                index === templatesDatas.length - 1 ? (
                   <BillingCodesTemplateItem
                     template={template}
                     handleSelectTemplate={handleSelectTemplate}

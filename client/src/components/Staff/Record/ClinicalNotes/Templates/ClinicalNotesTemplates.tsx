@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { useClinicalNotesTemplates } from "../../../../../hooks/reactquery/queries/clinicalNotesTemplatesQueries";
+import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useClinicalNotesFavoritesTemplates,
+  useClinicalNotesTemplates,
+} from "../../../../../hooks/reactquery/queries/clinicalNotesTemplatesQueries";
 import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { ClinicalNoteTemplateType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import Button from "../../../../UI/Buttons/Button";
 import Input from "../../../../UI/Inputs/Input";
 import EmptyLi from "../../../../UI/Lists/EmptyLi";
@@ -21,11 +26,12 @@ const ClinicalNotesTemplates = ({
   handleSelectTemplate,
 }: ClinicalNotesTemplatesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number>();
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search, 300);
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: templates,
@@ -34,7 +40,14 @@ const ClinicalNotesTemplates = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useClinicalNotesTemplates(debounceSearch);
+  } = useClinicalNotesTemplates(debouncedSearch);
+
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useClinicalNotesFavoritesTemplates(user.id, debouncedSearch);
+
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -53,15 +66,25 @@ const ClinicalNotesTemplates = ({
     setNewTemplateVisible((v) => !v);
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={error.message} />
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
 
-  const templatesDatas = templates?.pages.flatMap((page) => page.items);
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
 
   return (
     <div className="templates">

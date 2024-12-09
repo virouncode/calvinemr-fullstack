@@ -57,6 +57,7 @@ const MessageExternalTemplateEdit = ({
     setProgress(true);
     //create the message to put
     const messageTemplateToPut = {
+      ...template,
       id: template.id,
       name: name,
       author_id: user.id,

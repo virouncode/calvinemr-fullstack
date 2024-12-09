@@ -4,9 +4,14 @@ import useIntersection from "../../../../../../hooks/useIntersection";
 import EmptyLi from "../../../../../UI/Lists/EmptyLi";
 
 import React from "react";
-import { useLettersTemplates } from "../../../../../../hooks/reactquery/queries/lettersTemplatesQueries";
+import useUserContext from "../../../../../../hooks/context/useUserContext";
+import {
+  useLettersFavoritesTemplates,
+  useLettersTemplates,
+} from "../../../../../../hooks/reactquery/queries/lettersTemplatesQueries";
 import useDebounce from "../../../../../../hooks/useDebounce";
 import { LetterTemplateType } from "../../../../../../types/api";
+import { UserStaffType } from "../../../../../../types/app";
 import Button from "../../../../../UI/Buttons/Button";
 import Input from "../../../../../UI/Inputs/Input";
 import LoadingLi from "../../../../../UI/Lists/LoadingLi";
@@ -20,6 +25,7 @@ type LettersTemplatesProps = {
 };
 
 const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
 
   const [search, setSearch] = useState("");
@@ -33,6 +39,12 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
     fetchNextPage,
     isFetching,
   } = useLettersTemplates(debouncedSearch);
+
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useLettersFavoritesTemplates(user.id, debouncedSearch);
 
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -49,15 +61,25 @@ const LettersTemplates = ({ handleSelectTemplate }: LettersTemplatesProps) => {
     setSearch(value);
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={error.message} />
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
 
-  const templatesDatas = templates?.pages.flatMap((page) => page.items);
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
 
   return (
     <div className="templates">

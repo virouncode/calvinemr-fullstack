@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { useMessagesExternalTemplates } from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
+import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useMessagesExternalFavoritesTemplates,
+  useMessagesExternalTemplates,
+} from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { MessageExternalTemplateType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import Button from "../../../../UI/Buttons/Button";
 import Input from "../../../../UI/Inputs/Input";
 import EmptyLi from "../../../../UI/Lists/EmptyLi";
@@ -20,18 +25,24 @@ const MessagesExternalTemplates = ({
   handleSelectTemplate,
 }: MessagesExternalTemplatesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
-    data,
+    data: templates,
     isPending,
     error,
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
   } = useMessagesExternalTemplates(debouncedSearch);
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useMessagesExternalFavoritesTemplates(user.id, debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -48,15 +59,25 @@ const MessagesExternalTemplates = ({
     setSearch(value);
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={error.message} />
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
-  const messagesTemplates = data?.pages.flatMap((page) => page.items);
 
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
   return (
     <div className="templates">
       <div className="templates__btn-container">
@@ -81,9 +102,9 @@ const MessagesExternalTemplates = ({
         <ul>
           {isPending ? (
             <LoadingLi />
-          ) : messagesTemplates && messagesTemplates.length > 0 ? (
-            messagesTemplates.map((template, index) =>
-              index === messagesTemplates.length - 1 ? (
+          ) : templatesDatas && templatesDatas.length > 0 ? (
+            templatesDatas.map((template, index) =>
+              index === templatesDatas.length - 1 ? (
                 <MessageExternalTemplateItem
                   template={template}
                   handleSelectTemplate={handleSelectTemplate}

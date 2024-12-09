@@ -4,6 +4,7 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   useMessagesExternalTemplateDelete,
   useMessagesExternalTemplatePost,
+  useMessagesExternalTemplatePut,
 } from "../../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { MessageExternalTemplateType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -11,6 +12,7 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -32,8 +34,9 @@ const MessageExternalTemplateItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   //Queries
-  const messageTemplatePost = useMessagesExternalTemplatePost();
-  const messageTemplateDelete = useMessagesExternalTemplateDelete();
+  const templatePost = useMessagesExternalTemplatePost();
+  const templateDelete = useMessagesExternalTemplateDelete();
+  const templatePut = useMessagesExternalTemplatePut();
 
   const handleEditClick = () => {
     setEditTemplateVisible(true);
@@ -45,7 +48,7 @@ const MessageExternalTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      messageTemplateDelete.mutate(template.id, {
+      templateDelete.mutate(template.id, {
         onSuccess: () => {
           setEditTemplateVisible(false);
         },
@@ -59,7 +62,17 @@ const MessageExternalTemplateItem = ({
       author_id: user.id,
       date_created: nowTZTimestamp(),
     };
-    messageTemplatePost.mutate(messageTemplateToPost);
+    templatePost.mutate(messageTemplateToPost);
+  };
+
+  const handleLike = async (template: MessageExternalTemplateType) => {
+    const templateToPut: MessageExternalTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -74,11 +87,16 @@ const MessageExternalTemplateItem = ({
         </span>
         <>
           <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+          <HeartIcon
+            ml={15}
+            onClick={() => handleLike(template)}
+            active={template.favorites_staff_ids.includes(user.id)}
+          />
           {template.author_id === user.id && (
-            <PenIcon ml={15} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
-            <TrashIcon ml={15} onClick={handleDelete} />
+            <>
+              <PenIcon ml={15} onClick={handleEditClick} />
+              <TrashIcon ml={15} onClick={handleDelete} />
+            </>
           )}
         </>
       </li>

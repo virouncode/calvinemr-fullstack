@@ -20,6 +20,7 @@ export const useBillingCodeTemplatePost = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["billingCodesTemplates"] });
+      socket?.emit("message", { key: ["billingCodesFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -43,6 +44,7 @@ export const useBillingCodeTemplatePut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["billingCodesTemplates"] });
+      socket?.emit("message", { key: ["billingCodesFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -65,6 +67,7 @@ export const useBillingCodeTemplateDelete = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["billingCodesTemplates"] });
+      socket?.emit("message", { key: ["billingCodesFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {

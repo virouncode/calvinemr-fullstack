@@ -5,6 +5,7 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   useMessagesTemplateDelete,
   useMessagesTemplatePost,
+  useMessagesTemplatePut,
 } from "../../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { MessageTemplateType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -17,6 +18,7 @@ import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateEdit from "./MessageTemplateEdit";
 import MessageTemplateEditMobile from "./MessageTemplateEditMobile";
+import HeartIcon from "../../../../UI/Icons/HeartIcon";
 
 type MessageTemplateItemProps = {
   template: MessageTemplateType;
@@ -35,8 +37,9 @@ const MessageTemplateItem = ({
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
-  const messageTemplatePost = useMessagesTemplatePost();
-  const messageTemplateDelete = useMessagesTemplateDelete();
+  const templatePost = useMessagesTemplatePost();
+  const templateDelete = useMessagesTemplateDelete();
+  const templatePut = useMessagesTemplatePut();
 
   const handleEditClick = () => {
     setEditTemplateVisible(true);
@@ -48,7 +51,7 @@ const MessageTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      messageTemplateDelete.mutate(template.id, {
+      templateDelete.mutate(template.id, {
         onSuccess: () => {
           setEditTemplateVisible(false);
         },
@@ -62,7 +65,17 @@ const MessageTemplateItem = ({
       author_id: user.id,
       date_created: nowTZTimestamp(),
     };
-    messageTemplatePost.mutate(messageTemplateToPost);
+    templatePost.mutate(messageTemplateToPost);
+  };
+
+  const handleLike = async (template: MessageTemplateType) => {
+    const templateToPut: MessageTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -75,15 +88,18 @@ const MessageTemplateItem = ({
           ${staffIdToTitleAndName(staffInfos, template.author_id)})`
             : ""}
         </span>
-        <>
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
-          {template.author_id === user.id && (
+        <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+        <HeartIcon
+          ml={15}
+          onClick={() => handleLike(template)}
+          active={template.favorites_staff_ids.includes(user.id)}
+        />
+        {template.author_id === user.id && (
+          <>
             <PenIcon ml={15} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
             <TrashIcon ml={15} onClick={handleDelete} />
-          )}
-        </>
+          </>
+        )}
       </li>
       {editTemplateVisible && (
         <FakeWindow

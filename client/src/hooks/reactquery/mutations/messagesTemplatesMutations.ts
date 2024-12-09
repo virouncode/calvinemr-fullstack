@@ -17,6 +17,7 @@ export const useMessagesTemplatePost = () => {
       xanoPost("/messages_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesTemplates"] });
+      socket?.emit("message", { key: ["messagesFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -38,6 +39,7 @@ export const useMessagesTemplatePut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesTemplates"] });
+      socket?.emit("message", { key: ["messagesFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
@@ -56,6 +58,7 @@ export const useMessagesTemplateDelete = () => {
       xanoDelete(`/messages_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesTemplates"] });
+      socket?.emit("message", { key: ["messagesFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -73,6 +76,7 @@ export const useMessagesExternalTemplatePost = () => {
       xanoPost("/messages_external_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesExternalTemplates"] });
+      socket?.emit("message", { key: ["messagesExternalFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -94,6 +98,7 @@ export const useMessagesExternalTemplatePut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesExternalTemplates"] });
+      socket?.emit("message", { key: ["messagesExternalFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
@@ -112,6 +117,7 @@ export const useMessagesExternalTemplateDelete = () => {
       xanoDelete(`/messages_external_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["messagesExternalTemplates"] });
+      socket?.emit("message", { key: ["messagesExternalFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -129,6 +135,7 @@ export const useTodosTemplatePost = () => {
       xanoPost("/todos_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["todosTemplates"] });
+      socket?.emit("message", { key: ["todosFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -146,6 +153,7 @@ export const useTodosTemplatePut = () => {
       xanoPut(`/todos_templates/${templateToPut.id}`, "staff", templateToPut),
     onSuccess: () => {
       socket?.emit("message", { key: ["todosTemplates"] });
+      socket?.emit("message", { key: ["todosFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -163,6 +171,7 @@ export const useTodosTemplateDelete = () => {
       xanoDelete(`/todos_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["todosTemplates"] });
+      socket?.emit("message", { key: ["todosFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {

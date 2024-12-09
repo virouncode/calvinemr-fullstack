@@ -55,6 +55,7 @@ const FaxTemplateForm = ({ setNewTemplateVisible }: FaxTemplateFormProps) => {
       subject: subject,
       body: body,
       date_created: nowTZTimestamp(),
+      favorites_staff_ids: [user.id],
     };
     faxTemplatePost.mutate(faxTemplateToPost, {
       onSuccess: () => {

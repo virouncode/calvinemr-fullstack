@@ -13,6 +13,7 @@ export const useLettersTemplatePost = () => {
       xanoPost("/letters_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["lettersTemplates"] });
+      socket?.emit("message", { key: ["lettersFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -30,6 +31,7 @@ export const useLettersTemplatePut = () => {
       xanoPut(`/letters_templates/${templateToPut.id}`, "staff", templateToPut),
     onSuccess: () => {
       socket?.emit("message", { key: ["lettersTemplates"] });
+      socket?.emit("message", { key: ["lettersFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -47,6 +49,7 @@ export const useLettersTemplateDelete = () => {
       xanoDelete(`/letters_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["lettersTemplates"] });
+      socket?.emit("message", { key: ["lettersFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {

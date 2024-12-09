@@ -13,6 +13,7 @@ export const useClinicalNotesTemplatesPost = () => {
       xanoPost("/clinical_notes_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["clinicalNotesTemplates"] });
+      socket?.emit("message", { key: ["clinicalNotesFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -34,6 +35,7 @@ export const useClinicalNotesTemplatesPut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["clinicalNotesTemplates"] });
+      socket?.emit("message", { key: ["clinicalNotesFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
@@ -52,6 +54,7 @@ export const useClinicalNotesTemplatesDelete = () => {
       xanoDelete(`/clinical_notes_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["clinicalNotesTemplates"] });
+      socket?.emit("message", { key: ["clinicalNotesFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {

@@ -64,6 +64,7 @@ const MessageTemplateEdit = ({
     setProgress(true);
     //create the message template
     const messageTemplateToPut: MessageTemplateType = {
+      ...template,
       id: template.id,
       name: firstLetterOfFirstWordUpper(name),
       author_id: user.id,

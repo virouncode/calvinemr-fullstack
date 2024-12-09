@@ -25,6 +25,7 @@ const ClinicalNotesTemplateForm = ({
     author_id: user.id,
     body: "",
     date_created: nowTZTimestamp(),
+    favorites_staff_ids: [user.id],
   });
   const [errMsg, setErrMsg] = useState("");
   const [inputText, setInputText] = useState("");
@@ -66,6 +67,7 @@ const ClinicalNotesTemplateForm = ({
       name: firstLetterOfFirstWordUpper(newTemplate.name),
       date_created: nowTZTimestamp(),
       body: inputText,
+      favorites_staff_ids: [user.id],
     };
     templatePost.mutate(templateToPost, {
       onSuccess: () => setNewTemplateVisible(false),

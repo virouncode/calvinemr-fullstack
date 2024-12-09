@@ -40,6 +40,7 @@ export const getXano = async (req: Request, res: Response): Promise<void> => {
   try {
     const { URL, userType, queryParams } = req.query;
     const authToken = req.cookies.token;
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,

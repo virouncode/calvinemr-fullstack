@@ -5,6 +5,7 @@ import useUserContext from "../../../../../../hooks/context/useUserContext";
 import {
   useMedsTemplateDelete,
   useMedsTemplatePost,
+  useMedsTemplatePut,
 } from "../../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { MedTemplateType } from "../../../../../../types/api";
 import { UserStaffType } from "../../../../../../types/app";
@@ -12,6 +13,7 @@ import { nowTZTimestamp } from "../../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../../UI/Windows/FakeWindow";
@@ -33,8 +35,9 @@ const MedTemplateItem = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
   //Queries
-  const medTemplatePost = useMedsTemplatePost();
-  const medTemplateDelete = useMedsTemplateDelete();
+  const templatePost = useMedsTemplatePost();
+  const templatePut = useMedsTemplatePut();
+  const templateDelete = useMedsTemplateDelete();
 
   const handleEdit = () => {
     setEditVisible(true);
@@ -46,7 +49,7 @@ const MedTemplateItem = ({
       date_created: nowTZTimestamp(),
       author_id: user.id,
     };
-    medTemplatePost.mutate(templateToPost);
+    templatePost.mutate(templateToPost);
   };
 
   const handleDelete = async (medId: number) => {
@@ -55,8 +58,17 @@ const MedTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      medTemplateDelete.mutate(medId);
+      templateDelete.mutate(medId);
     }
+  };
+  const handleLike = async (template: MedTemplateType) => {
+    const templateToPut: MedTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -73,16 +85,17 @@ const MedTemplateItem = ({
               : ""}
           </span>
         </Tooltip>
-        <Tooltip title="Duplicate" placement="top-start" arrow>
-          <span>
-            <CloneIcon ml={10} onClick={handleDuplicate} />
-          </span>
-        </Tooltip>
-        {med.author_id === user.id && <PenIcon ml={15} onClick={handleEdit} />}
+        <CloneIcon ml={10} onClick={handleDuplicate} />
+        <HeartIcon
+          ml={15}
+          onClick={() => handleLike(med)}
+          active={med.favorites_staff_ids.includes(user.id)}
+        />
         {med.author_id === user.id && (
-          <span>
+          <>
+            <PenIcon ml={15} onClick={handleEdit} />
             <TrashIcon ml={15} onClick={() => handleDelete(med.id)} />
-          </span>
+          </>
         )}
       </li>
       {editVisible && (

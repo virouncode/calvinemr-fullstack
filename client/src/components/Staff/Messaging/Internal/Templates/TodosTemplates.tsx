@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { useTodosTemplates } from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
+import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useTodosFavoritesTemplates,
+  useTodosTemplates,
+} from "../../../../../hooks/reactquery/queries/messagesTemplatesQueries";
 import useDebounce from "../../../../../hooks/useDebounce";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { TodoTemplateType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import Button from "../../../../UI/Buttons/Button";
 import Input from "../../../../UI/Inputs/Input";
 import EmptyLi from "../../../../UI/Lists/EmptyLi";
@@ -18,18 +23,24 @@ type TodosTemplatesProps = {
 
 const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search, 300);
+  const debouncedSearch = useDebounce(search, 300);
   //Queries
   const {
-    data,
+    data: templates,
     isPending,
     error,
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useTodosTemplates(debounceSearch);
+  } = useTodosTemplates(debouncedSearch);
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useTodosFavoritesTemplates(user.id, debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -46,15 +57,25 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
     setSearch(value);
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={error.message} />
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
-  const todosTemplates = data?.pages.flatMap((page) => page.items);
 
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
   return (
     <div className="templates">
       <div className="templates__btn-container">
@@ -79,9 +100,9 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
         <ul>
           {isPending ? (
             <LoadingLi />
-          ) : todosTemplates && todosTemplates.length > 0 ? (
-            todosTemplates.map((template, index) =>
-              index === todosTemplates.length - 1 ? (
+          ) : templatesDatas && templatesDatas.length > 0 ? (
+            templatesDatas.map((template, index) =>
+              index === templatesDatas.length - 1 ? (
                 <TodoTemplateItem
                   template={template}
                   handleSelectTemplate={handleSelectTemplate}

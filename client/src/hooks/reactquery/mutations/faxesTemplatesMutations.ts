@@ -13,6 +13,7 @@ export const useFaxTemplatePost = () => {
       xanoPost("/faxes_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["faxesTemplates"] });
+      socket?.emit("message", { key: ["faxesFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -30,6 +31,7 @@ export const useFaxTemplatePut = () => {
       xanoPut(`/faxes_templates/${templateToPut.id}`, "staff", templateToPut),
     onSuccess: () => {
       socket?.emit("message", { key: ["faxesTemplates"] });
+      socket?.emit("message", { key: ["faxesFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -48,6 +50,7 @@ export const useFaxTemplateDelete = () => {
 
     onSuccess: () => {
       socket?.emit("message", { key: ["faxesTemplates"] });
+      socket?.emit("message", { key: ["faxesFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {

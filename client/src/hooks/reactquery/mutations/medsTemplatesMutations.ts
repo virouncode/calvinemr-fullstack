@@ -13,6 +13,7 @@ export const useMedsTemplatePost = () => {
       xanoPost("/medications_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["medsTemplates"] });
+      socket?.emit("message", { key: ["medsFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -34,6 +35,7 @@ export const useMedsTemplatePut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["medsTemplates"] });
+      socket?.emit("message", { key: ["medsFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -49,8 +51,8 @@ export const useMedsTemplateDelete = () => {
   return useMutation({
     mutationFn: (templateIdToDelete: number) =>
       xanoDelete(`/medications_templates/${templateIdToDelete}`, "staff"),
-
     onSuccess: () => {
+      socket?.emit("message", { key: ["medsTemplates"] });
       socket?.emit("message", { key: ["medsTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },

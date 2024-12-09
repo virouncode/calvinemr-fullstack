@@ -56,7 +56,7 @@ const FaxTemplateEdit = ({
     setProgress(true);
 
     const faxTemplateToPut: FaxTemplateType = {
-      id: template.id,
+      ...template,
       name: name,
       author_id: user.id,
       subject: subject,

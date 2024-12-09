@@ -5,8 +5,10 @@ import { AdminType, BillingCodeTemplateType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import CloneIcon from "../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../UI/Icons/TrashIcon";
+import { useBillingCodeTemplatePut } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 
 type BillingCodesTemplateDisplayProps = {
   lastItemRef?: (node: Element | null) => void;
@@ -31,6 +33,17 @@ const BillingCodesTemplateDisplay = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
+  const templatePut = useBillingCodeTemplatePut();
+
+  const handleLike = async (template: BillingCodeTemplateType) => {
+    const templateToPut: BillingCodeTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
+  };
 
   return (
     <li className="templates__list-item" ref={lastItemRef}>
@@ -42,6 +55,11 @@ const BillingCodesTemplateDisplay = ({
           : ""}
       </span>
       <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+      <HeartIcon
+        ml={15}
+        onClick={() => handleLike(template)}
+        active={template.favorites_staff_ids.includes(user.id)}
+      />
       {user.id === template.author_id && (
         <>
           <PenIcon ml={15} onClick={handleEditClick} />

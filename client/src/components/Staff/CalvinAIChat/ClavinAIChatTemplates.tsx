@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { useCalvinAITemplates } from "../../../hooks/reactquery/queries/calvinaiTemplatesQueries";
+import useUserContext from "../../../hooks/context/useUserContext";
+import {
+  useCalvinAIFavoritesTemplates,
+  useCalvinAITemplates,
+} from "../../../hooks/reactquery/queries/calvinaiTemplatesQueries";
 import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import { CalvinAITemplateType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 import Button from "../../UI/Buttons/Button";
 import Input from "../../UI/Inputs/Input";
 import EmptyLi from "../../UI/Lists/EmptyLi";
@@ -21,6 +26,7 @@ const CalvinAIChatTemplates = ({
   handleSelectTemplate,
 }: CalvinAIChatTemplatesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   const [newTemplateVisible, setNewTemplateVisible] = useState(false);
   const [templateToEditId, setTemplateToEditId] = useState<number | undefined>(
@@ -37,6 +43,11 @@ const CalvinAIChatTemplates = ({
     fetchNextPage,
     isFetching,
   } = useCalvinAITemplates(debouncedSearch);
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useCalvinAIFavoritesTemplates(user.id, debouncedSearch);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -55,15 +66,25 @@ const CalvinAIChatTemplates = ({
     setNewTemplateVisible((v) => !v);
   };
 
-  if (error) {
+  if (error || errorFavorites) {
     return (
-      <div className="calvinai__chat-templates">
-        <ErrorParagraph errorMsg={error.message} />
+      <div className="templates">
+        <ErrorParagraph
+          errorMsg={error?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
   }
 
-  const templatesDatas = templates?.pages.flatMap((page) => page.items);
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = templates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
 
   return (
     <div className="calvinai__chat-templates">

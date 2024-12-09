@@ -25,9 +25,12 @@ type MedsTemplatesListProps = {
   medsTemplates:
     | InfiniteData<XanoPaginatedType<MedTemplateType>, unknown>
     | undefined;
+  favoritesTemplates: MedTemplateType[] | undefined;
   progress: boolean;
   isPendingTemplates: boolean;
+  isPendingFavorites: boolean;
   errorTemplates: Error | null;
+  errorFavorites: Error | null;
   isFetchingNextPageTemplates: boolean;
   fetchNextPageTemplates: (
     options?: FetchNextPageOptions
@@ -46,9 +49,12 @@ type MedsTemplatesListProps = {
 
 const MedsTemplatesList = ({
   medsTemplates,
+  favoritesTemplates,
   progress,
   isPendingTemplates,
+  isPendingFavorites,
   errorTemplates,
+  errorFavorites,
   isFetchingNextPageTemplates,
   fetchNextPageTemplates,
   isFetchingTemplates,
@@ -68,14 +74,24 @@ const MedsTemplatesList = ({
     setNewVisible(true);
   };
 
-  if (errorTemplates)
+  if (errorTemplates || errorFavorites)
     return (
       <div className="templates">
-        <ErrorParagraph errorMsg={errorTemplates.message} />
+        <ErrorParagraph
+          errorMsg={errorTemplates?.message ?? errorFavorites?.message ?? ""}
+        />
       </div>
     );
 
-  const medsTemplatesDatas = medsTemplates?.pages.flatMap((page) => page.items);
+  const favoritesTemplatesIds = favoritesTemplates?.map(({ id }) => id);
+  const allTemplatesDatas = medsTemplates?.pages
+    .flatMap((page) => page.items)
+    .filter(({ id }) => !favoritesTemplatesIds?.includes(id));
+
+  const templatesDatas = [
+    ...(favoritesTemplates ?? []),
+    ...(allTemplatesDatas ?? []),
+  ];
 
   return (
     <div className="templates">
@@ -109,9 +125,9 @@ const MedsTemplatesList = ({
         <ul>
           {isPendingTemplates ? (
             <LoadingParagraph />
-          ) : medsTemplatesDatas && medsTemplatesDatas.length > 0 ? (
-            medsTemplatesDatas.map((med, index) =>
-              index === medsTemplatesDatas.length - 1 ? (
+          ) : templatesDatas && templatesDatas.length > 0 ? (
+            templatesDatas.map((med, index) =>
+              index === templatesDatas.length - 1 ? (
                 <MedTemplateItem
                   med={med}
                   key={med.id}

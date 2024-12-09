@@ -4,6 +4,7 @@ import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
   useTodosTemplateDelete,
   useTodosTemplatePost,
+  useTodosTemplatePut,
 } from "../../../../../hooks/reactquery/mutations/messagesTemplatesMutations";
 import { TodoTemplateType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -11,6 +12,7 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
@@ -32,8 +34,9 @@ const TodoTemplateItem = ({
   const { staffInfos } = useStaffInfosContext();
   const [editTemplateVisible, setEditTemplateVisible] = useState(false);
   //Queries
-  const todoTemplatePost = useTodosTemplatePost();
-  const todoTemplateDelete = useTodosTemplateDelete();
+  const templatePost = useTodosTemplatePost();
+  const templateDelete = useTodosTemplateDelete();
+  const templatePut = useTodosTemplatePut();
 
   const handleEditClick = () => {
     setEditTemplateVisible(true);
@@ -45,7 +48,7 @@ const TodoTemplateItem = ({
         content: "Do you really want to delete this template ?",
       })
     ) {
-      todoTemplateDelete.mutate(template.id, {
+      templateDelete.mutate(template.id, {
         onSuccess: () => {
           setEditTemplateVisible(false);
         },
@@ -59,7 +62,17 @@ const TodoTemplateItem = ({
       author_id: user.id,
       date_created: nowTZTimestamp(),
     };
-    todoTemplatePost.mutate(todoTemplateToPost);
+    templatePost.mutate(todoTemplateToPost);
+  };
+
+  const handleLike = async (template: TodoTemplateType) => {
+    const templateToPut: TodoTemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
   };
 
   return (
@@ -72,15 +85,19 @@ const TodoTemplateItem = ({
           ${staffIdToTitleAndName(staffInfos, template.author_id)})`
             : ""}
         </span>
-        <>
-          <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
-          {template.author_id === user.id && (
+
+        <CloneIcon onClick={() => handleDuplicate(template)} ml={5} />
+        <HeartIcon
+          ml={15}
+          onClick={() => handleLike(template)}
+          active={template.favorites_staff_ids.includes(user.id)}
+        />
+        {template.author_id === user.id && (
+          <>
             <PenIcon ml={15} onClick={handleEditClick} />
-          )}
-          {template.author_id === user.id && (
             <TrashIcon onClick={handleDelete} ml={15} />
-          )}
-        </>
+          </>
+        )}
       </li>
       {editTemplateVisible && (
         <FakeWindow

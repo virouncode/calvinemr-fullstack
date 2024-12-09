@@ -200,6 +200,7 @@ export type BillingCodeTemplateType = {
   author_id: number;
   date_created: number;
   billing_codes: string[];
+  favorites_staff_ids: number[];
 };
 
 export type BillingType = {
@@ -254,6 +255,7 @@ export type CalvinAITemplateType = {
   name: string;
   date_created: number;
   prompt: string;
+  favorites_staff_ids: number[];
 };
 
 export type CareElementType = {
@@ -563,6 +565,7 @@ export type ClinicalNoteTemplateType = {
   author_id: number;
   body: string;
   date_created: number;
+  favorites_staff_ids: number[];
 };
 
 export type ClinicalNoteTemplateFormType = {
@@ -570,6 +573,7 @@ export type ClinicalNoteTemplateFormType = {
   author_id: number;
   body: string;
   date_created: number;
+  favorites_staff_ids: number[];
 };
 
 export type CycleType = {
@@ -972,6 +976,7 @@ export type FaxTemplateType = {
   author_id: number;
   subject: string;
   body: string;
+  favorites_staff_ids: number[];
 };
 
 export type GroupType = {
@@ -1164,6 +1169,7 @@ export type LetterTemplateType = {
   description: string;
   subject: string;
   recipient_infos: string;
+  favorites_staff_ids: number[];
 };
 
 export type LetterTemplateFormType = {
@@ -1174,6 +1180,7 @@ export type LetterTemplateFormType = {
   description: string;
   subject: string;
   recipient_infos?: string;
+  favorites_staff_ids: number[];
 };
 
 export type LinkType = {
@@ -1307,6 +1314,7 @@ export type MedTemplateType = {
   SubstitutionNotAllowed: string;
   duration: { Y: number; M: number; W: number; D: number };
   refill_duration: { Y: number; M: number; W: number; D: number };
+  favorites_staff_ids: number[];
 };
 
 export type MedTemplateFormType = {
@@ -1331,6 +1339,7 @@ export type MedTemplateFormType = {
   SubstitutionNotAllowed: string;
   duration: { Y: number; M: number; W: number; D: number };
   refill_duration: { Y: number; M: number; W: number; D: number };
+  favorites_staff_ids: number[];
 };
 
 export type MessageType = {
@@ -1388,6 +1397,7 @@ export type MessageExternalTemplateType = {
   author_id: number;
   subject: string;
   body: string;
+  favorites_staff_ids: number[];
 };
 
 export type MessageTemplateType = {
@@ -1398,6 +1408,7 @@ export type MessageTemplateType = {
   subject: string;
   body: string;
   date_created: number;
+  favorites_staff_ids: number[];
 };
 
 export type NotepadType = {
@@ -1903,6 +1914,7 @@ export type TodoTemplateType = {
   body: string;
   author_id: number;
   date_created: number;
+  favorites_staff_ids: number[];
 };
 //WEATHER API Types
 export type WeatherType = {

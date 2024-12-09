@@ -57,6 +57,7 @@ const MessageExternalTemplateForm = ({
       subject: subject,
       body: body,
       date_created: nowTZTimestamp(),
+      favorites_staff_ids: [user.id],
     };
     messageTemplatePost.mutate(messageTemplateToPost, {
       onSuccess: () => {

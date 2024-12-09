@@ -95,6 +95,7 @@ const LetterTemplateForm = ({
       description,
       subject,
       recipient_infos: recipientInfos,
+      favorites_staff_ids: [user.id],
     };
     letterTemplatePost.mutate(letterTemplateToPost, {
       onSuccess: () => {

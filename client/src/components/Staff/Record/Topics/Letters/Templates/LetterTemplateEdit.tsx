@@ -90,6 +90,7 @@ const LetterTemplateEdit = ({
     setProgress(true);
     //create the message template
     const letterTemplateToPut: LetterTemplateType = {
+      ...template,
       id: template.id,
       name,
       description,

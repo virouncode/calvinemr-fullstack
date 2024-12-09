@@ -4,6 +4,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import {
   useCalvinAITemplateDelete,
   useCalvinAITemplatePost,
+  useCalvinAITemplatePut,
 } from "../../../hooks/reactquery/mutations/calvinaiTemplatesMutations";
 import { CalvinAITemplateType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
@@ -11,6 +12,7 @@ import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../UI/Icons/CloneIcon";
+import HeartIcon from "../../UI/Icons/HeartIcon";
 import PenIcon from "../../UI/Icons/PenIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
 
@@ -33,6 +35,7 @@ const CalvinAITemplateItem = ({
   //Queries
   const templateDelete = useCalvinAITemplateDelete();
   const templatePost = useCalvinAITemplatePost();
+  const templatePut = useCalvinAITemplatePut();
 
   const handleDelete = async () => {
     if (
@@ -53,6 +56,16 @@ const CalvinAITemplateItem = ({
     templatePost.mutate(templateToPost);
   };
 
+  const handleLike = async (template: CalvinAITemplateType) => {
+    const templateToPut: CalvinAITemplateType = {
+      ...template,
+      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
+        ? template.favorites_staff_ids.filter((id) => id !== user.id)
+        : [...template.favorites_staff_ids, user.id],
+    };
+    templatePut.mutate(templateToPut);
+  };
+
   return (
     <li className="templates__list-item" ref={lastItemRef}>
       <span onClick={() => handleSelectTemplate(template)}>
@@ -62,6 +75,11 @@ const CalvinAITemplateItem = ({
           : ""}
       </span>
       <CloneIcon onClick={() => handleDuplicate(template)} ml={10} />
+      <HeartIcon
+        ml={15}
+        onClick={() => handleLike(template)}
+        active={template.favorites_staff_ids.includes(user.id)}
+      />
       {user.id === template.author_id && (
         <>
           <PenIcon ml={15} onClick={() => handleEdit(template.id)} />

@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useMedsTemplatePost } from "../../../../../hooks/reactquery/mutations/medsTemplatesMutations";
 import { useTopicPost } from "../../../../../hooks/reactquery/mutations/topicMutations";
-import { useMedsTemplates } from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
+import {
+  useMedsFavoritesTemplates,
+  useMedsTemplates,
+} from "../../../../../hooks/reactquery/queries/medsTemplatesQueries";
 import useDebounce from "../../../../../hooks/useDebounce";
 import {
   dosageUnitCT,
@@ -111,6 +114,11 @@ const MedicationFormWithoutRX = ({
     fetchNextPage: fetchNextPageTemplates,
     isFetching: isFetchingTemplates,
   } = useMedsTemplates(debouncedSearch);
+  const {
+    data: favoritesTemplates,
+    isPending: isPendingFavorites,
+    error: errorFavorites,
+  } = useMedsFavoritesTemplates(user.id, debouncedSearch);
   const medTemplatePost = useMedsTemplatePost();
   const medPost = useTopicPost("MEDICATIONS & TREATMENTS", patientId);
 
@@ -824,9 +832,12 @@ const MedicationFormWithoutRX = ({
         >
           <MedsTemplatesList
             medsTemplates={templates}
+            favoritesTemplates={favoritesTemplates}
             progress={false}
             isPendingTemplates={isPendingTemplates}
+            isPendingFavorites={isPendingFavorites}
             errorTemplates={errorTemplates}
+            errorFavorites={errorFavorites}
             isFetchingNextPageTemplates={isFetchingNextPageTemplates}
             fetchNextPageTemplates={fetchNextPageTemplates}
             isFetchingTemplates={isFetchingTemplates}

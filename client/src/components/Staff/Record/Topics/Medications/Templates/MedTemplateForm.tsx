@@ -63,6 +63,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
       W: 0,
       D: 0,
     },
+    favorites_staff_ids: [user.id],
   });
   const [errMsg, setErrMsg] = useState("");
   const [progress, setProgress] = useState(false);

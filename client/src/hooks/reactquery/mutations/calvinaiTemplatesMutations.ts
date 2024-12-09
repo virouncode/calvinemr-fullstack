@@ -13,6 +13,7 @@ export const useCalvinAITemplatePost = () => {
       xanoPost("/calvinai_templates", "staff", templateToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["calvinaiTemplates"] });
+      socket?.emit("message", { key: ["calvinaiFavoritesTemplates"] });
       toast.success("Template post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -34,6 +35,7 @@ export const useCalvinAITemplatePut = () => {
       ),
     onSuccess: () => {
       socket?.emit("message", { key: ["calvinaiTemplates"] });
+      socket?.emit("message", { key: ["calvinaiFavoritesTemplates"] });
       toast.success("Template updated succesfully", { containerId: "A" });
     },
 
@@ -52,6 +54,7 @@ export const useCalvinAITemplateDelete = () => {
       xanoDelete(`/calvinai_templates/${templateIdToDelete}`, "staff"),
     onSuccess: () => {
       socket?.emit("message", { key: ["calvinaiTemplates"] });
+      socket?.emit("message", { key: ["calvinaiFavoritesTemplates"] });
       toast.success("Template deleted succesfully", { containerId: "A" });
     },
     onError: (error) => {
