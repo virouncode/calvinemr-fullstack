@@ -87,7 +87,6 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
           (acc, currentValue) => acc + currentValue
         )
       : 0;
-  console.log("totalCycles", totalCycles);
 
   return (
     <div className="dashboard-card">

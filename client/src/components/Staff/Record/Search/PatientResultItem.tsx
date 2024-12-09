@@ -1,3 +1,4 @@
+import avatar from "@/assets/img/avatar.png";
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -74,18 +75,52 @@ const PatientResultItem = ({
         </td>
       )}
       {user.access_level === "admin" ? (
-        <td>{patient.Names.LegalName.LastName.Part || ""}</td>
+        <td>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div
+              style={{
+                borderRadius: "9999px",
+                width: "50px",
+                height: "50px",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                src={patient.avatar ? patient.avatar.url : avatar}
+                alt={patient.Names.LegalName.LastName.Part}
+              />
+            </div>
+            <div>{patient.Names.LegalName.LastName.Part || ""}</div>
+          </div>
+        </td>
       ) : (
         <td>
-          <Tooltip title="Go to EMR" placement="top-start" arrow>
-            <NavLink
-              to={`/staff/patient-record/${patient.patient_id}`}
-              className="record-link"
-              // target="_blank"
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div
+              style={{
+                borderRadius: "9999px",
+                width: "50px",
+                height: "50px",
+                overflow: "hidden",
+              }}
             >
-              {patient.Names.LegalName.LastName.Part || ""}
-            </NavLink>
-          </Tooltip>
+              <img
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                src={patient.avatar ? patient.avatar.url : avatar}
+                alt={patient.Names.LegalName.LastName.Part}
+              />
+            </div>
+            <Tooltip title="Go to EMR" placement="top-start" arrow>
+              <NavLink
+                to={`/staff/patient-record/${patient.patient_id}`}
+                className="record-link"
+                // target="_blank"
+              >
+                {patient.Names.LegalName.LastName.Part || ""}
+              </NavLink>
+            </Tooltip>
+          </div>
         </td>
       )}
       <td>{patient.Names.LegalName.FirstName.Part || ""}</td>
