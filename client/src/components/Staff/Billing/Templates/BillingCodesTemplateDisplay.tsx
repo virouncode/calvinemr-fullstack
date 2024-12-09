@@ -1,6 +1,7 @@
 import React from "react";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
+import { useBillingCodeTemplatePut } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 import { AdminType, BillingCodeTemplateType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
@@ -8,7 +9,6 @@ import CloneIcon from "../../../UI/Icons/CloneIcon";
 import HeartIcon from "../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../UI/Icons/TrashIcon";
-import { useBillingCodeTemplatePut } from "../../../../hooks/reactquery/mutations/billingCodesTemplatesMutations";
 
 type BillingCodesTemplateDisplayProps = {
   lastItemRef?: (node: Element | null) => void;
@@ -58,7 +58,11 @@ const BillingCodesTemplateDisplay = ({
       <HeartIcon
         ml={15}
         onClick={() => handleLike(template)}
-        active={template.favorites_staff_ids.includes(user.id)}
+        active={
+          user?.access_level === "staff"
+            ? template.favorites_staff_ids.includes(user.id)
+            : template.favorites_admin_ids.includes(user.id)
+        }
       />
       {user.id === template.author_id && (
         <>

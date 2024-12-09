@@ -201,6 +201,7 @@ export type BillingCodeTemplateType = {
   date_created: number;
   billing_codes: string[];
   favorites_staff_ids: number[];
+  favorites_admin_ids: number[];
 };
 
 export type BillingType = {
