@@ -38,9 +38,18 @@ const BillingCodesTemplateDisplay = ({
   const handleLike = async (template: BillingCodeTemplateType) => {
     const templateToPut: BillingCodeTemplateType = {
       ...template,
-      favorites_staff_ids: template.favorites_staff_ids.includes(user.id)
-        ? template.favorites_staff_ids.filter((id) => id !== user.id)
-        : [...template.favorites_staff_ids, user.id],
+      favorites_staff_ids:
+        user.access_level === "staff"
+          ? template.favorites_staff_ids.includes(user.id)
+            ? template.favorites_staff_ids.filter((id) => id !== user.id)
+            : [...template.favorites_staff_ids, user.id]
+          : template.favorites_staff_ids,
+      favorites_admin_ids:
+        user.access_level === "admin"
+          ? template.favorites_admin_ids.includes(user.id)
+            ? template.favorites_admin_ids.filter((id) => id !== user.id)
+            : [...template.favorites_admin_ids, user.id]
+          : template.favorites_admin_ids,
     };
     templatePut.mutate(templateToPut);
   };
