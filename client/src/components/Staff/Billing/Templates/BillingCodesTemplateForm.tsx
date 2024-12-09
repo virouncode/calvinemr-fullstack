@@ -67,7 +67,8 @@ const BillingCodesTemplateForm = ({
         billing_code.toUpperCase()
       ),
       author_id: user.id,
-      favorites_staff_ids: [user.id],
+      favorites_staff_ids: user?.access_level === "staff" ? [user.id] : [],
+      favorites_admin_ids: user?.access_level === "admin" ? [user.id] : [],
     };
     billingCodeTemplatePost.mutate(billingCodeTemplateToPost, {
       onSuccess: () => setNewTemplateVisible(false),
