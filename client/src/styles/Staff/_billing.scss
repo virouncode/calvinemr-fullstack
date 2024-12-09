@@ -164,6 +164,9 @@
     z-index: 2;
   }
   &__item {
+    &:nth-child(odd) {
+      background-color: $grey;
+    }
     border-bottom: solid 1px $grey2;
     td {
       text-align: left;

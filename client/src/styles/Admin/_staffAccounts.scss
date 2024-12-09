@@ -81,6 +81,9 @@
     tbody {
       tr {
         border-bottom: solid 1px $grey2;
+        &:nth-child(odd) {
+          background-color: $grey;
+        }
         td {
           padding: 0.75rem;
           overflow: hidden;

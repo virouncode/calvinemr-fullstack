@@ -92,6 +92,9 @@
   tbody {
     tr {
       border-bottom: solid 1px $grey2;
+      &:nth-child(odd) {
+        background-color: $grey;
+      }
       .record-link {
         text-decoration: underline;
         font-weight: bold;

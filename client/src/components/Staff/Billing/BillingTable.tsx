@@ -115,7 +115,10 @@ const BillingTable: React.FC<BillingTableProps> = ({
           {isFetchingNextPage && <LoadingRow colSpan={16} />}
         </tbody>
         <tfoot>
-          <tr className="billing-table__item">
+          <tr
+            className="billing-table__item"
+            style={{ backgroundColor: "#FEFEFE" }}
+          >
             <td colSpan={8} style={{ fontWeight: "bold", border: "none" }}>
               Total fees
             </td>
