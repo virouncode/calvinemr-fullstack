@@ -331,6 +331,8 @@ As a new patient, you will most likely be asked to fill a medical history form. 
 For confidentiality purposes, all the messages you send and receive will be through the portal and are not shared with any external email server.
 Please do not reply to this email, as this address is automated and not monitored.
 
+PS: You can also access to the patient portal through our website : https://www.carefertility.ca
+
 Regards,
 The Reception Desk
 
@@ -503,6 +505,8 @@ PIN: ${pin}
 Please ensure you sign in as a patient.
 
 Please do not reply to this email, as this address is automated and not monitored.
+
+PS: You can also access to the patient portal through our website : https://www.carefertility.ca
 
 Regards,
 The Reception Desk
