@@ -28,20 +28,19 @@ export const xanoPostBatch = async (
   userType: string,
   datas: Record<string, unknown>[]
 ) => {
-  const responses = [];
-  for (const data of datas) {
-    const config: AxiosXanoConfigType = {
-      url: `/api/xano`,
-      method: "post",
-      data,
-      params: {
-        //query parameters !!! Not route parameters
-        URL,
-        userType,
-      },
-    };
-    const response = await axios(config);
-    responses.push(response.data);
-  }
-  return responses;
+  const responses = await Promise.all(
+    datas.map((data) =>
+      axios({
+        url: `/api/xano`,
+        method: "post",
+        data,
+        params: {
+          //query parameters !!! Not route parameters
+          URL,
+          userType,
+        },
+      })
+    )
+  );
+  return responses.map((response) => response.data);
 };

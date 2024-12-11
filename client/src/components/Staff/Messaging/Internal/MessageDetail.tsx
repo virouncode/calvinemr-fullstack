@@ -188,6 +188,7 @@ const MessageDetail = ({
     const dataURL = canvas.toDataURL("image/jpeg");
     const formData = new FormData();
     formData.append("content", dataURL);
+
     let response;
     try {
       response = await axios.post(
@@ -286,35 +287,38 @@ const MessageDetail = ({
           handleEdit={handleEdit}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div ref={messageContentRef} className="message__detail-content">
-          <Message
-            message={message}
-            key={message.id}
-            index={0}
-            section={section}
-          />
-          {section !== "To-dos" && (
-            <>
-              {previousMsgs && previousMsgs.length > 0
-                ? previousMsgs?.map((message, index) =>
-                    message.type === "Internal" ? (
-                      <Message
-                        message={message as MessageType}
-                        key={message.id}
-                        index={index + 1}
-                        section={section}
-                      />
-                    ) : (
-                      <MessageExternal
-                        message={message as MessageExternalType}
-                        key={message.id}
-                        index={index + 1}
-                      />
+        <div className="message__detail-content">
+          <div ref={messageContentRef}>
+            <Message
+              message={message}
+              key={message.id}
+              index={0}
+              section={section}
+            />
+            {section !== "To-dos" && (
+              <>
+                {previousMsgs && previousMsgs.length > 0
+                  ? previousMsgs?.map((message, index) =>
+                      message.type === "Internal" ? (
+                        <Message
+                          message={message as MessageType}
+                          key={message.id}
+                          index={index + 1}
+                          section={section}
+                        />
+                      ) : (
+                        <MessageExternal
+                          message={message as MessageExternalType}
+                          key={message.id}
+                          index={index + 1}
+                        />
+                      )
                     )
-                  )
-                : null}
-            </>
-          )}
+                  : null}
+              </>
+            )}
+          </div>
+
           {attachments && (
             <MessagesAttachments
               attachments={attachments}

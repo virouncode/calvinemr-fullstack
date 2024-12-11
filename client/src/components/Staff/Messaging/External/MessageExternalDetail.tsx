@@ -305,17 +305,19 @@ const MessageExternalDetail = ({
           handleAddToClinicalNotes={handleAddToClinicalNotes}
           handleDeleteMsg={handleDeleteMsg}
         />
-        <div className="message__detail-content" ref={messageContentRef}>
-          <MessageExternal message={message} key={message.id} index={0} />
-          {previousMsgs &&
-            previousMsgs.length > 0 &&
-            previousMsgs.map((message, index) => (
-              <MessageExternal
-                message={message}
-                key={message.id}
-                index={index + 1}
-              />
-            ))}
+        <div className="message__detail-content">
+          <div ref={messageContentRef}>
+            <MessageExternal message={message} key={message.id} index={0} />
+            {previousMsgs &&
+              previousMsgs.length > 0 &&
+              previousMsgs.map((message, index) => (
+                <MessageExternal
+                  message={message}
+                  key={message.id}
+                  index={index + 1}
+                />
+              ))}
+          </div>
           {attachments && (
             <MessagesExternalAttachments
               attachments={attachments}

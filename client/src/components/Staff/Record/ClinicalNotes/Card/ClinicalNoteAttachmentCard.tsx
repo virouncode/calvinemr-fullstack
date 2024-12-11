@@ -39,7 +39,10 @@ const ClinicalNoteAttachmentCard = ({
     <>
       {
         <div className="clinical-notes__attachment-card">
-          <div className="clinical-notes__attachment-thumbnail">
+          <div
+            className="clinical-notes__attachment-thumbnail"
+            onClick={handleImgClick}
+          >
             {attachment.file.mime.includes("image") ? (
               <img
                 src={`${import.meta.env.VITE_XANO_BASE_URL}${
@@ -47,10 +50,9 @@ const ClinicalNoteAttachmentCard = ({
                 }`}
                 alt="attachment thumbnail"
                 width="100%"
-                onClick={handleImgClick}
               />
             ) : attachment.file.mime.includes("video") ? (
-              <video onClick={handleImgClick} width="100%">
+              <video width="100%">
                 <source
                   src={`${import.meta.env.VITE_XANO_BASE_URL}${
                     attachment.file.path
@@ -60,10 +62,7 @@ const ClinicalNoteAttachmentCard = ({
               </video>
             ) : attachment.file.mime.includes("officedocument") ? (
               <div>
-                <div
-                  style={{ color: "blue", fontSize: "0.8rem" }}
-                  onClick={handleImgClick}
-                >
+                <div style={{ color: "blue", fontSize: "0.8rem" }}>
                   Preview document
                 </div>{" "}
                 <iframe
@@ -71,7 +70,6 @@ const ClinicalNoteAttachmentCard = ({
                   src={`https://docs.google.com/gview?url=${
                     import.meta.env.VITE_XANO_BASE_URL
                   }${attachment.file.path}&embedded=true&widget=false`}
-                  onClick={handleImgClick}
                   width="150%"
                   frameBorder="0"
                 ></iframe>
@@ -95,7 +93,6 @@ const ClinicalNoteAttachmentCard = ({
                     opacity: "0",
                     cursor: "pointer",
                   }}
-                  onClick={handleImgClick}
                 ></div>
               </div>
             )}
@@ -173,7 +170,6 @@ const ClinicalNoteAttachmentCard = ({
                 src={`https://docs.google.com/gview?url=${
                   import.meta.env.VITE_XANO_BASE_URL
                 }${attachment.file.path}&embedded=true&widget=false`}
-                onClick={handleImgClick}
                 width="100%"
                 height="100%"
                 frameBorder="0"

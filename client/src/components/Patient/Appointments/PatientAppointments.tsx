@@ -43,7 +43,7 @@ const PatientAppointments = () => {
         <PastAppointments pastAppointments={pastAppointments} />
         <NextAppointments nextAppointments={nextAppointments} />
       </div>
-      <NewAppointments />{" "}
+      <NewAppointments />
     </>
   );
 };

@@ -46,28 +46,25 @@ const AppointmentsSlots = ({
     );
   }, [appointmentsInRange, availability, practicianSelectedId, rangeStart]);
   return (
-    availability &&
-    appointmentsInRange && (
-      <>
-        {appointmentsProposals ? (
-          appointmentsProposals.length ? (
-            appointmentsProposals.map((appointment) => (
-              <AppointmentSlotItem
-                key={appointment.id}
-                appointment={appointment}
-                staffInfos={staffInfos}
-                setAppointmentSelected={setAppointmentSelected}
-                appointmentSelected={appointmentSelected}
-              />
-            ))
-          ) : (
-            <div>No appointments available this week</div>
-          )
+    <>
+      {appointmentsProposals ? (
+        appointmentsProposals.length ? (
+          appointmentsProposals.map((appointment) => (
+            <AppointmentSlotItem
+              key={appointment.id}
+              appointment={appointment}
+              staffInfos={staffInfos}
+              setAppointmentSelected={setAppointmentSelected}
+              appointmentSelected={appointmentSelected}
+            />
+          ))
         ) : (
-          <CircularProgressMedium />
-        )}
-      </>
-    )
+          <div>No appointments available this week</div>
+        )
+      ) : (
+        <CircularProgressMedium />
+      )}
+    </>
   );
 };
 

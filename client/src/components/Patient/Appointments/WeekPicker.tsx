@@ -24,11 +24,12 @@ const WeekPicker = ({
         disabled={
           rangeStart === nowTZ().plus({ days: 1 }).startOf("day").toMillis()
         }
+        className="btn"
       >
         <ArrowLeftIcon clickable={false} />
       </button>
       <label>Change week</label>
-      <button type="button" onClick={handleClickNext}>
+      <button type="button" onClick={handleClickNext} className="btn">
         <ArrowRightIcon clickable={false} />
       </button>
     </div>
