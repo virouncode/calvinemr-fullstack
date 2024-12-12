@@ -42,7 +42,6 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
     getStartOfTheMonthTZ()
   );
   const [rangeEndCycles, setRangeEndCycles] = useState(getEndOfTheMonthTZ());
-  const [siteSelectedId, setSiteSelectedId] = useState(-1);
   //Queries
   const {
     data: cycles,
@@ -59,10 +58,6 @@ const DashboardCardCycles = ({ sites }: DashboardCardCyclesProps) => {
     const value = e.target.value;
     if (!value) return;
     setRangeEndCycles((dateISOToTimestampTZ(value) as number) + 86399999);
-  };
-
-  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSiteSelectedId(parseInt(e.target.value));
   };
 
   if (isPendingCycles)

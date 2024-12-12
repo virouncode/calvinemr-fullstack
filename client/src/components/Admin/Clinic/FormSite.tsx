@@ -15,7 +15,6 @@ import RoomsForm from "./RoomsForm";
 type FormSiteProps = {
   formDatas: SiteFormType | SiteType;
   setFormDatas: React.Dispatch<React.SetStateAction<SiteFormType | SiteType>>;
-
   handleChange: (
     e:
       | React.ChangeEvent<HTMLInputElement>

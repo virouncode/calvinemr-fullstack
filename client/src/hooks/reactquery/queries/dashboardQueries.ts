@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { cycleTypes } from "../../../components/UI/Lists/CycleTypeList";
 import {
   AppointmentType,
   BillingType,
@@ -49,34 +48,40 @@ type TotalsForSitePerGenderType = { M: number; F: number; O: number };
 
 const fetchPatientsPerGender = async (sites: SiteType[]) => {
   const genders: ("M" | "F" | "O")[] = ["M", "F", "O"];
-  let totals: TotalsForSitePerGenderType[] = [];
-  for (const site of sites) {
-    const totalsForSite: TotalsForSitePerGenderType = {
-      M: 0,
-      F: 0,
-      O: 0,
-    };
-    for (let i = 0; i < genders.length; i++) {
-      const response: number = await xanoGet(
-        "/dashboard/patients_gender_site",
-        "admin",
-        { site_id: site.id, gender: genders[i] }
-      );
-      totalsForSite[genders[i]] = response;
-    }
-    totals = [...totals, totalsForSite];
-  }
-  const totalMale = totals.reduce((acc, current) => {
-    return acc + current["M"];
-  }, 0);
-  const totalFemale = totals.reduce((acc, current) => {
-    return acc + current["F"];
-  }, 0);
-  const totalOther = totals.reduce((acc, current) => {
-    return acc + current["O"];
-  }, 0);
 
-  return [...totals, { M: totalMale, F: totalFemale, O: totalOther }];
+  const totals: TotalsForSitePerGenderType[] = await Promise.all(
+    sites.map(async (site) => {
+      // Fetch data for all genders in parallel for a single site
+      const responses = await Promise.all(
+        genders.map((gender) =>
+          xanoGet("/dashboard/patients_gender_site", "admin", {
+            site_id: site.id,
+            gender,
+          })
+        )
+      );
+
+      // Map the responses to their respective genders
+      const totalsForSite = genders.reduce((acc, gender, idx) => {
+        acc[gender] = responses[idx];
+        return acc;
+      }, {} as TotalsForSitePerGenderType);
+
+      return totalsForSite;
+    })
+  );
+
+  // Aggregate totals across all sites
+  const aggregatedTotals = genders.reduce((acc, gender) => {
+    acc[gender] = totals.reduce(
+      (sum, siteTotals) => sum + siteTotals[gender],
+      0
+    );
+    return acc;
+  }, {} as TotalsForSitePerGenderType);
+
+  // Return site-wise totals along with aggregated totals
+  return [...totals, aggregatedTotals];
 };
 
 export const useDashboardPatientsPerGender = (sites?: SiteType[]) => {
@@ -96,87 +101,80 @@ type TotalsForSitePerAgeType = {
 };
 
 const fetchPatientsPerAge = async (sites: SiteType[]) => {
-  let totals: TotalsForSitePerAgeType[] = [];
-  for (const site of sites) {
-    const totalsForSite: TotalsForSitePerAgeType = {
-      under18: 0,
-      from18to35: 0,
-      from36to50: 0,
-      from51to70: 0,
-      over70: 0,
-    };
-    //<18
-    totalsForSite.under18 = await xanoGet(
-      "/dashboard/patients_under_age_site",
-      "admin",
-      {
-        site_id: site.id,
-        dob_limit: getLimitTimestampForAge(18),
-      }
-    );
-
-    //18-35
-    totalsForSite.from18to35 = await xanoGet(
-      "/dashboard/patients_age_range_site",
-      "admin",
-      {
-        site_id: site.id,
-        dob_start: getLimitTimestampForAge(35),
-        dob_end: getLimitTimestampForAge(18),
-      }
-    );
-    //36-50
-    totalsForSite.from36to50 = await xanoGet(
-      "/dashboard/patients_age_range_site",
-      "admin",
-      {
-        site_id: site.id,
-        dob_start: getLimitTimestampForAge(50),
-        dob_end: getLimitTimestampForAge(36),
-      }
-    );
-    //51-70
-    totalsForSite.from51to70 = await xanoGet(
-      "/dashboard/patients_age_range_site",
-      "admin",
-      {
-        site_id: site.id,
-        dob_start: getLimitTimestampForAge(70),
-        dob_end: getLimitTimestampForAge(51),
-      }
-    );
-    //>70
-    totalsForSite.over70 = await xanoGet(
-      "/dashboard/patients_over_age_site",
-      "admin",
-      {
-        site_id: site.id,
-        dob_limit: getLimitTimestampForAge(70),
-      }
-    );
-    totals = [...totals, totalsForSite];
-  }
-  totals = [
-    ...totals,
+  const ageRanges = [
     {
-      under18: totals.reduce((acc, current) => {
-        return acc + current.under18;
-      }, 0),
-      from18to35: totals.reduce((acc, current) => {
-        return acc + current.from18to35;
-      }, 0),
-      from36to50: totals.reduce((acc, current) => {
-        return acc + current.from36to50;
-      }, 0),
-      from51to70: totals.reduce((acc, current) => {
-        return acc + current.from51to70;
-      }, 0),
-      over70: totals.reduce((acc, current) => {
-        return acc + current.over70;
-      }, 0),
+      key: "under18",
+      type: "under_age",
+      dobLimit: getLimitTimestampForAge(18),
     },
+    {
+      key: "from18to35",
+      type: "age_range",
+      dobStart: getLimitTimestampForAge(35),
+      dobEnd: getLimitTimestampForAge(18),
+    },
+    {
+      key: "from36to50",
+      type: "age_range",
+      dobStart: getLimitTimestampForAge(50),
+      dobEnd: getLimitTimestampForAge(36),
+    },
+    {
+      key: "from51to70",
+      type: "age_range",
+      dobStart: getLimitTimestampForAge(70),
+      dobEnd: getLimitTimestampForAge(51),
+    },
+    { key: "over70", type: "over_age", dobLimit: getLimitTimestampForAge(70) },
   ];
-  return totals;
+
+  const totals: TotalsForSitePerAgeType[] = await Promise.all(
+    sites.map(async (site) => {
+      // Fetch data for all age ranges in parallel for a single site
+      const responses = await Promise.all(
+        ageRanges.map((range) => {
+          if (range.type === "under_age") {
+            return xanoGet("/dashboard/patients_under_age_site", "admin", {
+              site_id: site.id,
+              dob_limit: range.dobLimit,
+            });
+          } else if (range.type === "over_age") {
+            return xanoGet("/dashboard/patients_over_age_site", "admin", {
+              site_id: site.id,
+              dob_limit: range.dobLimit,
+            });
+          } else if (range.type === "age_range") {
+            return xanoGet("/dashboard/patients_age_range_site", "admin", {
+              site_id: site.id,
+              dob_start: range.dobStart,
+              dob_end: range.dobEnd,
+            });
+          }
+        })
+      );
+
+      // Map responses to age ranges
+      const totalsForSite = ageRanges.reduce((acc, range, idx) => {
+        acc[range.key as keyof TotalsForSitePerAgeType] = responses[idx];
+        return acc;
+      }, {} as TotalsForSitePerAgeType);
+
+      return totalsForSite;
+    })
+  );
+
+  // Aggregate totals for all sites
+  const aggregatedTotals = ageRanges.reduce((acc, range) => {
+    acc[range.key as keyof TotalsForSitePerAgeType] = totals.reduce(
+      (sum, siteTotals) =>
+        sum + siteTotals[range.key as keyof TotalsForSitePerAgeType],
+      0
+    );
+    return acc;
+  }, {} as TotalsForSitePerAgeType);
+
+  // Return site-wise totals along with aggregated totals
+  return [...totals, aggregatedTotals];
 };
 
 export const useDashboardPatientsPerAge = (sites?: SiteType[]) => {
@@ -212,118 +210,63 @@ const fetchCycles = async (
   rangeStart: number,
   rangeEnd: number
 ) => {
-  let totals: TotalsForSitePerCycleType[] = [];
-  for (const site of sites) {
-    const totalsForSite: TotalsForSitePerCycleType = {
-      ["Natural/Investigative"]: 0,
-      ["IC + Ovulation induction"]: 0,
-      ["IUI + Ovulation induction"]: 0,
-      ["IUI Natural cycle"]: 0,
-      ["IVF antagonist"]: 0,
-      ["IVF down regulation"]: 0,
-      ["IVF flare up"]: 0,
-      ["IVF sandwich"]: 0,
-      ["IVF duostim"]: 0,
-      ["FET natural cycle, no trigger"]: 0,
-      ["FET natural cycle + trigger"]: 0,
-      ["FET estrace + progesterone"]: 0,
-      ["FET down regulation"]: 0,
-      ["Oocyte thaw (own oocytes)"]: 0,
-      ["Oocyte thaw (donor oocytes)"]: 0,
-      ["Oocyte cryopreservation"]: 0,
-      ["Split Fertilization - Oocyte cryopreservation"]: 0,
-    };
-    for (let i = 0; i < cycleTypes.length; i++) {
-      const response: number = await xanoGet(
-        "/dashboard/cycle_type_range_site",
-        "admin",
-        {
-          cycle_type: cycleTypes[i],
-          range_start: rangeStart,
-          range_end: rangeEnd,
-          site_id: site.id,
-        }
-      );
-      totalsForSite[cycleTypes[i]] = response;
-    }
-    totals = [...totals, totalsForSite];
-  }
-
-  const totalNatural = totals.reduce((acc, current) => {
-    return acc + current["Natural/Investigative"];
-  }, 0);
-  const totalIC = totals.reduce((acc, current) => {
-    return acc + current["IC + Ovulation induction"];
-  }, 0);
-  const totalIUI = totals.reduce((acc, current) => {
-    return acc + current["IUI + Ovulation induction"];
-  }, 0);
-  const totalIUINatural = totals.reduce((acc, current) => {
-    return acc + current["IUI Natural cycle"];
-  }, 0);
-  const totalIVFAntagonist = totals.reduce((acc, current) => {
-    return acc + current["IVF antagonist"];
-  }, 0);
-  const totalIVFDownReg = totals.reduce((acc, current) => {
-    return acc + current["IVF down regulation"];
-  }, 0);
-  const totalIVFFlare = totals.reduce((acc, current) => {
-    return acc + current["IVF flare up"];
-  }, 0);
-  const totalIVFSandwich = totals.reduce((acc, current) => {
-    return acc + current["IVF sandwich"];
-  }, 0);
-  const totalIVFDuostim = totals.reduce((acc, current) => {
-    return acc + current["IVF duostim"];
-  }, 0);
-  const totalFETNaturalNoTrigger = totals.reduce((acc, current) => {
-    return acc + current["FET natural cycle, no trigger"];
-  }, 0);
-  const totalFETNaturalTrigger = totals.reduce((acc, current) => {
-    return acc + current["FET natural cycle + trigger"];
-  }, 0);
-  const totalFETEstrace = totals.reduce((acc, current) => {
-    return acc + current["FET estrace + progesterone"];
-  }, 0);
-  const totalFETDownReg = totals.reduce((acc, current) => {
-    return acc + current["FET down regulation"];
-  }, 0);
-  const totalOocyteThawOwn = totals.reduce((acc, current) => {
-    return acc + current["Oocyte thaw (own oocytes)"];
-  }, 0);
-  const totalOocyteThawDonor = totals.reduce((acc, current) => {
-    return acc + current["Oocyte thaw (donor oocytes)"];
-  }, 0);
-  const totalOocyteCryo = totals.reduce((acc, current) => {
-    return acc + current["Oocyte cryopreservation"];
-  }, 0);
-  const totalSplitFertilization = totals.reduce((acc, current) => {
-    return acc + current["Split Fertilization - Oocyte cryopreservation"];
-  }, 0);
-
-  return [
-    ...totals,
-    {
-      ["Natural/Investigative"]: totalNatural,
-      ["IC + Ovulation induction"]: totalIC,
-      ["IUI + Ovulation induction"]: totalIUI,
-      ["IUI Natural cycle"]: totalIUINatural,
-      ["IVF antagonist"]: totalIVFAntagonist,
-      ["IVF down regulation"]: totalIVFDownReg,
-      ["IVF flare up"]: totalIVFFlare,
-      ["IVF sandwich"]: totalIVFSandwich,
-      ["IVF duostim"]: totalIVFDuostim,
-      ["FET natural cycle, no trigger"]: totalFETNaturalNoTrigger,
-      ["FET natural cycle + trigger"]: totalFETNaturalTrigger,
-      ["FET estrace + progesterone"]: totalFETEstrace,
-      ["FET down regulation"]: totalFETDownReg,
-      ["Oocyte thaw (own oocytes)"]: totalOocyteThawOwn,
-      ["Oocyte thaw (donor oocytes)"]: totalOocyteThawDonor,
-      ["Oocyte cryopreservation"]: totalOocyteCryo,
-      ["Split Fertilization - Oocyte cryopreservation"]:
-        totalSplitFertilization,
-    },
+  const cycleTypes = [
+    "Natural/Investigative",
+    "IC + Ovulation induction",
+    "IUI + Ovulation induction",
+    "IUI Natural cycle",
+    "IVF antagonist",
+    "IVF down regulation",
+    "IVF flare up",
+    "IVF sandwich",
+    "IVF duostim",
+    "FET natural cycle, no trigger",
+    "FET natural cycle + trigger",
+    "FET estrace + progesterone",
+    "FET down regulation",
+    "Oocyte thaw (own oocytes)",
+    "Oocyte thaw (donor oocytes)",
+    "Oocyte cryopreservation",
+    "Split Fertilization - Oocyte cryopreservation",
   ];
+
+  // Create a map to hold all the promises
+  const totals: TotalsForSitePerCycleType[] = await Promise.all(
+    sites.map(async (site) => {
+      // Fetch data for all cycle types in parallel for a single site
+      const responses = await Promise.all(
+        cycleTypes.map((cycleType) =>
+          xanoGet("/dashboard/cycle_type_range_site", "admin", {
+            cycle_type: cycleType,
+            range_start: rangeStart,
+            range_end: rangeEnd,
+            site_id: site.id,
+          })
+        )
+      );
+
+      // Map the responses to their respective cycle types
+      const totalsForSite = cycleTypes.reduce((acc, cycleType, idx) => {
+        acc[cycleType as keyof TotalsForSitePerCycleType] = responses[idx];
+        return acc;
+      }, {} as TotalsForSitePerCycleType);
+
+      return totalsForSite;
+    })
+  );
+
+  // Aggregate totals for each cycle type
+  const aggregatedTotals = cycleTypes.reduce((acc, cycleType) => {
+    acc[cycleType as keyof TotalsForSitePerCycleType] = totals.reduce(
+      (sum, siteTotals) =>
+        sum + siteTotals[cycleType as keyof TotalsForSitePerCycleType],
+      0
+    );
+    return acc;
+  }, {} as TotalsForSitePerCycleType);
+
+  // Return the site-wise totals along with aggregated totals
+  return [...totals, aggregatedTotals];
 };
 
 export const useDashboardCycles = (

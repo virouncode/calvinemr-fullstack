@@ -22,7 +22,6 @@ import SiteForm from "./SiteForm";
 import SitesTable from "./SitesTable";
 
 const ClinicInfos = () => {
-  //Hooks
   const { user } = useUserContext() as { user: AdminType };
   const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
@@ -32,7 +31,7 @@ const ClinicInfos = () => {
   const [selectedSiteId, setSelectedSiteId] = useState(0);
   const [formDatas, setFormDatas] = useState(clinic as ClinicType);
   const [errMsgPost, setErrMsgPost] = useState("");
-  //Queries
+
   const { data: sites, isPending, error } = useSites();
 
   const handleAddNew = () => {
