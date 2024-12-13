@@ -213,6 +213,10 @@ const NewMessageExternalMobile = ({
     messagePost.mutate(messageToPost, {
       onSuccess: async () => {
         setNewVisible(false);
+        const emailsToPost: { to: string; subject: string; text: string }[] =
+          [];
+        const patientsSMSToPost: { to: string; body: string }[] = [];
+
         for (const recipient of recipients) {
           socket?.emit("message", {
             route: "UNREAD EXTERNAL",
@@ -222,67 +226,59 @@ const NewMessageExternalMobile = ({
             },
           });
           const recipientPhone = formatToE164Canadian(recipient.phone ?? "");
-          //EMAIL ALERT
-          try {
-            await axios.post(`/api/mailgun`, {
-              to: recipient.email, //to be changed to patient email
-              subject: `${clinic?.name ?? ""} - New message - DO NO REPLY`,
-              text: `
-    Hello ${recipient.name},
+          const emailToPost = {
+            to: recipient.email,
+            subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+            text: `Hello ${recipient.name},
     
-    You have a new message, please login to your patient portal.
+You have a new message, please login to your patient portal.
     
-    Please do not reply to this email, as this address is automated and not monitored. 
+Please do not reply to this email, as this address is automated and not monitored. 
     
-    Best wishes, 
-    Powered by CalvinEMR`,
-            });
-          } catch (err) {
-            if (err instanceof Error)
-              toast.error(
-                `Error: unable to send email alert to ${recipient.name}: ${err.message}`,
-                {
-                  containerId: "A",
-                }
-              );
-          }
-          //SMS ALERT
-          try {
-            await axios({
-              url: `/api/twilio`,
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              data: {
-                from: clinic?.name ?? "",
-                to: recipientPhone,
-                body: `
+Best wishes, 
+Powered by CalvinEMR`,
+          };
+          const smsToPost = {
+            from: clinic?.name ?? "",
+            to: recipientPhone,
+            body: `
     Hello ${recipient.name},
               
-    You have a new message, please login to your patient portal.
+  You have a new message, please login to your patient portal.
     
-    Please do not reply to this sms, as this number is automated and not monitored. 
+  Please do not reply to this sms, as this number is automated and not monitored. 
               
-    Best wishes,
-    Powered by Calvin EMR`,
-              },
-            });
-            setProgress(false);
-          } catch (err) {
-            if (err instanceof Error)
-              toast.error(
-                `Error: unable to send SMS alert to ${recipient.name}: ${err.message}`,
-                {
-                  containerId: "A",
-                }
-              );
-            setProgress(false);
-          }
+  Best wishes,
+  Powered by Calvin EMR`,
+          };
+          emailsToPost.push(emailToPost);
+          patientsSMSToPost.push(smsToPost);
         }
-      },
-      onSettled: () => {
-        setProgress(false);
+        //EMAIL ALERT
+        try {
+          await Promise.all(
+            emailsToPost.map((email) => axios.post(`/api/mailgun`, email))
+          );
+          await Promise.all(
+            patientsSMSToPost.map((sms) =>
+              axios({
+                url: `/api/twilio`,
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                data: sms,
+              })
+            )
+          );
+        } catch (err) {
+          if (err instanceof Error)
+            toast.error(`Error: unable to send alerts to patients`, {
+              containerId: "A",
+            });
+        } finally {
+          setProgress(false);
+        }
       },
     });
   };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -160,6 +161,24 @@ const MessageThumbnail = ({
       })
     ) {
       if (section === "To-dos") {
+        if (message.attachments_ids.length !== 0) {
+          try {
+            await xanoDeleteBatch(
+              "messages_attachments",
+              "staff",
+              (
+                message.attachments_ids as {
+                  attachment: MessageAttachmentType;
+                }[]
+              ).map(({ attachment }) => attachment.id as number)
+            );
+          } catch (err) {
+            if (err instanceof Error)
+              toast.error(`Error: unable to delete attachments${err.message}`, {
+                containerId: "A",
+              });
+          }
+        }
         todoDelete.mutate(message.id, {
           onSuccess: () => setMsgsSelectedIds([]),
         });

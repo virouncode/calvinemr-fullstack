@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoDeleteBatchSuccessfulRequests } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useClinicContext from "../../../hooks/context/useClinicContext";
@@ -372,7 +372,7 @@ const SignupPatientForm = () => {
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to post new patient:${err.message}`);
-      await xanoDeleteBatch(successfulRequests, "staff");
+      await xanoDeleteBatchSuccessfulRequests(successfulRequests, "staff");
       return;
     } finally {
       setProgress(false);

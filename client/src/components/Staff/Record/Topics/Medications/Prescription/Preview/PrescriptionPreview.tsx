@@ -6,7 +6,7 @@ import { PDFDocument, PageSizes } from "pdf-lib";
 import printJS from "print-js";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoDeleteBatch } from "../../../../../../../api/xanoCRUD/xanoDelete";
+import { xanoDeleteBatchSuccessfulRequests } from "../../../../../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../../../hooks/context/useUserContext";
@@ -293,7 +293,7 @@ const PrescriptionPreview = ({
           toast.error(`Unable to save the prescription: ${err.message}`, {
             containerId: "A",
           });
-        await xanoDeleteBatch(successfulRequests, "staff");
+        await xanoDeleteBatchSuccessfulRequests(successfulRequests, "staff");
       } finally {
         setProgress(false);
       }

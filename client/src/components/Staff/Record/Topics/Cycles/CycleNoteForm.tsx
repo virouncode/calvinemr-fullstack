@@ -13,6 +13,7 @@ type CycleNoteFormProps = {
   setFormDatas: React.Dispatch<React.SetStateAction<Partial<CycleType>>>;
   item: CycleNoteType;
   setErrMsg: React.Dispatch<React.SetStateAction<string>>;
+  index: number;
 };
 
 const CycleNoteForm = ({
@@ -20,6 +21,7 @@ const CycleNoteForm = ({
   setFormDatas,
   item,
   setErrMsg,
+  index,
 }: CycleNoteFormProps) => {
   const handleRemove = async () => {
     setErrMsg("");
@@ -44,10 +46,8 @@ const CycleNoteForm = ({
       value = value === "" ? null : dateISOToTimestampTZ(value);
     setFormDatas({
       ...formDatas,
-      notes: formDatas.notes?.map((note) => {
-        return note.temp_id === item.temp_id
-          ? { ...note, [name]: value }
-          : note;
+      notes: formDatas.notes?.map((note, noteIndex) => {
+        return noteIndex === index ? { ...note, [name]: value } : note;
       }),
     });
   };

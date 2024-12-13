@@ -2,7 +2,7 @@ import axios from "axios";
 import { uniqueId } from "lodash";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { xanoDelete } from "../../../../api/xanoCRUD/xanoDelete";
+import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useMessagePut } from "../../../../hooks/reactquery/mutations/messagesMutations";
@@ -134,8 +134,17 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
     setProgress(true);
     //Remove deleted attachments
     if (attachmentsToRemoveIds.length) {
-      for (const id of attachmentsToRemoveIds) {
-        await xanoDelete(`/messages_attachments/${id}`, "staff");
+      try {
+        await xanoDeleteBatch(
+          "messages_attachments",
+          "staff",
+          attachmentsToRemoveIds
+        );
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to delete attachments${err.message}`, {
+            containerId: "A",
+          });
       }
     }
     let attachmentsToAddIds: number[] = [];
@@ -144,7 +153,7 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
         attachments_array: attachmentsToAdd,
       });
     }
-    //create the message
+    //update the todo message
     const messageToPut: TodoType = {
       ...todo,
       subject: subject,
@@ -296,12 +305,15 @@ const EditTodo = ({ setEditTodoVisible, todo }: EditTodoProps) => {
             ref={textareaRef}
             autoFocus
           />
-          <MessagesAttachments
-            attachments={attachments}
-            handleRemoveAttachment={handleRemoveAttachment}
-            deletable={true}
-            addable={false}
-          />
+          {attachments.length > 0 && (
+            <MessagesAttachments
+              attachments={attachments}
+              handleRemoveAttachment={handleRemoveAttachment}
+              deletable={true}
+              addable={false}
+              cardWidth="30%"
+            />
+          )}
         </div>
         <div className="new-message__form-btns">
           <SaveButton

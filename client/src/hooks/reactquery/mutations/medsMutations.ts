@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoDeleteBatchSuccessfulRequests } from "../../../api/xanoCRUD/xanoDelete";
 import { xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import { MedType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
@@ -26,7 +26,7 @@ export const useMedsPostBatch = (patientId: number) => {
       toast.error(`Error: unable to post medications(s): ${error.message}`, {
         containerId: "A",
       });
-      xanoDeleteBatch(successfulRequests, "staff");
+      xanoDeleteBatchSuccessfulRequests(successfulRequests, "staff");
     },
   });
 };

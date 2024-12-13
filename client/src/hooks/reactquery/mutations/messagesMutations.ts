@@ -1,6 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import {
+  xanoDelete,
+  xanoDeleteBatchSuccessfulRequests,
+} from "../../../api/xanoCRUD/xanoDelete";
 import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import {
@@ -120,7 +123,7 @@ export const useMessagesPostBatch = (staffId: number, section: string) => {
           containerId: "A",
         }
       );
-      xanoDeleteBatch(successfulRequests, "staff");
+      xanoDeleteBatchSuccessfulRequests(successfulRequests, "staff");
     },
   });
 };
@@ -271,7 +274,7 @@ export const useMessagesExternalPostBatch = () => {
       toast.error(`Error: unable to post message(s): ${error.message}`, {
         containerId: "A",
       });
-      xanoDeleteBatch(successfulRequests, userType as string);
+      xanoDeleteBatchSuccessfulRequests(successfulRequests, userType as string);
     },
   });
 };

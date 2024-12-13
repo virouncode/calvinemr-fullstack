@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useMessageExternalPost } from "../../../hooks/reactquery/mutations/messagesMutations";
+import { useMessagesExternalPostBatch } from "../../../hooks/reactquery/mutations/messagesMutations";
 import { AppointmentType, MessageExternalType } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import {
@@ -26,7 +26,7 @@ const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
   const [appointmentSelectedId, setAppointmentSelectedId] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
   //Queries
-  const messagePost = useMessageExternalPost();
+  const messagesExternalPost = useMessagesExternalPostBatch();
 
   const isAppointmentSelected = (id: number) => appointmentSelectedId === id;
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +41,7 @@ const NextAppointments = ({ nextAppointments }: NextAppointmentsProps) => {
         content: "Do you really want to cancel this appointment ?",
       })
     ) {
+      const messagesToPost: Partial<MessageExternalType>[] = [];
       try {
         //get all secretaries id
         const secretariesIds = staffInfos
@@ -81,13 +82,16 @@ Cellphone: ${
             date_created: nowTZTimestamp(),
             type: "External",
           };
-          messagePost.mutate(messageToPost);
+          messagesToPost.push(messageToPost);
         }
+        messagesExternalPost.mutate(messagesToPost);
+
         setRequestSent(true);
-        setTimeout(() => setRequestSent(false), 6000);
         toast.success("Appointment cancelation request sent successfully", {
           containerId: "A",
         });
+        setTimeout(() => setRequestSent(false), 6000);
+
         setAppointmentSelectedId(0);
       } catch (err) {
         if (err instanceof Error)

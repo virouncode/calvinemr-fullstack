@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import { xanoDeleteBatchSuccessfulRequests } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import useClinicContext from "../../../hooks/context/useClinicContext";
@@ -337,7 +337,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to add staff member : ${err.message}`);
-      await xanoDeleteBatch(successfulRequests, "admin");
+      await xanoDeleteBatchSuccessfulRequests(successfulRequests, "admin");
     } finally {
       setProgress(false);
     }

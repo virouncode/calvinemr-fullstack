@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -20,7 +19,6 @@ import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAnd
 import DoneButton from "../../../UI/Buttons/DoneButton";
 import UndoneButton from "../../../UI/Buttons/UndoneButton";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
-import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import ExclamationIcon from "../../../UI/Icons/ExclamationIcon";
 import PaperclipIcon from "../../../UI/Icons/PaperclipIcon";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -122,10 +120,6 @@ const MessageThumbnailMobile = ({
     setCurrentMsgId(message.id);
   };
 
-  const handleEdit = () => {
-    setEditTodoVisible(true);
-  };
-
   const handleCheckMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const id = parseInt(e.target.id);
@@ -142,86 +136,6 @@ const MessageThumbnailMobile = ({
 
   const isMsgSelected = (id: number) => {
     return msgsSelectedIds.includes(id);
-  };
-
-  const handleDeleteMsg = async () => {
-    if (
-      await confirmAlert({
-        content: `Do you really want to delete this ${
-          section === "To-dos" ? "to-do" : "message"
-        } ?`,
-      })
-    ) {
-      if (section === "To-dos") {
-        todoDelete.mutate(message.id, {
-          onSuccess: () => setMsgsSelectedIds([]),
-        });
-        if (user.unreadTodosNbr !== 0 && !(message as TodoType).read) {
-          const newUnreadTodosNbr = user.unreadTodosNbr - 1;
-          socket?.emit("message", {
-            route: "USER",
-            action: "update",
-            content: {
-              id: user.id,
-              data: {
-                ...user,
-                unreadTodosNbr: newUnreadTodosNbr,
-                unreadNbr:
-                  newUnreadTodosNbr +
-                  user.unreadMessagesExternalNbr +
-                  user.unreadMessagesNbr,
-              },
-            },
-          });
-        }
-      } else {
-        const messageToPut: MessageType = {
-          ...(message as MessageType),
-          deleted_by_staff_ids: [
-            ...(message as MessageType).deleted_by_staff_ids,
-            user.id,
-          ],
-          attachments_ids: (
-            message.attachments_ids as { attachment: MessageAttachmentType }[]
-          ).map(({ attachment }) => attachment.id as number),
-        };
-        delete messageToPut.patient_infos; //from add-on
-        messagePut.mutate(messageToPut, {
-          onSuccess: () => {
-            toast.success("Message deleted successfully", {
-              containerId: "A",
-            });
-            setMsgsSelectedIds([]);
-          },
-          onError: (error) => {
-            toast.error(`Error: unable to delete message: ${error.message}`, {
-              containerId: "A",
-            });
-          },
-        });
-        if (
-          user.unreadMessagesNbr !== 0 &&
-          !messageToPut.read_by_staff_ids?.includes(user.id)
-        ) {
-          const newUnreadMessagesNbr = user.unreadMessagesNbr - 1;
-          socket?.emit("message", {
-            route: "USER",
-            action: "update",
-            content: {
-              id: user.id,
-              data: {
-                ...user,
-                unreadMessagesNbr: newUnreadMessagesNbr,
-                unreadNbr:
-                  newUnreadMessagesNbr +
-                  user.unreadMessagesExternalNbr +
-                  user.unreadTodosNbr,
-              },
-            },
-          });
-        }
-      }
-    }
   };
 
   const handleDone = async (

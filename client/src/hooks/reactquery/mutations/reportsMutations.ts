@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import {
+  xanoDelete,
+  xanoDeleteBatchSuccessfulRequests,
+} from "../../../api/xanoCRUD/xanoDelete";
 import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { ReportType } from "../../../types/api";
@@ -77,7 +80,7 @@ export const useReportsPostBatch = () => {
       toast.error(`Error: unable to post report(s): ${error.message}`, {
         containerId: "A",
       });
-      xanoDeleteBatch(successfulRequests, "staff");
+      xanoDeleteBatchSuccessfulRequests(successfulRequests, "staff");
     },
   });
 };

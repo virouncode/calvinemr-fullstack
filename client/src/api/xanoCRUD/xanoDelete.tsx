@@ -21,7 +21,7 @@ export const xanoDelete = async (
   return response.data;
 };
 
-export const xanoDeleteBatch = async (
+export const xanoDeleteBatchSuccessfulRequests = async (
   successfulRequests: {
     endpoint: string;
     id: number;
@@ -35,11 +35,32 @@ export const xanoDeleteBatch = async (
         method: "delete",
         params: {
           //query parameters !!! Not route parameters
-          URL: `${request.endpoint}${request.id}`,
+          URL: `${request.endpoint}/${request.id}`,
           userType,
         },
       })
     )
   );
-  responses.map((response) => response.data);
+  return responses.map((response) => response.data);
+};
+
+export const xanoDeleteBatch = async (
+  URL: string,
+  userType: string,
+  idsToDelete: number[]
+) => {
+  const responses = await Promise.all(
+    idsToDelete.map((id) =>
+      axios({
+        url: `/api/xano`,
+        method: "delete",
+        params: {
+          //query parameters !!! Not route parameters
+          URL: `${URL}/${id}`,
+          userType,
+        },
+      })
+    )
+  );
+  return responses.map((response) => response.data);
 };

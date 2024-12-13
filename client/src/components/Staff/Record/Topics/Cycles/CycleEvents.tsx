@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React from "react";
 import { CycleEventType, CycleType } from "../../../../../types/api";
 import {
@@ -29,7 +28,6 @@ const CycleEvents = ({
       events: [
         ...(formDatas.events as CycleEventType[]),
         {
-          temp_id: _.uniqueId(),
           date: todayTZTimestamp(),
           day_of_cycle: toDayOfCycle(
             todayTZTimestamp(),
@@ -52,6 +50,9 @@ const CycleEvents = ({
       ],
     });
   };
+
+  const cycleEvents = formDatas.events;
+
   return (
     <fieldset
       className="cycles-form__events"
@@ -84,14 +85,14 @@ const CycleEvents = ({
             </tr>
           </thead>
           <tbody>
-            {(formDatas.events ?? []).length > 0 ? (
-              formDatas.events
+            {(cycleEvents ?? []).length > 0 ? (
+              cycleEvents
                 ?.sort(
                   (a, b) => ((a.date as number) - (b.date as number)) as number
                 )
                 .map((item, index) => (
                   <CycleEventForm
-                    key={(item.temp_id as string) + index}
+                    key={"event" + index}
                     item={item}
                     formDatas={formDatas}
                     setFormDatas={setFormDatas}

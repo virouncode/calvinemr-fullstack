@@ -1,6 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoDelete, xanoDeleteBatch } from "../../../api/xanoCRUD/xanoDelete";
+import {
+  xanoDelete,
+  xanoDeleteBatchSuccessfulRequests,
+} from "../../../api/xanoCRUD/xanoDelete";
 import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { BillingType } from "../../../types/api";
@@ -45,7 +48,7 @@ export const useBillingsPostsBatch = () => {
       }));
     },
     onError: (error) => {
-      xanoDeleteBatch(successfulRequests, userType as string);
+      xanoDeleteBatchSuccessfulRequests(successfulRequests, userType as string);
       toast.error(`Error: unable to post billing: ${error.message}`, {
         containerId: "A",
       });

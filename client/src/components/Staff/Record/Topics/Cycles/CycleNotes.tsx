@@ -61,11 +61,12 @@ const CycleNotes = ({
                 )
                 .map((item, index) => (
                   <CycleNoteForm
-                    key={(item.temp_id as string) + index}
+                    key={"notes" + index}
                     item={item}
                     formDatas={formDatas}
                     setFormDatas={setFormDatas}
                     setErrMsg={setErrMsg}
+                    index={index}
                   />
                 ))
             ) : (

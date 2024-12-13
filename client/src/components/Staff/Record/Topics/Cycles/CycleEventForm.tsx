@@ -40,7 +40,7 @@ const CycleEventForm = ({
       setFormDatas({
         ...formDatas,
         events: (formDatas.events as CycleEventType[]).filter(
-          (event) => event.temp_id !== item.temp_id
+          (event, index) => index === index
         ),
       });
     }
@@ -51,13 +51,14 @@ const CycleEventForm = ({
     setErrMsg("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
+
     if (name === "date") {
       if (!value) return;
       value = dateISOToTimestampTZ(value);
       setFormDatas({
         ...formDatas,
-        events: formDatas.events?.map((event) => {
-          return event.temp_id === item.temp_id
+        events: formDatas.events?.map((event, eventIndex) => {
+          return eventIndex === index
             ? {
                 ...(event as CycleEventType),
                 date: value as number | null,
@@ -69,14 +70,11 @@ const CycleEventForm = ({
             : event;
         }),
       });
-      return;
     }
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event) => {
-        return event.temp_id === item.temp_id
-          ? { ...event, [name]: value }
-          : event;
+      events: formDatas.events?.map((event, eventIndex) => {
+        return eventIndex === index ? { ...event, [name]: value } : event;
       }),
     });
   };
@@ -84,8 +82,8 @@ const CycleEventForm = ({
     setErrMsg("");
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event) => {
-        return event.temp_id === item.temp_id
+      events: formDatas.events?.map((event, eventIndex) => {
+        return eventIndex === index
           ? {
               ...event,
               [`med_${medNbr}`]: {
@@ -105,8 +103,8 @@ const CycleEventForm = ({
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event) => {
-        return event.temp_id === item.temp_id
+      events: formDatas.events?.map((event, eventIndex) => {
+        return eventIndex === index
           ? {
               ...event,
               [`med_${medNbr}`]: {

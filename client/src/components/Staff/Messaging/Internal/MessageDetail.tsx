@@ -53,6 +53,7 @@ import MessagesPrint from "./MessagesPrint";
 import NewTodo from "./NewTodo";
 import NewTodoMobile from "./NewTodoMobile";
 import ReplyMessage from "./ReplyMessage";
+import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
 
 type MessageDetailProps = {
   setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
@@ -125,6 +126,24 @@ const MessageDetail = ({
       })
     ) {
       if (section === "To-dos") {
+        if (message.attachments_ids.length !== 0) {
+          try {
+            await xanoDeleteBatch(
+              "messages_attachments",
+              "staff",
+              (
+                message.attachments_ids as {
+                  attachment: MessageAttachmentType;
+                }[]
+              ).map(({ attachment }) => attachment.id as number)
+            );
+          } catch (err) {
+            if (err instanceof Error)
+              toast.error(`Error: unable to delete attachments${err.message}`, {
+                containerId: "A",
+              });
+          }
+        }
         todoDelete.mutate(message.id, {
           onSuccess: () => {
             setCurrentMsgId(0);
