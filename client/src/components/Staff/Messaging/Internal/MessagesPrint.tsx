@@ -16,6 +16,7 @@ type MessagesPrintPUProps = {
   previousMsgs?: (MessageType | MessageExternalType)[];
   attachments: MessageAttachmentType[];
   section: string;
+  printButton?: boolean;
 };
 
 const MessagesPrint = ({
@@ -23,6 +24,7 @@ const MessagesPrint = ({
   previousMsgs,
   attachments,
   section,
+  printButton = true,
 }: MessagesPrintPUProps) => {
   const handleClickPrint = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -30,18 +32,38 @@ const MessagesPrint = ({
     e.nativeEvent.view?.print();
   };
   return (
-    <div className="message__print">
-      <div className="message__print-btn">
-        <Button onClick={handleClickPrint} label="Print" />
-      </div>
+    <div
+      className="message__print"
+      style={{
+        width: printButton ? "" : "100%",
+        marginTop: printButton ? "" : "1000px",
+      }}
+    >
+      {printButton && (
+        <div className="message__print-btn">
+          <Button onClick={handleClickPrint} label="Print" />
+        </div>
+      )}
       <div className="message__print-container">
         <div className="message__print-title">
-          <p className="message__print-subject">
+          <p
+            className="message__print-subject"
+            style={{
+              fontSize: printButton ? "" : "1.25rem",
+              padding: printButton ? "" : "0.5rem",
+            }}
+          >
             <strong>Subject:{"\u00A0"}</strong>
             {message.subject}
           </p>
           {message.related_patient_id ? (
-            <p className="message__print-patient">
+            <p
+              className="message__print-patient"
+              style={{
+                fontSize: printButton ? "" : "1.25rem",
+                padding: printButton ? "" : "0.5rem",
+              }}
+            >
               <strong>Related Patient:{"\u00A0"}</strong>
               {toPatientName(message.patient_infos)}
             </p>
@@ -53,6 +75,7 @@ const MessagesPrint = ({
             key={message.id}
             index={0}
             section={section}
+            forSnapshot={!printButton}
           />
           {section !== "To-dos" &&
             previousMsgs &&
@@ -63,21 +86,25 @@ const MessagesPrint = ({
                   key={message.id}
                   index={index + 1}
                   section={section}
+                  forSnapshot={!printButton}
                 />
               ) : (
                 <MessageExternal
                   message={message as MessageExternalType}
                   key={message.id}
                   index={index + 1}
+                  forSnapshot={!printButton}
                 />
               )
             )}
-          <MessagesAttachments
-            attachments={attachments}
-            deletable={false}
-            cardWidth="20%"
-            addable={false}
-          />
+          {attachments.length > 0 && printButton && (
+            <MessagesAttachments
+              attachments={attachments}
+              deletable={false}
+              cardWidth="20%"
+              addable={false}
+            />
+          )}
         </div>
       </div>
     </div>

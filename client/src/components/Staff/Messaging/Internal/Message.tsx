@@ -8,14 +8,23 @@ type MessageProps = {
   message: MessageType | TodoType;
   index: number;
   section: string;
+  forSnapshot?: boolean;
 };
 
-const Message = ({ message, index, section }: MessageProps) => {
+const Message = ({
+  message,
+  index,
+  section,
+  forSnapshot = false,
+}: MessageProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
     <div className="message" style={{ marginLeft: `${index * 20}px` }}>
-      <div className="message__title">
+      <div
+        className="message__title"
+        style={{ fontSize: forSnapshot ? "1.25rem" : "" }}
+      >
         <div className="message__author">
           From:{" "}
           {staffIdToTitleAndName(
@@ -30,14 +39,27 @@ const Message = ({ message, index, section }: MessageProps) => {
         </div>
       </div>
       {section !== "To-dos" && (
-        <div className="message__subtitle">
+        <div
+          className="message__subtitle"
+          style={{
+            fontSize: forSnapshot ? "1rem" : "",
+            overflow: forSnapshot ? "visible" : "",
+            overflowWrap: forSnapshot ? "break-word" : "normal",
+            whiteSpace: forSnapshot ? "pre-wrap" : "",
+          }}
+        >
           to:{" "}
           {(message as MessageType).to_staff_ids
             .map((staff_id) => staffIdToTitleAndName(staffInfos, staff_id))
             .join(" / ")}
         </div>
       )}
-      <div className="message__body">{message.body}</div>
+      <div
+        className="message__body"
+        style={{ fontSize: forSnapshot ? "1.25rem" : "" }}
+      >
+        {message.body}
+      </div>
     </div>
   );
 };

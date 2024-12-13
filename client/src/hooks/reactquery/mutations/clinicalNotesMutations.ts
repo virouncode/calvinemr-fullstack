@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import { xanoPost, xanoPostBatch } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { ClinicalNoteLogType, ClinicalNoteType } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
@@ -18,6 +18,25 @@ export const useClinicalNotePost = () => {
     },
     onError: (error) => {
       toast.error(`Error: unable to post clinical note: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useClinicalNotesPost = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (clinicalNotesToPost: Partial<ClinicalNoteType>[]) =>
+      xanoPostBatch("/clinical_notes", "staff", clinicalNotesToPost),
+    onSuccess: (data) => {
+      socket?.emit("message", {
+        key: ["clinicalNotes"],
+      });
+      toast.success("Clinical notes post succesfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to post clinical notes: ${error.message}`, {
         containerId: "A",
       });
     },

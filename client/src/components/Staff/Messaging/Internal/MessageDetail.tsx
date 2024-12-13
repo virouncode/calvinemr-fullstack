@@ -81,6 +81,8 @@ const MessageDetail = ({
   const [newTodoVisible, setNewTodoVisible] = useState(false);
   const [allPersons, setAllPersons] = useState(false);
   const [posting, setPosting] = useState(false);
+  const [addToClinicalNotesVisible, setAddToClinicalNotesVisible] =
+    useState(false);
   const messageContentRef = useRef<HTMLDivElement | null>(null);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
@@ -177,99 +179,118 @@ const MessageDetail = ({
   };
 
   const handleAddToClinicalNotes = async () => {
-    setPosting(true);
-    //create the attachment with message content
-    if (!messageContentRef.current) return;
-    const element = messageContentRef.current;
-    const canvas = await html2canvas(element, {
-      useCORS: true,
-      scale: 2,
-    });
-    const dataURL = canvas.toDataURL("image/jpeg");
-    const formData = new FormData();
-    formData.append("content", dataURL);
+    setAddToClinicalNotesVisible(true);
+  };
 
-    let response;
-    try {
-      response = await axios.post(
-        import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      setPosting(false);
-      if (err instanceof Error)
-        toast.error(
-          `Unable to add message to patient clinical notes: ${err.message}`,
+  useEffect(() => {
+    if (!addToClinicalNotesVisible || !messageContentRef.current || posting)
+      return;
+
+    const addToClinicalNotes = async () => {
+      setPosting(true);
+      //create the attachment with message content
+      if (!messageContentRef.current) return;
+      const element = messageContentRef.current;
+      const canvas = await html2canvas(element, {
+        useCORS: true,
+        scale: 2,
+      });
+      const dataURL = canvas.toDataURL("image/jpeg");
+      const formData = new FormData();
+      formData.append("content", dataURL);
+
+      let response;
+      try {
+        response = await axios.post(
+          import.meta.env.VITE_XANO_UPLOAD_ATTACHMENT,
+          formData,
           {
-            containerId: "A",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
-      return;
-    }
+      } catch (err) {
+        setPosting(false);
+        if (err instanceof Error)
+          toast.error(
+            `Unable to add message to patient clinical notes: ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
+        return;
+      }
 
-    const fileToUpload: AttachmentType = response?.data;
-    //post attachment and get id
-    const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
-      {
-        file: fileToUpload,
-        alias: `Message from: ${staffIdToTitleAndName(
+      const fileToUpload: AttachmentType = response?.data;
+      //post attachment and get id
+      const datasAttachment: Partial<ClinicalNoteAttachmentType>[] = [
+        {
+          file: fileToUpload,
+          alias: `Message from: ${staffIdToTitleAndName(
+            staffInfos,
+            (message as MessageType).from_id
+          )} (${timestampToDateTimeSecondsStrTZ(message.date_created)})`,
+          date_created: nowTZTimestamp(),
+          created_by_id: user.id,
+        },
+      ];
+      const attach_ids: number[] = await xanoPost(
+        "/clinical_notes_attachments",
+        "staff",
+        {
+          attachments_array: datasAttachment,
+        }
+      );
+      const clinicalNoteToPost: Partial<ClinicalNoteType> = {
+        patient_id: message.related_patient_id,
+        subject: `Message from ${staffIdToTitleAndName(
           staffInfos,
           (message as MessageType).from_id
         )} (${timestampToDateTimeSecondsStrTZ(message.date_created)})`,
+        MyClinicalNotesContent: "See attachment",
+        ParticipatingProviders: [
+          {
+            Name: {
+              FirstName: staffIdToFirstName(staffInfos, user.id),
+              LastName: staffIdToLastName(staffInfos, user.id),
+            },
+            OHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
+            DateTimeNoteCreated: nowTZTimestamp(),
+          },
+        ],
+        version_nbr: 1,
+        attachments_ids: attach_ids,
         date_created: nowTZTimestamp(),
         created_by_id: user.id,
-      },
-    ];
-    const attach_ids: number[] = await xanoPost(
-      "/clinical_notes_attachments",
-      "staff",
-      {
-        attachments_array: datasAttachment,
-      }
-    );
-    const clinicalNoteToPost: Partial<ClinicalNoteType> = {
-      patient_id: message.related_patient_id,
-      subject: `Message from ${staffIdToTitleAndName(
-        staffInfos,
-        (message as MessageType).from_id
-      )} (${timestampToDateTimeSecondsStrTZ(message.date_created)})`,
-      MyClinicalNotesContent: "See attachment",
-      ParticipatingProviders: [
-        {
-          Name: {
-            FirstName: staffIdToFirstName(staffInfos, user.id),
-            LastName: staffIdToLastName(staffInfos, user.id),
-          },
-          OHIPPhysicianId: staffIdToOHIP(staffInfos, user.id),
-          DateTimeNoteCreated: nowTZTimestamp(),
+      };
+      clinicalNotePost.mutate(clinicalNoteToPost, {
+        onSuccess: () => {
+          toast.success("Message successfuly added to patient clinical notes", {
+            containerId: "A",
+          });
+          setAddToClinicalNotesVisible(false);
+          setPosting(false);
         },
-      ],
-      version_nbr: 1,
-      attachments_ids: attach_ids,
-      date_created: nowTZTimestamp(),
-      created_by_id: user.id,
+        onError: (error) => {
+          toast.error(
+            `Unable to add message to patient clinical notes: ${error.message}`,
+            { containerId: "A" }
+          );
+          setAddToClinicalNotesVisible(false);
+          setPosting(false);
+        },
+      });
     };
-    clinicalNotePost.mutate(clinicalNoteToPost, {
-      onSuccess: () => {
-        setPosting(false);
-        toast.success("Message successfuly added to patient clinical notes", {
-          containerId: "A",
-        });
-      },
-      onError: (error) => {
-        setPosting(false);
-        toast.error(
-          `Unable to add message to patient clinical notes: ${error.message}`,
-          { containerId: "A" }
-        );
-      },
-    });
-  };
+    addToClinicalNotes();
+  }, [
+    posting,
+    addToClinicalNotesVisible,
+    clinicalNotePost,
+    message,
+    staffInfos,
+    user.id,
+  ]);
 
   if (isPending) return <LoadingParagraph />;
   if (error && section !== "To-dos")
@@ -288,36 +309,34 @@ const MessageDetail = ({
           handleDeleteMsg={handleDeleteMsg}
         />
         <div className="message__detail-content">
-          <div ref={messageContentRef}>
-            <Message
-              message={message}
-              key={message.id}
-              index={0}
-              section={section}
-            />
-            {section !== "To-dos" && (
-              <>
-                {previousMsgs && previousMsgs.length > 0
-                  ? previousMsgs?.map((message, index) =>
-                      message.type === "Internal" ? (
-                        <Message
-                          message={message as MessageType}
-                          key={message.id}
-                          index={index + 1}
-                          section={section}
-                        />
-                      ) : (
-                        <MessageExternal
-                          message={message as MessageExternalType}
-                          key={message.id}
-                          index={index + 1}
-                        />
-                      )
+          <Message
+            message={message}
+            key={message.id}
+            index={0}
+            section={section}
+          />
+          {section !== "To-dos" && (
+            <>
+              {previousMsgs && previousMsgs.length > 0
+                ? previousMsgs?.map((message, index) =>
+                    message.type === "Internal" ? (
+                      <Message
+                        message={message as MessageType}
+                        key={message.id}
+                        index={index + 1}
+                        section={section}
+                      />
+                    ) : (
+                      <MessageExternal
+                        message={message as MessageExternalType}
+                        key={message.id}
+                        index={index + 1}
+                      />
                     )
-                  : null}
-              </>
-            )}
-          </div>
+                  )
+                : null}
+            </>
+          )}
 
           {attachments && (
             <MessagesAttachments
@@ -501,6 +520,17 @@ const MessageDetail = ({
               />
             )}
           </FakeWindow>
+        )}
+        {addToClinicalNotesVisible && (
+          <div ref={messageContentRef}>
+            <MessagesPrint
+              message={message}
+              previousMsgs={previousMsgs}
+              attachments={attachments}
+              section={section}
+              printButton={false}
+            />
+          </div>
         )}
       </>
     )

@@ -11,12 +11,14 @@ type MessagesExternalPrintProps = {
   message: MessageExternalType;
   previousMsgs: MessageExternalType[];
   attachments: MessageAttachmentType[];
+  printButton?: boolean;
 };
 
 const MessagesExternalPrint = ({
   message,
   previousMsgs,
   attachments,
+  printButton = true,
 }: MessagesExternalPrintProps) => {
   const handleClickPrint = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -24,34 +26,56 @@ const MessagesExternalPrint = ({
     e.nativeEvent.view?.print();
   };
   return (
-    <div className="message__print">
-      <div className="message__print-btn">
-        <Button onClick={handleClickPrint} label="Print" />
-      </div>
+    <div
+      className="message__print"
+      style={{
+        width: printButton ? "" : "100%",
+        marginTop: printButton ? "" : "1000px",
+      }}
+    >
+      {printButton && (
+        <div className="message__print-btn">
+          <Button onClick={handleClickPrint} label="Print" />
+        </div>
+      )}
       <div className="message__print-container">
         <div className="message__print-title">
-          <p className="message__print-subject">
+          <p
+            className="message__print-subject"
+            style={{
+              fontSize: printButton ? "" : "1.25rem",
+              padding: printButton ? "" : "0.5rem",
+            }}
+          >
             <strong>Subject:{"\u00A0"}</strong>
             {message.subject}
           </p>
         </div>
         <div className="message__detail-content">
-          <MessageExternal message={message} key={message.id} index={0} />
+          <MessageExternal
+            message={message}
+            key={message.id}
+            index={0}
+            forSnapshot={!printButton}
+          />
           {previousMsgs &&
             previousMsgs.map((message, index) => (
               <MessageExternal
                 message={message}
                 key={message.id}
                 index={index + 1}
+                forSnapshot={!printButton}
               />
             ))}
-          <MessagesExternalAttachments
-            message={message}
-            attachments={attachments}
-            deletable={false}
-            cardWidth="20%"
-            addable={false}
-          />
+          {attachments.length > 0 && printButton && (
+            <MessagesExternalAttachments
+              message={message}
+              attachments={attachments}
+              deletable={false}
+              cardWidth="20%"
+              addable={false}
+            />
+          )}
         </div>
       </div>
     </div>
