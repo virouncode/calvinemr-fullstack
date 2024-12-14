@@ -39,9 +39,7 @@ const CycleEventForm = ({
     ) {
       setFormDatas({
         ...formDatas,
-        events: (formDatas.events as CycleEventType[]).filter(
-          (event, index) => index === index
-        ),
+        events: formDatas.events?.filter(({ id }) => id !== item.id) ?? [],
       });
     }
   };
@@ -51,48 +49,52 @@ const CycleEventForm = ({
     setErrMsg("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
+    console.log("itemid", item.id);
 
     if (name === "date") {
       if (!value) return;
       value = dateISOToTimestampTZ(value);
       setFormDatas({
         ...formDatas,
-        events: formDatas.events?.map((event, eventIndex) => {
-          return eventIndex === index
-            ? {
-                ...(event as CycleEventType),
-                date: value as number | null,
-                day_of_cycle:
-                  formDatas.lmp && value
-                    ? toDayOfCycle(value as number, formDatas.lmp)
-                    : event.day_of_cycle,
-              }
-            : event;
-        }),
+        events:
+          formDatas.events?.map((event) => {
+            return event.id === item.id
+              ? {
+                  ...event,
+                  date: value as number | null,
+                  day_of_cycle:
+                    formDatas.lmp && value
+                      ? toDayOfCycle(value as number, formDatas.lmp)
+                      : item.day_of_cycle,
+                }
+              : event;
+          }) ?? [],
       });
     }
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event, eventIndex) => {
-        return eventIndex === index ? { ...event, [name]: value } : event;
-      }),
+      events:
+        formDatas.events?.map((event) => {
+          return event.id === item.id ? { ...event, [name]: value } : event;
+        }) ?? [],
     });
   };
   const handleChangeMedName = (value: string, medNbr: number) => {
     setErrMsg("");
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event, eventIndex) => {
-        return eventIndex === index
-          ? {
-              ...event,
-              [`med_${medNbr}`]: {
-                ...event[`med_${medNbr}` as CycleMedNumberType],
-                name: value,
-              },
-            }
-          : event;
-      }),
+      events:
+        formDatas.events?.map((event) => {
+          return event.id === item.id
+            ? {
+                ...event,
+                [`med_${medNbr}`]: {
+                  ...event[`med_${medNbr}` as CycleMedNumberType],
+                  name: value,
+                },
+              }
+            : event;
+        }) ?? [],
     });
   };
   const handleChangeMedNotes = (
@@ -103,17 +105,18 @@ const CycleEventForm = ({
     const value = e.target.value;
     setFormDatas({
       ...formDatas,
-      events: formDatas.events?.map((event, eventIndex) => {
-        return eventIndex === index
-          ? {
-              ...event,
-              [`med_${medNbr}`]: {
-                ...event[`med_${medNbr}` as CycleMedNumberType],
-                notes: value,
-              },
-            }
-          : event;
-      }),
+      events:
+        formDatas.events?.map((event) => {
+          return event.id === item.id
+            ? {
+                ...event,
+                [`med_${medNbr}`]: {
+                  ...event[`med_${medNbr}` as CycleMedNumberType],
+                  notes: value,
+                },
+              }
+            : event;
+        }) ?? [],
     });
   };
   return (

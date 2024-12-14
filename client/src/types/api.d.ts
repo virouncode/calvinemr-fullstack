@@ -620,9 +620,10 @@ export type CycleType = {
   site_id: number;
 };
 
-export type CycleNoteType = { temp_id?: string; text: string; date: number };
+export type CycleNoteType = { id?: string; text: string; date: number };
 
 export type CycleEventType = {
+  id?: string;
   date: number | null;
   day_of_cycle: string;
   endometrial_thickness: string;

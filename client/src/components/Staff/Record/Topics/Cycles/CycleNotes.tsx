@@ -1,5 +1,5 @@
-import _ from "lodash";
-import React from "react";
+import { uniqueId } from "lodash";
+import React, { useEffect } from "react";
 import { CycleType } from "../../../../../types/api";
 import { todayTZTimestamp } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
@@ -18,6 +18,20 @@ const CycleNotes = ({
   setErrMsg,
   errMsg,
 }: CycleNotesProps) => {
+  useEffect(() => {
+    if (formDatas.notes) {
+      const hasMissingIds = formDatas.notes.some((note) => !note.id);
+      if (hasMissingIds) {
+        const notesWithIds = formDatas.notes.map((note) =>
+          note.id ? note : { ...note, id: uniqueId() }
+        );
+        setFormDatas((prev) => ({
+          ...prev,
+          notes: notesWithIds,
+        }));
+      }
+    }
+  }, [formDatas.notes, setFormDatas]);
   const handleAdd = () => {
     setErrMsg("");
     setFormDatas({
@@ -25,7 +39,7 @@ const CycleNotes = ({
       notes: [
         ...(formDatas.notes ?? []),
         {
-          temp_id: _.uniqueId(),
+          id: uniqueId(),
           text: "",
           date: todayTZTimestamp(),
         },

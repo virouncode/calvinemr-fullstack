@@ -32,7 +32,7 @@ const CycleNoteForm = ({
     ) {
       setFormDatas({
         ...formDatas,
-        notes: formDatas.notes?.filter((note) => note.temp_id !== item.temp_id),
+        notes: formDatas.notes?.filter((note) => note.id !== item.id),
       });
     }
   };
@@ -46,8 +46,8 @@ const CycleNoteForm = ({
       value = value === "" ? null : dateISOToTimestampTZ(value);
     setFormDatas({
       ...formDatas,
-      notes: formDatas.notes?.map((note, noteIndex) => {
-        return noteIndex === index ? { ...note, [name]: value } : note;
+      notes: formDatas.notes?.map((note) => {
+        return note.id === item.id ? { ...note, [name]: value } : note;
       }),
     });
   };

@@ -1,4 +1,5 @@
-import React from "react";
+import { uniqueId } from "lodash";
+import React, { useEffect } from "react";
 import { CycleEventType, CycleType } from "../../../../../types/api";
 import {
   toDayOfCycle,
@@ -21,6 +22,21 @@ const CycleEvents = ({
   setErrMsg,
   errMsg,
 }: CycleEventsProps) => {
+  // Add unique IDs to events if missing
+  useEffect(() => {
+    if (formDatas.events) {
+      const hasMissingIds = formDatas.events.some((event) => !event.id);
+      if (hasMissingIds) {
+        const eventsWithIds = formDatas.events.map((event) =>
+          event.id ? event : { ...event, id: uniqueId() }
+        );
+        setFormDatas((prev) => ({
+          ...prev,
+          events: eventsWithIds,
+        }));
+      }
+    }
+  }, [formDatas.events, setFormDatas]);
   const handleAdd = () => {
     setErrMsg("");
     setFormDatas({
@@ -28,6 +44,7 @@ const CycleEvents = ({
       events: [
         ...(formDatas.events as CycleEventType[]),
         {
+          id: uniqueId(),
           date: todayTZTimestamp(),
           day_of_cycle: toDayOfCycle(
             todayTZTimestamp(),
@@ -50,8 +67,6 @@ const CycleEvents = ({
       ],
     });
   };
-
-  const cycleEvents = formDatas.events;
 
   return (
     <fieldset
@@ -85,14 +100,14 @@ const CycleEvents = ({
             </tr>
           </thead>
           <tbody>
-            {(cycleEvents ?? []).length > 0 ? (
-              cycleEvents
+            {formDatas.events && formDatas.events?.length > 0 ? (
+              formDatas.events
                 ?.sort(
                   (a, b) => ((a.date as number) - (b.date as number)) as number
                 )
                 .map((item, index) => (
                   <CycleEventForm
-                    key={"event" + index}
+                    key={item.id}
                     item={item}
                     formDatas={formDatas}
                     setFormDatas={setFormDatas}

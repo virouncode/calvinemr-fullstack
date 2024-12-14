@@ -65,8 +65,9 @@ const CycleDetails = ({
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
       ],
       cycle_nbr: `${demographicsInfos.ChartNumber}-${itemInfos?.cycle_nbr}`,
+      events: itemInfos.events?.map(({ id, ...event }) => event) ?? [],
+      notes: itemInfos.notes?.map(({ id, ...note }) => note) ?? [],
     };
-
     setProgress(true);
     topicPut.mutate(cycleToPut, {
       onError: () => setProgress(false),
