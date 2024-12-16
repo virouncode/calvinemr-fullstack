@@ -21,6 +21,7 @@ import {
 import { copyClinicalNoteToClipboard } from "../../../../../utils/js/copyToClipboard";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
+import { formatToRichText } from "../../../../../utils/strings/formatToRichText";
 import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
@@ -129,13 +130,16 @@ const ClinicalNoteCardHeader = ({
         messages: [
           {
             role: "user",
-            content: clinicalNote.MyClinicalNotesContent,
+            content: `${clinicalNote.MyClinicalNotesContent}`,
           },
         ],
       });
+      const text = response.data;
+      console.log(response.data);
+
       setEditVisible(true);
-      setAIRewritedText(response.data);
-      setInputText(response.data);
+      setAIRewritedText(formatToRichText(response.data));
+      setInputText(formatToRichText(response.data));
       inputTextBeforeSpeech.current = response.data;
       setIsRewriting(false);
     } catch (err) {
