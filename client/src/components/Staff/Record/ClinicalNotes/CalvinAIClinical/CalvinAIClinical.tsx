@@ -6,6 +6,7 @@ import {
 } from "../../../../../types/api";
 import { AIMessageType, PromptTextType } from "../../../../../types/app";
 import { getAgeTZ } from "../../../../../utils/dates/formatDates";
+import { reverseFromRichText } from "../../../../../utils/strings/reverseFromRichText";
 import CalvinAIClinicalDiscussion from "./CalvinAIClinicalDiscussion";
 import CalvinAIClinicalPrompt from "./CalvinAIClinicalPrompt";
 
@@ -36,7 +37,7 @@ const CalvinAIClinical = ({
       genderCT,
       demographicsInfos.Gender
     )} with the following symptoms:`,
-    body: initialBody,
+    body: reverseFromRichText(initialBody),
     attachments: "Here is further information that you may use: ",
     reports: "",
     question: `What questions should I ask for a focused medical history and review of systems? Format this way : "[item]: ", one per line.

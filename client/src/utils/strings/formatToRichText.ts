@@ -4,7 +4,7 @@ export const formatToRichText = (text: string): string => {
     .map((line) => {
       if (line.trim() === "") {
         // If the line is empty, return <p><br/></p>
-        return "<p><br/></p>";
+        return "<p><br></p>";
       } else {
         // Otherwise, wrap the line in <p>Line</p>
         return `<p>${line}</p>`;
