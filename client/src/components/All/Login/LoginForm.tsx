@@ -156,14 +156,20 @@ const LoginForm = () => {
       const unreadNbr =
         unreadTodosNbr + unreadMessagesExternalNbr + unreadMessagesNbr;
 
-      const unreadFaxNbr: number = (
-        await axios.post(`/api/srfax/inbox`, {
-          viewedStatus: "UNREAD",
-          all: true,
-          start: "",
-          end: "",
-        })
-      ).data.length;
+      let unreadFaxNbr = 0;
+      try {
+        unreadFaxNbr = (
+          await axios.post(`/api/srfax/inbox`, {
+            viewedStatus: "UNREAD",
+            all: true,
+            start: "",
+            end: "",
+          })
+        ).data.length;
+      } catch (faxError) {
+        console.error("Error fetching unread fax number:", faxError);
+        // Optionally set unreadFaxNbr to 0 or some default value
+      }
 
       setUser({
         ...user,
