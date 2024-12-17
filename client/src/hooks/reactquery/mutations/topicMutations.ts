@@ -25,9 +25,9 @@ export const useTopicPost = <T extends TopicType>(
   return useMutation<TopicDataMap[T], Error, Partial<TopicDataMap[T]>, void>({
     mutationFn: (topicToPost: Partial<TopicDataMap[T]>) =>
       xanoPost(topicUrlMutation, userType, topicToPost),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: [topic, patientId] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: [topic, patientId] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
 
@@ -79,9 +79,9 @@ export const useTopicPut = <T extends TopicType>(
   return useMutation<TopicDataMap[T], Error, TopicDataMap[T], void>({
     mutationFn: (topicToPut: TopicDataMap[T]) =>
       xanoPut(`${topicUrlMutation}/${topicToPut.id}`, userType, topicToPut),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: [topic, patientId] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: [topic, patientId] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
 
@@ -125,9 +125,9 @@ export const useTopicDelete = <T extends TopicType>(
   return useMutation<void, Error, number, void>({
     mutationFn: (templateIdToDelete: number) =>
       xanoDelete(`${topicUrlMutation}/${templateIdToDelete}`, "staff"),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: [topic, patientId] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: [topic, patientId] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
 

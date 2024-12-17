@@ -14,23 +14,23 @@ export const useAvailabilityPut = (userId: number) => {
         "staff",
         availabilityToPut
       ),
-    onMutate: async (availabilityToPut: Partial<AvailabilityType>) => {
-      await queryClient.cancelQueries({ queryKey: ["availability", userId] });
-      const previousSchedule: AvailabilityType | undefined =
-        queryClient.getQueryData(["availability", userId]);
-      queryClient.setQueryData(["availability", userId], availabilityToPut);
-      return { previousSchedule };
-    },
+    // onMutate: async (availabilityToPut: Partial<AvailabilityType>) => {
+    //   await queryClient.cancelQueries({ queryKey: ["availability", userId] });
+    //   const previousSchedule: AvailabilityType | undefined =
+    //     queryClient.getQueryData(["availability", userId]);
+    //   queryClient.setQueryData(["availability", userId], availabilityToPut);
+    //   return { previousSchedule };
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["availability", userId] });
       toast.success("Availability updated succesfully", { containerId: "A" });
     },
 
     onError: (error, variables, context) => {
-      queryClient.setQueryData(
-        ["availability", userId],
-        context?.previousSchedule
-      );
+      // queryClient.setQueryData(
+      //   ["availability", userId],
+      //   context?.previousSchedule
+      // );
       toast.error(`Error: unable to update availability: ${error.message}`, {
         containerId: "A",
       });

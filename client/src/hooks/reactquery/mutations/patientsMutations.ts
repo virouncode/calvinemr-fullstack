@@ -21,13 +21,13 @@ export const usePatientPut = (patientId: number) => {
         userType,
         demographicsToPut
       ),
-    onMutate: async (demographicsToPut: DemographicsType) => {
-      await queryClient.cancelQueries({ queryKey: ["patient", patientId] });
-      const previousDemographics: DemographicsType[] | undefined =
-        queryClient.getQueryData(["patient", patientId]);
-      queryClient.setQueryData(["patient", patientId], demographicsToPut);
-      return { previousDemographics };
-    },
+    // onMutate: async (demographicsToPut: DemographicsType) => {
+    //   await queryClient.cancelQueries({ queryKey: ["patient", patientId] });
+    //   const previousDemographics: DemographicsType[] | undefined =
+    //     queryClient.getQueryData(["patient", patientId]);
+    //   queryClient.setQueryData(["patient", patientId], demographicsToPut);
+    //   return { previousDemographics };
+    // },
     onSuccess: (data: DemographicsType) => {
       socket?.emit("message", { key: ["patient", patientId] });
       socket?.emit("message", { key: ["patients"] });
@@ -47,10 +47,10 @@ export const usePatientPut = (patientId: number) => {
       toast.success("Demographics updated succesfully", { containerId: "A" });
     },
     onError: (error, variables, context) => {
-      queryClient.setQueryData(
-        ["patient", patientId],
-        context?.previousDemographics
-      );
+      // queryClient.setQueryData(
+      //   ["patient", patientId],
+      //   context?.previousDemographics
+      // );
       toast.error(`Error: unable to update demographics: ${error.message}`, {
         containerId: "A",
       });

@@ -38,8 +38,8 @@ type ReportItemReceivedProps = {
   lastItemReceivedRef?: (node: Element | null) => void;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  reportPut: UseMutationResult<ReportType, Error, ReportType, void>;
-  reportDelete: UseMutationResult<void, Error, number, void>;
+  reportPut: UseMutationResult<ReportType, Error, ReportType, unknown>;
+  reportDelete: UseMutationResult<void, Error, number, unknown>;
   setFaxVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setFileToFax: React.Dispatch<
     React.SetStateAction<Partial<MessageAttachmentType> | undefined>

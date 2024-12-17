@@ -11,24 +11,24 @@ import useSocketContext from "../../context/useSocketContext";
 
 export const useReportPost = () => {
   const { socket } = useSocketContext();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (reportToPost: Partial<ReportType>) =>
       xanoPost("/reports", "staff", reportToPost),
-    onMutate: async (reportToPost) => {
-      await queryClient.cancelQueries({
-        queryKey: ["reportsReceived", reportToPost.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsSent", reportToPost.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reports", reportToPost.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
-      });
-    },
+    // onMutate: async (reportToPost) => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsReceived", reportToPost.patient_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsSent", reportToPost.patient_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reports", reportToPost.patient_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
+    //   });
+    // },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
       socket?.emit("message", { key: ["reportsSent", data.patient_id] });
@@ -91,16 +91,16 @@ export const useReportPut = (patientId: number) => {
   return useMutation({
     mutationFn: (reportToPut: ReportType) =>
       xanoPut(`/reports/${reportToPut.id}`, "staff", reportToPut),
-    onMutate: async (reportToPut) => {
-      await queryClient.cancelQueries({
-        queryKey: ["reportsReceived", patientId],
-      });
-      await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
-      await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsInbox", reportToPut.assigned_staff_id],
-      });
-    },
+    // onMutate: async (reportToPut) => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsReceived", patientId],
+    //   });
+    //   await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
+    //   await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsInbox", reportToPut.assigned_staff_id],
+    //   });
+    // },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", patientId] });
       socket?.emit("message", { key: ["reportsSent", patientId] });
@@ -126,23 +126,23 @@ export const useReportInboxPut = (staffId: number) => {
   return useMutation({
     mutationFn: (reportToPut: ReportType) =>
       xanoPut(`/reports/${reportToPut.id}`, "staff", reportToPut),
-    onMutate: async (reportToPut) => {
-      await queryClient.cancelQueries({
-        queryKey: ["reportsInbox", staffId],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsInbox", reportToPut.assigned_staff_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsReceived", reportToPut.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reportsSent", reportToPut.patient_id],
-      });
-      await queryClient.cancelQueries({
-        queryKey: ["reports", reportToPut.patient_id],
-      });
-    },
+    // onMutate: async (reportToPut) => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsInbox", staffId],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsInbox", reportToPut.assigned_staff_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsReceived", reportToPut.patient_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsSent", reportToPut.patient_id],
+    //   });
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reports", reportToPut.patient_id],
+    //   });
+    // },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
       socket?.emit("message", { key: ["reportsSent", data.patient_id] });
@@ -169,14 +169,14 @@ export const useReportDelete = (patientId: number) => {
   return useMutation({
     mutationFn: (reportIdToDelete: number) =>
       xanoDelete(`/reports/${reportIdToDelete}`, "staff"),
-    onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: ["reportsReceived", patientId],
-      });
-      await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
-      await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
-      await queryClient.cancelQueries({ queryKey: ["reportsInbox"] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["reportsReceived", patientId],
+    //   });
+    //   await queryClient.cancelQueries({ queryKey: ["reportsSent", patientId] });
+    //   await queryClient.cancelQueries({ queryKey: ["reports", patientId] });
+    //   await queryClient.cancelQueries({ queryKey: ["reportsInbox"] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["reportsReceived", patientId] });
       socket?.emit("message", { key: ["reportsSent", patientId] });

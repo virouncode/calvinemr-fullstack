@@ -11,33 +11,33 @@ import useSocketContext from "../../context/useSocketContext";
 
 export const useLabLinksCredentialsPost = (staffId: number) => {
   const { socket } = useSocketContext();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (credentialsToPost: Partial<LabLinkCredentialsType>) =>
       xanoPost("/lablinks_credentials", "staff", credentialsToPost),
-    onMutate: async (credentialsToPost: Partial<LabLinkCredentialsType>) => {
-      await queryClient.cancelQueries({
-        queryKey: ["labLinksCredentials", staffId],
-      });
-      const previousCredentials = queryClient.getQueryData([
-        "labLinksCredentials",
-        staffId,
-      ]);
-      queryClient.setQueryData(
-        ["labLinksCredentials", staffId],
-        (old: LabLinkCredentialsType[]) => [...old, credentialsToPost]
-      );
-      return { previousCredentials };
-    },
+    // onMutate: async (credentialsToPost: Partial<LabLinkCredentialsType>) => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["labLinksCredentials", staffId],
+    //   });
+    //   const previousCredentials = queryClient.getQueryData([
+    //     "labLinksCredentials",
+    //     staffId,
+    //   ]);
+    //   queryClient.setQueryData(
+    //     ["labLinksCredentials", staffId],
+    //     (old: LabLinkCredentialsType[]) => [...old, credentialsToPost]
+    //   );
+    //   return { previousCredentials };
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["labLinksCredentials", staffId] });
       toast.success("Credentials post succesfully", { containerId: "A" });
     },
     onError: (error, variables, context) => {
-      queryClient.setQueryData(
-        ["labLinksCredentials", staffId],
-        context?.previousCredentials
-      );
+      // queryClient.setQueryData(
+      //   ["labLinksCredentials", staffId],
+      //   context?.previousCredentials
+      // );
       toast.error(`Error: unable to post credentials: ${error.message}`, {
         containerId: "A",
       });
@@ -55,32 +55,32 @@ export const useLabLinksCredentialsPut = (staffId: number) => {
         "staff",
         credentialsToPut
       ),
-    onMutate: async (credentialsToPut: LabLinkCredentialsType) => {
-      await queryClient.cancelQueries({
-        queryKey: ["labLinksCredentials", staffId],
-      });
-      const previousCredentials = queryClient.getQueryData([
-        "labLinksCredentials",
-        staffId,
-      ]);
-      queryClient.setQueryData(
-        ["labLinksCredentials", staffId],
-        (old: LabLinkCredentialsType[]) =>
-          old.map((item) =>
-            item.id === credentialsToPut.id ? credentialsToPut : item
-          )
-      );
-      return { previousCredentials };
-    },
+    // onMutate: async (credentialsToPut: LabLinkCredentialsType) => {
+    //   await queryClient.cancelQueries({
+    //     queryKey: ["labLinksCredentials", staffId],
+    //   });
+    //   const previousCredentials = queryClient.getQueryData([
+    //     "labLinksCredentials",
+    //     staffId,
+    //   ]);
+    //   queryClient.setQueryData(
+    //     ["labLinksCredentials", staffId],
+    //     (old: LabLinkCredentialsType[]) =>
+    //       old.map((item) =>
+    //         item.id === credentialsToPut.id ? credentialsToPut : item
+    //       )
+    //   );
+    //   return { previousCredentials };
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["labLinksCredentials", staffId] });
       toast.success("Credentials updated succesfully", { containerId: "A" });
     },
     onError: (error, variables, context) => {
-      queryClient.setQueryData(
-        ["labLinksCredentials", staffId],
-        context?.previousCredentials
-      );
+      // queryClient.setQueryData(
+      //   ["labLinksCredentials", staffId],
+      //   context?.previousCredentials
+      // );
       toast.error(`Error: unable to update credentials: ${error.message}`, {
         containerId: "A",
       });

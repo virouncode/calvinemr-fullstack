@@ -12,9 +12,9 @@ export const useDoctorPost = () => {
   return useMutation({
     mutationFn: (doctorToPost: Partial<DoctorType>) =>
       xanoPost("/doctors", "staff", doctorToPost),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["doctors"] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: ["doctors"] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["doctors"] });
       toast.success(`Doctor post succesfully`, {
@@ -35,10 +35,10 @@ export const useDoctorPut = () => {
   return useMutation({
     mutationFn: (doctorToPut: DoctorType) =>
       xanoPut(`/doctors/${doctorToPut.id}`, "staff", doctorToPut),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["doctors"] });
-      await queryClient.cancelQueries({ queryKey: ["patientDoctors"] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: ["doctors"] });
+    //   await queryClient.cancelQueries({ queryKey: ["patientDoctors"] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["doctors"] });
       socket?.emit("message", { key: ["patientDoctors"] });
@@ -61,10 +61,10 @@ export const useDoctorDelete = () => {
   return useMutation({
     mutationFn: (doctorIdToDelete: number) =>
       xanoDelete(`/doctors/${doctorIdToDelete}`, "staff"),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["doctors"] });
-      await queryClient.cancelQueries({ queryKey: ["patientDoctors"] });
-    },
+    // onMutate: async () => {
+    //   await queryClient.cancelQueries({ queryKey: ["doctors"] });
+    //   await queryClient.cancelQueries({ queryKey: ["patientDoctors"] });
+    // },
     onSuccess: () => {
       socket?.emit("message", { key: ["doctors"] });
       socket?.emit("message", { key: ["patientDoctors"] });

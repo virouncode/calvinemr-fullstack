@@ -26,7 +26,7 @@ type FamilyDoctorListItemProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   lastItemRef?: (node: Element | null) => void;
-  doctorPut: UseMutationResult<DoctorType, Error, DoctorType, void>;
+  doctorPut: UseMutationResult<DoctorType, Error, DoctorType, unknown>;
 };
 
 const FamilyDoctorListItem = ({

@@ -21,7 +21,12 @@ type FamilyDoctorFormProps = {
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  doctorPost: UseMutationResult<DoctorType, Error, Partial<DoctorType>, void>;
+  doctorPost: UseMutationResult<
+    DoctorType,
+    Error,
+    Partial<DoctorType>,
+    unknown
+  >;
 };
 
 const FamilyDoctorForm = ({

@@ -29,7 +29,12 @@ type ReportFormProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   initialAttachment?: Partial<MessageAttachmentType>;
-  reportPost: UseMutationResult<ReportType, Error, Partial<ReportType>, void>;
+  reportPost: UseMutationResult<
+    ReportType,
+    Error,
+    Partial<ReportType>,
+    unknown
+  >;
 };
 
 const ReportForm = ({
