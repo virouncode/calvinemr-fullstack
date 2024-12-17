@@ -80,6 +80,8 @@ const PatientsGroupEdit = ({
     setEditVisible(false);
   };
   const handleSave = async () => {
+    console.log("handleSave");
+
     setErrMsg("");
     const groupToPut: GroupType = { ...itemInfos, patients: order };
 
