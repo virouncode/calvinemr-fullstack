@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
@@ -156,14 +156,16 @@ const LoginForm = () => {
       const unreadNbr =
         unreadTodosNbr + unreadMessagesExternalNbr + unreadMessagesNbr;
 
-      const unreadFaxNbr: number = (
-        await axios.post(`/api/srfax/inbox`, {
-          viewedStatus: "UNREAD",
-          all: true,
-          start: "",
-          end: "",
-        })
-      ).data.length;
+      // const unreadFaxNbr: number = (
+      //   await axios.post(`/api/srfax/inbox`, {
+      //     viewedStatus: "UNREAD",
+      //     all: true,
+      //     start: "",
+      //     end: "",
+      //   })
+      // ).data.length;
+
+      const unreadFaxNbr = 0;
 
       setUser({
         ...user,
