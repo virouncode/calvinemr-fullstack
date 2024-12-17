@@ -446,7 +446,8 @@ export const dateStringToISO = (dateString: string | undefined | null) => {
   return `${year}-${month}-${day}`;
 };
 
-export const toDayOfCycle = (date: number, lmp: number) => {
+export const toDayOfCycle = (date: number, lmp: number | null) => {
+  if (!lmp) return "";
   const dateLmp = DateTime.fromMillis(lmp);
   const dateCurrent = DateTime.fromMillis(date);
 

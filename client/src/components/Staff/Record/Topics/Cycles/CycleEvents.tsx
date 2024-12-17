@@ -25,6 +25,8 @@ const CycleEvents = ({
   // Add unique IDs to events if missing
   useEffect(() => {
     if (formDatas.events) {
+      console.log("formDatas.events", formDatas.events);
+
       const hasMissingIds = formDatas.events.some((event) => !event.id);
       if (hasMissingIds) {
         const eventsWithIds = formDatas.events.map((event) =>
@@ -38,6 +40,9 @@ const CycleEvents = ({
     }
   }, [formDatas.events, setFormDatas]);
   const handleAdd = () => {
+    console.log("handleAdd");
+    console.log("formDatas", formDatas);
+
     setErrMsg("");
     setFormDatas({
       ...formDatas,
