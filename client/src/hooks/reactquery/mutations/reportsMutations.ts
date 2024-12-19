@@ -11,24 +11,24 @@ import useSocketContext from "../../context/useSocketContext";
 
 export const useReportPost = () => {
   const { socket } = useSocketContext();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (reportToPost: Partial<ReportType>) =>
       xanoPost("/reports", "staff", reportToPost),
-    // onMutate: async (reportToPost) => {
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["reportsReceived", reportToPost.patient_id],
-    //   });
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["reportsSent", reportToPost.patient_id],
-    //   });
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["reports", reportToPost.patient_id],
-    //   });
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
-    //   });
-    // },
+    onMutate: async (reportToPost) => {
+      await queryClient.cancelQueries({
+        queryKey: ["reportsReceived", reportToPost.patient_id],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ["reportsSent", reportToPost.patient_id],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ["reports", reportToPost.patient_id],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ["reportsInbox", reportToPost.assigned_staff_id],
+      });
+    },
     onSuccess: (data: ReportType) => {
       socket?.emit("message", { key: ["reportsReceived", data.patient_id] });
       socket?.emit("message", { key: ["reportsSent", data.patient_id] });

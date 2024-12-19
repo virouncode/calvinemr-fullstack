@@ -1,4 +1,5 @@
 import { Tooltip } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
@@ -63,7 +64,6 @@ import WebcamCapture from "../../../Signup/WebcamCapture";
 import DemographicsAvatar from "./DemographicsAvatar";
 import EnrolmentHistory from "./EnrolmentHistory";
 import NewEnrolmentForm from "./NewEnrolmentForm";
-import axios from "axios";
 
 type DemographicsPopUpProps = {
   demographicsInfos: DemographicsType;
@@ -741,11 +741,14 @@ const DemographicsPopUp = ({
                   />
                 </>
               ) : (
-                <p>
-                  {postalOrZip === "postal"
-                    ? formDatas?.postalCode
-                    : formDatas?.zipCode}
-                </p>
+                <>
+                  <label htmlFor="">Postal/Zip code*</label>
+                  <p>
+                    {postalOrZip === "postal"
+                      ? formDatas?.postalCode
+                      : formDatas?.zipCode}
+                  </p>
+                </>
               )}
             </div>
             <div className="demographics-card__content-row demographics-card__content-row--tel">
