@@ -29,6 +29,7 @@ type CyclesPopUpProps = {
   topicDatas: InfiniteData<XanoPaginatedType<CycleType>, unknown> | undefined;
   topicPost: UseMutationResult<CycleType, Error, Partial<CycleType>, void>;
   topicPut: UseMutationResult<CycleType, Error, CycleType, void>;
+  topicDelete: UseMutationResult<void, Error, number, void>;
   isPending: boolean;
   error: Error | null;
   patientId: number;
@@ -50,6 +51,7 @@ const CyclesPopUp = ({
   topicDatas,
   topicPost,
   topicPut,
+  topicDelete,
   isPending,
   error,
   patientId,
@@ -140,6 +142,7 @@ const CyclesPopUp = ({
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
                       setPrintVisible={setPrintVisible}
+                      topicDelete={topicDelete}
                     />
                   ) : (
                     <CycleItem
@@ -149,6 +152,7 @@ const CyclesPopUp = ({
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
                       setPrintVisible={setPrintVisible}
+                      topicDelete={topicDelete}
                     />
                   )
                 )

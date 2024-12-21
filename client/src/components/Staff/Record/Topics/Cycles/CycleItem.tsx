@@ -1,8 +1,13 @@
-import React from "react";
+import { UseMutationResult } from "@tanstack/react-query";
+import React, { useState } from "react";
+import useUserContext from "../../../../../hooks/context/useUserContext";
 import { CycleType } from "../../../../../types/api";
+import { UserStaffType } from "../../../../../types/app";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import PrintButton from "../../../../UI/Buttons/PrintButton";
+import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import SignCell from "../../../../UI/Tables/SignCell";
 
 type CycleItemProps = {
@@ -12,6 +17,7 @@ type CycleItemProps = {
   setCycleToShow: React.Dispatch<React.SetStateAction<CycleType | undefined>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setPrintVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  topicDelete: UseMutationResult<void, Error, number, void>;
 };
 
 const CycleItem = ({
@@ -21,7 +27,10 @@ const CycleItem = ({
   setCycleToShow,
   setShow,
   setPrintVisible,
+  topicDelete,
 }: CycleItemProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const [progress, setProgress] = useState(false);
   const handleClickShow = () => {
     setCycleToShow(item);
     setShow(true);
@@ -29,6 +38,21 @@ const CycleItem = ({
   const handleClickPrint = () => {
     setCycleToShow(item);
     setPrintVisible((v) => !v);
+  };
+
+  const handleDeleteClick = async () => {
+    if (
+      await confirmAlert({
+        content: "Do you really want to delete this item ?",
+      })
+    ) {
+      setProgress(true);
+      topicDelete.mutate(item.id, {
+        onSettled: () => {
+          setProgress(false);
+        },
+      });
+    }
   };
   return (
     <tr
@@ -41,8 +65,12 @@ const CycleItem = ({
     >
       <td>
         <div className="cycles-item__btn-container">
-          <Button onClick={handleClickShow} label="Show" />
-          <PrintButton onClick={handleClickPrint} />
+          <Button onClick={handleClickShow} label="Show" disabled={progress} />
+          <PrintButton onClick={handleClickPrint} disabled={progress} />
+          <DeleteButton
+            onClick={handleDeleteClick}
+            disabled={item.created_by_id !== user.id || progress}
+          />
         </div>
       </td>
       <td>{item.status}</td>

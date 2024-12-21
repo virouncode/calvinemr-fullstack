@@ -6,7 +6,6 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { toast } from "react-toastify";
 import {
   useTopicDelete,
   useTopicPost,
@@ -145,12 +144,12 @@ const PatientTopic = ({
   //HANDLERS
   const handlePopUpClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation();
-    if (!isLargeScreen && topic === "IMMUNIZATIONS") {
-      toast.warning("This feature is not available on small screens", {
-        containerId: "A",
-      });
-      return;
-    }
+    // if (!isLargeScreen && topic === "IMMUNIZATIONS") {
+    //   toast.warning("This feature is not available on small screens", {
+    //     containerId: "A",
+    //   });
+    //   return;
+    // }
     setPopUpVisible((v) => !v);
   };
   const handleClickHeader = () => {
@@ -1219,6 +1218,7 @@ const PatientTopic = ({
               topicPut={
                 topicPut as UseMutationResult<CycleType, Error, CycleType, void>
               }
+              topicDelete={topicDelete}
               isPending={isPending}
               error={error}
               patientId={patientId}

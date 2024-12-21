@@ -6,7 +6,6 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { toast } from "react-toastify";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import { useFetchAllPages } from "../../../../../hooks/reactquery/useFetchAllPages";
@@ -105,12 +104,12 @@ const MedicationsPopUp = ({
   };
   const handleNewRX = () => {
     setErrMsgPost("");
-    if (!largeScreen) {
-      toast.warning("This feature is not available on small screens", {
-        containerId: "A",
-      });
-      return;
-    }
+    // if (!largeScreen) {
+    //   toast.warning("This feature is not available on small screens", {
+    //     containerId: "A",
+    //   });
+    //   return;
+    // }
     setPresVisible((v) => !v);
   };
   const handleNewMed = () => {
