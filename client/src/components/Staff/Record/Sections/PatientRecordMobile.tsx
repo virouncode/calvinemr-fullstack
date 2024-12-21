@@ -77,13 +77,12 @@ const PatientRecordMobile = ({
   };
 
   const handleClickExport = () => {
-    // if (window.matchMedia("(pointer: coarse)")) {
-    //   toast.warning("This feature is not available on mobile devices", {
-    //     containerId: "A",
-    //     autoClose: 3000,
-    //   });
-    //   return;
-    // }
+    if (window.matchMedia("(pointer: coarse)")) {
+      toast.warning("This feature is not optimized for mobile devices", {
+        containerId: "A",
+        autoClose: 3000,
+      });
+    }
     setExportVisible(true);
   };
 

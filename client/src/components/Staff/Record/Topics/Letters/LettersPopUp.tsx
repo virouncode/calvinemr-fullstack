@@ -6,6 +6,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
@@ -109,12 +110,11 @@ const LettersPopUp = ({
   };
   const handleAdd = () => {
     setErrMsgPost("");
-    // if (!largeScreen) {
-    //   toast.warning("This feature is not available on small screens", {
-    //     containerId: "A",
-    //   });
-    //   return;
-    // }
+    if (!largeScreen) {
+      toast.warning("This feature is not optimized for small screens", {
+        containerId: "A",
+      });
+    }
     editCounter.current += 1;
     setAddVisible((v) => !v);
   };
