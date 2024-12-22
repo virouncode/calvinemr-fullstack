@@ -15,6 +15,7 @@ import {
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
+import { handleUploadAttachment } from "../../../utils/files/handleUploadAttachment";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import AttachEdocsPamphletsButton from "../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
@@ -29,7 +30,6 @@ import AddEdocsPamphlets from "../Messaging/Internal/AddEdocsPamphlets";
 import MessagesAttachments from "../Messaging/Internal/MessagesAttachments";
 import FaxContacts from "./Contacts/FaxContacts";
 import FaxesTemplates from "./Templates/FaxesTemplates";
-import { handleUploadAttachment } from "../../../utils/files/handleUploadAttachment";
 
 type NewFaxProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,7 +64,7 @@ const NewFaxMobile = ({
   const [addEdocsPamphletsVisible, setAddEdocsPamphletsVisible] =
     useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const recipientsRef = useRef<HTMLDivElement | null>(null);
+  const recipientsRef = useRef<HTMLDivElement | null>(null); //todo
   //Queries
   const { data: sites, isPending, error } = useSites();
   const faxPost = useFaxPost();
@@ -110,18 +110,31 @@ const NewFaxMobile = ({
   };
 
   const handleSend = async () => {
-    const regex = /^\d{10}$/;
-    toFaxNumbers.forEach((toFaxNumber) => {
-      if (!regex.test(toFaxNumber)) {
-        toast.error(
-          `${toFaxNumber} is not a valid fax number, please enter a valid 10-digit fax number`,
-          {
-            containerId: "A",
-          }
-        );
-        return;
+    let toNewFaxNumbersArray: string[] = [];
+    if (toNewFaxNumbers) {
+      const regex = /^\d{3}-\d{3}-\d{4}$/;
+      toNewFaxNumbersArray = toNewFaxNumbers.split(",");
+      toNewFaxNumbersArray = toNewFaxNumbersArray.map((number) =>
+        number.trim()
+      );
+      for (const toNewFaxNumber of toNewFaxNumbersArray) {
+        if (!regex.test(toNewFaxNumber)) {
+          toast.error(
+            `${toNewFaxNumber} is not a valid fax number format, please enter xxx-xxx-xxxx format`,
+            {
+              containerId: "A",
+            }
+          );
+          return;
+        }
       }
-    });
+    }
+    const toFaxNumbersToPost = toFaxNumbers.map((number) =>
+      number.replace(/-/g, "")
+    );
+    const toNewFaxNumbersToPost = toNewFaxNumbersArray.map((number) =>
+      number.replace(/-/g, "")
+    );
     setProgress(true);
     const attachmentsToPost: Partial<MessageAttachmentType>[] = [
       ...attachments,
@@ -141,7 +154,7 @@ const NewFaxMobile = ({
       })) as Partial<MessageAttachmentType>[]),
     ];
     const faxToPost: FaxToPostType = {
-      faxNumbers: toFaxNumbers,
+      faxNumbers: [...toFaxNumbersToPost, ...toNewFaxNumbersToPost],
       sCPFromName: staffIdToTitleAndName(staffInfos, user.id),
       sCPToName: "whom it may concern",
       sCPOrganization: `${clinic.name} - ${
@@ -233,6 +246,15 @@ const NewFaxMobile = ({
             id="to"
             label="To:"
             placeholder="New numbers: xxx-xxx-xxxx, xxx-xxx-xxxx, ..."
+          />
+        </div>
+        <div className="new-fax__form-subject">
+          <Input
+            value={subject}
+            onChange={handleChangeSubject}
+            id="subject"
+            label="Subject:"
+            placeholder="Subject"
           />
         </div>
         <div className="new-fax__form-attach">
