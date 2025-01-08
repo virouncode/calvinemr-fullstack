@@ -16,6 +16,8 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../../utils/files/handleUploadAttachment";
+import { toEmailAlertPatientText } from "../../../../utils/messages/toEmailAlertPatientText";
+import { toSMSAlertPatientText } from "../../../../utils/messages/toSMSAlertPatientText";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
 import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
@@ -163,14 +165,9 @@ const ReplyMessageExternal = ({
       await axios.post(`/api/mailgun`, {
         to_email: message.from_patient_infos?.Email ?? "", //to be changed to patient email
         subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
-        text: `Hello ${toPatientName(message.from_patient_infos)},
-
-You have a new message, please login to your patient portal.
-
-Please do not reply to this email, as this address is automated and not monitored. 
-
-Best wishes, 
-Powered by CalvinEMR`,
+        text: toEmailAlertPatientText(
+          toPatientName(message.from_patient_infos)
+        ),
       });
     } catch (err) {
       if (err instanceof Error)
@@ -193,15 +190,9 @@ Powered by CalvinEMR`,
         data: {
           from: clinic?.name ?? "",
           to: patientPhone, //to be changed to patient cell_phone
-          body: `
-Hello ${toPatientName(message.from_patient_infos)},
-          
-You have a new message, please login to your patient portal.
-
-Please do not reply to this sms, as this number is automated and not monitored. 
-          
-Best wishes,
-Powered by Calvin EMR`,
+          body: toSMSAlertPatientText(
+            toPatientName(message.from_patient_infos)
+          ),
         },
       });
       setProgress(false);

@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -16,6 +18,7 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../../utils/files/handleUploadAttachment";
+import { toEmailAlertStaffText } from "../../../../utils/messages/toEmailAlertStaffText";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
 import AttachFilesButton from "../../../UI/Buttons/AttachFilesButton";
@@ -48,6 +51,7 @@ const ForwardMessageMobile = ({
   section,
 }: ForwardMessageMobileProps) => {
   //Hooks
+  const { clinic } = useClinicContext();
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -161,24 +165,52 @@ const ForwardMessageMobile = ({
       high_importance: important,
     };
     messagePost.mutate(messageToPost, {
-      onSuccess: () => {
-        setForwardVisible(false);
+      onSuccess: async () => {
+        const emailsToPost: { to: string; subject: string; text: string }[] =
+          [];
+        const senderName = staffIdToTitleAndName(staffInfos, user.id);
+        for (const to_staff_id of recipientsIds) {
+          if (to_staff_id !== user.id) {
+            socket?.emit("message", {
+              route: "UNREAD",
+              action: "update",
+              content: {
+                userId: to_staff_id,
+              },
+            });
+            const staff = staffInfos.find(({ id }) => id === to_staff_id);
+            const emailToPost = {
+              to: staff?.email ?? "",
+              subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+              text: toEmailAlertStaffText(
+                staffIdToTitleAndName(staffInfos, to_staff_id),
+                senderName,
+                messageToPost.subject ?? "",
+                messageToPost.body ?? ""
+              ),
+            };
+            emailsToPost.push(emailToPost);
+          }
+        }
+        try {
+          await Promise.all(
+            emailsToPost.map((email) => axios.post(`/api/mailgun`, email))
+          );
+        } catch (err) {
+          if (err instanceof Error) {
+            toast.error(
+              `Unable to send email alerts to recipients:${err.message}`,
+              { containerId: "A" }
+            );
+          }
+        } finally {
+          setForwardVisible(false);
+        }
       },
       onSettled: () => {
         setProgress(false);
       },
     });
-    for (const to_staff_id of recipientsIds) {
-      if (to_staff_id !== user.id) {
-        socket?.emit("message", {
-          route: "UNREAD",
-          action: "update",
-          content: {
-            userId: to_staff_id,
-          },
-        });
-      }
-    }
   };
 
   const handleAttach = () => {
@@ -295,9 +327,9 @@ const ForwardMessageMobile = ({
             </strong>
           </div>
         </div>
-        <div className="forward-message-mobile__form-body">
+        <div className="forward-message__form-body">
           <textarea value={body} onChange={handleChange} ref={textareaRef} />
-          <div className="forward-message-mobile__form-history">
+          <div className="forward-message__form-history">
             <Message
               message={message}
               key={message.id}

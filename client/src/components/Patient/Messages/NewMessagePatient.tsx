@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -9,7 +11,9 @@ import { MessageAttachmentType, MessageExternalType } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../utils/files/handleUploadAttachment";
+import { toEmailAlertStaffText } from "../../../utils/messages/toEmailAlertStaffText";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import { toPatientName } from "../../../utils/names/toPatientName";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
 import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
 import CancelButton from "../../UI/Buttons/CancelButton";
@@ -24,6 +28,7 @@ type NewMessagePatientProps = {
 
 const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
   //Hooks
+  const { clinic } = useClinicContext();
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -94,8 +99,7 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
       type: "External",
     };
     messagePost.mutate(messageToPost, {
-      onSuccess: () => {
-        setNewVisible(false);
+      onSuccess: async () => {
         socket?.emit("message", {
           route: "UNREAD EXTERNAL",
           action: "update",
@@ -103,6 +107,30 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
             userId: messageToPost.to_staff_id,
           },
         });
+        const senderName = toPatientName(user.demographics);
+        const staff = staffInfos.find(({ id }) => id === recipientId);
+        const emailToPost = {
+          to: staff?.email ?? "",
+          subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+          text: toEmailAlertStaffText(
+            staffIdToTitleAndName(staffInfos, recipientId),
+            senderName,
+            messageToPost.subject ?? "",
+            messageToPost.body ?? ""
+          ),
+        };
+        try {
+          await axios.post(`/api/mailgun`, emailToPost);
+        } catch (err) {
+          if (err instanceof Error) {
+            toast.error(
+              `Unable to send email alert to recipient:${err.message}`,
+              { containerId: "A" }
+            );
+          }
+        } finally {
+          setNewVisible(false);
+        }
       },
       onSettled: () => {
         setProgress(false);

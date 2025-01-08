@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -20,6 +22,7 @@ import {
 } from "../../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../../utils/files/handleUploadAttachment";
 import { titleToCategory } from "../../../../utils/messages/titleToCategory";
+import { toEmailAlertStaffText } from "../../../../utils/messages/toEmailAlertStaffText";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
@@ -51,6 +54,7 @@ const NewTodo = ({
   initialBody = "",
 }: NewTodoProps) => {
   //Hooks
+  const { clinic } = useClinicContext();
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -71,7 +75,7 @@ const NewTodo = ({
   const [dueDate, setDueDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   //Queries
-  const messagesPost = useMessagesPostBatch(user.id, "To-dos");
+  const todosPost = useMessagesPostBatch(user.id, "To-dos");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBody(e.target.value);
@@ -131,7 +135,7 @@ const NewTodo = ({
     setAttachments(updatedAttachments);
   };
 
-  const handleSave = async () => {
+  const handleSend = async () => {
     try {
       setProgress(true);
       const attachmentsToPost: Partial<MessageAttachmentType>[] = [
@@ -157,10 +161,12 @@ const NewTodo = ({
           attachments_array: attachmentsToPost,
         });
       }
-      const messagesToPost: Partial<TodoType>[] = [];
+      const todosToPost: Partial<TodoType>[] = [];
+      const emailsToPost: { to: string; subject: string; text: string }[] = [];
+      const senderName = staffIdToTitleAndName(staffInfos, user.id);
       for (const recipientId of recipientsIds) {
         //create the message
-        const messageToPost: Partial<TodoType> = {
+        const todoToPost: Partial<TodoType> = {
           from_staff_id: user.id,
           to_staff_id: recipientId,
           subject: subject,
@@ -173,10 +179,37 @@ const NewTodo = ({
           due_date: dueDate ? dateISOToTimestampTZ(dueDate) : null,
           read: recipientId === user.id,
         };
-        messagesToPost.push(messageToPost);
+        const staff = staffInfos.find(({ id }) => id === recipientId);
+        const emailToPost = {
+          to: staff?.email ?? "",
+          subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+          text: toEmailAlertStaffText(
+            staffIdToTitleAndName(staffInfos, recipientId),
+            senderName,
+            todoToPost.subject ?? "",
+            todoToPost.body ?? ""
+          ),
+        };
+        emailsToPost.push(emailToPost);
+        todosToPost.push(todoToPost);
       }
-      messagesPost.mutate(messagesToPost, {
-        onSuccess: () => setNewTodoVisible(false),
+      todosPost.mutate(todosToPost, {
+        onSuccess: async () => {
+          try {
+            await Promise.all(
+              emailsToPost.map((email) => axios.post(`/api/mailgun`, email))
+            );
+          } catch (err) {
+            if (err instanceof Error) {
+              toast.error(
+                `Unable to send email alerts to recipients:${err.message}`,
+                { containerId: "A" }
+              );
+            }
+          } finally {
+            setNewTodoVisible(false);
+          }
+        },
       });
     } catch (err) {
       if (err instanceof Error)
@@ -312,7 +345,7 @@ const NewTodo = ({
         </div>
         <div className="new-message__form-btns">
           <SaveButton
-            onClick={handleSave}
+            onClick={handleSend}
             disabled={isLoadingFile || progress}
           />
           <CancelButton onClick={handleCancel} disabled={progress} />

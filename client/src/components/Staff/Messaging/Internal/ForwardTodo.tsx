@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
@@ -18,6 +19,7 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../utils/dates/formatDates";
+import { toEmailAlertStaffText } from "../../../../utils/messages/toEmailAlertStaffText";
 import { staffIdToTitleAndName } from "../../../../utils/names/staffIdToTitleAndName";
 import CancelButton from "../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../UI/Buttons/SaveButton";
@@ -29,6 +31,7 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
+import useClinicContext from "../../../../hooks/context/useClinicContext";
 
 type ForwardTodoProps = {
   setForwardTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,6 +49,7 @@ const ForwardTodo = ({
   section,
 }: ForwardTodoProps) => {
   //Hooks
+  const { clinic } = useClinicContext();
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -99,6 +103,8 @@ const ForwardTodo = ({
     try {
       setProgress(true);
       const todosToPost: Partial<TodoType>[] = [];
+      const emailsToPost: { to: string; subject: string; text: string }[] = [];
+      const senderName = staffIdToTitleAndName(staffInfos, user.id);
       for (const recipientId of recipientsIds) {
         const todoToPost: Partial<TodoType> = {
           from_staff_id: user.id,
@@ -115,11 +121,39 @@ const ForwardTodo = ({
           read: recipientId === user.id,
           high_importance: todo.high_importance,
         };
+        const staff = staffInfos.find(({ id }) => id === recipientId);
+        const emailToPost = {
+          to: staff?.email ?? "",
+          subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+          text: toEmailAlertStaffText(
+            staffIdToTitleAndName(staffInfos, recipientId),
+            senderName,
+            todoToPost.subject ?? "",
+            todoToPost.body ?? ""
+          ),
+        };
+        emailsToPost.push(emailToPost);
         todosToPost.push(todoToPost);
       }
-      todosPost.mutate(todosToPost);
-      setForwardTodoVisible(false);
-      toast.success("Forwarded successfully", { containerId: "A" });
+      todosPost.mutate(todosToPost, {
+        onSuccess: async () => {
+          try {
+            await Promise.all(
+              emailsToPost.map((email) => axios.post(`/api/mailgun`, email))
+            );
+          } catch (err) {
+            if (err instanceof Error) {
+              toast.error(
+                `Unable to send email alerts to recipients:${err.message}`,
+                { containerId: "A" }
+              );
+            }
+          } finally {
+            setForwardTodoVisible(false);
+            toast.success("Forwarded successfully", { containerId: "A" });
+          }
+        },
+      });
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to forward to-do: ${err.message}`, {

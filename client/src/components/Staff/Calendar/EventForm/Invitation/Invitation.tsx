@@ -120,127 +120,135 @@ const Invitation = ({
           start
         )} - ${timestampToHumanDateTimeTZ(end)}`;
 
-    const patientsMailsToPost: { to: string; subject: string; text: string }[] =
-      [];
-    const patientsSMSToPost: { to: string; body: string }[] = [];
+    if (patientsGuestsInfos.length) {
+      const patientsMailsToPost: {
+        to: string;
+        subject: string;
+        text: string;
+      }[] = [];
+      const patientsSMSToPost: { to: string; body: string }[] = [];
 
-    for (const patientInfos of patientsGuestsInfos) {
-      const patientName = toPatientName(patientInfos);
-      const patientPhone = formatToE164Canadian(
-        patientInfos.PhoneNumber.find((phone) => phone._phoneNumberType === "C")
-          ?.phoneNumber ?? ""
-      );
-      const mailToPost = {
-        to: patientInfos.Email,
-        subject: subject + " - DO NOT REPLY",
-        text: toEmailInvitationText(
-          site,
-          user.settings.invitation_templates.find(
-            ({ name }) => name === templateSelected
+      for (const patientInfos of patientsGuestsInfos) {
+        const patientName = toPatientName(patientInfos);
+        const patientPhone = formatToE164Canadian(
+          patientInfos.PhoneNumber.find(
+            (phone) => phone._phoneNumberType === "C"
+          )?.phoneNumber ?? ""
+        );
+        const mailToPost = {
+          to: patientInfos.Email,
+          subject: subject + " - DO NOT REPLY",
+          text: toEmailInvitationText(
+            site,
+            user.settings.invitation_templates.find(
+              ({ name }) => name === templateSelected
+            ),
+            hostName,
+            patientName,
+            siteName,
+            clinicName,
+            allDay,
+            start,
+            end,
+            staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
+            intro,
+            message
           ),
-          hostName,
-          patientName,
-          siteName,
-          clinicName,
-          allDay,
-          start,
-          end,
-          staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
-          intro,
-          message
-        ),
-      };
-      patientsMailsToPost.push(mailToPost);
-      const smsToPost = {
-        to: patientPhone,
-        body: toSMSInvitationText(
-          site,
-          user.settings.invitation_templates.find(
-            ({ name }) => name === templateSelected
+        };
+        patientsMailsToPost.push(mailToPost);
+        const smsToPost = {
+          to: patientPhone,
+          body: toSMSInvitationText(
+            site,
+            user.settings.invitation_templates.find(
+              ({ name }) => name === templateSelected
+            ),
+            hostName,
+            patientName,
+            siteName,
+            clinicName,
+            allDay,
+            start,
+            end,
+            staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
+            intro,
+            message
           ),
-          hostName,
-          patientName,
-          siteName,
-          clinicName,
-          allDay,
-          start,
-          end,
-          staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
-          intro,
-          message
-        ),
-      };
-      patientsSMSToPost.push(smsToPost);
-    }
+        };
+        patientsSMSToPost.push(smsToPost);
+      }
 
-    try {
-      setProgress(true);
-      await Promise.all(
-        patientsMailsToPost.map((mailToPost) =>
-          axios.post(`/api/mailgun`, mailToPost)
-        )
-      );
-      await Promise.all(
-        patientsSMSToPost.map((smsToPost) =>
-          axios({
-            url: "/api/twilio",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            data: smsToPost,
-          })
-        )
-      );
-      toast.success(`Invitations to patients sent successfully`, {
-        containerId: "A",
-      });
-    } catch (err) {
-      if (err instanceof Error)
-        toast.error(`Couldn't send invitations to patients`, {
+      try {
+        setProgress(true);
+        await Promise.all(
+          patientsMailsToPost.map((mailToPost) =>
+            axios.post(`/api/mailgun`, mailToPost)
+          )
+        );
+        await Promise.all(
+          patientsSMSToPost.map((smsToPost) =>
+            axios({
+              url: "/api/twilio",
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              data: smsToPost,
+            })
+          )
+        );
+        toast.success(`Invitations to patients sent successfully`, {
           containerId: "A",
         });
-    } finally {
-      setProgress(false);
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Couldn't send invitations to patients`, {
+            containerId: "A",
+          });
+      } finally {
+        setProgress(false);
+      }
     }
 
-    const staffEmailsToPost: { to: string; subject: string; text: string }[] =
-      [];
-    for (const staff of staffGuestsInfos) {
-      const staffName = staffIdToTitleAndName(staffInfos, staff.id);
-      const emailToPost = {
-        to: staff.email,
-        subject: subject + " - DO NOT REPLY",
-        text: toEmailToStaffInvitationText(
-          site,
-          hostName,
-          staffName,
-          siteName,
-          clinicName,
-          allDay,
-          start,
-          end
-        ),
-      };
-      staffEmailsToPost.push(emailToPost);
-    }
-    try {
-      setProgress(true);
-      await Promise.all(
-        staffEmailsToPost.map((emailToPost) =>
-          axios.post(`/api/mailgun`, emailToPost)
-        )
-      );
-      toast.success(`Invitations to staff members sent successfully`, {
-        containerId: "A",
-      });
-    } catch (err) {
-      if (err instanceof Error)
-        toast.error(`Couldn't send invitations to staff members`, {
+    if (staffGuestsInfos.length) {
+      const staffEmailsToPost: { to: string; subject: string; text: string }[] =
+        [];
+      for (const staff of staffGuestsInfos) {
+        const staffName = staffIdToTitleAndName(staffInfos, staff.id);
+        const emailToPost = {
+          to: staff.email,
+          subject: subject + " - DO NOT REPLY",
+          text: toEmailToStaffInvitationText(
+            site,
+            hostName,
+            staffName,
+            siteName,
+            clinicName,
+            allDay,
+            start,
+            end
+          ),
+        };
+        staffEmailsToPost.push(emailToPost);
+      }
+      try {
+        setProgress(true);
+        await Promise.all(
+          staffEmailsToPost.map((emailToPost) =>
+            axios.post(`/api/mailgun`, emailToPost)
+          )
+        );
+        toast.success(`Invitations to staff members sent successfully`, {
           containerId: "A",
         });
-    } finally {
-      setProgress(false);
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Couldn't send invitations to staff members`, {
+            containerId: "A",
+          });
+      } finally {
+        setProgress(false);
+      }
     }
 
     const invitationSent: InvitationSentType = {
@@ -262,6 +270,7 @@ const Invitation = ({
     appointmentPut.mutate(appointmentToPut);
     setInvitationVisible(false);
   };
+
   const handleSendAndSave = async () => {
     await handleSend();
     const newTemplates = [...user.settings.invitation_templates];

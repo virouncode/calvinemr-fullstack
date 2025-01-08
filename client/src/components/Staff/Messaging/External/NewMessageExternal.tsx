@@ -18,6 +18,8 @@ import {
 import { UserStaffType } from "../../../../types/app";
 import { nowTZTimestamp } from "../../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../../utils/files/handleUploadAttachment";
+import { toEmailAlertPatientText } from "../../../../utils/messages/toEmailAlertPatientText";
+import { toSMSAlertPatientText } from "../../../../utils/messages/toSMSAlertPatientText";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import { formatToE164Canadian } from "../../../../utils/phone/formatToE164Canadian";
 import AttachEdocsPamphletsButton from "../../../UI/Buttons/AttachEdocsPamphletsButton";
@@ -235,27 +237,12 @@ const NewMessageExternal = ({
           const emailToPost = {
             to: recipient.email,
             subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
-            text: `Hello ${recipient.name},
-    
-You have a new message, please login to your patient portal.
-    
-Please do not reply to this email, as this address is automated and not monitored. 
-    
-Best wishes, 
-Powered by CalvinEMR`,
+            text: toEmailAlertPatientText(recipient.name),
           };
           const smsToPost = {
             from: clinic?.name ?? "",
             to: recipientPhone,
-            body: `
-    Hello ${recipient.name},
-              
-  You have a new message, please login to your patient portal.
-    
-  Please do not reply to this sms, as this number is automated and not monitored. 
-              
-  Best wishes,
-  Powered by Calvin EMR`,
+            body: toSMSAlertPatientText(recipient.name),
           };
           emailsToPost.push(emailToPost);
           patientsSMSToPost.push(smsToPost);

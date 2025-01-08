@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -8,7 +11,9 @@ import { MessageAttachmentType, MessageExternalType } from "../../../types/api";
 import { UserPatientType } from "../../../types/app";
 import { nowTZTimestamp } from "../../../utils/dates/formatDates";
 import { handleUploadAttachment } from "../../../utils/files/handleUploadAttachment";
+import { toEmailAlertStaffText } from "../../../utils/messages/toEmailAlertStaffText";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
+import { toPatientName } from "../../../utils/names/toPatientName";
 import MessageExternal from "../../Staff/Messaging/External/MessageExternal";
 import MessagesAttachments from "../../Staff/Messaging/Internal/MessagesAttachments";
 import AttachFilesButton from "../../UI/Buttons/AttachFilesButton";
@@ -31,6 +36,7 @@ const ReplyMessagePatient = ({
   setCurrentMsgId,
 }: ReplyMessagePatientProps) => {
   //Hooks
+  const { clinic } = useClinicContext();
   const { user } = useUserContext() as { user: UserPatientType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
@@ -80,9 +86,7 @@ const ReplyMessagePatient = ({
       type: "External",
     };
     messagePost.mutate(messageToPost, {
-      onSuccess: () => {
-        setReplyVisible(false);
-        setCurrentMsgId(0);
+      onSuccess: async () => {
         socket?.emit("message", {
           route: "UNREAD EXTERNAL",
           action: "update",
@@ -90,6 +94,31 @@ const ReplyMessagePatient = ({
             userId: messageToPost.to_staff_id,
           },
         });
+        const senderName = toPatientName(user.demographics);
+        const staff = staffInfos.find(({ id }) => id === message.from_staff_id);
+        const emailToPost = {
+          to: staff?.email ?? "",
+          subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+          text: toEmailAlertStaffText(
+            staffIdToTitleAndName(staffInfos, message.from_staff_id),
+            senderName,
+            messageToPost.subject ?? "",
+            messageToPost.body ?? ""
+          ),
+        };
+        try {
+          await axios.post(`/api/mailgun`, emailToPost);
+        } catch (err) {
+          if (err instanceof Error) {
+            toast.error(
+              `Unable to send email alert to recipient:${err.message}`,
+              { containerId: "A" }
+            );
+          }
+        } finally {
+          setReplyVisible(false);
+          setCurrentMsgId(0);
+        }
       },
       onSettled: () => {
         setProgress(false);
@@ -121,6 +150,15 @@ const ReplyMessagePatient = ({
 
   return (
     <div className="reply-message">
+      <div className="reply-message__btns">
+        <SaveButton
+          onClick={handleSend}
+          disabled={isLoadingFile || progress}
+          label="Send"
+        />
+        <CancelButton onClick={handleCancel} disabled={progress} />
+        {isLoadingFile && <CircularProgressMedium />}
+      </div>
       <div className="reply-message__recipients">
         <Input
           label="To:"
@@ -169,15 +207,6 @@ const ReplyMessagePatient = ({
             addable={false}
           />
         )}
-      </div>
-      <div className="reply-message__btns">
-        <SaveButton
-          onClick={handleSend}
-          disabled={isLoadingFile || progress}
-          label="Send"
-        />
-        <CancelButton onClick={handleCancel} disabled={progress} />
-        {isLoadingFile && <CircularProgressMedium />}
       </div>
     </div>
   );
