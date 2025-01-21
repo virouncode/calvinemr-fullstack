@@ -32,6 +32,7 @@ import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
+import useSocketContext from "../../../../../hooks/context/useSocketContext";
 
 type ReportItemReceivedProps = {
   item: ReportType;
@@ -64,6 +65,7 @@ const ReportItemReceived = ({
 }: ReportItemReceivedProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
+  const { socket } = useSocketContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<ReportType>(item);
@@ -129,6 +131,20 @@ const ReportItemReceived = ({
         setProgress(false);
       },
     });
+    if (user.nbReportsInbox !== 0) {
+      const newNbReportsInbox = user.nbReportsInbox - 1;
+      socket?.emit("message", {
+        route: "USER",
+        action: "update",
+        content: {
+          id: user.id,
+          data: {
+            ...user,
+            nbReportsInbox: newNbReportsInbox,
+          },
+        },
+      });
+    }
   };
 
   const handleEdit = () => {

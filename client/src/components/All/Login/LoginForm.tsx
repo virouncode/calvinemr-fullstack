@@ -170,7 +170,13 @@ const LoginForm = () => {
         console.error("Error fetching unread fax number:", faxError);
         // Optionally set unreadFaxNbr to 0 or some default value
       }
-
+      const nbReportsInbox: number = await xanoGet(
+        "/nb_reports_inbox",
+        "staff",
+        {
+          staff_id: user.id,
+        }
+      );
       setUser({
         ...user,
         settings,
@@ -179,6 +185,7 @@ const LoginForm = () => {
         unreadTodosNbr,
         unreadNbr,
         unreadFaxNbr,
+        nbReportsInbox,
       });
       localStorage.setItem(
         "user",
@@ -190,6 +197,7 @@ const LoginForm = () => {
           unreadTodosNbr,
           unreadNbr,
           unreadFaxNbr,
+          nbReportsInbox,
         })
       );
       //Connect socket

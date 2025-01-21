@@ -2,6 +2,7 @@ import { useMediaQuery } from "@mui/material";
 import { uniqueId } from "lodash";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useReportInboxPut } from "../../../hooks/reactquery/mutations/reportsMutations";
@@ -66,6 +67,7 @@ const ReportInboxItem = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
+  const { socket } = useSocketContext();
   const [progress, setProgress] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<ReportType>(item);
@@ -153,7 +155,6 @@ const ReportInboxItem = ({
 
   const handleAcknowledge = async () => {
     setErrMsgPost("");
-
     setProgress(true);
     const reportToPut: ReportType = {
       ...item,
@@ -173,7 +174,6 @@ const ReportInboxItem = ({
         { date_updated: nowTZTimestamp(), updated_by_id: user.id },
       ],
     };
-
     reportInboxPut.mutate(reportToPut, {
       onSuccess: () => {
         setProgress(false);
@@ -182,6 +182,20 @@ const ReportInboxItem = ({
         setProgress(false);
       },
     });
+    if (user.nbReportsInbox !== 0) {
+      const newNbReportsInbox = user.nbReportsInbox - 1;
+      socket?.emit("message", {
+        route: "USER",
+        action: "update",
+        content: {
+          id: user.id,
+          data: {
+            ...user,
+            nbReportsInbox: newNbReportsInbox,
+          },
+        },
+      });
+    }
   };
 
   const handleForward = (reportId: number) => {

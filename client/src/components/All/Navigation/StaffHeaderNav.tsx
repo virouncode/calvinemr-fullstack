@@ -77,7 +77,7 @@ const StaffHeaderNav = ({
                 : "header__link"
             }
           >
-            Inbox
+            {"Inbox" + (user.nbReportsInbox ? ` (${user.nbReportsInbox})` : "")}
           </NavLink>
         </li>
         <li>
