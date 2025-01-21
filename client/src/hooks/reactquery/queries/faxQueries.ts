@@ -21,7 +21,6 @@ const fetchFaxesInbox = async (
 };
 
 const fetchFaxNotes = async (fileName: string) => {
-  console.log("fetchFaxNotesfileName", fileName);
   const response: FaxNotesType = await xanoGet(
     "/faxnotes_for_filename",
     "staff",

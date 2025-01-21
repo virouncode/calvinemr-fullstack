@@ -618,8 +618,6 @@ const MedicationForm = ({
     });
   };
   const handleFrequencyChange = (value: string) => {
-    console.log("value", value);
-
     setFormDatas({
       ...formDatas,
       Frequency: value,

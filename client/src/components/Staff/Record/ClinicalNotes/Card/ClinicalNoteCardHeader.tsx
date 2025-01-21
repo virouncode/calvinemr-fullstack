@@ -134,9 +134,6 @@ const ClinicalNoteCardHeader = ({
           },
         ],
       });
-      const text = response.data;
-      console.log(response.data);
-
       setEditVisible(true);
       setAIRewritedText(formatToRichText(response.data));
       setInputText(formatToRichText(response.data));

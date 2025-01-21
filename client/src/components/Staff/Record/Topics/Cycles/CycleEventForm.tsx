@@ -49,7 +49,6 @@ const CycleEventForm = ({
     setErrMsg("");
     const name = e.target.name;
     let value: string | number | null = e.target.value;
-    console.log("itemid", item.id);
 
     if (name === "date") {
       if (!value) return;

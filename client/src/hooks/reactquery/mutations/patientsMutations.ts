@@ -3,7 +3,11 @@ import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import { DemographicsType } from "../../../types/api";
-import { UserPatientType, UserStaffType } from "../../../types/app";
+import {
+  UserAdminType,
+  UserPatientType,
+  UserStaffType,
+} from "../../../types/app";
 import useSocketContext from "../../context/useSocketContext";
 import useUserContext from "../../context/useUserContext";
 
@@ -11,9 +15,10 @@ export const usePatientPut = (patientId: number) => {
   const queryClient = useQueryClient();
   const { socket } = useSocketContext();
   const { user } = useUserContext() as {
-    user: UserStaffType | UserPatientType;
+    user: UserStaffType | UserPatientType | UserAdminType;
   };
   const userType = user.access_level;
+
   return useMutation({
     mutationFn: (demographicsToPut: DemographicsType) =>
       xanoPut(
