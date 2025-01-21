@@ -198,6 +198,32 @@ const MedicationForm = ({
       StartDate: formDatas.StartDate,
       site_id: user.site_id,
       PrescribedBy: formDatas.PrescribedBy,
+      Route: selectedTemplate.Route || formDatas.Route,
+      Frequency: selectedTemplate.Frequency || formDatas.Frequency,
+      Duration: selectedTemplate.Duration || formDatas.Duration,
+      duration:
+        selectedTemplate.duration?.D !== 0 ||
+        selectedTemplate.duration?.W !== 0 ||
+        selectedTemplate.duration?.M !== 0 ||
+        selectedTemplate.duration?.Y !== 0
+          ? selectedTemplate.duration || formDatas.duration
+          : formDatas.duration,
+      PrescriptionInstructions: toPrescriptionInstructions(
+        template.DrugName,
+        template.Strength.Amount,
+        template.Strength?.UnitOfMeasure,
+        template.SubstitutionNotAllowed,
+        template.Quantity,
+        template.Form,
+        template.Route || formDatas.Route,
+        template.Dosage,
+        template.DosageUnitOfMeasure,
+        template.Frequency || formDatas.Frequency,
+        template.Duration || formDatas.Duration,
+        template.NumberOfRefills,
+        template.RefillQuantity,
+        template.RefillDuration
+      ),
     };
     setFormDatas(newFormDatas);
   };
