@@ -27,7 +27,7 @@ const DurationPickerLong = ({
           alignItems: "center",
           justifyContent: "space-between",
           flexWrap: "wrap",
-          gap: "1rem",
+          gap: "0.5rem",
         }}
       >
         <div>
@@ -43,7 +43,7 @@ const DurationPickerLong = ({
             Y
           </label>
           <input
-            style={{ marginRight: "10px", width: "45px" }}
+            style={{ marginRight: "5px", width: "50px" }}
             type="number"
             step="1"
             min="0"
@@ -64,7 +64,7 @@ const DurationPickerLong = ({
             M
           </label>
           <input
-            style={{ marginRight: "10px", width: "45px" }}
+            style={{ marginRight: "5px", width: "50px" }}
             type="number"
             step="1"
             min="0"
@@ -85,7 +85,7 @@ const DurationPickerLong = ({
             W
           </label>
           <input
-            style={{ marginRight: "10px", width: "45px" }}
+            style={{ marginRight: "5px", width: "50px" }}
             type="number"
             step="1"
             min="0"
@@ -106,7 +106,7 @@ const DurationPickerLong = ({
             D
           </label>
           <input
-            style={{ width: "45px" }}
+            style={{ width: "50px" }}
             type="number"
             step="1"
             min="0"

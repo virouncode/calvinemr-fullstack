@@ -67,9 +67,9 @@ const MedicationForm = ({
     Dosage: "",
     DosageUnitOfMeasure: "",
     Form: "",
-    Route: "",
-    Frequency: "",
-    Duration: "",
+    Route: "Oral",
+    Frequency: "Once a day",
+    Duration: "30 days",
     RefillDuration: "",
     Quantity: "",
     RefillQuantity: "",
@@ -88,7 +88,7 @@ const MedicationForm = ({
       Y: 0,
       M: 0,
       W: 0,
-      D: 0,
+      D: 30,
     },
     refill_duration: {
       Y: 0,
@@ -592,6 +592,8 @@ const MedicationForm = ({
     });
   };
   const handleFrequencyChange = (value: string) => {
+    console.log("value", value);
+
     setFormDatas({
       ...formDatas,
       Frequency: value,
