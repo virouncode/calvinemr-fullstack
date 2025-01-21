@@ -246,8 +246,8 @@ const BillingForm = ({
             onChange={handleChange}
             onClick={() => setProviderOHIPSearchVisible(true)}
             label="Provider OHIP#*"
-            readOnly={user.access_level !== "admin"}
-            logo={userType === "admin"}
+            // readOnly={user.access_level !== "admin"}
+            // logo={userType === "admin"}
           />
         </div>
         <div className="billing__form-item" style={{ position: "relative" }}>
