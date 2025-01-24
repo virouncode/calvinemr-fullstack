@@ -34,6 +34,7 @@ import FakeWindow from "../../UI/Windows/FakeWindow";
 import BillingCodesTextarea from "./BillingCodesTextarea";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
+import ProviderOHIPSearch from "./ProviderOHIPSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
 import BillingCodesTemplates from "./Templates/BillingCodesTemplates";
 
@@ -56,6 +57,7 @@ const BillingForm = ({
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
+  const [selectedProviderId, setSelectedProviderId] = useState(0);
   const [formDatas, setFormDatas] = useState<BillingFormType>({
     dateStr: date
       ? timestampToDateISOTZ(parseInt(date))
@@ -127,12 +129,18 @@ const BillingForm = ({
     setRefOHIPSearchVisible(false);
   };
 
-  const handleClickProviderOHIP = (item: StaffType | DoctorType) => {
+  // Custom type guard function
+  const isStaffType = (item: StaffType | DoctorType): item is StaffType => {
+    return "site_id" in item; // Replace 'someUniqueStaffProperty' with an actual unique property in StaffType
+  };
+
+  const handleClickProviderOHIP = (item: StaffType) => {
     setErrMsgPost("");
     setFormDatas({
       ...formDatas,
       provider_ohip_billing_nbr: item.ohip_billing_nbr.toString(),
     });
+    setSelectedProviderId(item.id);
     setProviderOHIPSearchVisible(false);
   };
 
@@ -159,6 +167,10 @@ const BillingForm = ({
       .replace(",,", ",")
       .split(",");
     //Validation
+    if (selectedProviderId === 0) {
+      setErrMsgPost("Please select a provider");
+      return;
+    }
     try {
       await billingFormSchema.validate(formDatas);
     } catch (err) {
@@ -192,7 +204,7 @@ const BillingForm = ({
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
           created_by_user_type: user.access_level,
-          provider_id: user.id,
+          provider_id: selectedProviderId,
           referrer_ohip_billing_nbr: formDatas.referrer_ohip_billing_nbr,
           patient_id: formDatas.patient_id,
           diagnosis_id: (
@@ -246,6 +258,7 @@ const BillingForm = ({
             onChange={handleChange}
             onClick={() => setProviderOHIPSearchVisible(true)}
             label="Provider OHIP#*"
+            readOnly={true}
             // readOnly={user.access_level !== "admin"}
             // logo={userType === "admin"}
           />
@@ -336,7 +349,9 @@ const BillingForm = ({
           color="#94bae8"
           setPopUpVisible={setProviderOHIPSearchVisible}
         >
-          <ReferringOHIPSearch handleClickRefOHIP={handleClickProviderOHIP} />
+          <ProviderOHIPSearch
+            handleClickProviderOHIP={handleClickProviderOHIP}
+          />
         </FakeWindow>
       )}
       {refOHIPSearchVisible && (

@@ -16,7 +16,7 @@ export const toExportCSVName = (
   const allCaption = all ? "_All" : "";
   let name = "";
 
-  if (accessLevel === "Admin" || userTitle === "Secretary") {
+  if (accessLevel === "admin") {
     name = "";
   } else {
     name = `_${staffIdToTitleAndName(staffInfos, staffId, false, false)}`;

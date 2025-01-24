@@ -44,6 +44,7 @@ import SignCellMultipleTypes from "../../UI/Tables/SignCellMultipleTypes";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import DiagnosisSearch from "./DiagnosisSearch";
 import PatientChartHealthSearch from "./PatientChartHealthSearch";
+import ProviderOHIPSearch from "./ProviderOHIPSearch";
 import ReferringOHIPSearch from "./ReferringOHIPSearch";
 
 type BillingItemProps = {
@@ -71,8 +72,8 @@ const BillingItem = ({
     created_by_id: billing.created_by_id,
     created_by_user_type: billing.created_by_user_type,
     provider_ohip_billing_nbr:
-      billing.provider_ohip_billing_nbr?.ohip_billing_nbr,
-    referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
+      billing.provider_ohip_billing_nbr?.ohip_billing_nbr || "",
+    referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr,
     patient_id: billing.patient_id,
     patient_hcn: billing.patient_infos?.HealthCard?.Number,
     patient_name: toPatientName(billing.patient_infos),
@@ -87,10 +88,15 @@ const BillingItem = ({
     non_anaesthetist_fee: billing.billing_infos?.non_anaesthetist_fee,
     updates: billing.updates,
   });
+  const [selectedProviderId, setSelectedProviderId] = useState(
+    billing.provider_id
+  );
   const [editVisible, setEditVisible] = useState(false);
   const [diagnosisSearchVisible, setDiagnosisSearchVisible] = useState(false);
   const [patientSearchVisible, setPatientSearchVisible] = useState(false);
   const [refOHIPSearchVisible, setRefOHIPSearchVisible] = useState(false);
+  const [providerOHIPSearchVisible, setProviderOHIPSearchVisible] =
+    useState(false);
   const [progress, setProgress] = useState(false);
   const userType = user.access_level;
   //Queries
@@ -106,8 +112,8 @@ const BillingItem = ({
       created_by_id: billing.created_by_id,
       created_by_user_type: billing.created_by_user_type,
       provider_ohip_billing_nbr:
-        billing.provider_ohip_billing_nbr?.ohip_billing_nbr,
-      referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
+        billing.provider_ohip_billing_nbr?.ohip_billing_nbr ?? "",
+      referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr,
       patient_id: billing.patient_id,
       patient_hcn: billing.patient_infos?.HealthCard?.Number,
       patient_name: toPatientName(billing.patient_infos),
@@ -122,6 +128,7 @@ const BillingItem = ({
       non_anaesthetist_fee: billing.billing_infos?.non_anaesthetist_fee,
       updates: billing.updates,
     });
+    setSelectedProviderId(billing.provider_id);
   }, [billing]);
 
   const fakewindowRoot = document.getElementById("fake-window");
@@ -168,6 +175,16 @@ const BillingItem = ({
     setRefOHIPSearchVisible(false);
   };
 
+  const handleClickProviderOHIP = (item: StaffType) => {
+    setErrMsgPost("");
+    setItemInfos({
+      ...itemInfos,
+      provider_ohip_billing_nbr: item.ohip_billing_nbr,
+    });
+    setSelectedProviderId(item.id);
+    setRefOHIPSearchVisible(false);
+  };
+
   const handleCancel = () => {
     setErrMsgPost("");
     setItemInfos({
@@ -177,7 +194,7 @@ const BillingItem = ({
       created_by_id: billing.created_by_id,
       created_by_user_type: billing.created_by_user_type,
       provider_ohip_billing_nbr:
-        billing.provider_ohip_billing_nbr?.ohip_billing_nbr,
+        billing.provider_ohip_billing_nbr?.ohip_billing_nbr ?? "",
       referrer_ohip_billing_nbr: billing.referrer_ohip_billing_nbr ?? null,
       patient_id: billing.patient_id,
       patient_hcn: billing.patient_infos?.HealthCard?.Number,
@@ -193,6 +210,7 @@ const BillingItem = ({
       non_anaesthetist_fee: billing.billing_infos?.non_anaesthetist_fee,
       updates: billing.updates,
     });
+    setSelectedProviderId(billing.provider_id);
     setEditVisible(false);
   };
 
@@ -234,7 +252,7 @@ const BillingItem = ({
   };
 
   const handleSubmit = async () => {
-    //Validation
+    //Validation)
     try {
       await billingItemSchema.validate(itemInfos);
     } catch (err) {
@@ -270,6 +288,7 @@ const BillingItem = ({
     const billingToPut: BillingType = {
       ...billing,
       date: itemInfos.date,
+      provider_id: selectedProviderId,
       referrer_ohip_billing_nbr: itemInfos.referrer_ohip_billing_nbr,
       patient_id: itemInfos.patient_id,
       diagnosis_id: (
@@ -378,25 +397,32 @@ const BillingItem = ({
               toSiteName(sites, itemInfos.site_id)
             )}
           </td>
-          <td>
-            <Tooltip
-              title={staffIdToTitleAndName(staffInfos, billing.provider_id)}
-              placement="top-start"
-              arrow
-            >
-              <span>{itemInfos.provider_ohip_billing_nbr}</span>
-            </Tooltip>
+          <td style={{ position: "relative" }}>
+            {editVisible ? (
+              <InputWithSearchInTable
+                name="provider_ohip_billing_nbr"
+                value={itemInfos.provider_ohip_billing_nbr}
+                onClick={() => setProviderOHIPSearchVisible(true)}
+                readOnly={true}
+              />
+            ) : (
+              <Tooltip
+                title={staffIdToTitleAndName(staffInfos, billing.provider_id)}
+                placement="top-start"
+                arrow
+              >
+                <span>{itemInfos.provider_ohip_billing_nbr}</span>
+              </Tooltip>
+            )}
           </td>
           <td style={{ position: "relative" }}>
             {editVisible ? (
-              <>
-                <InputWithSearchInTable
-                  name="referrer_ohip_billing_nbr"
-                  value={itemInfos.referrer_ohip_billing_nbr}
-                  onChange={handleChange}
-                  onClick={() => setRefOHIPSearchVisible(true)}
-                />
-              </>
+              <InputWithSearchInTable
+                name="referrer_ohip_billing_nbr"
+                value={itemInfos.referrer_ohip_billing_nbr}
+                onChange={handleChange}
+                onClick={() => setRefOHIPSearchVisible(true)}
+              />
             ) : (
               itemInfos.referrer_ohip_billing_nbr
             )}
@@ -490,6 +516,24 @@ const BillingItem = ({
               setPopUpVisible={setDiagnosisSearchVisible}
             >
               <DiagnosisSearch handleClickDiagnosis={handleClickDiagnosis} />
+            </FakeWindow>,
+            fakewindowRoot
+          )}
+        {fakewindowRoot &&
+          providerOHIPSearchVisible &&
+          createPortal(
+            <FakeWindow
+              title="PROVIDER MD OHIP# SEARCH"
+              width={800}
+              height={600}
+              x={(window.innerWidth - 800) / 2}
+              y={(window.innerHeight - 600) / 2}
+              color="#94bae8"
+              setPopUpVisible={setProviderOHIPSearchVisible}
+            >
+              <ProviderOHIPSearch
+                handleClickProviderOHIP={handleClickProviderOHIP}
+              />
             </FakeWindow>,
             fakewindowRoot
           )}
