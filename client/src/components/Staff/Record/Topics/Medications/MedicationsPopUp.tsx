@@ -1,21 +1,16 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import { useFetchAllPages } from "../../../../../hooks/reactquery/useFetchAllPages";
 import useIntersection from "../../../../../hooks/useIntersection";
-import {
-  DemographicsType,
-  MedType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+import { DemographicsType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -33,37 +28,14 @@ import { default as MedicationItem } from "./MedicationItem";
 import RxPopUp from "./Prescription/Form/RxPopUp";
 
 type MedicationsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<MedType>> | undefined;
-  topicPost: UseMutationResult<MedType, Error, Partial<MedType>, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<MedType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   demographicsInfos: DemographicsType;
 };
 
 const MedicationsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   demographicsInfos,
 }: MedicationsPopUpProps) => {
   //Hooks
@@ -81,6 +53,18 @@ const MedicationsPopUp = ({
     fetchNextPage: fetchNextPageAllergies,
     hasNextPage: hasNextPageAllergies,
   } = useTopic("ALLERGIES & ADVERSE REACTIONS", patientId);
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("MEDICATIONS & TREATMENTS", patientId);
+  const topicPost = useTopicPost("MEDICATIONS & TREATMENTS", patientId);
+  const topicPut = useTopicPut("MEDICATIONS & TREATMENTS", patientId);
+  const topicDelete = useTopicDelete("MEDICATIONS & TREATMENTS", patientId);
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(

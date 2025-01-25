@@ -1,29 +1,15 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import {
-  MessageExternalType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+import { MessageExternalType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type MessagesExternalDropDownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<MessageExternalType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: MessageExternalType[];
 };
 
-const MessagesExternalDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: MessagesExternalDropDownProps) => {
+const MessagesExternalDropDown = ({ data }: MessagesExternalDropDownProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
 
   const getSection = (message: MessageExternalType) => {
@@ -35,25 +21,11 @@ const MessagesExternalDropDown = ({
       return "Received messages";
     }
   };
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages
-    .flatMap((page) => page.items)
-    .filter(
-      (message) =>
-        (message.from_staff_id && message.from_staff_id === user.id) ||
-        (message.to_staff_id && message.to_staff_id === user.id)
-    );
+  const datas = data.filter(
+    (message) =>
+      (message.from_staff_id && message.from_staff_id === user.id) ||
+      (message.to_staff_id && message.to_staff_id === user.id)
+  );
 
   return (
     <div className="topic-content">

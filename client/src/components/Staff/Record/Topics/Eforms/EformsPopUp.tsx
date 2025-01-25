@@ -1,20 +1,19 @@
 import { useState } from "react";
 
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
   EformType,
   MessageAttachmentType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -34,39 +33,16 @@ import EformEditPdfViewer from "./EformEditPdfViewer";
 import EformItem from "./EformItem";
 
 type EformsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<EformType>> | undefined;
-  topicPost: UseMutationResult<EformType, Error, Partial<EformType>, void>;
-  topicPut: UseMutationResult<EformType, Error, EformType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<EformType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
+
   demographicsInfos: DemographicsType;
 };
 
 const EformsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
+
   demographicsInfos,
 }: EformsPopUpProps) => {
   //Hooks
@@ -76,6 +52,18 @@ const EformsPopUp = ({
   const [eformToEdit, setEformToEdit] = useState<EformType | undefined>();
   const [editVisible, setEditVisible] = useState(false);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("E-FORMS", patientId);
+  const topicPost = useTopicPost("E-FORMS", patientId);
+  const topicPut = useTopicPut("E-FORMS", patientId);
+  const topicDelete = useTopicDelete("E-FORMS", patientId);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

@@ -1,9 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-  useReportsReceived,
-  useReportsSent,
-} from "../../../../hooks/reactquery/queries/reportsQueries";
-import { DemographicsType } from "../../../../types/api";
+import { DemographicsType, ReportType } from "../../../../types/api";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ReportsDropDown from "../Topics/Reports/ReportsDropDown";
 import ReportsPopUp from "../Topics/Reports/ReportsPopUp";
@@ -17,6 +13,8 @@ type PatientTopicReportsProps = {
   contentsVisible: boolean;
   side: "right" | "left";
   demographicsInfos: DemographicsType;
+  reportsReceived: ReportType[];
+  reportsSent: ReportType[];
 };
 
 const PatientTopicReports = ({
@@ -27,28 +25,14 @@ const PatientTopicReports = ({
   contentsVisible,
   side,
   demographicsInfos,
+  reportsReceived,
+  reportsSent,
 }: PatientTopicReportsProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
   //Queries
-  const {
-    data: reportsReceived,
-    isPending: isPendingReportsReceived,
-    error: errorReportsReceived,
-    isFetchingNextPage: isFetchingNextPageReportsReceived,
-    fetchNextPage: fetchNextPageReportsReceived,
-    isFetching: isFetchingReportsReceived,
-  } = useReportsReceived(patientId);
-  const {
-    data: reportsSent,
-    isPending: isPendingReportsSent,
-    error: errorReportsSent,
-    isFetchingNextPage: isFetchingNextPageReportsSent,
-    fetchNextPage: fetchNextPageReportsSent,
-    isFetching: isFetchingReportsSent,
-  } = useReportsSent(patientId);
 
   const TOPIC_STYLE = { color: textColor, background: backgroundColor };
 
@@ -91,11 +75,7 @@ const PatientTopicReports = ({
       >
         <ReportsDropDown
           reportsReceived={reportsReceived}
-          isPendingReportsReceived={isPendingReportsReceived}
-          errorReportsReceived={errorReportsReceived}
           reportsSent={reportsSent}
-          isPendingReportsSent={isPendingReportsSent}
-          errorReportsSent={errorReportsSent}
         />
         {popUpVisible && (
           <FakeWindow
@@ -108,20 +88,6 @@ const PatientTopicReports = ({
             setPopUpVisible={setPopUpVisible}
           >
             <ReportsPopUp
-              reportsReceived={reportsReceived}
-              isPendingReportsReceived={isPendingReportsReceived}
-              errorReportsReceived={errorReportsReceived}
-              isFetchingNextPageReportsReceived={
-                isFetchingNextPageReportsReceived
-              }
-              fetchNextPageReportsReceived={fetchNextPageReportsReceived}
-              isFetchingReportsReceived={isFetchingReportsReceived}
-              reportsSent={reportsSent}
-              isPendingReportsSent={isPendingReportsSent}
-              errorReportsSent={errorReportsSent}
-              isFetchingNextPageReportsSent={isFetchingNextPageReportsSent}
-              fetchNextPageReportsSent={fetchNextPageReportsSent}
-              isFetchingReportsSent={isFetchingReportsSent}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               demographicsInfos={demographicsInfos}

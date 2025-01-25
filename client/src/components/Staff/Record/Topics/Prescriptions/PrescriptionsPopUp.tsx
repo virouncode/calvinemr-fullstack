@@ -1,17 +1,15 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
   MessageAttachmentType,
-  PrescriptionType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
@@ -27,34 +25,27 @@ import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExte
 import PrescriptionItem from "./PrescriptionItem";
 
 type PrescriptionsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<PrescriptionType>> | undefined;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
-  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<PrescriptionType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   demographicsInfos: DemographicsType;
+  patientId: number;
+  setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PrescriptionsPopUp = ({
-  topicDatas,
-  isPending,
-  error,
-  setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   demographicsInfos,
+  patientId,
+  setPopUpVisible,
 }: PrescriptionsPopUpProps) => {
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("PAST PRESCRIPTIONS", patientId);
+  const topicPost = useTopicPost("PAST PRESCRIPTIONS", patientId);
+  const topicPut = useTopicPut("PAST PRESCRIPTIONS", patientId);
+  const topicDelete = useTopicDelete("PAST PRESCRIPTIONS", patientId);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

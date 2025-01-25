@@ -1,9 +1,4 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import {
   useReportDelete,
@@ -14,8 +9,6 @@ import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
   MessageAttachmentType,
-  ReportType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import Button from "../../../../UI/Buttons/Button";
@@ -33,52 +26,18 @@ import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExte
 import ReportForm from "./ReportForm";
 import ReportItemReceived from "./ReportItemReceived";
 import ReportItemSent from "./ReportItemSent";
+import {
+  useReportsReceived,
+  useReportsSent,
+} from "../../../../../hooks/reactquery/queries/reportsQueries";
 
 type ReportsPopUpProps = {
-  reportsReceived: InfiniteData<XanoPaginatedType<ReportType>> | undefined;
-  isPendingReportsReceived: boolean;
-  errorReportsReceived: Error | null;
-  isFetchingNextPageReportsReceived: boolean;
-  fetchNextPageReportsReceived: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ReportType>, unknown>,
-      Error
-    >
-  >;
-  isFetchingReportsReceived: boolean;
-  reportsSent: InfiniteData<XanoPaginatedType<ReportType>> | undefined;
-  isPendingReportsSent: boolean;
-  errorReportsSent: Error | null;
-  isFetchingNextPageReportsSent: boolean;
-  fetchNextPageReportsSent: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ReportType>, unknown>,
-      Error
-    >
-  >;
-  isFetchingReportsSent: boolean;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   demographicsInfos: DemographicsType;
 };
 
 const ReportsPopUp = ({
-  reportsReceived,
-  isPendingReportsReceived,
-  errorReportsReceived,
-  isFetchingNextPageReportsReceived,
-  fetchNextPageReportsReceived,
-  isFetchingReportsReceived,
-  reportsSent,
-  isPendingReportsSent,
-  errorReportsSent,
-  isFetchingNextPageReportsSent,
-  fetchNextPageReportsSent,
-  isFetchingReportsSent,
   patientId,
   setPopUpVisible,
   demographicsInfos,
@@ -101,6 +60,22 @@ const ReportsPopUp = ({
   const reportPost = useReportPost();
   const reportPut = useReportPut(patientId);
   const reportDelete = useReportDelete(patientId);
+  const {
+    data: reportsReceived,
+    isPending: isPendingReportsReceived,
+    error: errorReportsReceived,
+    isFetchingNextPage: isFetchingNextPageReportsReceived,
+    fetchNextPage: fetchNextPageReportsReceived,
+    isFetching: isFetchingReportsReceived,
+  } = useReportsReceived(patientId);
+  const {
+    data: reportsSent,
+    isPending: isPendingReportsSent,
+    error: errorReportsSent,
+    isFetchingNextPage: isFetchingNextPageReportsSent,
+    fetchNextPage: fetchNextPageReportsSent,
+    isFetching: isFetchingReportsSent,
+  } = useReportsSent(patientId);
   //Intersection observer
   const { divRef: rootReceivedRef, lastItemRef: lastItemReceivedRef } =
     useIntersection(

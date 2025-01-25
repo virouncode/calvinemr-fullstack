@@ -1,18 +1,16 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
-  ConsentFormType,
   DemographicsType,
   MessageAttachmentType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
@@ -32,44 +30,14 @@ import ConsentForm from "./ConsentForm";
 import ConsentFormItem from "./ConsentFormItem";
 
 type ConsentFormsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<ConsentFormType>> | undefined;
-  topicPost: UseMutationResult<
-    ConsentFormType,
-    Error,
-    Partial<ConsentFormType>,
-    void
-  >;
-  topicPut: UseMutationResult<ConsentFormType, Error, ConsentFormType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ConsentFormType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   demographicsInfos: DemographicsType;
 };
 
 const ConsentFormsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   demographicsInfos,
 }: ConsentFormsPopUpProps) => {
   //Hooks
@@ -79,6 +47,18 @@ const ConsentFormsPopUp = ({
   const [errMsgPost, setErrMsgPost] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("CONSENT FORMS", patientId);
+  const topicPost = useTopicPost("CONSENT FORMS", patientId);
+  const topicPut = useTopicPut("CONSENT FORMS", patientId);
+  const topicDelete = useTopicDelete("CONSENT FORMS", patientId);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

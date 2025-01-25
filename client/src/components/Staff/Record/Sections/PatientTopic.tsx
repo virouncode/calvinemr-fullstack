@@ -1,18 +1,6 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import {
-  useTopicDelete,
-  useTopicPost,
-  useTopicPut,
-} from "../../../../hooks/reactquery/mutations/topicMutations";
-import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
 import {
   AlertType,
   AllergyType,
@@ -24,14 +12,12 @@ import {
   DemographicsType,
   EformType,
   FamilyHistoryType,
-  ImmunizationType,
   LetterType,
   MedType,
   MessageExternalType,
   MessageType,
   PastHealthType,
   PersonalHistoryType,
-  PharmacyType,
   PregnancyType,
   PrescriptionType,
   ProblemListType,
@@ -40,7 +26,7 @@ import {
   RiskFactorType,
   TodoType,
   TopicType,
-  XanoPaginatedType,
+  TopicUnionType,
 } from "../../../../types/api";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
@@ -107,6 +93,7 @@ type PatientTopicProps = {
   contentsVisible?: boolean;
   side: "right" | "left";
   demographicsInfos?: DemographicsType;
+  data?: TopicUnionType[];
 };
 
 const PatientTopic = ({
@@ -119,6 +106,7 @@ const PatientTopic = ({
   contentsVisible,
   side,
   demographicsInfos,
+  data,
 }: PatientTopicProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
@@ -126,18 +114,6 @@ const PatientTopic = ({
   const triangleRef = useRef<SVGSVGElement | null>(null);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   const isLargeScreen = useMediaQuery("(min-width: 1280px)");
-  //Queries
-  const {
-    data: topicDatas,
-    isPending,
-    error,
-    isFetchingNextPage,
-    fetchNextPage,
-    isFetching,
-  } = useTopic(topic, patientId);
-  const topicPost = useTopicPost(topic, patientId);
-  const topicPut = useTopicPut(topic, patientId);
-  const topicDelete = useTopicDelete(topic, patientId);
 
   //STYLE
   const TOPIC_STYLE = { color: textColor, background: backgroundColor };
@@ -200,15 +176,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PAST HEALTH */}
         {topic === "PAST HEALTH" && (
-          <PastHealthDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<PastHealthType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <PastHealthDropDown data={data as PastHealthType[]} />
         )}
         {topic === "PAST HEALTH" && popUpVisible && (
           <FakeWindow
@@ -221,42 +189,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <PastHealthPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<PastHealthType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  PastHealthType,
-                  Error,
-                  Partial<PastHealthType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  PastHealthType,
-                  Error,
-                  PastHealthType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<PastHealthType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
             />
@@ -265,15 +197,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* FAMILY HISTORY */}
         {topic === "FAMILY HISTORY" && (
-          <FamilyHistoryDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<FamilyHistoryType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <FamilyHistoryDropDown data={data as FamilyHistoryType[]} />
         )}
         {topic === "FAMILY HISTORY" && popUpVisible && (
           <FakeWindow
@@ -286,42 +210,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <FamilyHistoryPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<FamilyHistoryType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  FamilyHistoryType,
-                  Error,
-                  Partial<FamilyHistoryType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  FamilyHistoryType,
-                  Error,
-                  FamilyHistoryType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<FamilyHistoryType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
             />
@@ -330,15 +218,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* RELATIONSHIPS */}
         {topic === "RELATIONSHIPS" && (
-          <RelationshipsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<RelationshipType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <RelationshipsDropDown data={data as RelationshipType[]} />
         )}
         {topic === "RELATIONSHIPS" && popUpVisible && (
           <FakeWindow
@@ -351,42 +231,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <RelationshipsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<RelationshipType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  RelationshipType,
-                  Error,
-                  Partial<RelationshipType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  RelationshipType,
-                  Error,
-                  RelationshipType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<RelationshipType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
             />
@@ -395,15 +239,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* ALERTS AND SPECIAL NEEDS */}
         {topic === "ALERTS & SPECIAL NEEDS" && (
-          <AlertsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<AlertType>, unknown>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <AlertsDropDown data={data as AlertType[]} />
         )}
         {topic === "ALERTS & SPECIAL NEEDS" && popUpVisible && (
           <FakeWindow
@@ -416,54 +252,15 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <AlertsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<AlertType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  AlertType,
-                  Error,
-                  Partial<AlertType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<AlertType, Error, AlertType, void>
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<AlertType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/* RISK FACTORS */}
         {topic === "RISK FACTORS" && (
-          <RisksDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<RiskFactorType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <RisksDropDown data={data as RiskFactorType[]} />
         )}
         {topic === "RISK FACTORS" && popUpVisible && (
           <FakeWindow
@@ -476,57 +273,15 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <RisksPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<RiskFactorType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  RiskFactorType,
-                  Error,
-                  Partial<RiskFactorType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  RiskFactorType,
-                  Error,
-                  RiskFactorType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<RiskFactorType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/* MEDICATIONS & TREATMENTS */}
         {topic === "MEDICATIONS & TREATMENTS" && (
-          <MedicationsDropDown
-            topicDatas={
-              topicDatas as InfiniteData<XanoPaginatedType<MedType>> | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <MedicationsDropDown data={data as MedType[]} />
         )}
         {topic === "MEDICATIONS & TREATMENTS" && popUpVisible && (
           <FakeWindow
@@ -539,52 +294,16 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <MedicationsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<MedType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  MedType,
-                  Error,
-                  Partial<MedType>,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               demographicsInfos={demographicsInfos as DemographicsType}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<MedType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/* PAST PRESCRIPTIONS */}
         {topic === "PAST PRESCRIPTIONS" && (
-          <PrescriptionsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<PrescriptionType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <PrescriptionsDropDown data={data as PrescriptionType[]} />
         )}
         {topic === "PAST PRESCRIPTIONS" && popUpVisible && (
           <FakeWindow
@@ -597,28 +316,9 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <PrescriptionsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<PrescriptionType>>
-                  | undefined
-              }
-              isPending={isPending}
-              error={error}
-              setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<PrescriptionType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
-              topicDelete={topicDelete}
               demographicsInfos={demographicsInfos as DemographicsType}
+              setPopUpVisible={setPopUpVisible}
+              patientId={patientId}
             />
           </FakeWindow>
         )}
@@ -640,61 +340,15 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <PharmaciesPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<PharmacyType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  PharmacyType,
-                  Error,
-                  Partial<PharmacyType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  PharmacyType,
-                  Error,
-                  PharmacyType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               demographicsInfos={demographicsInfos as DemographicsType}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<PharmacyType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/*E-FORMS */}
-        {topic === "E-FORMS" && (
-          <EformsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<EformType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
-        )}
+        {topic === "E-FORMS" && <EformsDropDown data={data as EformType[]} />}
         {topic === "E-FORMS" && popUpVisible && (
           <FakeWindow
             title={`ELECTRONIC FORMS of ${patientName}`}
@@ -706,39 +360,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <EformsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<EformType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  EformType,
-                  Error,
-                  Partial<EformType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<EformType, Error, EformType, void>
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<EformType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               demographicsInfos={demographicsInfos as DemographicsType}
             />
           </FakeWindow>
@@ -746,15 +369,7 @@ const PatientTopic = ({
         {/*******************/}
         {/*CONSENT FORMS */}
         {topic === "CONSENT FORMS" && (
-          <ConsentFormsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<ConsentFormType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <ConsentFormsDropDown data={data as ConsentFormType[]} />
         )}
         {topic === "CONSENT FORMS" && popUpVisible && (
           <FakeWindow
@@ -767,44 +382,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <ConsentFormsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<ConsentFormType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  EformType,
-                  Error,
-                  Partial<ConsentFormType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  ConsentFormType,
-                  Error,
-                  ConsentFormType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<ConsentFormType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               demographicsInfos={demographicsInfos as DemographicsType}
             />
           </FakeWindow>
@@ -812,15 +391,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* REMINDERS */}
         {topic === "REMINDERS" && (
-          <RemindersDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<ReminderType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <RemindersDropDown data={data as ReminderType[]} />
         )}
         {topic === "REMINDERS" && popUpVisible && (
           <FakeWindow
@@ -833,58 +404,14 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <RemindersPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<ReminderType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  ReminderType,
-                  Error,
-                  Partial<ReminderType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  ReminderType,
-                  Error,
-                  ReminderType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<ReminderType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/* LETTERS/REFERRALS */}
         {topic === "LETTERS/REFERRALS" && (
-          <LettersDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<LetterType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <LettersDropDown data={data as LetterType[]} />
         )}
         {topic === "LETTERS/REFERRALS" && popUpVisible && (
           <FakeWindow
@@ -897,44 +424,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <LettersPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<LetterType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  LetterType,
-                  Error,
-                  Partial<LetterType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  LetterType,
-                  Error,
-                  LetterType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<LetterType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               patientName={patientName}
               demographicsInfos={demographicsInfos as DemographicsType}
             />
@@ -942,15 +433,7 @@ const PatientTopic = ({
         )}
         {/* PERSONAL HISTORY */}
         {topic === "PERSONAL HISTORY" && (
-          <PersonalHistoryDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<PersonalHistoryType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <PersonalHistoryDropDown data={data as PersonalHistoryType[]} />
         )}
         {topic === "PERSONAL HISTORY" && popUpVisible && (
           <FakeWindow
@@ -963,29 +446,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <PersonalHistoryPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<PersonalHistoryType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  PersonalHistoryType,
-                  Error,
-                  Partial<PersonalHistoryType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  PersonalHistoryType,
-                  Error,
-                  PersonalHistoryType,
-                  void
-                >
-              }
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
             />
@@ -994,15 +454,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* CARE ELEMENTS */}
         {topic === "CARE ELEMENTS" && (
-          <CareElementsDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<CareElementType>, unknown>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <CareElementsDropDown data={data as CareElementType[]} />
         )}
         {topic === "CARE ELEMENTS" && popUpVisible && (
           <FakeWindow
@@ -1015,29 +467,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <CareElementsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<CareElementType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  CareElementType,
-                  Error,
-                  Partial<CareElementType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  CareElementType,
-                  Error,
-                  CareElementType,
-                  void
-                >
-              }
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               patientName={patientName}
               setPopUpVisible={setPopUpVisible}
@@ -1047,15 +476,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* PROBLEM LIST */}
         {topic === "PROBLEM LIST" && (
-          <ProblemListDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<ProblemListType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <ProblemListDropDown data={data as ProblemListType[]} />
         )}
         {topic === "PROBLEM LIST" && popUpVisible && (
           <FakeWindow
@@ -1068,59 +489,15 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <ProblemListPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<ProblemListType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  ProblemListType,
-                  Error,
-                  Partial<ProblemListType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  ProblemListType,
-                  Error,
-                  ProblemListType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<ProblemListType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/* PREGNANCIES */}
         {topic === "PREGNANCIES" && (
-          <PregnanciesDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<PregnancyType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <PregnanciesDropDown data={data as PregnancyType[]} />
         )}
         {topic === "PREGNANCIES" && popUpVisible && (
           <FakeWindow
@@ -1133,44 +510,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <PregnanciesPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<PregnancyType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  PregnancyType,
-                  Error,
-                  Partial<PregnancyType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  PregnancyType,
-                  Error,
-                  PregnancyType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<PregnancyType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
@@ -1178,16 +519,7 @@ const PatientTopic = ({
         {/* CYCLES */}
         {topic === "CYCLES" && (
           <CycleDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<CycleType>>
-                | undefined
-            }
-            topicPut={
-              topicPut as UseMutationResult<CycleType, Error, CycleType, void>
-            }
-            isPending={isPending}
-            error={error}
+            data={data as CycleType[]}
             demographicsInfos={demographicsInfos as DemographicsType}
           />
         )}
@@ -1202,39 +534,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <CyclesPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<CycleType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  CycleType,
-                  Error,
-                  Partial<CycleType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<CycleType, Error, CycleType, void>
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<CycleType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
               demographicsInfos={demographicsInfos as DemographicsType}
             />
           </FakeWindow>
@@ -1242,15 +543,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* ALLERGIES */}
         {topic === "ALLERGIES & ADVERSE REACTIONS" && (
-          <AllergiesDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<AllergyType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <AllergiesDropDown data={data as AllergyType[]} />
         )}
         {topic === "ALLERGIES & ADVERSE REACTIONS" && popUpVisible && (
           <FakeWindow
@@ -1263,44 +556,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <AllergiesPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<AllergyType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  AllergyType,
-                  Error,
-                  Partial<AllergyType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  AllergyType,
-                  Error,
-                  AllergyType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<AllergyType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
@@ -1317,60 +574,16 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <ImmunizationsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<ImmunizationType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  ImmunizationType,
-                  Error,
-                  Partial<ImmunizationType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  ImmunizationType,
-                  Error,
-                  ImmunizationType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               patientDob={patientDob as number}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<ImmunizationType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
         {/*******************/}
         {/* APPOINTMENTS */}
         {topic === "APPOINTMENTS" && (
-          <AppointmentsDropdown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<AppointmentType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <AppointmentsDropdown data={data as AppointmentType[]} />
         )}
         {topic === "APPOINTMENTS" && popUpVisible && (
           <FakeWindow
@@ -1383,45 +596,8 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <AppointmentsPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<AppointmentType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  AppointmentType,
-                  Error,
-                  Partial<AppointmentType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  AppointmentType,
-                  Error,
-                  AppointmentType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
-              demographicsInfos={demographicsInfos as DemographicsType}
-              isFetchingNextPage={isFetchingNextPage}
-              fetchNextPage={
-                fetchNextPage as (
-                  options?: FetchNextPageOptions
-                ) => Promise<
-                  InfiniteQueryObserverResult<
-                    InfiniteData<XanoPaginatedType<AppointmentType>, unknown>,
-                    Error
-                  >
-                >
-              }
-              isFetching={isFetching}
             />
           </FakeWindow>
         )}
@@ -1429,15 +605,7 @@ const PatientTopic = ({
 
         {/* CHECKLIST */}
         {topic === "CHECKLIST" && (
-          <ChecklistDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<ChecklistType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <ChecklistDropDown data={data as ChecklistType[]} />
         )}
         {topic === "CHECKLIST" && popUpVisible && (
           <FakeWindow
@@ -1450,30 +618,6 @@ const PatientTopic = ({
             setPopUpVisible={setPopUpVisible}
           >
             <ChecklistPopUp
-              topicDatas={
-                topicDatas as
-                  | InfiniteData<XanoPaginatedType<ChecklistType>>
-                  | undefined
-              }
-              topicPost={
-                topicPost as UseMutationResult<
-                  ChecklistType,
-                  Error,
-                  Partial<ChecklistType>,
-                  void
-                >
-              }
-              topicPut={
-                topicPut as UseMutationResult<
-                  ChecklistType,
-                  Error,
-                  ChecklistType,
-                  void
-                >
-              }
-              topicDelete={topicDelete}
-              isPending={isPending}
-              error={error}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
             />
@@ -1482,15 +626,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* MESSAGES ABOUT PATIENT */}
         {topic === "MESSAGES ABOUT PATIENT" && (
-          <MessagesDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<MessageType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <MessagesDropDown data={data as MessageType[]} />
         )}
         {topic === "MESSAGES ABOUT PATIENT" && popUpVisible && (
           <FakeWindow
@@ -1524,15 +660,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* MESSAGES WITH PATIENT */}
         {topic === "MESSAGES WITH PATIENT" && (
-          <MessagesExternalDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<MessageExternalType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <MessagesExternalDropDown data={data as MessageExternalType[]} />
         )}
         {topic === "MESSAGES WITH PATIENT" && popUpVisible && (
           <FakeWindow
@@ -1580,15 +708,7 @@ const PatientTopic = ({
         {/*******************/}
         {/* TO-DOS ABOUT PATIENT */}
         {topic === "TO-DOS ABOUT PATIENT" && (
-          <TodosDropDown
-            topicDatas={
-              topicDatas as
-                | InfiniteData<XanoPaginatedType<TodoType>>
-                | undefined
-            }
-            isPending={isPending}
-            error={error}
-          />
+          <TodosDropDown data={data as TodoType[]} />
         )}
         {topic === "TO-DOS ABOUT PATIENT" && popUpVisible && (
           <FakeWindow

@@ -1,48 +1,21 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import useUserContext from "../../../../../hooks/context/useUserContext";
-import {
-  DemographicsType,
-  GroupType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+import { DemographicsType, GroupType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type GroupsDropDownProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<GroupType>, unknown> | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: GroupType[];
   patientId: number;
 };
 
-const GroupsDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-  patientId,
-}: GroupsDropDownProps) => {
+const GroupsDropDown = ({ data, patientId }: GroupsDropDownProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-  const myGroups = datas
+  const myGroups = data
     ?.filter(({ global }) => !global)
     .filter((item) => item.staff_id === user.id);
 
-  const globalGroups = datas?.filter(({ global }) => global);
+  const globalGroups = data?.filter(({ global }) => global);
 
   return (
     <div className="topic-content">

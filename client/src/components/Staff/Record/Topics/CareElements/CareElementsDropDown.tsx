@@ -1,4 +1,3 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
 import {
   toCodeTableName,
@@ -8,42 +7,18 @@ import {
   CareElementAdditionalType,
   CareElementLastDatasType,
   CareElementType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import {
   cmToFeetAndInches,
   kgToLbs,
 } from "../../../../../utils/measurements/measurements";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type CareElementsDropDownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<CareElementType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: CareElementType[];
 };
 
-const CareElementsDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: CareElementsDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-
-  const datas = topicDatas?.pages?.flatMap((page) => page.items)[0];
+const CareElementsDropDown = ({ data }: CareElementsDropDownProps) => {
+  const datas = data[0];
   const additionalDatas: CareElementAdditionalType[] = datas?.Additional ?? [];
 
   const lastDatas: CareElementLastDatasType | null = datas

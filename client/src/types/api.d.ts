@@ -2169,3 +2169,60 @@ export type XMLExportFunctionType =
   | ((jsObj: RelationshipType, patientInfos: DemographicsType) => string)
   | ((jsObj: ReportType) => string)
   | ((jsObj: RiskFactor) => string);
+
+export type PatientRecordType = [
+  PastHealthType[],
+  FamilyHistoryType[],
+  RelationshipType[],
+  AlertType[],
+  RiskFactorType[],
+  MedType[],
+  PrescriptionType[],
+  DoctorType[],
+  EformType[],
+  ConsentFormType[],
+  ReminderType[],
+  LetterType[],
+  GroupType[],
+  PersonalHistoryType[],
+  CareElementType[],
+  ProblemListType[],
+  PregnancyType[],
+  CycleType[],
+  AllergyType[],
+  ReportType[],
+  ReportType[],
+  ImmunizationType[],
+  AppointmentType[],
+  ChecklistType[],
+  MessageType[],
+  MessageExternalType[],
+  TodoType[]
+];
+
+export type TopicUnionType =
+  | PastHealthType
+  | FamilyHistoryType
+  | RelationshipType
+  | AlertType
+  | RiskFactorType
+  | MedType
+  | PrescriptionType
+  | PharmacyType
+  | EformType
+  | ConsentFormType
+  | ReminderType
+  | LetterType
+  | GroupType
+  | PersonalHistoryType
+  | CareElementType
+  | ProblemListType
+  | PregnancyType
+  | CycleType
+  | AllergyType
+  | ImmunizationType
+  | CheckListType
+  | AppointmentType
+  | MessageType
+  | MessageExternalType
+  | TodoType;

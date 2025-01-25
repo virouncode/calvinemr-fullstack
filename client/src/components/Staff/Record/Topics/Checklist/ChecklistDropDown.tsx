@@ -1,41 +1,17 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { ChecklistType, XanoPaginatedType } from "../../../../../types/api";
+import { ChecklistType } from "../../../../../types/api";
 import {
   isTestExpired,
   splitChecklistResults,
 } from "../../../../../utils/checklist/checklistUtils";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type ChecklistDropDownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<ChecklistType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: ChecklistType[];
 };
 
-const ChecklistDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: ChecklistDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
+const ChecklistDropDown = ({ data }: ChecklistDropDownProps) => {
   const splittedChecklistResults = splitChecklistResults(
-    datas as ChecklistType[]
+    data as ChecklistType[]
   );
   const lastChecklistResults = splittedChecklistResults.map(
     (result) => result[0]
@@ -43,7 +19,7 @@ const ChecklistDropDown = ({
 
   return (
     <div className="topic-content">
-      {datas && datas.length > 0 ? (
+      {data && data.length > 0 ? (
         <ul>
           {lastChecklistResults.map(
             (result) =>

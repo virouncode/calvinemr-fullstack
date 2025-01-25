@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useTopic } from "../../../../hooks/reactquery/queries/topicQueries";
+import { GroupType } from "../../../../types/api";
 import GroupsDropDown from "../Topics/Groups/GroupsDropDown";
 import PatientTopicHeaderNoPopUp from "./PatientTopicHeaderNoPopUp";
 
@@ -9,6 +9,7 @@ type PatientTopicGroupsProps = {
   patientId: number;
   contentsVisible?: boolean;
   side: "right" | "left";
+  data: GroupType[];
 };
 
 const PatientTopicGroups = ({
@@ -17,12 +18,12 @@ const PatientTopicGroups = ({
   patientId,
   contentsVisible,
   side,
+  data,
 }: PatientTopicGroupsProps) => {
   //Hooks
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
   //Queries
-  const { data: topicDatas, isPending, error } = useTopic("GROUPS", patientId);
 
   const TOPIC_STYLE = { color: textColor, background: backgroundColor };
 
@@ -60,12 +61,7 @@ const PatientTopicGroups = ({
         }
         ref={containerRef}
       >
-        <GroupsDropDown
-          topicDatas={topicDatas}
-          isPending={isPending}
-          error={error}
-          patientId={patientId}
-        />
+        <GroupsDropDown data={data} patientId={patientId} />
       </div>
     </div>
   );

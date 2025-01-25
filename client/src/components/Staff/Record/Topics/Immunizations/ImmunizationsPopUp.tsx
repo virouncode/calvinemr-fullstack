@@ -1,11 +1,10 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { ImmunizationType, XanoPaginatedType } from "../../../../../types/api";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -15,49 +14,31 @@ import ImmunizationsTable from "./ImmunizationsTable";
 import RecImmunizationsTable from "./RecImmunizationsTable";
 
 type ImmunizationsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<ImmunizationType>> | undefined;
-  topicPost: UseMutationResult<
-    ImmunizationType,
-    Error,
-    Partial<ImmunizationType>,
-    void
-  >;
-  topicPut: UseMutationResult<ImmunizationType, Error, ImmunizationType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   patientDob: number;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ImmunizationType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
 const ImmunizationsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
   patientDob,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
 }: ImmunizationsPopUpProps) => {
   //HOOKS
   const [errMsgPost, setErrMsgPost] = useState("");
   const editCounter = useRef(0);
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("IMMUNIZATIONS", patientId);
+  const topicPost = useTopicPost("IMMUNIZATIONS", patientId);
+  const topicPut = useTopicPut("IMMUNIZATIONS", patientId);
+  const topicDelete = useTopicDelete("IMMUNIZATIONS", patientId);
 
   //HANDLERS
 

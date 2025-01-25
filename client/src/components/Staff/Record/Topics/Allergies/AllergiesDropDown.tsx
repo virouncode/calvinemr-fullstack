@@ -1,39 +1,16 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { AllergyType, XanoPaginatedType } from "../../../../../types/api";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
+import { AllergyType } from "../../../../../types/api";
 
 type AllergiesDropDownProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<AllergyType>, unknown> | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: AllergyType[];
 };
 
-const AllergiesDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: AllergiesDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-
+const AllergiesDropDown = ({ data }: AllergiesDropDownProps) => {
   return (
     <div className="topic-content">
-      {datas && datas.length >= 1 ? (
+      {data && data.length >= 1 ? (
         <ul>
-          {datas.slice(0, 4).map((item) => (
+          {data.slice(0, 4).map((item) => (
             <li key={item.id} className="topic-content__item">
               - {item.OffendingAgentDescription}
             </li>

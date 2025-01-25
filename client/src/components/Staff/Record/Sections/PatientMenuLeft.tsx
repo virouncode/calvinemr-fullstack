@@ -1,5 +1,5 @@
 import React from "react";
-import { DemographicsType } from "../../../../types/api";
+import { DemographicsType, PatientRecordType } from "../../../../types/api";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import PatientTopic from "./PatientTopic";
 import PatientTopicDemographics from "./PatientTopicDemographics";
@@ -10,13 +10,31 @@ type PatientMenuLeftProps = {
   demographicsInfos: DemographicsType;
   patientId: number;
   contentsVisible: boolean;
+  patientRecord: PatientRecordType;
 };
 
 const PatientMenuLeft = ({
   demographicsInfos,
   patientId,
   contentsVisible,
+  patientRecord,
 }: PatientMenuLeftProps) => {
+  const [
+    pastHealth,
+    familyHistory,
+    relationships,
+    alerts,
+    risks,
+    medications,
+    prescriptions,
+    doctors,
+    eforms,
+    consentForms,
+    reminders,
+    letters,
+    groups,
+    ...rest
+  ] = patientRecord;
   return (
     <div className="patient-record__menu">
       <PatientTopicDemographics
@@ -36,6 +54,7 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={pastHealth}
       />
 
       <PatientTopic
@@ -46,6 +65,7 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={familyHistory}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -55,6 +75,7 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={relationships}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -64,6 +85,7 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={alerts}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -73,8 +95,8 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={risks}
       />
-
       <PatientTopic
         textColor="#FEFEFE"
         backgroundColor="#931621"
@@ -84,6 +106,7 @@ const PatientMenuLeft = ({
         contentsVisible={contentsVisible}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={medications}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -94,6 +117,7 @@ const PatientMenuLeft = ({
         contentsVisible={contentsVisible}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={prescriptions}
       />
       <PatientTopicDoctors
         textColor="#FEFEFE"
@@ -103,6 +127,7 @@ const PatientMenuLeft = ({
         contentsVisible={contentsVisible}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={doctors}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -123,6 +148,7 @@ const PatientMenuLeft = ({
         contentsVisible={contentsVisible}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={eforms}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -133,6 +159,7 @@ const PatientMenuLeft = ({
         patientName={toPatientName(demographicsInfos)}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={consentForms}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -142,6 +169,7 @@ const PatientMenuLeft = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="left"
+        data={reminders}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -152,6 +180,7 @@ const PatientMenuLeft = ({
         patientName={toPatientName(demographicsInfos)}
         side="left"
         demographicsInfos={demographicsInfos}
+        data={letters}
       />
       <PatientTopicGroups
         textColor="#FEFEFE"
@@ -159,6 +188,7 @@ const PatientMenuLeft = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="left"
+        data={groups}
       />
     </div>
   );

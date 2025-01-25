@@ -1,41 +1,18 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { EformType, XanoPaginatedType } from "../../../../../types/api";
+import { EformType } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import { showDocument } from "../../../../../utils/files/showDocument";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type EformsDropDownProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<EformType>, unknown> | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: EformType[];
 };
 
-const EformsDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: EformsDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-
+const EformsDropDown = ({ data }: EformsDropDownProps) => {
   return (
     <div className="topic-content">
-      {datas && datas.length > 0 ? (
+      {data && data.length > 0 ? (
         <ul>
-          {datas.slice(0, 4).map((item) => (
+          {data.slice(0, 4).map((item) => (
             <li
               key={item.id}
               onClick={() => showDocument(item.file.url, item.file.mime)}

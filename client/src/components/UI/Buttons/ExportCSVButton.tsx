@@ -27,7 +27,6 @@ const ExportCSVButton = ({
 }: ExportCSVButtonProps) => {
   const { user } = useUserContext() as { user: AdminType | UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-  console.log("billings", billings);
 
   return (
     <button className="btn">

@@ -1,5 +1,5 @@
 import React from "react";
-import { DemographicsType } from "../../../../types/api";
+import { DemographicsType, PatientRecordType } from "../../../../types/api";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import PatientTopic from "./PatientTopic";
 import PatientTopicAgeCalculator from "./PatientTopicAgeCalculator";
@@ -11,13 +11,44 @@ type PatientMenuRightProps = {
   demographicsInfos: DemographicsType;
   patientId: number;
   contentsVisible: boolean;
+  patientRecord: PatientRecordType;
 };
 
 const PatientMenuRight = ({
   demographicsInfos,
   patientId,
   contentsVisible,
+  patientRecord,
 }: PatientMenuRightProps) => {
+  const [
+    pastHealth,
+    familyHistory,
+    relationships,
+    alerts,
+    risks,
+    medications,
+    prescriptions,
+    doctors,
+    eforms,
+    consentForms,
+    reminders,
+    letters,
+    groups,
+    personalHistory,
+    careElements,
+    problemList,
+    pregnancies,
+    cycles,
+    allergies,
+    reportsReceived,
+    reportsSent,
+    immunizations,
+    appointments,
+    checklist,
+    messages,
+    externalMessages,
+    todos,
+  ] = patientRecord;
   return (
     <div className="patient-record__menu">
       <PatientTopic
@@ -28,6 +59,7 @@ const PatientMenuRight = ({
         patientId={patientId}
         contentsVisible={contentsVisible}
         side="right"
+        data={personalHistory}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -37,6 +69,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={careElements}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -46,6 +79,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={problemList}
       />
       {demographicsInfos.Gender !== "M" && (
         <PatientTopic
@@ -56,6 +90,7 @@ const PatientMenuRight = ({
           contentsVisible={contentsVisible}
           patientName={toPatientName(demographicsInfos)}
           side="right"
+          data={pregnancies}
         />
       )}
       {demographicsInfos.Gender !== "M" && (
@@ -68,6 +103,7 @@ const PatientMenuRight = ({
           patientName={toPatientName(demographicsInfos)}
           demographicsInfos={demographicsInfos}
           side="right"
+          data={cycles}
         />
       )}
       <PatientTopic
@@ -78,6 +114,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={allergies}
       />
       <PatientTopicAgeCalculator
         textColor="#FEFEFE"
@@ -103,6 +140,8 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        reportsReceived={reportsReceived}
+        reportsSent={reportsSent}
       />
       <PatientTopicLabels
         textColor="#FEFEFE"
@@ -120,6 +159,7 @@ const PatientMenuRight = ({
         patientName={toPatientName(demographicsInfos)}
         patientDob={demographicsInfos.DateOfBirth as number}
         side="right"
+        data={immunizations}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -130,6 +170,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={appointments}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -140,6 +181,7 @@ const PatientMenuRight = ({
         patientName={toPatientName(demographicsInfos)}
         side="right"
         demographicsInfos={demographicsInfos}
+        data={checklist}
       />
       <PatientTopic
         textColor="#FEFEFE"
@@ -150,6 +192,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={messages}
       />
 
       <PatientTopic
@@ -161,6 +204,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={externalMessages}
       />
 
       <PatientTopic
@@ -172,6 +216,7 @@ const PatientMenuRight = ({
         contentsVisible={contentsVisible}
         patientName={toPatientName(demographicsInfos)}
         side="right"
+        data={todos}
       />
     </div>
   );

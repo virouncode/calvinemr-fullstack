@@ -1,11 +1,15 @@
-import { InfiniteData, UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import {
   CareElementAdditionalType,
   CareElementGraphDataType,
   CareElementListItemType,
   CareElementType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
@@ -30,27 +34,12 @@ import CareElementFormMeasurements from "./Form/CareElementFormMeasurements";
 import CareElementFormSmoking from "./Form/CareElementFormSmoking";
 
 type CareElementsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<CareElementType>> | undefined;
-  topicPost: UseMutationResult<
-    CareElementType,
-    Error,
-    Partial<CareElementType>,
-    void
-  >;
-  topicPut: UseMutationResult<CareElementType, Error, CareElementType, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   patientName: string;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CareElementsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  isPending,
-  error,
   patientId,
   patientName,
   setPopUpVisible,
@@ -108,6 +97,17 @@ const CareElementsPopUp = ({
       Name: "",
       Unit: "",
     });
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("CARE ELEMENTS", patientId);
+  const topicPost = useTopicPost("CARE ELEMENTS", patientId);
+  const topicPut = useTopicPut("CARE ELEMENTS", patientId);
+  const topicDelete = useTopicDelete("CARE ELEMENTS", patientId);
 
   if (isPending) {
     return (

@@ -1,12 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { ReminderType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,48 +17,30 @@ import ReminderForm from "./ReminderForm";
 import ReminderItem from "./ReminderItem";
 
 type RemindersPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<ReminderType>> | undefined;
-  topicPost: UseMutationResult<
-    ReminderType,
-    Error,
-    Partial<ReminderType>,
-    void
-  >;
-  topicPut: UseMutationResult<ReminderType, Error, ReminderType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ReminderType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
 const RemindersPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
 }: RemindersPopUpProps) => {
   //HOOKS
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("REMINDERS", patientId);
+  const topicPost = useTopicPost("REMINDERS", patientId);
+  const topicPut = useTopicPut("REMINDERS", patientId);
+  const topicDelete = useTopicDelete("REMINDERS", patientId);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

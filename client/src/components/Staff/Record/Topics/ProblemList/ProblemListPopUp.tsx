@@ -1,12 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { ProblemListType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,41 +17,11 @@ import ProblemListForm from "./ProblemListForm";
 import ProblemListItem from "./ProblemListItem";
 
 type ProblemListPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<ProblemListType>> | undefined;
-  topicPost: UseMutationResult<
-    ProblemListType,
-    Error,
-    Partial<ProblemListType>,
-    void
-  >;
-  topicPut: UseMutationResult<ProblemListType, Error, ProblemListType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<ProblemListType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
 const ProblemListPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   patientId,
   setPopUpVisible,
 }: ProblemListPopUpProps) => {
@@ -60,6 +29,18 @@ const ProblemListPopUp = ({
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("PROBLEM LIST", patientId);
+  const topicPost = useTopicPost("PROBLEM LIST", patientId);
+  const topicPut = useTopicPut("PROBLEM LIST", patientId);
+  const topicDelete = useTopicDelete("PROBLEM LIST", patientId);
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

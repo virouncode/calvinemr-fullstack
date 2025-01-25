@@ -1,18 +1,16 @@
 import { useMediaQuery } from "@mui/material";
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
-  LetterType,
   MessageAttachmentType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { toPatientName } from "../../../../../utils/names/toPatientName";
 import Button from "../../../../UI/Buttons/Button";
@@ -33,38 +31,13 @@ import LetterForm from "./Form/LetterForm";
 import LetterItem from "./LetterItem";
 
 type LettersPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<LetterType>> | undefined;
-  topicPost: UseMutationResult<LetterType, Error, Partial<LetterType>, void>;
-  topicPut: UseMutationResult<LetterType, Error, LetterType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<LetterType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   patientName: string;
   demographicsInfos: DemographicsType;
 };
 
 const LettersPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   patientId,
   setPopUpVisible,
   patientName,
@@ -76,6 +49,18 @@ const LettersPopUp = ({
   const [errMsgPost, setErrMsgPost] = useState("");
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   const largeScreen = useMediaQuery("(min-width: 1280px)");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("LETTERS/REFERRALS", patientId);
+  const topicPost = useTopicPost("LETTERS/REFERRALS", patientId);
+  const topicPut = useTopicPut("LETTERS/REFERRALS", patientId);
+  const topicDelete = useTopicDelete("LETTERS/REFERRALS", patientId);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

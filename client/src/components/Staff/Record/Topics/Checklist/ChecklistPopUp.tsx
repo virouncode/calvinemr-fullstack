@@ -1,6 +1,11 @@
-import { InfiniteData, UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { ChecklistType, XanoPaginatedType } from "../../../../../types/api";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import { ChecklistType } from "../../../../../types/api";
 import {
   checklistTests,
   splitChecklistResults,
@@ -14,28 +19,11 @@ import ChecklistHistory from "./ChecklistHistory";
 import ChecklistItem from "./ChecklistItem";
 
 type ChecklistPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<ChecklistType>> | undefined;
-  topicPost: UseMutationResult<
-    ChecklistType,
-    Error,
-    Partial<ChecklistType>,
-    void
-  >;
-  topicPut: UseMutationResult<ChecklistType, Error, ChecklistType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ChecklistPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
 }: ChecklistPopUpProps) => {
@@ -43,6 +31,18 @@ const ChecklistPopUp = ({
   const [historyVisible, setHistoryVisible] = useState(false);
   const [testNameToShow, setTestNameToShow] = useState("");
   const [testNameToAdd, setTestNameToAdd] = useState<string>("");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("CHECKLIST", patientId);
+  const topicPost = useTopicPost("CHECKLIST", patientId);
+  const topicPut = useTopicPut("CHECKLIST", patientId);
+  const topicDelete = useTopicDelete("CHECKLIST", patientId);
 
   const handleClose = () => {
     setPopUpVisible(false);

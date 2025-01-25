@@ -1,15 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  DemographicsType,
-  PharmacyType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import { DemographicsType, PharmacyType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -17,45 +13,16 @@ import PharmaciesList from "./PharmaciesList";
 import PharmacyCard from "./PharmacyCard";
 
 type PharmaciesPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<PharmacyType>> | undefined;
-  topicPost: UseMutationResult<
-    PharmacyType,
-    Error,
-    Partial<PharmacyType>,
-    void
-  >;
-  topicPut: UseMutationResult<PharmacyType, Error, PharmacyType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<PharmacyType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
+
   demographicsInfos: DemographicsType;
 };
 
 const PharmaciesPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
   demographicsInfos,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
 }: PharmaciesPopUpProps) => {
   //HOOKS
   const editCounter = useRef(0);
@@ -63,6 +30,17 @@ const PharmaciesPopUp = ({
   const [preferredPharmacy, setPreferredPharmacy] = useState<
     PharmacyType | undefined
   >();
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("PHARMACIES", patientId);
+  const topicPost = useTopicPost("PHARMACIES", patientId);
+  const topicPut = useTopicPut("PHARMACIES", patientId);
+  const topicDelete = useTopicDelete("PHARMACIES", patientId);
 
   useEffect(() => {
     setPreferredPharmacy(demographicsInfos.preferred_pharmacy);

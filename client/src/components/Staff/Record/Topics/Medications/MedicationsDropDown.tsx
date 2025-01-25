@@ -1,35 +1,13 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { MedType, XanoPaginatedType } from "../../../../../types/api";
+import { MedType } from "../../../../../types/api";
 import { isMedicationActive } from "../../../../../utils/medications/isMedicationActive";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type MedicationsDropDownProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<MedType>, unknown> | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: MedType[];
 };
 
-const MedicationsDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: MedicationsDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-  const activeMedications = datas?.filter((item) =>
+const MedicationsDropDown = ({ data }: MedicationsDropDownProps) => {
+  const activeMedications = data?.filter((item) =>
     isMedicationActive(item?.StartDate, item?.duration)
   );
   return (

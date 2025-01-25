@@ -5,10 +5,13 @@ import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { usePatientPut } from "../../../../hooks/reactquery/mutations/patientsMutations";
+import { usePatientRecord } from "../../../../hooks/reactquery/queries/patientRecordQueries";
 import { DemographicsType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import Button from "../../../UI/Buttons/Button";
+import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import ClinicalNotes from "../ClinicalNotes/ClinicalNotes";
 import ExportChart from "../ExportChart/ExportChart";
@@ -43,6 +46,10 @@ const PatientRecord = ({
   );
   //Queries
   const patientPut = usePatientPut(patientId);
+  const { data: patientRecord, error, isPending } = usePatientRecord(patientId);
+
+  if (isPending) return <LoadingParagraph />;
+  if (error) return <ErrorParagraph errorMsg={error.message} />;
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -151,6 +158,7 @@ const PatientRecord = ({
           demographicsInfos={demographicsInfos}
           patientId={patientId}
           contentsVisible={leftContentsVisible}
+          patientRecord={patientRecord}
         />
         <ClinicalNotes
           demographicsInfos={demographicsInfos}
@@ -164,6 +172,7 @@ const PatientRecord = ({
           demographicsInfos={demographicsInfos}
           patientId={patientId}
           contentsVisible={rightContentsVisible}
+          patientRecord={patientRecord}
         />
       </div>
       {exportVisible && (

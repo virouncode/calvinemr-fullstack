@@ -1,42 +1,18 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { PrescriptionType, XanoPaginatedType } from "../../../../../types/api";
+import { PrescriptionType } from "../../../../../types/api";
 import { showDocument } from "../../../../../utils/files/showDocument";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
+import { file } from "jszip";
 
 type PrescriptionsDropDownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<PrescriptionType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: PrescriptionType[];
 };
 
-const PrescriptionsDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: PrescriptionsDropDownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-
+const PrescriptionsDropDown = ({ data }: PrescriptionsDropDownProps) => {
   return (
     <div className="topic-content">
-      {datas && datas.length >= 1 ? (
+      {data && data.length >= 1 ? (
         <ul>
-          {datas.slice(0, 4).map((item) => (
+          {data.slice(0, 4).map((item) => (
             <li
               key={item.id}
               onClick={() =>

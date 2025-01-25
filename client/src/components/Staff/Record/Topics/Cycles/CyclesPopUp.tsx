@@ -1,17 +1,13 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import NewWindow from "react-new-window";
-import useIntersection from "../../../../../hooks/useIntersection";
 import {
-  CycleType,
-  DemographicsType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import useIntersection from "../../../../../hooks/useIntersection";
+import { CycleType, DemographicsType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -26,39 +22,14 @@ import CycleItem from "./CycleItem";
 import CyclePrint from "./CyclePrint";
 
 type CyclesPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<CycleType>, unknown> | undefined;
-  topicPost: UseMutationResult<CycleType, Error, Partial<CycleType>, void>;
-  topicPut: UseMutationResult<CycleType, Error, CycleType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<CycleType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   demographicsInfos: DemographicsType;
 };
 
 const CyclesPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   demographicsInfos,
 }: CyclesPopUpProps) => {
   //Hooks
@@ -68,6 +39,18 @@ const CyclesPopUp = ({
   const [show, setShow] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [printVisible, setPrintVisible] = useState(false);
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("CYCLES", patientId);
+  const topicPost = useTopicPost("CYCLES", patientId);
+  const topicPut = useTopicPut("CYCLES", patientId);
+  const topicDelete = useTopicDelete("CYCLES", patientId);
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(

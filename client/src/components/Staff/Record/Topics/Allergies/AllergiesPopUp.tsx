@@ -1,12 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { AllergyType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,36 +17,11 @@ import AllergyForm from "./AllergyForm";
 import AllergyItem from "./AllergyItem";
 
 type AllergiesPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<AllergyType>> | undefined;
-  topicPost: UseMutationResult<AllergyType, Error, Partial<AllergyType>, void>;
-  topicPut: UseMutationResult<AllergyType, Error, AllergyType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<AllergyType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AllergiesPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
   patientId,
   setPopUpVisible,
 }: AllergiesPopUpProps) => {
@@ -55,6 +29,21 @@ const AllergiesPopUp = ({
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("ALLERGIES & ADVERSE REACTIONS", patientId);
+  const topicPost = useTopicPost("ALLERGIES & ADVERSE REACTIONS", patientId);
+  const topicPut = useTopicPut("ALLERGIES & ADVERSE REACTIONS", patientId);
+  const topicDelete = useTopicDelete(
+    "ALLERGIES & ADVERSE REACTIONS",
+    patientId
+  );
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(

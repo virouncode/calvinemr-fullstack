@@ -1,44 +1,19 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { AppointmentType, XanoPaginatedType } from "../../../../../types/api";
+import { AppointmentType } from "../../../../../types/api";
 import { getNextPatientAppointments } from "../../../../../utils/appointments/getNextPatientAppointments";
 import {
   timestampToDateISOTZ,
   timestampToDateTimeStrTZ,
 } from "../../../../../utils/dates/formatDates";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type AppointmentsDropdownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<AppointmentType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: AppointmentType[];
 };
 
-const AppointmentsDropdown = ({
-  topicDatas,
-  isPending,
-  error,
-}: AppointmentsDropdownProps) => {
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
-
+const AppointmentsDropdown = ({ data }: AppointmentsDropdownProps) => {
   //FIND NEXT APPOINTMENT
   const nextAppointment = getNextPatientAppointments(
-    datas as AppointmentType[]
+    data as AppointmentType[]
   )[0];
 
   return (

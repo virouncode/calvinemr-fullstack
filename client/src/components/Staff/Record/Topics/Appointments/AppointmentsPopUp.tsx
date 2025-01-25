@@ -1,17 +1,12 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
-import useIntersection from "../../../../../hooks/useIntersection";
 import {
-  AppointmentType,
-  DemographicsType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import useIntersection from "../../../../../hooks/useIntersection";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -23,45 +18,13 @@ import AppointmentForm from "./AppointmentForm";
 import AppointmentItem from "./AppointmentItem";
 
 type AppointmentsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<AppointmentType>> | undefined;
-  topicPost: UseMutationResult<
-    AppointmentType,
-    Error,
-    Partial<AppointmentType>,
-    void
-  >;
-  topicPut: UseMutationResult<AppointmentType, Error, AppointmentType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  demographicsInfos: DemographicsType;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<AppointmentType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
 const AppointmentsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
-  demographicsInfos,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
 }: AppointmentsPopUpProps) => {
   //Hooks
   const editCounter = useRef(0);
@@ -73,6 +36,18 @@ const AppointmentsPopUp = ({
     isPending: isPendingSites,
     error: errorSites,
   } = useSites();
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("APPOINTMENTS", patientId);
+  const topicPost = useTopicPost("APPOINTMENTS", patientId);
+  const topicPut = useTopicPut("APPOINTMENTS", patientId);
+  const topicDelete = useTopicDelete("APPOINTMENTS", patientId);
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(

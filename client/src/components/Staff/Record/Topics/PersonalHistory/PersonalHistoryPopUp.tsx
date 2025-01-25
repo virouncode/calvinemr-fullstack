@@ -1,11 +1,15 @@
-import { InfiniteData, UseMutationResult } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import {
   PersonalHistoryFormType,
   PersonalHistoryType,
-  XanoPaginatedType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
 import {
@@ -28,31 +32,11 @@ import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PersonalHistoryForm from "./PersonalHistoryForm";
 
 type PersonalHistoryPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<PersonalHistoryType>> | undefined;
-  topicPost: UseMutationResult<
-    PersonalHistoryType,
-    Error,
-    Partial<PersonalHistoryType>,
-    void
-  >;
-  topicPut: UseMutationResult<
-    PersonalHistoryType,
-    Error,
-    PersonalHistoryType,
-    void
-  >;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PersonalHistoryPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  isPending,
-  error,
   patientId,
   setPopUpVisible,
 }: PersonalHistoryPopUpProps) => {
@@ -65,6 +49,17 @@ const PersonalHistoryPopUp = ({
     PersonalHistoryFormType | undefined
   >();
   const [progress, setProgress] = useState(false);
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("PERSONAL HISTORY", patientId);
+  const topicPost = useTopicPost("PERSONAL HISTORY", patientId);
+  const topicPut = useTopicPut("PERSONAL HISTORY", patientId);
+  const topicDelete = useTopicDelete("PERSONAL HISTORY", patientId);
 
   useEffect(() => {
     if (

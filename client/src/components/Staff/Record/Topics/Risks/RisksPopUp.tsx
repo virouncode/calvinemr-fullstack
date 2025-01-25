@@ -1,12 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { RiskFactorType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,48 +17,27 @@ import RiskForm from "./RiskForm";
 import RiskItem from "./RiskItem";
 
 type RisksPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<RiskFactorType>> | undefined;
-  topicPost: UseMutationResult<
-    RiskFactorType,
-    Error,
-    Partial<RiskFactorType>,
-    void
-  >;
-  topicPut: UseMutationResult<RiskFactorType, Error, RiskFactorType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<RiskFactorType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
-const RisksPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
-  patientId,
-  setPopUpVisible,
-  isFetchingNextPage,
-  isFetching,
-  fetchNextPage,
-}: RisksPopUpProps) => {
+const RisksPopUp = ({ patientId, setPopUpVisible }: RisksPopUpProps) => {
   //HOOKS
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("RISK FACTORS", patientId);
+  const topicPost = useTopicPost("RISK FACTORS", patientId);
+  const topicPut = useTopicPut("RISK FACTORS", patientId);
+  const topicDelete = useTopicDelete("RISK FACTORS", patientId);
 
   //INTERSECTION OBSERVER
   const { divRef, lastItemRef } = useIntersection(

@@ -1,52 +1,25 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
-import { ReminderType, XanoPaginatedType } from "../../../../../types/api";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
+import { ReminderType } from "../../../../../types/api";
 
 type RemindersDropDownProps = {
-  topicDatas:
-    | InfiniteData<XanoPaginatedType<ReminderType>, unknown>
-    | undefined;
-  isPending: boolean;
-  error: Error | null;
+  data: ReminderType[];
 };
 
-const RemindersDropDown = ({
-  topicDatas,
-  isPending,
-  error,
-}: RemindersDropDownProps) => {
+const RemindersDropDown = ({ data }: RemindersDropDownProps) => {
   useEffect(() => {
-    if (topicDatas) {
-      topicDatas.pages
-        .flatMap((page) => page.items)
-        .forEach((reminder) => {
-          toast.info(reminder.reminder, { autoClose: 2000, containerId: "A" });
-        });
+    if (data) {
+      data.forEach((reminder) => {
+        toast.info(reminder.reminder, { autoClose: 2000, containerId: "A" });
+      });
     }
-  }, [topicDatas]);
-
-  if (isPending)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph errorMsg={error.message} />
-      </div>
-    );
-  const datas = topicDatas?.pages.flatMap((page) => page.items);
+  }, [data]);
 
   return (
     <div className="topic-content">
-      {datas && datas.length > 0 ? (
+      {data && data.length > 0 ? (
         <ul>
-          {datas.slice(0, 4).map((item) => (
+          {data.slice(0, 4).map((item) => (
             <li key={item.id} className="topic-content__item">
               - {item.reminder}
             </li>

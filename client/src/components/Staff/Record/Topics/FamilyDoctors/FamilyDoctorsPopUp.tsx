@@ -1,73 +1,45 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-} from "@tanstack/react-query";
 import React, { useRef } from "react";
 import useIntersection from "../../../../../hooks/useIntersection";
-import {
-  DemographicsType,
-  DoctorType,
-  XanoPaginatedType,
-} from "../../../../../types/api";
+import { DemographicsType } from "../../../../../types/api";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PatientClinicDoctorsList from "./PatientClinicDoctorsList";
 import PatientFamilyDoctorsList from "./PatientFamilyDoctorsList";
+import { useDoctors } from "../../../../../hooks/reactquery/queries/doctorsQueries";
+import { usePatientDoctors } from "../../../../../hooks/reactquery/queries/patientDoctorsQueries";
 
 type FamilyDoctorsPopUpProps = {
-  patientDoctors:
-    | InfiniteData<XanoPaginatedType<DoctorType>, unknown>
-    | undefined;
-  isPendingPatientDoctors: boolean;
-  errorPatientDoctors: Error | null;
-  isFetchingNextPagePatientDoctors: boolean;
-  fetchNextPagePatientDoctors: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<DoctorType>, unknown>,
-      Error
-    >
-  >;
-  isFetchingPatientDoctors: boolean;
-  doctors: InfiniteData<XanoPaginatedType<DoctorType>, unknown> | undefined;
-  isPendingDoctors: boolean;
-  errorDoctors: Error | null;
-  isFetchingNextPageDoctors: boolean;
-  fetchNextPageDoctors: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<DoctorType>, unknown>,
-      Error
-    >
-  >;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
   demographicsInfos: DemographicsType;
 };
 
 const FamilyDoctorsPopUp = ({
-  patientDoctors,
-  isPendingPatientDoctors,
-  errorPatientDoctors,
-  isFetchingNextPagePatientDoctors,
-  fetchNextPagePatientDoctors,
-  isFetchingPatientDoctors,
-  doctors,
-  isPendingDoctors,
-  errorDoctors,
-  isFetchingNextPageDoctors,
-  fetchNextPageDoctors,
   patientId,
   setPopUpVisible,
   demographicsInfos,
 }: FamilyDoctorsPopUpProps) => {
   //Hooks
   const editCounter = useRef(0);
+
+  const {
+    data: patientDoctors,
+    isPending: isPendingPatientDoctors,
+    error: errorPatientDoctors,
+    isFetchingNextPage: isFetchingNextPagePatientDoctors,
+    fetchNextPage: fetchNextPagePatientDoctors,
+    isFetching: isFetchingPatientDoctors,
+  } = usePatientDoctors(patientId);
+  const {
+    data: doctors,
+    isPending: isPendingDoctors,
+    error: errorDoctors,
+    isFetchingNextPage: isFetchingNextPageDoctors,
+    fetchNextPage: fetchNextPageDoctors,
+    isFetching: isFetchingDoctors,
+  } = useDoctors();
   //Intersection observer
   const {
     divRef: rootRefPatientDoctors,

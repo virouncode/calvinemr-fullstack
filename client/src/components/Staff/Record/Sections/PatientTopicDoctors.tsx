@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useDoctors } from "../../../../hooks/reactquery/queries/doctorsQueries";
-import { usePatientDoctors } from "../../../../hooks/reactquery/queries/patientDoctorsQueries";
-import { DemographicsType } from "../../../../types/api";
+import { DemographicsType, DoctorType } from "../../../../types/api";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
 import FamilyDoctorsDropDown from "../Topics/FamilyDoctors/FamilyDoctorsDropDown";
 import FamilyDoctorsPopUp from "../Topics/FamilyDoctors/FamilyDoctorsPopUp";
@@ -15,6 +13,7 @@ type PatientTopicDoctorsProps = {
   contentsVisible: boolean;
   side: "right" | "left";
   demographicsInfos: DemographicsType;
+  data: DoctorType[];
 };
 
 const PatientTopicDoctors = ({
@@ -25,28 +24,13 @@ const PatientTopicDoctors = ({
   contentsVisible,
   side,
   demographicsInfos,
+  data,
 }: PatientTopicDoctorsProps) => {
   //Hooks
   const [popUpVisible, setPopUpVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triangleRef = useRef<SVGSVGElement | null>(null);
   //Queries
-  const {
-    data: patientDoctors,
-    isPending: isPendingPatientDoctors,
-    error: errorPatientDoctors,
-    isFetchingNextPage: isFetchingNextPagePatientDoctors,
-    fetchNextPage: fetchNextPagePatientDoctors,
-    isFetching: isFetchingPatientDoctors,
-  } = usePatientDoctors(patientId);
-  const {
-    data: doctors,
-    isPending: isPendingDoctors,
-    error: errorDoctors,
-    isFetchingNextPage: isFetchingNextPageDoctors,
-    fetchNextPage: fetchNextPageDoctors,
-    isFetching: isFetchingDoctors,
-  } = useDoctors();
 
   const TOPIC_STYLE = { color: textColor, background: backgroundColor };
 
@@ -88,11 +72,9 @@ const PatientTopicDoctors = ({
         ref={containerRef}
       >
         <FamilyDoctorsDropDown
-          patientDoctors={patientDoctors}
-          isPending={isPendingPatientDoctors}
-          error={errorPatientDoctors}
           patientId={patientId}
           demographicsInfos={demographicsInfos}
+          data={data}
         />
         {popUpVisible && (
           <FakeWindow
@@ -105,19 +87,6 @@ const PatientTopicDoctors = ({
             setPopUpVisible={setPopUpVisible}
           >
             <FamilyDoctorsPopUp
-              patientDoctors={patientDoctors}
-              isPendingPatientDoctors={isPendingPatientDoctors}
-              errorPatientDoctors={errorPatientDoctors}
-              isFetchingNextPagePatientDoctors={
-                isFetchingNextPagePatientDoctors
-              }
-              fetchNextPagePatientDoctors={fetchNextPagePatientDoctors}
-              isFetchingPatientDoctors={isFetchingPatientDoctors}
-              doctors={doctors}
-              isPendingDoctors={isPendingDoctors}
-              errorDoctors={errorDoctors}
-              isFetchingNextPageDoctors={isFetchingNextPageDoctors}
-              fetchNextPageDoctors={fetchNextPageDoctors}
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
               demographicsInfos={demographicsInfos}

@@ -1,60 +1,26 @@
-import { InfiniteData } from "@tanstack/react-query";
 import React from "react";
-import { ReportType, XanoPaginatedType } from "../../../../../types/api";
+import { ReportType } from "../../../../../types/api";
 import { timestampToDateISOTZ } from "../../../../../utils/dates/formatDates";
 import { showDocument } from "../../../../../utils/files/showDocument";
 import { showReportTextContent } from "../../../../../utils/reports/showReportTextContent";
-import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
-import CircularProgressMedium from "../../../../UI/Progress/CircularProgressMedium";
 
 type ReportsDropDownProps = {
-  reportsReceived:
-    | InfiniteData<XanoPaginatedType<ReportType>, unknown>
-    | undefined;
-  isPendingReportsReceived: boolean;
-  errorReportsReceived: Error | null;
-  reportsSent: InfiniteData<XanoPaginatedType<ReportType>, unknown> | undefined;
-  isPendingReportsSent: boolean;
-  errorReportsSent: Error | null;
+  reportsReceived: ReportType[];
+  reportsSent: ReportType[];
 };
 
 const ReportsDropDown = ({
   reportsReceived,
-  isPendingReportsReceived,
-  errorReportsReceived,
   reportsSent,
-  isPendingReportsSent,
-  errorReportsSent,
 }: ReportsDropDownProps) => {
-  if (isPendingReportsReceived || isPendingReportsSent)
-    return (
-      <div className="topic-content">
-        <CircularProgressMedium />
-      </div>
-    );
-  if (errorReportsReceived || errorReportsSent)
-    return (
-      <div className="topic-content">
-        <ErrorParagraph
-          errorMsg={
-            errorReportsReceived?.message || errorReportsSent?.message || ""
-          }
-        />
-      </div>
-    );
-  const datasReportsReceived = reportsReceived?.pages.flatMap(
-    (page) => page.items
-  );
-  const datasReportsSent = reportsSent?.pages.flatMap((page) => page.items);
-
   return (
     <div className="topic-content">
-      {(datasReportsReceived && datasReportsReceived.length > 0) ||
-      (datasReportsSent && datasReportsSent.length > 0) ? (
+      {(reportsReceived && reportsReceived.length > 0) ||
+      (reportsSent && reportsSent.length > 0) ? (
         <>
           <p style={{ fontWeight: "bold" }}>Received</p>
           <ul>
-            {datasReportsReceived
+            {reportsReceived
               ?.filter(({ acknowledged }) => !acknowledged)
               .slice(0, 3)
               .map((item) => (
@@ -75,7 +41,7 @@ const ReportsDropDown = ({
                   - {item.name} ({timestampToDateISOTZ(item.date_created)})
                 </li>
               ))}
-            {datasReportsReceived
+            {reportsReceived
               ?.filter(({ acknowledged }) => acknowledged)
               .slice(0, 3)
               .map((item) => (
@@ -101,7 +67,7 @@ const ReportsDropDown = ({
           </ul>
           <p style={{ fontWeight: "bold", marginTop: "10px" }}>Sent</p>
           <ul>
-            {datasReportsSent
+            {reportsSent
               ?.filter(({ File }) => File)
               .slice(0, 3)
               .map((item) => (

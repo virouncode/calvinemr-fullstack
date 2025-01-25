@@ -1,12 +1,11 @@
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import {
+  useTopicDelete,
+  useTopicPost,
+  useTopicPut,
+} from "../../../../../hooks/reactquery/mutations/topicMutations";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import { AlertType, XanoPaginatedType } from "../../../../../types/api";
 import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -18,43 +17,26 @@ import AlertForm from "./AlertForm";
 import AlertItem from "./AlertItem";
 
 type AlertsPopUpProps = {
-  topicDatas: InfiniteData<XanoPaginatedType<AlertType>> | undefined;
-  topicPost: UseMutationResult<AlertType, Error, Partial<AlertType>, void>;
-  topicPut: UseMutationResult<AlertType, Error, AlertType, void>;
-  topicDelete: UseMutationResult<void, Error, number, void>;
-  isPending: boolean;
-  error: Error | null;
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isFetchingNextPage: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions
-  ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<XanoPaginatedType<AlertType>, unknown>,
-      Error
-    >
-  >;
-  isFetching: boolean;
 };
 
-const AlertsPopUp = ({
-  topicDatas,
-  topicPost,
-  topicPut,
-  topicDelete,
-  isPending,
-  error,
-  patientId,
-  setPopUpVisible,
-  isFetchingNextPage,
-  fetchNextPage,
-  isFetching,
-}: AlertsPopUpProps) => {
+const AlertsPopUp = ({ patientId, setPopUpVisible }: AlertsPopUpProps) => {
   //Hooks
   const editCounter = useRef(0);
   const [addVisible, setAddVisible] = useState(false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  const {
+    data: topicDatas,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("ALERTS & SPECIAL NEEDS", patientId);
+  const topicPost = useTopicPost("ALERTS & SPECIAL NEEDS", patientId);
+  const topicPut = useTopicPut("ALERTS & SPECIAL NEEDS", patientId);
+  const topicDelete = useTopicDelete("ALERTS & SPECIAL NEEDS", patientId);
 
   //Intersection observer
   const { divRef, lastItemRef } = useIntersection(
