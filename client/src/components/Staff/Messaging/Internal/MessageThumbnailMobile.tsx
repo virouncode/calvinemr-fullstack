@@ -98,24 +98,24 @@ const MessageThumbnailMobile = ({
       };
       delete messageToPut.patient_infos; //from add-On
       messagePut.mutate(messageToPut);
-      if (user.unreadTodosNbr !== 0) {
-        const newUnreadTodosNbr = user.unreadTodosNbr - 1;
-        socket?.emit("message", {
-          route: "USER",
-          action: "update",
-          content: {
-            id: user.id,
-            data: {
-              ...user,
-              unreadTodosNbr: newUnreadTodosNbr,
-              unreadNbr:
-                newUnreadTodosNbr +
-                user.unreadMessagesExternalNbr +
-                user.unreadMessagesNbr,
-            },
-          },
-        });
-      }
+      // if (user.unreadTodosNbr !== 0) {
+      //   const newUnreadTodosNbr = user.unreadTodosNbr - 1;
+      //   socket?.emit("message", {
+      //     route: "USER",
+      //     action: "update",
+      //     content: {
+      //       id: user.id,
+      //       data: {
+      //         ...user,
+      //         unreadTodosNbr: newUnreadTodosNbr,
+      //         unreadNbr:
+      //           newUnreadTodosNbr +
+      //           user.unreadMessagesExternalNbr +
+      //           user.unreadMessagesNbr,
+      //       },
+      //     },
+      //   });
+      // }
     }
     setCurrentMsgId(message.id);
   };
@@ -151,6 +151,24 @@ const MessageThumbnailMobile = ({
     };
     delete messageToPut.patient_infos;
     messagePut.mutate(messageToPut);
+    if (user.unreadTodosNbr !== 0) {
+      const newUnreadTodosNbr = user.unreadTodosNbr - 1;
+      socket?.emit("message", {
+        route: "USER",
+        action: "update",
+        content: {
+          id: user.id,
+          data: {
+            ...user,
+            unreadTodosNbr: newUnreadTodosNbr,
+            unreadNbr:
+              newUnreadTodosNbr +
+              user.unreadMessagesExternalNbr +
+              user.unreadMessagesNbr,
+          },
+        },
+      });
+    }
   };
 
   const handleUndone = async (
@@ -166,6 +184,22 @@ const MessageThumbnailMobile = ({
     };
     delete messageToPut.patient_infos;
     messagePut.mutate(messageToPut);
+    const newUnreadTodosNbr = user.unreadTodosNbr + 1;
+    socket?.emit("message", {
+      route: "USER",
+      action: "update",
+      content: {
+        id: user.id,
+        data: {
+          ...user,
+          unreadTodosNbr: newUnreadTodosNbr,
+          unreadNbr:
+            newUnreadTodosNbr +
+            user.unreadMessagesExternalNbr +
+            user.unreadMessagesNbr,
+        },
+      },
+    });
   };
 
   const handleClickPatient = () => {

@@ -86,15 +86,15 @@ export const useMessagesPostBatch = (staffId: number, section: string) => {
           socket?.emit("message", {
             key: ["messages", (data as TodoType).to_staff_id],
           });
-          if ((data as TodoType).to_staff_id !== staffId) {
-            socket?.emit("message", {
-              route: "UNREAD TO-DO",
-              action: "update",
-              content: {
-                userId: (data as TodoType).to_staff_id,
-              },
-            });
-          }
+          // if ((data as TodoType).to_staff_id !== staffId) { //increment indicator even if self-assigned
+          socket?.emit("message", {
+            route: "UNREAD TO-DO",
+            action: "update",
+            content: {
+              userId: (data as TodoType).to_staff_id,
+            },
+          });
+          // }
         } else {
           for (const staff_id of (data as MessageType).to_staff_ids) {
             socket?.emit("message", { key: ["messages", staff_id] });
