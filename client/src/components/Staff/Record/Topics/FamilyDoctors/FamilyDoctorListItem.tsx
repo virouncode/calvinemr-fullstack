@@ -1,6 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import useUserContext from "../../../../../hooks/context/useUserContext";
+import { useDoctorDelete } from "../../../../../hooks/reactquery/mutations/doctorsMutations";
 import { provinceStateTerritoryCT } from "../../../../../omdDatas/codesTables";
 import { DoctorFormType, DoctorType } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
@@ -9,6 +10,7 @@ import { firstLetterUpper } from "../../../../../utils/strings/firstLetterUpper"
 import { doctorSchema } from "../../../../../validation/record/doctorValidation";
 import Button from "../../../../UI/Buttons/Button";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
+import DeleteButton from "../../../../UI/Buttons/DeleteButton";
 import EditButton from "../../../../UI/Buttons/EditButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
@@ -59,6 +61,7 @@ const FamilyDoctorListItem = ({
   });
   const [postalOrZip, setPostalOrZip] = useState("postal");
   const [progress, setProgress] = useState(false);
+  const doctorDelete = useDoctorDelete();
 
   useEffect(() => {
     setItemInfos({
@@ -185,6 +188,19 @@ const FamilyDoctorListItem = ({
     }
   };
 
+  const handleDeleteDoctor = async () => {
+    if (
+      await confirmAlert({
+        content: "Do you really want to remove this doctor ?",
+      })
+    ) {
+      setProgress(true);
+      doctorDelete.mutate(item.id, {
+        onSettled: () => setProgress(false),
+      });
+    }
+  };
+
   const handleEditClick = () => {
     editCounter.current += 1;
     setErrMsgPost("");
@@ -246,6 +262,10 @@ const FamilyDoctorListItem = ({
                   label="Add to patient"
                 />
                 <EditButton onClick={handleEditClick} disabled={progress} />
+                <DeleteButton
+                  onClick={handleDeleteDoctor}
+                  disabled={progress}
+                />
               </>
             ) : (
               <>

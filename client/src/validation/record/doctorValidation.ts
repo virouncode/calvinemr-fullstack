@@ -20,4 +20,7 @@ export const doctorSchema = yup.object({
     message: "Invalid Fax number: XXX-XXX-XXXX format required",
   }),
   email: yup.string().email("Invalid Email"),
+  ohip_billing_nbr: yup.string().matches(/^\d{6}$/, {
+    message: "Invalid OHIP billing number: 6-digits format required",
+  }),
 });
