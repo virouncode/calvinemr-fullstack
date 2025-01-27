@@ -62,10 +62,10 @@ const ExportCSVButton = ({
             service_quantity: 1,
             billing_infos: {
               ...billing.billing_infos,
-              billing_code:
-                billing.billing_infos?.billing_code.length === 4
-                  ? `${billing.billing_infos?.billing_code}A`
-                  : billing.billing_infos?.billing_code,
+              billing_code: billing.billing_infos?.billing_code,
+              // billing.billing_infos?.billing_code.length === 4
+              //   ? `${billing.billing_infos?.billing_code}A`
+              //   : billing.billing_infos?.billing_code,
             },
           };
         })}
