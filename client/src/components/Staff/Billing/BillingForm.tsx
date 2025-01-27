@@ -13,6 +13,7 @@ import {
   DoctorType,
   SiteType,
   StaffType,
+  XanoPaginatedType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import {
@@ -109,13 +110,25 @@ const BillingForm = ({
     setFormDatas({ ...formDatas, diagnosis_code: code });
     setDiagnosisSearchVisible(false);
   };
-  const handleClickPatient = (item: DemographicsType) => {
+  const handleClickPatient = async (item: DemographicsType) => {
     setErrMsgPost("");
+    const response: XanoPaginatedType<DoctorType> = await xanoGet(
+      "/doctors_of_patient",
+      "staff",
+      {
+        patient_id: item.patient_id,
+        page: 1,
+      }
+    );
+    const patientDoctors = response?.items;
     setFormDatas({
       ...formDatas,
       patient_id: item.patient_id,
       patient_name: toPatientName(item),
       patient_hcn: item.HealthCard?.Number || "",
+      referrer_ohip_billing_nbr: patientDoctors.length
+        ? patientDoctors[0].ohip_billing_nbr
+        : "",
     });
     setPatientSearchVisible(false);
   };

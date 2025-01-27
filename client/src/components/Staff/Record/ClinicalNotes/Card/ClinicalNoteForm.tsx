@@ -207,8 +207,10 @@ const ClinicalNoteForm = ({
           page: 1,
         }
       );
-      referrer_ohip =
-        response.items.map((doctor) => doctor.ohip_billing_nbr)?.[0] ?? "";
+      const patientDoctors = response?.items;
+      referrer_ohip = patientDoctors.length
+        ? patientDoctors[0].ohip_billing_nbr
+        : "";
     } catch (err) {
       if (err instanceof Error)
         console.log(`Unable to get referrer_ohip: ${err.message}`);
