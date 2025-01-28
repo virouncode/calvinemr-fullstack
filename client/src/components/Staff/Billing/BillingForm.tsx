@@ -58,7 +58,9 @@ const BillingForm = ({
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
-  const [selectedProviderId, setSelectedProviderId] = useState(0);
+  const [selectedProviderId, setSelectedProviderId] = useState(
+    user.access_level === "admin" ? 0 : user.id
+  );
   const [formDatas, setFormDatas] = useState<BillingFormType>({
     dateStr: date
       ? timestampToDateISOTZ(parseInt(date))
