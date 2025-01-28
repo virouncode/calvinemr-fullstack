@@ -12,7 +12,7 @@ import {
 import { UserStaffType } from "../../../../../types/app";
 import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { cycleSchema } from "../../../../../validation/cycles/cycleValidation";
-import CloseButton from "../../../../UI/Buttons/CloseButton";
+import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -149,7 +149,7 @@ const CycleDetails = ({
       setProgress(false);
     }
   };
-  const handleClose = async () => {
+  const handleCancel = async () => {
     if (
       await confirmAlert({
         content:
@@ -200,7 +200,7 @@ const CycleDetails = ({
           />
           <div className="cycles-form__btn-container">
             <SaveButton onClick={handleSave} disabled={progress} />
-            <CloseButton onClick={handleClose} disabled={progress} />
+            <CancelButton onClick={handleCancel} disabled={progress} />
             {progress && <CircularProgressSmall />}
           </div>
         </form>
