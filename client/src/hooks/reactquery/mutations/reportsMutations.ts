@@ -38,6 +38,7 @@ export const useReportPost = () => {
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
+      socket?.emit("message", { key: ["patientRecord"] });
       toast.success(`Report post succesfully`, {
         containerId: "A",
       });

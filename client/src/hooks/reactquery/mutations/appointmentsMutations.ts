@@ -72,6 +72,7 @@ export const useAppointmentsPost = (
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      socket?.emit("message", { key: ["patientRecord"] });
     },
     onError: (error, variables, context) => {
       // queryClient.setQueryData(

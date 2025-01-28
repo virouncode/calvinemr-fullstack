@@ -30,7 +30,7 @@ export const useTopicPost = <T extends TopicType>(
     // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
-
+      socket?.emit("message", { key: ["patientRecord", patientId] });
       if (topic === "APPOINTMENTS") {
         socket?.emit("message", { key: ["appointments"] });
         socket?.emit("message", { key: ["appointment"] });
@@ -84,6 +84,7 @@ export const useTopicPut = <T extends TopicType>(
     // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
+      socket?.emit("message", { key: ["patientRecord", patientId] });
 
       if (topic === "APPOINTMENTS") {
         socket?.emit("message", { key: ["appointments"] });
@@ -130,7 +131,7 @@ export const useTopicDelete = <T extends TopicType>(
     // },
     onSuccess: () => {
       socket?.emit("message", { key: [topic, patientId] });
-
+      socket?.emit("message", { key: ["patientRecord", patientId] });
       if (topic === "APPOINTMENTS") {
         socket?.emit("message", { key: ["appointments"] });
         socket?.emit("message", { key: ["appointment"] });

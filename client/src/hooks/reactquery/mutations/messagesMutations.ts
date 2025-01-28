@@ -47,6 +47,7 @@ export const useMessagePost = (staffId: number, section: string) => {
           });
         }
       }
+      socket?.emit("message", { key: ["patientRecord"] });
       toast.success("Message/To-do post succesfully", { containerId: "A" });
     },
     onError: (error) => {

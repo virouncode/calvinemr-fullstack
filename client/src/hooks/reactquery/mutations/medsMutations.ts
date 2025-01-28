@@ -14,6 +14,7 @@ export const useMedsPostBatch = (patientId: number) => {
     onSuccess: (datas: MedType[]) => {
       socket?.emit("message", { key: ["MEDICATIONS & TREATMENTS", patientId] });
       socket?.emit("message", { key: ["dashboardMedications"] });
+      socket?.emit("message", { key: ["patientRecord"] });
       toast.success("Medication(s) post succesfully", {
         containerId: "A",
       });

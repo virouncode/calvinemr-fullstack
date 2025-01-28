@@ -15,6 +15,7 @@ export const usePatientsGroupPost = (staffId: number) => {
       socket?.emit("message", { key: ["groups", staffId] });
       socket?.emit("message", { key: ["clinic groups"] });
       socket?.emit("message", { key: ["GROUPS"] });
+      socket?.emit("message", { key: ["patientRecord"] });
       toast.success("Group saved succesfully", { containerId: "A" });
     },
     onError: (error) => {

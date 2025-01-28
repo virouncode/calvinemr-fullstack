@@ -13,6 +13,7 @@ export const useEdocPost = () => {
       xanoPost("/edocs", "staff", edocToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["edocs"] });
+      socket?.emit("message", { key: ["patientRecord"] });
       toast.success("E-doc post succesfully", { containerId: "A" });
     },
     onError: (error) => {
