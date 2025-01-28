@@ -501,9 +501,12 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
   };
 
   return (
-    <div className="med-templates__form">
+    <div
+      className="medications-form"
+      style={{ padding: "1rem", height: "auto" }}
+    >
       {errMsg && <ErrorParagraph errorMsg={errMsg} />}
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Drug identification number"
           name="DrugIdentificationNumber"
@@ -512,7 +515,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-drug-number"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Drug name*"
           name="DrugName"
@@ -521,7 +524,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-drug-name"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Strength*"
           name="Strength"
@@ -530,7 +533,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-strength"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericCombo
           list={strengthUnitCT}
           value={formDatas.Strength.UnitOfMeasure}
@@ -538,7 +541,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Strength unit of measure*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericCombo
           list={formCT}
           value={formDatas.Form}
@@ -546,7 +549,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Form*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Dosage*"
           name="Dosage"
@@ -555,7 +558,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-dosage"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericCombo
           list={dosageUnitCT}
           value={formDatas.DosageUnitOfMeasure}
@@ -563,7 +566,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Dosage unit of measure*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericCombo
           list={routeCT}
           value={formDatas.Route}
@@ -571,7 +574,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Route*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericCombo
           list={frequencyCT}
           value={formDatas.Frequency}
@@ -579,7 +582,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Frequency*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <DurationPickerLong
           label="Duration"
           durationYears={formDatas.duration.Y}
@@ -589,7 +592,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           handleDurationPickerChange={handleDurationPickerChange}
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Quantity"
           name="Quantity"
@@ -598,7 +601,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-quantity"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <DurationPickerLong
           label="Refill duration"
           durationYears={formDatas.refill_duration.Y}
@@ -608,7 +611,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           handleDurationPickerChange={handleRefillDurationPickerChange}
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Refill quantity"
           name="RefillQuantity"
@@ -617,7 +620,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-refill-quantity"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <Input
           label="Number of refills"
           name="NumberOfRefills"
@@ -626,7 +629,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           id="med-template-nbr-refills"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericList
           name="LongTermMedication"
           list={ynIndicatorsimpleCT}
@@ -636,7 +639,7 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Long-term medication*"
         />
       </div>
-      <div className="med-templates__form-row">
+      <div className="medications-form__row">
         <GenericList
           name="SubstitutionNotAllowed"
           list={ynIndicatorsimpleCT}
@@ -646,17 +649,17 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           label="Substitution allowed*"
         />
       </div>
-      <div className="med-templates__form-row med-templates__form-row--text">
+      <div className="medications-form__row medications-form__row--text">
         <label htmlFor="med-template-notes">Notes</label>
         <textarea
-          className="med-templates__form-notes"
+          className="medications-form__notes"
           value={formDatas.Notes}
           onChange={handleChange}
           name="Notes"
           id="med-template-notes"
         />
       </div>
-      <div className="med-templates__form-row med-templates__form-row--text">
+      <div className="medications-form__row medications-form__row--text">
         <Tooltip
           title="This is auto-generated, however you can edit the instructions in free text, but it is your responsibility to ensure that they do not contradict the rest of the form."
           placement="top-start"
@@ -665,14 +668,14 @@ const MedTemplateForm = ({ setNewVisible }: MedTemplateFormProps) => {
           <label htmlFor="med-template-instructions">Instructions*</label>
         </Tooltip>
         <textarea
-          className="med-templates__form-instructions"
+          className="medications-form__instructions"
           value={formDatas.PrescriptionInstructions}
           onChange={handleChange}
           name="PrescriptionInstructions"
           id="med-template-instructions"
         />
       </div>
-      <div className="med-templates__form-btn-container">
+      <div className="medications-form__btn-container">
         <SaveButton onClick={handleSubmit} disabled={progress} />
         <CancelButton onClick={handleCancel} disabled={progress} />
       </div>
