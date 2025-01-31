@@ -1,6 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import React, { useState } from "react";
 import xanoGet from "../../../../../api/xanoCRUD/xanoGet";
+import { xanoPost } from "../../../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
@@ -74,68 +75,107 @@ const CycleForm = ({
           page: 1,
         })
       ).items?.[0];
-      for (const event of formDatas.events ?? []) {
-        if (event.e2) {
-          const e2Data = careElementsDatas?.E2.find(
-            (data: { E2: string; Date: number; E2Unit: "pmol/L" }) =>
-              data.Date === event.date
-          );
-          if (e2Data) {
-            e2Data.E2 = event.e2;
-          } else {
-            careElementsDatas?.E2.push({
-              Date: event.date as number,
-              E2: event.e2,
-              E2Unit: "pmol/L",
-            });
+      if (careElementsDatas) {
+        for (const event of formDatas.events ?? []) {
+          if (event.e2) {
+            const e2Data = careElementsDatas?.E2.find(
+              (data: { E2: string; Date: number; E2Unit: "pmol/L" }) =>
+                data.Date === event.date
+            );
+            if (e2Data) {
+              e2Data.E2 = event.e2;
+            } else {
+              careElementsDatas?.E2.push({
+                Date: event.date as number,
+                E2: event.e2,
+                E2Unit: "pmol/L",
+              });
+            }
+          }
+          if (event.lh) {
+            const lhData = careElementsDatas?.LH.find(
+              (data: { LH: string; Date: number; LHUnit: "IU/L" }) =>
+                data.Date === event.date
+            );
+            if (lhData) {
+              lhData.LH = event.lh;
+            } else {
+              careElementsDatas?.LH.push({
+                Date: event.date as number,
+                LH: event.lh,
+                LHUnit: "IU/L",
+              });
+            }
+          }
+          if (event.p4) {
+            const p4Data = careElementsDatas?.P4.find(
+              (data: { P4: string; Date: number; P4Unit: "ng/mL" }) =>
+                data.Date === event.date
+            );
+            if (p4Data) {
+              p4Data.P4 = event.p4;
+            } else {
+              careElementsDatas?.P4.push({
+                Date: event.date as number,
+                P4: event.p4,
+                P4Unit: "ng/mL",
+              });
+            }
           }
         }
-        if (event.lh) {
-          const lhData = careElementsDatas?.LH.find(
-            (data: { LH: string; Date: number; LHUnit: "IU/L" }) =>
-              data.Date === event.date
-          );
-          if (lhData) {
-            lhData.LH = event.lh;
-          } else {
-            careElementsDatas?.LH.push({
-              Date: event.date as number,
-              LH: event.lh,
-              LHUnit: "IU/L",
-            });
-          }
-        }
-        if (event.p4) {
-          const p4Data = careElementsDatas?.P4.find(
-            (data: { P4: string; Date: number; P4Unit: "ng/mL" }) =>
-              data.Date === event.date
-          );
-          if (p4Data) {
-            p4Data.P4 = event.p4;
-          } else {
-            careElementsDatas?.P4.push({
-              Date: event.date as number,
-              P4: event.p4,
-              P4Unit: "ng/mL",
-            });
-          }
-        }
+        const careElementsToPut = {
+          ...careElementsDatas,
+          updates: [
+            ...(careElementsDatas?.updates ?? []),
+            { updated_by_id: user.id, date_updated: nowTZTimestamp() },
+          ],
+        };
+        await xanoPut(
+          `/care_elements/${careElementsDatas.id}`,
+          "staff",
+          careElementsToPut
+        );
+        socket?.emit("message", { key: ["CARE ELEMENTS", patientId] });
+        setProgress(false);
+        setAddVisible(false);
+      } else {
+        const careElementsToPost: Partial<CareElementType> = {
+          patient_id: patientId,
+          date_created: nowTZTimestamp(),
+          created_by_id: user.id,
+          E2: formDatas.events
+            ? formDatas.events
+                .filter((event) => event.e2)
+                .map((event) => ({
+                  Date: event.date as number,
+                  E2: event.e2,
+                  E2Unit: "pmol/L",
+                }))
+            : [],
+          LH: formDatas.events
+            ? formDatas.events
+                .filter((event) => event.lh)
+                .map((event) => ({
+                  Date: event.date as number,
+                  LH: event.lh,
+                  LHUnit: "IU/L",
+                }))
+            : [],
+          P4: formDatas.events
+            ? formDatas.events
+                ?.filter((event) => event.p4)
+                .map((event) => ({
+                  Date: event.date as number,
+                  P4: event.p4,
+                  P4Unit: "ng/mL",
+                }))
+            : [],
+        };
+        await xanoPost("/care_elements", "staff", careElementsToPost);
+        socket?.emit("message", { key: ["CARE ELEMENTS", patientId] });
+        setProgress(false);
+        setAddVisible(false);
       }
-      const careElementsToPut = {
-        ...careElementsDatas,
-        updates: [
-          ...(careElementsDatas?.updates ?? []),
-          { updated_by_id: user.id, date_updated: nowTZTimestamp() },
-        ],
-      };
-      await xanoPut(
-        `/care_elements/${careElementsDatas.id}`,
-        "staff",
-        careElementsToPut
-      );
-      socket?.emit("message", { key: ["CARE ELEMENTS", patientId] });
-      setProgress(false);
-      setAddVisible(false);
     } catch (err) {
       if (err instanceof Error)
         setErrMsg(`Unable to save cycle: ${err.message}`);
