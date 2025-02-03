@@ -7,6 +7,9 @@
     "start": "concurrently \"pnpm --prefix server dev\" \"pnpm --prefix client dev\"",
     "heroku-postbuild": "cd client && pnpm install --production=false && pnpm run build && pnpm prune --prod && cd ../server && pnpm install --production=false && pnpm run build && pnpm prune --prod"
   },
+  "engines": {
+    "pnpm": "9.1.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
