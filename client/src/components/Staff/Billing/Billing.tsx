@@ -38,6 +38,7 @@ const Billing = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
+    hasNextPage,
   } = useBillings(rangeStart, rangeEnd, debouncedSearch);
 
   const {
@@ -90,6 +91,8 @@ const Billing = () => {
       )}
       <BillingFilter
         billings={billings}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
         rangeStart={rangeStart}
         rangeEnd={rangeEnd}
         search={search}

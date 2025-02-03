@@ -1,8 +1,14 @@
-import React from "react";
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+} from "@tanstack/react-query";
+import React, { useState } from "react";
 import { CSVLink } from "react-csv";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { AdminType, BillingType } from "../../../types/api";
+import { useFetchAllPages } from "../../../hooks/reactquery/useFetchAllPages";
+import { AdminType, BillingType, XanoPaginatedType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
 import { toExportCSVName } from "../../../utils/files/toExportCSVName";
@@ -12,10 +18,16 @@ type ExportCSVButtonProps = {
   rangeStart: number;
   rangeEnd: number;
   all: boolean;
-  headers: {
-    label: string;
-    key: string;
-  }[];
+  headers: { label: string; key: string }[];
+  fetchNextPage: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<XanoPaginatedType<BillingType>, unknown>,
+      Error
+    >
+  >;
+  hasNextPage: boolean;
 };
 
 const ExportCSVButton = ({
@@ -24,10 +36,13 @@ const ExportCSVButton = ({
   rangeEnd,
   all,
   headers,
+  fetchNextPage,
+  hasNextPage,
 }: ExportCSVButtonProps) => {
   const { user } = useUserContext() as { user: AdminType | UserStaffType };
   const { staffInfos } = useStaffInfosContext();
-
+  const [loading, setLoading] = useState(false);
+  useFetchAllPages(fetchNextPage, hasNextPage);
   return (
     <button className="btn">
       <CSVLink

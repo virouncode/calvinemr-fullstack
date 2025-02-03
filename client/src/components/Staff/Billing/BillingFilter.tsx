@@ -1,5 +1,10 @@
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+} from "@tanstack/react-query";
 import React from "react";
-import { BillingType } from "../../../types/api";
+import { BillingType, XanoPaginatedType } from "../../../types/api";
 import {
   dateISOToTimestampTZ,
   timestampToDateISOTZ,
@@ -21,6 +26,15 @@ type BillingFilterProps = {
   setAll: React.Dispatch<React.SetStateAction<boolean>>;
   initialRangeStart: React.MutableRefObject<number>;
   initialRangeEnd: React.MutableRefObject<number>;
+  fetchNextPage: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<XanoPaginatedType<BillingType>, unknown>,
+      Error
+    >
+  >;
+  hasNextPage: boolean;
 };
 
 const BillingFilter = ({
@@ -35,6 +49,8 @@ const BillingFilter = ({
   setAll,
   initialRangeStart,
   initialRangeEnd,
+  fetchNextPage,
+  hasNextPage,
 }: BillingFilterProps) => {
   const csvHeaders = [
     {
@@ -179,6 +195,8 @@ const BillingFilter = ({
         {billings && (
           <ExportCSVButton
             billings={billings}
+            fetchNextPage={fetchNextPage}
+            hasNextPage={hasNextPage}
             rangeStart={rangeStart}
             rangeEnd={rangeEnd}
             all={all}
