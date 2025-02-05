@@ -189,8 +189,8 @@ const BillingFilter = ({
         </div>
       </div>
       <div className="billing__filter-row-btns">
-        <a href="https://cab.md/Signin.aspx" target="_blank">
-          Cab MD
+        <a href="https://billing.clinicaid.ca/login/" target="_blank">
+          Clinic Aid
         </a>
         {billings && (
           <ExportCSVButton

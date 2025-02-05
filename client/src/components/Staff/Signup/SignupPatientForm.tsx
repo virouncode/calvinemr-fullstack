@@ -214,127 +214,129 @@ const SignupPatientForm = () => {
         content: { data: patientResponse },
       });
       patientId = patientResponse.id;
-      const demographicsToPost: Partial<DemographicsType> = {
-        ChartNumber: createChartNbr(
-          dateISOToTimestampTZ(formDatas.dob),
-          toCodeTableName(genderCT, formDatas.gender),
-          patientId
-        ),
-        PersonStatusCode: {
-          PersonStatusAsEnum: "A",
-          PersonStatusAsPlainText: "",
-        },
-        patient_id: patientId,
-        Email: formDatas.email?.toLowerCase(),
-        Names: {
-          NamePrefix: formDatas.prefix ?? "",
-          LegalName: {
-            _namePurpose: "L",
-            FirstName: {
-              Part: firstLetterUpper(formDatas.firstName ?? ""),
-              PartType: "GIV",
-              PartQualifier: "",
-            },
-            LastName: {
-              Part: firstLetterUpper(formDatas.lastName ?? ""),
-              PartType: "FAMC",
-              PartQualifier: "",
-            },
-            OtherName: [
-              {
-                Part: firstLetterUpper(formDatas.middleName ?? ""),
+      if (patientId) {
+        const demographicsToPost: Partial<DemographicsType> = {
+          ChartNumber: createChartNbr(
+            dateISOToTimestampTZ(formDatas.dob),
+            toCodeTableName(genderCT, formDatas.gender),
+            patientId
+          ),
+          PersonStatusCode: {
+            PersonStatusAsEnum: "A",
+            PersonStatusAsPlainText: "",
+          },
+          patient_id: patientId,
+          Email: formDatas.email?.toLowerCase(),
+          Names: {
+            NamePrefix: formDatas.prefix ?? "",
+            LegalName: {
+              _namePurpose: "L",
+              FirstName: {
+                Part: firstLetterUpper(formDatas.firstName ?? ""),
                 PartType: "GIV",
                 PartQualifier: "",
               },
-            ],
-          },
-          OtherNames: [
-            {
-              _namePurpose: "AL",
+              LastName: {
+                Part: firstLetterUpper(formDatas.lastName ?? ""),
+                PartType: "FAMC",
+                PartQualifier: "",
+              },
               OtherName: [
                 {
-                  Part: firstLetterUpper(formDatas.nickName ?? ""),
+                  Part: firstLetterUpper(formDatas.middleName ?? ""),
                   PartType: "GIV",
                   PartQualifier: "",
                 },
               ],
             },
+            OtherNames: [
+              {
+                _namePurpose: "AL",
+                OtherName: [
+                  {
+                    Part: firstLetterUpper(formDatas.nickName ?? ""),
+                    PartType: "GIV",
+                    PartQualifier: "",
+                  },
+                ],
+              },
+            ],
+            LastNameSuffix: formDatas.suffix ?? "",
+          },
+          Gender: formDatas.gender,
+          DateOfBirth: dateISOToTimestampTZ(formDatas.dob),
+          DateOfBirthISO: formDatas.dob,
+          HealthCard: {
+            Number: formDatas.healthNbr ?? "",
+            Version: formDatas.healthVersion ?? "",
+            ExpiryDate: dateISOToTimestampTZ(formDatas.healthExpiry),
+            ProvinceCode: formDatas.healthProvince ?? "",
+          },
+          SIN: formDatas.sin,
+          assigned_staff_id: formDatas.assignedMd ?? 0,
+          PhoneNumber: [
+            {
+              phoneNumber: formDatas.cellphone ?? "",
+              extension: formDatas.cellphoneExt ?? "",
+              _phoneNumberType: "C",
+            },
+            {
+              phoneNumber: formDatas.homephone ?? "",
+              extension: formDatas.homephoneExt ?? "",
+              _phoneNumberType: "R",
+            },
+            {
+              phoneNumber: formDatas.workphone ?? "",
+              extension: formDatas.workphoneExt ?? "",
+              _phoneNumberType: "W",
+            },
           ],
-          LastNameSuffix: formDatas.suffix ?? "",
-        },
-        Gender: formDatas.gender,
-        DateOfBirth: dateISOToTimestampTZ(formDatas.dob),
-        DateOfBirthISO: formDatas.dob,
-        HealthCard: {
-          Number: formDatas.healthNbr ?? "",
-          Version: formDatas.healthVersion ?? "",
-          ExpiryDate: dateISOToTimestampTZ(formDatas.healthExpiry),
-          ProvinceCode: formDatas.healthProvince ?? "",
-        },
-        SIN: formDatas.sin,
-        assigned_staff_id: formDatas.assignedMd ?? 0,
-        PhoneNumber: [
-          {
-            phoneNumber: formDatas.cellphone ?? "",
-            extension: formDatas.cellphoneExt ?? "",
-            _phoneNumberType: "C",
-          },
-          {
-            phoneNumber: formDatas.homephone ?? "",
-            extension: formDatas.homephoneExt ?? "",
-            _phoneNumberType: "R",
-          },
-          {
-            phoneNumber: formDatas.workphone ?? "",
-            extension: formDatas.workphoneExt ?? "",
-            _phoneNumberType: "W",
-          },
-        ],
-        Address: [
-          {
-            _addressType: "R",
-            Structured: {
-              Line1: firstLetterUpper(formDatas.line1 ?? ""),
-              Line2: "",
-              Line3: "",
-              City: firstLetterUpper(formDatas.city ?? ""),
-              CountrySubDivisionCode: formDatas.province ?? "",
-              PostalZipCode: {
-                PostalCode: formDatas.postalCode ?? "",
-                ZipCode: formDatas.zipCode ?? "",
+          Address: [
+            {
+              _addressType: "R",
+              Structured: {
+                Line1: firstLetterUpper(formDatas.line1 ?? ""),
+                Line2: "",
+                Line3: "",
+                City: firstLetterUpper(formDatas.city ?? ""),
+                CountrySubDivisionCode: formDatas.province ?? "",
+                PostalZipCode: {
+                  PostalCode: formDatas.postalCode ?? "",
+                  ZipCode: formDatas.zipCode ?? "",
+                },
               },
             },
+          ],
+          PreferredOfficialLanguage: formDatas.preferredOff,
+          avatar: formDatas.avatar,
+          ai_consent: false,
+          ai_consent_read: false,
+          date_created: nowTZTimestamp(),
+          created_by_id: user.id,
+        };
+        patientPost.mutate(demographicsToPost, {
+          onSuccess: (data) => {
+            successfulRequests.push({
+              endpoint: "/demographics",
+              id: data.id,
+            });
           },
-        ],
-        PreferredOfficialLanguage: formDatas.preferredOff,
-        avatar: formDatas.avatar,
-        ai_consent: false,
-        ai_consent_read: false,
-        date_created: nowTZTimestamp(),
-        created_by_id: user.id,
-      };
-      patientPost.mutate(demographicsToPost, {
-        onSuccess: (data) => {
-          successfulRequests.push({
-            endpoint: "/demographics",
-            id: data.id,
-          });
-        },
-      });
-      //Put patient in patients [] of assignedMd
-      const response3: StaffType = await xanoGet(
-        `/staff/${formDatas.assignedMd}`,
-        "staff"
-      );
-      await xanoPut(`/staff/${formDatas.assignedMd}`, "staff", {
-        ...response3,
-        patients: [...response3.patients, patientId],
-      });
-      socket?.emit("message", {
-        route: "STAFF INFOS",
-        action: "update",
-        content: { id: response3.id, data: response3 },
-      });
+        });
+        //Put patient in patients [] of assignedMd
+        const response3: StaffType = await xanoGet(
+          `/staff/${formDatas.assignedMd}`,
+          "staff"
+        );
+        await xanoPut(`/staff/${formDatas.assignedMd}`, "staff", {
+          ...response3,
+          patients: [...response3.patients, patientId],
+        });
+        socket?.emit("message", {
+          route: "STAFF INFOS",
+          action: "update",
+          content: { id: response3.id, data: response3 },
+        });
+      }
       setFormDatas({
         email: "",
         prefix: "",
