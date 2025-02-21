@@ -4,12 +4,12 @@ import PracticiansDirectory from "../../components/Staff/PracticiansDirectory/Pr
 import useTitle from "../../hooks/useTitle";
 
 const StaffSearchPracticiansPage = () => {
-  useTitle("Practicioners");
+  useTitle("Practitioners");
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Practicioners</title>
+          <title>Practitioners</title>
         </Helmet>
       </HelmetProvider>
       <section className="search-practician">

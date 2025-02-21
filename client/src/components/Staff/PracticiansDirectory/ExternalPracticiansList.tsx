@@ -57,7 +57,7 @@ const ExternalPracticiansList = ({
   return (
     <div className="doctors-list">
       <div className="doctors-list__title">
-        External Practicioners directory
+        External Practitioners directory
         <Button onClick={handleAdd} label="Add" />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}

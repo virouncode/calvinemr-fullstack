@@ -77,7 +77,7 @@ const StaffHeaderNav = ({
                 : "header__link"
             }
           >
-            Practicioners
+            Practitioners
           </NavLink>
         </li>
         <li>

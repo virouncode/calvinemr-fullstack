@@ -54,6 +54,13 @@ const ExternalPracticianForm = ({
     ohip_billing_nbr: "",
     patients: [],
   });
+  // const formRef = React.useRef<HTMLTableRowElement>(null);
+  // useEffect(() => {
+  //   if (formRef.current) {
+  //     formRef.current.scrollIntoView({ behavior: "instant", block: "nearest" });
+  //   }
+  // }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -71,6 +78,7 @@ const ExternalPracticianForm = ({
     }
     setFormDatas({ ...formDatas, [name]: value });
   };
+
   const handleChangePostalOrZip = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setErrMsgPost("");
     setPostalOrZip(e.target.value);
@@ -141,6 +149,7 @@ const ExternalPracticianForm = ({
     <tr
       className="doctors__form"
       style={{ border: errMsgPost && "solid 1.5px red" }}
+      // ref={formRef}
     >
       <td>
         <div className="doctors__form-btn-container">

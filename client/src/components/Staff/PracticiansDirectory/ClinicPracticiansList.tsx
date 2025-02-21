@@ -39,7 +39,7 @@ const ClinicPracticiansList = ({
 
   return (
     <div className="doctors-list">
-      <div className="doctors-list__title">Clinic Practicioners directory</div>
+      <div className="doctors-list__title">Clinic Practitioners directory</div>
       <div className="doctors-list__table-container doctors-list__table-container--practician">
         <table className="doctors-list__table">
           <thead>
