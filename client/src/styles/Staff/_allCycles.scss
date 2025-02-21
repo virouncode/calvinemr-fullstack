@@ -58,6 +58,13 @@
       text-align: center;
       padding: 0.5rem;
       word-break: break-word;
+      .record-link {
+        text-decoration: underline;
+        font-weight: bold;
+        &:hover {
+          opacity: 0.85;
+        }
+      }
     }
   }
 }

@@ -1,4 +1,6 @@
+import { Tooltip } from "@mui/material";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   CycleEventType,
   CycleType,
@@ -16,7 +18,17 @@ const AllCyclesItem = ({ event, cycle }: AllCyclesItemProps) => {
     <tr className="allCycles__item">
       <td>{cycle.cycle_nbr}</td>
       <td>{cycle.patient_infos.ChartNumber}</td>
-      <td>{cycle.patient_infos.Names?.LegalName.LastName.Part}</td>
+      <td>
+        <Tooltip title="Go to EMR" placement="top-start" arrow>
+          <NavLink
+            to={`/staff/patient-record/${cycle.patient_infos.patient_id}`}
+            className="record-link"
+            // target="_blank"
+          >
+            {cycle.patient_infos.Names?.LegalName.LastName.Part || ""}
+          </NavLink>
+        </Tooltip>
+      </td>
       <td>{cycle.patient_infos.Names?.LegalName.FirstName.Part}</td>
       <td>{timestampToDateISOTZ(cycle.patient_infos.DateOfBirth)}</td>
       <td>{cycle.cycle_type}</td>
