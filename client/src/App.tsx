@@ -31,6 +31,7 @@ import MissingPage from "./pages/All/MissingPage";
 import ResetPage from "./pages/All/ResetPage";
 import UnauthorizedPage from "./pages/All/UnauthorizedPage";
 import PatientMessagesPage from "./pages/Patient/PatientMessagesPage";
+import StaffAllCyclesPage from "./pages/Staff/StaffAllCyclesPage";
 import StaffCalendarPage from "./pages/Staff/StaffCalendarPage";
 
 const PatientAppointmentsPage = lazy(
@@ -63,6 +64,9 @@ const StaffPatientRecordPage = lazy(
 );
 const StaffPatientsGroupsPage = lazy(
   () => import("./pages/Staff/StaffPatientsGroupsPage")
+);
+const StaffSearchPracticiansPage = lazy(
+  () => import("./pages/Staff/StaffSearchPracticiansPage")
 );
 const StaffReferencePage = lazy(
   () => import("./pages/Staff/StaffReferencePage")
@@ -217,6 +221,14 @@ const App = () => {
               }
             />
             <Route
+              path="search-practicians"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffSearchPracticiansPage />
+                </Suspense>
+              }
+            />
+            <Route
               path="reports-inbox"
               element={
                 <Suspense fallback={<CircularProgressMedium />}>
@@ -285,6 +297,14 @@ const App = () => {
               element={
                 <Suspense fallback={<CircularProgressMedium />}>
                   <StaffBillingPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="all-cycles"
+              element={
+                <Suspense fallback={<CircularProgressMedium />}>
+                  <StaffAllCyclesPage />
                 </Suspense>
               }
             />

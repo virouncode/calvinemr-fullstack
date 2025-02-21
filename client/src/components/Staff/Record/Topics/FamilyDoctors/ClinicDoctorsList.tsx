@@ -2,7 +2,7 @@ import React from "react";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import { SiteType } from "../../../../../types/api";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
-import ClinicDoctorListItem from "./ClinicDoctorItem";
+import ClinicDoctorItem from "./ClinicDoctorItem";
 
 type ClinicDoctorsListProps = {
   patientId: number;
@@ -40,7 +40,7 @@ const ClinicDoctorsList = ({ patientId, sites }: ClinicDoctorsListProps) => {
           <tbody>
             {sites.length > 0 && doctors && doctors.length > 0 ? (
               doctors.map((item) => (
-                <ClinicDoctorListItem
+                <ClinicDoctorItem
                   item={item}
                   key={item.id}
                   patientId={patientId}

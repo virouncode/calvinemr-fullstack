@@ -56,7 +56,7 @@ const StaffHeaderNav = ({
             Patients
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to="/staff/groups"
             className={(nav) =>
@@ -67,19 +67,19 @@ const StaffHeaderNav = ({
           >
             Groups
           </NavLink>
-        </li>
-        {/* <li>
+        </li> */}
+        <li>
           <NavLink
-            to="/staff/doctors"
+            to="/staff/search-practicians"
             className={(nav) =>
               nav.isActive
                 ? "header__link header__link--active"
                 : "header__link"
             }
           >
-            Doctors
+            Practicioners
           </NavLink>
-        </li> */}
+        </li>
         <li>
           <NavLink
             to="/staff/reports-inbox"
@@ -154,7 +154,7 @@ const StaffHeaderNav = ({
             Billings
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to="/staff/signup-patient"
             className={(nav) =>
@@ -165,19 +165,19 @@ const StaffHeaderNav = ({
           >
             New Patient
           </NavLink>
-        </li>
-        {/* <li>
+        </li> */}
+        <li>
           <NavLink
-            to="/staff/allCycles"
+            to="/staff/all-cycles"
             className={(nav) =>
               nav.isActive
                 ? "header__link header__link--active"
                 : "header__link"
             }
           >
-            All cycles
+            All Cycles
           </NavLink>
-        </li> */}
+        </li>
         <li>
           <NavLink
             to="/staff/my-account"

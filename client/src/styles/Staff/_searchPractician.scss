@@ -1,11 +1,12 @@
-.search-patient {
+.search-practician {
   padding: 1rem;
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
-.search-patient__form {
+
+.search-practician__form {
   font-size: $size-base;
   margin: 0 auto 1rem;
   padding: 0 1rem;
@@ -24,7 +25,7 @@
     font-size: $size-base;
   }
 }
-.search-patient__item {
+.search-practician__item {
   display: flex;
   flex-direction: column;
   label {
@@ -43,7 +44,7 @@
     }
   }
 }
-.search-patient__count {
+.search-practician__count {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,12 +54,12 @@
   flex-direction: column;
   gap: 1rem;
 }
-.search-patient__btn-container {
+.search-practician__btn-container {
   display: flex;
   justify-content: space-between;
   gap: 0.25rem;
 }
-.search-patient__table-container {
+.search-practician__table-container {
   height: 300px;
   overflow-y: scroll;
   position: relative;
@@ -66,7 +67,7 @@
   box-shadow: $box-shadow-default;
   background-color: $white;
 }
-.search-patient__table {
+.search-practician__table {
   table-layout: fixed;
   min-width: 100%;
   border-collapse: collapse;
@@ -165,28 +166,28 @@
 
 /*lg*/
 @media (min-width: 475px) {
-  .search-patient {
+  .search-practician {
     height: 100%;
   }
-  .search-patient__table-container {
+  .search-practician__table-container {
     flex: 1;
     height: auto;
   }
-  .search-patient__count {
+  .search-practician__count {
     flex-direction: row;
   }
 }
 @media (min-width: 1024px) {
-  .search-patient__form {
+  .search-practician__form {
     font-size: $size-sm;
     input {
       font-size: $size-sm;
     }
   }
-  .search-patient__table {
+  .search-practician__table {
     font-size: $size-sm;
   }
-  .search-patient__item-btn-container {
+  .search-practician__item-btn-container {
     button {
       font-size: $size-sm;
     }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import { useDoctorsSearch } from "../../../hooks/reactquery/queries/doctorsQueries";
+import { useDoctorsSimpleSearch } from "../../../hooks/reactquery/queries/doctorsQueries";
 import useDebounce from "../../../hooks/useDebounce";
 import useIntersection from "../../../hooks/useIntersection";
 import { DoctorType, StaffType } from "../../../types/api";
@@ -33,7 +33,7 @@ const ReferringOHIPSearch = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useDoctorsSearch(debouncedSearch);
+  } = useDoctorsSimpleSearch(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDoctorsSearch } from "../../../../hooks/reactquery/queries/doctorsQueries";
+import { useDoctorsSimpleSearch } from "../../../../hooks/reactquery/queries/doctorsQueries";
 import useDebounce from "../../../../hooks/useDebounce";
 import useIntersection from "../../../../hooks/useIntersection";
 import Input from "../../../UI/Inputs/Input";
@@ -26,7 +26,7 @@ const DoctorsFaxNumbers = ({
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useDoctorsSearch(debouncedSearch);
+  } = useDoctorsSimpleSearch(debouncedSearch);
   //Intersection observer
   const { ulRef, lastItemRef } = useIntersection(
     isFetchingNextPage,

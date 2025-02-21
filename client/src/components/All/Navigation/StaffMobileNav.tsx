@@ -104,9 +104,14 @@ const StaffMobileNav = ({
               Patients
             </NavLink>
           </li>
-          <li onClick={handleClose}>
+          {/* <li onClick={handleClose}>
             <NavLink to="/staff/groups" className="mobile-nav__link">
               Groups
+            </NavLink>
+          </li> */}
+          <li onClick={handleClose}>
+            <NavLink to="/staff/search-staff" className="mobile-nav__link">
+              Staff
             </NavLink>
           </li>
           <li onClick={handleClose}>
@@ -141,9 +146,14 @@ const StaffMobileNav = ({
               Billings
             </NavLink>
           </li>
-          <li onClick={handleClose}>
+          {/* <li onClick={handleClose}>
             <NavLink to="/staff/signup-patient" className="mobile-nav__link">
               New Patient
+            </NavLink>
+          </li> */}
+          <li onClick={handleClose}>
+            <NavLink to="/staff/all-cycles" className="mobile-nav__link">
+              All Cycles
             </NavLink>
           </li>
           <li onClick={handleClose}>

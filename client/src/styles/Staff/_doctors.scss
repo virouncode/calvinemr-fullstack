@@ -100,6 +100,10 @@
     overflow: scroll;
     border-radius: 6px;
     box-shadow: $box-shadow-default;
+    &--practician {
+      flex: auto;
+      height: 300px;
+    }
   }
   &__table {
     table-layout: fixed;
@@ -153,6 +157,10 @@
       overflow: scroll;
       border-radius: 6px;
       box-shadow: $box-shadow-default;
+      &--practician {
+        flex: auto;
+        height: 300px;
+      }
     }
     &__table {
       font-size: $size-sm;

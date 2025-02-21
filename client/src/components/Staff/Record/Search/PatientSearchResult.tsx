@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { usePatients } from "../../../../hooks/reactquery/queries/patientsQueries";
 import useIntersection from "../../../../hooks/useIntersection";
@@ -7,6 +8,7 @@ import {
   UserAdminType,
   UserStaffType,
 } from "../../../../types/app";
+import Button from "../../../UI/Buttons/Button";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../UI/Paragraphs/LoadingParagraph";
 import LoadingRow from "../../../UI/Tables/LoadingRow";
@@ -33,6 +35,14 @@ const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
     fetchNextPage,
     isFetching
   );
+  const navigate = useNavigate();
+
+  const handleClickNewPatient = () => {
+    navigate("/staff/signup-patient");
+  };
+  const handleClickPatientsGroups = () => {
+    navigate("/staff/groups");
+  };
 
   if (isPending) return <LoadingParagraph />;
   if (error) return <ErrorParagraph errorMsg={error.message} />;
@@ -43,7 +53,16 @@ const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
     patients && (
       <>
         <div className="search-patient__count">
-          <em>Number of patients: {patients.pages[0].itemsTotal}</em>
+          <div className="search-patient__btn-container">
+            <Button label="New Patient" onClick={handleClickNewPatient} />
+            <Button
+              label="Patients groups"
+              onClick={handleClickPatientsGroups}
+            />
+          </div>
+          <p>
+            <em>Number of patients: {patients.pages[0].itemsTotal}</em>
+          </p>
         </div>
         <div className="search-patient__table-container" ref={divRef}>
           <table
