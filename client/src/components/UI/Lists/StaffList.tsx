@@ -7,11 +7,21 @@ type StaffListProps = {
   value: number;
   name: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  all?: boolean;
+  onlyDoctors?: boolean;
 };
 
-const StaffList = ({ value, name, handleChange }: StaffListProps) => {
+const StaffList = ({
+  value,
+  name,
+  handleChange,
+  all = false,
+  onlyDoctors = false,
+}: StaffListProps) => {
   const { staffInfos } = useStaffInfosContext();
-  const splittedStaffInfos = splitStaffInfos(staffInfos, true);
+  const splittedStaffInfos = onlyDoctors
+    ? splitStaffInfos(staffInfos, true, true)
+    : splitStaffInfos(staffInfos, true);
   return (
     <select
       value={value}
@@ -22,6 +32,7 @@ const StaffList = ({ value, name, handleChange }: StaffListProps) => {
       <option value="0" disabled>
         Choose a practitioner...
       </option>
+      {all && <option value="-1">All</option>}
       {splittedStaffInfos
         .filter(({ infos }) => infos.length)
         .map(({ name, infos }) => (

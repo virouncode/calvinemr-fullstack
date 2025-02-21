@@ -1,0 +1,86 @@
+.allCycles {
+  padding: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__table-container {
+    flex: 1;
+    overflow: scroll;
+    border-radius: 6px;
+    box-shadow: $box-shadow-default;
+    position: relative;
+  }
+  &__table {
+    table-layout: fixed;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: $size-xs;
+    thead {
+      position: sticky;
+      top: 0;
+      background: $blue;
+      border-radius: 6px;
+    }
+    th {
+      min-width: 120px;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+  }
+  &__form {
+    font-size: $size-base;
+    margin: 0 auto 1rem;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    column-gap: 2rem;
+    row-gap: 0.5rem;
+    width: 100%;
+    background-color: $white;
+    padding: 1rem;
+    border-radius: 6px;
+    border: solid 1px $grey2;
+    box-shadow: $box-shadow-default;
+    input,
+    select {
+      width: auto;
+      font-size: $size-base;
+    }
+  }
+  &__item {
+    border-bottom: solid 1px $grey2;
+    &:nth-child(odd) {
+      background-color: $grey;
+    }
+    td {
+      text-align: center;
+      padding: 0.5rem;
+      word-break: break-word;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .allCycles {
+    &__item {
+      td {
+        input,
+        select {
+          font-size: $size-sm;
+        }
+      }
+    }
+    &__table {
+      font-size: $size-sm;
+    }
+    &__form {
+      font-size: $size-sm;
+      input,
+      select {
+        font-size: $size-sm;
+      }
+    }
+  }
+}

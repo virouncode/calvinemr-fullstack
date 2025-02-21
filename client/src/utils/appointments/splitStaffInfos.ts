@@ -2,7 +2,8 @@ import { StaffType } from "../../types/api";
 
 export const splitStaffInfos = (
   staffInfos: StaffType[],
-  noSecretaries = false
+  noSecretaries = false,
+  onlyDoctors = false
 ) => {
   const activeStaff = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
@@ -53,7 +54,9 @@ export const splitStaffInfos = (
     name: "Others",
     infos: activeStaff.filter(({ title }) => title === "Other"),
   };
-  return noSecretaries
+  return onlyDoctors
+    ? [doctorsInfos]
+    : noSecretaries
     ? [
         doctorsInfos,
         medStudentsInfos,
