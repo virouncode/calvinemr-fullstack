@@ -1,4 +1,3 @@
-import { EventInput } from "@fullcalendar/core";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -16,7 +15,6 @@ import {
   StaffType,
 } from "../../../../../types/api";
 import { UserStaffType } from "../../../../../types/app";
-import { parseToAppointment } from "../../../../../utils/appointments/parseToAppointment";
 import { toEmailInvitationText } from "../../../../../utils/appointments/toEmailInvitationText";
 import { toEmailToStaffInvitationText } from "../../../../../utils/appointments/toEmailToStaffInvitationText";
 import { toSMSInvitationText } from "../../../../../utils/appointments/toSMSInvitationText";
@@ -48,7 +46,8 @@ type InvitationProps = {
   sites: SiteType[];
   siteId: number;
   allDay: boolean;
-  currentEvent: React.MutableRefObject<EventInput | null>;
+  formDatas: AppointmentType;
+  setFormDatas: React.Dispatch<React.SetStateAction<AppointmentType>>;
 };
 
 const Invitation = ({
@@ -62,7 +61,8 @@ const Invitation = ({
   sites,
   siteId,
   allDay,
-  currentEvent,
+  formDatas,
+  setFormDatas,
 }: InvitationProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -260,13 +260,12 @@ const Invitation = ({
         ),
       ],
     };
+
     const appointmentToPut: AppointmentType = {
-      ...parseToAppointment(currentEvent.current as EventInput),
-      invitations_sent: [
-        ...(currentEvent.current?.extendedProps?.invitations_sent ?? []),
-        invitationSent,
-      ],
+      ...formDatas,
+      invitations_sent: [...(formDatas.invitations_sent ?? []), invitationSent],
     };
+    setFormDatas(appointmentToPut);
     appointmentPut.mutate(appointmentToPut);
     setInvitationVisible(false);
   };

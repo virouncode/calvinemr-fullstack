@@ -1126,7 +1126,8 @@ const EventForm = ({
           sites={sites}
           siteId={formDatas.site_id}
           allDay={formDatas.all_day}
-          currentEvent={currentEvent}
+          formDatas={formDatas}
+          setFormDatas={setFormDatas}
         />
       )}
       {confirmDlgRecChangeVisible && (
