@@ -230,10 +230,7 @@ const ReportItemSent = ({
               <EditButton onClick={handleEdit} disabled={progress} />
               <Button onClick={handleSend} disabled={progress} label="Send" />
               <Button onClick={handleFax} disabled={progress} label="Fax" />
-              <DeleteButton
-                onClick={handleDeleteClick}
-                disabled={user.id !== item.assigned_staff_id || progress}
-              />
+              <DeleteButton onClick={handleDeleteClick} disabled={progress} />
             </>
           )}
         </div>

@@ -2,6 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import axios from "axios";
 import { PDFDocument, PageSizes, StandardFonts, rgb } from "pdf-lib";
 import React, { useEffect, useState } from "react";
+import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { reportClassCT } from "../../../../../omdDatas/codesTables";
@@ -32,7 +33,6 @@ import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
 import GenericList from "../../../../UI/Lists/GenericList";
 import SignCell from "../../../../UI/Tables/SignCell";
-import useSocketContext from "../../../../../hooks/context/useSocketContext";
 
 type ReportItemReceivedProps = {
   item: ReportType;
@@ -293,10 +293,7 @@ const ReportItemReceived = ({
               <EditButton onClick={handleEdit} disabled={progress} />
               <Button onClick={handleSend} disabled={progress} label="Send" />
               <Button onClick={handleFax} disabled={progress} label="Fax" />
-              <DeleteButton
-                onClick={handleDeleteClick}
-                disabled={user.id !== item.assigned_staff_id || progress}
-              />
+              <DeleteButton onClick={handleDeleteClick} disabled={progress} />
             </>
           )}
         </div>
