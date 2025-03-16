@@ -20,17 +20,15 @@ const PrescriptionHeader = ({ site }: PrescriptionHeaderProps) => {
       <div className="prescription__doctor-infos">
         <p>
           {staffIdToTitleAndName(staffInfos, user.id, false, true)} (LIC.{" "}
-          {user.licence_nbr})
+          {user.licence_nbr}, OHIP# {user.ohip_billing_nbr})
         </p>
         <p>
           {clinic?.name ?? ""}, {site?.name ?? ""}
         </p>
-        {site && (
-          <p>
-            {site?.address}, {site?.city}, {site?.province_state},{" "}
-            {site?.postal_code}{" "}
-          </p>
-        )}
+        {site && <p>{site?.address}</p>}
+        <p>
+          {site?.city}, {site?.province_state}, {site?.postal_code}{" "}
+        </p>
         <p>Phone: {site?.phone ?? ""}</p>
         <p>Fax: {site?.fax ?? ""}</p>
         <p>{clinic?.email ?? ""}</p>
