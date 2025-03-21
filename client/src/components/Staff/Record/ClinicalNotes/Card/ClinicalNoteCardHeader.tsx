@@ -150,7 +150,7 @@ const ClinicalNoteCardHeader = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    //Get referrer_ohip
+
     let referrer_ohip = "";
     try {
       const response: XanoPaginatedType<DoctorType> = await xanoGet(
@@ -168,17 +168,17 @@ const ClinicalNoteCardHeader = ({
         console.log(`Unable to get referrer_ohip: ${err.message}`);
     }
 
-    navigate(
-      referrer_ohip
-        ? `/staff/billing/${demographicsInfos.patient_id}/${toPatientName(
-            demographicsInfos
-          )}/${
-            demographicsInfos.HealthCard?.Number
-          }/${nowTZTimestamp()}/${referrer_ohip}`
-        : `/staff/billing/${demographicsInfos.patient_id}/${toPatientName(
-            demographicsInfos
-          )}/${demographicsInfos.HealthCard?.Number}/${nowTZTimestamp()}`
-    );
+    // Construction des search params
+    const searchParams = new URLSearchParams({
+      patientId: demographicsInfos.patient_id.toString(),
+      patientName: toPatientName(demographicsInfos),
+      healthCardNbr: demographicsInfos.HealthCard?.Number || "",
+      timestamp: nowTZTimestamp().toString(),
+      referrerOhip: referrer_ohip || "",
+    });
+
+    // Redirection avec search params
+    navigate(`/staff/billing?${searchParams.toString()}`);
   };
 
   return (

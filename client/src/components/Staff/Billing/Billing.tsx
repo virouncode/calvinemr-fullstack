@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useBillings } from "../../../hooks/reactquery/queries/billingQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
@@ -19,9 +19,10 @@ import BillingTable from "./BillingTable";
 
 const Billing = () => {
   //Hooks
-  const { pid } = useParams();
+  const [searchParams] = useSearchParams();
+  const patientId = searchParams.get("patientId");
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
-  const [addVisible, setAddVisible] = useState(pid ? true : false);
+  const [addVisible, setAddVisible] = useState(patientId ? true : false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [rangeStart, setRangeStart] = useState(getStartOfTheMonthTZ()); //start of the month
   const [rangeEnd, setRangeEnd] = useState(getEndOfTheMonthTZ()); //end of the month

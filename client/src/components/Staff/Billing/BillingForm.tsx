@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
@@ -54,7 +54,13 @@ const BillingForm = ({
 }: BillingFormProps) => {
   //Hooks
   const navigate = useNavigate();
-  const { pid, pName, hcn, date, refohip } = useParams();
+  const [searchParams] = useSearchParams();
+  const patientId = searchParams.get("patientId");
+  const patientName = searchParams.get("patientName");
+  const healthCardNbr = searchParams.get("healthCardNbr");
+  const timestamp = searchParams.get("timestamp");
+  const referrerOhip = searchParams.get("referrerOhip");
+
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
@@ -62,15 +68,15 @@ const BillingForm = ({
     user.access_level === "admin" ? 0 : user.id
   );
   const [formDatas, setFormDatas] = useState<BillingFormType>({
-    dateStr: date
-      ? timestampToDateISOTZ(parseInt(date))
+    dateStr: timestamp
+      ? timestampToDateISOTZ(parseInt(timestamp))
       : timestampToDateISOTZ(nowTZTimestamp(), "America/Toronto"),
     provider_ohip_billing_nbr:
       user.access_level === "admin" ? "" : staffIdToOHIP(staffInfos, user.id),
-    referrer_ohip_billing_nbr: refohip ?? "",
-    patient_id: pid ? parseInt(pid) : 0,
-    patient_hcn: hcn || "",
-    patient_name: pName || "",
+    referrer_ohip_billing_nbr: referrerOhip ?? "",
+    patient_id: patientId ? parseInt(patientId) : 0,
+    patient_hcn: healthCardNbr || "",
+    patient_name: patientName || "",
     diagnosis_code: "",
     billing_codes: "",
     site_id:
@@ -89,10 +95,10 @@ const BillingForm = ({
 
   useEffect(() => {
     //to hide parameters
-    if (date) {
+    if (timestamp) {
       navigate("/staff/billing");
     }
-  }, [date, navigate]);
+  }, [timestamp, navigate]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

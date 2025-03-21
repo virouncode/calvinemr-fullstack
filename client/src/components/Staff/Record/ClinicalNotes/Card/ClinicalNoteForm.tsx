@@ -220,17 +220,17 @@ const ClinicalNoteForm = ({
       onSuccess: () => {
         setAddVisible(false);
         localStorage.removeItem("currentNewClinicalNote");
-        navigate(
-          referrer_ohip
-            ? `/staff/billing/${patientId}/${toPatientName(
-                demographicsInfos
-              )}/${
-                demographicsInfos.HealthCard?.Number
-              }/${nowTZTimestamp()}/${referrer_ohip}`
-            : `/staff/billing/${patientId}/${toPatientName(
-                demographicsInfos
-              )}/${demographicsInfos.HealthCard?.Number}/${nowTZTimestamp()}`
-        );
+
+        // Construction des search params
+        const searchParams = new URLSearchParams({
+          patientId: patientId.toString(),
+          patientName: toPatientName(demographicsInfos),
+          healthCardNbr: demographicsInfos.HealthCard?.Number || "",
+          timestamp: nowTZTimestamp().toString(),
+          referrerOhip: referrer_ohip || "",
+        });
+        // Redirection avec search params
+        navigate(`/staff/billing?${searchParams.toString()}`);
       },
       onError: (err) => {
         toast.error(`Error: unable to save clinical note: ${err.message}`, {
