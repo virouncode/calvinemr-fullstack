@@ -18,7 +18,7 @@ const PrescriptionHeader = ({ site }: PrescriptionHeaderProps) => {
   return (
     <div className="prescription__header">
       <div className="prescription__doctor-infos">
-        <p>{staffIdToTitleAndName(staffInfos, user.id, false, true)} ()</p>
+        <p>{staffIdToTitleAndName(staffInfos, user.id, false, true)}</p>
         <p>
           LIC.#: {user.licence_nbr}, OHIP#: {user.ohip_billing_nbr}
         </p>
