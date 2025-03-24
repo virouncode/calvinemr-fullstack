@@ -77,7 +77,7 @@ const ReportsInbox = () => {
               <th>Class</th>
               <th>Sub Class</th>
               <th>Related patient</th>
-              <th>Next patient appointment</th>
+              {/* <th>Next patient appointment</th> */}
               <th>Date of document</th>
               <th>Date received</th>
               <th>Author</th>

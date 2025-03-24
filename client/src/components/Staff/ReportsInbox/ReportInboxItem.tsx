@@ -6,20 +6,12 @@ import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useReportInboxPut } from "../../../hooks/reactquery/mutations/reportsMutations";
-import { useAllPatientAppointments } from "../../../hooks/reactquery/queries/allPatientAppointmentsQueries";
 import { reportClassCT } from "../../../omdDatas/codesTables";
-import {
-  AppointmentType,
-  MessageAttachmentType,
-  ReportType,
-} from "../../../types/api";
+import { MessageAttachmentType, ReportType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
-import { getNextPatientAppointments } from "../../../utils/appointments/getNextPatientAppointments";
-import { toNextOccurence } from "../../../utils/appointments/occurences";
 import {
   nowTZTimestamp,
   timestampToDateISOTZ,
-  timestampToHumanDateTimeTZ,
 } from "../../../utils/dates/formatDates";
 import { showDocument } from "../../../utils/files/showDocument";
 import {
@@ -36,8 +28,6 @@ import EditButton from "../../UI/Buttons/EditButton";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 import GenericListToggle from "../../UI/Lists/GenericListToggle";
-import ErrorRow from "../../UI/Tables/ErrorRow";
-import LoadingRow from "../../UI/Tables/LoadingRow";
 import SignCell from "../../UI/Tables/SignCell";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import NewMessage from "../Messaging/Internal/NewMessage";
@@ -75,26 +65,26 @@ const ReportInboxItem = ({
   const [messageVisible, setMessageVisible] = useState(false);
   const [attachments, setAttachments] = useState<MessageAttachmentType[]>([]);
   const [initialBody, setInitialBody] = useState("");
-  const [patientNextAppointment, setPatientNextAppointment] = useState<
-    AppointmentType | undefined
-  >();
+  // const [patientNextAppointment, setPatientNextAppointment] = useState<
+  //   AppointmentType | undefined
+  // >();
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   //Queries
-  const {
-    data: patientAppointments,
-    isPending,
-    error,
-  } = useAllPatientAppointments(item.patient_id);
+  // const {
+  //   data: patientAppointments,
+  //   isPending,
+  //   error,
+  // } = useAllPatientAppointments(item.patient_id);
 
   const reportPut = useReportInboxPut(user.id);
   const reportInboxPut = useReportInboxPut(user.id);
 
-  useEffect(() => {
-    if (!patientAppointments || isPending || error) return;
-    setPatientNextAppointment(
-      getNextPatientAppointments(patientAppointments)[0]
-    );
-  }, [patientAppointments, isPending, error]);
+  // useEffect(() => {
+  //   if (!patientAppointments || isPending || error) return;
+  //   setPatientNextAppointment(
+  //     getNextPatientAppointments(patientAppointments)[0]
+  //   );
+  // }, [patientAppointments, isPending, error]);
 
   useEffect(() => {
     setItemInfos(item);
@@ -230,13 +220,13 @@ const ReportInboxItem = ({
     setEditVisible(false);
   };
 
-  if (isPending) return <LoadingRow colSpan={15} />;
-  if (error)
-    return (
-      <div className="clinical-notes__title">
-        <ErrorRow errorMsg={error.message} colSpan={15} />
-      </div>
-    );
+  // if (isPending) return <LoadingRow colSpan={15} />;
+  // if (error)
+  //   return (
+  //     <div className="clinical-notes__title">
+  //       <ErrorRow errorMsg={error.message} colSpan={15} />
+  //     </div>
+  //   );
 
   return (
     <>
@@ -331,7 +321,7 @@ const ReportInboxItem = ({
             {toPatientName(item.patient_infos)}
           </NavLink>
         </td>
-        <td>
+        {/* <td>
           {patientNextAppointment &&
             timestampToHumanDateTimeTZ(
               patientNextAppointment.recurrence === "Once"
@@ -343,7 +333,7 @@ const ReportInboxItem = ({
                     patientNextAppointment.exrule
                   )[0]
             )}
-        </td>
+        </td> */}
         <td>{timestampToDateISOTZ(item.EventDateTime)}</td>
         <td>{timestampToDateISOTZ(item.ReceivedDateTime)}</td>
         <td>
