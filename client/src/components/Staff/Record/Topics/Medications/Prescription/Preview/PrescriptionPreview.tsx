@@ -409,6 +409,13 @@ const PrescriptionPreview = ({
                   file: prescription,
                 },
               ]}
+              initialRecipient={{
+                ToFaxNumber:
+                  demographicsInfos.preferred_pharmacy?.FaxNumber.phoneNumber.replaceAll(
+                    "-",
+                    ""
+                  ) || "",
+              }}
             />
           ) : (
             <NewFax
@@ -419,6 +426,13 @@ const PrescriptionPreview = ({
                   file: prescription,
                 },
               ]}
+              initialRecipient={{
+                ToFaxNumber:
+                  demographicsInfos.preferred_pharmacy?.FaxNumber.phoneNumber.replaceAll(
+                    "-",
+                    ""
+                  ) || "",
+              }}
             />
           )}
         </FakeWindow>

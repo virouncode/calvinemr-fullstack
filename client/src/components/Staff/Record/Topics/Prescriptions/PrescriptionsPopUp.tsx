@@ -153,11 +153,25 @@ const PrescriptionsPopUp = ({
               <NewFaxMobile
                 setNewVisible={setFaxVisible}
                 initialAttachments={fileToFax ? [fileToFax] : []}
+                initialRecipient={{
+                  ToFaxNumber:
+                    demographicsInfos.preferred_pharmacy?.FaxNumber.phoneNumber.replaceAll(
+                      "-",
+                      ""
+                    ) || "",
+                }}
               />
             ) : (
               <NewFax
                 setNewVisible={setFaxVisible}
                 initialAttachments={fileToFax ? [fileToFax] : []}
+                initialRecipient={{
+                  ToFaxNumber:
+                    demographicsInfos.preferred_pharmacy?.FaxNumber.phoneNumber.replaceAll(
+                      "-",
+                      ""
+                    ) || "",
+                }}
               />
             )}
           </FakeWindow>
