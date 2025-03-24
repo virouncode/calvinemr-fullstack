@@ -20,6 +20,14 @@ export const toInverseRelation = (relation: string, gender: string) => {
       return "Cousin - paternal";
     case "Daughter":
       return gender === "Female" || gender === "Other" ? "Mother" : "Father";
+    case "Egg donor":
+      return "Egg recipient";
+    case "Egg recipient":
+      return "Egg donor";
+    case "Embryo donor":
+      return "Embryo recipient";
+    case "Embryo recipient":
+      return "Embryo donor";
     case "Father":
       return gender === "Female" || gender === "Other" ? "Daughter" : "Son";
     case "Friend":
@@ -54,6 +62,8 @@ export const toInverseRelation = (relation: string, gender: string) => {
         : "Half-brother";
     case "Husband":
       return gender === "Female" || gender === "Other" ? "Wife" : "Husband";
+    case "Intended parent":
+      return "Surrogate";
     case "Mother":
       return gender === "Female" || gender === "Other" ? "Daughter" : "Son";
     case "Nephew - maternal":
@@ -76,6 +86,12 @@ export const toInverseRelation = (relation: string, gender: string) => {
       return gender === "Female" || gender === "Other" ? "Sister" : "Brother";
     case "Son":
       return gender === "Female" || gender === "Other" ? "Mother" : "Father";
+    case "Sperm donor":
+      return "Sperm recipient";
+    case "Sperm recipient":
+      return "Sperm donor";
+    case "Surrogate":
+      return "Intended parent";
     case "Uncle - maternal":
       return gender === "Female" || gender === "Other"
         ? "Niece - maternal"

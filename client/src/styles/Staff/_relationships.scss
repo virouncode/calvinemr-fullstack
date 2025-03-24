@@ -100,7 +100,8 @@
     &__table {
       font-size: $size-sm;
     }
-    &__item-btn-container {
+    &__item-btn-container,
+    &__form-btn-container {
       button {
         font-size: $size-sm;
       }
