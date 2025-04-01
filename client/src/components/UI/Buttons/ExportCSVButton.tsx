@@ -43,10 +43,6 @@ const ExportCSVButton = ({
   const { staffInfos } = useStaffInfosContext();
   const [loading, setLoading] = useState(false);
   useFetchAllPages(fetchNextPage, hasNextPage);
-  console.log(
-    "billings",
-    typeof billings[0].provider_ohip_billing_nbr?.ohip_billing_nbr
-  );
 
   return (
     <button className="btn">
