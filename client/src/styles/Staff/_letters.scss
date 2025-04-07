@@ -231,7 +231,6 @@
     &-attachments,
     &-reports {
       margin-top: 15px;
-      overflow-y: scroll;
       &-title {
         font-weight: bold;
         padding: 0;
@@ -249,6 +248,7 @@
         padding: 10px;
         border: solid 1px $grey2;
         border-radius: 6px;
+        overflow-y: scroll;
       }
     }
     &-template {
