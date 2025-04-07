@@ -231,6 +231,7 @@
     &-attachments,
     &-reports {
       margin-top: 15px;
+      overflow-y: scroll;
       &-title {
         font-weight: bold;
         padding: 0;
