@@ -558,6 +558,7 @@ const PatientTopic = ({
             <AllergiesPopUp
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
+              patientDob={patientDob as number}
             />
           </FakeWindow>
         )}

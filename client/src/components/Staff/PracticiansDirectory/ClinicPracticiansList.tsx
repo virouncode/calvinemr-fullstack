@@ -2,6 +2,7 @@ import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { SearchStaffType, SiteType, StaffType } from "../../../types/api";
 import { staffIdToName } from "../../../utils/names/staffIdToName";
+import { removeAccents } from "../../../utils/strings/removeAccents";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import ClinicPracticianItem from "./ClinicPracticianItem";
 
@@ -19,9 +20,9 @@ const ClinicPracticiansList = ({
     .filter(({ title }) => title !== "Secretary")
     .filter(
       (item) =>
-        staffIdToName(staffInfos, item.id, false)
-          .toLowerCase()
-          .includes(debouncedSearch.name.toLowerCase().trim()) &&
+        removeAccents(
+          staffIdToName(staffInfos, item.id, false).toLowerCase()
+        ).includes(removeAccents(debouncedSearch.name.toLowerCase().trim())) &&
         sites
           .find(({ id }) => id === item.site_id)
           ?.email.toLowerCase()

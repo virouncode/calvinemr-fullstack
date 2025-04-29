@@ -14,6 +14,7 @@ import {
   nowTZTimestamp,
   timestampToDateISOTZ,
 } from "../../../../../utils/dates/formatDates";
+import { getLifeStage } from "../../../../../utils/dates/getLifeStage";
 import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { allergySchema } from "../../../../../validation/record/allergyValidation";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
@@ -30,6 +31,7 @@ type AllergyFormProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   topicPost: UseMutationResult<AllergyType, Error, Partial<AllergyType>, void>;
+  patientDob: number;
 };
 
 const AllergyForm = ({
@@ -39,9 +41,11 @@ const AllergyForm = ({
   setErrMsgPost,
   errMsgPost,
   topicPost,
+  patientDob,
 }: AllergyFormProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+
   const [formDatas, setFormDatas] = useState<AllergyFormType>({
     patient_id: patientId,
     date_created: nowTZTimestamp(),
@@ -50,7 +54,7 @@ const AllergyForm = ({
     PropertyOfOffendingAgent: "",
     ReactionType: "",
     StartDate: null,
-    LifeStage: "",
+    LifeStage: getLifeStage(patientDob ?? 0),
     Severity: "",
     Reaction: "",
     RecordedDate: nowTZTimestamp(),

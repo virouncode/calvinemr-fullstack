@@ -115,6 +115,7 @@ const PatientMenuRight = ({
         patientName={toPatientName(demographicsInfos)}
         side="right"
         data={allergies}
+        patientDob={demographicsInfos.DateOfBirth as number}
       />
       <PatientTopicAgeCalculator
         textColor="#FEFEFE"

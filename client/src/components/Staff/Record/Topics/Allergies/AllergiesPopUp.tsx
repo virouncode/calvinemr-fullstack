@@ -19,11 +19,13 @@ import AllergyItem from "./AllergyItem";
 type AllergiesPopUpProps = {
   patientId: number;
   setPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  patientDob: number;
 };
 
 const AllergiesPopUp = ({
   patientId,
   setPopUpVisible,
+  patientDob,
 }: AllergiesPopUpProps) => {
   //Hooks
   const editCounter = useRef(0);
@@ -127,6 +129,7 @@ const AllergiesPopUp = ({
                 setErrMsgPost={setErrMsgPost}
                 errMsgPost={errMsgPost}
                 topicPost={topicPost}
+                patientDob={patientDob}
               />
             )}
             {datas && datas.length > 0
