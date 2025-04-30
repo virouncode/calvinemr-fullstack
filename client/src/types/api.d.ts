@@ -1782,6 +1782,10 @@ export type SettingsType = {
   clinical_notes_order: string;
   date_created: number;
   autolock_time_min: number;
+  calendar_view: string;
+  timeline_visible: boolean;
+  hosts_ids: number[];
+  sites_ids: number[];
 };
 
 export type SiteType = {

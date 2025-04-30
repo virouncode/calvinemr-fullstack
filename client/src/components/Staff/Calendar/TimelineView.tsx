@@ -16,7 +16,12 @@ import FullCalendar from "@fullcalendar/react";
 import resourceTimeGrid from "@fullcalendar/resource-timegrid";
 import rrulePlugin from "@fullcalendar/rrule";
 import React from "react";
-import { SiteType } from "../../../types/api";
+import { toast } from "react-toastify";
+import xanoPut from "../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { SettingsType, SiteType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
 
 type TimelineViewProps = {
   initialDate: number;
@@ -35,6 +40,7 @@ type TimelineViewProps = {
   renderEventContent: (info: EventContentArg) => React.JSX.Element | undefined;
   site: SiteType | undefined;
   selectable: boolean;
+  hostsIds: number[];
 };
 
 const TimelineView = ({
@@ -54,9 +60,42 @@ const TimelineView = ({
   renderEventContent,
   site,
   selectable,
+  hostsIds,
 }: TimelineViewProps) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
+  const handleUpdateSettings = async (viewType: string) => {
+    try {
+      const datasToPut: SettingsType = {
+        ...user.settings,
+        timeline_visible: true,
+      };
+      const response: SettingsType = await xanoPut(
+        `/settings/${user.settings.id}`,
+        "staff",
+        datasToPut
+      );
+      socket?.emit("message", {
+        route: "USER",
+        action: "update",
+        content: {
+          id: user.id,
+          data: {
+            ...user,
+            settings: response,
+          },
+        },
+      });
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error: unable to save preference: ${err.message}`, {
+          containerId: "A",
+        });
+    }
+  };
   return (
     <FullCalendar
+      viewDidMount={({ view }) => handleUpdateSettings(view.type)}
       longPressDelay={200}
       plugins={[resourceTimeGrid, interaction, luxonPlugin, rrulePlugin]}
       timeZone="America/Toronto"

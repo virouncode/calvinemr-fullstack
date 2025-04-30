@@ -19,6 +19,21 @@ import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGrid from "@fullcalendar/timegrid";
 import React from "react";
+import { toast } from "react-toastify";
+import xanoPut from "../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { SettingsType } from "../../../types/api";
+import { UserStaffType } from "../../../types/app";
+
+export const calendarViews = [
+  "timeGrid",
+  "timeGridWeek",
+  "dayGridMonth",
+  "multiMonthYear",
+  "listWeek",
+] as const;
+export type CalendarViewType = (typeof calendarViews)[number];
 
 type CalendarViewProps = {
   initialDate: number;
@@ -37,6 +52,7 @@ type CalendarViewProps = {
   renderEventContent: (info: EventContentArg) => React.JSX.Element | undefined;
   selectable: boolean;
   currentView: string;
+  hostsIds: number[];
 };
 
 const CalendarView = ({
@@ -56,24 +72,45 @@ const CalendarView = ({
   renderEventContent,
   selectable,
   currentView,
+  hostsIds,
 }: CalendarViewProps) => {
-  // rrulePlugin.recurringTypes[0].expand = function (errd, fr, de) {
-  //   return errd.rruleSet
-  //     .between(de.toDate(fr.start), de.toDate(fr.end), true)
-  //     .map((d: Date) => {
-  //       return new Date(
-  //         Date.UTC(
-  //           d.getFullYear(),
-  //           d.getMonth(),
-  //           d.getDate(),
-  //           d.getHours(),
-  //           d.getMinutes()
-  //         )
-  //       );
-  //     });
-  // };
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
+
+  const handleUpdateSettings = async (viewType: string) => {
+    try {
+      const datasToPut: SettingsType = {
+        ...user.settings,
+        calendar_view: viewType,
+        timeline_visible: false,
+      };
+      const response: SettingsType = await xanoPut(
+        `/settings/${user.settings.id}`,
+        "staff",
+        datasToPut
+      );
+      socket?.emit("message", {
+        route: "USER",
+        action: "update",
+        content: {
+          id: user.id,
+          data: {
+            ...user,
+            settings: response,
+          },
+        },
+      });
+    } catch (err) {
+      if (err instanceof Error)
+        toast.error(`Error: unable to save preference: ${err.message}`, {
+          containerId: "A",
+        });
+    }
+  };
+
   return (
     <FullCalendar
+      viewDidMount={({ view }) => handleUpdateSettings(view.type)}
       longPressDelay={200}
       plugins={[
         dayGrid,

@@ -58,6 +58,7 @@ import {
 import { toRoomTitle } from "../../../utils/names/toRoomTitle";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import CalendarDisplay from "./CalendarDisplay";
 import CalendarLeftBar from "./CalendarLeftBar";
 import ConfirmDialogRecurringChange from "./ConfirmDialogRecurringChange";
@@ -73,15 +74,20 @@ import CalendarOptionsMobile from "./Options/CalendarOptionsMobile";
 const Calendar = () => {
   //================================= Hooks ========================================//
   const { user } = useUserContext() as { user: UserStaffType };
+
   const { staffInfos } = useStaffInfosContext();
   const [initialDate, setInitialDate] = useState(nowTZTimestamp()); //the date when toggling between timeline and calendar
   const [selectable, setSelectable] = useState(true);
-  const [timelineVisible, setTimelineVisible] = useState(false);
+  const [timelineVisible, setTimelineVisible] = useState(
+    user.settings.timeline_visible
+  );
   const [formVisible, setFormVisible] = useState(false);
   const [rangeStart, setRangeStart] = useState(getTodayStartTZ());
   const [rangeEnd, setRangeEnd] = useState(getTomorrowStartTZ());
   const [formColor, setFormColor] = useState("#93B5E9");
-  const [sitesIds, setSitesIds] = useState([user.site_id]); //Sites for CalendarFilter
+  const [sitesIds, setSitesIds] = useState(
+    user.settings.sites_ids.length ? user.settings.sites_ids : [user.site_id]
+  ); //Sites for CalendarFilter
   const [timelineSiteId, setTimelineSiteId] = useState(user.site_id); //Selected Timeline Site
   const [editAvailability, setEditAvailability] = useState(false);
   const [printDayVisible, setPrintDayVisible] = useState(false);
@@ -90,7 +96,9 @@ const Calendar = () => {
   const [mobileCalendarFilterVisible, setMobileCalendarFilterVisible] =
     useState(false);
   const [hostsIds, setHostsIds] = useState(
-    user.title === "Secretary"
+    user.settings.hosts_ids.length > 0
+      ? user.settings.hosts_ids
+      : user.title === "Secretary"
       ? [
           0, //no host yet (grey events)
           ...(staffInfos
@@ -115,7 +123,9 @@ const Calendar = () => {
   const initialInfo = useRef<EventResizeStartArg | EventDragStartArg | null>(
     null
   ); //we need union type because of all different handlers
-  const [currentView, setCurrentView] = useState("timeGrid");
+  const [currentView, setCurrentView] = useState(
+    user.settings.calendar_view ?? "timeGridWeek"
+  );
   const lastCurrentId = useRef("");
   const eventCounter = useRef(0); //for keyboard shortcuts
   const [isFirstEvent, setIsFirstEvent] = useState(false); //for recurring events
@@ -1455,6 +1465,7 @@ const Calendar = () => {
 
   if (appointments.isError)
     return <ErrorParagraph errorMsg={appointments.error.message} />;
+  if (!sites) return <LoadingParagraph />;
 
   return (
     <>

@@ -192,6 +192,7 @@ const CalendarDisplay = ({
           renderEventContent={renderEventContent}
           selectable={selectable}
           currentView={currentView}
+          hostsIds={hostsIds}
         />
       ) : (
         <TimelineView
@@ -211,6 +212,7 @@ const CalendarDisplay = ({
           renderEventContent={renderEventContent}
           site={sites.find(({ id }) => id === timelineSiteId)}
           selectable={selectable}
+          hostsIds={hostsIds}
         />
       )}
       {formVisible && (

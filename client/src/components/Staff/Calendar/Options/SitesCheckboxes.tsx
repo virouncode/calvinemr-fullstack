@@ -1,5 +1,10 @@
 import React from "react";
-import { SiteType } from "../../../../types/api";
+import { toast } from "react-toastify";
+import xanoPut from "../../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../../hooks/context/useSocketContext";
+import useUserContext from "../../../../hooks/context/useUserContext";
+import { SettingsType, SiteType } from "../../../../types/api";
+import { UserStaffType } from "../../../../types/app";
 import Checkbox from "../../../UI/Checkbox/Checkbox";
 
 type SitesCheckboxesProps = {
@@ -13,28 +18,142 @@ const SitesCheckboxes = ({
   sitesIds,
   setSitesIds,
 }: SitesCheckboxesProps) => {
-  const handleCheckAllSitesIds = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
+
+  const handleCheckAllSitesIds = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const checked = e.target.checked;
     if (checked) {
       setSitesIds(sites.map(({ id }) => id));
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          sites_ids: sites.map(({ id }) => id),
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     } else {
       setSitesIds([]);
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          sites_ids: [],
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     }
   };
-  const handleCheckSiteId = (
+  const handleCheckSiteId = async (
     e: React.ChangeEvent<HTMLInputElement>,
     siteId: number
   ) => {
     const checked = e.target.checked;
     if (checked) {
-      if (
+      const newSitesIds =
         [...sitesIds, siteId].length ===
         sites.filter(({ site_status }) => site_status !== "Closed").length
-      )
-        setSitesIds(sites.map(({ id }) => id));
-      else setSitesIds([...sitesIds, siteId]);
+          ? sites.map(({ id }) => id)
+          : [...sitesIds, siteId];
+
+      setSitesIds(newSitesIds);
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          sites_ids: newSitesIds,
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     } else {
       setSitesIds(sitesIds.filter((id) => id !== siteId));
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          sites_ids: sitesIds.filter((id) => id !== siteId),
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     }
   };
   const isSiteIdChecked = (siteId: number) => {

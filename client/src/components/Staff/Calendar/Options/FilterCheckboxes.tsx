@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import xanoPut from "../../../../api/xanoCRUD/xanoPut";
+import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
-import { StaffType } from "../../../../types/api";
-import { RemainingStaffType } from "../../../../types/app";
+import useUserContext from "../../../../hooks/context/useUserContext";
+import { SettingsType, StaffType } from "../../../../types/api";
+import { RemainingStaffType, UserStaffType } from "../../../../types/app";
 import { splitStaffInfos } from "../../../../utils/appointments/splitStaffInfos";
 import { categoryToTitle } from "../../../../utils/names/categoryToTitle";
 import FilterCheckboxesSection from "./FilterCheckboxesSection";
@@ -18,6 +22,8 @@ const FilterCheckboxes = ({
   remainingStaff,
 }: FilterCheckboxesProps) => {
   //Hooks
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const activeStaff: StaffType[] = staffInfos.filter(
     ({ account_status }) => account_status !== "Closed"
@@ -29,7 +35,7 @@ const FilterCheckboxes = ({
 
   const isCategoryChecked = (category: string) => categories.includes(category);
 
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = parseInt(e.target.id);
     const checked = e.target.checked;
     const category = e.target.name;
@@ -42,16 +48,74 @@ const FilterCheckboxes = ({
       if (
         [...hostsIds, id].filter((id) => categoryContactsIds.includes(id))
           .length === categoryContactsIds.length
-      )
+      ) {
         setCategories([...categories, category]);
+      }
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          hosts_ids: [...hostsIds, id],
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     } else {
       setHostsIds(hostsIds.filter((recipientId) => recipientId !== id));
-      if (categories.includes(category))
+      if (categories.includes(category)) {
         setCategories(categories.filter((name) => name !== category));
+      }
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          hosts_ids: hostsIds.filter((recipientId) => recipientId !== id),
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     }
   };
 
-  const handleCheckCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckCategory = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const category = e.target.id;
     const checked = e.target.checked;
     const categoryContactsIds = activeStaff
@@ -65,11 +129,64 @@ const FilterCheckboxes = ({
           recipientsIdsUpdated.push(id);
         }
       });
-
       setHostsIds(recipientsIdsUpdated);
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          hosts_ids: recipientsIdsUpdated,
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     } else {
       setCategories(categories.filter((cat) => cat !== category));
       setHostsIds(hostsIds.filter((id) => !categoryContactsIds.includes(id)));
+      try {
+        const datasToPut: SettingsType = {
+          ...user.settings,
+          hosts_ids: hostsIds.filter((id) => !categoryContactsIds.includes(id)),
+        };
+        const response: SettingsType = await xanoPut(
+          `/settings/${user.settings.id}`,
+          "staff",
+          datasToPut
+        );
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Error: unable to save preference: ${err.message}`, {
+            containerId: "A",
+          });
+      }
     }
   };
 

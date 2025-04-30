@@ -1,4 +1,7 @@
 import React from "react";
+import useSocketContext from "../../../hooks/context/useSocketContext";
+import useUserContext from "../../../hooks/context/useUserContext";
+import { UserStaffType } from "../../../types/app";
 
 type ToggleViewProps = {
   timelineVisible: boolean;
@@ -9,10 +12,12 @@ const ToggleView = ({
   timelineVisible,
   setTimelineVisible,
 }: ToggleViewProps) => {
-  const handleClickCalendar = () => {
+  const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
+  const handleClickCalendar = async () => {
     setTimelineVisible(false);
   };
-  const handleClickRooms = () => {
+  const handleClickRooms = async () => {
     setTimelineVisible(true);
   };
   return (
