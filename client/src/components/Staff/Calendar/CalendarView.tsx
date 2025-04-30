@@ -18,7 +18,7 @@ import multimonth from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGrid from "@fullcalendar/timegrid";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -77,6 +77,19 @@ const CalendarView = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
 
+  useEffect(() => {
+    if (user.settings.calendar_view) {
+      const htmlElement = document.querySelector(
+        `button.fc-${user.settings.calendar_view}Custom-button`
+      ) as HTMLElement;
+      console.log("htmlElement", htmlElement);
+
+      if (htmlElement) {
+        htmlElement.classList.add("fc-button-active");
+      }
+    }
+  }, [user.settings.calendar_view]);
+
   const handleUpdateSettings = async (viewType: string) => {
     try {
       const datasToPut: SettingsType = {
@@ -106,11 +119,19 @@ const CalendarView = ({
           containerId: "A",
         });
     }
+    return viewType;
+  };
+
+  const toggleActiveButtonClass = (htmlElement: HTMLElement) => {
+    const buttons = htmlElement.parentElement?.querySelectorAll(".fc-button");
+    buttons?.forEach((button) => {
+      button.classList.remove("fc-button-active");
+    });
+    htmlElement.classList.add("fc-button-active");
   };
 
   return (
     <FullCalendar
-      viewDidMount={({ view }) => handleUpdateSettings(view.type)}
       longPressDelay={200}
       plugins={[
         dayGrid,
@@ -125,10 +146,58 @@ const CalendarView = ({
       timeZone="America/Toronto"
       initialDate={initialDate}
       eventOrder={"start"}
+      customButtons={{
+        dayGridMonthCustom: {
+          text: "Month",
+          click: (e, htmlElement) => {
+            fcRef?.current?.getApi().changeView("dayGridMonth");
+            handleUpdateSettings("dayGridMonth");
+            // rest of your code here
+            toggleActiveButtonClass(htmlElement);
+          },
+        },
+        timeGridWeekCustom: {
+          text: "Week",
+          click: (e, htmlElement) => {
+            fcRef?.current?.getApi().changeView("timeGridWeek");
+            // rest of your code here
+            handleUpdateSettings("timeGridWeek");
+            toggleActiveButtonClass(htmlElement);
+          },
+        },
+        timeGridCustom: {
+          text: "Day",
+          click: (e, htmlElement) => {
+            fcRef?.current?.getApi().changeView("timeGrid");
+            // rest of your code here
+            handleUpdateSettings("timeGrid");
+            toggleActiveButtonClass(htmlElement);
+          },
+        },
+        multiMonthYearCustom: {
+          text: "Year",
+          click: (e, htmlElement) => {
+            fcRef?.current?.getApi().changeView("multiMonthYear");
+            // rest of your code here
+            handleUpdateSettings("multiMonthYear");
+            toggleActiveButtonClass(htmlElement);
+          },
+        },
+        listWeekCustom: {
+          text: "List",
+          click: (e, htmlElement) => {
+            fcRef?.current?.getApi().changeView("listWeek");
+            // rest of your code here
+            handleUpdateSettings("listWeek");
+            toggleActiveButtonClass(htmlElement);
+          },
+        },
+      }}
       //===================Design=====================//
       headerToolbar={{
         start: "title",
-        center: "timeGrid timeGridWeek dayGridMonth multiMonthYear listWeek",
+        center:
+          "timeGridCustom timeGridWeekCustom dayGridMonthCustom multiMonthYearCustom listWeekCustom",
         end: "prev today next",
       }}
       slotLabelFormat={{
