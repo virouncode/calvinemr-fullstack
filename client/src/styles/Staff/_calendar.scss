@@ -378,17 +378,17 @@
   &-title {
     display: flex;
     align-items: center;
-    font-size: $size-sm;
+    font-size: $size-lg;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
   &-item {
     display: flex;
     align-items: center;
-    font-size: $size-xs;
+    font-size: $size-base;
     font-weight: normal;
     margin-left: 0.75rem;
-    margin-bottom: 0.125rem;
+    margin-bottom: 0.25rem;
   }
 }
 .calendar__staff-checkboxes {
@@ -400,17 +400,17 @@
   &-title {
     display: flex;
     align-items: center;
-    font-size: $size-sm;
+    font-size: $size-lg;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
   &-item {
     display: flex;
     align-items: center;
-    font-size: $size-xs;
+    font-size: $size-base;
     font-weight: normal;
     margin-left: 0.75rem;
-    margin-bottom: 0.125rem;
+    margin-bottom: 0.25rem;
   }
 }
 .calendar__event-element-day {
@@ -477,6 +477,11 @@
 .gear-icon {
   position: absolute;
   top: 0.75rem;
+  left: 3rem;
+}
+.user-icon {
+  position: absolute;
+  top: 0.75rem;
 }
 .calendar__mobile-options {
   position: absolute;
@@ -494,6 +499,24 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+.calendar__mobile-filter {
+  &-title {
+    font-size: $size-xl;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: $white;
+  padding: 0.5rem;
+}
+.calendar__mobile-filter-header {
+  margin-bottom: 1rem;
 }
 .calendar__availability {
   display: flex;
@@ -698,6 +721,9 @@
 }
 /*lg*/
 @media (min-width: 1024px) {
+  .user-icon {
+    display: none;
+  }
   .calendar__options-timezone {
     display: block;
   }
@@ -785,6 +811,24 @@
     left: 50%;
     transform: translate(-50%);
   }
+  .calendar__site-checkboxes {
+    &-title {
+      font-size: $size-sm;
+    }
+    &-item {
+      font-size: $size-xs;
+      margin-bottom: 0.125rem;
+    }
+  }
+  .calendar__staff-checkboxes {
+    &-title {
+      font-size: $size-sm;
+    }
+    &-item {
+      font-size: $size-xs;
+      margin-bottom: 0.125rem;
+    }
+  }
 }
 /*xl*/
 @media (min-width: 1280px) {
@@ -839,16 +883,7 @@
   .calendar__filter-title {
     font-size: $size-sm;
   }
-  .calendar__site-checkboxes {
-    &-title {
-      font-size: $size-sm;
-    }
-  }
-  .calendar__staff-checkboxes {
-    &-title {
-      font-size: $size-sm;
-    }
-  }
+
   .calendar__event-element-day {
     &-time {
       width: 8%;

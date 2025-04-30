@@ -43,7 +43,10 @@ import {
   toLastOccurence,
   toNextOccurence,
 } from "../../../utils/appointments/occurences";
-import { parseToEvents } from "../../../utils/appointments/parseToEvents";
+import {
+  getRemainingStaff,
+  parseToEvents,
+} from "../../../utils/appointments/parseToEvents";
 import {
   getTodayStartTZ,
   getTomorrowStartTZ,
@@ -62,6 +65,7 @@ import ConfirmDialogRecurringDelete from "./ConfirmDialogRecurringDelete";
 import EventElement from "./EventElement";
 import EventElementListWeek from "./EventElementListWeek";
 import EventElementTimegrid from "./EventElementTimegrid";
+import CalendarFilterMobile from "./Options/CalendarFilterMobile";
 import CalendarOptions from "./Options/CalendarOptions";
 import CalendarOptionsMobile from "./Options/CalendarOptionsMobile";
 
@@ -82,6 +86,8 @@ const Calendar = () => {
   const [editAvailability, setEditAvailability] = useState(false);
   const [printDayVisible, setPrintDayVisible] = useState(false);
   const [mobileCalendarOptionsVisible, setMobileCalendarOptionsVisible] =
+    useState(false);
+  const [mobileCalendarFilterVisible, setMobileCalendarFilterVisible] =
     useState(false);
   const [hostsIds, setHostsIds] = useState(
     user.title === "Secretary"
@@ -1465,6 +1471,17 @@ const Calendar = () => {
           setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
         />
       )}
+      {mobileCalendarFilterVisible && (
+        <CalendarFilterMobile
+          sites={sites as SiteType[]}
+          sitesIds={sitesIds}
+          setSitesIds={setSitesIds}
+          hostsIds={hostsIds}
+          setHostsIds={setHostsIds}
+          setMobileCalendarFilterVisible={setMobileCalendarFilterVisible}
+          remainingStaff={getRemainingStaff(user.id, staffInfos)}
+        />
+      )}
       <div className="calendar__layout">
         <CalendarLeftBar
           handleShortcutpickrChange={handleShortcutpickrChange}
@@ -1512,6 +1529,7 @@ const Calendar = () => {
           setSitesIds={setSitesIds}
           isFirstEvent={isFirstEvent}
           setMobileCalendarOptionsVisible={setMobileCalendarOptionsVisible}
+          setMobileCalendarFilterVisible={setMobileCalendarFilterVisible}
         />
       </div>
       {confirmDlgRecChangeVisible && (

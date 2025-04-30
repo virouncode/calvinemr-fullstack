@@ -20,6 +20,7 @@ import { SiteType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { getRemainingStaff } from "../../../utils/appointments/parseToEvents";
 import { timestampToDateISOTZ } from "../../../utils/dates/formatDates";
+import CalendarFilterIcon from "../../UI/Icons/CalendarFilterIcon";
 import GearIcon from "../../UI/Icons/GearIcon";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -69,6 +70,7 @@ type CalendarDisplayProps = {
   setMobileCalendarOptionsVisible: React.Dispatch<
     React.SetStateAction<boolean>
   >;
+  setMobileCalendarFilterVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CalendarDisplay = ({
@@ -109,6 +111,7 @@ const CalendarDisplay = ({
   setSitesIds,
   isFirstEvent,
   setMobileCalendarOptionsVisible,
+  setMobileCalendarFilterVisible,
 }: CalendarDisplayProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -132,6 +135,9 @@ const CalendarDisplay = ({
         timelineVisible={timelineVisible}
       />
       <GearIcon onClick={() => setMobileCalendarOptionsVisible((v) => !v)} />
+      <CalendarFilterIcon
+        onClick={() => setMobileCalendarFilterVisible((v) => !v)}
+      />
       {(currentView === "timeGrid" || timelineVisible) && (
         <button
           onClick={handlePrintDay}
