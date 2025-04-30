@@ -9,7 +9,7 @@ export const useFetchAllPages = <TData, TError>(
     options?: FetchNextPageOptions
   ) => Promise<InfiniteQueryObserverResult<TData, TError>>,
   hasNextPage: boolean,
-  selectAll: boolean = true
+  selectAll: boolean = false
 ) => {
   const [isFetchingAll, setIsFetchingAll] = useState(false);
   const isMounted = useRef(true);
@@ -36,4 +36,20 @@ export const useFetchAllPages = <TData, TError>(
       isMounted.current = false;
     };
   }, [fetchNextPage, hasNextPage, isFetchingAll, selectAll]);
+
+  // Return a function to manually fetch all pages
+  const fetchAllPages = async () => {
+    if (!hasNextPage || isFetchingAll) return;
+
+    setIsFetchingAll(true);
+    let hasMorePages = true;
+    while (hasMorePages) {
+      const response = await fetchNextPage();
+      // Update hasMorePages based on response
+      hasMorePages = !!response.hasNextPage;
+    }
+    setIsFetchingAll(false);
+  };
+
+  return { isFetchingAll, fetchAllPages };
 };
