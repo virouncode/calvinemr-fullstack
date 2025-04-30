@@ -1,5 +1,6 @@
 import React from "react";
 import { useAllCyclesOfDoctor } from "../../../hooks/reactquery/queries/cyclesQueries";
+import { CycleTypeType } from "../../UI/Lists/CycleTypeList";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import AllCyclesItem from "./AllCyclesItem";
@@ -10,6 +11,7 @@ type AllCyclesResultsProps = {
     range_end: number;
     site_id: number;
     assigned_md: number;
+    cycle_type: CycleTypeType | "all";
   };
 };
 
@@ -22,9 +24,15 @@ const AllCyclesResults = ({ search }: AllCyclesResultsProps) => {
 
   if (error) return <div>Error loading cycles</div>;
 
-  const filteredCycles = cycles?.filter((cycle) =>
-    search.site_id === -1 ? true : cycle.site_id === search.site_id
-  );
+  const filteredCycles = cycles
+    ?.filter((cycle) =>
+      search.site_id === -1 ? true : cycle.site_id === search.site_id
+    )
+    .filter((cycle) =>
+      search.cycle_type === "all"
+        ? true
+        : cycle.cycle_type === search.cycle_type
+    );
 
   return (
     <div className="allCycles__table-container">
@@ -51,6 +59,10 @@ const AllCyclesResults = ({ search }: AllCyclesResultsProps) => {
             <th>Med 5</th>
             <th>Med 6</th>
             <th>Med 7</th>
+            <th>Funded IUI/IVF/FET Billing sent at</th>
+            <th>Funded IUI/IVF/FET Payed at</th>
+            <th>Non-Funded IUI/IVF/FET Billing sent at</th>
+            <th>Non-Funded IUI/IVF/FET Payed at</th>
           </tr>
         </thead>
         <tbody>

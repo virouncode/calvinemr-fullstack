@@ -618,6 +618,10 @@ export type CycleType = {
   cycle_notes: string;
   status: string;
   site_id: number;
+  funded_billing_sent_at: number | null;
+  funded_payment_received_at: number | null;
+  non_funded_billing_sent_at: number | null;
+  non_funded_payment_received_at: number | null;
 };
 
 export type CycleNoteType = { id?: string; text: string; date: number };

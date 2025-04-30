@@ -72,7 +72,8 @@
     &__patient-infos,
     &__cycle-infos,
     &__sperm-infos,
-    &__tests-infos {
+    &__tests-infos,
+    &__billing-infos {
       box-shadow: $box-shadow-default;
       padding: 0.5rem 0.5rem 1rem;
       border: solid 1px $grey2;
@@ -440,6 +441,32 @@
       }
     }
   }
+  &__billing {
+    flex: 1;
+    border: solid 1px $grey2;
+    border-radius: 6px;
+    padding: 5px;
+    &-title {
+      font-size: $size-base;
+      font-weight: bold;
+    }
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 2rem;
+    }
+    &-item {
+      font-size: $size-sm;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      label {
+        width: 100px;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 @media print {
@@ -472,7 +499,8 @@
       &__patient-infos,
       &__cycle-infos,
       &__sperm-infos,
-      &__tests-infos {
+      &__tests-infos,
+      &__billing-infos {
         .rw-combobox {
           input {
             width: 150px;

@@ -19,6 +19,7 @@ export const cycleTypes = [
   "Oocyte cryopreservation",
   "Split Fertilization - Oocyte cryopreservation",
 ] as const;
+export type CycleTypeType = (typeof cycleTypes)[number];
 
 type CycleTypeListProps = {
   handleChange: (value: string) => void;

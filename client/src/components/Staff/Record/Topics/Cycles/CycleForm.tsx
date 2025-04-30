@@ -20,6 +20,7 @@ import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
+import CycleBillingInfos from "./CycleBillingInfos";
 import CycleCycleInfos from "./CycleCycleInfos";
 import CycleEvents from "./CycleEvents";
 import CycleNotes from "./CycleNotes";
@@ -225,6 +226,12 @@ const CycleForm = ({
         setErrMsg={setErrMsg}
       />
       <CycleNotes
+        formDatas={formDatas}
+        setFormDatas={setFormDatas}
+        errMsg={errMsg}
+        setErrMsg={setErrMsg}
+      />
+      <CycleBillingInfos
         formDatas={formDatas}
         setFormDatas={setFormDatas}
         errMsg={errMsg}

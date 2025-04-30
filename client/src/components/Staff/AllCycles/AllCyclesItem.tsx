@@ -67,6 +67,10 @@ const AllCyclesItem = ({ event, cycle }: AllCyclesItemProps) => {
         {event.med_7.name +
           (event.med_7.notes ? ` (${event.med_1.notes})` : "")}
       </td>
+      <td>{timestampToDateISOTZ(cycle.funded_billing_sent_at)}</td>
+      <td>{timestampToDateISOTZ(cycle.funded_payment_received_at)}</td>
+      <td>{timestampToDateISOTZ(cycle.non_funded_billing_sent_at)}</td>
+      <td>{timestampToDateISOTZ(cycle.non_funded_payment_received_at)}</td>
     </tr>
   );
 };

@@ -24,6 +24,7 @@ import CycleNotes from "./CycleNotes";
 import CyclePatientInfos from "./CyclePatientInfos";
 import CycleSpermInfos from "./CycleSpermInfos";
 import CycleTestsInfos from "./CycleTestsInfos";
+import CycleBillingInfos from "./CycleBillingInfos";
 
 type CycleDetailsProps = {
   cycleToShow: CycleType;
@@ -234,6 +235,12 @@ const CycleDetails = ({
             setErrMsg={setErrMsg}
           />
           <CycleNotes
+            formDatas={itemInfos}
+            setFormDatas={setItemInfos}
+            errMsg={errMsg}
+            setErrMsg={setErrMsg}
+          />
+          <CycleBillingInfos
             formDatas={itemInfos}
             setFormDatas={setItemInfos}
             errMsg={errMsg}

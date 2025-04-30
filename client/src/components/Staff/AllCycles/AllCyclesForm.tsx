@@ -5,6 +5,8 @@ import {
   timestampToDateISOTZ,
 } from "../../../utils/dates/formatDates";
 import InputDate from "../../UI/Inputs/InputDate";
+import { CycleTypeType } from "../../UI/Lists/CycleTypeList";
+import CycleTypeSelect from "../../UI/Lists/CycleTypeSelect";
 import SiteSelect from "../../UI/Lists/SiteSelect";
 import StaffList from "../../UI/Lists/StaffList";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -16,6 +18,7 @@ type AllCyclesFormProps = {
     range_end: number;
     site_id: number;
     assigned_md: number;
+    cycle_type: CycleTypeType | "all";
   };
   setSearch: React.Dispatch<
     React.SetStateAction<{
@@ -23,6 +26,7 @@ type AllCyclesFormProps = {
       range_end: number;
       site_id: number;
       assigned_md: number;
+      cycle_type: CycleTypeType | "all";
     }>
   >;
 };
@@ -51,6 +55,13 @@ const AllCyclesForm = ({ search, setSearch }: AllCyclesFormProps) => {
       site_id: parseInt(value),
     }));
   };
+  const handleCycleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSearch((prev) => ({
+      ...prev,
+      cycle_type: value as CycleTypeType | "all",
+    }));
+  };
 
   if (error) return <ErrorParagraph errorMsg="Error loading sites" />;
   if (isPending) return <LoadingParagraph />;
@@ -73,6 +84,14 @@ const AllCyclesForm = ({ search, setSearch }: AllCyclesFormProps) => {
           name="range_end"
           id="to"
           label="To"
+        />
+      </div>
+      <div className="search-patient__item">
+        <CycleTypeSelect
+          handleCycleTypeChange={handleCycleTypeChange}
+          value={search.cycle_type}
+          label="Cycle Type"
+          all={true}
         />
       </div>
       <div className="search-patient__item">

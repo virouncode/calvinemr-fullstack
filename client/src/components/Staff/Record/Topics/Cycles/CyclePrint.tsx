@@ -7,6 +7,7 @@ import CyclePrintNotes from "./CyclePrintNotes";
 import CyclePrintPatient from "./CyclePrintPatient";
 import CyclePrintSperm from "./CyclePrintSperm";
 import CyclePrintTests from "./CyclePrintTests";
+import CyclePrintBilling from "./CyclePrintBilling";
 
 type CyclePrintProps = {
   cycle: CycleType;
@@ -50,6 +51,7 @@ const CyclePrint = ({
           <CyclePrintTests cycle={cycle} gender="Male" />
         </div>
         <CyclePrintNotes notes={cycle.notes} />
+        <CyclePrintBilling cycle={cycle} />
       </div>
       <div
         className="cycle-print__card"
