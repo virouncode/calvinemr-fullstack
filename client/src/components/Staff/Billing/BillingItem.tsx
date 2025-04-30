@@ -1,6 +1,7 @@
 import { Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
@@ -452,7 +453,14 @@ const BillingItem = ({
                 />
               </>
             ) : (
-              itemInfos.patient_name
+              <NavLink
+                to={`/staff/patient-record/${itemInfos.patient_id}`}
+                className="record-link"
+                style={{ textDecoration: "underline" }}
+                target="_blank"
+              >
+                {itemInfos.patient_name}
+              </NavLink>
             )}
           </td>
           <td style={{ position: "relative" }}>
