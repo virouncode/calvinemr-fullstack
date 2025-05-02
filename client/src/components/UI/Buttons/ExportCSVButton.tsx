@@ -92,7 +92,7 @@ const ExportCSVButton = ({
   return (
     <button className="btn" onClick={handleExportClick} disabled={loading}>
       {loading ? (
-        "Préparation de l'export..."
+        "Preparing export..."
       ) : (
         <CSVLink
           data={billings?.map((billing) => {
