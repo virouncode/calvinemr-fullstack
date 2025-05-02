@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useStaffMessages } from "../../../../hooks/reactquery/queries/messagesQueries";
+import useDebounce from "../../../../hooks/useDebounce";
 import { MessageType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { filterAndSortMessages } from "../../../../utils/messages/filterAndSortMessages";
@@ -24,6 +25,7 @@ const Messages = () => {
   const [printVisible, setPrintVisible] = useState(false);
   const [selectAllVisible, setSelectAllVisible] = useState(true);
   const [newTodoVisible, setNewTodoVisible] = useState(false);
+  const deboundedSearch = useDebounce(search, 300);
   //Queries
   const {
     data: messages,
@@ -32,7 +34,7 @@ const Messages = () => {
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
-  } = useStaffMessages(user.id, section, search);
+  } = useStaffMessages(user.id, section, deboundedSearch);
 
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
