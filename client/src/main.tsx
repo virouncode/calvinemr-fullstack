@@ -11,6 +11,7 @@ import { StaffInfosProvider } from "./context/StaffInfosProvider";
 import { TitleProvider } from "./context/TitleProvider";
 import { UserProvider } from "./context/UserProvider";
 import "./styles/index.scss";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -44,7 +45,7 @@ root.render(
           </SocketProvider>
         </UserProvider>
       </AuthProvider>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </BrowserRouter>
   // </React.StrictMode>
