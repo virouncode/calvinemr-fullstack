@@ -84,8 +84,6 @@ const CalendarView = ({
       const htmlElement = document.querySelector(
         `button.fc-${user.settings.calendar_view}Custom-button`
       ) as HTMLElement;
-      console.log("htmlElement", htmlElement);
-
       if (htmlElement) {
         htmlElement.classList.add("fc-button-active");
       }
@@ -96,6 +94,7 @@ const CalendarView = ({
     try {
       if (currentAbortController) {
         currentAbortController.abort();
+        console.log("Aborting previous request");
       }
       const newAbortController = new AbortController();
       setCurrentAbortController(newAbortController);
@@ -124,10 +123,13 @@ const CalendarView = ({
       });
       setCurrentAbortController(null);
     } catch (err) {
-      if (err instanceof Error)
+      console.log(err);
+
+      if (err instanceof Error && err.name !== "CanceledError") {
         toast.error(`Error: unable to save preference: ${err.message}`, {
           containerId: "A",
         });
+      }
     }
     return viewType;
   };
