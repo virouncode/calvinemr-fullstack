@@ -18,7 +18,7 @@ import multimonth from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGrid from "@fullcalendar/timegrid";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
@@ -76,6 +76,8 @@ const CalendarView = ({
 }: CalendarViewProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+  const [currentAbortController, setCurrentAbortController] =
+    useState<AbortController | null>(null);
 
   useEffect(() => {
     if (user.settings.calendar_view) {
@@ -92,6 +94,12 @@ const CalendarView = ({
 
   const handleUpdateSettings = async (viewType: string) => {
     try {
+      if (currentAbortController) {
+        currentAbortController.abort();
+      }
+      const newAbortController = new AbortController();
+      setCurrentAbortController(newAbortController);
+
       const datasToPut: SettingsType = {
         ...user.settings,
         calendar_view: viewType,
@@ -100,7 +108,8 @@ const CalendarView = ({
       const response: SettingsType = await xanoPut(
         `/settings/${user.settings.id}`,
         "staff",
-        datasToPut
+        datasToPut,
+        newAbortController
       );
       socket?.emit("message", {
         route: "USER",
@@ -113,6 +122,7 @@ const CalendarView = ({
           },
         },
       });
+      setCurrentAbortController(null);
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to save preference: ${err.message}`, {
