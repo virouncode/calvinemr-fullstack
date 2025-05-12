@@ -22,7 +22,9 @@ type EventElementProps = {
     info: EventContentArg
   ) => void;
   handlePatientClick: (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    e:
+      | React.MouseEvent<HTMLSpanElement, MouseEvent>
+      | React.TouchEvent<HTMLSpanElement>,
     patientId: number
   ) => void;
   patientsGuestsIds: { patient_infos: DemographicsType }[];
@@ -96,7 +98,12 @@ const EventElement = ({
                         patient_guest.patient_infos.patient_id
                       )
                     }
-                    onTouchEnd={(e) => e.stopPropagation()}
+                    onTouchEnd={(e) => {
+                      handlePatientClick(
+                        e,
+                        patient_guest.patient_infos.patient_id
+                      );
+                    }}
                     key={patient_guest.patient_infos.patient_id}
                   >
                     <strong>

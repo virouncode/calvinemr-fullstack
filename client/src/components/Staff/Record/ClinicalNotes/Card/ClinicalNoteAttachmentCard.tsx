@@ -72,6 +72,7 @@ const ClinicalNoteAttachmentCard = ({
                   }${attachment.file.path}&embedded=true&widget=false`}
                   width="150%"
                   frameBorder="0"
+                  allowFullScreen
                 ></iframe>
               </div>
             ) : (
@@ -83,6 +84,7 @@ const ClinicalNoteAttachmentCard = ({
                     attachment.file.path
                   }`}
                   width="100%"
+                  allowFullScreen
                 />
                 <div
                   style={{
@@ -173,6 +175,7 @@ const ClinicalNoteAttachmentCard = ({
                 width="100%"
                 height="100%"
                 frameBorder="0"
+                allowFullScreen
               ></iframe>
             </div>
           ) : (
@@ -184,6 +187,7 @@ const ClinicalNoteAttachmentCard = ({
               width="100%"
               height="100%"
               style={{ border: "none" }}
+              allowFullScreen
             />
           )}
         </NewWindow>

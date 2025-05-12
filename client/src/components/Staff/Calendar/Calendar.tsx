@@ -237,7 +237,9 @@ const Calendar = () => {
   };
 
   const handlePatientClick = (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    e:
+      | React.MouseEvent<HTMLSpanElement, MouseEvent>
+      | React.TouchEvent<HTMLSpanElement>,
     id: number
   ) => {
     e.stopPropagation();

@@ -22,7 +22,9 @@ type EventElementListWeekProps = {
     info: EventContentArg
   ) => void;
   handlePatientClick: (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    e:
+      | React.MouseEvent<HTMLSpanElement, MouseEvent>
+      | React.TouchEvent<HTMLSpanElement>,
     patientId: number
   ) => void;
   patientsGuestsIds: { patient_infos: DemographicsType }[];
@@ -72,6 +74,12 @@ const EventElementListWeek = ({
                     <span
                       className="calendar__patient-link calendar__patient-link--list"
                       onClick={(e) =>
+                        handlePatientClick(
+                          e,
+                          patient_guest.patient_infos.patient_id
+                        )
+                      }
+                      onTouchEnd={(e) =>
                         handlePatientClick(
                           e,
                           patient_guest.patient_infos.patient_id
