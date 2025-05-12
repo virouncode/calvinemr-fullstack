@@ -73,6 +73,7 @@ const EventElementTimegrid = ({
                       patient_guest.patient_infos.patient_id
                     )
                   }
+                  onTouchEnd={(e) => e.stopPropagation()}
                   key={patient_guest.patient_infos.patient_id}
                 >
                   <strong>
