@@ -33,12 +33,4 @@ Each clinic is provided with a unique app and a separate database.
    pnpm start
    ```
 4. Open your web browser and go to: `http://localhost:5173`
-5. Log in using the following credentials:
-   - **As a staff member:**
-     - Email: `staffguest@calvinemr.com`
-     - Password: `Staffguest1@`
-     - PIN: `1234`
-   - **As a patient:**
-     - Email: `patientguest@calvinemr.com`
-     - Password: `Patientguest2@`
-     - PIN: `1234`
+
