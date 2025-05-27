@@ -85,7 +85,7 @@ const AppointmentForm = ({
     all_day: false,
     AppointmentTime: "",
     Duration: 60,
-    AppointmentStatus: "Scheduled",
+    AppointmentStatus: "Confirmed",
     AppointmentDate: "",
     Provider: {
       Name: { FirstName: user.first_name, LastName: user.last_name },

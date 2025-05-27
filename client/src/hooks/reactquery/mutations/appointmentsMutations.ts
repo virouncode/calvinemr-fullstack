@@ -8,7 +8,9 @@ import {
   DemographicsType,
   StaffType,
 } from "../../../types/api";
+import { UserPatientType, UserStaffType } from "../../../types/app";
 import useSocketContext from "../../context/useSocketContext";
+import useUserContext from "../../context/useUserContext";
 
 //Appointments with an (s) for event on the calendar
 //Appointment for event form
@@ -169,12 +171,9 @@ export const useAppointmentsPut = (
     //   return { previousAppointments };
     // },
     onSuccess: (data) => {
-      console.log("data in useAppointmentsPut", data);
-
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
-
       socket?.emit("message", { key: ["staffAppointments"] });
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
@@ -256,7 +255,7 @@ export const useAppointmentsDelete = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: (data) => {
+    onSuccess: () => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -264,12 +263,6 @@ export const useAppointmentsDelete = (
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
-      const patientsIds = (
-        data.patients_guests_ids as { patient_infos: DemographicsType }[]
-      ).map(({ patient_infos }) => patient_infos.patient_id);
-      for (const patientId of patientsIds) {
-        socket?.emit("message", { key: ["patientRecord", patientId] });
-      }
       toast.success("Appointment deleted succesfully", { containerId: "A" });
     },
     onError: (error, variables, context) => {
@@ -294,11 +287,16 @@ export const useAppointmentsDelete = (
 
 export const useAppointmentPost = () => {
   const { socket } = useSocketContext();
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
   return useMutation({
     mutationFn: (appointmentToPost: Partial<AppointmentType>) => {
-      return xanoPost("/appointments", "staff", appointmentToPost);
+      return xanoPost("/appointments", user.access_level, appointmentToPost);
     },
     onSuccess: (data) => {
+      console.log("data", data);
+
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -376,7 +374,7 @@ export const useAppointmentDelete = () => {
   return useMutation({
     mutationFn: (appointmentIdToDelete: number) =>
       xanoDelete(`/appointments/${appointmentIdToDelete}`, "staff"),
-    onSuccess: (data) => {
+    onSuccess: () => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -384,17 +382,14 @@ export const useAppointmentDelete = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
-      const patientsIds = (
-        data.patients_guests_ids as { patient_infos: DemographicsType }[]
-      ).map(({ patient_infos }) => patient_infos.patient_id);
-      for (const patientId of patientsIds) {
-        socket?.emit("message", { key: ["patientRecord", patientId] });
-      }
+
       toast.success(`Appointment deleted successfully`, {
         containerId: "A",
       });
     },
     onError: (error) => {
+      console.log("prout");
+
       toast.error(`Error: unable to delete appointment: ${error.message}`, {
         containerId: "A",
       });

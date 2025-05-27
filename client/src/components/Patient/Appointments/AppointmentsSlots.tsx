@@ -21,6 +21,8 @@ type AppointmentsSlotsProps = {
     React.SetStateAction<AppointmentProposalType | null>
   >;
   appointmentSelected: AppointmentProposalType | null;
+  appointmentMode: AppointmentModeType;
+  setAppointmentMode: React.Dispatch<React.SetStateAction<AppointmentModeType>>;
 };
 
 const AppointmentsSlots = ({
@@ -31,13 +33,13 @@ const AppointmentsSlots = ({
   rangeStart,
   setAppointmentSelected,
   appointmentSelected,
+  appointmentMode,
+  setAppointmentMode,
 }: AppointmentsSlotsProps) => {
   //Hooks
   const [appointmentsProposals, setAppointmentsProposals] = useState<
     AppointmentProposalType[]
   >([]);
-  const [appointmentMode, setAppointmentMode] =
-    useState<AppointmentModeType>("in-person");
 
   useEffect(() => {
     setAppointmentsProposals(

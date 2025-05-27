@@ -90,6 +90,11 @@ const MessagesToolBar = ({
           const message = messages.find((msg) => msg.id === messageId);
           todoDelete.mutate(messageId, {
             onSuccess: () => {
+              if (message?.related_patient_id) {
+                socket?.emit("message", {
+                  key: ["patientRecord", message.related_patient_id],
+                });
+              }
               setNewVisible(false);
               setMsgsSelectedIds([]);
               setSelectAllVisible(true);

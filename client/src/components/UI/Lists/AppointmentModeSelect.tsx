@@ -1,6 +1,6 @@
 import React from "react";
 
-const modes = [
+export const modes = [
   { id: "in-person", name: "In person" },
   { id: "visio", name: "Video call" },
   { id: "phone", name: "Phone call" },

@@ -173,6 +173,11 @@ const ForwardTodoMobile = ({
       todoDelete.mutate(todo.id, {
         onSuccess: () => {
           setCurrentMsgId(0);
+          if (todo.related_patient_id) {
+            socket?.emit("message", {
+              key: ["patientRecord", todo.related_patient_id],
+            });
+          }
           setProgress(false);
         },
         onError: () => {

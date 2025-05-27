@@ -180,7 +180,14 @@ const MessageThumbnail = ({
           }
         }
         todoDelete.mutate(message.id, {
-          onSuccess: () => setMsgsSelectedIds([]),
+          onSuccess: () => {
+            if (message.related_patient_id) {
+              socket?.emit("message", {
+                key: ["patientRecord", message.related_patient_id],
+              });
+            }
+            setMsgsSelectedIds([]);
+          },
         });
         if (user.unreadTodosNbr !== 0 && !(message as TodoType).read) {
           const newUnreadTodosNbr = user.unreadTodosNbr - 1;

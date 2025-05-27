@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import useClinicContext from "../../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -31,7 +32,6 @@ import FakeWindow from "../../../UI/Windows/FakeWindow";
 import StaffContacts from "../StaffContacts";
 import MessagesAttachments from "./MessagesAttachments";
 import TodosTemplates from "./Templates/TodosTemplates";
-import useClinicContext from "../../../../hooks/context/useClinicContext";
 
 type ForwardTodoProps = {
   setForwardTodoVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -172,6 +172,11 @@ const ForwardTodo = ({
       todoDelete.mutate(todo.id, {
         onSuccess: () => {
           setCurrentMsgId(0);
+          if (todo.related_patient_id) {
+            socket?.emit("message", {
+              key: ["patientRecord", todo.related_patient_id],
+            });
+          }
           setProgress(false);
         },
         onError: () => {

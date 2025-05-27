@@ -51,7 +51,8 @@ const EventElementTimegrid = ({
       className="calendar__event-element-day"
       style={{
         backgroundImage:
-          event.extendedProps.status === "Cancelled"
+          event.extendedProps.status === "Cancelled" ||
+          event.extendedProps.status === "Scheduled"
             ? `repeating-linear-gradient(
                 45deg,
                 ${event.backgroundColor},

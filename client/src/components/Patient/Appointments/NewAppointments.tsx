@@ -1,23 +1,23 @@
 import _ from "lodash";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useMessagesExternalPostBatch } from "../../../hooks/reactquery/mutations/messagesMutations";
+import { useAppointmentPost } from "../../../hooks/reactquery/mutations/appointmentsMutations";
 import { useStaffAppointments } from "../../../hooks/reactquery/queries/appointmentsQueries";
 import { useAssignedPracticianAvailability } from "../../../hooks/reactquery/queries/availabilityQueries";
-import { MessageExternalType } from "../../../types/api";
+import { AppointmentModeType, AppointmentType } from "../../../types/api";
 import { AppointmentProposalType, UserPatientType } from "../../../types/app";
 import { getAppointmentsInRange } from "../../../utils/appointments/getAppointmentsInRange";
 import {
   nowTZ,
   nowTZTimestamp,
+  timestampToDateISOTZ,
   timestampToHumanDateTimeTZ,
+  timestampToTimeISOTZ,
 } from "../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
-import { toPatientName } from "../../../utils/names/toPatientName";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
@@ -39,6 +39,8 @@ const NewAppointments = () => {
   const [appointmentSelected, setAppointmentSelected] =
     useState<AppointmentProposalType | null>(null);
   const [requestSent, setRequestSent] = useState(false);
+  const [appointmentMode, setAppointmentMode] =
+    useState<AppointmentModeType>("in-person");
 
   //Queries
   const {
@@ -55,7 +57,8 @@ const NewAppointments = () => {
     isPending: isPendingAvailability,
     error: errorAvailability,
   } = useAssignedPracticianAvailability(user.demographics.assigned_staff_id);
-  const messagesExternalPost = useMessagesExternalPostBatch();
+  // const messagesExternalPost = useMessagesExternalPostBatch();
+  const appointmentPost = useAppointmentPost();
 
   const handleClickNext = async () => {
     setRangeStart((rs) =>
@@ -86,7 +89,7 @@ const NewAppointments = () => {
 
   const handleSubmit = async () => {
     if (
-      await confirmAlert({
+      (await confirmAlert({
         content: `You are about to request an appointment with ${staffIdToTitleAndName(
           staffInfos,
           user.demographics.assigned_staff_id
@@ -95,61 +98,99 @@ const NewAppointments = () => {
         )} to ${timestampToHumanDateTimeTZ(
           appointmentSelected?.end
         )}, do you confirm ?`,
-      })
+      })) &&
+      appointmentSelected
     ) {
-      //get all secretaries id
-      const secretariesIds = staffInfos
-        .filter(({ title }) => title === "Secretary")
-        .map(({ id }) => id);
-      //create the message
-      const messagesToPost: Partial<MessageExternalType>[] = [];
-      try {
-        for (const secretaryId of secretariesIds) {
-          const messageToPost = {
-            from_patient_id: user.id,
-            to_staff_id: secretaryId,
-            subject: "Appointment request",
-            body: `Hello ${staffIdToTitleAndName(staffInfos, secretaryId)},
+      //       //get all secretaries id
+      //       const secretariesIds = staffInfos
+      //         .filter(({ title }) => title === "Secretary")
+      //         .map(({ id }) => id);
+      //       //create the message
+      //       const messagesToPost: Partial<MessageExternalType>[] = [];
+      //       try {
+      //         for (const secretaryId of secretariesIds) {
+      //           const messageToPost = {
+      //             from_patient_id: user.id,
+      //             to_staff_id: secretaryId,
+      //             subject: "Appointment request",
+      //             body: `Hello ${staffIdToTitleAndName(staffInfos, secretaryId)},
 
-I would like to have an appointment with ${staffIdToTitleAndName(
-              staffInfos,
-              user.demographics.assigned_staff_id
-            )},
+      // I would like to have an appointment with ${staffIdToTitleAndName(
+      //               staffInfos,
+      //               user.demographics.assigned_staff_id
+      //             )},
 
-From ${timestampToHumanDateTimeTZ(
-              appointmentSelected?.start
-            )} to ${timestampToHumanDateTimeTZ(appointmentSelected?.end)}
-  
-Please call me or send me a message to confirm the appointment.
+      // From ${timestampToHumanDateTimeTZ(
+      //               appointmentSelected?.start
+      //             )} to ${timestampToHumanDateTimeTZ(appointmentSelected?.end)}
 
-Patient: ${toPatientName(user.demographics)}
-Chart Nbr: ${user.demographics.ChartNumber}
-Cellphone: ${
-              user.demographics.PhoneNumber.find(
-                ({ _phoneNumberType }) => _phoneNumberType === "C"
-              )?.phoneNumber
-            }`,
-            read_by_patients_ids: [user.id],
-            date_created: nowTZTimestamp(),
-            type: "External",
-          };
-          messagesToPost.push(messageToPost);
-        }
-        messagesExternalPost.mutate(messagesToPost);
-        toast.success(`Appointment request sent successfully`, {
-          containerId: "A",
-        });
-        setRequestSent(true);
-        setTimeout(() => setRequestSent(false), 6000);
-      } catch (err) {
-        if (err instanceof Error)
-          toast.error(
-            `Couldn't send the appointment request : ${err.message}`,
-            {
-              containerId: "A",
-            }
-          );
-      }
+      // Please call me or send me a message to confirm the appointment.
+
+      // Patient: ${toPatientName(user.demographics)}
+      // Chart Nbr: ${user.demographics.ChartNumber}
+      // Cellphone: ${
+      //               user.demographics.PhoneNumber.find(
+      //                 ({ _phoneNumberType }) => _phoneNumberType === "C"
+      //               )?.phoneNumber
+      //             }`,
+      //             read_by_patients_ids: [user.id],
+      //             date_created: nowTZTimestamp(),
+      //             type: "External",
+      //           };
+      //           messagesToPost.push(messageToPost);
+      //         }
+      //         messagesExternalPost.mutate(messagesToPost);
+      //         toast.success(`Appointment request sent successfully`, {
+      //           containerId: "A",
+      //         });
+      //         setRequestSent(true);
+      //         setTimeout(() => setRequestSent(false), 6000);
+      //       } catch (err) {
+      //         if (err instanceof Error)
+      //           toast.error(
+      //             `Couldn't send the appointment request : ${err.message}`,
+      //             {
+      //               containerId: "A",
+      //             }
+      //           );
+      //       }
+      const assignedStaff = staffInfos.find(
+        ({ id }) => id === user.demographics.assigned_staff_id
+      );
+      const appointmentToPost: Partial<AppointmentType> = {
+        host_id: user.demographics.assigned_staff_id,
+        date_created: nowTZTimestamp(),
+        created_by_id: user.demographics.assigned_staff_id,
+        start: appointmentSelected.start,
+        end: appointmentSelected.end,
+        room_id: "z",
+        all_day: false,
+        AppointmentTime: timestampToTimeISOTZ(appointmentSelected.start),
+        Duration: Math.floor(
+          (appointmentSelected.end - appointmentSelected.start) / (1000 * 60)
+        ),
+        AppointmentStatus: "Scheduled",
+        AppointmentDate: timestampToDateISOTZ(appointmentSelected.start),
+        AppointmentPurpose: "Appointment",
+        site_id: assignedStaff?.site_id,
+        recurrence: "Once",
+        Provider: {
+          Name: {
+            FirstName: assignedStaff?.first_name ?? "",
+            LastName: assignedStaff?.last_name ?? "",
+          },
+          OHIPPhysicianId: assignedStaff?.ohip_billing_nbr ?? "",
+        },
+        appointment_type: appointmentMode,
+        patients_guests_ids: [user.id],
+      };
+      appointmentPost.mutate(appointmentToPost, {
+        onSuccess: () => {
+          setAppointmentSelected(null);
+          setRequestSent(true);
+          setTimeout(() => setRequestSent(false), 6000);
+        },
+      });
     }
   };
 
@@ -185,8 +226,10 @@ Cellphone: ${
       </div>
       <p className="patient-appointments__new-disclaimer">
         These time slots are automatically generated based on the availability
-        of your practitioner. If you require different time options, please
-        contact the clinic directly.
+        of your practitioner:{" "}
+        {staffIdToTitleAndName(staffInfos, user.demographics.assigned_staff_id)}
+        . If you require different time options, please contact the clinic
+        directly.
       </p>
       {(error || errorAvailability) && (
         <ErrorParagraph
@@ -214,19 +257,22 @@ Cellphone: ${
               rangeStart={rangeStart}
               setAppointmentSelected={setAppointmentSelected}
               appointmentSelected={appointmentSelected}
+              appointmentMode={appointmentMode}
+              setAppointmentMode={setAppointmentMode}
             />
           )
         )}
       </div>
       {requestSent && (
         <p className="patient-appointments__new-success">
-          Your request has been sent,{" "}
+          Your request has been sent to{" "}
+          {staffIdToTitleAndName(
+            staffInfos,
+            user.demographics.assigned_staff_id
+          )}
+          .{" "}
           <strong>
-            Please wait for a secretary to confirm your appointment with{" "}
-            {staffIdToTitleAndName(
-              staffInfos,
-              user.demographics.assigned_staff_id
-            )}
+            Please wait for the practician to confirm your appointment
           </strong>
         </p>
       )}

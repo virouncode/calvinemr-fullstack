@@ -8,8 +8,8 @@ import { UserStaffType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
-import TrashIcon from "../../UI/Icons/TrashIcon";
 import PhoneIcon from "../../UI/Icons/PhoneIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import UserIcon from "../../UI/Icons/UserIcon";
 import VideoIcon from "../../UI/Icons/VideoIcon";
 
@@ -51,7 +51,8 @@ const EventElementListWeek = ({
       className="calendar__event-element-list"
       style={{
         backgroundImage:
-          event.extendedProps.status === "Cancelled"
+          event.extendedProps.status === "Cancelled" ||
+          event.extendedProps.status === "Scheduled"
             ? `repeating-linear-gradient(
           45deg,
           ${event.backgroundColor},

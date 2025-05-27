@@ -51,7 +51,8 @@ const EventElement = ({
       className="calendar__event-element"
       style={{
         backgroundImage:
-          event.extendedProps.status === "Cancelled"
+          event.extendedProps.status === "Cancelled" ||
+          event.extendedProps.status === "Scheduled"
             ? `repeating-linear-gradient(
           45deg,
           ${event.backgroundColor},
