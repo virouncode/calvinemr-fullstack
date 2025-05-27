@@ -64,7 +64,7 @@ export const useAppointmentsPost = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -73,6 +73,12 @@ export const useAppointmentsPost = (
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
       socket?.emit("message", { key: ["patientRecord"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
     },
     onError: (error, variables, context) => {
       // queryClient.setQueryData(
@@ -162,14 +168,23 @@ export const useAppointmentsPut = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("data in useAppointmentsPut", data);
+
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
+
       socket?.emit("message", { key: ["staffAppointments"] });
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
     },
     onError: (error, variables, context) => {
       // queryClient.setQueryData(
@@ -241,7 +256,7 @@ export const useAppointmentsDelete = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -249,6 +264,12 @@ export const useAppointmentsDelete = (
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success("Appointment deleted succesfully", { containerId: "A" });
     },
     onError: (error, variables, context) => {
@@ -277,7 +298,7 @@ export const useAppointmentPost = () => {
     mutationFn: (appointmentToPost: Partial<AppointmentType>) => {
       return xanoPost("/appointments", "staff", appointmentToPost);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -285,6 +306,12 @@ export const useAppointmentPost = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success(`Appointment saved successfully`, {
         containerId: "A",
       });
@@ -318,7 +345,7 @@ export const useAppointmentPut = () => {
         transformedAppointmentToPut
       );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -326,6 +353,12 @@ export const useAppointmentPut = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success(`Appointment saved successfully`, {
         containerId: "A",
       });
@@ -343,7 +376,7 @@ export const useAppointmentDelete = () => {
   return useMutation({
     mutationFn: (appointmentIdToDelete: number) =>
       xanoDelete(`/appointments/${appointmentIdToDelete}`, "staff"),
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -351,6 +384,12 @@ export const useAppointmentDelete = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success(`Appointment deleted successfully`, {
         containerId: "A",
       });

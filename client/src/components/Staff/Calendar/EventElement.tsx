@@ -8,7 +8,10 @@ import { UserStaffType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
+import PhoneIcon from "../../UI/Icons/PhoneIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
+import UserIcon from "../../UI/Icons/UserIcon";
+import VideoIcon from "../../UI/Icons/VideoIcon";
 
 type EventElementProps = {
   event: EventImpl;
@@ -65,7 +68,14 @@ const EventElement = ({
         </div>
         <div className="calendar__event-element-reason">
           <div className="calendar__event-element-purpose">
-            {event.extendedProps.purpose ?? "Appointment"}
+            {event.extendedProps.appointment_type === "visio" ? (
+              <VideoIcon mr={5} />
+            ) : event.extendedProps.appointment_type === "phone" ? (
+              <PhoneIcon mr={5} />
+            ) : event.extendedProps.appointment_type === "in-person" ? (
+              <UserIcon mr={5} />
+            ) : null}
+            {/* {event.extendedProps.purpose ?? "Appointment"} */}
           </div>
           {/* {(event.extendedProps.host === user.id ||
             user.title === "Secretary") && ( */}

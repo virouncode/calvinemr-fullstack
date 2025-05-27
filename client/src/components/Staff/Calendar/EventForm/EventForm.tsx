@@ -14,6 +14,7 @@ import {
 } from "../../../../hooks/reactquery/mutations/appointmentsMutations";
 import { useAvailableRooms } from "../../../../hooks/reactquery/queries/availableRoomsQueries";
 import {
+  AppointmentModeType,
   AppointmentType,
   DemographicsType,
   RruleType,
@@ -47,6 +48,7 @@ import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import ConfirmDialogRecurringChange from "../ConfirmDialogRecurringChange";
 import ConfirmDialogRecurringDelete from "../ConfirmDialogRecurringDelete";
+import EventFormAppointmentType from "./EventFormAppointmentType";
 import EventFormButtons from "./EventFormButtons";
 import EventFormGuests from "./EventFormGuests";
 import EventFormHostRow from "./EventFormHostRow";
@@ -143,6 +145,12 @@ const EventForm = ({
     setErrMsgPost("");
     const value = e.target.value;
     setFormDatas({ ...formDatas, AppointmentNotes: value });
+  };
+
+  const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setErrMsgPost("");
+    const value = e.target.value as AppointmentModeType | "";
+    setFormDatas({ ...formDatas, appointment_type: value });
   };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -741,6 +749,7 @@ const EventForm = ({
       rrule: formDatas.rrule,
       exrule: formDatas.exrule,
       invitations_sent: formDatas.invitations_sent,
+      appointment_type: formDatas.appointment_type,
     };
     //Validation
     try {
@@ -1098,6 +1107,10 @@ const EventForm = ({
           <EventFormNotes
             formDatas={formDatas}
             handleNotesChange={handleNotesChange}
+          />
+          <EventFormAppointmentType
+            formDatas={formDatas}
+            handleModeChange={handleModeChange}
           />
           <EventFormButtons
             formDatas={formDatas}

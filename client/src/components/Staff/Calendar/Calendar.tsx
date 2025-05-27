@@ -532,6 +532,7 @@ const Calendar = () => {
               },
               OHIPPhysicianId: user.ohip_billing_nbr,
             },
+      appointment_type: "",
     };
 
     if (timelineVisible) {
@@ -696,6 +697,7 @@ const Calendar = () => {
       exrule: event.extendedProps.exrule,
       room_id: event.extendedProps.roomId,
       invitations_sent: event.extendedProps.invitations_sent,
+      appointment_type: event.extendedProps.appointment_type,
     };
 
     if (!timelineVisible) {
@@ -856,6 +858,7 @@ const Calendar = () => {
         rrule: event.extendedProps.rrule,
         exrule: event.extendedProps.exrule,
         invitations_sent: event.extendedProps.invitations_sent,
+        appointment_type: event.extendedProps.appointment_type,
       };
       appointmentPut.mutate(appointmentToPut);
     } else {

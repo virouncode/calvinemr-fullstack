@@ -9,6 +9,9 @@ import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndNam
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
+import PhoneIcon from "../../UI/Icons/PhoneIcon";
+import UserIcon from "../../UI/Icons/UserIcon";
+import VideoIcon from "../../UI/Icons/VideoIcon";
 
 type EventElementListWeekProps = {
   event: EventImpl;
@@ -61,6 +64,13 @@ const EventElementListWeek = ({
     >
       <div className="calendar__event-element-list-infos">
         <div>
+          {event.extendedProps.appointment_type === "visio" ? (
+            <VideoIcon mr={5} />
+          ) : event.extendedProps.appointment_type === "phone" ? (
+            <PhoneIcon mr={5} />
+          ) : event.extendedProps.appointment_type === "in-person" ? (
+            <UserIcon mr={5} />
+          ) : null}
           <strong>
             {event.extendedProps.purpose?.toUpperCase() ?? "APPOINTMENT"}
           </strong>

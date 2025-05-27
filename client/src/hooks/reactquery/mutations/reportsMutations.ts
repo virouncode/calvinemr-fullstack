@@ -38,7 +38,7 @@ export const useReportPost = () => {
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
-      socket?.emit("message", { key: ["patientRecord"] });
+      socket?.emit("message", { key: ["patientRecord", data.patient_id] });
       toast.success(`Report post succesfully`, {
         containerId: "A",
       });
@@ -68,6 +68,7 @@ export const useReportsPostBatch = () => {
         socket?.emit("message", {
           key: ["reportsInbox", data.assigned_staff_id],
         });
+        socket?.emit("message", { key: ["patientRecord", data.patient_id] });
       }
       toast.success(`Report(s) post succesfully`, {
         containerId: "A",
@@ -109,6 +110,7 @@ export const useReportPut = (patientId: number) => {
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
+      socket?.emit("message", { key: ["patientRecord", data.patient_id] });
       toast.success(`Report updated succesfully`, {
         containerId: "A",
       });
@@ -152,6 +154,7 @@ export const useReportInboxPut = (staffId: number) => {
       socket?.emit("message", {
         key: ["reportsInbox", data.assigned_staff_id],
       });
+      socket?.emit("message", { key: ["patientRecord", data.patient_id] });
       toast.success(`Report updated succesfully`, {
         containerId: "A",
       });
@@ -183,6 +186,7 @@ export const useReportDelete = (patientId: number) => {
       socket?.emit("message", { key: ["reportsSent", patientId] });
       socket?.emit("message", { key: ["reports", patientId] });
       socket?.emit("message", { key: ["reportsInbox"] });
+      socket?.emit("message", { key: ["patientRecord", patientId] });
       toast.success(`Report deleted succesfully`, {
         containerId: "A",
       });

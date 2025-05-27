@@ -8,7 +8,10 @@ import { UserStaffType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
+import PhoneIcon from "../../UI/Icons/PhoneIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
+import UserIcon from "../../UI/Icons/UserIcon";
+import VideoIcon from "../../UI/Icons/VideoIcon";
 
 type EventElementTimegridProps = {
   event: EventImpl;
@@ -63,6 +66,13 @@ const EventElementTimegrid = ({
         {event.allDay ? "All Day" : info.timeText}
       </div>
       <div className="calendar__event-element-day-guests-infos">
+        {event.extendedProps.appointment_type === "visio" ? (
+          <VideoIcon mr={5} />
+        ) : event.extendedProps.appointment_type === "phone" ? (
+          <PhoneIcon mr={5} />
+        ) : event.extendedProps.appointment_type === "in-person" ? (
+          <UserIcon mr={5} />
+        ) : null}
         {patientsGuestsIds.length > 0 &&
           patientsGuestsIds.map(
             (patient_guest) =>

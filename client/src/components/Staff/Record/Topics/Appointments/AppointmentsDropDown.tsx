@@ -29,7 +29,7 @@ const AppointmentsDropdown = ({ data }: AppointmentsDropdownProps) => {
           </span>
         </>
       ) : (
-        "No next appointment"
+        "No appointment scheduled"
       )}
     </div>
   );

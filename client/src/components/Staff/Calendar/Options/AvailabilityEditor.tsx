@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useAvailabilityPut } from "../../../../hooks/reactquery/mutations/availabilityMutations";
 import { AvailabilityType } from "../../../../types/api";
@@ -25,7 +26,7 @@ const AvailabilityEditor = ({
   const [progress, setProgress] = useState(false);
   const [itemInfos, setItemInfos] = useState<AvailabilityType>(availability);
   const [errMsg, setErrMsg] = useState("");
-
+  const { staffInfos } = useStaffInfosContext();
   useEffect(() => {
     setItemInfos(availability);
   }, [availability]);
@@ -211,13 +212,31 @@ const AvailabilityEditor = ({
       });
     }
   };
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>, day: string) => {
+  const handleCheckUnavailable = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    day: string,
+    partOfTheDay: "morning" | "afternoon"
+  ) => {
     const checked = e.target.checked;
     setItemInfos({
       ...itemInfos,
-      unavailability: {
-        ...itemInfos.unavailability,
-        [day]: checked,
+      [`schedule_${partOfTheDay}`]: {
+        ...itemInfos[`schedule_${partOfTheDay}`],
+        [day]: itemInfos[`schedule_${partOfTheDay}`][
+          day as keyof AvailabilityType["schedule_morning"]
+        ].map((range) => {
+          if (checked) {
+            return {
+              ...range,
+              appointment_modes: [],
+            };
+          } else {
+            return {
+              ...range,
+              appointment_modes: ["in-person", "visio", "phone"],
+            };
+          }
+        }),
       },
     });
   };
@@ -243,6 +262,44 @@ const AvailabilityEditor = ({
     }
   };
 
+  const handleModeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    day: string,
+    partOfTheDay: "morning" | "afternoon"
+  ) => {
+    const checked = e.target.checked;
+    const mode = e.target.name;
+    if (checked) {
+      setItemInfos({
+        ...itemInfos,
+        [`schedule_${partOfTheDay}`]: {
+          ...itemInfos[`schedule_${partOfTheDay}`],
+          [day]: itemInfos[`schedule_${partOfTheDay}`][
+            day as keyof AvailabilityType["schedule_morning"]
+          ].map((range) => ({
+            ...range,
+            appointment_modes: [...range.appointment_modes, mode],
+          })),
+        },
+      });
+    } else {
+      setItemInfos({
+        ...itemInfos,
+        [`schedule_${partOfTheDay}`]: {
+          ...itemInfos[`schedule_${partOfTheDay}`],
+          [day]: itemInfos[`schedule_${partOfTheDay}`][
+            day as keyof AvailabilityType["schedule_morning"]
+          ].map((range) => ({
+            ...range,
+            appointment_modes: range.appointment_modes.filter(
+              (m) => m !== mode
+            ),
+          })),
+        },
+      });
+    }
+  };
+
   const handleCancel = () => {
     setItemInfos(availability);
     setEditAvailability(false);
@@ -258,7 +315,7 @@ const AvailabilityEditor = ({
           onSubmit={handleSubmit}
         >
           <div className="calendar__availability-editor-row">
-            <p></p>
+            <p style={{ width: "10%" }}></p>
             <p className="calendar__availability-editor-head">Morning</p>
             <p className="calendar__availability-editor-head">Afternoon</p>
             <p></p>
@@ -270,10 +327,10 @@ const AvailabilityEditor = ({
               handleEndMorningChange={handleEndMorningChange}
               handleStartAfternoonChange={handleStartAfternoonChange}
               handleEndAfternoonChange={handleEndAfternoonChange}
-              handleCheck={handleCheck}
+              handleCheckUnavailable={handleCheckUnavailable}
+              handleModeChange={handleModeChange}
               scheduleMorning={itemInfos.schedule_morning[day]}
               scheduleAfternoon={itemInfos.schedule_afternoon[day]}
-              unavailable={itemInfos.unavailability[day]}
               key={day}
             />
           ))}

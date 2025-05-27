@@ -16,11 +16,13 @@ import twilioRouter from "./routes/twilio/twilio";
 import weatherRouter from "./routes/weather/weather";
 import xanoRouter from "./routes/xano/xano";
 import xmlToJSRouter from "./routes/xmlToJs/xmlToJs";
-
-// Load environment variables
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["https://acrobatservices.adobe.com"] // Production origin
+    : ["http://localhost:5173", "https://acrobatservices.adobe.com"]; // Development origins
 const app = express();
 
 app
@@ -30,15 +32,11 @@ app
   .use(express.json({ limit: "50mb" }))
   .use(
     cors({
-      origin:
-        process.env.NODE_ENV === "production"
-          ? ["https://acrobatservices.adobe.com"]
-          : ["http://localhost:5173", "https://acrobatservices.adobe.com"],
+      origin: allowedOrigins,
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   )
-  .use(express.static(join(__dirname, "../../client/dist")))
   .use("/api/xano", xanoRouter)
   .use("/api/twilio", twilioRouter)
   .use("/api/extractToText", extractToTextRouter)
@@ -52,18 +50,18 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://acrobatservices.adobe.com"]
-        : ["http://localhost:5173", "https://acrobatservices.adobe.com"],
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "../../client/dist/index.html"));
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(join(__dirname, "../../client/dist")));
+  app.get("*", (req, res) =>
+    res.sendFile(join(__dirname, "../../client/dist/index.html"))
+  );
+}
 
 //Polling Faxes for staff users
 let pollingInterval: NodeJS.Timeout | null = null;
