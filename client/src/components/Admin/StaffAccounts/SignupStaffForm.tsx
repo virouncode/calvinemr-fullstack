@@ -10,6 +10,7 @@ import useUserContext from "../../../hooks/context/useUserContext";
 import {
   AdminType,
   AttachmentType,
+  AvailabilityType,
   ClinicType,
   NotepadType,
   SettingsType,
@@ -240,81 +241,219 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
         id: settingsResponse.id,
       });
 
-      const availabilityResponse = await xanoPost("/availability", "admin", {
+      const availabilityToPost: Partial<AvailabilityType> = {
         staff_id: staffResponse.id,
         date_created: nowTZTimestamp(),
         schedule_morning: {
           monday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           tuesday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           wednesday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           thursday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           friday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           saturday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           sunday: [
-            { hours: "09", min: "00", ampm: "AM" },
-            { hours: "12", min: "00", ampm: "PM" },
+            {
+              hours: "09",
+              min: "00",
+              ampm: "AM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "12",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
         },
         schedule_afternoon: {
           monday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           tuesday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           wednesday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           thursday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           friday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           saturday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
           sunday: [
-            { hours: "01", min: "00", ampm: "PM" },
-            { hours: "04", min: "00", ampm: "PM" },
+            {
+              hours: "01",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
+            {
+              hours: "04",
+              min: "00",
+              ampm: "PM",
+              appointment_modes: ["in-person", "visio", "phone"],
+            },
           ],
-        },
-        unavailability: {
-          monday: false,
-          tuesday: false,
-          wednesday: false,
-          thursday: false,
-          friday: false,
-          saturday: false,
-          sunday: false,
         },
         default_duration_hours: 1,
         default_duration_min: 0,
-      });
+      };
+
+      const availabilityResponse = await xanoPost(
+        "/availability",
+        "admin",
+        availabilityToPost
+      );
+
       successfulRequests.push({
         endpoint: "/availability",
         id: availabilityResponse.id,

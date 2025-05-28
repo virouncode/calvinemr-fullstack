@@ -527,7 +527,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   .calendar__availability-editor-heads {
     display: flex;
     justify-content: space-between;
@@ -536,23 +535,29 @@
     text-align: center;
   }
   .calendar__availability-editor-row {
-    display: grid;
-    grid-template-columns: 8% 40% 40% 12%;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 5rem;
+    border-bottom: solid 1px $grey2;
+    padding: 0.5rem 0;
+    width: 100%;
     .calendar__availability-editor-day {
       font-weight: bold;
+      width: 10%;
     }
     .calendar__availability-editor-head {
       text-align: center;
       font-weight: bold;
       margin-bottom: 0.5rem;
+      width: 30%;
     }
     .calendar__availability-editor-time {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 1rem;
+      width: 30%;
       .time-picker {
         display: flex;
         align-items: center;
@@ -561,6 +566,12 @@
           width: auto;
         }
       }
+    }
+    .calendar__availability-editor-mode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
     }
     .calendar__availability-editor-unavailable {
       display: flex;
@@ -786,6 +797,7 @@
       display: flex;
     }
     &-purpose {
+      display: flex;
       width: 70%;
     }
     &-btns {

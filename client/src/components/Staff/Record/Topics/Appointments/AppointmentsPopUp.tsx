@@ -7,7 +7,6 @@ import {
 import { useSites } from "../../../../../hooks/reactquery/queries/sitesQueries";
 import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
-import Button from "../../../../UI/Buttons/Button";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
@@ -104,7 +103,7 @@ const AppointmentsPopUp = ({
         <table className="appointments__table">
           <thead>
             <tr>
-              <th>Action</th>
+              {/* <th>Action</th> */}
               <th>Host</th>
               <th>Reason</th>
               <th>Recurrence</th>
@@ -115,6 +114,7 @@ const AppointmentsPopUp = ({
               <th>Site</th>
               <th>Room</th>
               <th>Status</th>
+              <th>Type</th>
               <th>Notes</th>
               <th>Updated By</th>
               <th>Updated On</th>
@@ -166,7 +166,7 @@ const AppointmentsPopUp = ({
         </table>
       </div>
       <div className="appointments__btn-container">
-        <Button onClick={handleAdd} disabled={addVisible} label="Add" />
+        {/* <Button onClick={handleAdd} disabled={addVisible} label="Add" /> */}
         <CloseButton onClick={handleClose} />
       </div>
     </div>

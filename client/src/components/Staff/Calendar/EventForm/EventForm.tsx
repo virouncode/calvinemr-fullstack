@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
+import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import {
@@ -14,6 +15,7 @@ import {
 } from "../../../../hooks/reactquery/mutations/appointmentsMutations";
 import { useAvailableRooms } from "../../../../hooks/reactquery/queries/availableRoomsQueries";
 import {
+  AppointmentModeType,
   AppointmentType,
   DemographicsType,
   RruleType,
@@ -47,6 +49,7 @@ import { confirmAlert } from "../../../UI/Confirm/ConfirmGlobal";
 import ErrorParagraph from "../../../UI/Paragraphs/ErrorParagraph";
 import ConfirmDialogRecurringChange from "../ConfirmDialogRecurringChange";
 import ConfirmDialogRecurringDelete from "../ConfirmDialogRecurringDelete";
+import EventFormAppointmentType from "./EventFormAppointmentType";
 import EventFormButtons from "./EventFormButtons";
 import EventFormGuests from "./EventFormGuests";
 import EventFormHostRow from "./EventFormHostRow";
@@ -94,6 +97,7 @@ const EventForm = ({
 }: EventFormProps) => {
   //=========================== Hooks =================================//
   const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [formDatas, setFormDatas] = useState<AppointmentType>(
     parseToAppointment(currentEvent.current as EventInput)
@@ -145,9 +149,29 @@ const EventForm = ({
     setFormDatas({ ...formDatas, AppointmentNotes: value });
   };
 
+  const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setErrMsgPost("");
+    const value = e.target.value as AppointmentModeType | "";
+    setFormDatas({ ...formDatas, appointment_type: value });
+  };
+
   const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrMsgPost("");
     const value = e.target.value;
+    const initialAppointment: AppointmentType = parseToAppointment(
+      currentEvent.current as EventInput
+    );
+    const initialStatus = initialAppointment.AppointmentStatus;
+    if (
+      value !== initialStatus &&
+      initialStatus === "Scheduled" &&
+      formDatas.patients_guests_ids.length > 0
+    ) {
+      toast.warn(
+        `You have changed the appointment's status from "Scheduled" to "${value}", please send an invitation/confirmation to the patient(s) if not already done.`,
+        { containerId: "A", autoClose: 6000 }
+      );
+    }
     setFormDatas({ ...formDatas, AppointmentStatus: value });
   };
 
@@ -573,6 +597,23 @@ const EventForm = ({
       })
     ) {
       appointmentDelete.mutate(formDatas.id);
+      const initialAppointment: AppointmentType = parseToAppointment(
+        currentEvent.current as EventInput
+      );
+      if (
+        initialAppointment.patients_guests_ids &&
+        initialAppointment.patients_guests_ids.length > 0
+      ) {
+        const patientsIds = (
+          initialAppointment.patients_guests_ids as {
+            patient_infos: DemographicsType;
+          }[]
+        ).map(({ patient_infos }) => patient_infos.patient_id);
+        for (const patientId of patientsIds) {
+          socket?.emit("message", { key: ["patientRecord", patientId] });
+        }
+      }
+
       setFormVisible(false);
       setSelectable(true);
       currentEvent.current = null;
@@ -641,6 +682,22 @@ const EventForm = ({
 
   const handleDeleteAllEvents = async () => {
     appointmentDelete.mutate(formDatas.id);
+    const initialAppointment: AppointmentType = parseToAppointment(
+      currentEvent.current as EventInput
+    );
+    if (
+      initialAppointment.patients_guests_ids &&
+      initialAppointment.patients_guests_ids.length > 0
+    ) {
+      const patientsIds = (
+        initialAppointment.patients_guests_ids as {
+          patient_infos: DemographicsType;
+        }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
+    }
     currentEvent.current = null;
     lastCurrentId.current = "";
     setConfirmDlgRecDeleteVisible(false);
@@ -741,6 +798,7 @@ const EventForm = ({
       rrule: formDatas.rrule,
       exrule: formDatas.exrule,
       invitations_sent: formDatas.invitations_sent,
+      appointment_type: formDatas.appointment_type,
     };
     //Validation
     try {
@@ -1098,6 +1156,10 @@ const EventForm = ({
           <EventFormNotes
             formDatas={formDatas}
             handleNotesChange={handleNotesChange}
+          />
+          <EventFormAppointmentType
+            formDatas={formDatas}
+            handleModeChange={handleModeChange}
           />
           <EventFormButtons
             formDatas={formDatas}

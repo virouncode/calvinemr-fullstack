@@ -8,7 +8,9 @@ import {
   DemographicsType,
   StaffType,
 } from "../../../types/api";
+import { UserPatientType, UserStaffType } from "../../../types/app";
 import useSocketContext from "../../context/useSocketContext";
+import useUserContext from "../../context/useUserContext";
 
 //Appointments with an (s) for event on the calendar
 //Appointment for event form
@@ -64,7 +66,7 @@ export const useAppointmentsPost = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -73,6 +75,12 @@ export const useAppointmentsPost = (
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
       socket?.emit("message", { key: ["patientRecord"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
     },
     onError: (error, variables, context) => {
       // queryClient.setQueryData(
@@ -162,7 +170,7 @@ export const useAppointmentsPut = (
     //   );
     //   return { previousAppointments };
     // },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -170,6 +178,12 @@ export const useAppointmentsPut = (
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
     },
     onError: (error, variables, context) => {
       // queryClient.setQueryData(
@@ -273,11 +287,16 @@ export const useAppointmentsDelete = (
 
 export const useAppointmentPost = () => {
   const { socket } = useSocketContext();
+  const { user } = useUserContext() as {
+    user: UserStaffType | UserPatientType;
+  };
   return useMutation({
     mutationFn: (appointmentToPost: Partial<AppointmentType>) => {
-      return xanoPost("/appointments", "staff", appointmentToPost);
+      return xanoPost("/appointments", user.access_level, appointmentToPost);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("data", data);
+
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -285,6 +304,12 @@ export const useAppointmentPost = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success(`Appointment saved successfully`, {
         containerId: "A",
       });
@@ -318,7 +343,7 @@ export const useAppointmentPut = () => {
         transformedAppointmentToPut
       );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -326,6 +351,12 @@ export const useAppointmentPut = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+      const patientsIds = (
+        data.patients_guests_ids as { patient_infos: DemographicsType }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
       toast.success(`Appointment saved successfully`, {
         containerId: "A",
       });
@@ -351,11 +382,14 @@ export const useAppointmentDelete = () => {
       socket?.emit("message", { key: ["patientAppointments"] });
       socket?.emit("message", { key: ["dashboardVisits"] });
       socket?.emit("message", { key: ["allPatientAppointments"] });
+
       toast.success(`Appointment deleted successfully`, {
         containerId: "A",
       });
     },
     onError: (error) => {
+      console.log("prout");
+
       toast.error(`Error: unable to delete appointment: ${error.message}`, {
         containerId: "A",
       });

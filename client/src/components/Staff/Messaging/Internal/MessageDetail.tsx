@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import NewWindow from "react-new-window";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -53,7 +54,7 @@ import MessagesPrint from "./MessagesPrint";
 import NewTodo from "./NewTodo";
 import NewTodoMobile from "./NewTodoMobile";
 import ReplyMessage from "./ReplyMessage";
-import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
+import useSocketContext from "../../../../hooks/context/useSocketContext";
 
 type MessageDetailProps = {
   setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
@@ -73,6 +74,7 @@ const MessageDetail = ({
   //Hooks
   const navigate = useNavigate();
   const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const { messageId } = useParams();
   const { staffInfos } = useStaffInfosContext();
   const [replyVisible, setReplyVisible] = useState(false);
@@ -147,6 +149,11 @@ const MessageDetail = ({
         todoDelete.mutate(message.id, {
           onSuccess: () => {
             setCurrentMsgId(0);
+            if (message.related_patient_id) {
+              socket?.emit("message", {
+                key: ["patientRecord", message.related_patient_id],
+              });
+            }
           },
         });
       } else {

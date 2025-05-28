@@ -23,11 +23,12 @@ const StatusRadioItem = ({
         value={status}
         checked={isStatusSelected(status)}
         onChange={handleStatusChange}
-        label={
-          status === "Scheduled" && formDatas.invitations_sent.length > 0
-            ? `${status}*`
-            : status
-        }
+        // label={
+        //   status === "Scheduled" && formDatas.invitations_sent.length > 0
+        //     ? `${status}*`
+        //     : status
+        // }
+        label={status}
       />
     </div>
   );

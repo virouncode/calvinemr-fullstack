@@ -103,6 +103,7 @@ export type AppointmentType = {
   exrule: ExruleType;
   recurrence: string;
   invitations_sent: InvitationSentType[];
+  appointment_type: AppointmentModeType | "";
   //add-ons
   site_infos?: SiteType;
   host_infos?: StaffType;
@@ -165,30 +166,29 @@ export type AttachmentType = {
   };
   url: string;
 };
-export type ScheduleType = {
-  monday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  tuesday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  wednesday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  thursday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  friday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  saturday: { hours: string; min: string; ampm: "AM" | "PM" }[];
-  sunday: { hours: string; min: string; ampm: "AM" | "PM" }[];
+
+export type AppointmentModeType = "in-person" | "visio" | "phone";
+export type TimeSlotType = {
+  hours: string;
+  min: string;
+  ampm: "AM" | "PM";
+  appointment_modes: AppointmentModeType[];
 };
-export type UnavailabilityType = {
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
-  sunday: boolean;
+
+export type ScheduleType = {
+  monday: TimeSlotType[];
+  tuesday: TimeSlotType[];
+  wednesday: TimeSlotType[];
+  thursday: TimeSlotType[];
+  friday: TimeSlotType[];
+  saturday: TimeSlotType[];
+  sunday: TimeSlotType[];
 };
 export type AvailabilityType = {
   id: number;
   staff_id: number;
   schedule_morning: ScheduleType;
   schedule_afternoon: ScheduleType;
-  unavailability: UnavailabilityType;
   default_duration_hours: number;
   default_duration_min: number;
   date_created: number;

@@ -17,6 +17,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -107,6 +108,7 @@ const Calendar = () => {
         ]
       : [user.id]
   );
+  const { socket } = useSocketContext();
 
   //Calendar Elements
   const fcRef = useRef<FullCalendar | null>(null);
@@ -303,6 +305,18 @@ const Calendar = () => {
       })
     ) {
       appointmentDelete.mutate(parseInt(currentEvent.current?.id as string));
+
+      if (currentEvent.current?.extendedProps?.patientsGuestsIds) {
+        const patientsIds = (
+          currentEvent.current?.extendedProps?.patientsGuestsIds as {
+            patient_infos: DemographicsType;
+          }[]
+        ).map(({ patient_infos }) => patient_infos.patient_id);
+
+        for (const patientId of patientsIds) {
+          socket?.emit("message", { key: ["patientRecord", patientId] });
+        }
+      }
       setFormVisible(false);
       setSelectable(true);
       currentEvent.current = null;
@@ -515,7 +529,7 @@ const Calendar = () => {
       Duration: info.allDay
         ? 1440
         : Math.floor((endDate - startDate) / (1000 * 60)),
-      AppointmentStatus: "Scheduled",
+      AppointmentStatus: "Confirmed",
       AppointmentDate: timestampToDateISOTZ(
         info.allDay ? startAllDay : startDate
       ),
@@ -532,6 +546,7 @@ const Calendar = () => {
               },
               OHIPPhysicianId: user.ohip_billing_nbr,
             },
+      appointment_type: "",
     };
 
     if (timelineVisible) {
@@ -696,6 +711,7 @@ const Calendar = () => {
       exrule: event.extendedProps.exrule,
       room_id: event.extendedProps.roomId,
       invitations_sent: event.extendedProps.invitations_sent,
+      appointment_type: event.extendedProps.appointment_type,
     };
 
     if (!timelineVisible) {
@@ -856,6 +872,7 @@ const Calendar = () => {
         rrule: event.extendedProps.rrule,
         exrule: event.extendedProps.exrule,
         invitations_sent: event.extendedProps.invitations_sent,
+        appointment_type: event.extendedProps.appointment_type,
       };
       appointmentPut.mutate(appointmentToPut);
     } else {
@@ -1425,6 +1442,17 @@ const Calendar = () => {
       >
     )?.event;
     appointmentDelete.mutate(parseInt(event.id));
+    if (currentEvent.current?.extendedProps?.patientsGuestsIds) {
+      const patientsIds = (
+        currentEvent.current?.extendedProps?.patientsGuestsIds as {
+          patient_infos: DemographicsType;
+        }[]
+      ).map(({ patient_infos }) => patient_infos.patient_id);
+
+      for (const patientId of patientsIds) {
+        socket?.emit("message", { key: ["patientRecord", patientId] });
+      }
+    }
     currentEvent.current = null;
     lastCurrentId.current = "";
     setConfirmDlgRecDeleteVisible(false);

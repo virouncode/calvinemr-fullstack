@@ -205,6 +205,7 @@ export const parseToEvent = (
           }))
         : [],
       invitations_sent: appointment.invitations_sent,
+      appointment_type: appointment.appointment_type,
     },
   };
   return event;

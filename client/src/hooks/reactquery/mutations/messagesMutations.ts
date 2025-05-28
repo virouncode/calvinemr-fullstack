@@ -41,9 +41,15 @@ export const useMessagePost = (staffId: number, section: string) => {
           socket?.emit("message", {
             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
           });
+          socket?.emit("message", {
+            key: ["patientRecord", data.related_patient_id],
+          });
         } else {
           socket?.emit("message", {
             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", data.related_patient_id],
           });
         }
       }
@@ -81,6 +87,8 @@ export const useMessagesPostBatch = (staffId: number, section: string) => {
       }
     },
     onSuccess: (datas: MessageType[] | TodoType[]) => {
+      console.log("datas", datas);
+
       socket?.emit("message", { key: ["messages", staffId] });
       for (const data of datas) {
         if (section === "To-dos") {
@@ -100,6 +108,23 @@ export const useMessagesPostBatch = (staffId: number, section: string) => {
           for (const staff_id of (data as MessageType).to_staff_ids) {
             socket?.emit("message", { key: ["messages", staff_id] });
           }
+        }
+      }
+      if (datas[0].related_patient_id) {
+        if (section === "To-dos") {
+          socket?.emit("message", {
+            key: ["TODOS ABOUT PATIENT", datas[0].related_patient_id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", datas[0].related_patient_id],
+          });
+        } else {
+          socket?.emit("message", {
+            key: ["MESSAGES ABOUT PATIENT", datas[0].related_patient_id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", datas[0].related_patient_id],
+          });
         }
       }
       toast.success("Message(s)/Todo(s) post succesfully", {
@@ -146,9 +171,15 @@ export const useMessagePut = (staffId: number, section: string) => {
           socket?.emit("message", {
             key: ["TODOS ABOUT PATIENT", data.related_patient_id],
           });
+          socket?.emit("message", {
+            key: ["patientRecord", data.related_patient_id],
+          });
         } else {
           socket?.emit("message", {
             key: ["MESSAGES ABOUT PATIENT", data.related_patient_id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", data.related_patient_id],
           });
         }
       }
@@ -189,14 +220,18 @@ export const useMessageExternalPost = () => {
           key: ["messagesExternal", "staff", user?.id],
         });
         if (data.to_patients_ids) {
-          for (const patientId of (
+          const patientsIds = (
             data.to_patients_ids as { to_patient_infos: DemographicsType }[]
-          ).map(({ to_patient_infos }) => to_patient_infos.patient_id)) {
+          ).map(({ to_patient_infos }) => to_patient_infos.patient_id);
+          for (const patientId of patientsIds) {
             socket?.emit("message", {
               key: ["messagesExternal", "patient", patientId],
             });
             socket?.emit("message", {
               key: ["MESSAGES WITH PATIENT", patientId],
+            });
+            socket?.emit("message", {
+              key: ["patientRecord", patientId],
             });
           }
         }
@@ -210,6 +245,9 @@ export const useMessageExternalPost = () => {
           });
           socket?.emit("message", {
             key: ["MESSAGES WITH PATIENT", user?.id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", user?.id],
           });
         }
       }
@@ -247,6 +285,9 @@ export const useMessagesExternalPostBatch = () => {
               socket?.emit("message", {
                 key: ["MESSAGES WITH PATIENT", patientId],
               });
+              socket?.emit("message", {
+                key: ["patientRecord", patientId],
+              });
             }
           }
         }
@@ -261,6 +302,9 @@ export const useMessagesExternalPostBatch = () => {
             });
             socket?.emit("message", {
               key: ["MESSAGES WITH PATIENT", user?.id],
+            });
+            socket?.emit("message", {
+              key: ["patientRecord", user?.id],
             });
           }
         }
@@ -307,6 +351,9 @@ export const useMessageExternalPut = () => {
             socket?.emit("message", {
               key: ["MESSAGES WITH PATIENT", patientId],
             });
+            socket?.emit("message", {
+              key: ["patientRecord", patientId],
+            });
           }
         }
       } else {
@@ -319,6 +366,9 @@ export const useMessageExternalPut = () => {
           });
           socket?.emit("message", {
             key: ["MESSAGES WITH PATIENT", user?.id],
+          });
+          socket?.emit("message", {
+            key: ["patientRecord", user?.id],
           });
         }
       }

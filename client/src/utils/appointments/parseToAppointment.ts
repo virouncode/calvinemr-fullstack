@@ -47,6 +47,7 @@ export const parseToAppointment = (event: EventInput) => {
     exrule: event.extendedProps?.exrule,
     recurrence: event.extendedProps?.recurrence,
     invitations_sent: event.extendedProps?.invitations_sent,
+    appointment_type: event.extendedProps?.appointment_type,
   };
   return appointment;
 };

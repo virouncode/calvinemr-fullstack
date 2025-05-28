@@ -36,13 +36,10 @@ import {
   firstLetterUpper,
 } from "../../../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
-import CancelButton from "../../../../UI/Buttons/CancelButton";
-import DeleteButton from "../../../../UI/Buttons/DeleteButton";
-import EditButton from "../../../../UI/Buttons/EditButton";
-import SaveButton from "../../../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
 import InputTextToggle from "../../../../UI/Inputs/InputTextToggle";
+import { modes } from "../../../../UI/Lists/AppointmentModeSelect";
 import SiteSelect from "../../../../UI/Lists/SiteSelect";
 import DateTimePicker from "../../../../UI/Pickers/DateTimePicker";
 import SignCell from "../../../../UI/Tables/SignCell";
@@ -620,8 +617,7 @@ const AppointmentItem = ({
         }}
         ref={lastItemRef}
       >
-        <td>
-          {/* {(isSecretary() || user.id === itemInfos.host_id) && ( */}
+        {/* <td>
           <div className="appointments__item-btn-container">
             {!editVisible ? (
               <>
@@ -642,8 +638,7 @@ const AppointmentItem = ({
               </>
             )}
           </div>
-          {/* )} */}
-        </td>
+        </td> */}
         <td style={{ minWidth: "170px" }}>
           {/* {editVisible && isSecretary() ? (
             <HostsSelect
@@ -774,6 +769,7 @@ const AppointmentItem = ({
             toRoomTitle(sites, item.site_id, item.room_id)
           )}
         </td>
+
         <td>
           <AppointmentStatusSelectToggle
             handleChange={handleChange}
@@ -781,6 +777,10 @@ const AppointmentItem = ({
             statuses={statuses}
             editVisible={editVisible}
           />
+        </td>
+        <td>
+          {modes.find((mode) => mode.id === item.appointment_type)?.name ??
+            "To be determined"}
         </td>
         <td>
           <InputTextToggle

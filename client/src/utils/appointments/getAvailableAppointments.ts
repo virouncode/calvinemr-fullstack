@@ -1,4 +1,8 @@
-import { AppointmentType, AvailabilityType } from "../../types/api";
+import {
+  AppointmentModeType,
+  AppointmentType,
+  AvailabilityType,
+} from "../../types/api";
 import { AppointmentProposalType, DayType } from "../../types/app";
 import { nowTZ } from "../dates/formatDates";
 import { getAppointmentProposal } from "./getAppoinmentProposal";
@@ -7,7 +11,8 @@ export const getAvailableAppointments = (
   availability: AvailabilityType,
   appointmentsInRange: AppointmentType[] | null,
   practicianSelectedId: number,
-  rangeStart: number
+  rangeStart: number,
+  appointmentMode: AppointmentModeType
 ) => {
   const days = [
     "monday",
@@ -32,7 +37,14 @@ export const getAvailableAppointments = (
 
   while (counter < 7) {
     //On boucle sur une semaine
-    while (availability.unavailability[days[newDay] as DayType] === true) {
+    while (
+      !availability.schedule_morning[
+        days[newDay] as DayType
+      ][0].appointment_modes.includes(appointmentMode) &&
+      !availability.schedule_afternoon[
+        days[newDay] as DayType
+      ][0].appointment_modes.includes(appointmentMode)
+    ) {
       //on incrémente newDay jusqu'à ce que le practicien soit dispo
       newDay = (newDay + 1) % 7;
       counter++;
@@ -49,7 +61,8 @@ export const getAvailableAppointments = (
         defaulDurationMs,
         practicianSelectedId,
         rangeStart,
-        newDay
+        newDay,
+        appointmentMode
       );
     if (appointmentProposal) proposals.push(appointmentProposal);
     newDay = (newDay + 1) % 7; //On incrémente
