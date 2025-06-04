@@ -36,7 +36,7 @@ export const usePatientsSimpleSearch = (search: string) => {
   });
 };
 
-export const usePatient = (patientId: number) => {
+export const usePatient = (patientId: number | null) => {
   return useQuery<DemographicsType>({
     queryKey: ["patient", patientId],
     queryFn: () => {

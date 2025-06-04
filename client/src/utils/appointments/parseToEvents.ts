@@ -183,6 +183,7 @@ export const parseToEvent = (
       updates: appointment.updates ?? [],
       date_created: appointment.date_created,
       created_by_id: appointment.created_by_id,
+      created_by_user_type: appointment.created_by_user_type,
       notes: appointment.AppointmentNotes as string,
       providerFirstName: appointment.Provider?.Name?.FirstName,
       providerLastName: appointment.Provider?.Name?.LastName,

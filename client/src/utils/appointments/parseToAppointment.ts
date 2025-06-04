@@ -12,6 +12,7 @@ export const parseToAppointment = (event: EventInput) => {
     host_id: event.extendedProps?.host,
     date_created: event.extendedProps?.date_created,
     created_by_id: event.extendedProps?.created_by_id,
+    created_by_user_type: event.extendedProps?.created_by_user_type,
     start:
       typeof event.start === "number"
         ? event.start

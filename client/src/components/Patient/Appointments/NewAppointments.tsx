@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { DateTime } from "luxon";
 import React, { useState } from "react";
-import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
 import { useAppointmentPost } from "../../../hooks/reactquery/mutations/appointmentsMutations";
@@ -28,7 +27,6 @@ import WeekPicker from "./WeekPicker";
 const NewAppointments = () => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
-  const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
   const [rangeStart, setRangeStart] = useState(
     nowTZ().plus({ days: 1 }).startOf("day").toMillis()
@@ -160,7 +158,8 @@ const NewAppointments = () => {
       const appointmentToPost: Partial<AppointmentType> = {
         host_id: user.demographics.assigned_staff_id,
         date_created: nowTZTimestamp(),
-        created_by_id: user.demographics.assigned_staff_id,
+        created_by_id: user.id,
+        created_by_user_type: "patient",
         start: appointmentSelected.start,
         end: appointmentSelected.end,
         room_id: "z",

@@ -519,6 +519,7 @@ const Calendar = () => {
       host_id: user.title === "Secretary" ? 0 : user.id,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
+      created_by_user_type: "staff",
       start: info.allDay ? startAllDay : startDate,
       end: info.allDay ? endAllDay : endDate,
       room_id: timelineVisible ? info.resource?.id ?? "z" : "z",
@@ -678,6 +679,7 @@ const Calendar = () => {
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
+      created_by_user_type: event.extendedProps.created_by_user_type,
       updates: [
         ...event.extendedProps.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
@@ -840,6 +842,7 @@ const Calendar = () => {
         all_day: event.allDay,
         date_created: event.extendedProps.date_created,
         created_by_id: event.extendedProps.created_by_id,
+        created_by_user_type: event.extendedProps.created_by_user_type,
         updates: [
           ...event.extendedProps.updates,
           { updated_by_id: user.id, date_updated: nowTZTimestamp() },
@@ -955,6 +958,7 @@ const Calendar = () => {
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
+      created_by_user_type: event.extendedProps.created_by_user_type,
       AppointmentTime: timestampToTimeISOTZ(
         event.allDay ? startAllDay : startDate
       ),
@@ -1258,6 +1262,7 @@ const Calendar = () => {
       all_day: event.allDay,
       date_created: event.extendedProps.date_created,
       created_by_id: event.extendedProps.created_by_id,
+      created_by_user_type: event.extendedProps.created_by_user_type,
       AppointmentTime: timestampToTimeISOTZ(
         event.allDay ? startAllDay : startDate
       ),

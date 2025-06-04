@@ -260,12 +260,14 @@
 .event-form__notes {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   label {
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
   textarea {
     height: 100px;
+    width: 100%;
   }
 }
 .event-form__btns {

@@ -1,5 +1,6 @@
 //Libraries
 import { EventInput } from "@fullcalendar/core";
+import { useMediaQuery } from "@mui/material";
 import _ from "lodash";
 import { DateTime } from "luxon";
 import React, { useRef, useState } from "react";
@@ -58,6 +59,7 @@ import EventFormRooms from "./EventFormRooms";
 import EventFormStatus from "./EventFormStatus";
 import EventFormTimeRow from "./EventFormTimeRow";
 import Invitation from "./Invitation/Invitation";
+import EventFormInfos from "./EventFormInfos";
 
 type EventFormProps = {
   currentEvent: React.MutableRefObject<EventInput | null>;
@@ -132,6 +134,7 @@ const EventForm = ({
     sites,
     formDatas.site_id
   );
+  const isTabletOrMobile = useMediaQuery("(max-width: 768px)");
   //=========================== Queries =================================//
   const appointmentPost = useAppointmentPost();
   const appointmentPut = useAppointmentPut();
@@ -772,6 +775,7 @@ const EventForm = ({
       all_day: formDatas.all_day,
       date_created: formDatas.date_created,
       created_by_id: formDatas.created_by_id,
+      created_by_user_type: formDatas.created_by_user_type,
       updates: [
         ...formDatas.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
@@ -845,6 +849,7 @@ const EventForm = ({
       all_day: formDatas.all_day,
       date_created: formDatas.date_created,
       created_by_id: formDatas.created_by_id,
+      created_by_user_type: formDatas.created_by_user_type,
       updates: [
         ...formDatas.updates,
         { updated_by_id: user.id, date_updated: nowTZTimestamp() },
@@ -1109,6 +1114,7 @@ const EventForm = ({
           onSubmit={handleSubmit}
         >
           {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
+          <EventFormInfos formDatas={formDatas} />
           <EventFormHostRow
             formDatas={formDatas}
             handleHostChange={handleHostChange}
@@ -1153,14 +1159,32 @@ const EventForm = ({
             selectedStatus={formDatas.AppointmentStatus}
             formDatas={formDatas}
           />
-          <EventFormNotes
-            formDatas={formDatas}
-            handleNotesChange={handleNotesChange}
-          />
-          <EventFormAppointmentType
-            formDatas={formDatas}
-            handleModeChange={handleModeChange}
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: isTabletOrMobile ? "column" : "row",
+              justifyContent: "space-between",
+              gap: "2rem",
+            }}
+          >
+            <EventFormNotes
+              formDatas={formDatas}
+              handleNotesChange={handleNotesChange}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              <EventFormAppointmentType
+                formDatas={formDatas}
+                handleModeChange={handleModeChange}
+              />
+            </div>
+          </div>
+
           <EventFormButtons
             formDatas={formDatas}
             currentEvent={currentEvent}

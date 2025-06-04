@@ -81,6 +81,7 @@ export type AppointmentType = {
   host_id: number;
   date_created: number;
   created_by_id: number;
+  created_by_user_type: "staff" | "patient" | null;
   start: number;
   end: number;
   patients_guests_ids: number[] | { patient_infos: DemographicsType }[];
