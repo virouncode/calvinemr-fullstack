@@ -27,10 +27,15 @@ const useAutoLockScreen = (
     logoutTimerID.current = null;
   }, []);
 
-  const resetTimer = useCallback(() => {
+  const resetTimerWithStorageUpdate = useCallback(() => {
     stopTimer();
     startTimer();
     localStorage.setItem("lastAction", nowTZTimestamp().toString());
+  }, [startTimer, stopTimer]);
+
+  const resetTimer = useCallback(() => {
+    stopTimer();
+    startTimer();
   }, [startTimer, stopTimer]);
 
   const handleStorageEvent = useCallback(
@@ -45,25 +50,39 @@ const useAutoLockScreen = (
   useEffect(() => {
     startTimer();
     window.addEventListener("storage", handleStorageEvent);
-    window.addEventListener("mousemove", resetTimer);
-    window.addEventListener("mousedown", resetTimer);
-    window.addEventListener("keypress", resetTimer);
-    window.addEventListener("DOMMouseScroll", resetTimer, { passive: true });
-    window.addEventListener("mousewheel", resetTimer, { passive: true });
-    window.addEventListener("touchmove", resetTimer, { passive: true });
-    window.addEventListener("MSPointerMove", resetTimer, { passive: true });
+    window.addEventListener("mousemove", resetTimerWithStorageUpdate);
+    window.addEventListener("mousedown", resetTimerWithStorageUpdate);
+    window.addEventListener("keypress", resetTimerWithStorageUpdate);
+    window.addEventListener("DOMMouseScroll", resetTimerWithStorageUpdate, {
+      passive: true,
+    });
+    window.addEventListener("mousewheel", resetTimerWithStorageUpdate, {
+      passive: true,
+    });
+    window.addEventListener("touchmove", resetTimerWithStorageUpdate, {
+      passive: true,
+    });
+    window.addEventListener("MSPointerMove", resetTimerWithStorageUpdate, {
+      passive: true,
+    });
     return () => {
       stopTimer();
       window.removeEventListener("storage", handleStorageEvent);
-      window.removeEventListener("mousemove", resetTimer);
-      window.removeEventListener("mousedown", resetTimer);
-      window.removeEventListener("keypress", resetTimer);
-      window.removeEventListener("DOMMouseScroll", resetTimer);
-      window.removeEventListener("mousewheel", resetTimer);
-      window.removeEventListener("touchmove", resetTimer);
-      window.removeEventListener("MSPointerMove", resetTimer);
+      window.removeEventListener("mousemove", resetTimerWithStorageUpdate);
+      window.removeEventListener("mousedown", resetTimerWithStorageUpdate);
+      window.removeEventListener("keypress", resetTimerWithStorageUpdate);
+      window.removeEventListener("DOMMouseScroll", resetTimerWithStorageUpdate);
+      window.removeEventListener("mousewheel", resetTimerWithStorageUpdate);
+      window.removeEventListener("touchmove", resetTimerWithStorageUpdate);
+      window.removeEventListener("MSPointerMove", resetTimerWithStorageUpdate);
     };
-  }, [handleStorageEvent, resetTimer, startTimer, stopTimer]);
+  }, [
+    handleStorageEvent,
+    resetTimer,
+    resetTimerWithStorageUpdate,
+    startTimer,
+    stopTimer,
+  ]);
 };
 
 export default useAutoLockScreen;
