@@ -22,7 +22,6 @@ import useUnreadSocket from "./hooks/socket/useUnreadSocket";
 import useUnreadTodoSocket from "./hooks/socket/useUnreadTodoSocket";
 import useUserSocket from "./hooks/socket/useUserSocket";
 import useAutoLogout from "./hooks/useAutoLogout";
-import { useLocalStorageTracker } from "./hooks/useLocalStorageTracker";
 import useLogoutForAll from "./hooks/useLogoutForAll";
 import useRefreshToken from "./hooks/useRefreshToken";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
@@ -109,7 +108,7 @@ const App = () => {
   //REFRESH TOKEN
   const { tokenLimitVerifierID, toastExpiredID } = useRefreshToken();
   //LOCAL STORAGE
-  useLocalStorageTracker();
+  // useLocalStorageTracker();
   useAutoLogout(120, toastExpiredID, tokenLimitVerifierID); //autologout in x min
   useLogoutForAll(); //log every tabs out if logout in one tab
   //CONTEXT SOCKETS

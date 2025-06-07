@@ -1,0 +1,152 @@
+# Cline Rules for Calvin EMR
+
+## Project Patterns & Preferences
+
+### Code Style & Formatting
+
+1. **TypeScript Conventions**
+
+   - Use TypeScript for all new code
+   - Explicit typing preferred over inferred types
+   - Interface names should be prefixed with 'I' (e.g., `IPatient`)
+   - Use type guards for runtime type checking
+
+2. **React Patterns**
+
+   - Functional components with hooks (no class components)
+   - Custom hooks for reusable logic
+   - Context API for state management
+   - Props interfaces defined for all components
+
+3. **File Structure**
+
+   - Group files by domain (Admin, Patient, Staff, All)
+   - Shared components in UI directory
+   - Hooks in dedicated hooks directory
+   - Utility functions organized by domain
+
+4. **Naming Conventions**
+
+   - PascalCase for components and types
+   - camelCase for variables, functions, and instances
+   - ALL_CAPS for constants
+   - kebab-case for file names (except components which use PascalCase)
+
+5. **CSS/SCSS**
+   - SCSS modules for component styling
+   - BEM-like naming convention
+   - Responsive design with mobile-first approach
+   - Variables for colors, spacing, and typography
+
+### Development Workflow
+
+1. **Feature Implementation**
+
+   - Understand requirements first
+   - Plan component structure
+   - Implement core functionality
+   - Add validation and error handling
+   - Test across different user roles
+
+2. **Security Considerations**
+
+   - Validate all user inputs
+   - Sanitize data before display
+   - Check authorization for all operations
+   - Protect sensitive data in local storage
+
+3. **Performance Optimization**
+   - Memoize expensive calculations
+   - Lazy load components when appropriate
+   - Optimize re-renders with React.memo
+   - Use virtualization for long lists
+
+### Project-Specific Patterns
+
+1. **Authentication Flow**
+
+   - JWT tokens stored in memory
+   - Refresh tokens for session persistence
+   - Role-based access control
+   - Auto-logout for inactive sessions
+
+2. **API Integration**
+
+   - Xano as primary backend service
+   - Custom Axios instances for different services
+   - Consistent error handling
+   - Type definitions for API responses
+
+3. **Real-time Features**
+
+   - Socket.io for real-time communication
+   - Dedicated handlers for different event types
+   - Fallback mechanisms for connection issues
+   - Reconnection logic
+
+4. **Form Handling**
+   - Custom validation hooks
+   - Consistent error messaging
+   - Progressive disclosure for complex forms
+   - Autosave for long forms
+
+## Critical Implementation Paths
+
+### Security Features
+
+- Auto-logout: `useAutoLogout.ts` hook manages inactivity detection and logout
+- Screen locking: `useAutoLockScreen.ts` handles temporary screen locking
+- Local storage: `useLocalStorageTracker.ts` monitors and secures local storage
+
+### Authentication
+
+- Auth context: `AuthProvider.tsx` manages authentication state
+- Token refresh: `useRefreshToken.ts` handles token renewal
+- Protected routes: `RequireAuth.tsx` controls access to protected pages
+
+### Data Flow
+
+- API requests flow through custom Axios instances in `api/xanoCRUD/`
+- Socket events handled by dedicated handlers in `socketHandlers/`
+- Context providers in `context/` manage global state
+
+## Known Challenges
+
+1. **Browser Compatibility**
+
+   - Safari has issues with certain WebSocket implementations
+   - Mobile browsers have different timeout behaviors
+   - Local storage limitations vary by browser
+
+2. **Performance Bottlenecks**
+
+   - Large datasets can cause rendering performance issues
+   - Socket connection management needs optimization
+   - Initial load time can be slow with many context providers
+
+3. **Integration Complexities**
+   - External services have rate limits and occasional downtime
+   - Fax service integration requires special error handling
+   - Weather API has usage limitations
+
+## User Preferences
+
+1. **Code Organization**
+
+   - Prefer smaller, focused components over large ones
+   - Extract complex logic into custom hooks
+   - Keep related functionality together
+
+2. **Documentation**
+
+   - Document complex logic with comments
+   - Update memory bank when implementing significant features
+   - Include rationale for non-obvious decisions
+
+3. **Problem Solving Approach**
+   - Understand the problem thoroughly before coding
+   - Consider security implications early
+   - Test across different user roles and scenarios
+   - Optimize for maintainability and readability
+
+This .clinerules file will be updated as new patterns and preferences are discovered during development.

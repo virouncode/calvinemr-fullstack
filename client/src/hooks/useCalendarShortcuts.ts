@@ -1,9 +1,9 @@
 import { EventInput } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
+import { UseMutationResult } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 import React, { useEffect } from "react"; // Keep React import for other hooks and types
 import { toast } from "react-toastify";
-import { xanoDelete } from "../api/xanoCRUD/xanoDelete";
 import xanoGet from "../api/xanoCRUD/xanoGet";
 import { confirmAlert } from "../components/UI/Confirm/ConfirmGlobal";
 import { AppointmentType } from "../types/api";
@@ -21,7 +21,8 @@ const useCalendarShortcuts = (
   setSelectable: React.Dispatch<React.SetStateAction<boolean>>,
   editAvailability: boolean,
   setIsFirstEvent: React.Dispatch<React.SetStateAction<boolean>>,
-  setConfirmDlgRecDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setConfirmDlgRecDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  appointmentDelete: UseMutationResult<void, Error, number, unknown>
 ) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
@@ -69,21 +70,10 @@ const useCalendarShortcuts = (
           })
         ) {
           try {
-            await xanoDelete(
-              `/appointments/${parseInt(currentEvent.current.id as string)}`,
-              "staff"
+            appointmentDelete.mutate(
+              parseInt(currentEvent.current.id as string)
             );
-            toast.success("Deleted Successfully", { containerId: "A" });
-            socket?.emit("message", {
-              route: "EVENTS",
-              action: "delete",
-              content: { id: parseInt(currentEvent.current.id as string) },
-            });
-            socket?.emit("message", {
-              route: "APPOINTMENTS",
-              action: "delete",
-              content: { id: parseInt(currentEvent.current.id as string) },
-            });
+
             setFormVisible(false);
             setSelectable(true);
             currentEvent.current = null;
@@ -147,6 +137,7 @@ const useCalendarShortcuts = (
     editAvailability,
     setConfirmDlgRecDeleteVisible,
     setIsFirstEvent,
+    appointmentDelete,
   ]);
 };
 

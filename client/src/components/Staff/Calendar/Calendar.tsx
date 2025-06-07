@@ -217,7 +217,8 @@ const Calendar = () => {
     setSelectable,
     editAvailability,
     setIsFirstEvent,
-    setConfirmDlgRecDeleteVisible
+    setConfirmDlgRecDeleteVisible,
+    appointmentDelete
   );
 
   //=============================== EVENTS HANDLERS =================================//
