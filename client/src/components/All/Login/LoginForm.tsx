@@ -107,6 +107,27 @@ const LoginForm = () => {
       });
       mySocket.emit("message", { key: ["logs"] });
       mySocket.emit("start polling faxes");
+      mySocket.on("connect", () => {
+        console.log("Socket connectée");
+      });
+
+      mySocket.on("disconnect", (reason) => {
+        console.log("Socket Déconnectée:", reason);
+      });
+
+      mySocket.on("reconnect_attempt", (attemptNumber) => {
+        console.log(`Socket tentative de reconnexion #${attemptNumber}`);
+      });
+
+      mySocket.on("reconnect", (attemptNumber) => {
+        console.log(
+          `Socket reconnexion réussie après ${attemptNumber} tentatives`
+        );
+      });
+
+      mySocket.on("reconnect_failed", () => {
+        console.log("Socket échec des tentatives de reconnexion");
+      });
       setSocket(mySocket);
 
       //================ USER INFOS ===================//

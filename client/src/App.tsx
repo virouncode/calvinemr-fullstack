@@ -130,6 +130,28 @@ const App = () => {
       const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {
         withCredentials: true,
       });
+      mySocket.on("connect", () => {
+        console.log("Socket connectée");
+      });
+
+      mySocket.on("disconnect", (reason) => {
+        console.log("Socket Déconnectée:", reason);
+      });
+
+      mySocket.on("reconnect_attempt", (attemptNumber) => {
+        console.log(`Socket tentative de reconnexion #${attemptNumber}`);
+      });
+
+      mySocket.on("reconnect", (attemptNumber) => {
+        console.log(
+          `Socket reconnexion réussie après ${attemptNumber} tentatives`
+        );
+      });
+
+      mySocket.on("reconnect_failed", () => {
+        console.log("Socket échec des tentatives de reconnexion");
+      });
+
       mySocket.emit("message", { key: ["logs"] });
       if (user?.access_level === "staff") mySocket.emit("start polling faxes");
       setSocket(mySocket);
