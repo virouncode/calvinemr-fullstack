@@ -62,10 +62,18 @@ const CareElementGraph = ({
   if (graphTopic === "BloodPressure") {
     const systolicData = (graphData as CareElementGraphDataType[])
       .sort((a, b) => a.Date - b.Date)
-      .map((item) => parseFloat(item.SystolicBP as string));
+      .map((item) =>
+        !isNaN(parseFloat(item.SystolicBP as string))
+          ? parseFloat(item.SystolicBP as string)
+          : null
+      );
     const diastolicData = (graphData as CareElementGraphDataType[])
       .sort((a, b) => a.Date - b.Date)
-      .map((item) => parseFloat(item.DiastolicBP as string));
+      .map((item) =>
+        !isNaN(parseFloat(item.DiastolicBP as string))
+          ? parseFloat(item.DiastolicBP as string)
+          : null
+      );
     const yDatas = [systolicData, diastolicData];
     series = yDatas.map((item, index) => ({
       data: item,
@@ -91,17 +99,29 @@ const CareElementGraph = ({
 
     const E2YDatas = xDatas.map((date) => {
       return E2Datas.find((item) => item.Date === date)
-        ? parseFloat(E2Datas.find((item) => item.Date === date)?.E2 as string)
+        ? !isNaN(
+            parseFloat(E2Datas.find((item) => item.Date === date)?.E2 as string)
+          )
+          ? parseFloat(E2Datas.find((item) => item.Date === date)?.E2 as string)
+          : null
         : null;
     });
     const LHYDatas = xDatas.map((date) => {
       return LHDatas.find((item) => item.Date === date)
-        ? parseFloat(LHDatas.find((item) => item.Date === date)?.LH as string)
+        ? !isNaN(
+            parseFloat(LHDatas.find((item) => item.Date === date)?.LH as string)
+          )
+          ? parseFloat(LHDatas.find((item) => item.Date === date)?.LH as string)
+          : null
         : null;
     });
     const P4YDatas = xDatas.map((date) => {
       return P4Datas.find((item) => item.Date === date)
-        ? parseFloat(P4Datas.find((item) => item.Date === date)?.P4 as string)
+        ? !isNaN(
+            parseFloat(P4Datas.find((item) => item.Date === date)?.P4 as string)
+          )
+          ? parseFloat(P4Datas.find((item) => item.Date === date)?.P4 as string)
+          : null
         : null;
     });
     const yDatas = [E2YDatas, LHYDatas, P4YDatas];

@@ -76,9 +76,15 @@ const CycleForm = ({
           page: 1,
         })
       ).items?.[0];
+      const regex = /^\d+(\.\d{0,2})?$/;
       if (careElementsDatas) {
         for (const event of formDatas.events ?? []) {
           if (event.e2) {
+            if (!regex.test(event.e2.toString())) {
+              setErrMsg("Invalid E2 value. Please enter a valid number.");
+              setProgress(false);
+              return;
+            }
             const e2Data = careElementsDatas?.E2.find(
               (data: { E2: string; Date: number; E2Unit: "pmol/L" }) =>
                 data.Date === event.date
@@ -94,6 +100,11 @@ const CycleForm = ({
             }
           }
           if (event.lh) {
+            if (!regex.test(event.lh.toString())) {
+              setErrMsg("Invalid LH value. Please enter a valid number.");
+              setProgress(false);
+              return;
+            }
             const lhData = careElementsDatas?.LH.find(
               (data: { LH: string; Date: number; LHUnit: "IU/L" }) =>
                 data.Date === event.date
@@ -109,6 +120,11 @@ const CycleForm = ({
             }
           }
           if (event.p4) {
+            if (!regex.test(event.p4.toString())) {
+              setErrMsg("Invalid P4 value. Please enter a valid number.");
+              setProgress(false);
+              return;
+            }
             const p4Data = careElementsDatas?.P4.find(
               (data: { P4: string; Date: number; P4Unit: "ng/mL" }) =>
                 data.Date === event.date
@@ -140,6 +156,20 @@ const CycleForm = ({
         setProgress(false);
         setAddVisible(false);
       } else {
+        if (
+          formDatas.events &&
+          formDatas.events.length &&
+          formDatas.events?.some(
+            (event) =>
+              !regex.test(event.e2) ||
+              !regex.test(event.lh) ||
+              !regex.test(event.p4)
+          )
+        ) {
+          setErrMsg("Invalid E2, LH or P4 value. Please enter a valid number.");
+          setProgress(false);
+          return;
+        }
         const careElementsToPost: Partial<CareElementType> = {
           patient_id: patientId,
           date_created: nowTZTimestamp(),
