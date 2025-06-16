@@ -40,8 +40,6 @@ const CycleEvents = ({
   const handleAdd = () => {
     setErrMsg("");
     const id = uniqueId();
-    console.log("uniqueId", id);
-
     setFormDatas({
       ...formDatas,
       events: [
