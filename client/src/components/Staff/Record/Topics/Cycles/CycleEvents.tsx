@@ -39,12 +39,15 @@ const CycleEvents = ({
   }, [formDatas.events, setFormDatas]);
   const handleAdd = () => {
     setErrMsg("");
+    const id = uniqueId();
+    console.log("uniqueId", id);
+
     setFormDatas({
       ...formDatas,
       events: [
         ...(formDatas.events as CycleEventType[]),
         {
-          id: uniqueId(),
+          id,
           date: todayTZTimestamp(),
           day_of_cycle: toDayOfCycle(
             todayTZTimestamp(),

@@ -47,6 +47,7 @@ const CycleEventForm = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setErrMsg("");
+
     const name = e.target.name;
     let value: string | number | null = e.target.value;
 
@@ -69,14 +70,15 @@ const CycleEventForm = ({
               : event;
           }) ?? [],
       });
+    } else {
+      setFormDatas({
+        ...formDatas,
+        events:
+          formDatas.events?.map((event) => {
+            return event.id === item.id ? { ...event, [name]: value } : event;
+          }) ?? [],
+      });
     }
-    setFormDatas({
-      ...formDatas,
-      events:
-        formDatas.events?.map((event) => {
-          return event.id === item.id ? { ...event, [name]: value } : event;
-        }) ?? [],
-    });
   };
   const handleChangeMedName = (value: string, medNbr: number) => {
     setErrMsg("");
