@@ -168,9 +168,9 @@ const CycleDetails = ({
           itemInfos.events.length &&
           itemInfos.events.some(
             (event) =>
-              !regex.test(event.e2) ||
-              !regex.test(event.lh) ||
-              !regex.test(event.p4)
+              (event.e2 && !regex.test(event.e2)) ||
+              (event.lh && !regex.test(event.lh)) ||
+              (event.p4 && !regex.test(event.p4))
           )
         ) {
           setErrMsg("Invalid E2, LH or P4 value. Please enter a valid number.");
