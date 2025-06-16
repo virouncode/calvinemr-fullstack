@@ -20,6 +20,7 @@ import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndNam
 import { toPatientName } from "../../../utils/names/toPatientName";
 import SaveButton from "../../UI/Buttons/SaveButton";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import { modes } from "../../UI/Lists/AppointmentModeSelect";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../UI/Paragraphs/LoadingParagraph";
 import AppointmentsSlots from "./AppointmentsSlots";
@@ -115,10 +116,12 @@ const NewAppointments = () => {
             subject: "Appointment request",
             body: `Hello ${staffIdToTitleAndName(staffInfos, secretaryId)},
 
-      I would like to have an appointment with ${staffIdToTitleAndName(
-        staffInfos,
-        user.demographics.assigned_staff_id
-      )},
+      I would like to have an appointment (${
+        modes.find(({ id }) => id === appointmentMode)?.name
+      }) with ${staffIdToTitleAndName(
+              staffInfos,
+              user.demographics.assigned_staff_id
+            )},
 
       From ${timestampToHumanDateTimeTZ(
         appointmentSelected?.start
