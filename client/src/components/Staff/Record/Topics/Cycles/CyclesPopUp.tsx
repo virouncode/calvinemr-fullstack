@@ -95,6 +95,7 @@ const CyclesPopUp = ({
   }
 
   const datas = topicDatas?.pages.flatMap((page) => page.items);
+  console.log("CyclesPopUp - datas", datas);
 
   return (
     <div className="cycles">
