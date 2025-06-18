@@ -64,7 +64,7 @@ const CareElementEditMeasurements = ({
 
   const handleSubmit = async () => {
     setErrMsgPost("");
-    const regex = /^\d+(\.\d{0,2})?$/;
+    const regex = /^\d+(\.\d{0,5})?$/;
     const regex2 = /^\s*\d{1,2}'\d{1,2}"?\s*$|^\s*\d{1,2}\s*$/;
     if (formDatasKg?.some((data) => !regex.test(data.Weight))) {
       setErrMsgPost(`Invalid Weight (kg) : Please enter a valid number.`);

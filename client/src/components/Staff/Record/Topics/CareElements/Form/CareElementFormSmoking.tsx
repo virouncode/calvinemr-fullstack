@@ -107,7 +107,7 @@ const CareElementFormSmoking = ({
       setErrMsgPost(`Please enter the number of packs per day.`);
       return;
     }
-    const regex = /^\d+(\.\d{0,2})?$/;
+    const regex = /^\d+(\.\d{0,5})?$/;
     if (
       formDatasSmokingPacks.PerDay &&
       !regex.test(formDatasSmokingPacks.PerDay)

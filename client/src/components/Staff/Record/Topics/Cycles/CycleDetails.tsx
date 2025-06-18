@@ -83,7 +83,7 @@ const CycleDetails = ({
               page: 1,
             })
           ).items?.[0];
-          const regex = /^\d+(\.\d{0,2})?$/;
+          const regex = /^\d+(\.\d{0,5})?$/;
           if (careElementsDatas) {
             for (const event of itemInfos.events ?? []) {
               if (event.e2) {

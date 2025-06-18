@@ -61,7 +61,7 @@ const CareElementEdit = ({
   );
   const handleSubmit = async () => {
     setErrMsgPost("");
-    const regex = /^\d+(\.\d{0,2})?$/;
+    const regex = /^\d+(\.\d{0,5})?$/;
     if (
       formDatas?.some(
         (data) => !regex.test(data[careElementToEdit.key] as string)

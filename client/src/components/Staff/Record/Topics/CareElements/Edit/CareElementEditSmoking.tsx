@@ -32,7 +32,7 @@ const CareElementEditSmoking = ({
   );
   const handleSubmit = async () => {
     setErrMsgPost("");
-    const regex = /^\d+(\.\d{0,2})?$/;
+    const regex = /^\d+(\.\d{0,5})?$/;
     if (formDatasPacks?.some((data) => !regex.test(data.PerDay))) {
       setErrMsgPost(`Invalid Packs per day : Please enter a valid number.`);
       return;

@@ -38,7 +38,7 @@ const CareElementEditBloodPressure = ({
 
   const handleSubmit = async () => {
     setErrMsgPost("");
-    const regex = /^\d+(\.\d{0,2})?$/;
+    const regex = /^\d+(\.\d{0,5})?$/;
     if (formDatas?.some((data) => !regex.test(data.SystolicBP))) {
       setErrMsgPost(`Invalid Systolic (mmHg) : Please enter a valid number.`);
       return;
