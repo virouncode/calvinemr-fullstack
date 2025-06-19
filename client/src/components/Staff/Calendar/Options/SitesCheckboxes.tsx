@@ -90,18 +90,28 @@ const SitesCheckboxes = ({
     siteId: number
   ) => {
     const checked = e.target.checked;
-    if (checked) {
-      const newSitesIds =
-        [...sitesIds, siteId].length ===
-        sites.filter(({ site_status }) => site_status !== "Closed").length
-          ? sites.map(({ id }) => id)
-          : [...sitesIds, siteId];
+    let updatedSitesIds: number[];
 
-      setSitesIds(newSitesIds);
+    if (checked) {
+      const sitesIdsSet = new Set([...sitesIds, siteId].filter(Boolean));
+      const activeSitesIds = sites
+        .filter(({ site_status }) => site_status !== "Closed")
+        .map(({ id }) => id);
+      const activeSiteIds = sites
+        .filter(({ site_status }) => site_status !== "Closed")
+        .map(({ id }) => id);
+      const allActiveSitesSelected = activeSiteIds.every((id) =>
+        sitesIdsSet.has(id)
+      );
+      updatedSitesIds = allActiveSitesSelected
+        ? sites.map(({ id }) => id).filter(Boolean)
+        : [...sitesIdsSet];
+
+      setSitesIds(updatedSitesIds);
       try {
         const datasToPut: SettingsType = {
           ...user.settings,
-          sites_ids: newSitesIds,
+          sites_ids: updatedSitesIds,
         };
         const response: SettingsType = await xanoPut(
           `/settings/${user.settings.id}`,
