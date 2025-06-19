@@ -43,8 +43,12 @@ const FilterCheckboxes = ({
     const categoryContactsIds = activeStaff
       .filter(({ title }) => title === categoryToTitle(category))
       .map(({ id }) => id);
+
+    let updatedHostsIds: number[];
+
     if (checked) {
-      setHostsIds([...hostsIds, id]);
+      updatedHostsIds = [...new Set([...hostsIds, id].filter(Boolean))];
+      setHostsIds(updatedHostsIds);
       if (
         [...hostsIds, id].filter((id) => categoryContactsIds.includes(id))
           .length === categoryContactsIds.length
@@ -79,7 +83,13 @@ const FilterCheckboxes = ({
           });
       }
     } else {
-      setHostsIds(hostsIds.filter((recipientId) => recipientId !== id));
+      updatedHostsIds = hostsIds.filter(
+        (recipientId) =>
+          recipientId !== id &&
+          recipientId !== null &&
+          recipientId !== undefined
+      );
+      setHostsIds(updatedHostsIds);
       if (categories.includes(category)) {
         setCategories(categories.filter((name) => name !== category));
       }
@@ -123,7 +133,7 @@ const FilterCheckboxes = ({
       .map(({ id }) => id);
     if (checked) {
       setCategories([...categories, category]);
-      const recipientsIdsUpdated = [...hostsIds];
+      const recipientsIdsUpdated = [...new Set([...hostsIds].filter(Boolean))];
       categoryContactsIds.forEach((id) => {
         if (!recipientsIdsUpdated.includes(id)) {
           recipientsIdsUpdated.push(id);
