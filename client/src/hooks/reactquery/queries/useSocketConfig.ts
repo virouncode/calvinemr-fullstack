@@ -9,23 +9,23 @@ const useSocketConfig = () => {
       withCredentials: true,
     });
     socket.on("connect", () => {
-      console.log("Connecté au serveur");
+      console.log("Socket connected");
     });
 
     socket.on("disconnect", (reason) => {
-      console.log("Déconnecté:", reason);
+      console.log("Socket disconnected", reason);
     });
 
     socket.on("reconnect_attempt", (attemptNumber) => {
-      console.log(`Tentative de reconnexion #${attemptNumber}`);
+      console.log(`Socket reconnexion attempt #${attemptNumber}`);
     });
 
     socket.on("reconnect", (attemptNumber) => {
-      console.log(`Reconnexion réussie après ${attemptNumber} tentatives`);
+      console.log(`Reconnexion succeed after ${attemptNumber} tries`);
     });
 
     socket.on("reconnect_failed", () => {
-      console.log("Échec des tentatives de reconnexion");
+      console.log("Socket reconnexion failure");
     });
     setSocket(socket);
     return () => {

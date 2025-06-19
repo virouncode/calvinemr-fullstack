@@ -121,6 +121,8 @@ const CycleForm = ({
                 }
               }
               if (event.p4) {
+                console.log("event.p4", event.p4);
+
                 if (!regex.test(event.p4.toString())) {
                   setErrMsg("Invalid P4 value. Please enter a valid number.");
                   setProgress(false);

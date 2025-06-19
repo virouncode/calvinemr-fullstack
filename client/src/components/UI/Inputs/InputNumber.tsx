@@ -4,7 +4,7 @@ type InputNumberProps = {
   value: number | "";
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  id: string;
+  id?: string;
   label?: string;
   width?: number;
   placeholder?: string;

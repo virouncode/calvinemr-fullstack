@@ -131,25 +131,23 @@ const App = () => {
         withCredentials: true,
       });
       mySocket.on("connect", () => {
-        console.log("Socket connectée");
+        console.log("Socket connected");
       });
 
       mySocket.on("disconnect", (reason) => {
-        console.log("Socket Déconnectée:", reason);
+        console.log("Socket disconnected:", reason);
       });
 
       mySocket.on("reconnect_attempt", (attemptNumber) => {
-        console.log(`Socket tentative de reconnexion #${attemptNumber}`);
+        console.log(`Socket reconnect attempt #${attemptNumber}`);
       });
 
       mySocket.on("reconnect", (attemptNumber) => {
-        console.log(
-          `Socket reconnexion réussie après ${attemptNumber} tentatives`
-        );
+        console.log(`Socket reconnexion succeed after ${attemptNumber} tries`);
       });
 
       mySocket.on("reconnect_failed", () => {
-        console.log("Socket échec des tentatives de reconnexion");
+        console.log("Socket reconnexion failure");
       });
 
       mySocket.emit("message", { key: ["logs"] });

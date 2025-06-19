@@ -88,7 +88,7 @@ export const usePreviousMessages = (
   section: string
 ) => {
   return useQuery({
-    queryKey: ["previousMessages"],
+    queryKey: ["previousMessages", message.id],
     queryFn: (): Promise<(MessageExternalType | MessageType)[]> =>
       fetchPreviousMessages(message, section),
   });

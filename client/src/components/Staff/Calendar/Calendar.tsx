@@ -73,8 +73,6 @@ import CalendarOptionsMobile from "./Options/CalendarOptionsMobile";
 
 //MY COMPONENT
 const Calendar = () => {
-  console.log("rendering Calendar");
-
   //================================= Hooks ========================================//
   const { user } = useUserContext() as { user: UserStaffType };
 
@@ -175,8 +173,6 @@ const Calendar = () => {
   );
 
   const events: EventInput[] | undefined = useMemo(() => {
-    console.log("calculating events");
-
     return parseToEvents(
       appointments?.data,
       staffInfos,
