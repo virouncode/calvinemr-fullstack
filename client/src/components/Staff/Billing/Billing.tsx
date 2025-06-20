@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useBillings } from "../../../hooks/reactquery/queries/billingQueries";
+import {
+  useBillings,
+  useBillingsFees,
+} from "../../../hooks/reactquery/queries/billingQueries";
 import { useSites } from "../../../hooks/reactquery/queries/sitesQueries";
 import useDebounce from "../../../hooks/useDebounce";
 import { AdminType } from "../../../types/api";
@@ -43,6 +46,12 @@ const Billing = () => {
   } = useBillings(rangeStart, rangeEnd, debouncedSearch);
 
   const {
+    data: fees,
+    isPending: isPendingFees,
+    error: errorFees,
+  } = useBillingsFees(rangeStart, rangeEnd, debouncedSearch);
+
+  const {
     data: sites,
     isPending: isPendingSites,
     error: errorSites,
@@ -59,11 +68,13 @@ const Billing = () => {
       </div>
     );
 
-  if (error || errorSites)
+  if (error || errorSites || errorFees)
     return (
       <div className="billing">
         <ErrorParagraph
-          errorMsg={error?.message || errorSites?.message || ""}
+          errorMsg={
+            error?.message || errorSites?.message || errorFees?.message || ""
+          }
         />
       </div>
     );
@@ -107,6 +118,8 @@ const Billing = () => {
       />
       <BillingTable
         isPending={isPending}
+        isPendingFees={isPendingFees}
+        fees={fees}
         billings={billings}
         errMsgPost={errMsgPost}
         setErrMsgPost={setErrMsgPost}

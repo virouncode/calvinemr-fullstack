@@ -1,6 +1,11 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { AdminType, BillingType, XanoPaginatedType } from "../../../types/api";
+import {
+  AdminType,
+  BillingInfosType,
+  BillingType,
+  XanoPaginatedType,
+} from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import useUserContext from "../../context/useUserContext";
 
@@ -32,5 +37,32 @@ export const useBillings = (
     },
     initialPageParam: 1,
     getNextPageParam: (prevData) => prevData.nextPage,
+  });
+};
+
+export const useBillingsFees = (
+  rangeStart: number,
+  rangeEnd: number,
+  search: string
+) => {
+  const { user } = useUserContext() as { user: UserStaffType | AdminType };
+  return useQuery<{ billing_infos: BillingInfosType }[]>({
+    queryKey: ["billingsFees", rangeStart, rangeEnd, search],
+    queryFn: () => {
+      if (user.access_level === "admin") {
+        return xanoGet("/billings_in_range_fees", "admin", {
+          range_start: rangeStart,
+          range_end: rangeEnd,
+          search,
+        });
+      } else {
+        return xanoGet("/billings_in_range_fees", "staff", {
+          range_start: rangeStart,
+          range_end: rangeEnd,
+          search,
+        });
+      }
+    },
+    enabled: !!user.id && !!rangeStart && !!rangeEnd,
   });
 };

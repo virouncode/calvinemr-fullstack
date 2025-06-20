@@ -205,6 +205,15 @@ export type BillingCodeTemplateType = {
   favorites_admin_ids: number[];
 };
 
+export type BillingInfosType = {
+  billing_code: string;
+  provider_fee: number;
+  assistant_fee: number;
+  specialist_fee: number;
+  anaesthetist_fee: number;
+  non_anaesthetist_fee: number;
+};
+
 export type BillingType = {
   id: number;
   date: number;
@@ -226,14 +235,7 @@ export type BillingType = {
   //add-ons
   site_infos?: SiteType;
   patient_infos?: DemographicsType;
-  billing_infos?: {
-    billing_code: string;
-    provider_fee: number;
-    assistant_fee: number;
-    specialist_fee: number;
-    anaesthetist_fee: number;
-    non_anaesthetist_fee: number;
-  };
+  billing_infos?: BillingInfosType;
   diagnosis_name?: { diagnosis: string };
   provider_ohip_billing_nbr?: { ohip_billing_nbr: string };
   diagnosis_code?: { code: number };

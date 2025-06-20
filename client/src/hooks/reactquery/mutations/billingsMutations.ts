@@ -20,6 +20,7 @@ export const useBillingPost = () => {
     onSuccess: () => {
       socket?.emit("message", { key: ["billings"] });
       socket?.emit("message", { key: ["dashboardBillings"] });
+      socket?.emit("message", { key: ["billingsFees"] });
       toast.success("Billing post succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -41,6 +42,7 @@ export const useBillingsPostsBatch = () => {
     onSuccess: (datas) => {
       socket?.emit("message", { key: ["billings"] });
       socket?.emit("message", { key: ["dashboardBillings"] });
+      socket?.emit("message", { key: ["billingsFees"] });
       toast.success("Billing(s) post succesfully", { containerId: "A" });
       successfulRequests = datas.map((item) => ({
         endpoint: "/billings",
@@ -66,6 +68,7 @@ export const useBillingPut = () => {
     onSuccess: () => {
       socket?.emit("message", { key: ["billings"] });
       socket?.emit("message", { key: ["dashboardBillings"] });
+      socket?.emit("message", { key: ["billingsFees"] });
       toast.success("Billing updated succesfully", { containerId: "A" });
     },
     onError: (error) => {

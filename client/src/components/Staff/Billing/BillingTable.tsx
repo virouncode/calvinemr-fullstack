@@ -5,7 +5,12 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import useIntersection from "../../../hooks/useIntersection";
-import { BillingType, SiteType, XanoPaginatedType } from "../../../types/api";
+import {
+  BillingInfosType,
+  BillingType,
+  SiteType,
+  XanoPaginatedType,
+} from "../../../types/api";
 import EmptyRow from "../../UI/Tables/EmptyRow";
 import LoadingRow from "../../UI/Tables/LoadingRow";
 import BillingItem from "./BillingItem";
@@ -27,6 +32,8 @@ type BillingTableProps = {
   sites: SiteType[];
   addVisible: boolean;
   isPending: boolean;
+  isPendingFees: boolean;
+  fees?: { billing_infos: BillingInfosType }[];
 };
 
 const BillingTable: React.FC<BillingTableProps> = ({
@@ -38,6 +45,8 @@ const BillingTable: React.FC<BillingTableProps> = ({
   isFetching,
   sites,
   isPending,
+  isPendingFees,
+  fees,
 }) => {
   const { divRef, lastItemRef } = useIntersection(
     isFetchingNextPage,
@@ -54,9 +63,9 @@ const BillingTable: React.FC<BillingTableProps> = ({
       | "non_anaesthetist_fee",
     divisor = 10000
   ) => {
-    if (!billings) return 0.0;
+    if (!fees) return 0.0;
     return (
-      billings
+      fees
         .map(({ billing_infos }) => (billing_infos?.[key] ?? 0) / divisor)
         .reduce((acc, curr) => acc + curr, 0)
         .toFixed(2) || 0.0
@@ -87,7 +96,7 @@ const BillingTable: React.FC<BillingTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {isPending && <LoadingRow colSpan={16} />}
+          {isPending && isPendingFees && <LoadingRow colSpan={16} />}
           {billings && billings.length > 0
             ? billings.map((item, index) =>
                 index === billings.length - 1 ? (
@@ -123,7 +132,7 @@ const BillingTable: React.FC<BillingTableProps> = ({
               Total fees
             </td>
             <td style={{ fontWeight: "bold", border: "none" }}>
-              Nbr of billings: {billings?.length ?? 0}
+              Nbr of billings: {fees?.length ?? 0}
             </td>
             <td style={{ border: "none" }}>
               {calculateTotal("provider_fee")} $
