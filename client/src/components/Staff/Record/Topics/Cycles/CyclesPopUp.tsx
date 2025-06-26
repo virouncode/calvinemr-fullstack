@@ -130,6 +130,7 @@ const CyclesPopUp = ({
                       setShow={setShow}
                       setPrintVisible={setPrintVisible}
                       topicDelete={topicDelete}
+                      patientId={patientId}
                     />
                   ) : (
                     <CycleItem
@@ -140,6 +141,7 @@ const CyclesPopUp = ({
                       setShow={setShow}
                       setPrintVisible={setPrintVisible}
                       topicDelete={topicDelete}
+                      patientId={patientId}
                     />
                   )
                 )

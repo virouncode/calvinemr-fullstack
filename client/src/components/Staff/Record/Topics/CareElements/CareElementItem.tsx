@@ -83,7 +83,10 @@ const CareElementItem = ({
     <tr className="care-elements__item">
       <td className="care-elements__item-btn-container">
         {careElement.key !== "bodyMassIndex" &&
-          careElement.key !== "bodySurfaceArea" && (
+          careElement.key !== "bodySurfaceArea" &&
+          careElement.key !== "E2" &&
+          careElement.key !== "LH" &&
+          careElement.key !== "P4" && (
             <>
               <Button label="Add" onClick={handleAddVisible} />
               <Button

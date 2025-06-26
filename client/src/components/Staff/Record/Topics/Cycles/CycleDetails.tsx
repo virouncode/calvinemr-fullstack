@@ -84,64 +84,109 @@ const CycleDetails = ({
             })
           ).items?.[0];
           const regex = /^\d+(\.\d{0,5})?$/;
+
           if (careElementsDatas) {
             for (const event of itemInfos.events ?? []) {
-              if (event.e2) {
-                if (!regex.test(event.e2.toString())) {
-                  setErrMsg("Invalid E2 value. Please enter a valid number.");
-                  setProgress(false);
-                  return;
-                }
-                const e2Data = careElementsDatas?.E2.find(
-                  (data: { E2: string; Date: number; E2Unit: "pmol/L" }) =>
-                    data.Date === event.date
-                );
-                if (e2Data) {
-                  e2Data.E2 = event.e2;
+              // Pour E2
+              if (event.e2 && !regex.test(event.e2)) {
+                setErrMsg("Invalid E2 value. Please enter a valid number.");
+                setProgress(false);
+                return;
+              }
+              const e2Data = careElementsDatas?.E2.find(
+                (data: { E2: string; Date: number; E2Unit: "pmol/L" }) =>
+                  data.Date === event.date
+              );
+              if (e2Data) {
+                if (event.e2) {
+                  //la valeur existe déjà dans CareElements, on la met à jour
+                  careElementsDatas.E2 = careElementsDatas.E2.map(
+                    (data: { Date: number; E2: string; E2Unit: "pmol/L" }) =>
+                      data.Date === event.date
+                        ? { ...data, E2: event.e2, E2Unit: "pmol/L" }
+                        : data
+                  );
                 } else {
-                  careElementsDatas?.E2.push({
+                  // Si la valeur est vide mais existe dans CareElements, la supprimer
+                  careElementsDatas.E2 = careElementsDatas.E2.filter(
+                    (data: { Date: number }) => data.Date !== event.date
+                  );
+                }
+              } else {
+                // Si la valeur n'existe pas dans CareElements, on l'ajoute si non vide
+                if (event.e2) {
+                  careElementsDatas.E2.push({
                     Date: event.date as number,
                     E2: event.e2,
                     E2Unit: "pmol/L",
                   });
                 }
               }
-              if (event.lh) {
-                if (!regex.test(event.lh.toString())) {
-                  setErrMsg("Invalid LH value. Please enter a valid number.");
-                  setProgress(false);
-                  return;
-                }
-                const lhData = careElementsDatas?.LH.find(
-                  (data: { LH: string; Date: number; LHUnit: "IU/L" }) =>
-                    data.Date === event.date
-                );
-                if (lhData) {
-                  lhData.LH = event.lh;
+              // Pour LH
+              if (event.lh && !regex.test(event.lh)) {
+                setErrMsg("Invalid LH value. Please enter a valid number.");
+                setProgress(false);
+                return;
+              }
+              const lhData = careElementsDatas?.LH.find(
+                (data: { LH: string; Date: number; LHUnit: "IU/L" }) =>
+                  data.Date === event.date
+              );
+              if (lhData) {
+                if (event.lh) {
+                  //la valeur existe déjà dans CareElements, on la met à jour
+                  careElementsDatas.LH = careElementsDatas.LH.map(
+                    (data: { Date: number; LH: string; LHUnit: "IU/L" }) =>
+                      data.Date === event.date
+                        ? { ...data, LH: event.lh, LHUnit: "IU/L" }
+                        : data
+                  );
                 } else {
-                  careElementsDatas?.LH.push({
+                  // Si la valeur est vide mais existe dans CareElements, la supprimer
+                  careElementsDatas.LH = careElementsDatas.LH.filter(
+                    (data: { Date: number }) => data.Date !== event.date
+                  );
+                }
+              } else {
+                // Si la valeur n'existe pas dans CareElements, on l'ajoute si non vide
+                if (event.lh) {
+                  careElementsDatas.LH.push({
                     Date: event.date as number,
                     LH: event.lh,
                     LHUnit: "IU/L",
                   });
                 }
               }
-              if (event.p4) {
-                console.log("event.p4", event.p4);
 
-                if (!regex.test(event.p4.toString())) {
-                  setErrMsg("Invalid P4 value. Please enter a valid number.");
-                  setProgress(false);
-                  return;
-                }
-                const p4Data = careElementsDatas?.P4.find(
-                  (data: { P4: string; Date: number; P4Unit: "ng/mL" }) =>
-                    data.Date === event.date
-                );
-                if (p4Data) {
-                  p4Data.P4 = event.p4;
+              // Pour P4
+              if (event.p4 && !regex.test(event.p4)) {
+                setErrMsg("Invalid P4 value. Please enter a valid number.");
+                setProgress(false);
+                return;
+              }
+              const p4Data = careElementsDatas?.P4.find(
+                (data: { P4: string; Date: number; P4Unit: "ng/mL" }) =>
+                  data.Date === event.date
+              );
+              if (p4Data) {
+                if (event.p4) {
+                  //la valeur existe déjà dans CareElements, on la met à jour
+                  careElementsDatas.P4 = careElementsDatas.P4.map(
+                    (data: { Date: number; P4: string; P4Unit: "ng/mL" }) =>
+                      data.Date === event.date
+                        ? { ...data, P4: event.p4, P4Unit: "ng/mL" }
+                        : data
+                  );
                 } else {
-                  careElementsDatas?.P4.push({
+                  // Si la valeur est vide mais existe dans CareElements, la supprimer
+                  careElementsDatas.P4 = careElementsDatas.P4.filter(
+                    (data: { Date: number }) => data.Date !== event.date
+                  );
+                }
+              } else {
+                // Si la valeur n'existe pas dans CareElements, on l'ajoute si non vide
+                if (event.p4) {
+                  careElementsDatas.P4.push({
                     Date: event.date as number,
                     P4: event.p4,
                     P4Unit: "ng/mL",
@@ -187,7 +232,9 @@ const CycleDetails = ({
               created_by_id: user.id,
               E2: itemInfos.events
                 ? itemInfos.events
-                    .filter((event) => event.e2)
+                    .filter(
+                      (event) => event.e2 && regex.test(event.e2.toString())
+                    )
                     .map((event) => ({
                       Date: event.date as number,
                       E2: event.e2,
@@ -196,7 +243,9 @@ const CycleDetails = ({
                 : [],
               LH: itemInfos.events
                 ? itemInfos.events
-                    .filter((event) => event.lh)
+                    .filter(
+                      (event) => event.lh && regex.test(event.lh.toString())
+                    )
                     .map((event) => ({
                       Date: event.date as number,
                       LH: event.lh,
@@ -205,7 +254,9 @@ const CycleDetails = ({
                 : [],
               P4: itemInfos.events
                 ? itemInfos.events
-                    ?.filter((event) => event.p4)
+                    ?.filter(
+                      (event) => event.p4 && regex.test(event.p4.toString())
+                    )
                     .map((event) => ({
                       Date: event.date as number,
                       P4: event.p4,
