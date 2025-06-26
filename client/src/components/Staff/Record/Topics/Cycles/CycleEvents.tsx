@@ -1,12 +1,21 @@
 import { uniqueId } from "lodash";
-import React, { useEffect } from "react";
-import { CycleEventType, CycleType } from "../../../../../types/api";
+import React, { useEffect, useState } from "react";
+import { useTopic } from "../../../../../hooks/reactquery/queries/topicQueries";
+import {
+  CareElementGraphDataType,
+  CycleEventType,
+  CycleType,
+} from "../../../../../types/api";
 import {
   toDayOfCycle,
   todayTZTimestamp,
 } from "../../../../../utils/dates/formatDates";
 import Button from "../../../../UI/Buttons/Button";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import EmptyRow from "../../../../UI/Tables/EmptyRow";
+import FakeWindow from "../../../../UI/Windows/FakeWindow";
+import CareElementGraph from "../CareElements/CareElementGraph";
 import CycleEventForm from "./CycleEventForm";
 
 type CycleEventsProps = {
@@ -22,6 +31,15 @@ const CycleEvents = ({
   setErrMsg,
   errMsg,
 }: CycleEventsProps) => {
+  const {
+    data,
+    isPending,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useTopic("CARE ELEMENTS", formDatas.patient_id as number);
+  const [graphVisible, setGraphVisible] = useState(false);
   // Add unique IDs to events if missing
   useEffect(() => {
     if (formDatas.events) {
@@ -69,14 +87,43 @@ const CycleEvents = ({
     });
   };
 
+  const handleShowGraph = () => {
+    setGraphVisible(true);
+  };
+
+  if (isPending) {
+    return (
+      <fieldset
+        className="cycles-form__events"
+        style={{ border: errMsg && "solid 1px red" }}
+      >
+        <legend>EVENTS</legend>
+        <LoadingParagraph />
+      </fieldset>
+    );
+  }
+  if (error) {
+    return (
+      <fieldset
+        className="cycles-form__events"
+        style={{ border: errMsg && "solid 1px red" }}
+      >
+        <legend>EVENTS</legend>
+        <ErrorParagraph errorMsg={error.message} />
+      </fieldset>
+    );
+  }
+  const careElementsDatas = data?.pages?.flatMap((page) => page.items)[0];
+
   return (
     <fieldset
       className="cycles-form__events"
       style={{ border: errMsg && "solid 1px red" }}
     >
       <legend>EVENTS</legend>
-      <div style={{ marginBottom: "10px" }}>
+      <div style={{ marginBottom: "10px", display: "flex", gap: "10px" }}>
         <Button onClick={handleAdd} label="Add" />
+        <Button onClick={handleShowGraph} label="Show hormones graph" />
       </div>
       <div className="cycles-form__events-table-container">
         <table className="cycles-form__events-table">
@@ -122,6 +169,34 @@ const CycleEvents = ({
           </tbody>
         </table>
       </div>
+      {graphVisible && (
+        <FakeWindow
+          title={`HORMONES GRAPH`}
+          width={800}
+          height={600}
+          x={(window.innerWidth - 800) / 2}
+          y={(window.innerHeight - 600) / 2}
+          color="#577399"
+          setPopUpVisible={setGraphVisible}
+        >
+          <CareElementGraph
+            graphTopic="E2"
+            graphData={[
+              careElementsDatas?.E2 as CareElementGraphDataType[],
+              careElementsDatas?.LH as CareElementGraphDataType[],
+              careElementsDatas?.P4 as CareElementGraphDataType[],
+            ]}
+            graphUnit={["pmol/L", "IU/L", "ng/ml"]}
+            careElementToShow={{
+              name: "E2 (pmol/L)",
+              key: "E2",
+              valueKey: "E2",
+              unit: "pmol/L",
+              unitKey: "E2Unit",
+            }}
+          />
+        </FakeWindow>
+      )}
     </fieldset>
   );
 };

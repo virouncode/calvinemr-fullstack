@@ -97,15 +97,17 @@ const Calendar = () => {
   const [mobileCalendarFilterVisible, setMobileCalendarFilterVisible] =
     useState(false);
   const [hostsIds, setHostsIds] = useState(
-    user.settings.hosts_ids.length > 0
+    user.title === "Secretary"
+      ? user.settings.hosts_ids.length > 0
+        ? [0, ...user.settings.hosts_ids] //0 is for no host yet (grey events)
+        : [
+            0, //no host yet (grey events)
+            ...(staffInfos
+              .filter(({ site_id }) => site_id === user.site_id)
+              .map(({ id }) => id) as number[]), //all staff from the secretary site
+          ]
+      : user.settings.hosts_ids.length > 0
       ? user.settings.hosts_ids
-      : user.title === "Secretary"
-      ? [
-          0, //no host yet (grey events)
-          ...(staffInfos
-            .filter(({ site_id }) => site_id === user.site_id)
-            .map(({ id }) => id) as number[]), //all staff from the secretary site
-        ]
       : [user.id]
   );
   const { socket } = useSocketContext();

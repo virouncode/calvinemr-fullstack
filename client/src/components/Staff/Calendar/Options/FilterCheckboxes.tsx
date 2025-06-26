@@ -47,7 +47,13 @@ const FilterCheckboxes = ({
     let updatedHostsIds: number[];
 
     if (checked) {
+      console.log("checked", id, category);
+
       updatedHostsIds = [...new Set([...hostsIds, id].filter(Boolean))];
+      if (user.title === "Secretary" && !updatedHostsIds.includes(0)) {
+        updatedHostsIds = [0, ...updatedHostsIds];
+      }
+
       setHostsIds(updatedHostsIds);
       if (
         [...hostsIds, id].filter((id) => categoryContactsIds.includes(id))
@@ -58,7 +64,7 @@ const FilterCheckboxes = ({
       try {
         const datasToPut: SettingsType = {
           ...user.settings,
-          hosts_ids: [...hostsIds, id],
+          hosts_ids: [...new Set([...hostsIds, id].filter(Boolean))],
         };
         const response: SettingsType = await xanoPut(
           `/settings/${user.settings.id}`,
@@ -89,6 +95,9 @@ const FilterCheckboxes = ({
           recipientId !== null &&
           recipientId !== undefined
       );
+      if (user.title === "Secretary" && !updatedHostsIds.includes(0)) {
+        updatedHostsIds = [0, ...updatedHostsIds];
+      }
       setHostsIds(updatedHostsIds);
       if (categories.includes(category)) {
         setCategories(categories.filter((name) => name !== category));
@@ -96,7 +105,9 @@ const FilterCheckboxes = ({
       try {
         const datasToPut: SettingsType = {
           ...user.settings,
-          hosts_ids: hostsIds.filter((recipientId) => recipientId !== id),
+          hosts_ids: [
+            ...new Set(hostsIds.filter((recipientId) => recipientId !== id)),
+          ],
         };
         const response: SettingsType = await xanoPut(
           `/settings/${user.settings.id}`,
@@ -133,17 +144,20 @@ const FilterCheckboxes = ({
       .map(({ id }) => id);
     if (checked) {
       setCategories([...categories, category]);
-      const recipientsIdsUpdated = [...new Set([...hostsIds].filter(Boolean))];
+      let recipientsIdsUpdated = [...new Set([...hostsIds].filter(Boolean))];
       categoryContactsIds.forEach((id) => {
         if (!recipientsIdsUpdated.includes(id)) {
           recipientsIdsUpdated.push(id);
         }
       });
+      if (user.title === "Secretary" && !recipientsIdsUpdated.includes(0)) {
+        recipientsIdsUpdated = [0, ...recipientsIdsUpdated];
+      }
       setHostsIds(recipientsIdsUpdated);
       try {
         const datasToPut: SettingsType = {
           ...user.settings,
-          hosts_ids: recipientsIdsUpdated,
+          hosts_ids: recipientsIdsUpdated.slice(1),
         };
         const response: SettingsType = await xanoPut(
           `/settings/${user.settings.id}`,
@@ -169,11 +183,21 @@ const FilterCheckboxes = ({
       }
     } else {
       setCategories(categories.filter((cat) => cat !== category));
-      setHostsIds(hostsIds.filter((id) => !categoryContactsIds.includes(id)));
+      let hostsIdsUpdated = hostsIds.filter(
+        (id) => !categoryContactsIds.includes(id)
+      );
+      if (user.title === "Secretary" && !hostsIdsUpdated.includes(0)) {
+        hostsIdsUpdated = [0, ...hostsIdsUpdated];
+      }
+      setHostsIds(hostsIdsUpdated);
       try {
         const datasToPut: SettingsType = {
           ...user.settings,
-          hosts_ids: hostsIds.filter((id) => !categoryContactsIds.includes(id)),
+          hosts_ids: [
+            ...new Set(
+              hostsIds.filter((id) => !categoryContactsIds.includes(id))
+            ),
+          ],
         };
         const response: SettingsType = await xanoPut(
           `/settings/${user.settings.id}`,
