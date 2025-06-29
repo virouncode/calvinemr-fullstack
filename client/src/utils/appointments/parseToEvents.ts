@@ -151,6 +151,10 @@ export const parseToEvent = (
         }))
       : [],
     duration: appointment.Duration * 60000,
+    startEditable: appointment.host_id === userId || isSecretary ? true : false,
+    durationEditable:
+      appointment.host_id === userId || isSecretary ? true : false,
+
     extendedProps: {
       host: appointment.host_id,
       hostName: appointment.host_infos

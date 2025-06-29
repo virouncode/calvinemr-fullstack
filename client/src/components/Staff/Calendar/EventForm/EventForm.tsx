@@ -54,12 +54,12 @@ import EventFormAppointmentType from "./EventFormAppointmentType";
 import EventFormButtons from "./EventFormButtons";
 import EventFormGuests from "./EventFormGuests";
 import EventFormHostRow from "./EventFormHostRow";
+import EventFormInfos from "./EventFormInfos";
 import EventFormNotes from "./EventFormNotes";
 import EventFormRooms from "./EventFormRooms";
 import EventFormStatus from "./EventFormStatus";
 import EventFormTimeRow from "./EventFormTimeRow";
 import Invitation from "./Invitation/Invitation";
-import EventFormInfos from "./EventFormInfos";
 
 type EventFormProps = {
   currentEvent: React.MutableRefObject<EventInput | null>;
@@ -572,6 +572,12 @@ const EventForm = ({
   const handleCancel = async () => {
     setErrMsgPost("");
     if (
+      user.title !== "Secretary" &&
+      currentEvent.current?.extendedProps?.host !== user.id
+    ) {
+      setFormVisible(false);
+      setCalendarSelectable(true);
+    } else if (
       await confirmAlert({
         content: "Do you really want to close (all changes will be lost) ?",
       })
@@ -1104,13 +1110,13 @@ const EventForm = ({
     <>
       {!invitationVisible ? (
         <form
-          // className={
-          //   user.title === "Secretary" ||
-          //   currentEvent.current?.extendedProps?.host === user.id
-          //     ? "event-form"
-          //     : "event-form event-form--uneditable"
-          // }
-          className="event-form"
+          className={
+            user.title === "Secretary" ||
+            currentEvent.current?.extendedProps?.host === user.id
+              ? "event-form"
+              : "event-form event-form--uneditable"
+          }
+          // className="event-form"
           onSubmit={handleSubmit}
         >
           {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}

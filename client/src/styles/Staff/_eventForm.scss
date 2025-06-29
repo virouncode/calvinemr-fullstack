@@ -5,6 +5,10 @@
   gap: 0.5rem;
   width: 100%;
   overflow: hidden;
+  &--uneditable {
+    pointer-events: none;
+    opacity: 0.8;
+  }
 }
 .event-form__host {
   display: grid;
@@ -276,6 +280,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
+  pointer-events: all;
 }
 .event-form__invitation {
   padding: 1rem;
@@ -347,6 +352,7 @@
   .event-form__invitation-btns {
     margin-top: 1rem;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     gap: 0.25rem;
   }
@@ -382,6 +388,10 @@
     }
   }
   .event-form__invitation {
+    .event-form__invitation-btns {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
     font-size: $size-base;
     textarea {
       font-size: $size-base;

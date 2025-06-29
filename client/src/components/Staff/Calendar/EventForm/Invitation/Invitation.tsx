@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import xanoPut from "../../../../../api/xanoCRUD/xanoPut";
 import useClinicContext from "../../../../../hooks/context/useClinicContext";
+import useSocketContext from "../../../../../hooks/context/useSocketContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useAppointmentPut } from "../../../../../hooks/reactquery/mutations/appointmentsMutations";
+import { useSettings } from "../../../../../hooks/reactquery/queries/settingsQueries";
 import {
   AppointmentType,
   DemographicsType,
@@ -28,6 +30,8 @@ import { toPatientName } from "../../../../../utils/names/toPatientName";
 import { formatToE164Canadian } from "../../../../../utils/phone/formatToE164Canadian";
 import CancelButton from "../../../../UI/Buttons/CancelButton";
 import SaveButton from "../../../../UI/Buttons/SaveButton";
+import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
+import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import CircularProgressSmall from "../../../../UI/Progress/CircularProgressSmall";
 import InvitationInfos from "./InvitationInfos";
 import InvitationIntro from "./InvitationIntro";
@@ -66,24 +70,50 @@ const Invitation = ({
 }: InvitationProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+  const { socket } = useSocketContext();
   const { clinic } = useClinicContext();
-  const [message, setMessage] = useState(
-    user.settings.invitation_templates.find(
-      ({ name }) => name === "In person appointment"
-    )?.message ?? ""
-  );
-  const [intro, setIntro] = useState(
-    user.settings.invitation_templates.find(
-      ({ name }) => name === "In person appointment"
-    )?.intro ?? ""
-  );
+  const [message, setMessage] = useState("");
+  const [intro, setIntro] = useState("");
   const [templateSelected, setTemplateSelected] = useState(
     "In person appointment"
   );
   const [siteSelectedId, setSiteSelectedId] = useState(siteId ?? 0);
   const [progress, setProgress] = useState(false);
+
   //Queries
+  const { data: settings, error, isLoading } = useSettings(hostId);
   const appointmentPut = useAppointmentPut();
+
+  useEffect(() => {
+    if (settings) {
+      setMessage(
+        settings.invitation_templates?.find(
+          ({ name }) => name === "In person appointment"
+        )?.message ?? ""
+      );
+      setIntro(
+        settings.invitation_templates?.find(
+          ({ name }) => name === "In person appointment"
+        )?.intro ?? ""
+      );
+    }
+  }, [settings]);
+
+  if (error) {
+    return (
+      <form className="event-form__invitation">
+        <ErrorParagraph errorMsg={error.message} />
+      </form>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <form className="event-form__invitation">
+        <LoadingParagraph />
+      </form>
+    );
+  }
 
   //HANDLERS
   const handleSend = async () => {
@@ -135,6 +165,8 @@ const Invitation = ({
             (phone) => phone._phoneNumberType === "C"
           )?.phoneNumber ?? ""
         );
+        console.log("patientPhone", patientPhone);
+
         const mailToPost = {
           to: patientInfos.Email,
           subject: subject + " - DO NOT REPLY",
@@ -270,9 +302,8 @@ const Invitation = ({
     setInvitationVisible(false);
   };
 
-  const handleSendAndSave = async () => {
-    await handleSend();
-    const newTemplates = [...user.settings.invitation_templates];
+  const handleSave = async () => {
+    const newTemplates = [...(settings as SettingsType).invitation_templates];
     if (newTemplates.find(({ name }) => name === templateSelected)) {
       (
         newTemplates.find(
@@ -287,11 +318,32 @@ const Invitation = ({
     }
     setProgress(true);
     const settingsToPut: SettingsType = {
-      ...user.settings,
+      ...(settings as SettingsType),
       invitation_templates: newTemplates,
     };
     try {
-      await xanoPut(`/settings/${user.settings.id}`, "staff", settingsToPut);
+      const response = await xanoPut(
+        `/settings/${settings?.id}`,
+        "staff",
+        settingsToPut
+      );
+      socket?.emit("message", { key: ["settings", hostId] });
+      if (user.id === hostId) {
+        socket?.emit("message", {
+          route: "USER",
+          action: "update",
+          content: {
+            id: user.id,
+            data: {
+              ...user,
+              settings: response,
+            },
+          },
+        });
+      }
+      toast.success("Saved invitation template successfully", {
+        containerId: "A",
+      });
     } catch (err) {
       if (err instanceof Error)
         toast.error(`Error: unable to save templates: ${err.message}`, {
@@ -300,6 +352,11 @@ const Invitation = ({
     } finally {
       setProgress(false);
     }
+  };
+
+  const handleSendAndSave = async () => {
+    await handleSend();
+    await handleSave();
   };
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -328,38 +385,48 @@ const Invitation = ({
   };
 
   return (
-    <form className="event-form__invitation">
-      <div className="event-form__invitation-content">
-        <InvitationTemplatesRadio
-          handleTemplateChange={handleTemplateChange}
-          templates={user.settings.invitation_templates}
-          templateSelected={templateSelected}
-        />
-        <InvitationIntro intro={intro} handleIntroChange={handleIntroChange} />
-        <InvitationInfos
-          templateSelected={templateSelected}
-          handleSiteChange={handleSiteChange}
-          sites={sites}
-          siteSelectedId={siteSelectedId}
-        />
-        <InvitationMessage
-          message={message}
-          handleMessageChange={handleMessageChange}
-        />
-      </div>
-      <div className="event-form__invitation-btns">
-        {user.id === hostId && (
+    settings && (
+      <form className="event-form__invitation">
+        <div className="event-form__invitation-content">
+          <InvitationTemplatesRadio
+            handleTemplateChange={handleTemplateChange}
+            templates={user.settings.invitation_templates}
+            templateSelected={templateSelected}
+          />
+          <InvitationIntro
+            intro={intro}
+            handleIntroChange={handleIntroChange}
+          />
+          <InvitationInfos
+            templateSelected={templateSelected}
+            handleSiteChange={handleSiteChange}
+            sites={sites}
+            siteSelectedId={siteSelectedId}
+          />
+          <InvitationMessage
+            message={message}
+            handleMessageChange={handleMessageChange}
+          />
+        </div>
+        <div className="event-form__invitation-btns">
+          {(user.id === hostId || user.title === "Secretary") && (
+            <SaveButton
+              onClick={handleSendAndSave}
+              label="Send & Save as template"
+              disabled={progress}
+            />
+          )}
+          <SaveButton onClick={handleSend} label="Send" disabled={progress} />
           <SaveButton
-            onClick={handleSendAndSave}
-            label="Send & Save as template"
+            onClick={handleSave}
+            label="Save as template"
             disabled={progress}
           />
-        )}
-        <SaveButton onClick={handleSend} label="Send" disabled={progress} />
-        <CancelButton onClick={handleCancel} />
-        {progress && <CircularProgressSmall />}
-      </div>
-    </form>
+          <CancelButton onClick={handleCancel} />
+          {progress && <CircularProgressSmall />}
+        </div>
+      </form>
+    )
   );
 };
 
