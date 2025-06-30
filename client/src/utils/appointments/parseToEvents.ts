@@ -132,14 +132,18 @@ export const parseToEvent = (
     textColor: textColor,
     display: "block",
     allDay: appointment.all_day,
-    editable:
-      appointment.host_id === userId || isSecretary || isNurse ? true : false, //if secretary give access
-    resourceEditable:
-      appointment.host_id === userId || isSecretary || isNurse ? true : false, //if secretary give access
-    startEditable:
-      appointment.host_id === userId || isSecretary || isNurse ? true : false,
-    durationEditable:
-      appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    // editable:
+    //   appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    // resourceEditable:
+    //   appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    // startEditable:
+    //   appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    // durationEditable:
+    //   appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    editable: true,
+    startEditable: true,
+    resourceEditable: true,
+    durationEditable: true,
     resourceId: rooms?.find(({ id }) => id === appointment.room_id)
       ?.id as string,
     rrule: appointment.rrule?.freq
