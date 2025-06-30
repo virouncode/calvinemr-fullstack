@@ -34,7 +34,7 @@ const EventFormHostRow = ({
         <HostsSelect
           handleHostChange={handleHostChange}
           hostId={formDatas.host_id}
-          disabled={user.title !== "Secretary"}
+          disabled={user.title !== "Secretary" && user.title !== "Nurse"}
         />
       </div>
       <div className="event-form__host-item">

@@ -33,6 +33,7 @@ const EventFormButtons = ({
   return (
     <div className="event-form__btns">
       {user.title === "Secretary" ||
+      user.title === "Nurse" ||
       currentEvent.current?.extendedProps?.host === user.id ? (
         <>
           <SubmitButton label="Save" />

@@ -1112,6 +1112,7 @@ const EventForm = ({
         <form
           className={
             user.title === "Secretary" ||
+            user.title === "Nurse" ||
             currentEvent.current?.extendedProps?.host === user.id
               ? "event-form"
               : "event-form event-form--uneditable"

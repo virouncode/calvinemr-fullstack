@@ -180,6 +180,7 @@ const Calendar = () => {
       staffInfos,
       sites,
       user.title === "Secretary",
+      user.title === "Nurse",
       user.id as number
     );
   }, [appointments?.data, sites, staffInfos, user.id, user.title]);

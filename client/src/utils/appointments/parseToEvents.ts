@@ -50,6 +50,7 @@ export const parseToEvents = (
   staffInfos: StaffType[],
   sites: SiteType[] | undefined,
   isSecretary: boolean,
+  isNurse: boolean,
   userId: number
 ) => {
   //give a color to each remaining member of the staff
@@ -73,6 +74,7 @@ export const parseToEvents = (
               "#bfbfbf",
               "#3D375A",
               isSecretary,
+              isNurse,
               userId,
               sites?.find(({ id }) => id === appointment.site_id)
                 ?.rooms as RoomType[],
@@ -91,6 +93,7 @@ export const parseToEvents = (
                 })
               ].textColor,
               isSecretary,
+              isNurse,
               userId,
               sites?.find(({ id }) => id === appointment.site_id)
                 ?.rooms as RoomType[],
@@ -101,6 +104,7 @@ export const parseToEvents = (
             "#8fb4fb",
             "#3D375A",
             isSecretary,
+            isNurse,
             userId,
             sites?.find(({ id }) => id === appointment.site_id)
               ?.rooms as RoomType[],
@@ -115,6 +119,7 @@ export const parseToEvent = (
   color: string,
   textColor: string,
   isSecretary: boolean,
+  isNurse: boolean,
   userId: number,
   rooms: RoomType[],
   staffInfos: StaffType[]
@@ -127,11 +132,14 @@ export const parseToEvent = (
     textColor: textColor,
     display: "block",
     allDay: appointment.all_day,
-    // editable: appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
-    editable: true,
-    // resourceEditable:
-    //   appointment.host_id === userId || isSecretary ? true : false, //if secretary give access
-    resourceEditable: true,
+    editable:
+      appointment.host_id === userId || isSecretary || isNurse ? true : false, //if secretary give access
+    resourceEditable:
+      appointment.host_id === userId || isSecretary || isNurse ? true : false, //if secretary give access
+    startEditable:
+      appointment.host_id === userId || isSecretary || isNurse ? true : false,
+    durationEditable:
+      appointment.host_id === userId || isSecretary || isNurse ? true : false,
     resourceId: rooms?.find(({ id }) => id === appointment.room_id)
       ?.id as string,
     rrule: appointment.rrule?.freq
@@ -151,9 +159,6 @@ export const parseToEvent = (
         }))
       : [],
     duration: appointment.Duration * 60000,
-    startEditable: appointment.host_id === userId || isSecretary ? true : false,
-    durationEditable:
-      appointment.host_id === userId || isSecretary ? true : false,
 
     extendedProps: {
       host: appointment.host_id,

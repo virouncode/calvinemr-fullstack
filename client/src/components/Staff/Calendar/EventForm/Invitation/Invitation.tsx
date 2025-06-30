@@ -409,7 +409,9 @@ const Invitation = ({
           />
         </div>
         <div className="event-form__invitation-btns">
-          {(user.id === hostId || user.title === "Secretary") && (
+          {(user.id === hostId ||
+            user.title === "Secretary" ||
+            user.title === "Nurse") && (
             <SaveButton
               onClick={handleSendAndSave}
               label="Send & Save as template"
@@ -417,11 +419,15 @@ const Invitation = ({
             />
           )}
           <SaveButton onClick={handleSend} label="Send" disabled={progress} />
-          <SaveButton
-            onClick={handleSave}
-            label="Save as template"
-            disabled={progress}
-          />
+          {(user.id === hostId ||
+            user.title === "Secretary" ||
+            user.title === "Nurse") && (
+            <SaveButton
+              onClick={handleSave}
+              label="Save as template"
+              disabled={progress}
+            />
+          )}
           <CancelButton onClick={handleCancel} />
           {progress && <CircularProgressSmall />}
         </div>
