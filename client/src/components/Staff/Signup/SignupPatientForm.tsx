@@ -176,7 +176,7 @@ const SignupPatientForm = () => {
       }
     } catch (err) {
       if (err instanceof Error)
-        setErrMsg(`Unable to post new patient: ${err.message}`);
+        setErrMsg(`Unable to check patient email: ${err.message}`);
       setProgress(false);
       return;
     }
@@ -314,7 +314,7 @@ const SignupPatientForm = () => {
           date_created: nowTZTimestamp(),
           created_by_id: user.id,
         };
-        patientPost.mutate(demographicsToPost, {
+        await patientPost.mutateAsync(demographicsToPost, {
           onSuccess: (data) => {
             successfulRequests.push({
               endpoint: "/demographics",
