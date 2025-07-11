@@ -58,7 +58,6 @@ const RelationshipItem = ({
   const [patientSelected, setPatientSelected] = useState<
     DemographicsType | undefined
   >();
-  console.log("item", item);
 
   const fakewindowRoot = document.getElementById("fake-window");
 
