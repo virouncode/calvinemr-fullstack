@@ -76,7 +76,7 @@ const RelationshipForm = ({
     //Submission
     setProgress(true);
     //Post the relationship
-    topicPost.mutate(topicToPost);
+    await topicPost.mutateAsync(topicToPost);
     //Post the inverse relationship
     const gender = patientSelected?.Gender;
     const inverseRelationToPost: Partial<RelationshipType> = {
