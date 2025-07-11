@@ -150,24 +150,32 @@ const RelationshipItem = ({
       })
     ) {
       setProgress(true);
-      if (relations.includes(itemInfos.relationship)) {
-        const inverseRelationToDeleteId = (
-          await xanoGet("/relationship_between", "staff", {
-            patient_id: item.relation_id,
-            relation_id: item.patient_id,
-          })
-        )[0].id;
-        if (inverseRelationToDeleteId)
-          await topicDelete.mutateAsync(inverseRelationToDeleteId);
+      try {
+        if (relations.includes(itemInfos.relationship)) {
+          const inverseRelationToDeleteId = (
+            await xanoGet("/relationship_between", "staff", {
+              patient_id: item.relation_id,
+              relation_id: item.patient_id,
+            })
+          )[0].id;
+          if (inverseRelationToDeleteId)
+            await topicDelete.mutateAsync(inverseRelationToDeleteId);
+        }
+        topicDelete.mutate(item.id, {
+          onSuccess: () => {
+            setProgress(false);
+          },
+          onError: () => {
+            setProgress(false);
+          },
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          setErrMsgPost(
+            `An error occurred while deleting the relationship : ${err.message}`
+          );
+        setProgress(false);
       }
-      topicDelete.mutate(item.id, {
-        onSuccess: () => {
-          setProgress(false);
-        },
-        onError: () => {
-          setProgress(false);
-        },
-      });
     }
   };
   const handleClickPatient = (patient: DemographicsType) => {
