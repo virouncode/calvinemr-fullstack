@@ -97,7 +97,7 @@ const RelationshipItem = ({
         patient_id: item.relation_id,
         relation_id: item.patient_id,
       })
-    )[0].id;
+    )[0]?.id;
     if (inverseRelationToDeleteId) {
       await topicDelete.mutateAsync(inverseRelationToDeleteId);
     }
@@ -158,7 +158,7 @@ const RelationshipItem = ({
               patient_id: item.relation_id,
               relation_id: item.patient_id,
             })
-          )[0].id;
+          )[0]?.id;
           if (inverseRelationToDeleteId)
             await topicDelete.mutateAsync(inverseRelationToDeleteId);
         }
