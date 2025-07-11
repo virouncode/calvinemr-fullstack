@@ -1,4 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
+import { capitalize } from "lodash";
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import "react-widgets/scss/styles.scss";
@@ -61,7 +62,7 @@ const RelationshipForm = ({
   const handleSubmit = async () => {
     const topicToPost: Partial<RelationshipType> = {
       patient_id: patientId,
-      relationship: formDatas?.relationship,
+      relationship: capitalize(formDatas?.relationship),
       relation_id: patientSelected?.patient_id,
       date_created: nowTZTimestamp(),
       created_by_id: user.id,
@@ -82,7 +83,7 @@ const RelationshipForm = ({
     const inverseRelationToPost: Partial<RelationshipType> = {
       patient_id: patientSelected?.patient_id,
       relationship: toInverseRelation(
-        formDatas.relationship ?? "",
+        capitalize(formDatas?.relationship),
         toCodeTableName(genderCT, gender)
       ),
       relation_id: formDatas.patient_id,
