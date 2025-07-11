@@ -1,5 +1,7 @@
+import { capitalize } from "lodash";
+
 export const toInverseRelation = (relation: string, gender: string) => {
-  switch (relation) {
+  switch (capitalize(relation)) {
     case "Aunt - maternal":
       return gender === "Female" || gender === "Other"
         ? "Niece - maternal"
