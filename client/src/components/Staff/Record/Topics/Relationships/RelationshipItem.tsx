@@ -97,9 +97,11 @@ const RelationshipItem = ({
         relation_id: item.patient_id,
       })
     )[0].id;
+    if (inverseRelationToDeleteId) {
+      await topicDelete.mutateAsync(inverseRelationToDeleteId);
+    }
 
-    topicDelete.mutate(inverseRelationToDeleteId);
-    topicPut.mutate(topicToPut);
+    await topicPut.mutateAsync(topicToPut);
     //Post the inverse relationship
     const gender = patientSelected?.Gender;
     const inverseRelationToPost: Partial<RelationshipType> = {
