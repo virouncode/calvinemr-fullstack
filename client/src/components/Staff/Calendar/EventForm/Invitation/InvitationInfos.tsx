@@ -43,7 +43,7 @@ const InvitationInfos = ({
           <label>Appointment Infos (read only)</label>
           {templateSelected !== "Video appointment" &&
             templateSelected !== "Phone appointment" &&
-            templateSelected !== "[Blank]" && (
+            templateSelected !== "[FreeText]" && (
               <div className="site-select">
                 <SiteSelect
                   label="Site"

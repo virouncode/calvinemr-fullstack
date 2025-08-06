@@ -230,7 +230,7 @@ const SignupStaffForm = ({ setAddVisible, sites }: SignupStaffFormProps) => {
               infos: `You have an appointment with: [host_name]\nAppointment time: [date]\nLocation: [address_of_clinic]\n\n`,
               message: `Please arrive 10 minutes before your appointment to check in at the front desk.\nBring your OHIP card and any relevant documentation.\nDue to the high volume of patients, we cannot guarantee that you will see the physician exactly at the time of your appointment. However, we make every effort possible to be respectful of your time.\n\nPlease inform the clinic at least 24 hours in advance if you need to cancel or reschedule your appointment.\n\nSpecial instructions:\nPlease do not eat or drink for at least 6 hours before your appointment.\n\n`,
             },
-            { name: "[Blank]", intro: "", infos: "", message: "" },
+            { name: "[FreeText]", intro: "", infos: "", message: "" },
           ],
           date_created: nowTZTimestamp(),
           clinical_notes_order: "desc",
