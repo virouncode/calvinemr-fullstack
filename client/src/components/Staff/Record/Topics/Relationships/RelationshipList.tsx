@@ -1,5 +1,4 @@
 import React from "react";
-import { Combobox } from "react-widgets";
 import { relations } from "../../../../../utils/relationships/relations";
 
 type RelationshipListProps = {
@@ -14,12 +13,24 @@ const RelationshipList = ({
   itemId = 0,
 }: RelationshipListProps) => {
   return (
-    <Combobox
-      placeholder="Choose or type a relationship"
+    // <DropdownList
+    //   placeholder="Choose or type a relationship"
+    //   value={value}
+    //   onChange={(value) => handleChange(value, itemId)}
+    //   data={relations}
+    // />
+
+    <select
       value={value}
-      onChange={(value) => handleChange(value, itemId)}
-      data={relations}
-    />
+      onChange={(e) => handleChange(e.target.value, itemId)}
+    >
+      {relations &&
+        relations.map((relation) => (
+          <option value={relation} key={relation}>
+            {relation}
+          </option>
+        ))}
+    </select>
   );
 };
 
