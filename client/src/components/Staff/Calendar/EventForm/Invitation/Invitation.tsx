@@ -168,8 +168,8 @@ const Invitation = ({
             )?.phoneNumber ?? ""
           );
           const mailToPost = {
-            // to: patientInfos.Email,
-            to: "virounk@gmail.com", // For testing purposes
+            to: patientInfos.Email,
+            //to: "virounk@gmail.com", // For testing purposes
             subject: subject + " - DO NOT REPLY",
             text: toEmailInvitationText(
               site,
@@ -190,8 +190,8 @@ const Invitation = ({
           };
           patientsMailsToPost.push(mailToPost);
           const smsToPost = {
-            // to: patientPhone,
-            to: "+33683267962", // For testing purposes
+            to: patientPhone,
+            //to: "+33683267962", // For testing purposes
             body: toSMSInvitationText(
               site,
               user.settings.invitation_templates.find(
