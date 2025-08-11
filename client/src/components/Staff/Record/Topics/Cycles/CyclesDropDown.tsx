@@ -50,10 +50,10 @@ const CycleDropDown = ({ data, demographicsInfos }: CycleDropDownProps) => {
       {show && cycleToShow && (
         <FakeWindow
           title={`ART CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
-          width={1400}
-          height={800}
-          x={(window.innerWidth - 1400) / 2}
-          y={(window.innerHeight - 800) / 2}
+          width={window.innerWidth}
+          height={window.innerHeight}
+          x={0}
+          y={0}
           color="#2B8C99"
           setPopUpVisible={setShow}
           closeCross={false}
