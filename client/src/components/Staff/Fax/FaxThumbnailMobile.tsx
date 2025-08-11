@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
-import { useFaxDelete } from "../../../hooks/reactquery/mutations/faxMutations";
-import { FaxInboxType, FaxOutboxType } from "../../../types/api";
+import {
+  useFaxDelete,
+  useFaxNotesDelete,
+} from "../../../hooks/reactquery/mutations/faxMutations";
+import {
+  FaxInboxType,
+  FaxNotesType,
+  FaxOutboxType,
+  FaxToDeleteType,
+} from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { timestampToDateStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
@@ -14,6 +22,7 @@ import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./Contacts/ContactFaxForm";
 import FaxNotes from "./FaxNotes";
+import { toast } from "react-toastify";
 
 type FaxThumbnailMobileProps = {
   fax:
@@ -41,6 +50,7 @@ const FaxThumbnailMobile = ({
   const [notesVisible, setNotesVisible] = useState(false);
   //Queries
   const faxDelete = useFaxDelete();
+  const faxNotesDelete = useFaxNotesDelete();
 
   const faxNumber =
     section === "Received faxes"
@@ -77,6 +87,50 @@ const FaxThumbnailMobile = ({
 
   const isFaxSelected = (id: string) => {
     return faxesSelectedIds.includes(id);
+  };
+
+  const handleDeleteFax = async () => {
+    if (
+      await confirmAlert({
+        content:
+          "Do you really want to delete this fax (this action is irreversible)?",
+      })
+    ) {
+      //Delete fax notes
+      try {
+        const faxNotesToDelete: FaxNotesType = await xanoGet(
+          "/faxnotes_for_filename",
+          "staff",
+          {
+            file_name: fax.FileName,
+          }
+        );
+        if (faxNotesToDelete) {
+          faxNotesDelete.mutate(faxNotesToDelete.id, {
+            onError: (err) => {
+              toast.error(`Unable to delete fax notes: ${err}`, {
+                containerId: "A",
+              });
+            },
+          });
+        }
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(`Unable to delete fax notes: ${err.message}`, {
+            containerId: "A",
+          });
+        return;
+      }
+      const faxToDelete: FaxToDeleteType = {
+        faxFileName: fax.FileName,
+        direction: section === "Received faxes" ? "IN" : "OUT",
+      };
+      faxDelete.mutate(faxToDelete, {
+        onSuccess: () => {
+          setFaxesSelectedIds([]);
+        },
+      });
+    }
   };
 
   const handleAddFaxNumber = async (
