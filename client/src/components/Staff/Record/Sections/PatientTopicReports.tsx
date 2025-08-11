@@ -81,9 +81,9 @@ const PatientTopicReports = ({
           <FakeWindow
             title={`REPORTS about ${patientName}`}
             width={window.innerWidth}
-            height={750}
+            height={window.innerHeight}
             x={0}
-            y={(window.innerHeight - 750) / 2}
+            y={0}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >
