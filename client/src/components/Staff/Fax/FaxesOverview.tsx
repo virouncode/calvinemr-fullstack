@@ -1,6 +1,9 @@
 import { useMediaQuery } from "@mui/material";
 import React from "react";
+import { useFaxContactsNames } from "../../../hooks/reactquery/queries/faxQueries";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
+import { addDashes } from "../../../utils/phone/addDashes";
+import { removeDashes } from "../../../utils/phone/removeDashes";
 import EmptyParagraph from "../../UI/Paragraphs/EmptyParagraph";
 import FaxesOverviewToolbar from "./FaxesOverviewToolbar";
 import FaxThumbnail from "./FaxThumbnail";
@@ -41,18 +44,53 @@ const FaxesOverview = ({
   const faxesToShow = faxes
     ? section === "Received faxes"
       ? (faxes as FaxInboxType[]).filter(({ CallerID }) =>
-          ("1" + CallerID).includes(search)
+          CallerID.includes(removeDashes(search))
         )
       : (faxes as FaxOutboxType[]).filter(({ ToFaxNumber }) =>
-          ToFaxNumber.includes(search)
+          ToFaxNumber.includes("1" + removeDashes(search))
         )
     : [];
+
+  const faxNumbers = faxes
+    ? section === "Received faxes"
+      ? [
+          ...new Set(
+            faxesToShow.map((item) =>
+              addDashes((item as FaxInboxType).CallerID)
+            )
+          ),
+        ]
+      : [
+          ...new Set(
+            faxesToShow.map((item) =>
+              addDashes((item as FaxOutboxType).ToFaxNumber)
+            )
+          ),
+        ]
+    : [];
+
+  const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
+
+  const faxesToShowWithContactName = faxesToShow.map((item) => {
+    const faxNumber =
+      section === "Received faxes"
+        ? (item as FaxInboxType).CallerID
+        : (item as FaxOutboxType).ToFaxNumber;
+    const contactName =
+      faxContactsNames?.find(
+        ({ faxNumber: number }) => number === addDashes(faxNumber)
+      )?.name || "";
+    return {
+      ...item,
+      contactName,
+    };
+  });
 
   return (
     <>
       <FaxesOverviewToolbar section={section} />
-      {faxesToShow && faxesToShow.length > 0 ? (
-        faxesToShow.map((item) =>
+      {faxesToShowWithContactName && faxesToShowWithContactName.length > 0 ? (
+        faxesToShowWithContactName.map((item) =>
           isTabletOrMobile ? (
             <FaxThumbnailMobile
               key={item.FileName}

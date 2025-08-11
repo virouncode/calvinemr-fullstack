@@ -50,6 +50,22 @@ const fetchFax = async (id: string, direction: string) => {
   return faxBase64;
 };
 
+const fetchFaxContactName = async (faxNumber: string) => {
+  const response = await xanoGet("/contact_with_fax_number", "staff", {
+    fax_number: faxNumber,
+  });
+  return response;
+};
+
+const fetchFaxContactsNames = async (
+  faxNumbers: string[]
+): Promise<{ faxNumber: string; name: string }[]> => {
+  const response = await xanoGet("/contacts_with_fax_numbers", "staff", {
+    fax_numbers: faxNumbers,
+  });
+  return response;
+};
+
 export const useFaxesInbox = (
   viewedStatus = "ALL",
   all = true,
@@ -80,5 +96,21 @@ export const useFaxNotes = (fileName: string) => {
   return useQuery({
     queryKey: ["fax notes", fileName],
     queryFn: () => fetchFaxNotes(fileName),
+  });
+};
+
+export const useFaxContactName = (faxNumber: string) => {
+  return useQuery({
+    queryKey: ["fax contact name", faxNumber],
+    queryFn: () => fetchFaxContactName(faxNumber),
+    enabled: !!faxNumber,
+  });
+};
+
+export const useFaxContactsNames = (faxNumbers: string[]) => {
+  return useQuery({
+    queryKey: ["fax contacts names", faxNumbers],
+    queryFn: () => fetchFaxContactsNames(faxNumbers),
+    enabled: faxNumbers.length > 0,
   });
 };

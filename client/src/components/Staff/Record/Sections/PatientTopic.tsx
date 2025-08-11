@@ -527,9 +527,9 @@ const PatientTopic = ({
           <FakeWindow
             title={`CYCLES of ${patientName}`}
             width={window.innerWidth}
-            height={600}
+            height={window.innerHeight}
             x={0}
-            y={(window.innerHeight - 600) / 2}
+            y={0}
             color={backgroundColor}
             setPopUpVisible={setPopUpVisible}
           >

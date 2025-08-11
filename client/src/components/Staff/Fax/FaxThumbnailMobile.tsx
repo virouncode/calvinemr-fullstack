@@ -16,7 +16,9 @@ import ContactFaxForm from "./Contacts/ContactFaxForm";
 import FaxNotes from "./FaxNotes";
 
 type FaxThumbnailMobileProps = {
-  fax: FaxInboxType | FaxOutboxType;
+  fax:
+    | (FaxInboxType & { contactName: string })
+    | (FaxOutboxType & { contactName: string });
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
   setCurrentCallerId: React.Dispatch<React.SetStateAction<string>>;
   setFaxesSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
@@ -40,30 +42,10 @@ const FaxThumbnailMobile = ({
   //Queries
   const faxDelete = useFaxDelete();
 
-  // useEffect(() => {
-  //   const contactWithFaxNumber = async () => {
-  //     const response = await xanoGet("/contact_with_fax_number", "staff", {
-  //       fax_number:
-  //         section === "Received faxes"
-  //           ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-  //           : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber),
-  //     });
-  //     if (response) {
-  //       setContactName(
-  //         response.Name
-  //           ? response.Name
-  //           : response.name
-  //           ? response.name
-  //           : response.LastName
-  //           ? `${response.LastName}, `
-  //           : "" + response.FirstName
-  //           ? `${response.FirstName}, `
-  //           : "" + response.speciality
-  //       );
-  //     }
-  //   };
-  //   contactWithFaxNumber();
-  // }, [fax, section]);
+  const faxNumber =
+    section === "Received faxes"
+      ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
+      : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber);
 
   const handleFaxClick = async () => {
     if (section === "Received faxes") {
@@ -142,10 +124,7 @@ const FaxThumbnailMobile = ({
           className="fax__thumbnail-checkbox"
         />
         <div className="fax__thumbnail-author" onClick={handleFaxClick}>
-          {section === "Received faxes"
-            ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-            : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
-          {/* / {contactName} */}
+          {faxNumber} ({fax.contactName || "Unknown"})
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
         <ClipboardIcon ml={15} onClick={handleClickNotes} />

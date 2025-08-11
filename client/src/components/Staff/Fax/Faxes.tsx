@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import useSocketContext from "../../../hooks/context/useSocketContext";
 import {
   useFaxesInbox,
   useFaxesOutbox,
@@ -12,8 +14,17 @@ import FaxBox from "./FaxBox";
 import FaxLeftBar from "./FaxLeftBar";
 import FaxToolBar from "./FaxToolBar";
 
+// Type pour les messages socket
+interface SocketMessage {
+  action: string;
+  route: string;
+  content?: Record<string, unknown>;
+}
+
 const Faxes = () => {
   //Hooks
+  const { socket } = useSocketContext();
+  const queryClient = useQueryClient();
   const [newVisible, setNewVisible] = useState(false);
   const [faxesSelectedIds, setFaxesSelectedIds] = useState<string[]>([]);
   const [currentFaxId, setCurrentFaxId] = useState("");
@@ -34,6 +45,22 @@ const Faxes = () => {
   const initialRangeEnd = useRef(
     timestampToDateISOTZ(getEndOfTheMonthTZ()).split("-").join("")
   );
+
+  // Écoute des événements socket pour rafraîchir les données de fax
+  useEffect(() => {
+    const handleSocketMessage = (message: SocketMessage) => {
+      if (message.route === "FAX DATA" && message.action === "refresh") {
+        // Invalider les queries pour forcer un refetch
+        queryClient.invalidateQueries({ queryKey: ["faxes inbox"] });
+        queryClient.invalidateQueries({ queryKey: ["faxes outbox"] });
+      }
+    };
+
+    socket?.on("message", handleSocketMessage);
+    return () => {
+      socket?.off("message", handleSocketMessage);
+    };
+  }, [socket, queryClient]);
   //Queries
   const {
     data: faxesInbox,

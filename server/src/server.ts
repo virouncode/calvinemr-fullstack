@@ -97,10 +97,18 @@ const fetchUnreadFaxes = async () => {
     const unreadFaxNbr = response.data.length;
     if (unreadFaxNbr !== previousUnreadFaxNbr) {
       previousUnreadFaxNbr = unreadFaxNbr;
+      // Notification du compteur (existant)
       io.emit("message", {
         action: "create",
         route: "UNREAD FAX",
         content: { data: unreadFaxNbr },
+      });
+
+      // Nouvel événement pour rafraîchir les données de fax
+      io.emit("message", {
+        action: "refresh",
+        route: "FAX DATA",
+        content: { unreadCount: unreadFaxNbr },
       });
     }
   } catch (error) {

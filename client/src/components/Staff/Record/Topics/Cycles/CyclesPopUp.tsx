@@ -178,9 +178,9 @@ const CyclesPopUp = ({
         <FakeWindow
           title={`ART CYCLE# ${cycleToShow?.cycle_nbr} DETAILS`}
           width={window.innerWidth}
-          height={800}
+          height={window.innerHeight}
           x={0}
-          y={(window.innerHeight - 800) / 2}
+          y={0}
           color="#2B8C99"
           setPopUpVisible={setShow}
           closeCross={false}

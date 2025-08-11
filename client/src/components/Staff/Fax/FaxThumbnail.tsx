@@ -27,7 +27,9 @@ import ContactFaxForm from "./Contacts/ContactFaxForm";
 import FaxNotes from "./FaxNotes";
 
 type FaxThumbnailProps = {
-  fax: FaxInboxType | FaxOutboxType;
+  fax:
+    | (FaxInboxType & { contactName: string })
+    | (FaxOutboxType & { contactName: string });
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
   setCurrentCallerId: React.Dispatch<React.SetStateAction<string>>;
   setFaxesSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
@@ -76,6 +78,10 @@ const FaxThumbnail = ({
   //   };
   //   contactWithFaxNumber();
   // }, [fax, section]);
+  const faxNumber =
+    section === "Received faxes"
+      ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
+      : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber);
 
   const handleFaxClick = async () => {
     if (section === "Received faxes") {
@@ -198,10 +204,7 @@ const FaxThumbnail = ({
           className="fax__thumbnail-checkbox"
         />
         <div className="fax__thumbnail-author" onClick={handleFaxClick}>
-          {section === "Received faxes"
-            ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-            : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)}{" "}
-          {/* / {contactName} */}
+          {faxNumber} ({fax.contactName || "Unknown"})
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>

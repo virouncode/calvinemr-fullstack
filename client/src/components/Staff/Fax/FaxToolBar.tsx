@@ -135,7 +135,7 @@ const FaxToolBar = ({
           value={search}
           onChange={handleChange}
           id="search"
-          placeholder="Search by fax number..."
+          placeholder="Search by fax number, contact name..."
           className="fax__toolbar-filter-search"
         />
         <div className="fax__toolbar-filter-date">
