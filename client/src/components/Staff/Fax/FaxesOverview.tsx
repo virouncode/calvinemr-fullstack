@@ -50,7 +50,9 @@ const FaxesOverview = ({
         ]
       : [
           ...new Set(
-            faxes.map((item) => addDashes((item as FaxOutboxType).ToFaxNumber))
+            faxes.map((item) =>
+              addDashes((item as FaxOutboxType).ToFaxNumber.slice(1))
+            )
           ),
         ]
     : [];
