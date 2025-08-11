@@ -62,7 +62,7 @@ const FaxesOverview = ({
         const faxNumber =
           section === "Received faxes"
             ? (item as FaxInboxType).CallerID
-            : (item as FaxOutboxType).ToFaxNumber;
+            : (item as FaxOutboxType).ToFaxNumber.slice(1); // Remove leading '1'
         const contactName =
           faxContactsNames?.find(
             ({ faxNumber: number }) => number === addDashes(faxNumber)
