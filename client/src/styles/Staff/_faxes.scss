@@ -358,6 +358,9 @@
               label {
                 margin-bottom: 0.25rem;
               }
+              input {
+                width: 100%;
+              }
               &:nth-child(3) {
                 flex-direction: row;
                 align-items: center;
