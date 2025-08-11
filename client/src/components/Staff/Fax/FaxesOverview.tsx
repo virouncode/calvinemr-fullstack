@@ -41,16 +41,6 @@ const FaxesOverview = ({
 
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
-  // const faxesToShow = faxes
-  //   ? section === "Received faxes"
-  //     ? (faxes as FaxInboxType[]).filter(({ CallerID }) =>
-  //         CallerID.includes(removeDashes(search))
-  //       )
-  //     : (faxes as FaxOutboxType[]).filter(({ ToFaxNumber }) =>
-  //         ToFaxNumber.includes("1" + removeDashes(search))
-  //       )
-  //   : [];
-
   const faxNumbers = faxes
     ? section === "Received faxes"
       ? [
@@ -84,14 +74,19 @@ const FaxesOverview = ({
       })
     : [];
 
+  console.log("faxesWithContactName", faxesWithContactName);
+
   const faxesToShow = faxesWithContactName.filter((item) => {
     const faxNumber =
       section === "Received faxes"
         ? (item as FaxInboxType).CallerID
         : (item as FaxOutboxType).ToFaxNumber;
     return (
-      addDashes(faxNumber).includes(removeDashes(search)) ||
-      item.contactName.toLowerCase().includes(search.toLowerCase())
+      faxNumber.includes(
+        section === "Received faxes"
+          ? removeDashes(search)
+          : "1" + removeDashes(search)
+      ) || item.contactName.toLowerCase().includes(search.toLowerCase())
     );
   });
 
