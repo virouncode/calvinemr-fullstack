@@ -295,8 +295,6 @@ export const useAppointmentPost = () => {
       return xanoPost("/appointments", user.access_level, appointmentToPost);
     },
     onSuccess: (data) => {
-      console.log("data", data);
-
       socket?.emit("message", { key: ["appointments"] });
       socket?.emit("message", { key: ["appointment"] });
       socket?.emit("message", { key: ["APPOINTMENTS"] });
@@ -388,8 +386,6 @@ export const useAppointmentDelete = () => {
       });
     },
     onError: (error) => {
-      console.log("prout");
-
       toast.error(`Error: unable to delete appointment: ${error.message}`, {
         containerId: "A",
       });
