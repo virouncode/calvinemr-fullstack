@@ -360,8 +360,7 @@
                 margin-bottom: 0.25rem;
               }
               input {
-                box-sizing: border-box;
-                width: 100%;
+                width: calc(100%-4px);
               }
               &:nth-child(3) {
                 flex-direction: row;
