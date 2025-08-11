@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -22,7 +23,6 @@ import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
 import ContactFaxForm from "./Contacts/ContactFaxForm";
 import FaxNotes from "./FaxNotes";
-import { toast } from "react-toastify";
 
 type FaxThumbnailMobileProps = {
   fax:
@@ -170,7 +170,7 @@ const FaxThumbnailMobile = ({
           : "fax__thumbnail-mobile"
       }
     >
-      <div className="fax__thumbnail-link">
+      <div className="fax__thumbnail-link" style={{ width: "80%" }}>
         <Checkbox
           id={fax.FileName}
           onChange={handleCheckFax}
@@ -183,7 +183,11 @@ const FaxThumbnailMobile = ({
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
         <ClipboardIcon ml={15} onClick={handleClickNotes} />
       </div>
-      <div className="fax__thumbnail-date" onClick={handleFaxClick}>
+      <div
+        className="fax__thumbnail-date"
+        onClick={handleFaxClick}
+        style={{ width: "20%" }}
+      >
         {timestampToDateStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
       {addFaxNumberVisible && (

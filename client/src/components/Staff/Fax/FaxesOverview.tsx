@@ -76,8 +76,6 @@ const FaxesOverview = ({
       })
     : [];
 
-  console.log("faxesWithContactName", faxesWithContactName);
-
   const faxesToShow = faxesWithContactName.filter((item) => {
     const faxNumber =
       section === "Received faxes"

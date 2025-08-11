@@ -36,7 +36,6 @@ export const getAvailableAppointments = (
   let counter = 0;
 
   let newDay = tomorrow;
-  console.log("tomorrow", tomorrow);
 
   while (counter < 7) {
     //On boucle sur une semaine
@@ -53,8 +52,6 @@ export const getAvailableAppointments = (
       newDay = (newDay + 1) % 7;
       counter++;
     }
-    console.log("newDay", newDay);
-    console.log("counter", counter);
 
     const deltaNewDay =
       newDay - tomorrow >= 0 ? newDay - tomorrow : 7 + (newDay - tomorrow);
