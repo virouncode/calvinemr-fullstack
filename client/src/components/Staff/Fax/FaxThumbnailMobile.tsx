@@ -170,7 +170,7 @@ const FaxThumbnailMobile = ({
           : "fax__thumbnail-mobile"
       }
     >
-      <div className="fax__thumbnail-link" style={{ width: "70%" }}>
+      <div className="fax__thumbnail-link">
         <Checkbox
           id={fax.FileName}
           onChange={handleCheckFax}
@@ -183,11 +183,7 @@ const FaxThumbnailMobile = ({
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
         <ClipboardIcon ml={15} onClick={handleClickNotes} />
       </div>
-      <div
-        className="fax__thumbnail-date"
-        onClick={handleFaxClick}
-        style={{ width: "30%" }}
-      >
+      <div className="fax__thumbnail-date" onClick={handleFaxClick}>
         {timestampToDateStrTZ(parseInt(fax.EpochTime) * 1000)}
       </div>
       {addFaxNumberVisible && (
