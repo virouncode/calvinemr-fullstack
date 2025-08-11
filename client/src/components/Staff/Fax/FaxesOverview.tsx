@@ -41,56 +41,65 @@ const FaxesOverview = ({
 
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
-  const faxesToShow = faxes
-    ? section === "Received faxes"
-      ? (faxes as FaxInboxType[]).filter(({ CallerID }) =>
-          CallerID.includes(removeDashes(search))
-        )
-      : (faxes as FaxOutboxType[]).filter(({ ToFaxNumber }) =>
-          ToFaxNumber.includes("1" + removeDashes(search))
-        )
-    : [];
+  // const faxesToShow = faxes
+  //   ? section === "Received faxes"
+  //     ? (faxes as FaxInboxType[]).filter(({ CallerID }) =>
+  //         CallerID.includes(removeDashes(search))
+  //       )
+  //     : (faxes as FaxOutboxType[]).filter(({ ToFaxNumber }) =>
+  //         ToFaxNumber.includes("1" + removeDashes(search))
+  //       )
+  //   : [];
 
   const faxNumbers = faxes
     ? section === "Received faxes"
       ? [
           ...new Set(
-            faxesToShow.map((item) =>
-              addDashes((item as FaxInboxType).CallerID)
-            )
+            faxes.map((item) => addDashes((item as FaxInboxType).CallerID))
           ),
         ]
       : [
           ...new Set(
-            faxesToShow.map((item) =>
-              addDashes((item as FaxOutboxType).ToFaxNumber)
-            )
+            faxes.map((item) => addDashes((item as FaxOutboxType).ToFaxNumber))
           ),
         ]
     : [];
 
   const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
 
-  const faxesToShowWithContactName = faxesToShow.map((item) => {
+  const faxesWithContactName = faxes
+    ? faxes.map((item) => {
+        const faxNumber =
+          section === "Received faxes"
+            ? (item as FaxInboxType).CallerID
+            : (item as FaxOutboxType).ToFaxNumber;
+        const contactName =
+          faxContactsNames?.find(
+            ({ faxNumber: number }) => number === addDashes(faxNumber)
+          )?.name || "";
+        return {
+          ...item,
+          contactName,
+        };
+      })
+    : [];
+
+  const faxesToShow = faxesWithContactName.filter((item) => {
     const faxNumber =
       section === "Received faxes"
         ? (item as FaxInboxType).CallerID
         : (item as FaxOutboxType).ToFaxNumber;
-    const contactName =
-      faxContactsNames?.find(
-        ({ faxNumber: number }) => number === addDashes(faxNumber)
-      )?.name || "";
-    return {
-      ...item,
-      contactName,
-    };
+    return (
+      addDashes(faxNumber).includes(removeDashes(search)) ||
+      item.contactName.toLowerCase().includes(search.toLowerCase())
+    );
   });
 
   return (
     <>
       <FaxesOverviewToolbar section={section} />
-      {faxesToShowWithContactName && faxesToShowWithContactName.length > 0 ? (
-        faxesToShowWithContactName.map((item) =>
+      {faxesToShow && faxesToShow.length > 0 ? (
+        faxesToShow.map((item) =>
           isTabletOrMobile ? (
             <FaxThumbnailMobile
               key={item.FileName}
