@@ -47,15 +47,17 @@ const FaxesOverview = ({
           ...new Set(
             faxes.map((item) => addDashes((item as FaxInboxType).CallerID))
           ),
-        ]
+        ].filter(Boolean)
       : [
           ...new Set(
             faxes.map((item) =>
               addDashes((item as FaxOutboxType).ToFaxNumber.slice(1))
             )
           ),
-        ]
+        ].filter(Boolean)
     : [];
+
+  console.log("Fax numbers:", faxNumbers);
 
   const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
 
@@ -89,6 +91,8 @@ const FaxesOverview = ({
       ) || item.contactName.toLowerCase().includes(search.toLowerCase())
     );
   });
+
+  console.log("Faxes to show:", faxesToShow);
 
   return (
     <>
