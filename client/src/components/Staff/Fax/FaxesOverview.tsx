@@ -1,6 +1,9 @@
 import { useMediaQuery } from "@mui/material";
 import React from "react";
-import { useFaxContactsNames } from "../../../hooks/reactquery/queries/faxQueries";
+import {
+  useFaxContactsNames,
+  useFaxNotesForFilenames,
+} from "../../../hooks/reactquery/queries/faxQueries";
 import { FaxInboxType, FaxOutboxType } from "../../../types/api";
 import { addDashes } from "../../../utils/phone/addDashes";
 import { removeDashes } from "../../../utils/phone/removeDashes";
@@ -57,11 +60,18 @@ const FaxesOverview = ({
         ].filter(Boolean)
     : [];
 
-  console.log("Fax numbers:", faxNumbers);
+  const fileNames = faxes
+    ? faxes.map((item) => (item as FaxInboxType | FaxOutboxType).FileName)
+    : [];
+
+  console.log("fileNames:", fileNames);
 
   const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
+  const { data: faxNotes } = useFaxNotesForFilenames(fileNames);
 
-  const faxesWithContactName = faxes
+  console.log("faxNotes:", faxNotes);
+
+  const faxesWithNotesAndContactName = faxes
     ? faxes.map((item) => {
         const faxNumber =
           section === "Received faxes"
@@ -71,14 +81,20 @@ const FaxesOverview = ({
           faxContactsNames?.find(
             ({ faxNumber: number }) => number === addDashes(faxNumber)
           )?.name || "";
+        const note =
+          faxNotes?.find(
+            (note) =>
+              note.FileName === (item as FaxInboxType | FaxOutboxType).FileName
+          )?.Notes || "";
         return {
           ...item,
           contactName,
+          note,
         };
       })
     : [];
 
-  const faxesToShow = faxesWithContactName.filter((item) => {
+  const faxesToShow = faxesWithNotesAndContactName.filter((item) => {
     const faxNumber =
       section === "Received faxes"
         ? (item as FaxInboxType).CallerID

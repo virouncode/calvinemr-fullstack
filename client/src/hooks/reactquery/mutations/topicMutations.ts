@@ -44,6 +44,7 @@ export const useTopicPost = <T extends TopicType>(
       if (topic === "PHARMACIES") {
         socket?.emit("message", { key: [topic] });
         socket?.emit("message", { key: ["pharmacies"] });
+        socket?.emit("message", { key: ["fax contacts names"] });
       }
       if (topic === "CARE ELEMENTS") {
         socket?.emit("message", { key: ["patient", patientId] });

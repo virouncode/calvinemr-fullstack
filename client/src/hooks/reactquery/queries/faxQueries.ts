@@ -66,6 +66,19 @@ const fetchFaxContactsNames = async (
   return response;
 };
 
+const fetchFaxNotesForFilenames = async (
+  fileNames: string[]
+): Promise<FaxNotesType[]> => {
+  if (fileNames.length === 0) return [];
+
+  const response = await xanoGet("/fax_notes_for_filenames", "staff", {
+    filenames: fileNames,
+  });
+  console.log("response:", response);
+
+  return response;
+};
+
 export const useFaxesInbox = (
   viewedStatus = "ALL",
   all = true,
@@ -112,5 +125,13 @@ export const useFaxContactsNames = (faxNumbers: string[]) => {
     queryKey: ["fax contacts names", faxNumbers],
     queryFn: () => fetchFaxContactsNames(faxNumbers),
     enabled: faxNumbers.length > 0,
+  });
+};
+
+export const useFaxNotesForFilenames = (fileNames: string[]) => {
+  return useQuery({
+    queryKey: ["fax notes for filenames", fileNames],
+    queryFn: () => fetchFaxNotesForFilenames(fileNames),
+    enabled: fileNames.length > 0,
   });
 };

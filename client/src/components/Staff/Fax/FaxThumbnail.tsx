@@ -19,7 +19,7 @@ import { timestampToDateTimeStrTZ } from "../../../utils/dates/formatDates";
 import { callerIDToFaxNumber } from "../../../utils/fax/callerIDToFaxNumber";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
-import ClipboardIcon from "../../UI/Icons/ClipboardIcon";
+import PenIcon from "../../UI/Icons/PenIcon";
 import SquarePlusIcon from "../../UI/Icons/SquarePlusIcon";
 import TrashIcon from "../../UI/Icons/TrashIcon";
 import FakeWindow from "../../UI/Windows/FakeWindow";
@@ -28,8 +28,8 @@ import FaxNotes from "./FaxNotes";
 
 type FaxThumbnailProps = {
   fax:
-    | (FaxInboxType & { contactName: string })
-    | (FaxOutboxType & { contactName: string });
+    | (FaxInboxType & { contactName: string; note: string })
+    | (FaxOutboxType & { contactName: string; note: string });
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
   setCurrentCallerId: React.Dispatch<React.SetStateAction<string>>;
   setFaxesSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
@@ -184,11 +184,11 @@ const FaxThumbnail = ({
         </div>
         <SquarePlusIcon onClick={handleAddFaxNumber} ml={5} />
       </div>
-      <div className="fax__thumbnail-pages" onClick={handleFaxClick}>
-        {fax.Pages}
-        <Tooltip title="Notes">
+      <div className="fax__thumbnail-notes" onClick={handleFaxClick}>
+        <p className="fax__thumbnail-notes-text">{fax.note}</p>
+        <Tooltip title="Edit">
           <span>
-            <ClipboardIcon ml={15} onClick={handleClickNotes} />
+            <PenIcon ml={15} onClick={handleClickNotes} />
           </span>
         </Tooltip>
       </div>

@@ -11,6 +11,7 @@ import Checkbox from "../../UI/Checkbox/Checkbox";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
+import { FAXES_PER_PAGE } from "./Faxes";
 
 type FaxToolBarProps = {
   newVisible: boolean;
@@ -33,6 +34,10 @@ type FaxToolBarProps = {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   all: boolean;
   setAll: React.Dispatch<React.SetStateAction<boolean>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  numberOfFaxes?: number;
+  totalPages: number;
 };
 
 const FaxToolBar = ({
@@ -56,6 +61,10 @@ const FaxToolBar = ({
   setSearch,
   all,
   setAll,
+  currentPage,
+  setCurrentPage,
+  numberOfFaxes,
+  totalPages,
 }: FaxToolBarProps) => {
   //Queries
   const faxesDelete = useFaxesDelete();
@@ -127,6 +136,8 @@ const FaxToolBar = ({
     }
   };
 
+  console.log("totalPages:", totalPages);
+
   return (
     <div className="fax__toolbar">
       <p className="fax__toolbar-title">Faxing</p>
@@ -170,6 +181,25 @@ const FaxToolBar = ({
           </div>
         </div>
       </div>
+      {numberOfFaxes && (
+        <div className="fax__toolbar-pagination">
+          <p>
+            Page {currentPage} of {Math.ceil(numberOfFaxes / FAXES_PER_PAGE)}
+          </p>
+          <Button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            label="<"
+            disabled={currentPage === 1}
+          />
+          <Button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            label=">"
+            disabled={currentPage === totalPages}
+          />
+        </div>
+      )}
 
       <div className="fax__toolbar-btns">
         <Button onClick={handleClickNew} label="New" disabled={newVisible} />

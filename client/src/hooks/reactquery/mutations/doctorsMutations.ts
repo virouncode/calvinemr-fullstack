@@ -19,6 +19,7 @@ export const useDoctorPost = () => {
       socket?.emit("message", { key: ["doctors"] });
       socket?.emit("message", { key: ["patientDoctors"] });
       socket?.emit("message", { key: ["patientRecord"] });
+      socket?.emit("message", { key: ["fax contacts names"] });
       toast.success(`Doctor post succesfully`, {
         containerId: "A",
       });

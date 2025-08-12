@@ -12,6 +12,7 @@ export const useFaxDirectoryPost = () => {
     },
     onSuccess: () => {
       socket?.emit("message", { key: ["fax directory"] });
+      socket?.emit("message", { key: ["fax contacts names"] });
       toast.success("Contact saved succesfully", { containerId: "A" });
     },
     onError: (error) => {

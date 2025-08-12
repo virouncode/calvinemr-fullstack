@@ -114,6 +114,7 @@ export const useFaxNotesPost = () => {
       postFaxNotes(faxNotesToPost),
     onSuccess: () => {
       socket?.emit("message", { key: ["fax notes"] });
+      socket?.emit("message", { key: ["fax notes for filenames"] });
       toast.success("Fax notes saved succesfully", { containerId: "A" });
     },
     onError: (error) => {
@@ -130,6 +131,7 @@ export const useFaxNotesPut = () => {
     mutationFn: (faxNotesToPut: FaxNotesType) => putFaxNotes(faxNotesToPut),
     onSuccess: () => {
       socket?.emit("message", { key: ["fax notes"] });
+      socket?.emit("message", { key: ["fax notes for filenames"] });
       toast.success("Fax notes saved succesfully", { containerId: "A" });
     },
     onError: (error) => {

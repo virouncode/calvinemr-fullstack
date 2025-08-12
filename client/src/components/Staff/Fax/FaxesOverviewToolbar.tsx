@@ -10,7 +10,7 @@ const FaxesOverviewToolbar = ({ section }: FaxesOverviewToolbarProps) => {
       <div className="fax__overview-from">
         {section === "Received faxes" ? "From Fax#/Name" : "To Fax#/Name"}
       </div>
-      <div className="fax__overview-pages">Nbr of pages</div>
+      <div className="fax__overview-notes">Notes</div>
       <div className="fax__overview-date">Date</div>
       <div className="fax__overview-fake-div"></div>
     </div>

@@ -14,6 +14,8 @@ import FaxBox from "./FaxBox";
 import FaxLeftBar from "./FaxLeftBar";
 import FaxToolBar from "./FaxToolBar";
 
+export const FAXES_PER_PAGE = 20;
+
 // Type pour les messages socket
 interface SocketMessage {
   action: string;
@@ -39,12 +41,16 @@ const Faxes = () => {
     timestampToDateISOTZ(getEndOfTheMonthTZ()).split("-").join("")
   ); //start of the month
   const [all, setAll] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const initialRangeStart = useRef(
     timestampToDateISOTZ(getStartOfTheMonthTZ()).split("-").join("")
   );
   const initialRangeEnd = useRef(
     timestampToDateISOTZ(getEndOfTheMonthTZ()).split("-").join("")
   );
+  const startIndex = (currentPage - 1) * FAXES_PER_PAGE;
+  const endIndex = startIndex + FAXES_PER_PAGE;
 
   // Écoute des événements socket pour rafraîchir les données de fax
   useEffect(() => {
@@ -73,6 +79,11 @@ const Faxes = () => {
     error: errorOutbox,
   } = useFaxesOutbox(all, rangeStart, rangeEnd);
 
+  const numberOfFaxes =
+    section === "Received faxes" ? faxesInbox?.length : faxesOutbox?.length;
+  console.log("Number of faxes:", numberOfFaxes);
+  const totalPages = Math.ceil((numberOfFaxes ?? 0) / FAXES_PER_PAGE);
+
   return (
     <div className="fax__container">
       <FaxToolBar
@@ -96,6 +107,10 @@ const Faxes = () => {
         setSearch={setSearch}
         all={all}
         setAll={setAll}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        numberOfFaxes={numberOfFaxes}
+        totalPages={totalPages}
       />
       <div className="fax__content">
         <FaxLeftBar
@@ -115,8 +130,8 @@ const Faxes = () => {
           currentCallerId={currentCallerId}
           setCurrentFaxId={setCurrentFaxId}
           setCurrentCallerId={setCurrentCallerId}
-          faxesInbox={faxesInbox}
-          faxesOutbox={faxesOutbox}
+          faxesInbox={faxesInbox?.slice(startIndex, endIndex) ?? []}
+          faxesOutbox={faxesOutbox?.slice(startIndex, endIndex) ?? []}
           isPendingInbox={isPendingInbox}
           isPendingOutbox={isPendingOutbox}
           errorInbox={errorInbox}
