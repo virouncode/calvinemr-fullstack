@@ -81,7 +81,6 @@ const Faxes = () => {
 
   const numberOfFaxes =
     section === "Received faxes" ? faxesInbox?.length : faxesOutbox?.length;
-  console.log("Number of faxes:", numberOfFaxes);
   const totalPages = Math.ceil((numberOfFaxes ?? 0) / FAXES_PER_PAGE);
 
   return (

@@ -136,8 +136,6 @@ const FaxToolBar = ({
     }
   };
 
-  console.log("totalPages:", totalPages);
-
   return (
     <div className="fax__toolbar">
       <p className="fax__toolbar-title">Faxing</p>

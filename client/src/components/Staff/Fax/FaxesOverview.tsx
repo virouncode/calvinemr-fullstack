@@ -64,12 +64,8 @@ const FaxesOverview = ({
     ? faxes.map((item) => (item as FaxInboxType | FaxOutboxType).FileName)
     : [];
 
-  console.log("fileNames:", fileNames);
-
   const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
   const { data: faxNotes } = useFaxNotesForFilenames(fileNames);
-
-  console.log("faxNotes:", faxNotes);
 
   const faxesWithNotesAndContactName = faxes
     ? faxes.map((item) => {
@@ -107,8 +103,6 @@ const FaxesOverview = ({
       ) || item.contactName.toLowerCase().includes(search.toLowerCase())
     );
   });
-
-  console.log("Faxes to show:", faxesToShow);
 
   return (
     <>
