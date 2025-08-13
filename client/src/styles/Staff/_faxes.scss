@@ -28,7 +28,9 @@
     .fax__toolbar-title {
       font-size: $size-xl;
       font-weight: bold;
-      padding: 0;
+      padding-right: 1rem;
+      display: flex;
+      justify-content: space-between;
     }
     input {
       width: 100%;

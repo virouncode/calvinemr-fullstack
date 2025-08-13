@@ -171,7 +171,11 @@ const FaxToolBar = ({
 
   return (
     <div className="fax__toolbar">
-      <p className="fax__toolbar-title">Faxing</p>
+      <div className="fax__toolbar-title">
+        <p>Faxing</p>
+        <Button onClick={handleClickNew} label="New" disabled={newVisible} />
+      </div>
+
       <div className="fax__toolbar-filter">
         <Input
           value={search}
@@ -233,7 +237,6 @@ const FaxToolBar = ({
       )}
 
       <div className="fax__toolbar-btns">
-        <Button onClick={handleClickNew} label="New" disabled={newVisible} />
         {currentFaxId === "" &&
           faxesSelectedIds.length !== 0 &&
           import.meta.env.VITE_ISDEMO === "false" && (
