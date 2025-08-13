@@ -54,6 +54,14 @@ const deleteFaxNotes = async (faxNotesToDeleteId: number) => {
   return response;
 };
 
+const markFaxesAs = async (fileNames: string[], viewedStatus: string) => {
+  const response = await axios.post(`/api/srfax/markFaxesAs`, {
+    fileNames,
+    viewedStatus,
+  });
+  return response.data;
+};
+
 export const useFaxPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
@@ -153,6 +161,26 @@ export const useFaxNotesDelete = () => {
     },
     onError: (error) => {
       toast.error(`Error: unable to delete fax notes: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useMarkFaxesAs = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (data: { fileNames: string[]; viewedStatus: string }) =>
+      markFaxesAs(data.fileNames, data.viewedStatus),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["faxes inbox"] });
+      socket?.emit("message", { key: ["faxes outbox"] });
+      toast.success("Faxes viewed status changed successfully", {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to mark faxes: ${error.message}`, {
         containerId: "A",
       });
     },

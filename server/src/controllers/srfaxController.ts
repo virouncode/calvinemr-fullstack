@@ -314,3 +314,40 @@ export const deleteFaxes = async (
     res.status(400).json({ success: false, message: errorMessage });
   }
 };
+
+export const markFaxesAs = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { fileNames, viewedStatus } = req.body;
+    await Promise.all(
+      fileNames.map(async (faxFileName: string) => {
+        const data = {
+          action: "Update_Viewed_Status",
+          access_id: process.env.SRFAX_ACCESS_ID!,
+          access_pwd: process.env.SRFAX_ACCESS_PWD!,
+          sFaxFileName: faxFileName,
+          sDirection: "IN",
+          sMarkasViewed: viewedStatus,
+        };
+        const response = await axios.post(
+          "https://secure.srfax.com/SRF_SecWebSvc.php",
+          data,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        if (response.data.Status !== "Success") {
+          throw new Error(response.data.Result);
+        }
+      })
+    );
+    res.status(200).json({
+      success: true,
+      data: { message: "Viewed status updated successfully" },
+    });
+  } catch (err) {
+    const errorMessage = handleError(err);
+    console.error(errorMessage);
+    res.status(500).json({ success: false, message: errorMessage });
+  }
+};

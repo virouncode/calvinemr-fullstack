@@ -1,5 +1,8 @@
 import React from "react";
-import { useFaxesDelete } from "../../../hooks/reactquery/mutations/faxMutations";
+import {
+  useFaxesDelete,
+  useMarkFaxesAs,
+} from "../../../hooks/reactquery/mutations/faxMutations";
 import {
   FaxesToDeleteType,
   FaxInboxType,
@@ -68,6 +71,7 @@ const FaxToolBar = ({
 }: FaxToolBarProps) => {
   //Queries
   const faxesDelete = useFaxesDelete();
+  const markFaxesAs = useMarkFaxesAs();
 
   const handleClickNew = () => {
     setNewVisible(true);
@@ -136,6 +140,35 @@ const FaxToolBar = ({
     }
   };
 
+  const handleMarkAsUnread = async () => {
+    if (
+      await confirmAlert({
+        content: "Do you really want to mark selected faxes as unread?",
+      })
+    ) {
+      const fileNames = faxesSelectedIds;
+      const viewedStatus = "N"; // Mark as unread
+      markFaxesAs.mutate({ fileNames, viewedStatus });
+    }
+  };
+  const handleMarkAsRead = async () => {
+    if (
+      await confirmAlert({
+        content: "Do you really want to mark selected faxes as read?",
+      })
+    ) {
+      const fileNames = faxesSelectedIds;
+      const viewedStatus = "Y"; // Mark as read
+      markFaxesAs.mutate({ fileNames, viewedStatus });
+    }
+  };
+  const hasUnreadMessagesSelected =
+    section === "Received faxes" &&
+    faxesInbox.some(
+      (fax) =>
+        faxesSelectedIds.includes(fax.FileName) && fax.ViewedStatus === "N"
+    );
+
   return (
     <div className="fax__toolbar">
       <p className="fax__toolbar-title">Faxing</p>
@@ -181,8 +214,8 @@ const FaxToolBar = ({
       </div>
       {numberOfFaxes && (
         <div className="fax__toolbar-pagination">
-          <p>
-            Page {currentPage} of {Math.ceil(numberOfFaxes / FAXES_PER_PAGE)}
+          <p className="fax__toolbar-pagination-text">
+            Page {currentPage} / {Math.ceil(numberOfFaxes / FAXES_PER_PAGE)}
           </p>
           <Button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -204,7 +237,17 @@ const FaxToolBar = ({
         {currentFaxId === "" &&
           faxesSelectedIds.length !== 0 &&
           import.meta.env.VITE_ISDEMO === "false" && (
-            <Button onClick={handleDeleteSelected} label="Delete Selected" />
+            <Button onClick={handleDeleteSelected} label="Delete" />
+          )}
+        {currentFaxId === "" &&
+          faxesSelectedIds.length !== 0 &&
+          !hasUnreadMessagesSelected && (
+            <Button onClick={handleMarkAsUnread} label="Mark as Unread" />
+          )}
+        {currentFaxId === "" &&
+          faxesSelectedIds.length !== 0 &&
+          hasUnreadMessagesSelected && (
+            <Button onClick={handleMarkAsRead} label="Mark as Read" />
           )}
         {currentFaxId === "" &&
           (selectAllVisible ? (

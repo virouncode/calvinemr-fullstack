@@ -5,6 +5,7 @@ import {
   getFaxesInbox,
   getFaxesOutbox,
   getFaxFile,
+  markFaxesAs,
   postFax,
 } from "../../controllers/srfaxController";
 const srfaxRouter = express.Router();
@@ -15,5 +16,6 @@ srfaxRouter.route("/outbox").post(getFaxesOutbox);
 srfaxRouter.route("/faxFile").post(getFaxFile);
 srfaxRouter.route("/deleteFax").post(deleteFax);
 srfaxRouter.route("/deleteFaxes").post(deleteFaxes);
+srfaxRouter.route("/markFaxesAs").post(markFaxesAs);
 
 export default srfaxRouter;

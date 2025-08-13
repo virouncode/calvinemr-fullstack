@@ -74,7 +74,6 @@ const fetchFaxNotesForFilenames = async (
   const response = await xanoGet("/fax_notes_for_filenames", "staff", {
     filenames: fileNames,
   });
-  console.log("response:", response);
 
   return response;
 };
