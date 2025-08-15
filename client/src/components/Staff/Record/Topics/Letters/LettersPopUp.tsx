@@ -226,11 +226,13 @@ const LettersPopUp = ({
             <NewFaxMobile
               setNewVisible={setFaxVisible}
               initialAttachments={fileToFax ? [fileToFax] : []}
+              initialSubject="Consult report"
             />
           ) : (
             <NewFax
               setNewVisible={setFaxVisible}
               initialAttachments={fileToFax ? [fileToFax] : []}
+              initialSubject="Consult report"
             />
           )}
         </FakeWindow>

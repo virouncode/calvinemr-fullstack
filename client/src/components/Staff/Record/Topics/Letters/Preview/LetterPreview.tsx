@@ -639,6 +639,7 @@ const LetterPreview = ({
                   referringDoctor?.FaxNumber.phoneNumber.replaceAll("-", "") ||
                   "",
               }}
+              initialSubject="Consult report"
             />
           ) : (
             <NewFax
@@ -654,6 +655,7 @@ const LetterPreview = ({
                   referringDoctor?.FaxNumber.phoneNumber.replaceAll("-", "") ||
                   "",
               }}
+              initialSubject="Consult report"
             />
           )}
         </FakeWindow>

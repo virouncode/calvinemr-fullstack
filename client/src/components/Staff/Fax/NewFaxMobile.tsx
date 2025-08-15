@@ -36,6 +36,7 @@ type NewFaxProps = {
   initialAttachments?: Partial<MessageAttachmentType>[];
   initialRecipient?: { ToFaxNumber: string };
   reply?: boolean;
+  initialSubject?: string;
 };
 
 const NewFaxMobile = ({
@@ -43,6 +44,7 @@ const NewFaxMobile = ({
   initialAttachments = [],
   initialRecipient,
   reply = false,
+  initialSubject = "",
 }: NewFaxProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -56,7 +58,7 @@ const NewFaxMobile = ({
     initialRecipient ? [initialRecipient.ToFaxNumber] : []
   );
   const [toNewFaxNumbers, setToNewFaxNumbers] = useState("");
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState(initialSubject || "");
   const [body, setBody] = useState("");
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [progress, setProgress] = useState(false);

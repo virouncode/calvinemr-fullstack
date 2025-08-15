@@ -160,6 +160,7 @@ const PrescriptionsPopUp = ({
                       ""
                     ) || "",
                 }}
+                initialSubject="Rx"
               />
             ) : (
               <NewFax
@@ -172,6 +173,7 @@ const PrescriptionsPopUp = ({
                       ""
                     ) || "",
                 }}
+                initialSubject="Rx"
               />
             )}
           </FakeWindow>
