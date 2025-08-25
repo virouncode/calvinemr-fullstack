@@ -44,17 +44,15 @@ const Messages = () => {
       let results: MessageType[] | undefined = messages.pages.flatMap(
         (page) => page.items
       );
-      console.log(
-        "message we seek",
-        results?.find((item) => item.id === parseInt(messageId))
+      const messageToFind = results?.find(
+        (item) => item.id === parseInt(messageId)
       );
+      console.log("messageToFind", messageToFind);
 
-      // while (!results?.find((item) => item.id === parseInt(messageId))) {
+      if (messageToFind) return;
       results = (await fetchNextPage()).data?.pages.flatMap(
         (page) => page.items
       );
-      console.log("fetchNextPage", results);
-      // }
     };
     fetchMessagesUntilMessageId();
   }, [messages, messageId, fetchNextPage, isPending]);
