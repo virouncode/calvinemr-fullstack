@@ -100,7 +100,9 @@ const FaxesOverview = ({
         section === "Received faxes"
           ? removeDashes(search)
           : "1" + removeDashes(search)
-      ) || item.contactName.toLowerCase().includes(search.toLowerCase())
+      ) ||
+      item.contactName.toLowerCase().includes(search.toLowerCase()) ||
+      item.note.toLowerCase().includes(search.toLowerCase())
     );
   });
 

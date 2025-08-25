@@ -8,8 +8,6 @@ import useTitle from "../../hooks/useTitle";
 
 const StaffMessagesPage = () => {
   const { msgType } = useParams();
-  console.log("msgType", msgType);
-
   const [msgsType, setMsgsType] = useState(msgType || "Internal");
   const isTypeChecked = (type: string) => {
     return type === msgsType ? true : false;
