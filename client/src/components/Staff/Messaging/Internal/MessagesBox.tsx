@@ -81,11 +81,15 @@ const MessagesBox = ({
       </div>
     );
 
+  const message = messages.find(({ id }) => id === currentMsgId) as
+    | MessageType
+    | TodoType;
+
   return (
     messages && (
       <>
         <div className="messages__content-box" ref={divRef}>
-          {currentMsgId === 0 ? (
+          {currentMsgId === 0 && message ? (
             <MessagesOverview
               messages={messages}
               isFetchingNextPage={isFetchingNextPage}
@@ -99,11 +103,7 @@ const MessagesBox = ({
           ) : (
             <MessageDetail
               setCurrentMsgId={setCurrentMsgId}
-              message={
-                messages.find(({ id }) => id === currentMsgId) as
-                  | MessageType
-                  | TodoType
-              }
+              message={message}
               section={section}
               printVisible={printVisible}
               setPrintVisible={setPrintVisible}

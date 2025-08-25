@@ -91,7 +91,6 @@ export const usePreviousMessages = (
     queryKey: ["previousMessages", message.id],
     queryFn: (): Promise<(MessageExternalType | MessageType)[]> =>
       fetchPreviousMessages(message, section),
-    enabled: !!message.id,
   });
 };
 
