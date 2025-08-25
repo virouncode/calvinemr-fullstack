@@ -85,11 +85,13 @@ const MessagesBox = ({
     | MessageType
     | TodoType;
 
+  console.log("message in MessagesBox", message);
+
   return (
     messages && (
       <>
         <div className="messages__content-box" ref={divRef}>
-          {currentMsgId === 0 && message ? (
+          {currentMsgId === 0 ? (
             <MessagesOverview
               messages={messages}
               isFetchingNextPage={isFetchingNextPage}
@@ -101,13 +103,15 @@ const MessagesBox = ({
               search={search}
             />
           ) : (
-            <MessageDetail
-              setCurrentMsgId={setCurrentMsgId}
-              message={message}
-              section={section}
-              printVisible={printVisible}
-              setPrintVisible={setPrintVisible}
-            />
+            message && (
+              <MessageDetail
+                setCurrentMsgId={setCurrentMsgId}
+                message={message}
+                section={section}
+                printVisible={printVisible}
+                setPrintVisible={setPrintVisible}
+              />
+            )
           )}
         </div>
         {newVisible && (
