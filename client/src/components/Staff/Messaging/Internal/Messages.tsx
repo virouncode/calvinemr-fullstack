@@ -36,18 +36,20 @@ const Messages = () => {
     isFetching,
   } = useStaffMessages(user.id, section, deboundedSearch);
 
+  console.log("messages", messages);
+
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
     const fetchMessagesUntilMessageId = async () => {
       let results: MessageType[] | undefined = messages.pages.flatMap(
         (page) => page.items
       );
-      while (!results?.find((item) => item.id === parseInt(messageId))) {
-        results = (await fetchNextPage()).data?.pages.flatMap(
-          (page) => page.items
-        );
-        console.log("fetchNextPage", results);
-      }
+      // while (!results?.find((item) => item.id === parseInt(messageId))) {
+      results = (await fetchNextPage()).data?.pages.flatMap(
+        (page) => page.items
+      );
+      console.log("fetchNextPage", results);
+      // }
     };
     fetchMessagesUntilMessageId();
   }, [messages, messageId, fetchNextPage, isPending]);
