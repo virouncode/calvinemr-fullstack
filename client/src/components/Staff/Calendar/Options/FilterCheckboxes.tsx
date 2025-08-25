@@ -47,8 +47,6 @@ const FilterCheckboxes = ({
     let updatedHostsIds: number[];
 
     if (checked) {
-      console.log("checked", id, category);
-
       updatedHostsIds = [...new Set([...hostsIds, id].filter(Boolean))];
       if (user.title === "Secretary" && !updatedHostsIds.includes(0)) {
         updatedHostsIds = [0, ...updatedHostsIds];

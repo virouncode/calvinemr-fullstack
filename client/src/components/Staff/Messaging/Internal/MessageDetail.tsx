@@ -88,8 +88,6 @@ const MessageDetail = ({
     useState(false);
   const messageContentRef = useRef<HTMLDivElement | null>(null);
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
-  console.log("messageId", messageId);
-  console.log("message", message);
   //Queries
   const {
     data: previousMsgs,

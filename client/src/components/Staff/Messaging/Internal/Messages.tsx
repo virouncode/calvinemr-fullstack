@@ -36,8 +36,6 @@ const Messages = () => {
     isFetching,
   } = useStaffMessages(user.id, section, deboundedSearch);
 
-  console.log("messages", messages);
-
   useEffect(() => {
     if (!messages || !messageId || isPending) return;
     const fetchMessagesUntilMessageId = async () => {

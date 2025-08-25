@@ -85,8 +85,6 @@ const MessagesBox = ({
     | MessageType
     | TodoType;
 
-  console.log("message in MessagesBox", message);
-
   return (
     messages && (
       <>
