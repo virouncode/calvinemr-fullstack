@@ -98,12 +98,12 @@ const MessageDetail = ({
   const todoDelete = useTodoDelete(user.id);
   const clinicalNotePost = useClinicalNotePost();
 
-  useEffect(() => {
-    //to hide parameters
-    if (messageId) {
-      navigate("/staff/messages");
-    }
-  }, [messageId, navigate]);
+  // useEffect(() => {
+  //   //to hide parameters
+  //   if (messageId) {
+  //     navigate("/staff/messages");
+  //   }
+  // }, [messageId, navigate]);
 
   const attachments = message
     ? (message.attachments_ids as { attachment: MessageAttachmentType }[]).map(
