@@ -44,6 +44,11 @@ const Messages = () => {
       let results: MessageType[] | undefined = messages.pages.flatMap(
         (page) => page.items
       );
+      console.log(
+        "message we seek",
+        results?.find((item) => item.id === parseInt(messageId))
+      );
+
       // while (!results?.find((item) => item.id === parseInt(messageId))) {
       results = (await fetchNextPage()).data?.pages.flatMap(
         (page) => page.items
