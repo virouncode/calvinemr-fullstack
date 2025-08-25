@@ -46,6 +46,7 @@ const Messages = () => {
         results = (await fetchNextPage()).data?.pages.flatMap(
           (page) => page.items
         );
+        console.log("fetchNextPage", results);
       }
     };
     fetchMessagesUntilMessageId();
