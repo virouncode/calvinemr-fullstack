@@ -416,6 +416,7 @@ const PrescriptionPreview = ({
                     ""
                   ) || "",
               }}
+              initialSubject="Rx"
             />
           ) : (
             <NewFax
@@ -433,6 +434,7 @@ const PrescriptionPreview = ({
                     ""
                   ) || "",
               }}
+              initialSubject="Rx"
             />
           )}
         </FakeWindow>

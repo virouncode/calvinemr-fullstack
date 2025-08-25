@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { xanoDeleteBatch } from "../../../../api/xanoCRUD/xanoDelete";
 import { xanoPost } from "../../../../api/xanoCRUD/xanoPost";
+import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
 import { useClinicalNotePost } from "../../../../hooks/reactquery/mutations/clinicalNotesMutations";
@@ -54,7 +55,6 @@ import MessagesPrint from "./MessagesPrint";
 import NewTodo from "./NewTodo";
 import NewTodoMobile from "./NewTodoMobile";
 import ReplyMessage from "./ReplyMessage";
-import useSocketContext from "../../../../hooks/context/useSocketContext";
 
 type MessageDetailProps = {
   setCurrentMsgId: React.Dispatch<React.SetStateAction<number>>;
@@ -97,6 +97,9 @@ const MessageDetail = ({
   const messagePut = useMessagePut(user.id, section);
   const todoDelete = useTodoDelete(user.id);
   const clinicalNotePost = useClinicalNotePost();
+
+  console.log("messageId", messageId);
+  console.log("message", message);
 
   useEffect(() => {
     //to hide parameters
