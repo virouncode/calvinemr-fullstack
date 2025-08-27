@@ -126,6 +126,7 @@ const FaxToolBar = ({
       initialRangeEnd.current = value.split("-").join("");
       setRangeEnd(value.split("-").join(""));
     }
+    setCurrentPage(1);
   };
 
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,10 +134,12 @@ const FaxToolBar = ({
       setAll(true);
       setRangeStart("19700101");
       setRangeEnd("30000101");
+      setCurrentPage(1);
     } else {
       setAll(false);
       setRangeStart(initialRangeStart.current);
       setRangeEnd(initialRangeEnd.current);
+      setCurrentPage(1);
     }
   };
 
