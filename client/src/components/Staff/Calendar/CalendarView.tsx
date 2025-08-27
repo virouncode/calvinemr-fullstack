@@ -94,7 +94,6 @@ const CalendarView = ({
     try {
       if (currentAbortController) {
         currentAbortController.abort();
-        console.log("Aborting previous request");
       }
       const newAbortController = new AbortController();
       setCurrentAbortController(newAbortController);

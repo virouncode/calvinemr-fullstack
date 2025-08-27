@@ -60,7 +60,7 @@ const FaxDetail = ({
     data: faxBase64,
     isPending,
     error,
-  } = useFax(currentFaxId, section === "Received faxes" ? "IN" : "OUT");
+  } = useFax(currentFaxId, section === "Sent" ? "OUT" : "IN");
   const faxDelete = useFaxDelete();
   const faxNotesDelete = useFaxNotesDelete();
 
@@ -102,7 +102,7 @@ const FaxDetail = ({
       //Delete fax
       const faxToDelete: FaxToDeleteType = {
         faxFileName: currentFaxId,
-        direction: section === "Received faxes" ? "IN" : "OUT",
+        direction: section === "Sent" ? "OUT" : "IN",
       };
       faxDelete.mutate(faxToDelete, {
         onSuccess: () => {

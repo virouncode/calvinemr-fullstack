@@ -9,6 +9,7 @@ type HeartIconProps = {
   ml?: number;
   mr?: number;
   active: boolean;
+  color?: string;
 };
 
 const HeartIcon = ({
@@ -16,6 +17,7 @@ const HeartIcon = ({
   ml = 0,
   mr = 0,
   active = false,
+  color = "red",
 }: HeartIconProps) => {
   return active ? (
     <FontAwesomeIcon
@@ -25,7 +27,7 @@ const HeartIcon = ({
         cursor: "pointer",
         marginLeft: `${ml}px`,
         marginRight: `${mr}px`,
-        color: "red",
+        color: color,
       }}
       className="icon"
     />

@@ -1,4 +1,4 @@
-import React from "react";
+import { default as React } from "react";
 import {
   useFaxesDelete,
   useMarkFaxesAs,
@@ -12,6 +12,8 @@ import { dateStringToISO } from "../../../utils/dates/formatDates";
 import Button from "../../UI/Buttons/Button";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import { confirmAlert } from "../../UI/Confirm/ConfirmGlobal";
+import HeartIcon from "../../UI/Icons/HeartIcon";
+import TrashIcon from "../../UI/Icons/TrashIcon";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
 import { FAXES_PER_PAGE } from "./Faxes";
@@ -23,8 +25,7 @@ type FaxToolBarProps = {
   faxesSelectedIds: string[];
   setFaxesSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
   currentFaxId: string;
-  faxesInbox: FaxInboxType[];
-  faxesOutbox: FaxOutboxType[];
+  faxes: FaxInboxType[] | FaxOutboxType[];
   selectAllVisible: boolean;
   setSelectAllVisible: React.Dispatch<React.SetStateAction<boolean>>;
   rangeStart: string;
@@ -41,6 +42,7 @@ type FaxToolBarProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   numberOfFaxes?: number;
   totalPages: number;
+  setFolderFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FaxToolBar = ({
@@ -50,8 +52,7 @@ const FaxToolBar = ({
   faxesSelectedIds,
   setFaxesSelectedIds,
   currentFaxId,
-  faxesInbox,
-  faxesOutbox,
+  faxes,
   selectAllVisible,
   setSelectAllVisible,
   rangeStart,
@@ -68,6 +69,7 @@ const FaxToolBar = ({
   setCurrentPage,
   numberOfFaxes,
   totalPages,
+  setFolderFormVisible,
 }: FaxToolBarProps) => {
   //Queries
   const faxesDelete = useFaxesDelete();
@@ -77,29 +79,27 @@ const FaxToolBar = ({
     setNewVisible(true);
   };
 
-  const handleSelectAll = () => {
-    const allFaxesIds =
-      section === "Received faxes"
-        ? faxesInbox.map(({ FileName }) => FileName)
-        : faxesOutbox.map(({ FileName }) => FileName);
-    setFaxesSelectedIds(allFaxesIds);
-    setSelectAllVisible(false);
-  };
-
-  const handleUnselectAll = () => {
-    setFaxesSelectedIds([]);
-    setSelectAllVisible(true);
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    if (checked) {
+      const allFaxesIds = faxes.map(({ FileName }) => FileName);
+      setFaxesSelectedIds(allFaxesIds);
+      setSelectAllVisible(false);
+    } else {
+      setFaxesSelectedIds([]);
+      setSelectAllVisible(true);
+    }
   };
 
   const handleDeleteSelected = async () => {
     if (
       await confirmAlert({
-        content: `Do you really want to delete selected faxes ? (this action is irreversible)`,
+        content: `Do you really want to delete selected faxes ? (this action is irreversible and will remove them from all folders)`,
       })
     ) {
       const faxesToDelete: FaxesToDeleteType = {
         faxFileNames: faxesSelectedIds,
-        direction: section === "Received faxes" ? "IN" : "OUT",
+        direction: section === "Sent" ? "OUT" : "IN",
       };
       faxesDelete.mutate(faxesToDelete, {});
     }
@@ -162,12 +162,30 @@ const FaxToolBar = ({
       markFaxesAs.mutate({ fileNames, viewedStatus });
     }
   };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    setFaxesSelectedIds([]);
+    setSelectAllVisible(true);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    setFaxesSelectedIds([]);
+    setSelectAllVisible(true);
+  };
+
   const hasUnreadMessagesSelected =
     section === "Received faxes" &&
-    faxesInbox.some(
+    faxes.some(
       (fax) =>
-        faxesSelectedIds.includes(fax.FileName) && fax.ViewedStatus === "N"
+        faxesSelectedIds.includes(fax.FileName) &&
+        (fax as FaxInboxType).ViewedStatus === "N"
     );
+
+  const handleFolderFormVisible = () => {
+    setFolderFormVisible(true);
+  };
 
   return (
     <div className="fax__toolbar">
@@ -216,32 +234,25 @@ const FaxToolBar = ({
           </div>
         </div>
       </div>
-      {numberOfFaxes && (
+      {numberOfFaxes ? (
         <div className="fax__toolbar-pagination">
           <p className="fax__toolbar-pagination-text">
             Page {currentPage} / {Math.ceil(numberOfFaxes / FAXES_PER_PAGE)}
           </p>
           <Button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={handlePreviousPage}
             label="<"
             disabled={currentPage === 1}
           />
           <Button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={handleNextPage}
             label=">"
             disabled={currentPage === totalPages}
           />
         </div>
-      )}
+      ) : null}
 
       <div className="fax__toolbar-btns">
-        {currentFaxId === "" &&
-          faxesSelectedIds.length !== 0 &&
-          import.meta.env.VITE_ISDEMO === "false" && (
-            <Button onClick={handleDeleteSelected} label="Delete" />
-          )}
         {currentFaxId === "" &&
           faxesSelectedIds.length !== 0 &&
           !hasUnreadMessagesSelected && (
@@ -253,15 +264,22 @@ const FaxToolBar = ({
             <Button onClick={handleMarkAsRead} label="Mark as Read" />
           )}
         {currentFaxId === "" &&
-          (selectAllVisible ? (
-            <Button
-              onClick={handleSelectAll}
-              label="Select All"
-              disabled={!faxesInbox && !faxesOutbox}
+          faxesSelectedIds.length !== 0 &&
+          section !== "Sent" && (
+            <HeartIcon
+              onClick={handleFolderFormVisible}
+              ml={10}
+              active={true}
+              color="black"
             />
-          ) : (
-            <Button onClick={handleUnselectAll} label="Unselect All" />
-          ))}
+          )}
+        {currentFaxId === "" && faxesSelectedIds.length !== 0 && (
+          // import.meta.env.VITE_ISDEMO === "false" &&
+          <TrashIcon onClick={handleDeleteSelected} ml={10} />
+        )}
+        {currentFaxId === "" && faxes.length > 0 && (
+          <Checkbox checked={!selectAllVisible} onChange={handleSelectAll} />
+        )}
       </div>
     </div>
   );

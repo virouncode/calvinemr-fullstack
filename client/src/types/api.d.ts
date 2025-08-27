@@ -2027,6 +2027,21 @@ export type FaxNotesType = {
   updates: { date_updated: number; updated_by_id: number }[];
 };
 
+export type FaxFolderType = {
+  id: number;
+  name: string;
+  date_created: number;
+  created_by_id: number;
+};
+
+export type FiledFaxType = {
+  id: number;
+  FileName: string;
+  fax_folder_id: number;
+  date_created: number;
+  created_by_id: number;
+};
+
 export type FaxToDeleteType = {
   faxFileName: string;
   direction: "IN" | "OUT";

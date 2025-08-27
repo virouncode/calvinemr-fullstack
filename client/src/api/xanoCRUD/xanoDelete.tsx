@@ -5,6 +5,7 @@ axios.defaults.withCredentials = true;
 export const xanoDelete = async (
   URL: string,
   userType: string,
+  data?: Record<string, unknown>,
   abortController?: AbortController
 ) => {
   const config: AxiosXanoConfigType = {
@@ -17,6 +18,7 @@ export const xanoDelete = async (
     },
   };
   if (abortController) config.signal = abortController.signal;
+  if (data) config.data = data;
   const response = await axios(config);
   return response.data;
 };

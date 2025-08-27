@@ -53,12 +53,12 @@ const FaxThumbnailMobile = ({
   const faxNotesDelete = useFaxNotesDelete();
 
   const faxNumber =
-    section === "Received faxes"
-      ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-      : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber);
+    section === "Sent"
+      ? callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
+      : callerIDToFaxNumber((fax as FaxInboxType).CallerID);
 
   const handleFaxClick = async () => {
-    if (section === "Received faxes") {
+    if (section !== "Sent") {
       setCurrentCallerId((fax as FaxInboxType).CallerID);
       if (
         (fax as FaxInboxType).ViewedStatus === "N" &&
@@ -123,7 +123,7 @@ const FaxThumbnailMobile = ({
       }
       const faxToDelete: FaxToDeleteType = {
         faxFileName: fax.FileName,
-        direction: section === "Received faxes" ? "IN" : "OUT",
+        direction: section === "Sent" ? "OUT" : "IN",
       };
       faxDelete.mutate(faxToDelete, {
         onSuccess: () => {
@@ -139,9 +139,9 @@ const FaxThumbnailMobile = ({
     e.stopPropagation();
     const response = await xanoGet("/contact_with_fax_number", "staff", {
       fax_number:
-        section === "Received faxes"
-          ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-          : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber),
+        section === "Sent"
+          ? callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
+          : callerIDToFaxNumber((fax as FaxInboxType).CallerID),
     });
     if (
       !response ||
@@ -163,7 +163,7 @@ const FaxThumbnailMobile = ({
   return (
     <div
       className={
-        section === "Received faxes"
+        section !== "Sent"
           ? (fax as FaxInboxType).ViewedStatus === "Y"
             ? "fax__thumbnail-mobile"
             : "fax__thumbnail-mobile fax__thumbnail-mobile--unread"
@@ -199,9 +199,9 @@ const FaxThumbnailMobile = ({
           <ContactFaxForm
             setAddFaxNumberVisible={setAddFaxNumberVisible}
             initialFaxNumber={
-              section === "Received faxes"
-                ? callerIDToFaxNumber((fax as FaxInboxType).CallerID)
-                : callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
+              section === "Sent"
+                ? callerIDToFaxNumber((fax as FaxOutboxType).ToFaxNumber)
+                : callerIDToFaxNumber((fax as FaxInboxType).CallerID)
             }
           />
         </FakeWindow>

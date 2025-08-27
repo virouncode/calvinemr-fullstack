@@ -1,7 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
-import { FaxInboxType, FaxNotesType, FaxOutboxType } from "../../../types/api";
+import {
+  FaxFolderType,
+  FaxInboxType,
+  FaxNotesType,
+  FaxOutboxType,
+  FiledFaxType,
+} from "../../../types/api";
 axios.defaults.withCredentials = true;
 
 const fetchFaxesInbox = async (
@@ -78,6 +84,20 @@ const fetchFaxNotesForFilenames = async (
   return response;
 };
 
+const fetchFaxFolders = async (): Promise<FaxFolderType[]> => {
+  const response = await xanoGet("/fax_folders", "staff");
+  return response;
+};
+
+const fetchFaxesForFolderId = async (
+  folderId: number
+): Promise<FiledFaxType[]> => {
+  const response = await xanoGet("/faxes_for_folder_id", "staff", {
+    folder_id: folderId,
+  });
+  return response;
+};
+
 export const useFaxesInbox = (
   viewedStatus = "ALL",
   all = true,
@@ -132,5 +152,24 @@ export const useFaxNotesForFilenames = (fileNames: string[]) => {
     queryKey: ["fax notes for filenames", fileNames],
     queryFn: () => fetchFaxNotesForFilenames(fileNames),
     enabled: fileNames.length > 0,
+  });
+};
+
+export const useFaxFolders = () => {
+  return useQuery({
+    queryKey: ["fax folders"],
+    queryFn: () => fetchFaxFolders(),
+  });
+};
+
+export const useFaxesForFolderId = (folderId: string) => {
+  return useQuery({
+    queryKey: ["faxes for folder id", folderId],
+    queryFn: () => {
+      return isNaN(parseInt(folderId))
+        ? []
+        : fetchFaxesForFolderId(parseInt(folderId));
+    },
+    enabled: !!folderId,
   });
 };

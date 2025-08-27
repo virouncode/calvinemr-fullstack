@@ -45,13 +45,10 @@ const Messages = () => {
       const messageToFind = results?.find(
         (item) => item.id === parseInt(messageId)
       );
-      console.log("messageToFind", messageToFind);
-
       if (messageToFind) return;
       results = (await fetchNextPage()).data?.pages.flatMap(
         (page) => page.items
       );
-      console.log("fetchNextPage", results);
     };
     fetchMessagesUntilMessageId();
   }, [messages, messageId, fetchNextPage, isPending]);

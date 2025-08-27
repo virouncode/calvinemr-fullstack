@@ -19,8 +19,7 @@ type FaxBoxProps = {
   currentCallerId: string;
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
   setCurrentCallerId: React.Dispatch<React.SetStateAction<string>>;
-  faxesInbox: FaxInboxType[] | undefined;
-  faxesOutbox: FaxOutboxType[] | undefined;
+  faxes: FaxInboxType[] | FaxOutboxType[];
   isPendingInbox: boolean;
   isPendingOutbox: boolean;
   errorInbox: Error | null;
@@ -38,8 +37,7 @@ const FaxBox = ({
   currentCallerId,
   setCurrentFaxId,
   setCurrentCallerId,
-  faxesInbox,
-  faxesOutbox,
+  faxes,
   isPendingInbox,
   isPendingOutbox,
   errorInbox,
@@ -47,6 +45,7 @@ const FaxBox = ({
   search,
 }: FaxBoxProps) => {
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
+
   if (isPendingOutbox || isPendingInbox)
     return (
       <div className="fax__content-box">
@@ -71,7 +70,7 @@ const FaxBox = ({
       <div className="fax__content-box">
         {!currentFaxId ? (
           <FaxesOverview
-            faxes={section === "Received faxes" ? faxesInbox : faxesOutbox}
+            faxes={faxes}
             setCurrentFaxId={setCurrentFaxId}
             setCurrentCallerId={setCurrentCallerId}
             faxesSelectedIds={faxesSelectedIds}

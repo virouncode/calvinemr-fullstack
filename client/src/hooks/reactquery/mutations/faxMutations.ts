@@ -6,9 +6,11 @@ import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import {
   FaxesToDeleteType,
+  FaxFolderType,
   FaxNotesType,
   FaxToDeleteType,
   FaxToPostType,
+  FiledFaxType,
 } from "../../../types/api";
 import useSocketContext from "../../context/useSocketContext";
 
@@ -60,6 +62,50 @@ const markFaxesAs = async (fileNames: string[], viewedStatus: string) => {
     viewedStatus,
   });
   return response.data;
+};
+
+const postFaxFolder = async (faxFolderToPost: Partial<FaxFolderType>) => {
+  const response = await xanoPost("/fax_folders", "staff", faxFolderToPost);
+  return response;
+};
+
+const putFaxFolder = async (faxFolderToPut: FaxFolderType) => {
+  const response = await xanoPut(
+    `/fax_folders/${faxFolderToPut.id}`,
+    "staff",
+    faxFolderToPut
+  );
+  return response;
+};
+
+const deleteFaxFolder = async (faxFolderToDeleteId: number) => {
+  const response = await xanoDelete(
+    `/fax_folders/${faxFolderToDeleteId}`,
+    "staff"
+  );
+  return response;
+};
+
+const postFiledFax = async (filedFaxToPost: Partial<FiledFaxType>) => {
+  const response = await xanoPost("/filed_faxes", "staff", filedFaxToPost);
+  return response;
+};
+
+const putFiledFax = async (filedFaxToPut: FiledFaxType) => {
+  const response = await xanoPut(
+    `/filed_faxes/${filedFaxToPut.id}`,
+    "staff",
+    filedFaxToPut
+  );
+  return response;
+};
+
+const deleteFiledFax = async (filedFaxToDeleteId: number) => {
+  const response = await xanoDelete(
+    `/filed_faxes/${filedFaxToDeleteId}`,
+    "staff"
+  );
+  return response;
 };
 
 export const useFaxPost = () => {
@@ -183,6 +229,119 @@ export const useMarkFaxesAs = () => {
       toast.error(`Error: unable to mark faxes: ${error.message}`, {
         containerId: "A",
       });
+    },
+  });
+};
+
+export const useFaxFolderPost = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxFolderToPost: Partial<FaxFolderType>) =>
+      postFaxFolder(faxFolderToPost),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax folders"] });
+      toast.success("Fax label added succesfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to add fax label: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFaxFolderPut = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxFolderToPut: FaxFolderType) => putFaxFolder(faxFolderToPut),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax folders"] });
+      toast.success("Fax label updated successfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to update fax label: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFaxFolderDelete = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (faxFolderToDeleteId: number) =>
+      deleteFaxFolder(faxFolderToDeleteId),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["fax folders"] });
+      toast.success("Fax label deleted successfully", { containerId: "A" });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to delete fax label: ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFiledFaxPost = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (filedFaxToPost: Partial<FiledFaxType>) =>
+      postFiledFax(filedFaxToPost),
+    onSuccess: (data: FiledFaxType) => {
+      socket?.emit("message", {
+        key: ["faxes for folder id", data.fax_folder_id],
+      });
+      toast.success("Label succesfully assigned to fax(es)", {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to assign label to fax(es) ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFiledFaxPut = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (filedFaxToPut: FiledFaxType) => putFiledFax(filedFaxToPut),
+    onSuccess: (data: FiledFaxType) => {
+      socket?.emit("message", {
+        key: ["faxes for folder id", data.fax_folder_id],
+      });
+      toast.success("Label succesfully assigned to fax(es)", {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error: unable to assign label to fax(es) ${error.message}`, {
+        containerId: "A",
+      });
+    },
+  });
+};
+
+export const useFiledFaxDelete = () => {
+  const { socket } = useSocketContext();
+  return useMutation({
+    mutationFn: (filedFaxToDeleteId: number) =>
+      deleteFiledFax(filedFaxToDeleteId),
+    onSuccess: () => {
+      socket?.emit("message", { key: ["faxes for folder id"] });
+      toast.success("Label succesfully removed from fax(es)", {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(
+        `Error: unable to remove label from fax(es) ${error.message}`,
+        {
+          containerId: "A",
+        }
+      );
     },
   });
 };

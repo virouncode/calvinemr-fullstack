@@ -13,7 +13,7 @@ import FaxThumbnail from "./FaxThumbnail";
 import FaxThumbnailMobile from "./FaxThumbnailMobile";
 
 type FaxesOverviewProps = {
-  faxes: FaxInboxType[] | FaxOutboxType[] | undefined;
+  faxes: FaxInboxType[] | FaxOutboxType[];
   setCurrentFaxId: React.Dispatch<React.SetStateAction<string>>;
   setCurrentCallerId: React.Dispatch<React.SetStateAction<string>>;
   faxesSelectedIds: string[];
@@ -38,24 +38,24 @@ const FaxesOverview = ({
       case "Sent":
         return `No sent faxes in this date range`;
       default:
-        return "";
+        return "No faxes in this folder";
     }
   };
 
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   const faxNumbers = faxes
-    ? section === "Received faxes"
+    ? section === "Sent"
       ? [
-          ...new Set(
-            faxes.map((item) => addDashes((item as FaxInboxType).CallerID))
-          ),
-        ].filter(Boolean)
-      : [
           ...new Set(
             faxes.map((item) =>
               addDashes((item as FaxOutboxType).ToFaxNumber.slice(1))
             )
+          ),
+        ].filter(Boolean)
+      : [
+          ...new Set(
+            faxes.map((item) => addDashes((item as FaxInboxType).CallerID))
           ),
         ].filter(Boolean)
     : [];
@@ -64,15 +64,16 @@ const FaxesOverview = ({
     ? faxes.map((item) => (item as FaxInboxType | FaxOutboxType).FileName)
     : [];
 
+  // Appeler les autres hooks avec les données calculées
   const { data: faxContactsNames } = useFaxContactsNames(faxNumbers);
   const { data: faxNotes } = useFaxNotesForFilenames(fileNames);
 
   const faxesWithNotesAndContactName = faxes
     ? faxes.map((item) => {
         const faxNumber =
-          section === "Received faxes"
-            ? (item as FaxInboxType).CallerID
-            : (item as FaxOutboxType).ToFaxNumber.slice(1); // Remove leading '1'
+          section === "Sent"
+            ? (item as FaxOutboxType).ToFaxNumber.slice(1) // Remove leading '1'
+            : (item as FaxInboxType).CallerID;
         const contactName =
           faxContactsNames?.find(
             ({ faxNumber: number }) => number === addDashes(faxNumber)
@@ -92,14 +93,12 @@ const FaxesOverview = ({
 
   const faxesToShow = faxesWithNotesAndContactName.filter((item) => {
     const faxNumber =
-      section === "Received faxes"
-        ? (item as FaxInboxType).CallerID
-        : (item as FaxOutboxType).ToFaxNumber;
+      section === "Sent"
+        ? (item as FaxOutboxType).ToFaxNumber
+        : (item as FaxInboxType).CallerID;
     return (
       faxNumber.includes(
-        section === "Received faxes"
-          ? removeDashes(search)
-          : "1" + removeDashes(search)
+        section === "Sent" ? "1" + removeDashes(search) : removeDashes(search)
       ) || item.contactName.toLowerCase().includes(search.toLowerCase())
       // ||
       // item.note.toLowerCase().includes(search.toLowerCase())

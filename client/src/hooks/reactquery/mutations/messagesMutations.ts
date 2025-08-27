@@ -87,8 +87,6 @@ export const useMessagesPostBatch = (staffId: number, section: string) => {
       }
     },
     onSuccess: (datas: MessageType[] | TodoType[]) => {
-      console.log("datas", datas);
-
       socket?.emit("message", { key: ["messages", staffId] });
       for (const data of datas) {
         if (section === "To-dos") {

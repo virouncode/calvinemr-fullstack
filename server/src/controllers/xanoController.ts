@@ -142,10 +142,12 @@ export const deleteXano = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
+    const data = req.body; // Optional data for DELETE request
     const config = {
       method: "delete",
       url: URL as string,
       headers,
+      data,
     };
     const axiosXanoInstance = getAxiosInstance(userType as string);
     const response = await axiosXanoInstance(config);
