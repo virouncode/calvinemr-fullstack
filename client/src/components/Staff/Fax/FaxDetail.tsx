@@ -233,7 +233,7 @@ const FaxDetail = ({
               onClick={handleClickForward}
               label="Forward"
             />
-            {section === "Received faxes" && (
+            {section !== "Sent" && (
               <Button
                 disabled={progress}
                 onClick={handleClickReply}
