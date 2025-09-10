@@ -7,6 +7,8 @@ import xanoPostAuth from "../../../api/xanoCRUD/xanoPostAuth";
 import useAdminsInfosContext from "../../../hooks/context/useAdminsInfosContext";
 import useAuthContext from "../../../hooks/context/useAuthContext";
 import useClinicContext from "../../../hooks/context/useClinicContext";
+import usePurposesContext from "../../../hooks/context/usePuposesContext";
+import usePurposesCategoriesContext from "../../../hooks/context/usePurposesCategoriesContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -15,6 +17,8 @@ import {
   ClinicType,
   DemographicsType,
   PatientType,
+  PurposeCategoryType,
+  PurposeType,
   SettingsType,
   StaffType,
 } from "../../../types/api";
@@ -35,6 +39,9 @@ const LoginForm = () => {
   const { setClinic } = useClinicContext();
   const { setAdminsInfos } = useAdminsInfosContext();
   const { setStaffInfos } = useStaffInfosContext();
+  const { setPurposes } = usePurposesContext();
+  const { setPurposesCategories } = usePurposesCategoriesContext();
+
   const navigate = useNavigate();
   const location = useLocation();
   const [err, setErr] = useState("");
@@ -235,6 +242,22 @@ const LoginForm = () => {
       const adminsInfos: AdminType[] = await xanoGet("/admins", "staff");
       setAdminsInfos(adminsInfos);
       localStorage.setItem("adminsInfos", JSON.stringify(adminsInfos));
+
+      //=============== PURPOSES CATEGORIES =================//
+      const purposesCategories: PurposeCategoryType[] = await xanoGet(
+        "/purposes_categories",
+        "staff"
+      );
+      setPurposesCategories(purposesCategories);
+      localStorage.setItem(
+        "purposesCategories",
+        JSON.stringify(purposesCategories)
+      );
+
+      //=============== PURPOSES =================//
+      const purposes: PurposeType[] = await xanoGet("/purposes", "staff");
+      setPurposes(purposes);
+      localStorage.setItem("purposes", JSON.stringify(purposes));
 
       //=============== WARN IF SITE CLOSED =================//
       localStorage.setItem("alreadyWarnedSiteClosed", "false");

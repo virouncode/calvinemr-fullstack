@@ -42,6 +42,7 @@ export const parseToAppointment = (event: EventInput) => {
       OHIPPhysicianId: event.extendedProps?.providerOHIP,
     },
     AppointmentPurpose: event.extendedProps?.purpose,
+    purposes_ids: event.extendedProps?.purposes_ids,
     AppointmentNotes: event.extendedProps?.notes,
     site_id: event.extendedProps?.siteId,
     rrule: event.extendedProps?.rrule,

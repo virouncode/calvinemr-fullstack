@@ -1,10 +1,9 @@
 import { EventContentArg } from "@fullcalendar/core";
 import { EventImpl } from "@fullcalendar/core/internal";
 import React from "react";
+import usePurposesContext from "../../../hooks/context/usePuposesContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import useUserContext from "../../../hooks/context/useUserContext";
 import { DemographicsType, StaffType } from "../../../types/api";
-import { UserStaffType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
@@ -44,8 +43,19 @@ const EventElementTimegrid = ({
   staffGuestsIds,
 }: EventElementTimegridProps) => {
   //Hooks
-  const { user } = useUserContext() as { user: UserStaffType };
+  const { purposes } = usePurposesContext();
   const { staffInfos } = useStaffInfosContext();
+
+  const purposesNames: string | null =
+    event.extendedProps.purposes_ids?.length > 0
+      ? event.extendedProps.purposes_ids
+          .map((id: number) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name: string | null) => name !== null)
+          .join(" - ")
+      : null;
   return (
     <div
       className="calendar__event-element-day"
@@ -116,9 +126,7 @@ const EventElementTimegrid = ({
                 </span>
               )
           )}
-        <strong>
-          {event.extendedProps.purpose?.toUpperCase() ?? "APPOINTMENT"}
-        </strong>
+        <strong>{purposesNames ?? "Appointment"}</strong>
         {" / "}
         <strong>Host: </strong>
         {event.extendedProps.hostName} / <strong>Site:</strong>{" "}

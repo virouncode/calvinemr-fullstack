@@ -92,6 +92,7 @@ const AppointmentForm = ({
       OHIPPhysicianId: user.ohip_billing_nbr,
     },
     AppointmentPurpose: "Appointment",
+    purposes_ids: [],
     AppointmentNotes: "",
     site_id: user.site_id,
     rrule: { freq: "", interval: 0, until: "", dtstart: "" },

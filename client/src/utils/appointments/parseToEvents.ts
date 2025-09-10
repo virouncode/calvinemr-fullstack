@@ -180,6 +180,7 @@ export const parseToEvent = (
         : "",
       duration: appointment.Duration,
       purpose: appointment.AppointmentPurpose,
+      purposes_ids: appointment.purposes_ids,
       status: appointment.AppointmentStatus,
       staffGuestsIds: appointment.staff_guests_ids as {
         staff_infos: StaffType;

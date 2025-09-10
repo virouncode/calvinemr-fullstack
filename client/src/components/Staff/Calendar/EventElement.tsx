@@ -2,9 +2,7 @@ import { EventContentArg } from "@fullcalendar/core";
 import { EventImpl } from "@fullcalendar/core/internal";
 import React from "react";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
-import useUserContext from "../../../hooks/context/useUserContext";
 import { DemographicsType, StaffType } from "../../../types/api";
-import { UserStaffType } from "../../../types/app";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
 import { toPatientName } from "../../../utils/names/toPatientName";
 import CloneIcon from "../../UI/Icons/CloneIcon";
@@ -44,8 +42,8 @@ const EventElement = ({
   staffGuestsIds,
 }: EventElementProps) => {
   //Hooks
-  const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
+
   return (
     <div
       className="calendar__event-element"

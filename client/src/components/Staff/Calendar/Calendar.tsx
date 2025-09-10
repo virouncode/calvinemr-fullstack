@@ -537,6 +537,7 @@ const Calendar = () => {
         info.allDay ? startAllDay : startDate
       ),
       AppointmentPurpose: "Appointment",
+      purposes_ids: [],
       site_id: timelineVisible ? timelineSiteId : user.site_id,
       recurrence: "Once",
       Provider:
@@ -708,6 +709,7 @@ const Calendar = () => {
         OHIPPhysicianId: event.extendedProps.OHIP,
       },
       AppointmentPurpose: event.extendedProps.purpose,
+      purposes_ids: event.extendedProps.purposes_ids,
       AppointmentNotes: event.extendedProps.notes,
       site_id: event.extendedProps.siteId,
       recurrence: event.extendedProps.recurrence,
@@ -871,6 +873,7 @@ const Calendar = () => {
           OHIPPhysicianId: event.extendedProps.OHIP,
         },
         AppointmentPurpose: event.extendedProps.purpose,
+        purposes_ids: event.extendedProps.purposes_ids,
         AppointmentNotes: event.extendedProps.notes,
         site_id: event.extendedProps.siteId,
         recurrence: event.extendedProps.recurrence,
@@ -979,6 +982,7 @@ const Calendar = () => {
         OHIPPhysicianId: event.extendedProps.OHIP,
       },
       AppointmentPurpose: event.extendedProps.purpose,
+      purposes_ids: event.extendedProps.purposes_ids,
       AppointmentNotes: event.extendedProps.notes,
       site_id: event.extendedProps.siteId,
       recurrence: "Once",
@@ -1283,6 +1287,7 @@ const Calendar = () => {
         OHIPPhysicianId: event.extendedProps.OHIP,
       },
       AppointmentPurpose: event.extendedProps.purpose,
+      purposes_ids: event.extendedProps.purposes_ids,
       AppointmentNotes: event.extendedProps.notes,
       site_id: event.extendedProps.siteId,
       recurrence: event.extendedProps.recurrence,
@@ -1503,6 +1508,8 @@ const Calendar = () => {
   if (appointments.isError)
     return <ErrorParagraph errorMsg={appointments.error.message} />;
   if (!sites) return <LoadingParagraph />;
+
+  console.log("appontments", appointments?.data);
 
   return (
     <>

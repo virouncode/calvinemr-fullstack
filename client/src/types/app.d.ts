@@ -79,6 +79,18 @@ export type ClinicContextType = {
   setClinic: React.Dispatch<React.SetStateAction<ClinicType | null>>;
 };
 
+export type PurposesContextType = {
+  purposes: PurposeType[];
+  setPurposes: React.Dispatch<React.SetStateAction<PurposeType[]>>;
+};
+
+export type PurposesCategoriesContextType = {
+  purposesCategories: PurposeCategoryType[];
+  setPurposesCategories: React.Dispatch<
+    React.SetStateAction<PurposeCategoryType[]>
+  >;
+};
+
 export type AxiosXanoConfigType = {
   url: string;
   method: string;

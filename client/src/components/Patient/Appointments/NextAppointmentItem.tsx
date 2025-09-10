@@ -1,4 +1,5 @@
 import React from "react";
+import usePurposesContext from "../../../hooks/context/usePuposesContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import { AppointmentType } from "../../../types/api";
 import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndName";
@@ -18,6 +19,17 @@ const NextAppointmentItem = ({
 }: NextAppointmentItemProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
+  const { purposes } = usePurposesContext();
+
+  const purposesNames = appointment.purposes_ids?.length
+    ? appointment.purposes_ids
+        .map((id) => {
+          const purpose = purposes.find((purpose) => purpose.id === id);
+          return purpose ? purpose.name : null;
+        })
+        .filter((name) => name !== null)
+        .join(" - ")
+    : null;
   return (
     <li key={appointment.id} className="patient-appointments__next-item">
       <div className="patient-appointments__next-item-date">
@@ -33,7 +45,7 @@ const NextAppointmentItem = ({
           With {staffIdToTitleAndName(staffInfos, appointment.host_id)}
         </div>
         <div className="patient-appointments__next-item-reason">
-          Reason : {appointment.AppointmentPurpose}
+          Reason : {purposesNames ?? "Appointment"}
         </div>
       </div>
     </li>

@@ -802,6 +802,7 @@ const EventForm = ({
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
       AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      purposes_ids: formDatas.purposes_ids,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       site_id: formDatas.site_id,
       recurrence: formDatas.recurrence,
@@ -876,6 +877,7 @@ const EventForm = ({
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
       AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      purposes_ids: formDatas.purposes_ids,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       site_id: formDatas.site_id,
       recurrence: "Once",
@@ -1124,6 +1126,7 @@ const EventForm = ({
           <EventFormInfos formDatas={formDatas} />
           <EventFormHostRow
             formDatas={formDatas}
+            setFormDatas={setFormDatas}
             handleHostChange={handleHostChange}
             handlePurposeChange={handlePurposeChange}
             handleRecurrenceChange={handleRecurrenceChange}

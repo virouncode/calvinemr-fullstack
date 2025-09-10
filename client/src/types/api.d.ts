@@ -98,6 +98,7 @@ export type AppointmentType = {
     OHIPPhysicianId: string;
   };
   AppointmentPurpose: string;
+  purposes_ids: number[];
   AppointmentNotes: string;
   site_id: number;
   rrule: RruleType;
@@ -133,6 +134,7 @@ export type AppointmentFormType = {
     OHIPPhysicianId: string;
   };
   AppointmentPurpose: string;
+  purposes_ids: number[];
   AppointmentNotes: string;
   site_id: number;
   rrule: RruleType;
@@ -1789,6 +1791,19 @@ export type SettingsType = {
   timeline_visible: boolean;
   hosts_ids: number[];
   sites_ids: number[];
+};
+
+export type PurposeType = {
+  id: number;
+  name: string;
+  category_id: number;
+  date_created: number;
+};
+
+export type PurposeCategoryType = {
+  id: number;
+  name: string;
+  date_created: number;
 };
 
 export type SiteType = {

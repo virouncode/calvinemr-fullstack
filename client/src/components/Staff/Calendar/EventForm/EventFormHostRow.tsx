@@ -4,13 +4,14 @@ import useUserContext from "../../../../hooks/context/useUserContext";
 import { AppointmentType } from "../../../../types/api";
 import { UserStaffType } from "../../../../types/app";
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
-import Input from "../../../UI/Inputs/Input";
 import InputDate from "../../../UI/Inputs/InputDate";
+import PurposesSelect from "../../../UI/Lists/PurposesSelect";
 import HostsSelect from "./Host/HostsSelect";
 import RecurrenceSelect from "./RecurrenceSelect";
 
 type EventFormHostRowProps = {
   formDatas: AppointmentType;
+  setFormDatas: React.Dispatch<React.SetStateAction<AppointmentType>>;
   handleHostChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handlePurposeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRecurrenceChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -19,6 +20,7 @@ type EventFormHostRowProps = {
 
 const EventFormHostRow = ({
   formDatas,
+  setFormDatas,
   handleHostChange,
   handlePurposeChange,
   handleRecurrenceChange,
@@ -38,13 +40,14 @@ const EventFormHostRow = ({
         />
       </div>
       <div className="event-form__host-item">
-        <Input
+        {/* <Input
           value={formDatas.AppointmentPurpose}
           onChange={handlePurposeChange}
           name="AppointmentPurpose"
           id="purpose"
           label="Purpose"
-        />
+        /> */}
+        <PurposesSelect formDatas={formDatas} setFormDatas={setFormDatas} />
       </div>
       <div className="event-form__host-item">
         <RecurrenceSelect

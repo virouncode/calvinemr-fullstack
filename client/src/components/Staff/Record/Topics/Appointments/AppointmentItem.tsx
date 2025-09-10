@@ -2,6 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import usePurposesContext from "../../../../../hooks/context/usePuposesContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/availableRoomsQueries";
@@ -72,6 +73,7 @@ const AppointmentItem = ({
 }: AppointmentItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
+  const { purposes } = usePurposesContext();
   const { staffInfos } = useStaffInfosContext();
   const [editVisible, setEditVisible] = useState(false);
   const [itemInfos, setItemInfos] = useState<AppointmentType>(item);
@@ -604,6 +606,16 @@ const AppointmentItem = ({
     return availableRooms?.includes(roomId) ? false : true;
   };
 
+  const purposesNames = item.purposes_ids.length
+    ? item.purposes_ids
+        .map((id) => {
+          const purpose = purposes.find((purpose) => purpose.id === id);
+          return purpose ? purpose.name : null;
+        })
+        .filter((name) => name !== null)
+        .join(" - ")
+    : null;
+
   return (
     itemInfos && (
       <tr
@@ -660,7 +672,7 @@ const AppointmentItem = ({
         <td>
           <InputTextToggle
             name="AppointmentPurpose"
-            value={itemInfos.AppointmentPurpose}
+            value={purposesNames ?? "Appointment"}
             onChange={handleChange}
             editVisible={editVisible}
           />

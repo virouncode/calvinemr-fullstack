@@ -105,7 +105,7 @@ const AppointmentsPopUp = ({
             <tr>
               {/* <th>Action</th> */}
               <th>Host</th>
-              <th>Reason</th>
+              <th>Purpose</th>
               <th>Recurrence</th>
               <th>Until</th>
               <th>From</th>
