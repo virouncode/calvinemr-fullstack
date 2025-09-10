@@ -55,7 +55,6 @@ export const getAvailableAppointments = (
 
     const deltaNewDay =
       newDay - tomorrow >= 0 ? newDay - tomorrow : 7 + (newDay - tomorrow);
-    console.log("deltaNewDay", deltaNewDay);
 
     const appointmentProposal: AppointmentProposalType | null =
       getAppointmentProposal(
