@@ -1,4 +1,5 @@
 import React from "react";
+import usePurposesContext from "../../../../../hooks/context/usePuposesContext";
 import { AppointmentType } from "../../../../../types/api";
 import { getNextPatientAppointments } from "../../../../../utils/appointments/getNextPatientAppointments";
 import {
@@ -11,10 +12,21 @@ type AppointmentsDropdownProps = {
 };
 
 const AppointmentsDropdown = ({ data }: AppointmentsDropdownProps) => {
+  const { purposes } = usePurposesContext();
   //FIND NEXT APPOINTMENT
   const nextAppointment = getNextPatientAppointments(
     data as AppointmentType[]
   )[0];
+
+  const purposesNames = nextAppointment?.purposes_ids
+    ? nextAppointment.purposes_ids
+        .map((id) => {
+          const purpose = purposes.find((purpose) => purpose.id === id);
+          return purpose ? purpose.name : null;
+        })
+        .filter((name) => name !== null)
+        .join(" - ")
+    : "TBD";
 
   return (
     <div className="topic-content">
@@ -25,7 +37,7 @@ const AppointmentsDropdown = ({ data }: AppointmentsDropdownProps) => {
             {!nextAppointment.all_day
               ? timestampToDateTimeStrTZ(nextAppointment.start)
               : timestampToDateISOTZ(nextAppointment.start) + " All Day"}{" "}
-            ({nextAppointment.AppointmentPurpose})
+            ({purposesNames})
           </span>
         </>
       ) : (

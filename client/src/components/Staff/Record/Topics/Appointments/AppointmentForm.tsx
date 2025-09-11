@@ -2,6 +2,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import usePurposesContext from "../../../../../hooks/context/usePuposesContext";
 import useStaffInfosContext from "../../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../../hooks/context/useUserContext";
 import { useAvailableRooms } from "../../../../../hooks/reactquery/queries/availableRoomsQueries";
@@ -71,6 +72,7 @@ const AppointmentForm = ({
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
+  const { purposes } = usePurposesContext();
   const initialStart = nowTZ()
     .set({ hour: 7, minute: 0, second: 0 })
     .toMillis();
@@ -91,7 +93,7 @@ const AppointmentForm = ({
       Name: { FirstName: user.first_name, LastName: user.last_name },
       OHIPPhysicianId: user.ohip_billing_nbr,
     },
-    AppointmentPurpose: "Appointment",
+    AppointmentPurpose: "TBD",
     purposes_ids: [46],
     AppointmentNotes: "",
     site_id: user.site_id,
@@ -514,12 +516,19 @@ const AppointmentForm = ({
 
   const handleSubmit = async () => {
     setErrMsgPost("");
+    const purposesNames = formDatas.purposes_ids
+      ? formDatas.purposes_ids
+          .map((id) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name) => name !== null)
+          .join(" - ")
+      : "TBD";
     //Formatting
     const topicToPost: AppointmentFormType = {
       ...formDatas,
-      AppointmentPurpose: firstLetterOfFirstWordUpper(
-        formDatas.AppointmentPurpose
-      ),
+      AppointmentPurpose: purposesNames,
       AppointmentTime: timestampToTimeISOTZ(formDatas.start),
       AppointmentDate: timestampToDateISOTZ(formDatas.start),
       Provider: {

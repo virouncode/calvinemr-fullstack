@@ -11,7 +11,6 @@ type EventFormHostRowProps = {
   setFormDatas: React.Dispatch<React.SetStateAction<AppointmentType>>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   handleHostChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  handlePurposeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRecurrenceChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleUntilChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -21,7 +20,6 @@ const EventFormHostRow = ({
   setFormDatas,
   setErrMsgPost,
   handleHostChange,
-  handlePurposeChange,
   handleRecurrenceChange,
   handleUntilChange,
 }: EventFormHostRowProps) => {

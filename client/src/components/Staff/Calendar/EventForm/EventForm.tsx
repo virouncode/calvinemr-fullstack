@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import xanoGet from "../../../../api/xanoCRUD/xanoGet";
+import usePurposesContext from "../../../../hooks/context/usePuposesContext";
 import useSocketContext from "../../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../../hooks/context/useUserContext";
@@ -101,9 +102,11 @@ const EventForm = ({
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
   const { staffInfos } = useStaffInfosContext();
+  const { purposes } = usePurposesContext();
   const [formDatas, setFormDatas] = useState<AppointmentType>(
     parseToAppointment(currentEvent.current as EventInput)
   );
+
   const [previousStart, setPreviousStart] = useState<number>(
     currentEvent.current?.start as number
   );
@@ -140,11 +143,6 @@ const EventForm = ({
   const appointmentPut = useAppointmentPut();
   const appointmentDelete = useAppointmentDelete();
   //============================ HANDLERS ==========================//
-  const handlePurposeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setErrMsgPost("");
-    const value = e.target.value;
-    setFormDatas({ ...formDatas, AppointmentPurpose: value });
-  };
 
   const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setErrMsgPost("");
@@ -770,6 +768,16 @@ const EventForm = ({
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
+    const purposesNames = formDatas.purposes_ids
+      ? formDatas.purposes_ids
+          .map((id) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name) => name !== null)
+          .join(" - ")
+      : "TBD";
+
     const appointmentToPut: AppointmentType = {
       id: formDatas.id,
       host_id: formDatas.host_id,
@@ -801,7 +809,7 @@ const EventForm = ({
         },
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
-      AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      AppointmentPurpose: purposesNames,
       purposes_ids: formDatas.purposes_ids,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       site_id: formDatas.site_id,
@@ -847,6 +855,16 @@ const EventForm = ({
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
+    const purposesNames = formDatas.purposes_ids
+      ? formDatas.purposes_ids
+          .map((id) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name) => name !== null)
+          .join(" - ")
+      : "TBD";
+
     const appointmentToPost: Partial<AppointmentType> = {
       host_id: formDatas.host_id,
       start: formDatas.all_day ? startAllDay : formDatas.start,
@@ -877,7 +895,7 @@ const EventForm = ({
         },
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
-      AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      AppointmentPurpose: purposesNames,
       purposes_ids: formDatas.purposes_ids,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       site_id: formDatas.site_id,
@@ -969,6 +987,16 @@ const EventForm = ({
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
+    const purposesNames = formDatas.purposes_ids
+      ? formDatas.purposes_ids
+          .map((id) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name) => name !== null)
+          .join(" - ")
+      : "TBD";
+
     const appointmentToPut: AppointmentType = {
       ...formDatas,
       start: formDatas.all_day ? startAllDay : formDatas.start,
@@ -990,7 +1018,7 @@ const EventForm = ({
         },
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
-      AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      AppointmentPurpose: purposesNames,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       rrule: {
         ...formDatas.rrule,
@@ -1034,6 +1062,16 @@ const EventForm = ({
       .toMillis();
     const endAllDay = startAllDay + 24 * 3600 * 1000;
 
+    const purposesNames = formDatas.purposes_ids
+      ? formDatas.purposes_ids
+          .map((id) => {
+            const purpose = purposes.find((purpose) => purpose.id === id);
+            return purpose ? purpose.name : null;
+          })
+          .filter((name) => name !== null)
+          .join(" - ")
+      : "TBD";
+
     const appointmentToPost: Partial<AppointmentType> = {
       ...formDatas,
       start: formDatas.all_day ? startAllDay : formDatas.start,
@@ -1055,7 +1093,7 @@ const EventForm = ({
         },
         OHIPPhysicianId: staffIdToOHIP(staffInfos, formDatas.host_id),
       },
-      AppointmentPurpose: firstLetterUpper(formDatas.AppointmentPurpose),
+      AppointmentPurpose: purposesNames,
       AppointmentNotes: firstLetterUpper(formDatas.AppointmentNotes),
       site_id: formDatas.site_id,
       recurrence: formDatas.recurrence,
@@ -1131,7 +1169,6 @@ const EventForm = ({
             setFormDatas={setFormDatas}
             setErrMsgPost={setErrMsgPost}
             handleHostChange={handleHostChange}
-            handlePurposeChange={handlePurposeChange}
             handleRecurrenceChange={handleRecurrenceChange}
             handleUntilChange={handleUntilChange}
           />

@@ -175,7 +175,7 @@ const NewAppointments = () => {
       //   ),
       //   AppointmentStatus: "Scheduled",
       //   AppointmentDate: timestampToDateISOTZ(appointmentSelected.start),
-      //   AppointmentPurpose: "Appointment",
+      //   AppointmentPurpose: "TBD",
       //   site_id: assignedStaff?.site_id,
       //   recurrence: "Once",
       //   Provider: {

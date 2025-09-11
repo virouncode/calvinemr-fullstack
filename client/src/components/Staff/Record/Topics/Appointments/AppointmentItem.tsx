@@ -32,10 +32,7 @@ import {
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { toRoomTitle } from "../../../../../utils/names/toRoomTitle";
 import { toSiteName } from "../../../../../utils/names/toSiteName";
-import {
-  firstLetterOfFirstWordUpper,
-  firstLetterUpper,
-} from "../../../../../utils/strings/firstLetterUpper";
+import { firstLetterOfFirstWordUpper } from "../../../../../utils/strings/firstLetterUpper";
 import { appointmentSchema } from "../../../../../validation/record/appointmentValidation";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import InputDateToggle from "../../../../UI/Inputs/InputDateToggle";
@@ -509,9 +506,19 @@ const AppointmentItem = ({
         })))
     ) {
       //Formatting
+      const purposesNames = itemInfos.purposes_ids.length
+        ? itemInfos.purposes_ids
+            .map((id) => {
+              const purpose = purposes.find((purpose) => purpose.id === id);
+              return purpose ? purpose.name : null;
+            })
+            .filter((name) => name !== null)
+            .join(" - ")
+        : "TBD";
+
       const topicToPut: AppointmentType = {
         ...itemInfos,
-        AppointmentPurpose: firstLetterUpper(itemInfos.AppointmentPurpose),
+        AppointmentPurpose: purposesNames,
         AppointmentTime: timestampToTimeISOTZ(itemInfos.start),
         AppointmentDate: timestampToDateISOTZ(itemInfos.start),
         Provider: {
@@ -614,7 +621,7 @@ const AppointmentItem = ({
         })
         .filter((name) => name !== null)
         .join(" - ")
-    : null;
+    : "TBD";
 
   return (
     itemInfos && (
@@ -672,7 +679,7 @@ const AppointmentItem = ({
         <td>
           <InputTextToggle
             name="AppointmentPurpose"
-            value={purposesNames ?? "Appointment"}
+            value={purposesNames}
             onChange={handleChange}
             editVisible={editVisible}
           />

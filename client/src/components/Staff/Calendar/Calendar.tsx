@@ -536,7 +536,7 @@ const Calendar = () => {
       AppointmentDate: timestampToDateISOTZ(
         info.allDay ? startAllDay : startDate
       ),
-      AppointmentPurpose: "Appointment",
+      AppointmentPurpose: "TBD",
       purposes_ids: [46],
       site_id: timelineVisible ? timelineSiteId : user.site_id,
       recurrence: "Once",

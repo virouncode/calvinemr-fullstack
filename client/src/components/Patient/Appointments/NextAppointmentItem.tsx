@@ -29,7 +29,7 @@ const NextAppointmentItem = ({
         })
         .filter((name) => name !== null)
         .join(" - ")
-    : null;
+    : "TBD";
   return (
     <li key={appointment.id} className="patient-appointments__next-item">
       <div className="patient-appointments__next-item-date">
@@ -45,7 +45,7 @@ const NextAppointmentItem = ({
           With {staffIdToTitleAndName(staffInfos, appointment.host_id)}
         </div>
         <div className="patient-appointments__next-item-reason">
-          Reason : {purposesNames ?? "Appointment"}
+          Purpose : {purposesNames}
         </div>
       </div>
     </li>
