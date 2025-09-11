@@ -537,7 +537,7 @@ const Calendar = () => {
         info.allDay ? startAllDay : startDate
       ),
       AppointmentPurpose: "Appointment",
-      purposes_ids: [],
+      purposes_ids: [46],
       site_id: timelineVisible ? timelineSiteId : user.site_id,
       recurrence: "Once",
       Provider:
