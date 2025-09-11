@@ -1,8 +1,5 @@
 import React from "react";
-import useStaffInfosContext from "../../../../hooks/context/useStaffInfosContext";
-import useUserContext from "../../../../hooks/context/useUserContext";
 import { AppointmentType } from "../../../../types/api";
-import { UserStaffType } from "../../../../types/app";
 import { timestampToDateISOTZ } from "../../../../utils/dates/formatDates";
 import InputDate from "../../../UI/Inputs/InputDate";
 import PurposesSelect from "../../../UI/Lists/PurposesSelect";
@@ -12,6 +9,7 @@ import RecurrenceSelect from "./RecurrenceSelect";
 type EventFormHostRowProps = {
   formDatas: AppointmentType;
   setFormDatas: React.Dispatch<React.SetStateAction<AppointmentType>>;
+  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   handleHostChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handlePurposeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRecurrenceChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -21,14 +19,13 @@ type EventFormHostRowProps = {
 const EventFormHostRow = ({
   formDatas,
   setFormDatas,
+  setErrMsgPost,
   handleHostChange,
   handlePurposeChange,
   handleRecurrenceChange,
   handleUntilChange,
 }: EventFormHostRowProps) => {
   //Hooks
-  const { user } = useUserContext() as { user: UserStaffType };
-  const { staffInfos } = useStaffInfosContext();
   return (
     <div className="event-form__host">
       <div className="event-form__host-item">
@@ -40,14 +37,11 @@ const EventFormHostRow = ({
         />
       </div>
       <div className="event-form__host-item">
-        {/* <Input
-          value={formDatas.AppointmentPurpose}
-          onChange={handlePurposeChange}
-          name="AppointmentPurpose"
-          id="purpose"
-          label="Purpose"
-        /> */}
-        <PurposesSelect formDatas={formDatas} setFormDatas={setFormDatas} />
+        <PurposesSelect
+          formDatas={formDatas}
+          setFormDatas={setFormDatas}
+          setErrMsgPost={setErrMsgPost}
+        />
       </div>
       <div className="event-form__host-item">
         <RecurrenceSelect

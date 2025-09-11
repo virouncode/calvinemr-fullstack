@@ -816,6 +816,7 @@ const EventForm = ({
       await appointmentSchema.validate(appointmentToPut);
     } catch (err) {
       if (err instanceof Error) setErrMsgPost(err.message);
+      setProgress(false);
       return;
     }
     appointmentPut.mutate(appointmentToPut, {
@@ -1119,6 +1120,7 @@ const EventForm = ({
           //     ? "event-form"
           //     : "event-form event-form--uneditable"
           // }
+          style={{ border: errMsgPost ? "2px solid red" : undefined }}
           className="event-form"
           onSubmit={handleSubmit}
         >
@@ -1127,6 +1129,7 @@ const EventForm = ({
           <EventFormHostRow
             formDatas={formDatas}
             setFormDatas={setFormDatas}
+            setErrMsgPost={setErrMsgPost}
             handleHostChange={handleHostChange}
             handlePurposeChange={handlePurposeChange}
             handleRecurrenceChange={handleRecurrenceChange}

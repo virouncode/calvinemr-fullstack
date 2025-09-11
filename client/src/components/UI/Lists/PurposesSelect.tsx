@@ -7,9 +7,14 @@ import Checkbox from "../Checkbox/Checkbox";
 type PurposesSelectProps = {
   formDatas: AppointmentType;
   setFormDatas: React.Dispatch<React.SetStateAction<AppointmentType>>;
+  setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PurposesSelect = ({ formDatas, setFormDatas }: PurposesSelectProps) => {
+const PurposesSelect = ({
+  formDatas,
+  setFormDatas,
+  setErrMsgPost,
+}: PurposesSelectProps) => {
   const [open, setOpen] = useState(false);
   const { purposes } = usePurposesContext();
   const { purposesCategories } = usePurposesCategoriesContext();
@@ -43,6 +48,7 @@ const PurposesSelect = ({ formDatas, setFormDatas }: PurposesSelectProps) => {
   const handleCheckPurpose = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = parseInt(e.target.id);
     const checked = e.target.checked;
+    setErrMsgPost("");
     if (checked) {
       setPurposesCheckedIds([...purposesCheckedIds, id]);
       setFormDatas({
