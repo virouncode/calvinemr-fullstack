@@ -157,6 +157,7 @@ const ExportCSVButton = ({
               setCsvLinkElement(ref.link);
             }
           }}
+          enclosingCharacter=""
         >
           Export to CSV
         </CSVLink>

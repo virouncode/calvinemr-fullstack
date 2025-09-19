@@ -45,6 +45,8 @@ const PurposesSelect = ({
     data.push({ category: category.name, purposes: purposesInCategory });
   });
 
+  console.log("data", data);
+
   const handleCheckPurpose = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = parseInt(e.target.id);
     const checked = e.target.checked;
