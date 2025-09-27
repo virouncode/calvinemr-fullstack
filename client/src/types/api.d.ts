@@ -2096,6 +2096,7 @@ export type TopicPaginatedDataMap = {
   ["PERSONAL HISTORY"]: XanoPaginatedType<PersonalHistoryType>;
   ["CARE ELEMENTS"]: XanoPaginatedType<CareElementType>;
   ["PROBLEM LIST"]: XanoPaginatedType<ProblemListType>;
+  ["BILLINGS"]: XanoPaginatedType<BillingType>;
   ["PREGNANCIES"]: XanoPaginatedType<PregnancyType>;
   ["CYCLES"]: XanoPaginatedType<CycleType>;
   ["ALLERGIES & ADVERSE REACTIONS"]: XanoPaginatedType<AllergyType>;
@@ -2125,6 +2126,7 @@ export type TopicDataMap = {
   ["PERSONAL HISTORY"]: PersonalHistoryType;
   ["CARE ELEMENTS"]: CareElementType;
   ["PROBLEM LIST"]: ProblemListType;
+  ["BILLINGS"]: BillingType;
   ["PREGNANCIES"]: PregnancyType;
   ["CYCLES"]: CycleType;
   ["ALLERGIES & ADVERSE REACTIONS"]: AllergyType;

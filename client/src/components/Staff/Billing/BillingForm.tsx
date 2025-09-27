@@ -44,6 +44,9 @@ type BillingFormProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   sites: SiteType[];
+  patientId?: number;
+  patientName?: string;
+  patientHcn?: string;
 };
 
 const BillingForm = ({
@@ -51,12 +54,15 @@ const BillingForm = ({
   setErrMsgPost,
   errMsgPost,
   sites,
+  patientId,
+  patientName,
+  patientHcn,
 }: BillingFormProps) => {
   //Hooks
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const patientId = searchParams.get("patientId");
-  const patientName = searchParams.get("patientName");
+  const pId = searchParams.get("patientId");
+  const pName = searchParams.get("patientName");
   const healthCardNbr = searchParams.get("healthCardNbr");
   const timestamp = searchParams.get("timestamp");
   const referrerOhip = searchParams.get("referrerOhip");
@@ -74,9 +80,9 @@ const BillingForm = ({
     provider_ohip_billing_nbr:
       user.access_level === "admin" ? "" : staffIdToOHIP(staffInfos, user.id),
     referrer_ohip_billing_nbr: referrerOhip ?? "",
-    patient_id: patientId ? parseInt(patientId) : 0,
-    patient_hcn: healthCardNbr || "",
-    patient_name: patientName || "",
+    patient_id: patientId ?? (pId ? parseInt(pId) : 0),
+    patient_hcn: patientHcn ?? (healthCardNbr || ""),
+    patient_name: patientName ?? (pName || ""),
     diagnosis_code: "",
     billing_codes: "",
     site_id:
@@ -304,6 +310,7 @@ const BillingForm = ({
             onClick={() => setPatientSearchVisible(true)}
             readOnly={true}
             label="Patient Health Card#"
+            disabled={!!patientId}
           />
         </div>
         <div className="billing__form-item" style={{ position: "relative" }}>
@@ -332,6 +339,7 @@ const BillingForm = ({
             onClick={() => setPatientSearchVisible(true)}
             readOnly={true}
             label="Patient Name*"
+            disabled={!!patientId}
           />
         </div>
         <div className="billing__form-item">

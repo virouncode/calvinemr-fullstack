@@ -30,6 +30,7 @@ import {
 } from "../../../../types/api";
 import { toPatientName } from "../../../../utils/names/toPatientName";
 import FakeWindow from "../../../UI/Windows/FakeWindow";
+import Billing from "../../Billing/Billing";
 import NewMessageExternal from "../../Messaging/External/NewMessageExternal";
 import NewMessageExternalMobile from "../../Messaging/External/NewMessageExternalMobile";
 import NewMessage from "../../Messaging/Internal/NewMessage";
@@ -42,6 +43,7 @@ import AllergiesDropDown from "../Topics/Allergies/AllergiesDropDown";
 import AllergiesPopUp from "../Topics/Allergies/AllergiesPopUp";
 import AppointmentsDropdown from "../Topics/Appointments/AppointmentsDropDown";
 import AppointmentsPopUp from "../Topics/Appointments/AppointmentsPopUp";
+import BillingsDropDown from "../Topics/Billings/BillingsDropDown";
 import CareElementsDropDown from "../Topics/CareElements/CareElementsDropDown";
 import CareElementsPopUp from "../Topics/CareElements/CareElementsPopUp";
 import ChecklistDropDown from "../Topics/Checklist/ChecklistDropDown";
@@ -491,6 +493,26 @@ const PatientTopic = ({
             <ProblemListPopUp
               patientId={patientId}
               setPopUpVisible={setPopUpVisible}
+            />
+          </FakeWindow>
+        )}
+        {/*******************/}
+        {/* BILLINGS */}
+        {topic === "BILLINGS" && <BillingsDropDown />}
+        {topic === "BILLINGS" && popUpVisible && (
+          <FakeWindow
+            title={`BILLINGS of ${patientName}`}
+            width={window.innerWidth}
+            height={800}
+            x={0}
+            y={0}
+            color={backgroundColor}
+            setPopUpVisible={setPopUpVisible}
+          >
+            <Billing
+              patientId={patientId}
+              patientName={patientName}
+              patientHcn={demographicsInfos?.HealthCard.Number}
             />
           </FakeWindow>
         )}

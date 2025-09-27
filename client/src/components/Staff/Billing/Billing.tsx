@@ -20,12 +20,18 @@ import BillingFilter from "./BillingFilter";
 import BillingForm from "./BillingForm";
 import BillingTable from "./BillingTable";
 
-const Billing = () => {
+type BillingProps = {
+  patientId?: number;
+  patientName?: string;
+  patientHcn?: string;
+};
+
+const Billing = ({ patientId, patientName, patientHcn }: BillingProps) => {
   //Hooks
   const [searchParams] = useSearchParams();
-  const patientId = searchParams.get("patientId");
+  const pId = searchParams.get("patientId");
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
-  const [addVisible, setAddVisible] = useState(patientId ? true : false);
+  const [addVisible, setAddVisible] = useState(pId ? true : false);
   const [errMsgPost, setErrMsgPost] = useState("");
   const [serviceOrEntry, setServiceOrEntry] = useState<"service" | "entry">(
     "service"
@@ -46,13 +52,25 @@ const Billing = () => {
     fetchNextPage,
     isFetching,
     hasNextPage,
-  } = useBillings(rangeStart, rangeEnd, serviceOrEntry, debouncedSearch);
+  } = useBillings(
+    rangeStart,
+    rangeEnd,
+    serviceOrEntry,
+    debouncedSearch,
+    patientId
+  );
 
   const {
     data: fees,
     isPending: isPendingFees,
     error: errorFees,
-  } = useBillingsFees(rangeStart, rangeEnd, serviceOrEntry, debouncedSearch);
+  } = useBillingsFees(
+    rangeStart,
+    rangeEnd,
+    serviceOrEntry,
+    debouncedSearch,
+    patientId
+  );
 
   const {
     data: sites,
@@ -102,6 +120,9 @@ const Billing = () => {
           setErrMsgPost={setErrMsgPost}
           errMsgPost={errMsgPost}
           sites={sites}
+          patientId={patientId}
+          patientName={patientName}
+          patientHcn={patientHcn}
         />
       )}
       <BillingFilter

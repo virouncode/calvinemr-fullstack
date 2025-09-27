@@ -81,6 +81,16 @@ const PatientMenuRight = ({
         side="right"
         data={problemList}
       />
+      <PatientTopic
+        textColor="#FEFEFE"
+        backgroundColor="#01ba95"
+        topic="BILLINGS"
+        patientId={patientId}
+        contentsVisible={contentsVisible}
+        patientName={toPatientName(demographicsInfos)}
+        side="right"
+        demographicsInfos={demographicsInfos}
+      />
       {demographicsInfos.Gender !== "M" && (
         <PatientTopic
           textColor="#FEFEFE"

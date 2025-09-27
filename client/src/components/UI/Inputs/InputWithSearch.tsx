@@ -12,6 +12,7 @@ type InputWithSearchProps = {
   readOnly?: boolean;
   logo?: boolean;
   width?: number;
+  disabled?: boolean;
 };
 
 const InputWithSearch = ({
@@ -24,6 +25,7 @@ const InputWithSearch = ({
   readOnly,
   logo = true,
   width,
+  disabled = false,
 }: InputWithSearchProps) => {
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
   return (
@@ -39,7 +41,7 @@ const InputWithSearch = ({
         style={{ width: width ? `${width}px` : "" }}
       />
 
-      {logo && (
+      {logo && !disabled && (
         <MagnifyingGlassIcon
           right={5}
           top={isTabletOrMobile ? 32 : 28}
