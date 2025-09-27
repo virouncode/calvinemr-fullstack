@@ -27,6 +27,9 @@ const Billing = () => {
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
   const [addVisible, setAddVisible] = useState(patientId ? true : false);
   const [errMsgPost, setErrMsgPost] = useState("");
+  const [serviceOrEntry, setServiceOrEntry] = useState<"service" | "entry">(
+    "service"
+  );
   const [rangeStart, setRangeStart] = useState(getStartOfTheMonthTZ()); //start of the month
   const [rangeEnd, setRangeEnd] = useState(getEndOfTheMonthTZ()); //end of the month
   const [search, setSearch] = useState("");
@@ -43,13 +46,13 @@ const Billing = () => {
     fetchNextPage,
     isFetching,
     hasNextPage,
-  } = useBillings(rangeStart, rangeEnd, debouncedSearch);
+  } = useBillings(rangeStart, rangeEnd, serviceOrEntry, debouncedSearch);
 
   const {
     data: fees,
     isPending: isPendingFees,
     error: errorFees,
-  } = useBillingsFees(rangeStart, rangeEnd, debouncedSearch);
+  } = useBillingsFees(rangeStart, rangeEnd, serviceOrEntry, debouncedSearch);
 
   const {
     data: sites,
@@ -115,6 +118,8 @@ const Billing = () => {
         setAll={setAll}
         initialRangeStart={initialRangeStart}
         initialRangeEnd={initialRangeEnd}
+        serviceOrEntry={serviceOrEntry}
+        setServiceOrEntry={setServiceOrEntry}
       />
       <BillingTable
         isPending={isPending}

@@ -13,6 +13,7 @@ import ExportCSVButton from "../../UI/Buttons/ExportCSVButton";
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import Input from "../../UI/Inputs/Input";
 import InputDate from "../../UI/Inputs/InputDate";
+import Radio from "../../UI/Radio/Radio";
 
 type BillingFilterProps = {
   billings?: BillingType[];
@@ -35,6 +36,8 @@ type BillingFilterProps = {
     >
   >;
   hasNextPage: boolean;
+  serviceOrEntry: "service" | "entry";
+  setServiceOrEntry: React.Dispatch<React.SetStateAction<"service" | "entry">>;
 };
 
 const BillingFilter = ({
@@ -51,6 +54,8 @@ const BillingFilter = ({
   initialRangeEnd,
   fetchNextPage,
   hasNextPage,
+  serviceOrEntry = "service",
+  setServiceOrEntry,
 }: BillingFilterProps) => {
   const csvHeaders = [
     {
@@ -145,9 +150,40 @@ const BillingFilter = ({
     setSearch(e.target.value);
   };
 
+  const handleChangeDateFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.name;
+    if (value === "service") setServiceOrEntry("service");
+    if (value === "entry") setServiceOrEntry("entry");
+  };
+
   return (
     <div className="billing__filter">
       <div className="billing__filter-row-dates">
+        <div className="billing__filter-row-dates-radio">
+          <label>Filter by </label>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="billing__filter-row-radio-item">
+              <Radio
+                id="service"
+                name="service"
+                onChange={handleChangeDateFilter}
+                value="service"
+                checked={serviceOrEntry === "service"}
+                label="Date of service"
+              />
+            </div>
+            <div className="billing__filter-row-radio-item">
+              <Radio
+                id="entry"
+                name="entry"
+                onChange={handleChangeDateFilter}
+                value="entry"
+                checked={serviceOrEntry === "entry"}
+                label="Date of entry"
+              />
+            </div>
+          </div>
+        </div>
         <div className="billing__filter-item">
           <InputDate
             value={timestampToDateISOTZ(rangeStart)}
@@ -177,6 +213,8 @@ const BillingFilter = ({
             label="All"
           />
         </div>
+      </div>
+      <div className="billing__filter-row-search">
         <div className="billing__filter-item">
           <Input
             value={search}
@@ -187,22 +225,22 @@ const BillingFilter = ({
             placeholder="Billing code, Name, ..."
           />
         </div>
-      </div>
-      <div className="billing__filter-row-btns">
-        <a href="https://billing.clinicaid.ca/login/" target="_blank">
-          Clinic Aid
-        </a>
-        {billings && (
-          <ExportCSVButton
-            billings={billings}
-            fetchNextPage={fetchNextPage}
-            hasNextPage={hasNextPage}
-            rangeStart={rangeStart}
-            rangeEnd={rangeEnd}
-            all={all}
-            headers={csvHeaders}
-          />
-        )}
+        <div className="billing__filter-btns">
+          <a href="https://billing.clinicaid.ca/login/" target="_blank">
+            Clinic Aid
+          </a>
+          {billings && (
+            <ExportCSVButton
+              billings={billings}
+              fetchNextPage={fetchNextPage}
+              hasNextPage={hasNextPage}
+              rangeStart={rangeStart}
+              rangeEnd={rangeEnd}
+              all={all}
+              headers={csvHeaders}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

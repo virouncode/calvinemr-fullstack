@@ -47,6 +47,8 @@ const PastHealthItem = ({
   const [progress, setProgress] = useState(false);
 
   useEffect(() => {
+    console.log("useEffect item", item);
+
     setItemInfos(item);
   }, [item]);
 
