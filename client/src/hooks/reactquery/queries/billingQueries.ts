@@ -35,6 +35,7 @@ export const useBillings = (
               range_end: rangeEnd,
               page: pageParam,
               search,
+              patient_id: patientId,
             }
           );
         }
@@ -62,6 +63,7 @@ export const useBillings = (
               range_end: rangeEnd,
               page: pageParam,
               search,
+              patient_id: patientId,
             }
           );
         }
@@ -115,6 +117,7 @@ export const useBillingsFees = (
               range_start: rangeStart,
               range_end: rangeEnd,
               search,
+              patient_id: patientId,
             }
           );
         }
@@ -140,6 +143,7 @@ export const useBillingsFees = (
               range_start: rangeStart,
               range_end: rangeEnd,
               search,
+              patient_id: patientId,
             }
           );
         }
