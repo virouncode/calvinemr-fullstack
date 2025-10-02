@@ -12,7 +12,7 @@ const RequireAuth = ({ allowedAccesses }: RequireAuthProps) => {
   const location = useLocation();
 
   return allowedAccesses.includes(user?.access_level as string) ? (
-    <Outlet />
+    <Outlet /> //children inside the Route
   ) : auth?.email ? ( //user is logged in but not allowed to access this page
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (

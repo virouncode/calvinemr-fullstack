@@ -106,6 +106,32 @@ const BillingForm = ({
     }
   }, [timestamp, navigate]);
 
+  useEffect(() => {
+    const fetchPatientDoctors = async () => {
+      if (patientId) {
+        const response: XanoPaginatedType<DoctorType> = await xanoGet(
+          "/doctors_of_patient",
+          "staff",
+          {
+            patient_id: patientId,
+            page: 1,
+          }
+        );
+        const patientDoctors = response?.items;
+        setFormDatas({
+          ...formDatas,
+          patient_id: patientId,
+          patient_name: patientName ?? (pName || ""),
+          patient_hcn: patientHcn ?? (healthCardNbr || ""),
+          referrer_ohip_billing_nbr: patientDoctors.length
+            ? patientDoctors[0].ohip_billing_nbr
+            : "",
+        });
+      }
+    };
+    fetchPatientDoctors();
+  }, [formDatas, healthCardNbr, pName, patientHcn, patientId, patientName]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

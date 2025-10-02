@@ -1509,8 +1509,6 @@ const Calendar = () => {
     return <ErrorParagraph errorMsg={appointments.error.message} />;
   if (!sites) return <LoadingParagraph />;
 
-  console.log("appontments", appointments?.data);
-
   return (
     <>
       <CalendarOptions
