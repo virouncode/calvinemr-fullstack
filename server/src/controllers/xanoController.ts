@@ -180,7 +180,7 @@ export const authXano = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       secure: true,
-      sameSite: "none",
+      sameSite: "strict",
     });
     res.status(response.status).send(
       JSON.stringify({
