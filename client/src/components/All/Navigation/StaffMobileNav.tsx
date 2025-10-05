@@ -74,8 +74,12 @@ const StaffMobileNav = ({
     localStorage.removeItem("lastAction");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("calendarScrollPosition");
+    localStorage.removeItem("calendarCurrentDate");
     localStorage.removeItem("alreadyWarnedSiteClosed");
     localStorage.setItem("message", "logout");
+    localStorage.removeItem("purposes");
+    localStorage.removeItem("purposesCategories");
     localStorage.removeItem("message");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);
     toastExpiredID.current && toast.dismiss(toastExpiredID.current);

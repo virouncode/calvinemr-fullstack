@@ -183,7 +183,7 @@ const CyclesPopUp = ({
           y={0}
           color="#2B8C99"
           setPopUpVisible={setShow}
-          closeCross={false}
+          warningMessage={true}
         >
           <CycleDetails
             setShow={setShow}

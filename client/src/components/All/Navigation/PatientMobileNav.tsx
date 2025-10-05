@@ -53,7 +53,11 @@ const PatientMobileNav = ({
     localStorage.removeItem("lastAction");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("calendarScrollPosition");
+    localStorage.removeItem("calendarCurrentDate");
     localStorage.removeItem("alreadyWarnedSiteClosed");
+    localStorage.removeItem("purposes");
+    localStorage.removeItem("purposesCategories");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);

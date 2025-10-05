@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { AdminType } from "../types/api";
 import { AdminsInfosContextType } from "../types/app";
 
@@ -9,13 +14,11 @@ export const AdminsInfosProvider = ({ children }: PropsWithChildren) => {
     const storedAdminsInfos = localStorage.getItem("adminsInfos");
     return storedAdminsInfos ? JSON.parse(storedAdminsInfos) : [];
   });
+
+  const value = useMemo(() => ({ adminsInfos, setAdminsInfos }), [adminsInfos]);
+
   return (
-    <AdminsInfosContext.Provider
-      value={{
-        adminsInfos,
-        setAdminsInfos,
-      }}
-    >
+    <AdminsInfosContext.Provider value={value}>
       {children}
     </AdminsInfosContext.Provider>
   );

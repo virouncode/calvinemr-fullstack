@@ -72,6 +72,10 @@ const AdminMobileNav = ({
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
     localStorage.removeItem("alreadyWarnedSiteClosed");
+    localStorage.removeItem("calendarScrollPosition");
+    localStorage.removeItem("calendarCurrentDate");
+    localStorage.removeItem("purposes");
+    localStorage.removeItem("purposesCategories");
     localStorage.setItem("message", "logout");
     localStorage.removeItem("message");
     tokenLimitVerifierID.current && clearInterval(tokenLimitVerifierID.current);

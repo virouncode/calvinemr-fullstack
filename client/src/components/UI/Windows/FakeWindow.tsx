@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { confirmAlert } from "../Confirm/ConfirmGlobal";
 import XmarkRectangleIcon from "../Icons/XmarkRectangleIcon";
 
 type FakeWindowProps = {
@@ -13,6 +14,7 @@ type FakeWindowProps = {
   textColor?: string;
   closeCross?: boolean;
   closeDisabled?: boolean;
+  warningMessage?: boolean;
 };
 
 const FakeWindow = ({
@@ -27,6 +29,7 @@ const FakeWindow = ({
   textColor = "#FEFEFE",
   closeCross = true,
   closeDisabled = false,
+  warningMessage = false,
 }: FakeWindowProps) => {
   const isDragging = useRef(false);
   const isResizing = useRef(false);
@@ -139,6 +142,19 @@ const FakeWindow = ({
     window.addEventListener("touchend", handleResizeEnd, { passive: true });
   };
 
+  const handleClose = async () => {
+    if (
+      warningMessage &&
+      (await confirmAlert({
+        content: "Do you really want to close (all changes will be lost) ?",
+      }))
+    ) {
+      setPopUpVisible(false);
+    } else if (!warningMessage && !closeDisabled) {
+      setPopUpVisible(false);
+    }
+  };
+
   return (
     <div
       ref={windowRef}
@@ -169,9 +185,7 @@ const FakeWindow = ({
         </p>
         {closeCross && (
           <div
-            onClick={() => {
-              setPopUpVisible(false);
-            }}
+            onClick={handleClose}
             className={
               closeDisabled
                 ? "window-title-close window-title-close--disabled"

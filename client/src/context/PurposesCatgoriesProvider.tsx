@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { PurposeCategoryType } from "../types/api";
 import { PurposesCategoriesContextType } from "../types/app";
 
@@ -12,13 +17,14 @@ export const PurposesCategoriesProvider = ({ children }: PropsWithChildren) => {
     const storedPurposesCategories = localStorage.getItem("purposesCategories");
     return storedPurposesCategories ? JSON.parse(storedPurposesCategories) : [];
   });
+
+  const value = useMemo(
+    () => ({ purposesCategories, setPurposesCategories }),
+    [purposesCategories]
+  );
+
   return (
-    <PurposesCategoriesContext.Provider
-      value={{
-        purposesCategories,
-        setPurposesCategories,
-      }}
-    >
+    <PurposesCategoriesContext.Provider value={value}>
       {children}
     </PurposesCategoriesContext.Provider>
   );

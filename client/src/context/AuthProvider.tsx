@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { AuthContextType, AuthType } from "../types/app";
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -8,16 +13,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     const storedAuth = localStorage.getItem("auth");
     return storedAuth ? JSON.parse(storedAuth) : {};
   });
-  return (
-    <AuthContext.Provider
-      value={{
-        auth,
-        setAuth,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+
+  const value = useMemo(() => ({ auth, setAuth }), [auth]);
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { StaffType } from "../types/api";
 import { StaffInfosContextType } from "../types/app";
 
@@ -10,13 +15,10 @@ export const StaffInfosProvider = ({ children }: PropsWithChildren) => {
     return storedStaffInfos ? JSON.parse(storedStaffInfos) : [];
   });
 
+  const value = useMemo(() => ({ staffInfos, setStaffInfos }), [staffInfos]);
+
   return (
-    <StaffInfosContext.Provider
-      value={{
-        staffInfos,
-        setStaffInfos,
-      }}
-    >
+    <StaffInfosContext.Provider value={value}>
       {children}
     </StaffInfosContext.Provider>
   );

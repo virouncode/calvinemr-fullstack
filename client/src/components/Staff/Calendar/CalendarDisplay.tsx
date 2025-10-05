@@ -224,7 +224,7 @@ const CalendarDisplay = ({
           y={0}
           color={formColor}
           setPopUpVisible={setFormVisible}
-          closeCross={false}
+          warningMessage={true}
           textColor="#3D375A"
         >
           <EventForm

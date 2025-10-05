@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { PurposeType } from "../types/api";
 import { PurposesContextType } from "../types/app";
 
@@ -9,13 +14,11 @@ export const PurposesProvider = ({ children }: PropsWithChildren) => {
     const storedPurposes = localStorage.getItem("purposes");
     return storedPurposes ? JSON.parse(storedPurposes) : [];
   });
+
+  const value = useMemo(() => ({ purposes, setPurposes }), [purposes]);
+
   return (
-    <PurposesContext.Provider
-      value={{
-        purposes,
-        setPurposes,
-      }}
-    >
+    <PurposesContext.Provider value={value}>
       {children}
     </PurposesContext.Provider>
   );

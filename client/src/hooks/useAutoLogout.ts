@@ -36,7 +36,11 @@ const useAutoLogout = (
     localStorage.removeItem("adminsInfos");
     localStorage.removeItem("currentNewClinicalNote");
     localStorage.removeItem("currentEditClinicalNote");
+    localStorage.removeItem("calendarScrollPosition");
+    localStorage.removeItem("calendarCurrentDate");
     localStorage.removeItem("alreadyWarnedSiteClosed");
+    localStorage.removeItem("purposes");
+    localStorage.removeItem("purposesCategories");
     localStorage.setItem("message", "logout"); //send a message to all tabs to logout
     localStorage.removeItem("message");
     toastID.current && toast.dismiss(toastID.current);

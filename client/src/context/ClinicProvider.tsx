@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { ClinicType } from "../types/api";
 import { ClinicContextType } from "../types/app";
 
@@ -10,15 +15,10 @@ export const ClinicProvider = ({ children }: PropsWithChildren) => {
     return storedClinic ? JSON.parse(storedClinic) : {};
   });
 
+  const value = useMemo(() => ({ clinic, setClinic }), [clinic]);
+
   return (
-    <ClinicContext.Provider
-      value={{
-        clinic,
-        setClinic,
-      }}
-    >
-      {children}
-    </ClinicContext.Provider>
+    <ClinicContext.Provider value={value}>{children}</ClinicContext.Provider>
   );
 };
 

@@ -197,7 +197,7 @@
           font-size: $size-base;
         }
         &--edit {
-          height: 600px;
+          height: 900px;
           overflow-y: scroll;
           .ql-container.ql-snow {
             height: 86%;
@@ -334,7 +334,7 @@
       margin-bottom: 0.5rem;
       &-quill {
         width: 100%;
-        height: 600px;
+        height: 900px;
         overflow-y: scroll;
         .ql-toolbar.ql-snow {
           display: block;

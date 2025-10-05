@@ -77,7 +77,11 @@ const Calendar = () => {
   const { user } = useUserContext() as { user: UserStaffType };
 
   const { staffInfos } = useStaffInfosContext();
-  const [initialDate, setInitialDate] = useState(nowTZTimestamp()); //the date when toggling between timeline and calendar
+  const [initialDate, setInitialDate] = useState(
+    localStorage.getItem("calendarCurrentDate")
+      ? Date.parse(localStorage.getItem("calendarCurrentDate") as string)
+      : nowTZTimestamp()
+  ); //the date when toggling between timeline and calendar
   const [selectable, setSelectable] = useState(true);
   const [timelineVisible, setTimelineVisible] = useState(
     user.settings.timeline_visible
@@ -227,6 +231,8 @@ const Calendar = () => {
     selectedDates: Date[],
     dateStr: string
   ) => {
+    console.log(fcRef.current);
+    console.log(fcRef.current?.getApi().getDate());
     const localOffset = DateTime.now().offset;
     const torontoMidnight = DateTime.fromISO(dateStr.slice(0, 10), {
       zone: "America/Toronto",
@@ -495,6 +501,28 @@ const Calendar = () => {
     lastCurrentId.current = "";
     currentInfo.current = null;
     !timelineVisible && setCurrentView(info.view.type);
+
+    const saved = localStorage.getItem("calendarScrollPosition");
+    if (!saved) return;
+
+    // === restauration différée du scroll ===
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (fcRef.current) {
+          localStorage.setItem(
+            "calendarCurrentDate",
+            fcRef.current.getApi().getDate().toISOString()
+          );
+        }
+        const scrollGrid = document.querySelector(
+          ".fc-scroller.fc-scroller-liquid-absolute"
+        ) as HTMLElement | null;
+        if (scrollGrid) {
+          scrollGrid.scrollTo(0, parseInt(saved, 10));
+          console.log("📦 Scroll restored after view change:", saved);
+        }
+      }, 50); // laisse FullCalendar finir son rendu
+    });
   };
 
   //DATE SELECT

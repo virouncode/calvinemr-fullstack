@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import useSaveScrollPosition from "../../../hooks/useSaveScrollPosition";
 import { SettingsType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 
@@ -78,6 +79,7 @@ const CalendarView = ({
   const { socket } = useSocketContext();
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController | null>(null);
+  useSaveScrollPosition();
 
   useEffect(() => {
     if (user.settings.calendar_view) {
@@ -273,6 +275,24 @@ const CalendarView = ({
       eventDrop={handleDrop}
       eventResize={handleResize}
       eventResizeStart={handleResizeStart}
+      viewDidMount={() => {
+        const savedScrollPosition = localStorage.getItem(
+          "calendarScrollPosition"
+        );
+        if (savedScrollPosition) {
+          const scrollGrid = document.querySelector(
+            ".fc-scroller.fc-scroller-liquid-absolute"
+          ) as HTMLElement | null;
+          if (scrollGrid) {
+            scrollGrid.scrollTo(0, parseInt(savedScrollPosition));
+          }
+        }
+        const savedCurrentDate = localStorage.getItem("calendarCurrentDate");
+        if (savedCurrentDate && fcRef.current) {
+          const savedDate = new Date(parseInt(savedCurrentDate));
+          fcRef.current.getApi().gotoDate(savedDate);
+        }
+      }}
       //====================== EVENT STYLING =================//
       eventContent={renderEventContent}
       eventClassNames={function (arg) {

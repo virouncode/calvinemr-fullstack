@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from "react";
 import { UserContextType, UserType } from "../types/app";
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -9,16 +14,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     return storedUser ? JSON.parse(storedUser) : {};
   });
 
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        setUser,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
-  );
+  const value = useMemo(() => ({ user, setUser }), [user]);
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserContext;
