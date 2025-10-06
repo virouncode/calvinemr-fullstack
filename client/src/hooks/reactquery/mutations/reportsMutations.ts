@@ -111,9 +111,9 @@ export const useReportPut = (patientId: number) => {
         key: ["reportsInbox", data.assigned_staff_id],
       });
       socket?.emit("message", { key: ["patientRecord", data.patient_id] });
-      toast.success(`Report updated succesfully`, {
-        containerId: "A",
-      });
+      // toast.success(`Report updated succesfully`, {
+      //   containerId: "A",
+      // });
     },
     onError: (error) => {
       toast.error(`Error: unable to update report: ${error.message}`, {
@@ -155,9 +155,9 @@ export const useReportInboxPut = (staffId: number) => {
         key: ["reportsInbox", data.assigned_staff_id],
       });
       socket?.emit("message", { key: ["patientRecord", data.patient_id] });
-      toast.success(`Report updated succesfully`, {
-        containerId: "A",
-      });
+      // toast.success(`Report updated succesfully`, {
+      //   containerId: "A",
+      // });
     },
     onError: (error) => {
       toast.error(`Error: unable to update report: ${error.message}`, {

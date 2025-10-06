@@ -109,6 +109,7 @@ const CyclesPopUp = ({
               <th>Cycle number</th>
               <th>Date (LMP)</th>
               <th>Cycle type</th>
+              <th>Notes</th>
               <th>Funded IUI/IVF/FET Billing sent at</th>
               <th>Funded IUI/IVF/FET Payed at</th>
               <th>Non-Funded IUI/IVF/FET Billing sent at</th>

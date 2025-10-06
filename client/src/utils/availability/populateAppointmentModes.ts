@@ -312,7 +312,6 @@ export const populateAppointmentModes = async (staffIds: number[]) => {
         "staff",
         availabilityToPut
       );
-      console.log(`Updated availability for staff ID ${staffId}:`, response);
     }
   } catch (err) {
     console.error("Error fetching availability:", err);

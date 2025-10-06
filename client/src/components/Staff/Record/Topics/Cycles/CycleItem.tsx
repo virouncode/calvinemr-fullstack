@@ -167,6 +167,7 @@ const CycleItem = ({
       <td>{item.cycle_nbr}</td>
       <td>{timestampToDateISOTZ(item.lmp)}</td>
       <td>{item.cycle_type}</td>
+      <td>{item.cycle_notes}</td>
       <td>{timestampToDateISOTZ(item.funded_billing_sent_at)}</td>
       <td>{timestampToDateISOTZ(item.funded_payment_received_at)}</td>
       <td>{timestampToDateISOTZ(item.non_funded_billing_sent_at)}</td>

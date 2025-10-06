@@ -231,8 +231,6 @@ const Calendar = () => {
     selectedDates: Date[],
     dateStr: string
   ) => {
-    console.log(fcRef.current);
-    console.log(fcRef.current?.getApi().getDate());
     const localOffset = DateTime.now().offset;
     const torontoMidnight = DateTime.fromISO(dateStr.slice(0, 10), {
       zone: "America/Toronto",
@@ -519,7 +517,6 @@ const Calendar = () => {
         ) as HTMLElement | null;
         if (scrollGrid) {
           scrollGrid.scrollTo(0, parseInt(saved, 10));
-          console.log("📦 Scroll restored after view change:", saved);
         }
       }, 50); // laisse FullCalendar finir son rendu
     });
