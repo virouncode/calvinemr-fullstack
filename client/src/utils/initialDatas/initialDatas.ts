@@ -66,6 +66,10 @@ export const initialCycle = (
   site_id:
     staffInfos.find(({ id }) => id === demographicsInfos.assigned_staff_id)
       ?.site_id ?? 0,
+  tbr_md: true,
+  rwd_md: false,
+  tbr_nurse: true,
+  rwd_nurse: false,
 });
 
 export const initialStaff: StaffFormType = {

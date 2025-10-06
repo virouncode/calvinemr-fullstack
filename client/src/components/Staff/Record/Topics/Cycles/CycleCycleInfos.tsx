@@ -70,9 +70,42 @@ const CycleCycleInfos = ({
     setErrMsg("");
     const checked = e.target.checked;
     const name = e.target.name;
+
     if (checked) {
+      if (name === "tbr_nurse") {
+        setFormDatas({ ...formDatas, rwd_nurse: false, [name]: true });
+        return;
+      }
+      if (name === "rwd_nurse") {
+        setFormDatas({ ...formDatas, tbr_nurse: false, [name]: true });
+        return;
+      }
+      if (name === "tbr_md") {
+        setFormDatas({ ...formDatas, rwd_md: false, [name]: true });
+        return;
+      }
+      if (name === "rwd_md") {
+        setFormDatas({ ...formDatas, tbr_md: false, [name]: true });
+        return;
+      }
       setFormDatas({ ...formDatas, [name]: true });
     } else {
+      if (name === "tbr_nurse") {
+        setFormDatas({ ...formDatas, [name]: false, rwd_nurse: true });
+        return;
+      }
+      if (name === "rwd_nurse") {
+        setFormDatas({ ...formDatas, [name]: false, tbr_nurse: true });
+        return;
+      }
+      if (name === "tbr_md") {
+        setFormDatas({ ...formDatas, [name]: false, rwd_md: true });
+        return;
+      }
+      if (name === "rwd_md") {
+        setFormDatas({ ...formDatas, [name]: false, tbr_md: true });
+        return;
+      }
       setFormDatas({ ...formDatas, [name]: false });
     }
   };
@@ -185,6 +218,48 @@ const CycleCycleInfos = ({
                 value={formDatas.third_party ?? ""}
                 handleChange={handleThirdPartyChange}
                 label="3rd party"
+              />
+            </div>
+          </div>
+          <div className="cycles-form__cycle-infos-row">
+            <div className="cycles-form__cycle-infos-item cycles-form__cycle-infos-item--checkbox">
+              <Checkbox
+                label="TBR Nurse"
+                labelSide="left"
+                checked={formDatas.tbr_nurse as boolean}
+                name="tbr_nurse"
+                onChange={handleCheck}
+                mr={0}
+              />
+            </div>
+            <div className="cycles-form__cycle-infos-item cycles-form__cycle-infos-item--checkbox">
+              <Checkbox
+                label="RWD Nurse"
+                labelSide="left"
+                checked={formDatas.rwd_nurse as boolean}
+                name="rwd_nurse"
+                onChange={handleCheck}
+                mr={0}
+              />
+            </div>
+            <div className="cycles-form__cycle-infos-item cycles-form__cycle-infos-item--checkbox">
+              <Checkbox
+                label="TBR MD"
+                labelSide="left"
+                checked={formDatas.tbr_md as boolean}
+                name="tbr_md"
+                onChange={handleCheck}
+                mr={0}
+              />
+            </div>
+            <div className="cycles-form__cycle-infos-item cycles-form__cycle-infos-item--checkbox">
+              <Checkbox
+                label="RWD MD"
+                labelSide="left"
+                checked={formDatas.rwd_md as boolean}
+                name="rwd_md"
+                onChange={handleCheck}
+                mr={0}
               />
             </div>
           </div>

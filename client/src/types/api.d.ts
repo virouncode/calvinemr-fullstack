@@ -627,6 +627,10 @@ export type CycleType = {
   funded_payment_received_at: number | null;
   non_funded_billing_sent_at: number | null;
   non_funded_payment_received_at: number | null;
+  tbr_nurse: boolean;
+  rwd_nurse: boolean;
+  tbr_md: boolean;
+  rwd_md: boolean;
 };
 
 export type CycleNoteType = { id?: string; text: string; date: number };
