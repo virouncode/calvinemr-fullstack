@@ -3,6 +3,7 @@ import axios from "axios";
 import uniqueId from "lodash/uniqueId";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useUserContext from "../../../hooks/context/useUserContext";
 import {
@@ -14,6 +15,7 @@ import {
   AttachmentType,
   FaxNotesType,
   FaxToDeleteType,
+  FiledFaxType,
   MessageAttachmentType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
@@ -99,6 +101,18 @@ const FaxDetail = ({
           });
         return;
       }
+      //Delete filed faxes
+      const filedFaxesToDelete: FiledFaxType[] = await xanoGet(
+        "/filed_faxes_for_file_names",
+        "staff",
+        {
+          file_names: [currentFaxId],
+        }
+      );
+      const filedFaxesToDeleteIds = filedFaxesToDelete.map(({ id }) => id);
+      await xanoDelete("/filed_faxes_batch", "staff", {
+        filed_faxes_to_delete_ids: filedFaxesToDeleteIds,
+      });
       //Delete fax
       const faxToDelete: FaxToDeleteType = {
         faxFileName: currentFaxId,

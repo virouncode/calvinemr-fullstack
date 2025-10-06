@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { xanoDelete } from "../../../api/xanoCRUD/xanoDelete";
 import xanoGet from "../../../api/xanoCRUD/xanoGet";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -12,6 +13,7 @@ import {
   FaxNotesType,
   FaxOutboxType,
   FaxToDeleteType,
+  FiledFaxType,
 } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 import { timestampToDateStrTZ } from "../../../utils/dates/formatDates";
@@ -121,6 +123,19 @@ const FaxThumbnailMobile = ({
           });
         return;
       }
+      //Delete filed faxes
+      const filedFaxesToDelete: FiledFaxType[] = await xanoGet(
+        "/filed_faxes_for_file_names",
+        "staff",
+        {
+          file_names: [fax.FileName],
+        }
+      );
+      const filedFaxesToDeleteIds = filedFaxesToDelete.map(({ id }) => id);
+      await xanoDelete("/filed_faxes_batch", "staff", {
+        filed_faxes_to_delete_ids: filedFaxesToDeleteIds,
+      });
+      //Delete Fax
       const faxToDelete: FaxToDeleteType = {
         faxFileName: fax.FileName,
         direction: section === "Sent" ? "OUT" : "IN",

@@ -108,6 +108,13 @@ const deleteFiledFax = async (filedFaxToDeleteId: number) => {
   return response;
 };
 
+const deleteFiledFaxes = async (filedFaxesToDeleteIds: number[]) => {
+  const response = await xanoPost("/filed_faxes_batch", "staff", {
+    filed_faxes_to_delete_ids: filedFaxesToDeleteIds,
+  });
+  return response;
+};
+
 export const useFaxPost = () => {
   const { socket } = useSocketContext();
   return useMutation({
@@ -331,6 +338,26 @@ export const useFiledFaxDelete = () => {
       deleteFiledFax(filedFaxToDeleteId),
     onSuccess: () => {
       socket?.emit("message", { key: ["faxes for folder id"] });
+      toast.success("Label succesfully removed from fax(es)", {
+        containerId: "A",
+      });
+    },
+    onError: (error) => {
+      toast.error(
+        `Error: unable to remove label from fax(es) ${error.message}`,
+        {
+          containerId: "A",
+        }
+      );
+    },
+  });
+};
+
+export const useFiledFaxesDelete = () => {
+  return useMutation({
+    mutationFn: (filedFaxesToDeleteIds: number[]) =>
+      deleteFiledFaxes(filedFaxesToDeleteIds),
+    onSuccess: () => {
       toast.success("Label succesfully removed from fax(es)", {
         containerId: "A",
       });
