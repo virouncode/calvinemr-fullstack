@@ -6,20 +6,20 @@ type OtherFaxNumberItemProps = {
   other: FaxContactType;
   handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isContactChecked: (faxNumber: string) => boolean;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const OtherFaxNumberItem = ({
   other,
   handleCheckContact,
   isContactChecked,
-  lastItemRef,
+  targetRef,
 }: OtherFaxNumberItemProps) => {
   const label = `${other.name ? `${other.name}, ` : ""}${
     other.category ? `${other.category} ` : ""
   }`;
   return (
-    <li className="fax-numbers__item" ref={lastItemRef}>
+    <li className="fax-numbers__item" ref={targetRef}>
       <Checkbox
         id={other.fax_number}
         name={other.name}

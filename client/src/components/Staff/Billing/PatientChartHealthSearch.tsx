@@ -31,11 +31,10 @@ const PatientChartHealthSearch = ({
     isFetching,
   } = usePatientsSimpleSearch(debouncedSearch);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +63,7 @@ const PatientChartHealthSearch = ({
           placeholder="Search by Chart#, Health Card#, Name..."
         />
       </div>
-      <ul className="hcn__results" ref={ulRef}>
+      <ul className="hcn__results" ref={rootRef}>
         <li className="hcn__results-item hcn__results-item--headers">
           <span className="hcn__results-code">Chart#</span>
           <span className="hcn__results-code">Health Card#</span>
@@ -77,7 +76,7 @@ const PatientChartHealthSearch = ({
                   className="hcn__results-item"
                   key={item.id}
                   onClick={() => handleClickPatient(item)}
-                  ref={lastItemRef}
+                  ref={targetRef}
                 >
                   <span className="hcn__results-code">{item.ChartNumber}</span>{" "}
                   <span className="hcn__results-code">

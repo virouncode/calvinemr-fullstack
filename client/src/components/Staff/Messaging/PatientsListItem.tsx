@@ -11,7 +11,7 @@ type PatientsListItemProps = {
   isPatientChecked: (id: number) => boolean;
   patientName: string;
   progress: boolean;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const PatientsListItem = ({
@@ -20,10 +20,10 @@ const PatientsListItem = ({
   isPatientChecked,
   patientName,
   progress,
-  lastItemRef,
+  targetRef,
 }: PatientsListItemProps) => {
   return (
-    <li className="patients__list-item" ref={lastItemRef}>
+    <li className="patients__list-item" ref={targetRef}>
       <Checkbox
         id={info.patient_id.toString()}
         name={patientName}

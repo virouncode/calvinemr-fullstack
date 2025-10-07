@@ -6,16 +6,16 @@ import UserPlusIcon from "../../../../UI/Icons/UserPlusIcon";
 type GuestPatientResultItemProps = {
   guest: DemographicsType;
   handleAddPatientGuest: (guest: DemographicsType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const GuestPatientResultItem = ({
   guest,
   handleAddPatientGuest,
-  lastItemRef,
+  targetRef,
 }: GuestPatientResultItemProps) => {
   return (
-    <li ref={lastItemRef}>
+    <li ref={targetRef}>
       <span>{toPatientName(guest)}</span>
       <UserPlusIcon ml={10} onClick={() => handleAddPatientGuest(guest)} />
     </li>

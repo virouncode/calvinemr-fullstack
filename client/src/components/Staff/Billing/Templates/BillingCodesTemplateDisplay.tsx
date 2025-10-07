@@ -11,7 +11,7 @@ import PenIcon from "../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../UI/Icons/TrashIcon";
 
 type BillingCodesTemplateDisplayProps = {
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   handleSelectTemplate: (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
     billing_codes: string[]
@@ -23,7 +23,7 @@ type BillingCodesTemplateDisplayProps = {
 };
 
 const BillingCodesTemplateDisplay = ({
-  lastItemRef,
+  targetRef,
   handleSelectTemplate,
   template,
   handleEditClick,
@@ -55,7 +55,7 @@ const BillingCodesTemplateDisplay = ({
   };
 
   return (
-    <li className="templates__list-item" ref={lastItemRef}>
+    <li className="templates__list-item" ref={targetRef}>
       <span onClick={(e) => handleSelectTemplate(e, template.billing_codes)}>
         {template.name} : {template.billing_codes.join(", ")}{" "}
         {template.author_id

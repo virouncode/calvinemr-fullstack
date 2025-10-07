@@ -25,7 +25,7 @@ type MessageExternalThumbnailProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageExternalThumbnail = ({
@@ -34,7 +34,7 @@ const MessageExternalThumbnail = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
 }: MessageExternalThumbnailProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -158,7 +158,7 @@ const MessageExternalThumbnail = ({
           ? "message__thumbnail message__thumbnail--external message__thumbnail--unread"
           : "message__thumbnail message__thumbnail--external"
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
       <div className="message__thumbnail-from">

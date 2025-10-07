@@ -48,7 +48,7 @@ const BillingTable: React.FC<BillingTableProps> = ({
   isPendingFees,
   fees,
 }) => {
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -73,7 +73,7 @@ const BillingTable: React.FC<BillingTableProps> = ({
   };
 
   return (
-    <div className="billing-table__container" ref={divRef}>
+    <div className="billing-table__container" ref={rootRef}>
       <table className="billing-table">
         <thead>
           <tr>
@@ -106,7 +106,7 @@ const BillingTable: React.FC<BillingTableProps> = ({
                     errMsgPost={errMsgPost}
                     setErrMsgPost={setErrMsgPost}
                     sites={sites}
-                    lastItemRef={lastItemRef}
+                    targetRef={targetRef}
                   />
                 ) : (
                   <BillingItem

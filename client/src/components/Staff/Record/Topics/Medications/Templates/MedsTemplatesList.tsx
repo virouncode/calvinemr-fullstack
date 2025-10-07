@@ -64,7 +64,7 @@ const MedsTemplatesList = ({
   handleSelectTemplate,
 }: MedsTemplatesListProps) => {
   const [newVisible, setNewVisible] = useState(false);
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPageTemplates,
     fetchNextPageTemplates,
     isFetchingTemplates
@@ -121,7 +121,7 @@ const MedsTemplatesList = ({
               .join(", ")
           : "No allergies"}
       </div>
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <ul>
           {isPendingTemplates ? (
             <LoadingParagraph />
@@ -132,7 +132,7 @@ const MedsTemplatesList = ({
                   med={med}
                   key={med.id}
                   handleSelectTemplate={handleSelectTemplate}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <MedTemplateItem

@@ -68,7 +68,7 @@ const PharmaciesList = ({
   const [errMsgPost, setErrMsgPost] = useState("");
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -107,7 +107,7 @@ const PharmaciesList = ({
         <Button onClick={handleAddNewClick} label="Add" />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="pharmacies-list__table-container" ref={divRef}>
+      <div className="pharmacies-list__table-container" ref={rootRef}>
         <table className="pharmacies-list__table">
           <thead>
             <tr>
@@ -143,7 +143,7 @@ const PharmaciesList = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       demographicsInfos={demographicsInfos}
                       topicPut={topicPut}
                       patientId={patientId}

@@ -53,7 +53,7 @@ const CyclesPopUp = ({
   const topicDelete = useTopicDelete("CYCLES", patientId);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -100,7 +100,7 @@ const CyclesPopUp = ({
     <div className="cycles">
       <h1 className="cycles__title">Cycle monitoring</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="cycles__table-container" ref={divRef}>
+      <div className="cycles__table-container" ref={rootRef}>
         <table className="cycles__table">
           <thead>
             <tr>
@@ -126,7 +126,7 @@ const CyclesPopUp = ({
                       item={item}
                       key={item.id}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       setCycleToShow={setCycleToShow}
                       setShow={setShow}
                       setPrintVisible={setPrintVisible}

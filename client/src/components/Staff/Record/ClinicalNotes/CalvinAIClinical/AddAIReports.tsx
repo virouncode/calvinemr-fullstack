@@ -65,7 +65,7 @@ const AddAIReports = ({
   //Hooks
   const [reportsAddedIds, setReportsAddedIds] = useState<number[]>([]);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -88,7 +88,7 @@ const AddAIReports = ({
   const reportsDatas = reports?.pages?.flatMap((page) => page.items);
 
   return (
-    <div className="calvinai-prompt__reports" ref={divRef}>
+    <div className="calvinai-prompt__reports" ref={rootRef}>
       <p className="calvinai-prompt__reports-title">
         Add reports datas
         {isLoadingReportText && <CircularProgressSmall />}
@@ -110,7 +110,7 @@ const AddAIReports = ({
                   isLoadingAttachmentText={isLoadingAttachmentText}
                   promptText={promptText}
                   setPromptText={setPromptText}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <AddAIReportItem

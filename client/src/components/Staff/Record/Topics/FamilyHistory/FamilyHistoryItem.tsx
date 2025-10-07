@@ -27,7 +27,7 @@ type FamilyHistoryItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<
     FamilyHistoryType,
     Error,
@@ -42,7 +42,7 @@ const FamilyHistoryItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: FamilyHistoryItemProps) => {
@@ -144,7 +144,7 @@ const FamilyHistoryItem = ({
       <tr
         className="famhistory__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="famhistory__item-btn-container">

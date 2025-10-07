@@ -22,7 +22,7 @@ type MessagePatientThumbnailMobileProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: ((node: Element | null) => void) | null;
+  targetRef?: ((node: Element | null) => void) | null;
 };
 
 const MessagePatientThumbnailMobile = ({
@@ -31,7 +31,7 @@ const MessagePatientThumbnailMobile = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef = null,
+  targetRef = null,
 }: MessagePatientThumbnailMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
@@ -108,7 +108,7 @@ const MessagePatientThumbnailMobile = ({
           ? "message__thumbnail-mobile message__thumbnail-mobile--unread"
           : "message__thumbnail-mobile"
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
       <div className="message__thumbnail-mobile-title">

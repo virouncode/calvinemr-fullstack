@@ -30,7 +30,7 @@ const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
     isFetching,
   } = usePatients(debouncedSearch);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -64,7 +64,7 @@ const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
             <em>Number of patients: {patients.pages[0].itemsTotal}</em>
           </p>
         </div>
-        <div className="search-patient__table-container" ref={divRef}>
+        <div className="search-patient__table-container" ref={rootRef}>
           <table
             className={
               user.access_level === "admin"
@@ -98,7 +98,7 @@ const PatientSearchResult = ({ debouncedSearch }: PatientSearchResultProps) => {
                   <PatientResultItem
                     patient={patient}
                     key={patient.id}
-                    lastPatientRef={lastItemRef}
+                    lastPatientRef={targetRef}
                   />
                 ) : (
                   <PatientResultItem patient={patient} key={patient.id} />

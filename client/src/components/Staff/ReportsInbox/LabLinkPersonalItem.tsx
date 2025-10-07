@@ -21,13 +21,13 @@ import Input from "../../UI/Inputs/Input";
 type LabLinkPersonalItemProps = {
   link: LabLinkPersonalType;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const LabLinkPersonalItem = ({
   link,
   setErrMsgPost,
-  lastItemRef,
+  targetRef,
 }: LabLinkPersonalItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
@@ -115,7 +115,7 @@ const LabLinkPersonalItem = ({
   };
 
   return (
-    <li className="lablinks__item" ref={lastItemRef}>
+    <li className="lablinks__item" ref={targetRef}>
       <div className="lablinks__item-link">
         <a href={link.url} target="_blank" rel="noreferrer">
           {link.name}

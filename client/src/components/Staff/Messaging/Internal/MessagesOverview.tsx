@@ -14,7 +14,7 @@ type MessagesOverviewProps = {
   msgsSelectedIds: number[];
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   section: string;
-  lastItemRef: (node: Element | null) => void;
+  targetRef: (node: Element | null) => void;
   search: string;
 };
 
@@ -25,7 +25,7 @@ const MessagesOverview = ({
   msgsSelectedIds,
   setMsgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
   search,
 }: MessagesOverviewProps) => {
   const emptySectionMessages = (sectionName: string) => {
@@ -64,7 +64,7 @@ const MessagesOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <MessageThumbnail
@@ -74,7 +74,7 @@ const MessagesOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               )
             ) : isTabletOrMobile ? (

@@ -42,7 +42,7 @@ const FamilyHistoryPopUp = ({
   const topicDelete = useTopicDelete("FAMILY HISTORY", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -90,7 +90,7 @@ const FamilyHistoryPopUp = ({
     <div className="famhistory">
       <h1 className="famhistory__title">Patient family history</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="famhistory__table-container" ref={divRef}>
+      <div className="famhistory__table-container" ref={rootRef}>
         <table className="famhistory__table">
           <thead>
             <tr>
@@ -126,7 +126,7 @@ const FamilyHistoryPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

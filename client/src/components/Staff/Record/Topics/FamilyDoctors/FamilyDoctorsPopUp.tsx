@@ -1,4 +1,6 @@
 import React, { useRef } from "react";
+import { useDoctors } from "../../../../../hooks/reactquery/queries/doctorsQueries";
+import { usePatientDoctors } from "../../../../../hooks/reactquery/queries/patientDoctorsQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import { DemographicsType } from "../../../../../types/api";
 import CloseButton from "../../../../UI/Buttons/CloseButton";
@@ -7,8 +9,6 @@ import ErrorParagraph from "../../../../UI/Paragraphs/ErrorParagraph";
 import LoadingParagraph from "../../../../UI/Paragraphs/LoadingParagraph";
 import PatientClinicDoctorsList from "./PatientClinicDoctorsList";
 import PatientFamilyDoctorsList from "./PatientFamilyDoctorsList";
-import { useDoctors } from "../../../../../hooks/reactquery/queries/doctorsQueries";
-import { usePatientDoctors } from "../../../../../hooks/reactquery/queries/patientDoctorsQueries";
 
 type FamilyDoctorsPopUpProps = {
   patientId: number;
@@ -41,14 +41,12 @@ const FamilyDoctorsPopUp = ({
     isFetching: isFetchingDoctors,
   } = useDoctors();
   //Intersection observer
-  const {
-    divRef: rootRefPatientDoctors,
-    lastItemRef: lastItemRefPatientDoctors,
-  } = useIntersection(
-    isFetchingNextPagePatientDoctors,
-    fetchNextPagePatientDoctors,
-    isFetchingPatientDoctors
-  );
+  const { rootRef: rootRefPatientDoctors, targetRef: targetRefPatientDoctors } =
+    useIntersection<HTMLDivElement | null>(
+      isFetchingNextPagePatientDoctors,
+      fetchNextPagePatientDoctors,
+      isFetchingPatientDoctors
+    );
 
   //HANDLERS
   const handleClose = async () => {
@@ -89,7 +87,7 @@ const FamilyDoctorsPopUp = ({
       />
       <PatientFamilyDoctorsList
         rootRefPatientDoctors={rootRefPatientDoctors}
-        lastItemRefPatientDoctors={lastItemRefPatientDoctors}
+        targetRefPatientDoctors={targetRefPatientDoctors}
         patientDoctors={patientDoctors}
         patientId={patientId}
         isFetchingNextPagePatientDoctors={isFetchingNextPagePatientDoctors}

@@ -24,7 +24,7 @@ type PrescriptionItemProps = {
   >;
   setNewMessageExternalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setFaxVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const PrescriptionItem = ({
@@ -33,7 +33,7 @@ const PrescriptionItem = ({
   setAttachmentsToSend,
   setNewMessageExternalVisible,
   setFaxVisible,
-  lastItemRef,
+  targetRef,
 }: PrescriptionItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
@@ -55,7 +55,7 @@ const PrescriptionItem = ({
     setNewMessageExternalVisible(true);
   };
   return (
-    <tr className="prescriptions__item" ref={lastItemRef}>
+    <tr className="prescriptions__item" ref={targetRef}>
       <td className="prescriptions__item-btn-container">
         <Button onClick={handleSend} label="Send" />
         <Button onClick={handleFax} label="Fax" />

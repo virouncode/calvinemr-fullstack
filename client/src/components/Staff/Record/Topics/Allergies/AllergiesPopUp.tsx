@@ -48,7 +48,7 @@ const AllergiesPopUp = ({
   );
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -102,7 +102,7 @@ const AllergiesPopUp = ({
         Patient allergies & adverse reactions
       </h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="pasthealth__table-container" ref={divRef}>
+      <div className="pasthealth__table-container" ref={rootRef}>
         <table className="allergies__table">
           <thead>
             <tr>
@@ -141,7 +141,7 @@ const AllergiesPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

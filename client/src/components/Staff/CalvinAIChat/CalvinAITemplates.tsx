@@ -53,7 +53,7 @@ const CalvinAITemplates = ({
   } = useCalvinAIFavoritesTemplates(user.id, debouncedSearch);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -105,7 +105,7 @@ const CalvinAITemplates = ({
           autoFocus={true}
         />
       </div>
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -117,7 +117,7 @@ const CalvinAITemplates = ({
                   handleSelectTemplate={handleSelectTemplate}
                   handleEdit={handleEdit}
                   key={template.id}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <CalvinAITemplateItem

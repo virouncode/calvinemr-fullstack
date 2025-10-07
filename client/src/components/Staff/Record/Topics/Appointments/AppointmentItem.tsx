@@ -53,7 +53,7 @@ type AppointmentItemProps = {
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
   sites: SiteType[];
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<AppointmentType, Error, AppointmentType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -64,7 +64,7 @@ const AppointmentItem = ({
   setErrMsgPost,
   errMsgPost,
   sites,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: AppointmentItemProps) => {
@@ -634,7 +634,7 @@ const AppointmentItem = ({
               ? "#cecdcd"
               : undefined,
         }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         {/* <td>
           <div className="appointments__item-btn-container">

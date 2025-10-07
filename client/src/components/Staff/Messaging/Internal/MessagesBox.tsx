@@ -67,7 +67,7 @@ const MessagesBox = ({
   search,
 }: MessagesBoxProps) => {
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -88,7 +88,7 @@ const MessagesBox = ({
   return (
     messages && (
       <>
-        <div className="messages__content-box" ref={divRef}>
+        <div className="messages__content-box" ref={rootRef}>
           {currentMsgId === 0 ? (
             <MessagesOverview
               messages={messages}
@@ -97,7 +97,7 @@ const MessagesBox = ({
               msgsSelectedIds={msgsSelectedIds}
               setMsgsSelectedIds={setMsgsSelectedIds}
               section={section}
-              lastItemRef={lastItemRef}
+              targetRef={targetRef}
               search={search}
             />
           ) : (

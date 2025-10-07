@@ -23,11 +23,10 @@ const OthersFaxNumbers = ({
     isFetching,
   } = useFaxDirectory();
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   if (isPending)
@@ -54,13 +53,13 @@ const OthersFaxNumbers = ({
   return (
     <div className="fax-numbers">
       <label className="fax-numbers__title">Others</label>
-      <ul className="fax-numbers__list" ref={ulRef}>
+      <ul className="fax-numbers__list" ref={rootRef}>
         {others.map((other, index) =>
           index === others.length - 1 ? (
             <OtherFaxNumberItem
               key={other.id}
               other={other}
-              lastItemRef={lastItemRef}
+              targetRef={targetRef}
               handleCheckContact={handleCheckContact}
               isContactChecked={isContactChecked}
             />

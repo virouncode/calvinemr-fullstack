@@ -41,11 +41,10 @@ const MigrationPatientsList = ({
     isFetching,
   } = usePatients(search);
   //Hooks
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   if (isPending) return <LoadingParagraph />;
@@ -56,7 +55,7 @@ const MigrationPatientsList = ({
   );
 
   return (
-    <ul className="patients__list" ref={ulRef}>
+    <ul className="patients__list" ref={rootRef}>
       <li className="patients__list-item">
         <Checkbox
           id="all-patients"
@@ -77,7 +76,7 @@ const MigrationPatientsList = ({
                 isPatientChecked={isPatientChecked}
                 patientName={toPatientName(item)}
                 progress={progress}
-                lastItemRef={lastItemRef}
+                targetRef={targetRef}
               />
             ) : (
               <PatientsListItem

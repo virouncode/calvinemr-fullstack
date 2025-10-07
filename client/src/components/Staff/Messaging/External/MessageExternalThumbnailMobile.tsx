@@ -22,7 +22,7 @@ type MessageExternalThumbnailMobileProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageExternalThumbnailMobile = ({
@@ -31,7 +31,7 @@ const MessageExternalThumbnailMobile = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
 }: MessageExternalThumbnailMobileProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -102,7 +102,7 @@ const MessageExternalThumbnailMobile = ({
           ? "message__thumbnail-mobile message__thumbnail-mobile--unread"
           : "message__thumbnail-mobile"
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
       <div className="message__thumbnail-mobile-title">

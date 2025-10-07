@@ -7,7 +7,7 @@ import Input from "../../../UI/Inputs/Input";
 type BillingCodesTemplateEditProps = {
   formDatas: BillingCodeTemplateType;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   handleSave: () => Promise<void>;
   handleCancel: () => void;
   errMsgPost: string;
@@ -16,7 +16,7 @@ type BillingCodesTemplateEditProps = {
 const BillingCodesTemplateEdit = ({
   formDatas,
   handleChange,
-  lastItemRef,
+  targetRef,
   handleSave,
   handleCancel,
   errMsgPost,
@@ -25,7 +25,7 @@ const BillingCodesTemplateEdit = ({
     <li
       className="billing-codes-template__form"
       style={{ border: errMsgPost && "solid 1px red" }}
-      ref={lastItemRef}
+      ref={targetRef}
     >
       <div className="billing-codes-template__form-item">
         <Input

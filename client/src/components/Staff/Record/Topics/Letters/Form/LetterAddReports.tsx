@@ -31,7 +31,7 @@ const LetterAddReports = ({
     isFetching,
   } = useReports(patientId);
   //Intersection Observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -54,7 +54,7 @@ const LetterAddReports = ({
     .filter(({ Format }) => Format === "Binary");
 
   return (
-    <div className="letter__options-reports" ref={divRef}>
+    <div className="letter__options-reports" ref={rootRef}>
       <p className="letter__options-reports-title">Add patient files reports</p>
       <ul className="letter__options-reports-list">
         {reportsDatas.length > 0
@@ -65,7 +65,7 @@ const LetterAddReports = ({
                   report={report}
                   reportsAddedIds={reportsAddedIds}
                   setReportsAddedIds={setReportsAddedIds}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                   setAttachments={setAttachments}
                 />
               ) : (

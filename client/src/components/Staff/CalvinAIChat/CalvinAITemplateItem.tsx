@@ -20,14 +20,14 @@ type CalvinAITemplateItemProps = {
   template: CalvinAITemplateType;
   handleSelectTemplate: (template: CalvinAITemplateType) => void;
   handleEdit: (templateId: number) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const CalvinAITemplateItem = ({
   template,
   handleSelectTemplate,
   handleEdit,
-  lastItemRef,
+  targetRef,
 }: CalvinAITemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -67,7 +67,7 @@ const CalvinAITemplateItem = ({
   };
 
   return (
-    <li className="templates__list-item" ref={lastItemRef}>
+    <li className="templates__list-item" ref={targetRef}>
       <span onClick={() => handleSelectTemplate(template)}>
         {template.name}{" "}
         {template.author_id

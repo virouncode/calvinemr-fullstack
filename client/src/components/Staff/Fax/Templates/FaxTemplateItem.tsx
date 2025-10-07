@@ -21,13 +21,13 @@ import FaxTemplateEdit from "./FaxTemplateEdit";
 type FaxTemplateItemProps = {
   template: FaxTemplateType;
   handleSelectTemplate: (template: FaxTemplateType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const FaxTemplateItem = ({
   template,
   handleSelectTemplate,
-  lastItemRef,
+  targetRef,
 }: FaxTemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -77,7 +77,7 @@ const FaxTemplateItem = ({
 
   return (
     <>
-      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
+      <li className="templates__list-item" key={template.id} ref={targetRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id

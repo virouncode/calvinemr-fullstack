@@ -49,7 +49,7 @@ const ClinicalNotesTemplates = ({
   } = useClinicalNotesFavoritesTemplates(user.id, debouncedSearch);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -102,7 +102,7 @@ const ClinicalNotesTemplates = ({
           placeholder="Template name, author name"
         />
       </div>
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -114,7 +114,7 @@ const ClinicalNotesTemplates = ({
                   handleSelectTemplate={handleSelectTemplate}
                   handleEdit={handleEdit}
                   key={template.id}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <ClinicalNotesTemplatesItem

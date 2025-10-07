@@ -20,10 +20,10 @@ import InputTextToggle from "../../UI/Inputs/InputTextToggle";
 
 type ReferenceEdocItemProps = {
   item: EdocType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
-const EdocItem = ({ item, lastItemRef }: ReferenceEdocItemProps) => {
+const EdocItem = ({ item, targetRef }: ReferenceEdocItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
   const [progress, setProgress] = useState(false);
@@ -101,7 +101,7 @@ const EdocItem = ({ item, lastItemRef }: ReferenceEdocItemProps) => {
       <tr
         className="reference__edocs-item"
         style={{ border: errMsgPost && "solid 1.5px red" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="reference__edocs-item-btn-container">

@@ -67,7 +67,7 @@ const MedicationsPopUp = ({
   const topicDelete = useTopicDelete("MEDICATIONS & TREATMENTS", patientId);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -135,7 +135,7 @@ const MedicationsPopUp = ({
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
-        <div className="medications__table-container" ref={divRef}>
+        <div className="medications__table-container" ref={rootRef}>
           <table className="medications__table">
             <thead>
               <tr>
@@ -157,7 +157,7 @@ const MedicationsPopUp = ({
                       <MedicationItem
                         item={item}
                         key={item.id}
-                        lastItemRef={lastItemRef}
+                        targetRef={targetRef}
                         topicDelete={topicDelete}
                       />
                     ) : (

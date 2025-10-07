@@ -54,8 +54,8 @@ const FamilyDoctorsList = ({
   const doctorPut = useDoctorPut();
 
   //INTERSECTION OBSERVER
-  const { divRef: rootRefDoctors, lastItemRef: lastItemRefDoctors } =
-    useIntersection(
+  const { rootRef: rootRefDoctors, targetRef: targetRefDoctors } =
+    useIntersection<HTMLDivElement | null>(
       isFetchingNextPageDoctors,
       fetchNextPageDoctors,
       isFetchingDoctors
@@ -132,7 +132,7 @@ const FamilyDoctorsList = ({
                       patientId={patientId}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRefDoctors}
+                      targetRef={targetRefDoctors}
                       doctorPut={doctorPut}
                     />
                   ) : (

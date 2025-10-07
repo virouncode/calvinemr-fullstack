@@ -19,7 +19,7 @@ import SignCell from "../../../../UI/Tables/SignCell";
 type ConsentFormItemProps = {
   item: EformType;
   editCounter: React.MutableRefObject<number>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<ConsentFormType, Error, ConsentFormType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
   setFaxVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +39,7 @@ type ConsentFormItemProps = {
 const ConsentFormItem = ({
   item,
   editCounter,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
   setFaxVisible,
@@ -152,7 +152,7 @@ const ConsentFormItem = ({
   };
 
   return (
-    <tr className="consentforms__item" ref={lastItemRef}>
+    <tr className="consentforms__item" ref={targetRef}>
       <td>
         <div className="consentforms__item-btn-container">
           {editVisible ? (

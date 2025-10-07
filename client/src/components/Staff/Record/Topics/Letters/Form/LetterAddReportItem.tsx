@@ -7,7 +7,7 @@ type LetterAddReportItemProps = {
   report: ReportType;
   reportsAddedIds: number[];
   setReportsAddedIds: React.Dispatch<React.SetStateAction<number[]>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   setAttachments: React.Dispatch<React.SetStateAction<LetterAttachmentType[]>>;
 };
 
@@ -15,7 +15,7 @@ const LetterAddReportItem = ({
   report,
   reportsAddedIds,
   setReportsAddedIds,
-  lastItemRef,
+  targetRef,
   setAttachments,
 }: LetterAddReportItemProps) => {
   const isChecked = (id: number) => reportsAddedIds.includes(id);
@@ -44,7 +44,7 @@ const LetterAddReportItem = ({
   };
 
   return (
-    <li className="letter__options-reports-item" ref={lastItemRef}>
+    <li className="letter__options-reports-item" ref={targetRef}>
       <Checkbox
         id={report.name}
         onChange={handleChange}

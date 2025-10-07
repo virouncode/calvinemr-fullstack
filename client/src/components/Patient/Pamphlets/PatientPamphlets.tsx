@@ -21,7 +21,7 @@ const PatientPamphlets = () => {
   } = usePamphlets(debouncedSearch);
 
   //Hooks
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -44,7 +44,7 @@ const PatientPamphlets = () => {
         />
       </div>
       {error && <ErrorParagraph errorMsg={error.message} />}
-      <div className="patient-pamphlets__table-container" ref={divRef}>
+      <div className="patient-pamphlets__table-container" ref={rootRef}>
         <table className="patient-pamphlets__table">
           <thead>
             <tr>
@@ -62,7 +62,7 @@ const PatientPamphlets = () => {
                     <PatientPamphletItem
                       item={item}
                       key={item.id}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                     />
                   ) : (
                     <PatientPamphletItem item={item} key={item.id} />

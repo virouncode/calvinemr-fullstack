@@ -30,11 +30,10 @@ const LabLinksPersonal = () => {
     const value = e.target.value;
     setSearch(value);
   };
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
   const [addVisible, setAddVisible] = useState(false);
   const handleAdd = () => {
@@ -75,7 +74,7 @@ const LabLinksPersonal = () => {
 
       <ul
         className="lablinks__list"
-        ref={ulRef}
+        ref={rootRef}
         style={{ border: errMsgPost && "solid 1px red" }}
       >
         {links && links.length > 0
@@ -84,7 +83,7 @@ const LabLinksPersonal = () => {
                 <LabLinkPersonalItem
                   link={link}
                   key={link.id}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                   setErrMsgPost={setErrMsgPost}
                 />
               ) : (

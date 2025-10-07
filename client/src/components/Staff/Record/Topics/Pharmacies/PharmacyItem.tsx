@@ -29,7 +29,7 @@ type PharmacyItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   demographicsInfos: DemographicsType;
   topicPut: UseMutationResult<PharmacyType, Error, PharmacyType, void>;
   patientId: number;
@@ -40,7 +40,7 @@ const PharmacyItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   demographicsInfos,
   topicPut,
   patientId,
@@ -225,7 +225,7 @@ const PharmacyItem = ({
       <tr
         className="pharmacies-list__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="pharmacies-list__item-btn-container">

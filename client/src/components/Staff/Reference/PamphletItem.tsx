@@ -22,14 +22,14 @@ type PamphletItemProps = {
   item: PamphletType;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const PamphletItem = ({
   item,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
 }: PamphletItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { staffInfos } = useStaffInfosContext();
@@ -111,7 +111,7 @@ const PamphletItem = ({
       <tr
         className="reference__edocs-item"
         style={{ border: errMsgPost && "solid 1.5px red" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="reference__edocs-item-btn-container">

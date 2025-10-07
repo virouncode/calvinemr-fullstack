@@ -31,7 +31,7 @@ type AllergyItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<AllergyType, Error, AllergyType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -41,7 +41,7 @@ const AllergyItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: AllergyItemProps) => {
@@ -139,7 +139,7 @@ const AllergyItem = ({
       <tr
         className="allergies__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="allergies__item-btn-container">

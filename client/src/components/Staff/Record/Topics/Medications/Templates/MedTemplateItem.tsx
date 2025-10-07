@@ -22,13 +22,13 @@ import MedTemplateEdit from "./MedTemplateEdit";
 type MedTemplateItemProps = {
   med: MedTemplateType;
   handleSelectTemplate: (template: MedTemplateType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MedTemplateItem = ({
   med,
   handleSelectTemplate,
-  lastItemRef,
+  targetRef,
 }: MedTemplateItemProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
@@ -73,7 +73,7 @@ const MedTemplateItem = ({
 
   return (
     <>
-      <li className="templates__list-item" ref={lastItemRef}>
+      <li className="templates__list-item" ref={targetRef}>
         <Tooltip title={"Add to RX"} placement="top-start" arrow>
           <span
             onClick={() => handleSelectTemplate(med)}

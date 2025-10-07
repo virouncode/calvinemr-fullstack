@@ -42,7 +42,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
     error: errorFavorites,
   } = useTodosFavoritesTemplates(user.id, debouncedSearch);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -96,7 +96,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
           label="Search"
         />
       </div>
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -107,7 +107,7 @@ const TodosTemplates = ({ handleSelectTemplate }: TodosTemplatesProps) => {
                   template={template}
                   handleSelectTemplate={handleSelectTemplate}
                   key={template.id}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <TodoTemplateItem

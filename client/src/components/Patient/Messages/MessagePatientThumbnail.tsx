@@ -25,7 +25,7 @@ type MessagePatientThumbnailProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: ((node: Element | null) => void) | null;
+  targetRef?: ((node: Element | null) => void) | null;
 };
 
 const MessagePatientThumbnail = ({
@@ -34,7 +34,7 @@ const MessagePatientThumbnail = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef = null,
+  targetRef = null,
 }: MessagePatientThumbnailProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserPatientType };
@@ -168,7 +168,7 @@ const MessagePatientThumbnail = ({
           ? "message__thumbnail message__thumbnail--external message__thumbnail--unread"
           : "message__thumbnail message__thumbnail--external "
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
       <div className="message__thumbnail-from">

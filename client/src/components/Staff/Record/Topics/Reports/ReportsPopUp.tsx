@@ -5,6 +5,10 @@ import {
   useReportPost,
   useReportPut,
 } from "../../../../../hooks/reactquery/mutations/reportsMutations";
+import {
+  useReportsReceived,
+  useReportsSent,
+} from "../../../../../hooks/reactquery/queries/reportsQueries";
 import useIntersection from "../../../../../hooks/useIntersection";
 import {
   DemographicsType,
@@ -26,10 +30,6 @@ import NewMessageExternalMobile from "../../../Messaging/External/NewMessageExte
 import ReportForm from "./ReportForm";
 import ReportItemReceived from "./ReportItemReceived";
 import ReportItemSent from "./ReportItemSent";
-import {
-  useReportsReceived,
-  useReportsSent,
-} from "../../../../../hooks/reactquery/queries/reportsQueries";
 
 type ReportsPopUpProps = {
   patientId: number;
@@ -77,17 +77,18 @@ const ReportsPopUp = ({
     isFetching: isFetchingReportsSent,
   } = useReportsSent(patientId);
   //Intersection observer
-  const { divRef: rootReceivedRef, lastItemRef: lastItemReceivedRef } =
-    useIntersection(
+  const { rootRef: rootReceivedRef, targetRef: lastItemReceivedRef } =
+    useIntersection<HTMLDivElement | null>(
       isFetchingNextPageReportsReceived,
       fetchNextPageReportsReceived,
       isFetchingReportsReceived
     );
-  const { divRef: rootSentRef, lastItemRef: lastItemSentRef } = useIntersection(
-    isFetchingNextPageReportsSent,
-    fetchNextPageReportsSent,
-    isFetchingReportsSent
-  );
+  const { rootRef: rootSentRef, targetRef: lastItemSentRef } =
+    useIntersection<HTMLDivElement | null>(
+      isFetchingNextPageReportsSent,
+      fetchNextPageReportsSent,
+      isFetchingReportsSent
+    );
 
   const handleClose = async () => {
     if (

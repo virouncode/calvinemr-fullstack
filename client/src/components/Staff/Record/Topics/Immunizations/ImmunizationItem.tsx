@@ -35,7 +35,7 @@ type ImmunizationItemProps = {
   editCounter: React.MutableRefObject<number>;
   topicPut: UseMutationResult<ImmunizationType, Error, ImmunizationType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const ImmunizationItem = ({
@@ -45,7 +45,7 @@ const ImmunizationItem = ({
   editCounter,
   topicPut,
   topicDelete,
-  lastItemRef,
+  targetRef,
 }: ImmunizationItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [editVisible, setEditVisible] = useState(false);
@@ -153,7 +153,7 @@ const ImmunizationItem = ({
       <tr
         className="immunizations__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="immunizations__item-btn-container">

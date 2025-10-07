@@ -43,7 +43,7 @@ const PregnanciesPopUp = ({
   const topicDelete = useTopicDelete("PREGNANCIES", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -92,7 +92,7 @@ const PregnanciesPopUp = ({
     <div className="pregnancies">
       <h1 className="pregnancies__title">Patient pregnancies</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="pregnancies__table-container" ref={divRef}>
+      <div className="pregnancies__table-container" ref={rootRef}>
         <table className="pregnancies__table">
           <thead>
             <tr>
@@ -126,7 +126,7 @@ const PregnanciesPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

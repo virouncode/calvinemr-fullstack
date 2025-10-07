@@ -57,7 +57,7 @@ const MessagesExternalBox = ({
   search,
 }: MessagesExternalBoxProps) => {
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -74,7 +74,7 @@ const MessagesExternalBox = ({
   return (
     messages && (
       <>
-        <div className="messages__content-box" ref={divRef}>
+        <div className="messages__content-box" ref={rootRef}>
           {currentMsgId === 0 ? (
             <MessagesExternalOverview
               messages={messages}
@@ -83,7 +83,7 @@ const MessagesExternalBox = ({
               msgsSelectedIds={msgsSelectedIds}
               setMsgsSelectedIds={setMsgsSelectedIds}
               section={section}
-              lastItemRef={lastItemRef}
+              targetRef={targetRef}
               search={search}
             />
           ) : (

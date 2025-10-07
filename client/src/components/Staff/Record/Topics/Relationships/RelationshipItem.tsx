@@ -29,7 +29,7 @@ type RelationshipItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPost: UseMutationResult<
     RelationshipType,
     Error,
@@ -45,7 +45,7 @@ const RelationshipItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPost,
   topicPut,
   topicDelete,
@@ -191,7 +191,7 @@ const RelationshipItem = ({
         <tr
           className="relationships__item"
           style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-          ref={lastItemRef}
+          ref={targetRef}
         >
           <td>
             <div className="relationships__item-btn-container">

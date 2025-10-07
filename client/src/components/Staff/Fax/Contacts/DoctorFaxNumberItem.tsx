@@ -6,14 +6,14 @@ type DoctorFaxNumberItemProps = {
   doctor: DoctorType;
   handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isContactChecked: (faxNumber: string) => boolean;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const DoctorFaxNumberItem = ({
   doctor,
   handleCheckContact,
   isContactChecked,
-  lastItemRef,
+  targetRef,
 }: DoctorFaxNumberItemProps) => {
   const label = `${doctor.LastName ? `${doctor.LastName} ` : ""}${
     doctor.FirstName ? `${doctor.FirstName}, ` : ""
@@ -21,7 +21,7 @@ const DoctorFaxNumberItem = ({
     doctor.Address.Structured.City
   }`;
   return (
-    <li className="fax-numbers__item" ref={lastItemRef}>
+    <li className="fax-numbers__item" ref={targetRef}>
       <Checkbox
         id={doctor.FaxNumber.phoneNumber}
         name={doctor.LastName}

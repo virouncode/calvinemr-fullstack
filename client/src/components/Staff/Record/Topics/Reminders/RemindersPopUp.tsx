@@ -43,7 +43,7 @@ const RemindersPopUp = ({
   const topicDelete = useTopicDelete("REMINDERS", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -91,7 +91,7 @@ const RemindersPopUp = ({
     <div className="reminders">
       <h1 className="reminders__title">Reminders</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="reminders__table-container" ref={divRef}>
+      <div className="reminders__table-container" ref={rootRef}>
         <table className="reminders__table">
           <thead>
             <tr>
@@ -121,7 +121,7 @@ const RemindersPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

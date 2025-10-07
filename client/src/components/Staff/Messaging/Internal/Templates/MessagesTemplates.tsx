@@ -48,7 +48,7 @@ const MessagesTemplates = ({
     error: errorFavorites,
   } = useMessagesFavoritesTemplates(user.id, debouncedSearch);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -103,7 +103,7 @@ const MessagesTemplates = ({
           autoFocus={true}
         />
       </div>
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <ul>
           {isPending ? (
             <LoadingLi />
@@ -114,7 +114,7 @@ const MessagesTemplates = ({
                   template={template}
                   handleSelectTemplate={handleSelectTemplate}
                   key={template.id}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <MessageTemplateItem

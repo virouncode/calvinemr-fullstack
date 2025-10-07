@@ -25,11 +25,10 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
     isFetching,
   } = useDiagnosis(debouncedSearch);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +55,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
           placeholder="Search by Diagnosis name..."
         />
       </div>
-      <ul className="diagnosis__results" ref={ulRef}>
+      <ul className="diagnosis__results" ref={rootRef}>
         <li className="diagnosis__results-item diagnosis__results-item--headers">
           <span className="diagnosis__results-code">Code</span>
           <span className="diagnosis__results-diagnosis">Diagnosis</span>
@@ -69,7 +68,7 @@ const DiagnosisSearch = ({ handleClickDiagnosis }: DiagnosisSearchProps) => {
                   className="diagnosis__results-item"
                   key={item.id}
                   onClick={() => handleClickDiagnosis(item.code)}
-                  ref={lastItemRef}
+                  ref={targetRef}
                 >
                   <span className="diagnosis__results-code">{item.code}</span>
                   <span className="diagnosis__results-diagnosis">

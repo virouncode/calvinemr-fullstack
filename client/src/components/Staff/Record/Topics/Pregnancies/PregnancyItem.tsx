@@ -25,7 +25,7 @@ type PregnancyItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<PregnancyType, Error, PregnancyType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -35,7 +35,7 @@ const PregnancyItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: PregnancyItemProps) => {
@@ -134,7 +134,7 @@ const PregnancyItem = ({
       <tr
         className="pregnancies__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="pregnancies__item-btn-container">

@@ -63,7 +63,7 @@ const LettersPopUp = ({
   const topicDelete = useTopicDelete("LETTERS/REFERRALS", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -128,7 +128,7 @@ const LettersPopUp = ({
       <h1 className="letters__title">Patient letters</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
 
-      <div className="letters__table-container" ref={divRef}>
+      <div className="letters__table-container" ref={rootRef}>
         <table className="letters__table">
           <thead>
             <tr>
@@ -150,7 +150,7 @@ const LettersPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                       setFaxVisible={setFaxVisible}

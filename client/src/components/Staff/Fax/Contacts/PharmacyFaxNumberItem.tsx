@@ -6,17 +6,17 @@ type PharmacyFaxNumberItemProps = {
   pharmacy: PharmacyType;
   handleCheckContact: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isContactChecked: (faxNumber: string) => boolean;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const PharmacyFaxNumberItem = ({
   pharmacy,
   handleCheckContact,
   isContactChecked,
-  lastItemRef,
+  targetRef,
 }: PharmacyFaxNumberItemProps) => {
   return (
-    <li className="fax-numbers__item" ref={lastItemRef}>
+    <li className="fax-numbers__item" ref={targetRef}>
       <Checkbox
         id={pharmacy.FaxNumber.phoneNumber}
         name={pharmacy.Name}

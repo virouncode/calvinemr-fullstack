@@ -40,7 +40,7 @@ const RisksPopUp = ({ patientId, setPopUpVisible }: RisksPopUpProps) => {
   const topicDelete = useTopicDelete("RISK FACTORS", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -90,7 +90,7 @@ const RisksPopUp = ({ patientId, setPopUpVisible }: RisksPopUpProps) => {
       <h1 className="risk__title">Patient risk factors & prevention</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
-        <div className="risk__table-container" ref={divRef}>
+        <div className="risk__table-container" ref={rootRef}>
           <table className="risk__table">
             <thead>
               <tr>
@@ -126,7 +126,7 @@ const RisksPopUp = ({ patientId, setPopUpVisible }: RisksPopUpProps) => {
                         editCounter={editCounter}
                         setErrMsgPost={setErrMsgPost}
                         errMsgPost={errMsgPost}
-                        lastItemRef={lastItemRef}
+                        targetRef={targetRef}
                         topicPut={topicPut}
                         topicDelete={topicDelete}
                       />

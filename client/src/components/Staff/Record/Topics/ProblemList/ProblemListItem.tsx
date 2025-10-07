@@ -26,7 +26,7 @@ type ProblemListItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<string>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<ProblemListType, Error, ProblemListType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -36,7 +36,7 @@ const ProblemListItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: ProblemListItemProps) => {
@@ -137,7 +137,7 @@ const ProblemListItem = ({
       <tr
         className="problemlist__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="problemlist__item-btn-container">

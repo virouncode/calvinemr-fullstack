@@ -38,17 +38,16 @@ const PatientsList = ({
     isFetching,
   } = usePatientsSimpleSearch(search);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const patientsDemographics = data?.pages?.flatMap((page) => page.items);
 
   return (
-    <ul className="patients__list" ref={ulRef}>
+    <ul className="patients__list" ref={rootRef}>
       {error && <li>{error.message}</li>}
       {isPending ? (
         <LoadingLi />
@@ -77,7 +76,7 @@ const PatientsList = ({
                 isPatientChecked={isPatientChecked}
                 patientName={toPatientName(info)}
                 progress={isFetchingNextPage}
-                lastItemRef={lastItemRef}
+                targetRef={targetRef}
               />
             ) : (
               <PatientsListItem

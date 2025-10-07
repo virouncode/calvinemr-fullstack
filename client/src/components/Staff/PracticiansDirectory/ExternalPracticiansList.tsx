@@ -38,11 +38,10 @@ const ExternalPracticiansList = ({
   } = useDoctorsSearch(debouncedSearch);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "div"
+    isFetching
   );
 
   const handleAdd = () => {
@@ -63,7 +62,7 @@ const ExternalPracticiansList = ({
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <div
         className="doctors-list__table-container doctors-list__table-container--practician"
-        ref={divRef}
+        ref={rootRef}
       >
         <table className="doctors-list__table">
           <thead>
@@ -102,7 +101,7 @@ const ExternalPracticiansList = ({
                       key={item.id}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       doctorPut={doctorPut}
                     />
                   ) : (

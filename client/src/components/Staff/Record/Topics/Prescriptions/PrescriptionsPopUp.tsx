@@ -47,7 +47,7 @@ const PrescriptionsPopUp = ({
   const topicPut = useTopicPut("PAST PRESCRIPTIONS", patientId);
   const topicDelete = useTopicDelete("PAST PRESCRIPTIONS", patientId);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -90,7 +90,7 @@ const PrescriptionsPopUp = ({
     <div className="prescriptions">
       <h1 className="prescriptions__title">Patient prescriptions</h1>
       <>
-        <div className="prescriptions__table-container" ref={divRef}>
+        <div className="prescriptions__table-container" ref={rootRef}>
           <table className="prescriptions__table">
             <thead>
               <tr>
@@ -108,7 +108,7 @@ const PrescriptionsPopUp = ({
                       <PrescriptionItem
                         item={item}
                         key={item.id}
-                        lastItemRef={lastItemRef}
+                        targetRef={targetRef}
                         setFileToFax={setFileToFax}
                         setFaxVisible={setFaxVisible}
                         setNewMessageExternalVisible={

@@ -49,7 +49,7 @@ const BillingCodesTemplates = ({
   } = useBillingCodesFavoritesTemplates(user.id, debouncedSearch);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -105,7 +105,7 @@ const BillingCodesTemplates = ({
         />
       </div>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="templates__list" ref={divRef}>
+      <div className="templates__list" ref={rootRef}>
         <div ref={billingCodesTemplatesStartRef}></div>
         <ul>
           {newTemplateVisible && (
@@ -124,7 +124,7 @@ const BillingCodesTemplates = ({
                     errMsgPost={errMsgPost}
                     setErrMsgPost={setErrMsgPost}
                     key={template.id}
-                    lastItemRef={lastItemRef}
+                    targetRef={targetRef}
                   />
                 ) : (
                   <BillingCodesTemplateItem

@@ -40,7 +40,7 @@ type MessageThumbnailProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageThumbnail = ({
@@ -49,7 +49,7 @@ const MessageThumbnail = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
 }: MessageThumbnailProps) => {
   //Hooks
   const navigate = useNavigate();
@@ -337,7 +337,7 @@ const MessageThumbnail = ({
           ? "message__thumbnail message__thumbnail--todo message__thumbnail--unread"
           : "message__thumbnail message__thumbnail--todo"
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
 

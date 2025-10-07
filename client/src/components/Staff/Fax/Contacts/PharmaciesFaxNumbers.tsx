@@ -28,11 +28,10 @@ const PharmaciesFaxNumbers = ({
     isFetching,
   } = usePharmaciesSearch(debouncedSearch);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const pharmacies = data?.pages
@@ -47,7 +46,7 @@ const PharmaciesFaxNumbers = ({
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search..."
       />
-      <ul className="fax-numbers__list" ref={ulRef}>
+      <ul className="fax-numbers__list" ref={rootRef}>
         {error && <li>{error.message}</li>}
         {pharmacies && pharmacies.length > 0
           ? pharmacies.map((pharmacy, index) =>
@@ -55,7 +54,7 @@ const PharmaciesFaxNumbers = ({
                 <PharmacyFaxNumberItem
                   key={pharmacy.id}
                   pharmacy={pharmacy}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                   handleCheckContact={handleCheckContact}
                   isContactChecked={isContactChecked}
                 />

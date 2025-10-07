@@ -30,20 +30,20 @@ const ClinicalNotesOverview = ({
   isFetching,
 }: ClinicalNotesOverviewProps) => {
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
   );
   return (
-    <div className="clinical-notes__overview" ref={divRef}>
+    <div className="clinical-notes__overview" ref={rootRef}>
       {clinicalNotes.length > 0 ? (
         clinicalNotes.map((clinicalNote, index) =>
           index === clinicalNotes.length - 1 ? (
             <ClinicalNoteOverviewCard
               key={clinicalNote.id}
               clinicalNote={clinicalNote}
-              lastItemRef={lastItemRef}
+              targetRef={targetRef}
             />
           ) : (
             <ClinicalNoteOverviewCard

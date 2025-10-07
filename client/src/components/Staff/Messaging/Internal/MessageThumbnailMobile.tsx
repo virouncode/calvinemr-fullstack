@@ -30,7 +30,7 @@ type MessageThumbnailMobileProps = {
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   msgsSelectedIds: number[];
   section: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageThumbnailMobile = ({
@@ -39,7 +39,7 @@ const MessageThumbnailMobile = ({
   setMsgsSelectedIds,
   msgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
 }: MessageThumbnailMobileProps) => {
   //Hooks
   const navigate = useNavigate();
@@ -218,7 +218,7 @@ const MessageThumbnailMobile = ({
           ? "message__thumbnail-mobile message__thumbnail-mobile--todo message__thumbnail-mobile--unread"
           : "message__thumbnail-mobile message__thumbnail-mobile--todo"
       }
-      ref={lastItemRef}
+      ref={targetRef}
     >
       {/*========== FROM =============*/}
       <div className="message__thumbnail-mobile-title">

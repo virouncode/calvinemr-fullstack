@@ -21,13 +21,13 @@ import LetterTemplateEdit from "./LetterTemplateEdit";
 type LetterTemplateItemProps = {
   template: LetterTemplateType;
   handleSelectTemplate: (template: LetterTemplateType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const LetterTemplateItem = ({
   template,
   handleSelectTemplate,
-  lastItemRef,
+  targetRef,
 }: LetterTemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -73,7 +73,7 @@ const LetterTemplateItem = ({
 
   return (
     <>
-      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
+      <li className="templates__list-item" key={template.id} ref={targetRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id

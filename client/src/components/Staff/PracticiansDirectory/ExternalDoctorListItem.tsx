@@ -24,7 +24,7 @@ type ExternalDoctorListItemProps = {
   item: DoctorType;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   doctorPut: UseMutationResult<DoctorType, Error, DoctorType, unknown>;
 };
 
@@ -32,7 +32,7 @@ const ExternalDoctorListItem = ({
   item,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   doctorPut,
 }: ExternalDoctorListItemProps) => {
   //HOOKS
@@ -226,7 +226,7 @@ const ExternalDoctorListItem = ({
       <tr
         className="doctors__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="doctors__item-btn-container">

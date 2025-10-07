@@ -7,17 +7,17 @@ import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitle
 
 type ClinicalNoteOverviewCardProps = {
   clinicalNote: ClinicalNoteType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const ClinicalNoteOverviewCard = ({
   clinicalNote,
-  lastItemRef,
+  targetRef,
 }: ClinicalNoteOverviewCardProps) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   return (
-    <div className="clinical-notes__overview-card" ref={lastItemRef}>
+    <div className="clinical-notes__overview-card" ref={targetRef}>
       <div className="clinical-notes__overview-card-row">
         <label>From:</label>
         <p>{staffIdToTitleAndName(staffInfos, clinicalNote.created_by_id)}</p>

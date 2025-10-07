@@ -39,7 +39,7 @@ const AlertsPopUp = ({ patientId, setPopUpVisible }: AlertsPopUpProps) => {
   const topicDelete = useTopicDelete("ALERTS & SPECIAL NEEDS", patientId);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -88,7 +88,7 @@ const AlertsPopUp = ({ patientId, setPopUpVisible }: AlertsPopUpProps) => {
       <h1 className="alerts__title">Alerts and special needs</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
       <>
-        <div className="alerts__table-container" ref={divRef}>
+        <div className="alerts__table-container" ref={rootRef}>
           <table className="alerts__table">
             <thead>
               <tr>
@@ -121,7 +121,7 @@ const AlertsPopUp = ({ patientId, setPopUpVisible }: AlertsPopUpProps) => {
                         editCounter={editCounter}
                         setErrMsgPost={setErrMsgPost}
                         errMsgPost={errMsgPost}
-                        lastItemRef={lastItemRef}
+                        targetRef={targetRef}
                         topicPut={topicPut}
                         topicDelete={topicDelete}
                       />

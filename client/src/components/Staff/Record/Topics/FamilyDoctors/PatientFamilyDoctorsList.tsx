@@ -19,7 +19,7 @@ import PatientFamilyDoctorItem from "./PatientFamilyDoctorItem";
 
 type PatientFamilyDoctorsListProps = {
   rootRefPatientDoctors: React.RefObject<HTMLDivElement>;
-  lastItemRefPatientDoctors: (node: Element | null) => void;
+  targetRefPatientDoctors: (node: Element | null) => void;
   patientDoctors:
     | InfiniteData<XanoPaginatedType<DoctorType>, unknown>
     | undefined;
@@ -44,7 +44,7 @@ type PatientFamilyDoctorsListProps = {
 
 const PatientFamilyDoctorsList = ({
   rootRefPatientDoctors,
-  lastItemRefPatientDoctors,
+  targetRefPatientDoctors,
   patientDoctors,
   patientId,
   isFetchingNextPagePatientDoctors,
@@ -101,7 +101,7 @@ const PatientFamilyDoctorsList = ({
                       item={item}
                       patientId={patientId}
                       key={item.id}
-                      lastItemRef={lastItemRefPatientDoctors}
+                      targetRef={targetRefPatientDoctors}
                     />
                   ) : (
                     <PatientFamilyDoctorItem

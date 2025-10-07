@@ -20,14 +20,14 @@ type ClinicalNotesTemplatesItemProps = {
   template: ClinicalNoteTemplateType;
   handleSelectTemplate: (template: ClinicalNoteTemplateType) => void;
   handleEdit: (id: number) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const ClinicalNotesTemplatesItem = ({
   template,
   handleSelectTemplate,
   handleEdit,
-  lastItemRef,
+  targetRef,
 }: ClinicalNotesTemplatesItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -67,7 +67,7 @@ const ClinicalNotesTemplatesItem = ({
   };
 
   return (
-    <li className="templates__list-item" ref={lastItemRef}>
+    <li className="templates__list-item" ref={targetRef}>
       <span onClick={() => handleSelectTemplate(template)}>
         {template.name}{" "}
         {template.author_id

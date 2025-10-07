@@ -19,7 +19,7 @@ type ReminderItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<ReminderType, Error, ReminderType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -29,7 +29,7 @@ const ReminderItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: ReminderItemProps) => {
@@ -117,7 +117,7 @@ const ReminderItem = ({
       <tr
         className="reminders__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="reminders__item-btn-container">

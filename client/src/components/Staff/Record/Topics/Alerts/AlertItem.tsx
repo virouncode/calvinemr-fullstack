@@ -24,7 +24,7 @@ type AlertItemProps = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<AlertType, Error, AlertType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
@@ -34,7 +34,7 @@ const AlertItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
 }: AlertItemProps) => {
@@ -127,7 +127,7 @@ const AlertItem = ({
       <tr
         className="alerts__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="alerts__item-btn-container">

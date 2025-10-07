@@ -21,13 +21,13 @@ import MessageExternalTemplateEdit from "./MessageExternalTemplateEdit";
 type MessageExternalTemplateItemProps = {
   template: MessageExternalTemplateType;
   handleSelectTemplate: (template: MessageExternalTemplateType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageExternalTemplateItem = ({
   template,
   handleSelectTemplate,
-  lastItemRef,
+  targetRef,
 }: MessageExternalTemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -77,7 +77,7 @@ const MessageExternalTemplateItem = ({
 
   return (
     <>
-      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
+      <li className="templates__list-item" key={template.id} ref={targetRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id

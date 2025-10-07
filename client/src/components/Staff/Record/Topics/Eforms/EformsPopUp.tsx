@@ -66,7 +66,7 @@ const EformsPopUp = ({
   const topicDelete = useTopicDelete("E-FORMS", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -113,7 +113,7 @@ const EformsPopUp = ({
   return (
     <div className="eforms">
       <h1 className="eforms__title">Patient e-forms</h1>
-      <div className="eforms__table-container" ref={divRef}>
+      <div className="eforms__table-container" ref={rootRef}>
         <table className="eforms__table">
           <thead>
             <tr>
@@ -130,7 +130,7 @@ const EformsPopUp = ({
                     <EformItem
                       item={item}
                       key={item.id}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                       setFaxVisible={setFaxVisible}

@@ -42,7 +42,7 @@ const PastHealthPopUp = ({
   const topicDelete = useTopicDelete("PAST HEALTH", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -89,7 +89,7 @@ const PastHealthPopUp = ({
     <div className="pasthealth">
       <h1 className="pasthealth__title">Patient past health</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="pasthealth__table-container" ref={divRef}>
+      <div className="pasthealth__table-container" ref={rootRef}>
         <table className="pasthealth__table">
           <thead>
             <tr>
@@ -125,7 +125,7 @@ const PastHealthPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

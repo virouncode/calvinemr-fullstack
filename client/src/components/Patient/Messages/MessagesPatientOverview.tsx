@@ -14,7 +14,7 @@ type MessagesPatientOverviewProps = {
   msgsSelectedIds: number[];
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   section: string;
-  lastItemRef: (node: Element | null) => void;
+  targetRef: (node: Element | null) => void;
   search: string;
 };
 
@@ -25,7 +25,7 @@ const MessagesPatientOverview = ({
   msgsSelectedIds,
   setMsgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
   search,
 }: MessagesPatientOverviewProps) => {
   const emptySectionMessages = (sectionName: string) => {
@@ -58,7 +58,7 @@ const MessagesPatientOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <MessagePatientThumbnail
@@ -68,7 +68,7 @@ const MessagesPatientOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               )
             ) : isTabletOrMobile ? (

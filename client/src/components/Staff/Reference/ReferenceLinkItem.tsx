@@ -11,13 +11,13 @@ import ReferenceLinkEdit from "./ReferenceLinkEdit";
 type MyLinkItemProps = {
   link: LinkType;
   setAddVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const ReferenceLinkItem = ({
   link,
   setAddVisible,
-  lastItemRef,
+  targetRef,
 }: MyLinkItemProps) => {
   const [editVisible, setEditVisible] = useState(false);
   const linkDelete = useLinkDelete(link.staff_id);
@@ -38,7 +38,7 @@ const ReferenceLinkItem = ({
   };
 
   return (
-    <li key={link.name} ref={lastItemRef}>
+    <li key={link.name} ref={targetRef}>
       <a href={link.url} target="_blank" rel="noreferrer">
         {link.name}
       </a>

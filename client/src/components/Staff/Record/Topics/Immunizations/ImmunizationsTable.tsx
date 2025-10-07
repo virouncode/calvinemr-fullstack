@@ -54,7 +54,7 @@ const ImmunizationsTable = ({
 }: ImmunizationsTableProps) => {
   const [addVisible, setAddVisible] = useState(false);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -67,7 +67,7 @@ const ImmunizationsTable = ({
   };
   return (
     <>
-      <div className="immunizations__table-container" ref={divRef}>
+      <div className="immunizations__table-container" ref={rootRef}>
         <table className="immunizations__table">
           <thead>
             <tr>
@@ -107,7 +107,7 @@ const ImmunizationsTable = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

@@ -13,13 +13,13 @@ import Button from "../../../../UI/Buttons/Button";
 type PatientFamilyDoctorItemProps = {
   item: DoctorType;
   patientId: number;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const PatientFamilyDoctorItem = ({
   item,
   patientId,
-  lastItemRef,
+  targetRef,
 }: PatientFamilyDoctorItemProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const [progress, setProgress] = useState(false);
@@ -46,7 +46,7 @@ const PatientFamilyDoctorItem = ({
   };
 
   return (
-    <tr className="doctors__item" ref={lastItemRef}>
+    <tr className="doctors__item" ref={targetRef}>
       <td>
         <Button
           onClick={handleRemoveFromPatient}

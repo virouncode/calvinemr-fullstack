@@ -19,7 +19,7 @@ import SignCell from "../../../../UI/Tables/SignCell";
 type CycleItemProps = {
   item: CycleType;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   setCycleToShow: React.Dispatch<React.SetStateAction<CycleType | undefined>>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   setPrintVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +30,7 @@ type CycleItemProps = {
 const CycleItem = ({
   item,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   setCycleToShow,
   setShow,
   setPrintVisible,
@@ -151,7 +151,7 @@ const CycleItem = ({
         border: errMsgPost && "solid 1.5px red",
         backgroundColor: item.status === "Active" ? "#FEFEFE" : "#cecdcd",
       }}
-      ref={lastItemRef}
+      ref={targetRef}
     >
       <td>
         <div className="cycles-item__btn-container">

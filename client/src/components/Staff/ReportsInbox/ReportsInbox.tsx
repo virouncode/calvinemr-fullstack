@@ -31,7 +31,7 @@ const ReportsInbox = () => {
   } = useReportsInbox(user.id);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -65,7 +65,7 @@ const ReportsInbox = () => {
       )}
       <h3 className="reportsinbox__subtitle">Reports to acknowledge</h3>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="reportsinbox__table-container" ref={divRef}>
+      <div className="reportsinbox__table-container" ref={rootRef}>
         <table className="reportsinbox__table">
           <thead>
             <tr>
@@ -96,7 +96,7 @@ const ReportsInbox = () => {
                       setForwardVisible={setForwardVisible}
                       forwardVisible={forwardVisible}
                       setReportToForwardId={setReportToForwardId}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       errMsgPost={errMsgPost}
                       setErrMsgPost={setErrMsgPost}
                     />

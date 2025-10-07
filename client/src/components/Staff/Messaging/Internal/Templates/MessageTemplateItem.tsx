@@ -13,23 +13,23 @@ import { nowTZTimestamp } from "../../../../../utils/dates/formatDates";
 import { staffIdToTitleAndName } from "../../../../../utils/names/staffIdToTitleAndName";
 import { confirmAlert } from "../../../../UI/Confirm/ConfirmGlobal";
 import CloneIcon from "../../../../UI/Icons/CloneIcon";
+import HeartIcon from "../../../../UI/Icons/HeartIcon";
 import PenIcon from "../../../../UI/Icons/PenIcon";
 import TrashIcon from "../../../../UI/Icons/TrashIcon";
 import FakeWindow from "../../../../UI/Windows/FakeWindow";
 import MessageTemplateEdit from "./MessageTemplateEdit";
 import MessageTemplateEditMobile from "./MessageTemplateEditMobile";
-import HeartIcon from "../../../../UI/Icons/HeartIcon";
 
 type MessageTemplateItemProps = {
   template: MessageTemplateType;
   handleSelectTemplate: (template: MessageTemplateType) => void;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const MessageTemplateItem = ({
   template,
   handleSelectTemplate,
-  lastItemRef,
+  targetRef,
 }: MessageTemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType };
@@ -80,7 +80,7 @@ const MessageTemplateItem = ({
 
   return (
     <>
-      <li className="templates__list-item" key={template.id} ref={lastItemRef}>
+      <li className="templates__list-item" key={template.id} ref={targetRef}>
         <span onClick={() => handleSelectTemplate(template)}>
           {template.name}{" "}
           {template.author_id

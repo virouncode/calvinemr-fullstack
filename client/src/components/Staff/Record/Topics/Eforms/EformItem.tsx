@@ -13,7 +13,7 @@ import SignCell from "../../../../UI/Tables/SignCell";
 
 type EformItemType = {
   item: EformType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<EformType, Error, EformType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
   setFaxVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +30,7 @@ type EformItemType = {
 
 const EformItem = ({
   item,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
   setFaxVisible,
@@ -120,7 +120,7 @@ const EformItem = ({
   };
 
   return (
-    <tr className="eforms__item" ref={lastItemRef}>
+    <tr className="eforms__item" ref={targetRef}>
       <td>
         <div className="eforms__item-btn-container">
           {renameVisible ? (

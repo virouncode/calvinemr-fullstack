@@ -19,7 +19,7 @@ type LetterItemType = {
   editCounter: React.MutableRefObject<number>;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
   errMsgPost: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicPut: UseMutationResult<LetterType, Error, LetterType, void>;
   topicDelete: UseMutationResult<void, Error, number, void>;
   setFaxVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,7 +38,7 @@ const LetterItem = ({
   editCounter,
   setErrMsgPost,
   errMsgPost,
-  lastItemRef,
+  targetRef,
   topicPut,
   topicDelete,
   setFaxVisible,
@@ -155,7 +155,7 @@ const LetterItem = ({
       <tr
         className="letters__item"
         style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-        ref={lastItemRef}
+        ref={targetRef}
       >
         <td>
           <div className="letters__item-btn-container">

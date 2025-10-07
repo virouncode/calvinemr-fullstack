@@ -22,7 +22,7 @@ type AddAIReportItemProps = {
   isLoadingAttachmentText: boolean;
   promptText: PromptTextType;
   setPromptText: React.Dispatch<React.SetStateAction<PromptTextType>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const AddAIReportItem = ({
@@ -37,7 +37,7 @@ const AddAIReportItem = ({
   isLoadingAttachmentText,
   promptText,
   setPromptText,
-  lastItemRef,
+  targetRef,
 }: AddAIReportItemProps) => {
   const isChecked = (id: number) => reportsAddedIds.includes(id);
 
@@ -100,7 +100,7 @@ const AddAIReportItem = ({
   };
 
   return (
-    <li className="calvinai-prompt__report-item" ref={lastItemRef}>
+    <li className="calvinai-prompt__report-item" ref={targetRef}>
       <Checkbox
         id={report.id.toString()}
         onChange={handleChange}

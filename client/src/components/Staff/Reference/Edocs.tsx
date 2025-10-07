@@ -26,7 +26,7 @@ const Edocs = () => {
   } = useEdocs(debouncedSearch);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -59,7 +59,7 @@ const Edocs = () => {
       <div className="reference__edocs-results">
         {error && <ErrorParagraph errorMsg={error.message} />}
         <>
-          <div className="reference__edocs-table-container" ref={divRef}>
+          <div className="reference__edocs-table-container" ref={rootRef}>
             <table className="reference__edocs-table">
               <thead>
                 <tr>
@@ -78,7 +78,7 @@ const Edocs = () => {
                         <EdocItem
                           item={item}
                           key={item.id}
-                          lastItemRef={lastItemRef}
+                          targetRef={targetRef}
                         />
                       ) : (
                         <EdocItem item={item} key={item.id} />

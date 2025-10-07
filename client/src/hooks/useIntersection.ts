@@ -4,20 +4,18 @@ import {
 } from "@tanstack/react-query";
 import { useCallback, useRef } from "react";
 
-const useIntersection = <TData, TError>(
+const useIntersection = <TElement extends HTMLElement | null>(
   isFetchingNextPage: boolean,
   fetchNextPage: (
     options?: FetchNextPageOptions
-  ) => Promise<InfiniteQueryObserverResult<TData, TError>>,
+  ) => Promise<InfiniteQueryObserverResult<unknown, unknown>>,
   isFetching: boolean,
-  elementType: string = "div",
   addVisible: boolean = false
 ) => {
   const observer = useRef<IntersectionObserver | null>(null);
-  const ulRef = useRef<HTMLUListElement | null>(null);
-  const divRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<TElement | null>(null);
 
-  const lastItemRef = useCallback(
+  const targetRef = useCallback(
     (node: Element | null) => {
       if (isFetchingNextPage || addVisible) return;
       if (observer.current) {
@@ -25,9 +23,9 @@ const useIntersection = <TData, TError>(
       }
 
       const options: IntersectionObserverInit = {
-        root: elementType === "div" ? divRef.current : ulRef.current,
+        root: rootRef.current,
         rootMargin: "0px",
-        threshold: 0.1,
+        threshold: 0.1, //10% of the item is visible
       };
 
       observer.current = new IntersectionObserver(async (entries) => {
@@ -44,10 +42,10 @@ const useIntersection = <TData, TError>(
         observer.current.observe(node);
       }
     },
-    [addVisible, elementType, fetchNextPage, isFetching, isFetchingNextPage]
+    [addVisible, fetchNextPage, isFetching, isFetchingNextPage]
   );
 
-  return { ulRef, divRef, lastItemRef };
+  return { rootRef, targetRef };
 };
 
 export default useIntersection;

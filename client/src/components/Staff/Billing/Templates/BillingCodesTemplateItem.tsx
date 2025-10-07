@@ -22,7 +22,7 @@ type BillingCodesTemplateItemProps = {
   ) => void;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
 const BillingCodesTemplateItem = ({
@@ -30,7 +30,7 @@ const BillingCodesTemplateItem = ({
   handleSelectTemplate,
   errMsgPost,
   setErrMsgPost,
-  lastItemRef,
+  targetRef,
 }: BillingCodesTemplateItemProps) => {
   //Hooks
   const { user } = useUserContext() as { user: UserStaffType | AdminType };
@@ -113,14 +113,14 @@ const BillingCodesTemplateItem = ({
     <BillingCodesTemplateEdit
       formDatas={formDatas}
       handleChange={handleChange}
-      lastItemRef={lastItemRef}
+      targetRef={targetRef}
       handleSave={handleSave}
       handleCancel={handleCancel}
       errMsgPost={errMsgPost}
     />
   ) : (
     <BillingCodesTemplateDisplay
-      lastItemRef={lastItemRef}
+      targetRef={targetRef}
       handleSelectTemplate={handleSelectTemplate}
       template={template}
       handleEditClick={handleEditClick}

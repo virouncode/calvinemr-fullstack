@@ -19,13 +19,13 @@ import MedicationDetails from "./MedicationDetails";
 
 type MedicationItemProps = {
   item: MedType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   topicDelete: UseMutationResult<void, Error, number, void>;
 };
 
 const MedicationItem = ({
   item,
-  lastItemRef,
+  targetRef,
   topicDelete,
 }: MedicationItemProps) => {
   //Hooks
@@ -57,7 +57,7 @@ const MedicationItem = ({
               ? "#FEFEFE"
               : "#cecdcd",
           }}
-          ref={lastItemRef}
+          ref={targetRef}
         >
           <td>
             <div className="medications__item-btn-container">

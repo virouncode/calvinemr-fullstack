@@ -28,11 +28,10 @@ const DoctorsFaxNumbers = ({
     isFetching,
   } = useDoctorsSimpleSearch(debouncedSearch);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const doctors = data?.pages
@@ -47,7 +46,7 @@ const DoctorsFaxNumbers = ({
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search..."
       />
-      <ul className="fax-numbers__list" ref={ulRef}>
+      <ul className="fax-numbers__list" ref={rootRef}>
         {error && <li>{error.message}</li>}
         {doctors && doctors.length > 0
           ? doctors.map((doctor, index) =>
@@ -55,7 +54,7 @@ const DoctorsFaxNumbers = ({
                 <DoctorFaxNumberItem
                   key={doctor.id}
                   doctor={doctor}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                   handleCheckContact={handleCheckContact}
                   isContactChecked={isContactChecked}
                 />

@@ -14,7 +14,7 @@ type MessagesExternalOverviewProps = {
   msgsSelectedIds: number[];
   setMsgsSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
   section: string;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   search: string;
 };
 
@@ -25,7 +25,7 @@ const MessagesExternalOverview = ({
   msgsSelectedIds,
   setMsgsSelectedIds,
   section,
-  lastItemRef,
+  targetRef,
   search,
 }: MessagesExternalOverviewProps) => {
   const emptySectionMessages = (sectionName: string) => {
@@ -62,7 +62,7 @@ const MessagesExternalOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               ) : (
                 <MessageExternalThumbnail
@@ -72,7 +72,7 @@ const MessagesExternalOverview = ({
                   setMsgsSelectedIds={setMsgsSelectedIds}
                   msgsSelectedIds={msgsSelectedIds}
                   section={section}
-                  lastItemRef={lastItemRef}
+                  targetRef={targetRef}
                 />
               )
             ) : isTabletOrMobile ? (
@@ -83,7 +83,7 @@ const MessagesExternalOverview = ({
                 setMsgsSelectedIds={setMsgsSelectedIds}
                 msgsSelectedIds={msgsSelectedIds}
                 section={section}
-                lastItemRef={lastItemRef}
+                targetRef={targetRef}
               />
             ) : (
               <MessageExternalThumbnail

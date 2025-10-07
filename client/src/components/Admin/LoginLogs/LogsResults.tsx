@@ -28,7 +28,7 @@ const LogsResults = ({
   } = useLogs(debouncedSearch, rangeStart, rangeEnd);
 
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -40,7 +40,7 @@ const LogsResults = ({
 
   return (
     data && (
-      <div className="logs__table-container" ref={divRef}>
+      <div className="logs__table-container" ref={rootRef}>
         <table className="logs__table">
           <thead>
             <tr>
@@ -54,11 +54,7 @@ const LogsResults = ({
           <tbody>
             {logsDatas.map((log, index) =>
               index === logsDatas.length - 1 ? (
-                <LogResultItem
-                  log={log}
-                  key={log.id}
-                  lastLogRef={lastItemRef}
-                />
+                <LogResultItem log={log} key={log.id} lastLogRef={targetRef} />
               ) : (
                 <LogResultItem log={log} key={log.id} />
               )

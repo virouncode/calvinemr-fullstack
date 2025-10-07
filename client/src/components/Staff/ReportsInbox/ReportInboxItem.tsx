@@ -40,7 +40,7 @@ type ReportInboxItemProps = {
   setForwardVisible: React.Dispatch<React.SetStateAction<boolean>>;
   forwardVisible: boolean;
   setReportToForwardId: React.Dispatch<React.SetStateAction<number>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -50,7 +50,7 @@ const ReportInboxItem = ({
   setForwardVisible,
   forwardVisible,
   setReportToForwardId,
-  lastItemRef,
+  targetRef,
   errMsgPost,
   setErrMsgPost,
 }: ReportInboxItemProps) => {
@@ -232,7 +232,7 @@ const ReportInboxItem = ({
     <>
       <tr
         className="reports__item"
-        ref={lastItemRef}
+        ref={targetRef}
         style={{ border: errMsgPost && "solid 1px red" }}
       >
         <td>

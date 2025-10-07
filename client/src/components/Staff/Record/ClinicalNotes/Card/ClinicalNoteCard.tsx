@@ -44,7 +44,7 @@ type ClinicalNoteCardProps = {
   setSelectAll: React.Dispatch<React.SetStateAction<boolean>>;
   contentsVisible: boolean;
   demographicsInfos: DemographicsType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   editClinicalNoteInMemory: ClinicalNoteType | null;
   setEditClinicalNoteInMemory: React.Dispatch<
     React.SetStateAction<ClinicalNoteType | null>
@@ -62,7 +62,7 @@ const ClinicalNoteCard = ({
   setSelectAll,
   contentsVisible,
   demographicsInfos,
-  lastItemRef,
+  targetRef,
   editClinicalNoteInMemory,
   setEditClinicalNoteInMemory,
   addVisible,
@@ -359,7 +359,7 @@ const ClinicalNoteCard = ({
 
   return (
     tempFormDatas && (
-      <div className="clinical-notes__card" ref={lastItemRef}>
+      <div className="clinical-notes__card" ref={targetRef}>
         <div ref={editClinicalNoteRef}></div>
         {bodyVisible ? (
           <ClinicalNoteCardHeader

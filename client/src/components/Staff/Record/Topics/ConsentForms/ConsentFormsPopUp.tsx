@@ -61,7 +61,7 @@ const ConsentFormsPopUp = ({
   const topicDelete = useTopicDelete("CONSENT FORMS", patientId);
 
   //INTERSECTION OBSERVER
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -119,7 +119,7 @@ const ConsentFormsPopUp = ({
   return (
     <div className="consentforms">
       <h1 className="consentforms__title">Patient consent forms</h1>
-      <div className="consentforms__table-container" ref={divRef}>
+      <div className="consentforms__table-container" ref={rootRef}>
         <table className="consentforms__table">
           <thead>
             <tr>
@@ -150,7 +150,7 @@ const ConsentFormsPopUp = ({
                       editCounter={editCounter}
                       item={item}
                       key={item.id}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                       setFaxVisible={setFaxVisible}

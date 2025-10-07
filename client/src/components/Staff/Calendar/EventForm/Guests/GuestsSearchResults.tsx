@@ -65,7 +65,7 @@ const GuestsSearchResults = ({
   //Hooks
   const { staffInfos } = useStaffInfosContext();
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -78,18 +78,18 @@ const GuestsSearchResults = ({
     [];
   if (isPending)
     return (
-      <div className="guests-results" ref={divRef}>
+      <div className="guests-results" ref={rootRef}>
         <LoadingParagraph />
       </div>
     );
   if (error)
     return (
-      <div className="guests-results" ref={divRef}>
+      <div className="guests-results" ref={rootRef}>
         <ErrorParagraph errorMsg={error.message} />
       </div>
     );
   return (
-    <div className="guests-results" ref={divRef}>
+    <div className="guests-results" ref={rootRef}>
       <div className="guests-results__patients">
         <div className="guests-results__title">Patients</div>
         <ul>
@@ -99,7 +99,7 @@ const GuestsSearchResults = ({
                 key={guest.id}
                 guest={guest}
                 handleAddPatientGuest={handleAddPatientGuest}
-                lastItemRef={lastItemRef}
+                targetRef={targetRef}
               />
             ) : (
               <GuestPatientResultItem

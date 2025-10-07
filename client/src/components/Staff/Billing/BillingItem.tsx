@@ -52,7 +52,7 @@ type BillingItemProps = {
   billing: BillingType;
   errMsgPost: string;
   setErrMsgPost: React.Dispatch<React.SetStateAction<string>>;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
   sites: SiteType[];
 };
 
@@ -60,7 +60,7 @@ const BillingItem = ({
   billing,
   errMsgPost,
   setErrMsgPost,
-  lastItemRef,
+  targetRef,
   sites,
 }: BillingItemProps) => {
   //Hooks
@@ -347,7 +347,7 @@ const BillingItem = ({
         <tr
           className="billing-table__item"
           style={{ border: errMsgPost && editVisible ? "solid 1.5px red" : "" }}
-          ref={lastItemRef}
+          ref={targetRef}
         >
           {user.title !== "Secretary" ? (
             <td>

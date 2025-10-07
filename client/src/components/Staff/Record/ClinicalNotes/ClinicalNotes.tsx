@@ -74,11 +74,12 @@ const ClinicalNotes = ({
   const isTabletOrMobile = useMediaQuery("(max-width: 1024px)");
 
   //Intersection observer
-  const { divRef: contentRef, lastItemRef } = useIntersection(
-    isFetchingNextPage,
-    fetchNextPage,
-    isFetching
-  );
+  const { rootRef: contentRef, targetRef } =
+    useIntersection<HTMLDivElement | null>(
+      isFetchingNextPage,
+      fetchNextPage,
+      isFetching
+    );
 
   useEffect(() => {
     if (addVisible && formRef.current) {
@@ -240,7 +241,7 @@ const ClinicalNotes = ({
                     selectAll={selectAll}
                     contentsVisible={contentsVisible}
                     demographicsInfos={demographicsInfos}
-                    lastItemRef={lastItemRef}
+                    targetRef={targetRef}
                     addVisible={addVisible}
                     editClinicalNoteInMemory={
                       editClinicalNoteInMemory?.id === item.id

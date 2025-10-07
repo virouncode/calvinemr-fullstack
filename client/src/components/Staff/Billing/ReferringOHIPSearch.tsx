@@ -35,11 +35,10 @@ const ReferringOHIPSearch = ({
     isFetching,
   } = useDoctorsSimpleSearch(debouncedSearch);
   //Intersection observer
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +75,7 @@ const ReferringOHIPSearch = ({
       </div>
       <div className="refohip__results">
         <p className="refohip__results-title">External doctors</p>
-        <ul ref={ulRef}>
+        <ul ref={rootRef}>
           <li className="refohip__results-item refohip__results-item--headers">
             <span className="refohip__results-code">OHIP#</span>
             <span className="refohip__results-name">Name</span>
@@ -88,7 +87,7 @@ const ReferringOHIPSearch = ({
                     className="refohip__results-item"
                     key={item.id}
                     onClick={() => handleClickRefOHIP(item)}
-                    ref={lastItemRef}
+                    ref={targetRef}
                   >
                     <span className="refohip__results-code">
                       {item.ohip_billing_nbr}

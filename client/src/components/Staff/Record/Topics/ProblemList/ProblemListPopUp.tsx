@@ -42,7 +42,7 @@ const ProblemListPopUp = ({
   const topicPut = useTopicPut("PROBLEM LIST", patientId);
   const topicDelete = useTopicDelete("PROBLEM LIST", patientId);
   //Intersection observer
-  const { divRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLDivElement | null>(
     isFetchingNextPage,
     fetchNextPage,
     isFetching
@@ -90,7 +90,7 @@ const ProblemListPopUp = ({
     <div className="problemlist">
       <h1 className="problemlist__title">Patient problem list</h1>
       {errMsgPost && <ErrorParagraph errorMsg={errMsgPost} />}
-      <div className="problemlist__table-container" ref={divRef}>
+      <div className="problemlist__table-container" ref={rootRef}>
         <table className="problemlist__table">
           <thead>
             <tr>
@@ -126,7 +126,7 @@ const ProblemListPopUp = ({
                       editCounter={editCounter}
                       setErrMsgPost={setErrMsgPost}
                       errMsgPost={errMsgPost}
-                      lastItemRef={lastItemRef}
+                      targetRef={targetRef}
                       topicPut={topicPut}
                       topicDelete={topicDelete}
                     />

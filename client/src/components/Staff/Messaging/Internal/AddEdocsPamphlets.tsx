@@ -48,8 +48,8 @@ const AddEdocsPamphlets = ({
   } = useEdocs(debouncedSearchEdocs);
 
   //INTERSECTION OBSERVER
-  const { divRef: divRefEdocs, lastItemRef: lastItemRefEdocs } =
-    useIntersection(
+  const { rootRef: rootRefEdocs, targetRef: targetRefEdocs } =
+    useIntersection<HTMLDivElement | null>(
       isFetchingNextPageEdocs,
       fetchNextPageEdocs,
       isFetchingEdocs
@@ -65,8 +65,8 @@ const AddEdocsPamphlets = ({
   } = usePamphlets(debouncedSearchPamphlets);
 
   //INTERSECTION OBSERVER
-  const { divRef: divRefPamphlets, lastItemRef: lastItemRefPamphlets } =
-    useIntersection(
+  const { rootRef: rootRefPamphlets, targetRef: targetRefPamphlets } =
+    useIntersection<HTMLDivElement | null>(
       isFetchingNextPagePamphlets,
       fetchNextPagePamphlets,
       isFetchingPamphlets
@@ -131,7 +131,7 @@ const AddEdocsPamphlets = ({
             placeholder="Search by name..."
           />
         </div>
-        <div className="add-edocs__results" ref={divRefEdocs}>
+        <div className="add-edocs__results" ref={rootRefEdocs}>
           {errorEdocs ? (
             <ErrorParagraph errorMsg={errorEdocs.message} />
           ) : (
@@ -139,7 +139,7 @@ const AddEdocsPamphlets = ({
               {(edocsResults?.length ?? 0) > 0 ? (
                 edocsResults?.map((edoc, index) =>
                   index === edocsResults.length - 1 ? (
-                    <li ref={lastItemRefEdocs} key={edoc.id}>
+                    <li ref={targetRefEdocs} key={edoc.id}>
                       <Checkbox
                         label={edoc.name}
                         id={`${edoc.id}-edoc`}
@@ -180,7 +180,7 @@ const AddEdocsPamphlets = ({
             placeholder="Search by name..."
           />
         </div>
-        <div className="add-pamphlets__results" ref={divRefPamphlets}>
+        <div className="add-pamphlets__results" ref={rootRefPamphlets}>
           {errorPamphlets ? (
             <ErrorParagraph errorMsg={errorPamphlets.message} />
           ) : (
@@ -188,7 +188,7 @@ const AddEdocsPamphlets = ({
               {(pamphletsResults?.length ?? 0) > 0 ? (
                 pamphletsResults?.map((pamphlet, index) =>
                   index === pamphletsResults.length - 1 ? (
-                    <li ref={lastItemRefPamphlets} key={pamphlet.id}>
+                    <li ref={targetRefPamphlets} key={pamphlet.id}>
                       <Checkbox
                         label={pamphlet.name}
                         id={`${pamphlet.id}-pamphlet`}

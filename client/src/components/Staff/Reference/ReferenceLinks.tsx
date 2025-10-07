@@ -24,11 +24,10 @@ const ReferenceLinks = () => {
     isFetching,
   } = useLinks(user.id, search);
 
-  const { ulRef, lastItemRef } = useIntersection(
+  const { rootRef, targetRef } = useIntersection<HTMLUListElement | null>(
     isFetchingNextPage,
     fetchNextPage,
-    isFetching,
-    "ul"
+    isFetching
   );
 
   const handleAdd = () => {
@@ -368,7 +367,7 @@ const ReferenceLinks = () => {
           />
         )}
         {error && <ErrorParagraph errorMsg={error.message} />}
-        <ul className="reference__links-personal-links" ref={ulRef}>
+        <ul className="reference__links-personal-links" ref={rootRef}>
           {data && (links?.length ?? 0) > 0
             ? links?.map((link, index) =>
                 index === links.length - 1 ? (
@@ -376,7 +375,7 @@ const ReferenceLinks = () => {
                     link={link}
                     key={link.id}
                     setAddVisible={setAddVisible}
-                    lastItemRef={lastItemRef}
+                    targetRef={targetRef}
                   />
                 ) : (
                   <ReferenceLinkItem

@@ -7,19 +7,16 @@ import { staffIdToTitleAndName } from "../../../utils/names/staffIdToTitleAndNam
 
 type PatientPamphletItemType = {
   item: PamphletType;
-  lastItemRef?: (node: Element | null) => void;
+  targetRef?: (node: Element | null) => void;
 };
 
-const PatientPamphletItem = ({
-  item,
-  lastItemRef,
-}: PatientPamphletItemType) => {
+const PatientPamphletItem = ({ item, targetRef }: PatientPamphletItemType) => {
   //Hooks
   const { staffInfos } = useStaffInfosContext();
 
   return (
     item && (
-      <tr className="patient-pamphlets__item" ref={lastItemRef}>
+      <tr className="patient-pamphlets__item" ref={targetRef}>
         <td style={{ textAlign: "left" }}>{item.name}</td>
         <td
           className="patient-pamphlets__item-link"
