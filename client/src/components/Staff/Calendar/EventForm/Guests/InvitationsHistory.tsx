@@ -11,11 +11,11 @@ const InvitationsHistory = ({ invitationsSent }: InvitationsHistoryProps) => {
   const invitations = invitationsSent.sort((a, b) => b.date - a.date);
   return (
     <div className="invitations-history">
-      <div className="invitations-history__disclaimer">
+      {/* <div className="invitations-history__disclaimer">
         If you've sent an invitation since the last appointment opening, please
         save (or close) and reopen the appointment to refresh the invitation
         history.
-      </div>
+      </div> */}
       <ul>
         {invitations.length > 0 ? (
           invitations.map((invitation) => (

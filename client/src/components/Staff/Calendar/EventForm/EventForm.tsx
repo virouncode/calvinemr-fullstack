@@ -564,6 +564,12 @@ const EventForm = ({
 
   const handleInvitation = () => {
     setErrMsgPost("");
+    if (formDatas.appointment_type === "") {
+      toast.error("Please select an appointment type first", {
+        containerId: "A",
+      });
+      return;
+    }
     setInvitationVisible(true);
   };
 
@@ -1247,6 +1253,7 @@ const EventForm = ({
       ) : (
         <Invitation
           setInvitationVisible={setInvitationVisible}
+          setFormVisible={setFormVisible}
           hostId={formDatas.host_id}
           staffInfos={staffInfos}
           start={formDatas.start}

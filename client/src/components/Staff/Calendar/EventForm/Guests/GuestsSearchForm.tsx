@@ -95,9 +95,9 @@ const GuestsSearchForm = ({
       {invitationsSentVisible && (
         <FakeWindow
           title="INVITATIONS SENT"
-          width={500}
+          width={800}
           height={500}
-          x={(window.innerWidth - 500) / 2}
+          x={(window.innerWidth - 800) / 2}
           y={(window.innerHeight - 500) / 2}
           color="#8fb4fb"
           setPopUpVisible={setInvitationsSentVisible}

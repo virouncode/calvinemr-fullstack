@@ -215,9 +215,8 @@
           margin-bottom: 2rem;
         }
         &__item {
-          display: grid;
-          grid-template-columns: 30% 5% 60%;
-          column-gap: 1rem;
+          display: flex;
+          justify-content: space-between;
           margin-bottom: 1rem;
         }
       }

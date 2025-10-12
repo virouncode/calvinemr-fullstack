@@ -42,6 +42,7 @@ axios.defaults.withCredentials = true;
 
 type InvitationProps = {
   setInvitationVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   hostId: number;
   staffInfos: StaffType[];
   start: number;
@@ -57,6 +58,7 @@ type InvitationProps = {
 
 const Invitation = ({
   setInvitationVisible,
+  setFormVisible,
   hostId,
   staffInfos,
   start,
@@ -296,6 +298,8 @@ const Invitation = ({
             staffIdToTitleAndName(staffInfos, staff.id)
           ),
         ],
+        sent_by: user.id,
+        appointment_type: formDatas.appointment_type ?? "",
       };
 
       const appointmentToPut: AppointmentType = {
@@ -307,7 +311,7 @@ const Invitation = ({
       };
       setFormDatas(appointmentToPut);
       appointmentPut.mutate(appointmentToPut);
-      setInvitationVisible(false);
+      setFormVisible(false);
     }
   };
 

@@ -114,6 +114,8 @@ export type AppointmentType = {
 export type InvitationSentType = {
   date: number;
   guests_names: string[];
+  sent_by: number | null;
+  appointment_type: AppointmentModeType | "";
 };
 
 export type AppointmentFormType = {
