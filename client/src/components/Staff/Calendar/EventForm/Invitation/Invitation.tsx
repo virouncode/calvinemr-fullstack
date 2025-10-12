@@ -397,13 +397,35 @@ const Invitation = ({
     setSiteSelectedId(parseInt(e.target.value));
   };
 
+  const templatesToShow = user.settings.invitation_templates.filter(
+    ({ name }) => {
+      switch (formDatas.appointment_type) {
+        case "in-person":
+          return (
+            name !== "Video appointment" &&
+            name !== "Video appointment - MD is ready" &&
+            name !== "Phone appointment"
+          );
+        case "phone":
+          return name === "Phone appointment";
+        case "visio":
+          return (
+            name === "Video appointment" ||
+            name === "Video appointment - MD is ready"
+          );
+        default:
+          return false;
+      }
+    }
+  );
+
   return (
     settings && (
       <form className="event-form__invitation">
         <div className="event-form__invitation-content">
           <InvitationTemplatesRadio
             handleTemplateChange={handleTemplateChange}
-            templates={user.settings.invitation_templates}
+            templates={templatesToShow}
             templateSelected={templateSelected}
           />
           <InvitationIntro
