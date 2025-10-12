@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import xanoPut from "../../../api/xanoCRUD/xanoPut";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useUserContext from "../../../hooks/context/useUserContext";
+import useSaveScrollPosition from "../../../hooks/useSaveScrollPosition";
 import { SettingsType, SiteType } from "../../../types/api";
 import { UserStaffType } from "../../../types/app";
 
@@ -64,6 +65,8 @@ const TimelineView = ({
 }: TimelineViewProps) => {
   const { user } = useUserContext() as { user: UserStaffType };
   const { socket } = useSocketContext();
+  useSaveScrollPosition("resourceTimeGridDay");
+
   const handleUpdateSettings = async (viewType: string) => {
     try {
       const datasToPut: SettingsType = {
