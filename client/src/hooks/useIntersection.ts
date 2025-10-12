@@ -12,14 +12,14 @@ const useIntersection = <TElement extends HTMLElement | null>(
   isFetching: boolean,
   addVisible: boolean = false
 ) => {
-  const observer = useRef<IntersectionObserver | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
   const rootRef = useRef<TElement | null>(null);
 
   const targetRef = useCallback(
     (node: Element | null) => {
       if (isFetchingNextPage || addVisible) return;
-      if (observer.current) {
-        observer.current.disconnect();
+      if (observerRef.current) {
+        observerRef.current.disconnect();
       }
 
       const options: IntersectionObserverInit = {
@@ -28,7 +28,7 @@ const useIntersection = <TElement extends HTMLElement | null>(
         threshold: 0.1, //10% of the item is visible
       };
 
-      observer.current = new IntersectionObserver(async (entries) => {
+      observerRef.current = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting && !isFetching) {
           try {
             await fetchNextPage();
@@ -39,7 +39,7 @@ const useIntersection = <TElement extends HTMLElement | null>(
       }, options);
 
       if (node) {
-        observer.current.observe(node);
+        observerRef.current.observe(node);
       }
     },
     [addVisible, fetchNextPage, isFetching, isFetchingNextPage]

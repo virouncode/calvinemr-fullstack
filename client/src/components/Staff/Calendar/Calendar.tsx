@@ -77,11 +77,12 @@ const Calendar = () => {
   const { user } = useUserContext() as { user: UserStaffType };
 
   const { staffInfos } = useStaffInfosContext();
-  const [initialDate, setInitialDate] = useState(
+  const currentDate = useRef(
     localStorage.getItem("calendarCurrentDate")
-      ? Date.parse(localStorage.getItem("calendarCurrentDate") as string)
+      ? Number(localStorage.getItem("calendarCurrentDate") as string)
       : nowTZTimestamp()
-  ); //the date when toggling between timeline and calendar
+  );
+
   const [selectable, setSelectable] = useState(true);
   const [timelineVisible, setTimelineVisible] = useState(
     user.settings.timeline_visible
@@ -488,9 +489,6 @@ const Calendar = () => {
     setRangeEnd(
       DateTime.fromJSDate(info.end, { zone: "America/Toronto" }).toMillis()
     );
-    setInitialDate(
-      DateTime.fromJSDate(info.start, { zone: "America/Toronto" }).toMillis()
-    );
     if (currentElement.current) {
       currentElement.current.style.border = "none";
     }
@@ -498,24 +496,24 @@ const Calendar = () => {
     currentElement.current = null;
     lastCurrentId.current = "";
     currentInfo.current = null;
-    !timelineVisible && setCurrentView(info.view.type);
+    const viewType = info.view.type;
+    if (!timelineVisible) setCurrentView(viewType);
 
-    const saved = localStorage.getItem("calendarScrollPosition");
-    if (!saved) return;
-
-    // === restauration différée du scroll ===
+    // // === enregistrement de la nouvelle date du calendar et restauration différée du scroll ===
     requestAnimationFrame(() => {
       setTimeout(() => {
         if (fcRef.current) {
+          currentDate.current = fcRef.current.getApi().getDate().getTime();
           localStorage.setItem(
             "calendarCurrentDate",
-            fcRef.current.getApi().getDate().toISOString()
+            currentDate.current.toString()
           );
         }
         const scrollGrid = document.querySelector(
           ".fc-scroller.fc-scroller-liquid-absolute"
         ) as HTMLElement | null;
-        if (scrollGrid) {
+        const saved = localStorage.getItem("calendarScrollPosition");
+        if (scrollGrid && saved) {
           scrollGrid.scrollTo(0, parseInt(saved, 10));
         }
       }, 50); // laisse FullCalendar finir son rendu
@@ -1582,7 +1580,7 @@ const Calendar = () => {
           handlePrintDay={handlePrintDay}
           rangeStart={rangeStart}
           rangeEnd={rangeEnd}
-          initialDate={initialDate}
+          initialDate={currentDate.current}
           fcRef={fcRef}
           handleDatesSet={handleDatesSet}
           handleDateSelect={handleDateSelect}

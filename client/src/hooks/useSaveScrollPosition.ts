@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function useSaveScrollPosition() {
+function useSaveScrollPosition(currentView: string) {
   useEffect(() => {
     const scrollGrid = document.querySelector(
       ".fc-scroller.fc-scroller-liquid-absolute"
@@ -19,15 +19,18 @@ function useSaveScrollPosition() {
       if (scrollGrid) {
         const pos = scrollGrid.scrollTop;
         localStorage.setItem("calendarScrollPosition", pos.toString());
-        console.log("💾 Saved scroll position:", pos);
       }
     };
 
     // On debounce la sauvegarde pour éviter de spammer le localStorage
     const debouncedSave = debounce(saveScrollPosition, 200); // 200 ms de délai
 
-    if (scrollGrid) {
-      console.log("addEventListener");
+    if (
+      scrollGrid &&
+      currentView !== "dayGridMonth" &&
+      currentView !== "multiMonthYear" &&
+      currentView !== "listWeek"
+    ) {
       scrollGrid.addEventListener("scroll", debouncedSave);
     }
 
@@ -37,7 +40,7 @@ function useSaveScrollPosition() {
         scrollGrid.removeEventListener("scroll", debouncedSave);
       }
     };
-  }, []);
+  }, [currentView]);
 }
 
 export default useSaveScrollPosition;

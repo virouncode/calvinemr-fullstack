@@ -30,6 +30,7 @@ app
   .use(cookieParser())
   .use(express.urlencoded({ extended: true }))
   .use(express.json({ limit: "50mb" }))
+  .use(express.text())
   .use(
     cors({
       origin: allowedOrigins,

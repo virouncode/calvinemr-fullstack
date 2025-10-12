@@ -79,7 +79,7 @@ const CalendarView = ({
   const { socket } = useSocketContext();
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController | null>(null);
-  useSaveScrollPosition();
+  useSaveScrollPosition(currentView);
 
   useEffect(() => {
     if (user.settings.calendar_view) {
