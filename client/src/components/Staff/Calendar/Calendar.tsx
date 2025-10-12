@@ -78,7 +78,8 @@ const Calendar = () => {
 
   const { staffInfos } = useStaffInfosContext();
   const currentDate = useRef(
-    localStorage.getItem("calendarCurrentDate")
+    localStorage.getItem("calendarCurrentDate") &&
+      !isNaN(Number(localStorage.getItem("calendarCurrentDate") as string))
       ? Number(localStorage.getItem("calendarCurrentDate") as string)
       : nowTZTimestamp()
   );
