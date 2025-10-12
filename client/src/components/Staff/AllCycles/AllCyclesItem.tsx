@@ -18,6 +18,10 @@ const AllCyclesItem = ({ event, cycle }: AllCyclesItemProps) => {
     <tr className="allCycles__item">
       <td>{cycle.cycle_nbr}</td>
       <td>{cycle.patient_infos.ChartNumber}</td>
+      <td>{cycle.tbr_nurse ? "✔️" : ""}</td>
+      <td>{cycle.rwd_nurse ? "✔️" : ""}</td>
+      <td>{cycle.tbr_md ? "✔️" : ""}</td>
+      <td>{cycle.rwd_md ? "✔️" : ""}</td>
       <td>
         <Tooltip title="Go to EMR" placement="top-start" arrow>
           <NavLink

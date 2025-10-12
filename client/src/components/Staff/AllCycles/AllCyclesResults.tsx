@@ -41,6 +41,10 @@ const AllCyclesResults = ({ search }: AllCyclesResultsProps) => {
           <tr>
             <th>Cycle#</th>
             <th>Patient Chart#</th>
+            <th>TBR Nurse</th>
+            <th>RWD Nurse</th>
+            <th>TBR MD</th>
+            <th>RWD MD</th>
             <th>Last Name</th>
             <th>First Name</th>
             <th>Date of birth</th>
