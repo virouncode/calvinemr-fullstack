@@ -161,24 +161,26 @@ const ReplyMessageExternal = ({
     });
 
     //EMAIL ALERT
-    try {
-      await axios.post(`/api/mailgun`, {
-        to_email: message.from_patient_infos?.Email ?? "", //to be changed to patient email
-        subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
-        text: toEmailAlertPatientText(
-          toPatientName(message.from_patient_infos)
-        ),
-      });
-    } catch (err) {
-      if (err instanceof Error)
-        toast.error(
-          `Error: unable to send email alert to ${toPatientName(
-            message.from_patient_infos
-          )}: ${err.message}`,
-          {
-            containerId: "A",
-          }
-        );
+    if (message.from_patient_infos?.Email) {
+      try {
+        await axios.post(`/api/mailgun`, {
+          to_email: message.from_patient_infos.Email,
+          subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+          text: toEmailAlertPatientText(
+            toPatientName(message.from_patient_infos)
+          ),
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          toast.error(
+            `Error: unable to send email alert to ${toPatientName(
+              message.from_patient_infos
+            )}: ${err.message}`,
+            {
+              containerId: "A",
+            }
+          );
+      }
     }
     try {
       await axios({

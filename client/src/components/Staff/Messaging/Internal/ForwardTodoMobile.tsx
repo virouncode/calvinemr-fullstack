@@ -123,8 +123,9 @@ const ForwardTodoMobile = ({
           high_importance: todo.high_importance,
         };
         const staff = staffInfos.find(({ id }) => id === recipientId);
+        if (!staff) continue; //No staff found -> no email sent
         const emailToPost = {
-          to: staff?.email ?? "",
+          to: staff.email,
           subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
           text: toEmailAlertStaffText(
             staffIdToTitleAndName(staffInfos, recipientId),

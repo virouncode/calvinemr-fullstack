@@ -304,10 +304,14 @@ export const newPatient = async (
     };
     const axiosXanoInstance = getAxiosInstance("staff");
     const response = await axiosXanoInstance(config);
-    const emailToPost = {
-      to: datasToPost.email,
-      subject: `Welcome to ${clinicName} - DO NOT REPLY`,
-      text: `Dear ${firstName}${middleName ? " " + middleName : ""} ${lastName},
+
+    if (datasToPost.email) {
+      const emailToPost = {
+        to: datasToPost.email,
+        subject: `Welcome to ${clinicName} - DO NOT REPLY`,
+        text: `Dear ${firstName}${
+          middleName ? " " + middleName : ""
+        } ${lastName},
 
 Welcome to ${clinicName}!
 
@@ -339,9 +343,10 @@ Regards,
 The Reception Desk
 
 Powered by Calvin EMR`,
-    };
-    const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
-    await axios.post(mailgunUrl, emailToPost);
+      };
+      const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
+      await axios.post(mailgunUrl, emailToPost);
+    }
     handleResponse(response, res);
   } catch (err) {
     handleError(err as AxiosError, res);

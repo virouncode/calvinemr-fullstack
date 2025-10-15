@@ -38,6 +38,12 @@ const PatientResultItem = ({
   const fakewindowRoot = document.getElementById("fake-window");
 
   const handleResetPwd = async () => {
+    if (!patient.Email) {
+      toast.error("Please provide a valid email address to the patient first", {
+        containerId: "A",
+      });
+      return;
+    }
     if (
       await confirmAlert({
         content: `You are about to reset ${toPatientName(

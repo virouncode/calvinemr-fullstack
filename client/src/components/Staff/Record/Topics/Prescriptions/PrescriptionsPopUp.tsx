@@ -196,7 +196,7 @@ const PrescriptionsPopUp = ({
                   {
                     id: demographicsInfos.patient_id,
                     name: toPatientName(demographicsInfos),
-                    email: demographicsInfos.Email,
+                    email: demographicsInfos.Email ?? "",
                     phone:
                       demographicsInfos.PhoneNumber.find(
                         ({ _phoneNumberType }) => _phoneNumberType === "C"
@@ -212,7 +212,7 @@ const PrescriptionsPopUp = ({
                   {
                     id: demographicsInfos.patient_id,
                     name: toPatientName(demographicsInfos),
-                    email: demographicsInfos.Email,
+                    email: demographicsInfos.Email ?? "",
                     phone:
                       demographicsInfos.PhoneNumber.find(
                         ({ _phoneNumberType }) => _phoneNumberType === "C"

@@ -335,7 +335,7 @@ const ReportsPopUp = ({
                 {
                   id: demographicsInfos.patient_id,
                   name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
+                  email: demographicsInfos.Email ?? "",
                   phone:
                     demographicsInfos.PhoneNumber.find(
                       ({ _phoneNumberType }) => _phoneNumberType === "C"
@@ -351,7 +351,7 @@ const ReportsPopUp = ({
                 {
                   id: demographicsInfos.patient_id,
                   name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
+                  email: demographicsInfos.Email ?? "",
                   phone:
                     demographicsInfos.PhoneNumber.find(
                       ({ _phoneNumberType }) => _phoneNumberType === "C"

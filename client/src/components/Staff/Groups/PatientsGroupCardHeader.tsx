@@ -44,7 +44,7 @@ const PatientsGroupCardHeader = ({
           return {
             id: patient_infos.patient_id,
             name: toPatientName(patient_infos),
-            email: patient_infos.Email,
+            email: patient_infos.Email ?? "",
             phone:
               patient_infos.PhoneNumber?.find(
                 ({ _phoneNumberType }) => _phoneNumberType === "C"

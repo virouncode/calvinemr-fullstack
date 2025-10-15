@@ -13,13 +13,15 @@ const mg = mailgun.client({
 });
 
 const postEmail = async (req: Request, res: Response): Promise<void> => {
-  const { to, subject, text }: { to: string[]; subject: string; text: string } =
+  const { to, subject, text }: { to: string; subject: string; text: string } =
     req.body;
+
+  if (!to) res.status(400).send({ error: "recipient email is required" });
 
   try {
     const response = await mg.messages.create(process.env.MAILGUN_DOMAIN!, {
       from: process.env.MAILGUN_SENDER_EMAIL!,
-      to, // Array of strings for multiple recipients
+      to,
       subject,
       text,
     });

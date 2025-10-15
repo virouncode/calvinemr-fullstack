@@ -96,8 +96,9 @@ const ReplyMessagePatient = ({
         });
         const senderName = toPatientName(user.demographics);
         const staff = staffInfos.find(({ id }) => id === message.from_staff_id);
+        if (!staff) return; //No staff found -> no email sent
         const emailToPost = {
-          to: staff?.email ?? "",
+          to: staff.email,
           subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
           text: toEmailAlertStaffText(
             staffIdToTitleAndName(staffInfos, message.from_staff_id),

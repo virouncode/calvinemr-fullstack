@@ -85,6 +85,6 @@ export const toAnonymousText = (
     demographicsInfos.Address?.find(({ _addressType }) => _addressType === "R")
       ?.Structured?.City ?? ""
   );
-  result = replaceInsensitive(result, demographicsInfos.Email);
+  result = replaceInsensitive(result, demographicsInfos.Email ?? "");
   return result;
 };

@@ -767,7 +767,7 @@ const ExportChartPreview = ({
                 {
                   id: patientId,
                   name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
+                  email: demographicsInfos.Email ?? "",
                   phone:
                     demographicsInfos.PhoneNumber.find(
                       ({ _phoneNumberType }) => _phoneNumberType === "C"
@@ -783,7 +783,7 @@ const ExportChartPreview = ({
                 {
                   id: patientId,
                   name: toPatientName(demographicsInfos),
-                  email: demographicsInfos.Email,
+                  email: demographicsInfos.Email ?? "",
                   phone:
                     demographicsInfos.PhoneNumber.find(
                       ({ _phoneNumberType }) => _phoneNumberType === "C"

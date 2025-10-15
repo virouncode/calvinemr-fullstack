@@ -165,20 +165,22 @@ const SignupPatientForm = () => {
     //Is the mail already taken ?
     setProgress(true);
     const successfulRequests: { endpoint: string; id: number }[] = [];
-    try {
-      const existingPatient = await xanoGet(`/patient_with_email`, "staff", {
-        email: formDatas.email?.toLowerCase(),
-      });
-      if (existingPatient) {
-        setErrMsg("There is already an account with this email");
+    if (formDatas.email) {
+      try {
+        const existingPatient = await xanoGet(`/patient_with_email`, "staff", {
+          email: formDatas.email.toLowerCase(),
+        });
+        if (existingPatient) {
+          setErrMsg("There is already an account with this email");
+          setProgress(false);
+          return;
+        }
+      } catch (err) {
+        if (err instanceof Error)
+          setErrMsg(`Unable to check patient email: ${err.message}`);
         setProgress(false);
         return;
       }
-    } catch (err) {
-      if (err instanceof Error)
-        setErrMsg(`Unable to check patient email: ${err.message}`);
-      setProgress(false);
-      return;
     }
 
     //Formatting
@@ -544,7 +546,7 @@ const SignupPatientForm = () => {
           </div>
           <div className="signup-patient__row">
             <GenericList
-              label="Province/State:"
+              label="Province/State*:"
               name="province"
               list={provinceStateTerritoryCT}
               value={formDatas.province ?? ""}
