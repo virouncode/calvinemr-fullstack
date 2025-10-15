@@ -522,6 +522,18 @@ const Calendar = () => {
         if (scrollGrid && saved) {
           scrollGrid.scrollTo(0, parseInt(saved, 10));
         }
+        const htmlElement = document.querySelector(
+          `button.fc-${viewType}Custom-button`
+        ) as HTMLElement;
+
+        if (htmlElement) {
+          const buttons =
+            htmlElement.parentElement?.querySelectorAll(".fc-button");
+          buttons?.forEach((button) => {
+            button.classList.remove("fc-button-active");
+          });
+          htmlElement.classList.add("fc-button-active");
+        }
       }, 50); // laisse FullCalendar finir son rendu
     });
   };
