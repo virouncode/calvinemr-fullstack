@@ -1,13 +1,13 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
+import helmet from "helmet";
 import { createServer } from "http";
 import { join } from "path";
 import { Server } from "socket.io";
 
 // Import routers
-import axios from "axios";
 import extractToTextRouter from "./routes/extractToText/extractToText";
 import mailgunRouter from "./routes/mailgun/mailgun";
 import openaiRouter from "./routes/openai/openai";
@@ -16,21 +16,29 @@ import twilioRouter from "./routes/twilio/twilio";
 import weatherRouter from "./routes/weather/weather";
 import xanoRouter from "./routes/xano/xano";
 import xmlToJSRouter from "./routes/xmlToJs/xmlToJs";
+import { startPollingFaxes, stopPollingFaxes } from "./utils/faxPolling";
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["https://acrobatservices.adobe.com"] // Production origin
+    ? ["https://acrobatservices.adobe.com"] // Production origins
     : ["http://localhost:5173", "https://acrobatservices.adobe.com"]; // Development origins
-const app = express();
 
+//========================== EXPRESS APP SETUP =========================//
+const app = express();
 app
-  .set("trust proxy", true)
-  .use(cookieParser())
-  .use(express.urlencoded({ extended: true }))
-  .use(express.json({ limit: "50mb" }))
-  .use(express.text())
+  .use(
+    helmet({
+      contentSecurityPolicy: false, // because React of inline styles
+      crossOriginEmbedderPolicy: false, // to avoid certain blocking with Vite or iframes
+    })
+  ) //Security middleware, set various HTTP headers to help protect the app
+  .set("trust proxy", true) // Trust first proxy
+  .use(cookieParser()) //extract cookies from incoming requests and populate req.cookies
+  .use(express.urlencoded({ extended: true })) //application/x-www-form-urlencoded body parsing to req.body
+  .use(express.json({ limit: "2mb" })) //application/json body parsing to req.body
+  .use(express.text()) //text/plain body parsing to req.body
   .use(
     cors({
       origin: allowedOrigins,
@@ -38,96 +46,69 @@ app
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   )
-  .use("/api/xano", xanoRouter)
+  .use("/api/xano", xanoRouter) //delegate /api/xano routes to xanoRouter
   .use("/api/twilio", twilioRouter)
   .use("/api/extractToText", extractToTextRouter)
   .use("/api/xmlToJs", xmlToJSRouter)
   .use("/api/srfax", srfaxRouter)
   .use("/api/openai", openaiRouter)
   .use("/api/mailgun", mailgunRouter)
-  .use("/api/weather", weatherRouter);
+  .use("/api/weather", weatherRouter)
+  .use((req, res, next) => {
+    if (req.path.startsWith("/api/")) {
+      return res.status(404).json({ message: "Not found" });
+    } //Unknown /api/* route
+    next(); // If not /api/*, continue to next middleware (to serve React frontend)
+  });
+
+if (process.env.NODE_ENV === "production") {
+  //In production, serve the React frontend
+  app.use(express.static(join(__dirname, "../../client/dist"))); //All static files from Vite build
+  app.get("*", (req, res) =>
+    res.sendFile(join(__dirname, "../../client/dist/index.html"))
+  ); //All routes other than /api/* will serve index.html => React takes care of routing with React Router
+}
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+  res.status(500).json({ message: "Internal server error" });
+}); //Error handling middleware
 
 const httpServer = createServer(app);
 
+//========================== SOCKET.IO SETUP =========================//
 const io = new Server(httpServer, {
   cors: {
+    //even if CORS is handled by express, socket.io needs it too
     origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(join(__dirname, "../../client/dist")));
-  app.get("*", (req, res) =>
-    res.sendFile(join(__dirname, "../../client/dist/index.html"))
-  );
-}
-
-//Polling Faxes for staff users
-let pollingInterval: NodeJS.Timeout | null = null;
-let previousUnreadFaxNbr = 0;
 const connectedStaff = new Set(); // Track only users with "staff" access
 
-const startPollingFaxes = () => {
-  if (!pollingInterval) {
-    pollingInterval = setInterval(fetchUnreadFaxes, 10000);
-    console.log("Polling started");
-  }
-};
-
-const stopPollingFaxes = () => {
-  if (pollingInterval) {
-    clearInterval(pollingInterval);
-    pollingInterval = null;
-    console.log("Polling stopped");
-  }
-};
-
-const fetchUnreadFaxes = async () => {
-  try {
-    const response = await axios.post(
-      `${process.env.BACKEND_URL}/api/srfax/inbox`,
-      {
-        viewedStatus: "UNREAD",
-        all: true,
-        start: "",
-        end: "",
-      }
-    );
-    const unreadFaxNbr = response.data.length;
-    if (unreadFaxNbr !== previousUnreadFaxNbr) {
-      previousUnreadFaxNbr = unreadFaxNbr;
-      // Notification du compteur (existant)
-      io.emit("message", {
-        action: "create",
-        route: "UNREAD FAX",
-        content: { data: unreadFaxNbr },
-      });
-
-      // Nouvel événement pour rafraîchir les données de fax
-      io.emit("message", {
-        action: "refresh",
-        route: "FAX DATA",
-        content: { unreadCount: unreadFaxNbr },
-      });
-    }
-  } catch (error) {
-    if (error instanceof Error)
-      console.error("Failed to retrieve unread faxes:", error.message);
-  }
-};
-
-// SOCKET CONNECTION/DECONNECTION EVENT LISTENERS
+//New client connection
 io.on("connection", (socket) => {
+  //socket represents this specific client
   console.log(`User ${socket.id} connected`);
-
+  //Event listeners
+  //Polling Faxes for staff users
   socket.on("start polling faxes", () => {
     connectedStaff.add(socket.id);
     if (connectedStaff.size === 1) {
-      startPollingFaxes(); // Start polling when the first staff member connects
+      startPollingFaxes(io); // Start polling if this is the first staff member
     }
   });
+  //General message relay
+  socket.on("message", (message) => {
+    try {
+      io.emit("message", message);
+    } catch (error) {
+      console.error("Error emitting message:", error);
+    }
+  });
+  //User disconnect
   socket.on("disconnect", (reason) => {
     if (connectedStaff.has(socket.id)) {
       connectedStaff.delete(socket.id);
@@ -137,8 +118,12 @@ io.on("connection", (socket) => {
     }
     console.log(`User ${socket.id} disconnected because: ${reason}`);
   });
-  socket.on("message", (message) => {
-    io.emit("message", message);
+  //Socket connect error
+  socket.on("connect_error", (err) => {
+    console.log(
+      `Socket error (${socket.id}):`,
+      err instanceof Error ? err.message : err
+    );
   });
 });
 
@@ -149,18 +134,18 @@ io.on("connect_error", (err) => {
 // SERVER ERROR HANDLING
 process.on("uncaughtException", (err) => {
   console.log("Uncaught Exception:", err);
+  //Send a message to all connected clients
   io.emit("serverError", {
     message: "Server error occurred. Please try again later.",
   });
-  process.exit(1);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
   console.log("Unhandled Rejection at:", promise, "reason:", reason);
+  //Send a message to all connected clients
   io.emit("serverError", {
     message: "Server error occurred. Please try again later.",
   });
-  process.exit(1);
 });
 
 httpServer.listen(PORT, () => {

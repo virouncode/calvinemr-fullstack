@@ -1,9 +1,31 @@
-import axios, { AxiosError } from "axios";
+import { authQuerySchema, authSchema } from "@shared/zod-schemas/authSchema";
+import {
+  insertPatientSchema,
+  InsertPatientType,
+} from "@shared/zod-schemas/patientSchema";
+import {
+  resetPasswordQuerySchema,
+  resetPasswordSchema,
+  resetPatientPwdFromAdminSchema,
+  resetStaffPwdFromAdminSchema,
+} from "@shared/zod-schemas/resetPasswordSchema";
+import {
+  insertStaffSchema,
+  InsertStaffType,
+} from "@shared/zod-schemas/staffSchema";
+import { tempPasswordQuerySchema } from "@shared/zod-schemas/tempPasswordSchema";
+import {
+  unlockQuerySchema,
+  unlockSchema,
+} from "@shared/zod-schemas/unlockSchema";
+import { xanoQuerySchema } from "@shared/zod-schemas/xanoSchema";
+import axios from "axios";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { jwtDecode } from "jwt-decode";
 import { generatePassword } from "../utils/generatePassword";
 import { generatePIN } from "../utils/generatePIN";
-import { handleError, handleResponse } from "../utils/helper";
+import { handleError, handleSuccess } from "../utils/helper";
 import {
   toPatientFirstName,
   toPatientLastName,
@@ -20,225 +42,208 @@ import {
 dotenv.config();
 
 // Determine the appropriate Axios instance based on user type
-const getAxiosInstance = (userType: string) => {
-  switch (userType) {
-    case "admin":
-      return axiosXanoAdmin;
-    case "staff":
-      return axiosXanoStaff;
-    case "patient":
-      return axiosXanoPatient;
-    case "reset":
-      return axiosXanoReset;
-    default:
-      throw new Error("Invalid user type");
-  }
+const axiosMap = {
+  admin: axiosXanoAdmin,
+  staff: axiosXanoStaff,
+  patient: axiosXanoPatient,
+  reset: axiosXanoReset,
+} as const;
+
+type UserType = keyof typeof axiosMap; // "admin" | "staff" | "patient" | "reset"
+
+export const getAxiosInstance = (userType: UserType) => {
+  const instance = axiosMap[userType];
+  if (!instance) throw new Error(`Invalid user type: ${userType}`);
+  return instance;
 };
 
 // GET request handler for Xano API
-export const getXano = async (req: Request, res: Response): Promise<void> => {
+export const getXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType, queryParams } = req.query;
+    const { URL, userType, queryParams } = xanoQuerySchema.parse(req.query);
     const authToken = req.cookies.token;
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "get",
-      url: URL as string,
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.get(URL, {
       headers,
-      params: queryParams as object,
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
+      params: queryParams,
+    });
 
     if (URL === "/auth/me" && process.env.NODE_ENV !== "development") {
-      const logConfig = {
-        method: "post",
-        url: "/logs",
-        headers,
-        data: {
-          user_id: response.data.id,
+      // Log user login activity
+      await axiosXanoInstance.post(
+        "/logs",
+        {
+          user_id: axiosResponse.data.id,
           user_type: userType,
           ip_address: req.ip,
           user_name:
             userType === "patient"
-              ? toPatientFirstName(response.data.patient_infos) +
+              ? toPatientFirstName(axiosResponse.data.patient_infos) +
                 " " +
-                toPatientMiddleName(response.data.patient_infos) +
+                toPatientMiddleName(axiosResponse.data.patient_infos) +
                 " " +
-                toPatientLastName(response.data.patient_infos)
-              : response.data.full_name,
+                toPatientLastName(axiosResponse.data.patient_infos)
+              : axiosResponse.data.full_name,
         },
-      };
-      await axiosXanoInstance(logConfig);
+        { headers }
+      );
     }
 
-    handleResponse(response, res);
+    return handleSuccess({ axiosResponse, res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // POST request handler for Xano API
-export const postXano = async (req: Request, res: Response): Promise<void> => {
+export const postXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType } = req.query;
-    const datasToPost = req.body;
+    const { URL, userType } = xanoQuerySchema.parse(req.query);
+    const body = req.body;
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "post",
-      url: URL as string,
-      headers,
-      data: datasToPost,
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
-    handleResponse(response, res);
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.post(URL, body, { headers });
+    return handleSuccess({ axiosResponse, res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // PUT request handler for Xano API
-export const putXano = async (req: Request, res: Response): Promise<void> => {
+export const putXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType } = req.query;
-    const datasToPut = req.body;
+    const { URL, userType } = xanoQuerySchema.parse(req.query);
+    const body = req.body;
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "put",
-      url: URL as string,
-      headers,
-      data: datasToPut,
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
-    handleResponse(response, res);
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.put(URL, body, { headers });
+    return handleSuccess({ axiosResponse, res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // DELETE request handler for Xano API
-export const deleteXano = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const deleteXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType } = req.query;
+    const { URL, userType } = xanoQuerySchema.parse(req.query);
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
     const data = req.body; // Optional data for DELETE request
-    const config = {
-      method: "delete",
-      url: URL as string,
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.delete(URL, {
       headers,
       data,
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
-    res.status(response.status).send(JSON.stringify({ success: true }));
+    });
+    return handleSuccess({ axiosResponse, res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // POST request handler for authentication
-export const authXano = async (req: Request, res: Response): Promise<void> => {
+export const authXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType } = req.query;
+    const { URL, userType } = authQuerySchema.parse(req.query); // Validate query parameters
+    const body = authSchema.parse(req.body); // Validate request body
 
-    const datasToPost = req.body;
     const headers = {
       "Content-Type": "application/json",
     };
-    const config = {
-      method: "post",
-      url: URL as string,
-      headers,
-      data: datasToPost,
-    };
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.post(URL, body, { headers });
 
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
+    if (typeof axiosResponse.data?.authToken !== "string") {
+      throw new Error("Invalid response from Xano: missing authToken");
+    }
 
-    res.cookie("token", response.data.authToken, {
+    const decoded = jwtDecode(axiosResponse.data.authToken);
+
+    console.log("Decoded JWT:", decoded);
+
+    res.cookie("token", axiosResponse.data.authToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
-    res.status(response.status).send(
-      JSON.stringify({
-        success: true,
-        data: Date.now() + 24 * 60 * 60 * 1000, // 24 hours from now
-      })
-    );
+
+    return handleSuccess({ axiosResponse, message: "Login successfully", res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // POST request handler for password reset
-export const resetXano = async (req: Request, res: Response): Promise<void> => {
+export const resetXano = async (req: Request, res: Response) => {
   try {
-    const { URL, userType, tempToken } = req.query;
-    const datasToPost = req.body;
+    const { URL, userType, tempToken } = resetPasswordQuerySchema.parse(
+      req.query
+    );
+    const body = resetPasswordSchema.parse(req.body);
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${tempToken as string}`,
+      Authorization: `Bearer ${tempToken}`,
     };
-    const config = {
-      method: "post",
-      url: URL as string,
-      headers,
-      data: datasToPost,
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
-    res.status(response.status).send(JSON.stringify({ success: true }));
+
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.post(URL, body, { headers });
+    return handleSuccess({
+      axiosResponse,
+      message: "Password reset successfully",
+      res,
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    handleError({
+      err,
+      res,
+    });
   }
 };
 
 // POST request handler to create new staff
-export const newStaff = async (req: Request, res: Response): Promise<void> => {
+export const newStaff = async (req: Request, res: Response) => {
   try {
-    const datasToPost = req.body;
-    const clinicName = datasToPost.clinic_name;
-    delete datasToPost.clinic_name;
+    const body = insertStaffSchema.parse(req.body);
+    const { clinic_name: clinicName, ...rest } = body;
+
     const newPassword = generatePassword();
     const newPIN = generatePIN();
-    datasToPost.password = newPassword;
-    datasToPost.pin = newPIN;
+
+    const datasToPost: Omit<InsertStaffType, "clinic_name"> & {
+      password: string;
+      pin: string;
+    } = {
+      ...rest,
+      password: newPassword,
+      pin: newPIN,
+    };
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "post",
-      url: "/staff",
-      headers,
-      data: datasToPost,
-    };
     const axiosXanoInstance = getAxiosInstance("admin");
-    const response = await axiosXanoInstance(config);
+    const axiosResponse = await axiosXanoInstance.post("/staff", datasToPost, {
+      headers,
+    });
+
     const emailToPost = {
       to: datasToPost.email,
       subject: `Welcome to ${clinicName} - DO NOT REPLY`,
@@ -266,44 +271,55 @@ Powered by Calvin EMR`,
     };
     const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
     await axios.post(mailgunUrl, emailToPost);
-    handleResponse(response, res);
+    return handleSuccess({
+      axiosResponse,
+      message: "Staff created successfully",
+      res,
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // POST request handler to create new patient
-export const newPatient = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const newPatient = async (req: Request, res: Response) => {
   try {
-    const datasToPost = req.body;
-    const clinicName = datasToPost.clinic_name;
-    const firstName = datasToPost.first_name;
-    const lastName = datasToPost.last_name;
-    const middleName = datasToPost.middle_name;
-    delete datasToPost.clinic_name;
-    delete datasToPost.first_name;
-    delete datasToPost.last_name;
-    delete datasToPost.middle_name;
+    const body = insertPatientSchema.parse(req.body);
+    const {
+      clinic_name: clinicName,
+      first_name: firstName,
+      middle_name: middleName,
+      last_name: lastName,
+      ...rest
+    } = body;
+
     const newPassword = generatePassword();
     const newPIN = generatePIN();
-    datasToPost.password = newPassword;
-    datasToPost.pin = newPIN;
+    const datasToPost: Omit<
+      InsertPatientType,
+      "clinic_name" | "first_name" | "middle_name" | "last_name"
+    > & {
+      password: string;
+      pin: string;
+    } = {
+      ...rest,
+      password: newPassword,
+      pin: newPIN,
+    };
+
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "post",
-      url: "/patients",
-      headers,
-      data: datasToPost,
-    };
     const axiosXanoInstance = getAxiosInstance("staff");
-    const response = await axiosXanoInstance(config);
+    const axiosResponse = await axiosXanoInstance.post(
+      "/patients",
+      datasToPost,
+      {
+        headers,
+      }
+    );
     const emailToPost = {
       to: datasToPost.email,
       subject: `Welcome to ${clinicName} - DO NOT REPLY`,
@@ -342,39 +358,45 @@ Powered by Calvin EMR`,
     };
     const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
     await axios.post(mailgunUrl, emailToPost);
-    handleResponse(response, res);
+    return handleSuccess({
+      axiosResponse,
+      message: "Patient created successfully",
+      res,
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // Request a temporary password for user
-export const tempPassword = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const tempPassword = async (req: Request, res: Response) => {
   try {
-    const { email, userType } = req.query;
+    const { email, userType } = tempPasswordQuerySchema.parse(req.query);
     const headers = {
       "Content-Type": "application/json",
     };
-    const config = {
-      method: "get",
-      url: `/auth/${userType}/request_temp_password`,
-      headers,
-      params: { email },
-    };
     const axiosXanoInstance = getAxiosInstance("reset");
-    const response = await axiosXanoInstance(config);
+    const axiosResponse = await axiosXanoInstance.get(
+      `/auth/${userType}/request_temp_password`,
+      { headers, params: { email } }
+    );
+    if (
+      !axiosResponse.data.temp_login.temp_password ||
+      typeof axiosResponse.data.temp_login.temp_password !== "string"
+    ) {
+      throw new Error("Failed to generate temporary password");
+    }
+
     const emailToPost = {
-      to: response.data.email,
+      to: axiosResponse.data.email,
       subject: `${process.env.CLINIC_NAME}: Temporary Password - DO NOT REPLY`,
       text: `Hello ${
-        response.data.full_name || toPatientName(response.data.patient_infos)
+        axiosResponse.data.full_name ||
+        toPatientName(axiosResponse.data.patient_infos)
       }
 
 Please find your temporary password for your account: ${
-        response.data.temp_login.temp_password
+        axiosResponse.data.temp_login.temp_password
       }
 
 This password will be active for 15 minutes, after this time, please make a new request.
@@ -388,56 +410,56 @@ Powered by Calvin EMR`,
     };
     const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
     await axios.post(mailgunUrl, emailToPost);
-    res.status(response.status).send(JSON.stringify({ success: true }));
+    return handleSuccess({
+      axiosResponse,
+      message: "Temporary password sent to your email",
+      res,
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
 // Unlock a user account
 export const unlock = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { user_id, pin, userType } = req.body;
+    const body = unlockSchema.parse(req.body);
+    const { userType } = unlockQuerySchema.parse(req.query);
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "post",
-      url: "/unlock",
+
+    const axiosXanoInstance = getAxiosInstance(userType);
+    const axiosResponse = await axiosXanoInstance.post("/unlock", body, {
       headers,
-      data: { user_id, pin },
-    };
-    const axiosXanoInstance = getAxiosInstance(userType as string);
-    const response = await axiosXanoInstance(config);
-    handleResponse(response, res);
+    });
+    handleSuccess({ axiosResponse, res });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    handleError({ err, res });
   }
 };
 
-export const resetStaffPwd = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+//Reset passwords and pins from admin dashboard
+export const resetStaffPwd = async (req: Request, res: Response) => {
   try {
-    const { staff_id, email, clinic_name, full_name } = req.body;
+    const { staff_id, email, clinic_name, full_name } =
+      resetStaffPwdFromAdminSchema.parse(req.body);
     const password = generatePassword();
     const pin = generatePIN();
+
     const authToken = req.cookies.token;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     };
-    const config = {
-      method: "put",
-      url: "/staff_password_pin",
-      headers,
-      data: { password, pin, staff_id },
-    };
     const axiosXanoInstance = getAxiosInstance("admin");
-    const response = await axiosXanoInstance(config);
+    const response = await axiosXanoInstance.put(
+      "/staff_password_pin",
+      { password, pin, staff_id },
+      { headers }
+    );
     const emailToPost = {
       to: email,
       subject: `${clinic_name} - Password reset - DO NOT REPLY`,
@@ -463,18 +485,22 @@ Powered by Calvin EMR`,
     };
     const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
     await axios.post(mailgunUrl, emailToPost);
-    handleResponse(response, res);
+    return handleSuccess({
+      axiosResponse: response,
+      res,
+      message:
+        "Staff password reset successfully, an email has been sent to the staff member",
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    return handleError({ err, res });
   }
 };
 
-export const resetPatientPwd = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const resetPatientPwd = async (req: Request, res: Response) => {
   try {
-    const { patient_id, email, clinic_name, full_name } = req.body;
+    const { patient_id, email, clinic_name, full_name } =
+      resetPatientPwdFromAdminSchema.parse(req.body);
+
     const password = generatePassword();
     const pin = generatePIN();
     const authToken = req.cookies.token;
@@ -489,7 +515,11 @@ export const resetPatientPwd = async (
       data: { password, pin, patient_id },
     };
     const axiosXanoInstance = getAxiosInstance("admin");
-    const response = await axiosXanoInstance(config);
+    const axiosResponse = await axiosXanoInstance.put(
+      "/patient_password_pin",
+      { password, pin, patient_id },
+      { headers }
+    );
     const emailToPost = {
       to: email,
       subject: `${clinic_name} - Password reset - DO NOT REPLY`,
@@ -517,8 +547,13 @@ Powered by Calvin EMR`,
     };
     const mailgunUrl = `${process.env.BACKEND_URL}/api/mailgun`;
     await axios.post(mailgunUrl, emailToPost);
-    handleResponse(response, res);
+    handleSuccess({
+      axiosResponse,
+      res,
+      message:
+        "Patient password reset successfully, an email has been sent to the patient",
+    });
   } catch (err) {
-    handleError(err as AxiosError, res);
+    handleError({ err, res });
   }
 };

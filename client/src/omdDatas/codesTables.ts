@@ -1,6 +1,6 @@
 import { CodeTableType } from "../types/app";
 
-export const namePrefixCT: CodeTableType[] = [
+export const namePrefixCT = [
   //CT-001
   { code: "Bro", name: "Brother" },
   { code: "Capt", name: "Captain" },

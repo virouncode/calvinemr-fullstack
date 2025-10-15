@@ -103,10 +103,13 @@ const LoginForm = () => {
         password,
         pin,
       });
-      setAuth({ email, tokenLimit: response.data + 60000 });
+      setAuth({ email, tokenLimit: Date.now() + 24 * 60 * 60 * 1000 + 60000 });
       localStorage.setItem(
         "auth",
-        JSON.stringify({ email, tokenLimit: response.data + 60000 })
+        JSON.stringify({
+          email,
+          tokenLimit: Date.now() + 24 * 60 * 60 * 1000 + 60000,
+        })
       );
       //================ SOCKET ===================//
       const mySocket = socketIOClient(import.meta.env.VITE_BACKEND_URL, {

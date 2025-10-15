@@ -19,12 +19,13 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
+        //in development when calling /api from localhost:5173 (Vite front) it will be redirected to the backend server
         target: "http://localhost:3001/api", // Backend server URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
     host: "0.0.0.0", // Allow access from external devices
-    port: 5173, // You can specify the port, default is 3000
+    port: 5173, // Default Vite port
   },
 });
