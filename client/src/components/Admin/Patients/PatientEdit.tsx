@@ -156,7 +156,7 @@ const PatientEdit = ({ patient, setEditVisible }: PatientEditProps) => {
     const response = await xanoGet("/patient_with_email", "admin", {
       email: formDatas?.email.toLowerCase() ?? "",
     });
-    if (response && response.patient_id !== patient.patient_id) {
+    if (response && response.id !== patient.patient_id) {
       setErrMsgPost("Email already used by another patient");
       toast.error(
         `Error: email ${formDatas?.email.toLowerCase()} already used by another patient`,
