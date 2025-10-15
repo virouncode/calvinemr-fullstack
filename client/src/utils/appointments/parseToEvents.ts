@@ -90,12 +90,12 @@ export const parseToEvents = (
                 _.findIndex(remainingStaffObjects, {
                   id: appointment.host_id,
                 })
-              ].color,
+              ]?.color,
               remainingStaffObjects[
                 _.findIndex(remainingStaffObjects, {
                   id: appointment.host_id,
                 })
-              ].textColor,
+              ]?.textColor,
               isSecretary,
               isNurse,
               userId,
