@@ -485,6 +485,8 @@ const Calendar = () => {
 
   // DATES SET
   const handleDatesSet = (info: DatesSetArg) => {
+    console.log("handleDatesSet", info);
+
     setRangeStart(
       DateTime.fromJSDate(info.start, { zone: "America/Toronto" }).toMillis()
     );
@@ -499,6 +501,8 @@ const Calendar = () => {
     lastCurrentId.current = "";
     currentInfo.current = null;
     const viewType = info.view.type;
+    console.log("viewType", viewType);
+
     if (!timelineVisible) setCurrentView(viewType);
 
     // // === enregistrement de la nouvelle date du calendar et restauration différée du scroll ===

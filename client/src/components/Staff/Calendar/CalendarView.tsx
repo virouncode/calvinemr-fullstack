@@ -275,24 +275,6 @@ const CalendarView = ({
       eventDrop={handleDrop}
       eventResize={handleResize}
       eventResizeStart={handleResizeStart}
-      viewDidMount={() => {
-        const savedScrollPosition = localStorage.getItem(
-          "calendarScrollPosition"
-        );
-        if (savedScrollPosition) {
-          const scrollGrid = document.querySelector(
-            ".fc-scroller.fc-scroller-liquid-absolute"
-          ) as HTMLElement | null;
-          if (scrollGrid) {
-            scrollGrid.scrollTo(0, parseInt(savedScrollPosition));
-          }
-        }
-        const savedCurrentDate = localStorage.getItem("calendarCurrentDate");
-        if (savedCurrentDate && fcRef.current) {
-          const savedDate = new Date(parseInt(savedCurrentDate));
-          fcRef.current.getApi().gotoDate(savedDate);
-        }
-      }}
       //====================== EVENT STYLING =================//
       eventContent={renderEventContent}
       eventClassNames={function (arg) {
