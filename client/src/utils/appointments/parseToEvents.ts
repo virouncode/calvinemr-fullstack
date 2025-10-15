@@ -67,6 +67,8 @@ export const parseToEvents = (
         textColor: colorsPalette[index % colorsPalette.length].text,
       };
     });
+  console.log("remainingStaffObjects", remainingStaffObjects);
+
   const events: EventInput[] = appointments.map(
     (appointment) =>
       appointment.host_id !== userId
