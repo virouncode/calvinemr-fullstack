@@ -155,6 +155,7 @@ const Calendar = () => {
     sitesIds,
     sites
   );
+
   const appointmentPost = useAppointmentsPost(
     hostsIds,
     rangeStart,

@@ -54,6 +54,8 @@ export const parseToEvents = (
   userId: number
 ) => {
   //give a color to each remaining member of the staff
+  console.log("appointments", appointments);
+
   if (!sites || sites.length === 0 || !appointments) return undefined;
   const remainingStaffObjects = staffInfos
     .filter(({ account_status }) => account_status !== "Closed")
