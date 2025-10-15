@@ -54,7 +54,6 @@ export const parseToEvents = (
   userId: number
 ) => {
   //give a color to each remaining member of the staff
-  console.log("appointments", appointments);
 
   if (!sites || sites.length === 0 || !appointments) return undefined;
   const remainingStaffObjects = staffInfos
@@ -67,7 +66,6 @@ export const parseToEvents = (
         textColor: colorsPalette[index % colorsPalette.length].text,
       };
     });
-  console.log("remainingStaffObjects", remainingStaffObjects);
 
   const events: EventInput[] = appointments.map(
     (appointment) =>
