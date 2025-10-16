@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { Request, Response } from "express";
 import formData from "form-data";
 import Mailgun from "mailgun.js";
+import { handleSuccess, handleError } from "../utils/helper";
 
 dotenv.config(); // Load environment variables
 
@@ -12,29 +13,29 @@ const mg = mailgun.client({
   key: process.env.MAILGUN_SENDING_API_KEY!,
 });
 
-const postEmail = async (req: Request, res: Response): Promise<void> => {
-  const { to, subject, text }: { to: string; subject: string; text: string } =
-    req.body;
-
-  if (!to) res.status(400).send({ error: "recipient email is required" });
-
+export const postEmail = async (req: Request, res: Response) => {
   try {
-    const response = await mg.messages.create(process.env.MAILGUN_DOMAIN!, {
+    const { to, subject, text }: { to: string; subject: string; text: string } =
+      req.body;
+
+    if (!to) {
+      throw new Error("Recipient email is required");
+    }
+
+    const result = await mg.messages.create(process.env.MAILGUN_DOMAIN!, {
       from: process.env.MAILGUN_SENDER_EMAIL!,
       to,
       subject,
       text,
     });
-    res.status(200).send(response);
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error("Mailgun error:", err.message);
-      res.status(500).send({ error: err.message });
-    } else {
-      res.status(500).send({ error: "Unknown error occurred" });
-    }
+
+    return handleSuccess({
+      result,
+      status: 200,
+      message: "Email sent successfully via Mailgun",
+      res,
+    });
+  } catch (err) {
+    return handleError({ err, res });
   }
 };
-
-// Export the function as a module
-export { postEmail };

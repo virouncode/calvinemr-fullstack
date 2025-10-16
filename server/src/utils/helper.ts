@@ -1,23 +1,25 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { Response } from "express";
 import { ZodError } from "zod";
 import { ApiResponse } from "../types/api";
 
 export const handleSuccess = <T>({
-  axiosResponse,
+  result,
+  status,
   message = "Request successful",
   res,
 }: {
-  axiosResponse: AxiosResponse<T>;
+  result: T;
+  status: number;
   message?: string;
   res: Response;
 }) => {
   const response: ApiResponse<T> = {
     success: true,
-    data: axiosResponse.data,
+    data: result,
     message,
   };
-  return res.status(axiosResponse.status).json(response);
+  return res.status(status).json(response);
 };
 
 export const handleError = ({

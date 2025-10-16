@@ -23,6 +23,5 @@ export const authSchema = z.object({
 export type AuthType = z.infer<typeof authSchema>;
 
 export const authQuerySchema = z.object({
-  URL: z.string().nonempty("Invalid URL"),
   userType: z.enum(["admin", "staff", "patient", "reset"]),
 });

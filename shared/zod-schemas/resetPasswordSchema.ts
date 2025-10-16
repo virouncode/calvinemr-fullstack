@@ -1,7 +1,6 @@
 import z from "zod";
 
 export const resetPasswordQuerySchema = z.object({
-  URL: z.url("Invalid URL").nonempty("URL is required"),
   userType: z.enum(["admin", "staff", "patient", "reset"]),
   tempToken: z.string().nonempty("Temporary token is required"),
 });

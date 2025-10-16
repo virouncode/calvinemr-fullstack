@@ -1,36 +1,52 @@
-import axios from "axios";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { fetchWithTimeout } from "../utils/fetchWithTimeout";
+import { handleError, handleSuccess } from "../utils/helper";
 dotenv.config();
-axios.defaults.withCredentials = true;
 
-const handleError = (err: unknown): string => {
-  if (err instanceof Error) {
-    return err.message;
-  } else if (typeof err === "string") {
-    return err;
-  } else {
-    return "An unknown error occurred";
-  }
+type WeatherResponse = {
+  location: {
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
+    tz_id: string;
+    localtime: string;
+  };
+  current: {
+    temp_c: number;
+    temp_f: number;
+    condition: { text: string; icon: string };
+    wind_kph: number;
+    humidity: number;
+    feelslike_c: number;
+    last_updated: string;
+  };
 };
 
-export const getWeather = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getWeather = async (req: Request, res: Response) => {
   try {
-    const response = await axios.get(
-      `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=Toronto&aqi=no`
-    );
+    const { city = "Toronto" } = req.query;
 
-    res.status(200).json({ success: true, data: response.data });
+    const url = `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=${city}&aqi=no`;
+
+    const response = await fetchWithTimeout(url, { method: "GET" }, 8000);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Weather API error: ${errorText}`);
+    }
+
+    const data: WeatherResponse = await response.json();
+
+    return handleSuccess({
+      result: data,
+      status: 200,
+      message: `Current weather for ${data.location.name}, ${data.location.country}`,
+      res,
+    });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-
-    // Check if err has a status code, if not fallback to 500
-    const statusCode = (err as { status?: number }).status || 500;
-
-    res.status(statusCode).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };

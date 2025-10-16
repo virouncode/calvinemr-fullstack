@@ -1,6 +1,9 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { downloadAndEncodeFile } from "../utils/downloadAndEncodeFile";
+import { fetchWithTimeout } from "../utils/fetchWithTimeout";
+import { handleError, handleSuccess } from "../utils/helper";
 dotenv.config();
 axios.defaults.withCredentials = true;
 
@@ -17,38 +20,40 @@ type AttachmentType = {
   };
   url: string;
 };
-type MessageAttachmentType = {
-  id: number | string;
-  file: AttachmentType | null;
-  alias: string;
-  date_created: number;
-  created_by_user_type: "staff" | "patient";
-  created_by_id: number;
-};
 
-// Helper function to download and encode the file to base64
-const downloadAndEncodeFile = async (url: string): Promise<string> => {
-  try {
-    const response = await axios.get(url, { responseType: "arraybuffer" });
-    return Buffer.from(response.data).toString("base64");
-  } catch (error) {
-    throw new Error(`Error downloading file: ${handleError(error)}`);
+const SRFAX_URL = "https://secure.srfax.com/SRF_SecWebSvc.php";
+const DEFAULT_HEADERS = { "Content-Type": "application/json" };
+
+const buildAuthData = () => ({
+  access_id: process.env.SRFAX_ACCESS_ID!,
+  access_pwd: process.env.SRFAX_ACCESS_PWD!,
+});
+
+const srfaxRequest = async <T>(
+  payload: Record<string, any>
+): Promise<{ result: T; status: number }> => {
+  const config: RequestInit = {
+    method: "POST",
+    headers: DEFAULT_HEADERS,
+    body: JSON.stringify(payload),
+  };
+
+  const response = await fetchWithTimeout(SRFAX_URL, config, 15000);
+  const status = response.status;
+  const result = await response.json();
+
+  if (result.Status === "Failed") {
+    throw new Error(result.Result || "SRFax API error");
   }
+
+  return { result: result.Result as T, status };
 };
 
-// Error handling function to handle different types of errors
-const handleError = (err: unknown): string => {
-  if (err instanceof Error) {
-    return err.message;
-  } else if (typeof err === "string") {
-    return err;
-  } else {
-    return "An unknown error occurred";
-  }
-};
+// ------------------------------
+// 📤 Send Fax
+// ------------------------------
 
-// Post a fax
-export const postFax = async (req: Request, res: Response): Promise<void> => {
+export const postFax = async (req: Request, res: Response) => {
   try {
     const {
       faxNumbers,
@@ -60,24 +65,9 @@ export const postFax = async (req: Request, res: Response): Promise<void> => {
       attachments,
     } = req.body;
 
-    const data: {
-      action: string;
-      access_id: string;
-      access_pwd: string;
-      sCallerID: string;
-      sSenderEmail: string;
-      sFaxType: string;
-      sCPFromName: string;
-      sCPToName: string;
-      sCPOrganization: string;
-      sCoverPage: string;
-      sCPSubject: string;
-      sCPComments: string;
-      [key: string]: string;
-    } = {
+    const baseData: Record<string, any> = {
+      ...buildAuthData(),
       action: "Queue_Fax",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
       sCallerID: process.env.SRFAX_CALLER_ID!,
       sSenderEmail: "calvinemrtest@gmail.com",
       sFaxType: "SINGLE",
@@ -89,265 +79,164 @@ export const postFax = async (req: Request, res: Response): Promise<void> => {
       sCPComments,
     };
 
-    // Process attachments if they exist
-    if (attachments && attachments.length > 0) {
+    // Process attachments
+    if (attachments?.length > 0) {
       await Promise.all(
         attachments.map(
-          async (
-            attachment: { fileName: string; fileURL: string },
-            index: number
-          ) => {
-            const encodedFileContent = await downloadAndEncodeFile(
-              attachment.fileURL
-            );
-            data[`sFileName_${index + 1}`] = attachment.fileName;
-            data[`sFileContent_${index + 1}`] = encodedFileContent;
+          async (att: { fileName: string; fileURL: string }, i: number) => {
+            const encoded = await downloadAndEncodeFile(att.fileURL);
+            baseData[`sFileName_${i + 1}`] = att.fileName;
+            baseData[`sFileContent_${i + 1}`] = encoded;
           }
         )
       );
     }
 
-    // Send faxes to each number
+    // Send fax to each number
     await Promise.all(
       faxNumbers.map(async (faxNumber: string) => {
-        const faxToPost = { ...data, sToFaxNumber: `1${faxNumber}` }; // Fix fax number formatting
-
-        const response = await axios.post(
-          "https://secure.srfax.com/SRF_SecWebSvc.php",
-          faxToPost,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
-
-        if (response.data.Status === "Failed") {
-          throw new Error(response.data.Result);
-        }
+        const faxToPost = { ...baseData, sToFaxNumber: `1${faxNumber}` };
+        await srfaxRequest(faxToPost);
       })
     );
 
-    res
-      .status(200)
-      .json({ success: true, data: { message: "Fax successfully sent" } });
+    return handleSuccess({
+      result: { message: "Fax successfully sent" },
+      status: 200,
+      res,
+    });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(500).json({ success: false, message: errorMessage }); // Changed to 500 for server errors
+    return handleError({ err, res });
   }
 };
 
-// Get faxes from inbox
-export const getFaxesInbox = async (
+// ------------------------------
+// 📥 Get Faxes (Inbox / Outbox)
+// ------------------------------
+
+const getFaxList = async (
+  action: "Get_Fax_Inbox" | "Get_Fax_Outbox",
   req: Request,
   res: Response
-): Promise<void> => {
+) => {
   try {
     const { viewedStatus, all, start, end } = req.body;
 
-    const data: Record<string, any> = {
-      action: "Get_Fax_Inbox",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
-      sPeriod: all ? "ALL" : "RANGE",
-      sViewedStatus: viewedStatus,
-    };
-
-    if (!all) {
-      data.sStartDate = start;
-      data.sEndDate = end;
-    }
-
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    res.status(200).json(response.data.Result);
-  } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
-  }
-};
-
-// Get faxes from outbox
-export const getFaxesOutbox = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const { all, start, end } = req.body;
-
-    const data: Record<string, any> = {
-      action: "Get_Fax_Outbox",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
+    const payload: Record<string, any> = {
+      ...buildAuthData(),
+      action,
       sPeriod: all ? "ALL" : "RANGE",
     };
 
+    if (action === "Get_Fax_Inbox") {
+      payload.sViewedStatus = viewedStatus ?? "ALL";
+    }
     if (!all) {
-      data.sStartDate = start;
-      data.sEndDate = end;
+      payload.sStartDate = start;
+      payload.sEndDate = end;
     }
 
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    res.status(200).json(response.data.Result);
+    const { result, status } = await srfaxRequest(payload);
+    return handleSuccess({ result, status, res });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };
 
-// Get a specific fax file
-export const getFaxFile = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getFaxesInbox = (req: Request, res: Response) =>
+  getFaxList("Get_Fax_Inbox", req, res);
+
+export const getFaxesOutbox = (req: Request, res: Response) =>
+  getFaxList("Get_Fax_Outbox", req, res);
+
+// ------------------------------
+// 📄 Retrieve / Delete Fax
+// ------------------------------
+
+export const getFaxFile = async (req: Request, res: Response) => {
   try {
     const { id, direction } = req.body;
-
-    const data = {
+    const payload = {
+      ...buildAuthData(),
       action: "Retrieve_Fax",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
       sFaxFileName: id,
       sDirection: direction,
       sFaxFormat: "PDF",
       sMarkasViewed: "Y",
     };
 
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    if (response.data.Status === "Success") {
-      res.status(200).json(response.data.Result);
-    } else {
-      res.status(400).json(response.data.Result);
-    }
+    const { result, status } = await srfaxRequest(payload);
+    return handleSuccess({ result, status, res });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };
 
-// Delete a fax
-export const deleteFax = async (req: Request, res: Response): Promise<void> => {
+export const deleteFax = async (req: Request, res: Response) => {
   try {
     const { faxFileName, direction } = req.body;
-
-    const data = {
+    const payload = {
+      ...buildAuthData(),
       action: "Delete_Fax",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
       sFaxFileName: faxFileName,
       sDirection: direction,
     };
 
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    if (response.data.Status === "Success") {
-      res.status(200).json(response.data.Result);
-    } else {
-      res.status(400).json(response.data.Result);
-    }
+    const { result, status } = await srfaxRequest(payload);
+    return handleSuccess({ result, status, res });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };
 
-// Delete multiple faxes
-export const deleteFaxes = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const deleteFaxes = async (req: Request, res: Response) => {
   try {
-    const {
-      faxFileNames,
-      direction,
-    }: {
-      faxFileNames: string[];
-      direction: string;
-    } = req.body;
+    const { faxFileNames, direction } = req.body;
 
-    const data: Record<string, any> = {
+    const payload: Record<string, any> = {
+      ...buildAuthData(),
       action: "Delete_Fax",
-      access_id: process.env.SRFAX_ACCESS_ID!,
-      access_pwd: process.env.SRFAX_ACCESS_PWD!,
       sDirection: direction,
     };
 
-    faxFileNames.forEach((faxFileName, i) => {
-      data[`sFaxFileName_${i + 1}`] = faxFileName;
+    faxFileNames.forEach((name: string, i: number) => {
+      payload[`sFaxFileName_${i + 1}`] = name;
     });
 
-    const response = await axios.post(
-      "https://secure.srfax.com/SRF_SecWebSvc.php",
-      data,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    if (response.data.Status === "Success") {
-      res.status(200).json(response.data.Result);
-    } else {
-      res.status(400).json(response.data.Result);
-    }
+    const { result, status } = await srfaxRequest(payload);
+    return handleSuccess({ result, status, res });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(400).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };
 
-export const markFaxesAs = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+// ------------------------------
+// 👁️ Mark Fax as Viewed
+// ------------------------------
+
+export const markFaxesAs = async (req: Request, res: Response) => {
   try {
     const { fileNames, viewedStatus } = req.body;
+
     await Promise.all(
       fileNames.map(async (faxFileName: string) => {
-        const data = {
+        const payload = {
+          ...buildAuthData(),
           action: "Update_Viewed_Status",
-          access_id: process.env.SRFAX_ACCESS_ID!,
-          access_pwd: process.env.SRFAX_ACCESS_PWD!,
           sFaxFileName: faxFileName,
           sDirection: "IN",
           sMarkasViewed: viewedStatus,
         };
-        const response = await axios.post(
-          "https://secure.srfax.com/SRF_SecWebSvc.php",
-          data,
-          { headers: { "Content-Type": "application/json" } }
-        );
-        if (response.data.Status !== "Success") {
-          throw new Error(response.data.Result);
-        }
+        await srfaxRequest(payload);
       })
     );
-    res.status(200).json({
-      success: true,
-      data: { message: "Viewed status updated successfully" },
+
+    return handleSuccess({
+      result: { message: "Viewed status updated successfully" },
+      status: 200,
+      res,
     });
   } catch (err) {
-    const errorMessage = handleError(err);
-    console.error(errorMessage);
-    res.status(500).json({ success: false, message: errorMessage });
+    return handleError({ err, res });
   }
 };

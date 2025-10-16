@@ -1,10 +1,10 @@
-import { DocumentProcessorServiceClient } from "@google-cloud/documentai/build/src/v1"; // Adjust the path based on your setup
-import axios from "axios";
+import { DocumentProcessorServiceClient } from "@google-cloud/documentai/build/src/v1";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { fetchWithTimeout } from "../utils/fetchWithTimeout";
+import { handleError, handleSuccess } from "../utils/helper";
 
 dotenv.config();
-axios.defaults.withCredentials = true;
 
 const projectId = process.env.DOCUMENTAI_PROJECT_ID;
 const location = "us"; // Format is 'us' or 'eu'
@@ -30,14 +30,23 @@ interface DocumentAIResponse {
   };
 }
 
+// 📘 Utilitaire pour extraire le texte d’un document depuis son URL
 const extractTextFromDoc = async (
   docUrl: string,
   mime: string
 ): Promise<string[]> => {
   const name = `projects/${projectId}/locations/${location}/processors/${processorId}`;
-  // Read the file into memory.
-  const response = await axios.get(docUrl, { responseType: "arraybuffer" });
-  const encodedImage = Buffer.from(response.data, "binary").toString("base64");
+
+  // 1️⃣ Lecture du fichier avec timeout
+  const response = await fetchWithTimeout(docUrl, { method: "GET" }, 10000);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch document: ${response.statusText}`);
+  }
+
+  const arrayBuffer = await response.arrayBuffer();
+  const encodedImage = Buffer.from(arrayBuffer).toString("base64");
+
+  // 2️⃣ Prépare la requête DocumentAI
   const request = {
     name,
     rawDocument: {
@@ -46,61 +55,52 @@ const extractTextFromDoc = async (
     },
   };
 
-  // Recognizes text entities in the PDF document
+  // 3️⃣ Traitement via Google DocumentAI
   try {
     const [result] = await client.processDocument(request);
     const { document } = result as DocumentAIResponse;
 
-    // Get all of the document text as one big string
     const { text } = document;
-
-    // Extract shards from the text field
-    const getText = (textAnchor: {
-      textSegments: Array<{ startIndex?: number; endIndex: number }>;
-    }) => {
-      if (!textAnchor.textSegments || textAnchor.textSegments.length === 0) {
-        return "";
-      }
-
-      // First shard in document doesn't have startIndex property
-      const startIndex = textAnchor.textSegments[0].startIndex || 0;
-      const endIndex = textAnchor.textSegments[0].endIndex;
-
-      return text.substring(startIndex, endIndex);
-    };
-
-    // Read the text recognition output from the processor
     const [page1] = document.pages;
     const { paragraphs } = page1;
 
-    const decodedText: string[] = [];
+    // 4️⃣ Extraction du texte
+    const getText = (textAnchor: {
+      textSegments: Array<{ startIndex?: number; endIndex: number }>;
+    }) => {
+      if (!textAnchor.textSegments?.length) return "";
+      const { startIndex = 0, endIndex } = textAnchor.textSegments[0];
+      return text.substring(startIndex, endIndex);
+    };
 
-    for (const paragraph of paragraphs) {
-      const paragraphText = getText(paragraph.layout.textAnchor);
-      decodedText.push(paragraphText);
-    }
+    const decodedText: string[] = paragraphs.map((p) =>
+      getText(p.layout.textAnchor)
+    );
+
     return decodedText;
   } catch (err) {
-    console.error(err);
-    throw new Error("Error processing document");
+    console.error("DocumentAI processing error:", err);
+    throw new Error("Error processing document with Google DocumentAI");
   }
 };
 
-export const postExtractToText = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+// 🎯 Contrôleur Express standardisé
+export const postExtractToText = async (req: Request, res: Response) => {
   try {
     const { docUrl, mime } = req.body;
-    const result = await extractTextFromDoc(docUrl, mime);
-    res.status(200).send(result);
-  } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({ success: false, message: err.message });
-    } else {
-      res
-        .status(500)
-        .json({ success: false, message: "Unknown error occurred" });
+    if (!docUrl || !mime) {
+      throw new Error("Missing required parameters: docUrl or mime");
     }
+
+    const result = await extractTextFromDoc(docUrl, mime);
+
+    return handleSuccess({
+      result,
+      status: 200,
+      message: "Text extracted successfully",
+      res,
+    });
+  } catch (err) {
+    return handleError({ err, res });
   }
 };

@@ -1,3 +1,4 @@
+import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -8,6 +9,7 @@ import { join } from "path";
 import { Server } from "socket.io";
 
 // Import routers
+import rateLimit from "express-rate-limit";
 import extractToTextRouter from "./routes/extractToText/extractToText";
 import mailgunRouter from "./routes/mailgun/mailgun";
 import openaiRouter from "./routes/openai/openai";
@@ -28,17 +30,16 @@ const allowedOrigins =
 //========================== EXPRESS APP SETUP =========================//
 const app = express();
 app
+
   .use(
     helmet({
       contentSecurityPolicy: false, // because React of inline styles
       crossOriginEmbedderPolicy: false, // to avoid certain blocking with Vite or iframes
     })
   ) //Security middleware, set various HTTP headers to help protect the app
+  .use(compression()) //Compress all HTTP responses
   .set("trust proxy", true) // Trust first proxy
   .use(cookieParser()) //extract cookies from incoming requests and populate req.cookies
-  .use(express.urlencoded({ extended: true })) //application/x-www-form-urlencoded body parsing to req.body
-  .use(express.json({ limit: "2mb" })) //application/json body parsing to req.body
-  .use(express.text()) //text/plain body parsing to req.body
   .use(
     cors({
       origin: allowedOrigins,
@@ -46,6 +47,19 @@ app
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   )
+  .use(
+    "/api/xano",
+    rateLimit({
+      windowMs: 5 * 60 * 1000, // 5 minutes
+      limit: 300, // max 300 xano requests per IP per windowMs
+      message: "Too many requests from this IP, please try again later.",
+      standardHeaders: true, // add RateLimit-* headers
+      legacyHeaders: false, // disable X-RateLimit-* headers
+    })
+  )
+  .use(express.json({ limit: "2mb" })) //application/json body parsing to req.body
+  .use(express.urlencoded({ extended: true })) //application/x-www-form-urlencoded body parsing to req.body
+  .use(express.text({ type: "text/plain" })) //text/plain body parsing to req.body
   .use("/api/xano", xanoRouter) //delegate /api/xano routes to xanoRouter
   .use("/api/twilio", twilioRouter)
   .use("/api/extractToText", extractToTextRouter)
@@ -146,6 +160,12 @@ process.on("unhandledRejection", (reason, promise) => {
   io.emit("serverError", {
     message: "Server error occurred. Please try again later.",
   });
+});
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received. Shutting down gracefully...");
+  stopPollingFaxes();
+  httpServer.close(() => process.exit(0));
 });
 
 httpServer.listen(PORT, () => {

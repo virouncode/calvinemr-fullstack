@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 import OpenAI from "openai";
+import { handleError, handleSuccess } from "../utils/helper";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -10,60 +11,64 @@ const openai = new OpenAI({
   project: process.env.OPENAI_PROJECT_ID!,
 });
 
-// Define type for the message object
+// Type pour un message de chat
 interface AIMessage {
   role: "system" | "user" | "assistant";
   content: string;
 }
 
-// Streamed response from ChatGPT
-const postChatGPTStream = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { messages }: { messages: AIMessage[] } = req.body;
-
+// 💬 Endpoint : génération complète (non streamée)
+export const postChatGPTFull = async (req: Request, res: Response) => {
   try {
+    const { messages }: { messages: AIMessage[] } = req.body;
+
+    if (!messages || !Array.isArray(messages)) {
+      throw new Error("Missing or invalid 'messages' array in request body");
+    }
+
+    const completion = await openai.chat.completions.create({
+      messages,
+      model: "gpt-3.5-turbo",
+    });
+
+    const content = completion.choices[0]?.message?.content ?? "";
+
+    return handleSuccess({
+      result: content,
+      status: 200,
+      message: "ChatGPT response generated successfully",
+      res,
+    });
+  } catch (err) {
+    return handleError({ err, res });
+  }
+};
+
+// 💬 Endpoint : génération en streaming (utile pour front interactif)
+export const postChatGPTStream = async (req: Request, res: Response) => {
+  try {
+    const { messages }: { messages: AIMessage[] } = req.body;
+
+    if (!messages || !Array.isArray(messages)) {
+      throw new Error("Missing or invalid 'messages' array in request body");
+    }
+
     const stream = await openai.chat.completions.create({
       messages,
       model: "gpt-3.5-turbo",
       stream: true,
     });
 
+    // Envoie des chunks au fur et à mesure
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
     for await (const chunk of stream) {
-      res.write(chunk.choices[0]?.delta?.content || "");
+      const text = chunk.choices[0]?.delta?.content || "";
+      res.write(text);
     }
+
     res.end();
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error(err);
-      res.status(500).send({ error: err.message });
-    } else {
-      res.status(500).send({ error: "Unknown error occurred" });
-    }
+  } catch (err) {
+    return handleError({ err, res });
   }
 };
-
-// Full response from ChatGPT
-const postChatGPTFull = async (req: Request, res: Response): Promise<void> => {
-  const { messages }: { messages: AIMessage[] } = req.body;
-
-  try {
-    const response = await openai.chat.completions.create({
-      messages,
-      model: "gpt-3.5-turbo",
-    });
-
-    res.send(response.choices[0].message.content);
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error(err);
-      res.status(500).send({ error: err.message });
-    } else {
-      res.status(500).send({ error: "Unknown error occurred" });
-    }
-  }
-};
-
-// Export the functions
-export { postChatGPTFull, postChatGPTStream };
