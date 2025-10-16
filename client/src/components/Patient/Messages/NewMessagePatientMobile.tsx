@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { xanoPost } from "../../../api/xanoCRUD/xanoPost";
+import useClinicContext from "../../../hooks/context/useClinicContext";
 import useSocketContext from "../../../hooks/context/useSocketContext";
 import useStaffInfosContext from "../../../hooks/context/useStaffInfosContext";
 import useUserContext from "../../../hooks/context/useUserContext";
@@ -20,7 +21,6 @@ import SaveButton from "../../UI/Buttons/SaveButton";
 import Input from "../../UI/Inputs/Input";
 import CircularProgressMedium from "../../UI/Progress/CircularProgressMedium";
 import PatientStaffContacts from "./PatientStaffContacts";
-import useClinicContext from "../../../hooks/context/useClinicContext";
 
 type NewMessagePatientMobileProps = {
   setNewVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -112,8 +112,9 @@ const NewMessagePatientMobile = ({
         });
         const senderName = toPatientName(user.demographics);
         const staff = staffInfos.find(({ id }) => id === recipientId);
+        if (!staff) return; //No staff found -> no email sent
         const emailToPost = {
-          to: staff?.email ?? "",
+          to: staff.email,
           subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
           text: toEmailAlertStaffText(
             staffIdToTitleAndName(staffInfos, recipientId),

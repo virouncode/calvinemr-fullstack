@@ -32,10 +32,7 @@ export const demographicsSchema = yup.object({
     message: "Invalid SIN: XXX XXX XXX format required",
     excludeEmptyString: true,
   }),
-  email: yup
-    .string()
-    .required("Email field is required")
-    .email("Invalid Email"),
+  email: yup.string().email("Invalid Email"),
   cellphone: yup.string().matches(/^\d{3}-\d{3}-\d{4}$/, {
     message: "Invalid Cell phone number: XXX-XXX-XXXX format required",
     excludeEmptyString: true,
@@ -59,9 +56,6 @@ export const demographicsSchema = yup.object({
     excludeEmptyString: true,
   }),
   province: yup.string().required("Province/State field is required"),
-  preferredOff: yup
-    .string()
-    .required("Preferred official language field is required"),
   status: yup.string().required("Person status field is required"),
   assignedMd: yup
     .string()

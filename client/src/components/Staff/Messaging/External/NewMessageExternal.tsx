@@ -114,7 +114,7 @@ const NewMessageExternal = ({
         {
           id: info.patient_id,
           name: toPatientName(info),
-          email: info.Email,
+          email: info.Email ?? "",
           phone:
             info.PhoneNumber?.find(
               ({ _phoneNumberType }) => _phoneNumberType === "C"
@@ -142,7 +142,7 @@ const NewMessageExternal = ({
             return {
               id: demographicsInfos.patient_id,
               name: toPatientName(demographicsInfos),
-              email: demographicsInfos.Email,
+              email: demographicsInfos.Email ?? "",
               phone:
                 demographicsInfos.PhoneNumber?.find(
                   ({ _phoneNumberType }) => _phoneNumberType === "C"
@@ -234,18 +234,21 @@ const NewMessageExternal = ({
             },
           });
           const recipientPhone = formatToE164Canadian(recipient.phone ?? "");
-          const emailToPost = {
-            to: recipient.email,
-            subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
-            text: toEmailAlertPatientText(recipient.name),
-          };
           const smsToPost = {
             from: clinic?.name ?? "",
             to: recipientPhone,
             body: toSMSAlertPatientText(recipient.name),
           };
-          emailsToPost.push(emailToPost);
           patientsSMSToPost.push(smsToPost);
+          if (recipient.email) {
+            const emailToPost = {
+              to: recipient.email,
+              subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
+              text: toEmailAlertPatientText(recipient.name),
+            };
+
+            emailsToPost.push(emailToPost);
+          }
         }
         //EMAIL ALERT
         try {

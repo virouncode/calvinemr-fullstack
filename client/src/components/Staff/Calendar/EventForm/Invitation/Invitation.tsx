@@ -169,28 +169,30 @@ const Invitation = ({
               (phone) => phone._phoneNumberType === "C"
             )?.phoneNumber ?? ""
           );
-          const mailToPost = {
-            to: patientInfos.Email,
-            //to: "virounk@gmail.com", // For testing purposes
-            subject: subject + " - DO NOT REPLY",
-            text: toEmailInvitationText(
-              site,
-              user.settings.invitation_templates.find(
-                ({ name }) => name === templateSelected
+          if (patientInfos.Email) {
+            const emailToPost = {
+              to: patientInfos.Email,
+              //to: "virounk@gmail.com", // For testing purposes
+              subject: subject + " - DO NOT REPLY",
+              text: toEmailInvitationText(
+                site,
+                user.settings.invitation_templates.find(
+                  ({ name }) => name === templateSelected
+                ),
+                hostName,
+                patientName,
+                siteName,
+                clinicName,
+                allDay,
+                start,
+                end,
+                staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
+                intro,
+                message
               ),
-              hostName,
-              patientName,
-              siteName,
-              clinicName,
-              allDay,
-              start,
-              end,
-              staffInfos.find(({ id }) => id === hostId)?.video_link ?? "",
-              intro,
-              message
-            ),
-          };
-          patientsMailsToPost.push(mailToPost);
+            };
+            patientsMailsToPost.push(emailToPost);
+          }
           const smsToPost = {
             to: patientPhone,
             //to: "+33683267962", // For testing purposes
@@ -217,8 +219,8 @@ const Invitation = ({
         try {
           setProgress(true);
           await Promise.all(
-            patientsMailsToPost.map((mailToPost) =>
-              axios.post(`/api/mailgun`, mailToPost)
+            patientsMailsToPost.map((emailToPost) =>
+              axios.post(`/api/mailgun`, emailToPost)
             )
           );
           await Promise.all(

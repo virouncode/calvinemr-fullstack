@@ -169,7 +169,7 @@ export const fillPdfForm = async (
             ({ _phoneNumberType }) => _phoneNumberType === "R"
           )?.phoneNumber,
       },
-      { fieldName: "patient_email", value: demographicsInfos.Email },
+      { fieldName: "patient_email", value: demographicsInfos.Email ?? "" },
       { fieldName: "patient_sin", value: demographicsInfos.SIN },
       {
         fieldName: "patient_height_cm",

@@ -152,19 +152,21 @@ const PatientEdit = ({ patient, setEditVisible }: PatientEditProps) => {
       if (err instanceof Error) setErrMsgPost(err.message);
       return;
     }
-    //Check if email already used
-    const response = await xanoGet("/patient_with_email", "admin", {
-      email: formDatas?.email.toLowerCase() ?? "",
-    });
-    if (response && response.patient_id !== patient.patient_id) {
-      setErrMsgPost("Email already used by another patient");
-      toast.error(
-        `Error: email ${formDatas?.email.toLowerCase()} already used by another patient`,
-        {
-          containerId: "A",
-        }
-      );
-      return;
+    if (formDatas?.email) {
+      //Check if email already used
+      const response = await xanoGet("/patient_with_email", "admin", {
+        email: formDatas.email.toLowerCase(),
+      });
+      if (response && response.id !== patient.patient_id) {
+        setErrMsgPost("Email already used by another patient");
+        toast.error(
+          `Error: email ${formDatas.email.toLowerCase()} already used by another patient`,
+          {
+            containerId: "A",
+          }
+        );
+        return;
+      }
     }
 
     //Formatting
@@ -194,7 +196,7 @@ const PatientEdit = ({ patient, setEditVisible }: PatientEditProps) => {
         formDatas?.fPhysicianFirstName ?? ""
       ),
       fPhysicianLastName: firstLetterUpper(formDatas?.fPhysicianLastName ?? ""),
-      email: formDatas?.email.toLowerCase() ?? "",
+      email: formDatas?.email?.toLowerCase() ?? "",
     });
     const patientToPut: DemographicsType = {
       ...patient,
@@ -322,7 +324,7 @@ const PatientEdit = ({ patient, setEditVisible }: PatientEditProps) => {
         OHIPPhysicianId: formDatas?.pPhysicianOHIP ?? "",
         PrimaryPhysicianCPSO: formDatas?.pPhysicianCPSO ?? "",
       },
-      Email: formDatas?.email.toLowerCase() ?? "",
+      Email: formDatas?.email?.toLowerCase() ?? "",
       PersonStatusCode: {
         ...patient.PersonStatusCode,
         PersonStatusAsEnum: formDatas?.status ?? "",
@@ -379,7 +381,7 @@ const PatientEdit = ({ patient, setEditVisible }: PatientEditProps) => {
     try {
       await xanoPut("/patient_email", "admin", {
         id: patient.patient_id,
-        email: formDatas?.email.toLowerCase() ?? "",
+        email: formDatas?.email?.toLowerCase() ?? "",
       });
     } catch (err) {
       if (err instanceof Error)

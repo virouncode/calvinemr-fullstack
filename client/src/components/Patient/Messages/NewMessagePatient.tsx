@@ -109,8 +109,10 @@ const NewMessagePatient = ({ setNewVisible }: NewMessagePatientProps) => {
         });
         const senderName = toPatientName(user.demographics);
         const staff = staffInfos.find(({ id }) => id === recipientId);
+        if (!staff) return; //No staff found -> no email sent
+
         const emailToPost = {
-          to: staff?.email ?? "",
+          to: staff.email,
           subject: `${clinic?.name ?? ""} - New message - DO NOT REPLY`,
           text: toEmailAlertStaffText(
             staffIdToTitleAndName(staffInfos, recipientId),

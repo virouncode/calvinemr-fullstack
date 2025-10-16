@@ -769,7 +769,7 @@ export type DemographicsType = {
     OHIPPhysicianId: string;
     PrimaryPhysicianCPSO: string;
   };
-  Email: string;
+  Email: string | null;
   PersonStatusCode: {
     PersonStatusAsEnum: string;
     PersonStatusAsPlainText: string;
@@ -804,7 +804,7 @@ export type DemographicsFormType = {
   healthProvince: string;
   gender: string;
   sin: string;
-  email: string;
+  email: string | null;
   cellphone: string;
   cellphoneExt: string;
   homephone: string;
@@ -1501,7 +1501,7 @@ export type PastHealthFormType = {
 
 export type PatientType = {
   id: number;
-  email: string;
+  email: string | null;
   password: string;
   access_level: "patient";
   account_status: string;

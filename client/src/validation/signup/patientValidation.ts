@@ -1,10 +1,7 @@
 import * as yup from "yup";
 
 export const patientSchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid Email")
-    .required("Email field is required"),
+  email: yup.string().email("Invalid Email"),
   firstName: yup
     .string()
     .required("First Name field is required")
@@ -49,6 +46,7 @@ export const patientSchema = yup.object({
     excludeEmptyString: true,
   }),
   line1: yup.string().required("Address field is required"),
+  province: yup.string().required("Province/State field is required"),
   postalCode: yup.string().matches(/^[A-Z]\d[A-Z] \d[A-Z]\d$/, {
     message: "Invalid Postal Code: A1A 1A1 format required",
     excludeEmptyString: true,
