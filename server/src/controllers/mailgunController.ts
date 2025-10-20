@@ -13,6 +13,8 @@ const mg = mailgun.client({
 });
 
 const postEmail = async (req: Request, res: Response): Promise<void> => {
+  console.log("post email");
+
   const { to, subject, text }: { to: string; subject: string; text: string } =
     req.body;
 

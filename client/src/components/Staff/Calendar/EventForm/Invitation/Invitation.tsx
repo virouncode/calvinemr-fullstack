@@ -218,31 +218,34 @@ const Invitation = ({
 
         try {
           setProgress(true);
-          await Promise.all(
-            patientsMailsToPost.map((emailToPost) =>
-              axios.post(`/api/mailgun`, emailToPost)
-            )
-          );
-          await Promise.all(
-            patientsSMSToPost.map((smsToPost) =>
-              axios({
-                url: "/api/twilio",
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                data: smsToPost,
-              })
-            )
-          );
-          toast.success(`Invitations to patients sent successfully`, {
-            containerId: "A",
-          });
-        } catch (err) {
-          if (err instanceof Error)
-            toast.error(`Couldn't send invitations to patients`, {
+
+          try {
+            await Promise.all(
+              patientsMailsToPost.map((emailToPost) =>
+                axios.post(`/api/mailgun`, emailToPost)
+              )
+            );
+          } catch (err) {
+            console.error("Email sending failed:", err);
+            toast.warn("Couldn't send emails, but will still send SMS.", {
               containerId: "A",
             });
+          }
+
+          try {
+            await Promise.all(
+              patientsSMSToPost.map((smsToPost) =>
+                axios.post(`/api/twilio`, smsToPost)
+              )
+            );
+          } catch (err) {
+            console.error("SMS sending failed:", err);
+            toast.error("Couldn't send SMS to patients.", { containerId: "A" });
+          }
+
+          toast.success("Invitations to patients processed.", {
+            containerId: "A",
+          });
         } finally {
           setProgress(false);
         }
