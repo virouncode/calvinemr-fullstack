@@ -147,13 +147,16 @@ const Invitation = ({
       const siteName = site?.name ?? "";
       const clinicName = clinic?.name ?? "";
       const subject = allDay
-        ? `Appointment at ${clinic?.name}-${siteName}: ${timestampToHumanDateTZ(
+        ? `Appointment at ${clinicName}-${siteName}: ${timestampToHumanDateTZ(
             start
           )} All Day`
         : `Appointment at ${clinicName}-${siteName}: ${timestampToHumanDateTimeTZ(
             start
           )} - ${timestampToHumanDateTimeTZ(end)}`;
 
+      // =====================
+      // 🧩 Patients Invitations
+      // =====================
       if (patientsGuestsInfos.length) {
         const patientsMailsToPost: {
           to: string;
@@ -169,10 +172,11 @@ const Invitation = ({
               (phone) => phone._phoneNumberType === "C"
             )?.phoneNumber ?? ""
           );
+
+          // Email
           if (patientInfos.Email) {
-            const emailToPost = {
+            patientsMailsToPost.push({
               to: patientInfos.Email,
-              //to: "virounk@gmail.com", // For testing purposes
               subject: subject + " - DO NOT REPLY",
               text: toEmailInvitationText(
                 site,
@@ -190,12 +194,12 @@ const Invitation = ({
                 intro,
                 message
               ),
-            };
-            patientsMailsToPost.push(emailToPost);
+            });
           }
-          const smsToPost = {
+
+          // SMS
+          patientsSMSToPost.push({
             to: patientPhone,
-            //to: "+33683267962", // For testing purposes
             body: toSMSInvitationText(
               site,
               user.settings.invitation_templates.find(
@@ -212,54 +216,76 @@ const Invitation = ({
               intro,
               message
             ),
-          };
-          patientsSMSToPost.push(smsToPost);
+          });
         }
 
-        try {
-          setProgress(true);
+        setProgress(true);
 
-          try {
+        // --- Envoi EMAILS ---
+        let emailsOk = true;
+        try {
+          if (patientsMailsToPost.length) {
             await Promise.all(
               patientsMailsToPost.map((emailToPost) =>
                 axios.post(`/api/mailgun`, emailToPost)
               )
             );
-          } catch (err) {
-            console.error("Email sending failed:", err);
-            toast.warn("Couldn't send emails, but will still send SMS.", {
+            toast.success("Patient emails sent successfully", {
               containerId: "A",
             });
           }
+        } catch (err) {
+          emailsOk = false;
+          console.error("Error sending patient emails:", err);
+          toast.warn("Couldn't send patient emails, will still send SMS.", {
+            containerId: "A",
+          });
+        }
 
-          try {
+        // --- Envoi SMS ---
+        try {
+          if (patientsSMSToPost.length) {
             await Promise.all(
               patientsSMSToPost.map((smsToPost) =>
                 axios.post(`/api/twilio`, smsToPost)
               )
             );
-          } catch (err) {
-            console.error("SMS sending failed:", err);
-            toast.error("Couldn't send SMS to patients.", { containerId: "A" });
+            toast.success("Patient SMS sent successfully", {
+              containerId: "A",
+            });
           }
+        } catch (err) {
+          console.error("Error sending patient SMS:", err);
+          toast.error("Couldn't send SMS to patients.", { containerId: "A" });
+        }
 
+        // --- Résumé ---
+        if (emailsOk) {
           toast.success("Invitations to patients processed.", {
             containerId: "A",
           });
-        } finally {
-          setProgress(false);
+        } else {
+          toast.warn("Some patient invitations failed (email issues).", {
+            containerId: "A",
+          });
         }
+
+        setProgress(false);
       }
 
+      // =====================
+      // 🧩 Staff Invitations
+      // =====================
       if (staffGuestsInfos.length) {
         const staffEmailsToPost: {
           to: string;
           subject: string;
           text: string;
         }[] = [];
+
         for (const staff of staffGuestsInfos) {
           const staffName = staffIdToTitleAndName(staffInfos, staff.id);
-          const emailToPost = {
+          staffEmailsToPost.push({
             to: staff.email,
             subject: subject + " - DO NOT REPLY",
             text: toEmailToStaffInvitationText(
@@ -272,29 +298,32 @@ const Invitation = ({
               start,
               end
             ),
-          };
-          staffEmailsToPost.push(emailToPost);
+          });
         }
+
+        setProgress(true);
         try {
-          setProgress(true);
           await Promise.all(
             staffEmailsToPost.map((emailToPost) =>
               axios.post(`/api/mailgun`, emailToPost)
             )
           );
-          toast.success(`Invitations to staff members sent successfully`, {
+          toast.success("Invitations to staff members sent successfully", {
             containerId: "A",
           });
         } catch (err) {
-          if (err instanceof Error)
-            toast.error(`Couldn't send invitations to staff members`, {
-              containerId: "A",
-            });
+          console.error("Error sending staff invitations:", err);
+          toast.error("Couldn't send invitations to staff members", {
+            containerId: "A",
+          });
         } finally {
           setProgress(false);
         }
       }
 
+      // =====================
+      // 📅 Update appointment
+      // =====================
       const invitationSent: InvitationSentType = {
         date: nowTZTimestamp(),
         guests_names: [
@@ -314,6 +343,7 @@ const Invitation = ({
           invitationSent,
         ],
       };
+
       setFormDatas(appointmentToPut);
       appointmentPut.mutate(appointmentToPut);
       setFormVisible(false);
