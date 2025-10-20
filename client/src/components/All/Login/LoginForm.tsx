@@ -1,3 +1,4 @@
+import { loginSchema } from "@shared/zod-schemas/loginSchema";
 import axios, { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,7 +24,6 @@ import {
   StaffType,
 } from "../../../types/api";
 import { toPatientName } from "../../../utils/names/toPatientName";
-import { loginSchema } from "../../../validation/login/loginValidation";
 import ErrorParagraph from "../../UI/Paragraphs/ErrorParagraph";
 import LoginBtnContainer from "./LoginBtnContainer";
 import LoginInputs from "./LoginInputs";
@@ -77,25 +77,20 @@ const LoginForm = () => {
   };
 
   const handleSubmitStaff = async () => {
-    //Validation
     try {
-      await loginSchema.validate(formDatas);
-    } catch (err) {
-      if (err instanceof Error) setErr(err.message);
-      return;
-    }
-    //Formatting
-    const formDatasToPost = {
-      ...formDatas,
-      email: formDatas.email.toLowerCase(),
-    };
-    const email = formDatasToPost.email;
-    const password = formDatasToPost.password;
-    const pin = formDatasToPost.pin;
-    //Submission
+      //Validation
+      loginSchema.parse(formDatas);
+      //Formatting
+      const formDatasToPost = {
+        ...formDatas,
+        email: formDatas.email.toLowerCase(),
+      };
+      const email = formDatasToPost.email;
+      const password = formDatasToPost.password;
+      const pin = formDatasToPost.pin;
+      //Submission
 
-    //************************************* STAFF *************************************//
-    try {
+      //************************************* STAFF *************************************//
       setLoadingStaff(true);
       //=============== AUTH =================//
       const response = await xanoPostAuth(LOGIN_URL, "staff", {
@@ -291,7 +286,7 @@ const LoginForm = () => {
   const handleSubmitPatient = async () => {
     //Validation
     try {
-      await loginSchema.validate(formDatas);
+      await loginSchema.parse(formDatas);
     } catch (err) {
       if (err instanceof Error) setErr(err.message);
       return;
@@ -404,7 +399,7 @@ const LoginForm = () => {
   const handleSubmitAdmin = async () => {
     //Validation
     try {
-      await loginSchema.validate(formDatas);
+      await loginSchema.parse(formDatas);
     } catch (err) {
       if (err instanceof Error) setErr(err.message);
       return;
